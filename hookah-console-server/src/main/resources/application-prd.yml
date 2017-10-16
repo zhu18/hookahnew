@@ -102,4 +102,21 @@ myconf:
     ipPort: 192.168.15.174:8500
   es:
     ipPort: 192.168.15.175:9300
+    cluster:
+      name: qingdao-es
+    clientTransport:
+      sniff: true
+      ignore_cluster_name: false
+      ping_timeout: 5s
+      nodes_sampler_interval: 5s
+    goods:
+      index: bdg-goods-v1
+      type: goods
+      shards: 4
+      replicas: 1
+    category:
+      index: bdg-category-v1
+      type: category
+      shards: 2
+      replicas: 1
 debug: true

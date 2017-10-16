@@ -10,6 +10,8 @@ spring:
   datasource:
     url: jdbc:log4jdbc:mysql://192.168.15.90:3306/bdgStore?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
+    #driverClassName: com.mysql.jdbc.Driver
+    #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: password
     initialize: true
@@ -38,17 +40,13 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.90:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/bdgStore
   rabbitmq:
     addresses: 192.168.200.116:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
-    listener:
-      retry:
-      enabled: true
-      max-attempts: 2
   mail:
       host: smtp.galaxybigdata.com
       username: service@qddata.com.cn
@@ -63,6 +61,14 @@ spring:
               enable: true
             socketFactory:
               fallback: false
+#  jpa:
+#    database: MYSQL
+#    show-sql: true
+##    hibernate:
+##      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
 myconf:
@@ -85,5 +91,5 @@ myconf:
   redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-      ipPort: 127.0.0.1:8500
+      ipPort: localhost:8500
 debug: true

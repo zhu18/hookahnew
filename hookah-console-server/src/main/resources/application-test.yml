@@ -38,22 +38,19 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.90:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/bdgStore
   rabbitmq:
     addresses: 192.168.200.116:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
-    listener:
-      retry:
-        enabled: true
-        max-attempts: 2
   mail:
-      host: smtp.qiye.163.com
-      port: 25
-      username: gbd@jusfoun.com
-      password: 1QAZ2wsx
+      host: smtp.galaxybigdata.com
+      username: service@qddata.com.cn
+      password: Bigdata8661101
+      transport:
+        protocol: smtp
       properties:
         mail:
           smtp:
@@ -72,17 +69,6 @@ spring:
 #        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
-redis:
-  ip: 192.168.15.90
-  port: 6379
-  password: Yqn2ht4DYkMHlDvTY7CV
-  pool:
-    #最大分配的对象数
-    maxTotal: 1024
-    #最大能够保持idel状态的对象数
-    maxIdle: 200
-    #当调用borrow Object方法时，是否进行有效性检查
-    testOnBorrow: false
 myconf:
   beetl:
     templatesPath: views/
@@ -92,7 +78,6 @@ myconf:
     cache: false
   host:
     domain: galaxybigdata.com
-    cms: ${server.http.protocal}www.galaxybigdata.com
     website: ${server.http.protocal}www.galaxybigdata.com
     static: ${server.http.protocal}static.galaxybigdata.com
     auth: ${server.http.protocal}auth.galaxybigdata.com
@@ -101,12 +86,12 @@ myconf:
   oauth2:
     clientId: admin
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.galaxybigdata.com.cn/reg
-    loginUrl: http://auth.galaxybigdata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.galaxybigdata.com.cn/home
-    logoutUrl: http://auth.galaxybigdata.com.cn/logout?redirect_uri=http://trade.galaxybigdata.com.cn/login
-    accessTokenUrl: http://auth.galaxybigdata.com.cn/oauth/accessToken
-    userInfoUrl: http://auth.galaxybigdata.com.cn/userInfo
-    redirectUrl: http://auth.galaxybigdata.com.cn/login
+    regUrl: http://auth.galaxybigdata.com/reg
+    loginUrl: http://auth.galaxybigdata.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.galaxybigdata.com/home
+    logoutUrl: http://auth.galaxybigdata.com/logout?redirect_uri=http://www.galaxybigdata.com/login
+    accessTokenUrl: http://auth.galaxybigdata.com/oauth/accessToken
+    userInfoUrl: http://auth.galaxybigdata.com/userInfo
+    redirectUrl: http://auth.galaxybigdata.com/login
   api:
     url: http://192.168.200.116:5555/gateway/insert
     tokenUrl: http://192.168.200.116:5555/gateway/getToken
@@ -114,7 +99,24 @@ myconf:
   redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-    ipPort: 192.168.15.202:8500
+    ipPort: localhost:8500
   es:
-    ipPort: 192.168.15.175:9300
+    ipPort: 192.168.200.116:9300
+    cluster:
+      name: qingdao-es
+    clientTransport:
+      sniff: true
+      ignore_cluster_name: false
+      ping_timeout: 5s
+      nodes_sampler_interval: 5s
+    goods:
+      index: bdg-goods-v1
+      type: goods
+      shards: 4
+      replicas: 1
+    category:
+      index: bdg-category-v1
+      type: category
+      shards: 2
+      replicas: 1
 debug: true

@@ -9,12 +9,11 @@ myconf:
     static: ${server.http.protocal}static.galaxybigdata.com
     auth: ${server.http.protocal}auth.galaxybigdata.com
     console: ${server.http.protocal}console.galaxybigdata.com
-    crowd: ${server.http.protocal}crowd.galaxybigdata.com
 debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.15.175:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/bdgStore
   mvc:
       static-path-pattern: /static/**
   http:

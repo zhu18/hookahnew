@@ -1,9 +1,9 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jusfoun.hookah.console.server.config.Constants;
 import com.jusfoun.hookah.console.server.config.ESTemplate;
 import com.jusfoun.hookah.console.server.config.ESTransportClient;
+import com.jusfoun.hookah.console.server.config.EsProps;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
@@ -34,6 +34,7 @@ import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.core.convert.ConverterNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +61,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     GoodsAttrTypeService goodsAttrTypeService;
     @Autowired
     CategoryMapper categoryMapper;
+    @Resource
+    EsProps esProps;
 
     // 创建索引
     @Override
@@ -217,11 +220,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             map = AnnotationUtil.convert2Map(vo.getEsGoods());
         }
         if(vo.getRange() == null) {
-            esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
-                    Constants.GOODS_TYPE, map, pagination, orderField, order, "goodsName");
+            esTemplate.search(esTransportClient.getObject(), esProps.getGoods().get("index"),
+                    esProps.getGoods().get("type"), map, pagination, orderField, order, "goodsName");
         }else {
-            esTemplate.search(esTransportClient.getObject(), Constants.GOODS_INDEX,
-                    Constants.GOODS_TYPE, map, pagination, orderField, order, vo.getRange(), "goodsName");
+            esTemplate.search(esTransportClient.getObject(), esProps.getGoods().get("index"),
+                    esProps.getGoods().get("type"), map, pagination, orderField, order, vo.getRange(), "goodsName");
         }
         pagination.getTotalPage();
         return pagination;
@@ -238,8 +241,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public List<String> goodsSuggestion(String prefix, Integer size) throws Exception {
         if(size == null)
             size = HookahConstants.PAGE_SIZE;
-        List<String> list = esTemplate.suggest(esTransportClient.getObject(), prefix, size, Constants.GOODS_INDEX,
-                Constants.GOODS_TYPE, "suggest", "suggest1");
+        List<String> list = esTemplate.suggest(esTransportClient.getObject(), prefix, size, esProps.getGoods().get("index"),
+                esProps.getGoods().get("type"), "suggest", "suggest1");
         return list;
     }
 
@@ -268,7 +271,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         //按查询条件查询分类集合
         Map<String, List<EsAggResult>> map = esTemplate.getCounts(esTransportClient.getObject(),
-                Constants.GOODS_INDEX, Constants.GOODS_TYPE, goods != null ? AnnotationUtil.convert2Map(goods) : null, listCnt);
+                esProps.getGoods().get("index"), esProps.getGoods().get("type"), goods != null ? AnnotationUtil.convert2Map(goods) : null, listCnt);
         if (map != null && map.size() > 0) {
             for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
                 switch (entry.getKey()) {
@@ -302,7 +305,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         listCnt.add(new EsAgg(HookahConstants.GOODS_AGG_KEYWORODS_ARRAYS, HookahConstants.GOODS_AGG_KEYWORODS_ARRAYS_FIELD));
         //按查询条件查询分类集合
         Map<String, List<EsAggResult>> map = esTemplate.getCounts(esTransportClient.getObject(),
-                Constants.GOODS_INDEX, Constants.GOODS_TYPE, goods != null ? AnnotationUtil.convert2Map(goods) : null, listCnt);
+                esProps.getGoods().get("index"), esProps.getGoods().get("type"), goods != null ? AnnotationUtil.convert2Map(goods) : null, listCnt);
         if (map != null && map.size() > 0) {
             for (Map.Entry<String, List<EsAggResult>> entry : map.entrySet()) {
                 switch (entry.getKey()) {
@@ -472,8 +475,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         pagination.setCurrentPage(HookahConstants.PAGE_NUM);
         Map<String, Object> map = new HashedMap();
         map.put("fullName", keyword);
-        esTemplate.search(esTransportClient.getObject(), Constants.GOODS_CATEGORY_INDEX,
-                Constants.GOODS_CATEGORY_TYPE, map, pagination, null, null, "fullName");
+        esTemplate.search(esTransportClient.getObject(), esProps.getCategory().get("index"),
+                esProps.getCategory().get("type"), map, pagination, null, null, "fullName");
         return pagination.getList();
     }
 
@@ -507,8 +510,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         for(int i=0;i<goodsIds.length;i++){
 
             updateRequest = new UpdateRequest();
-            updateRequest.index(Constants.GOODS_INDEX);
-            updateRequest.type(Constants.GOODS_TYPE);
+            updateRequest.index(esProps.getGoods().get("index"));
+            updateRequest.type(esProps.getGoods().get("type"));
             updateRequest.id(goodsIds[i]);
             updateRequest.doc(jsonBuilder()
                     .startObject()

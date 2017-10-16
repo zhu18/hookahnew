@@ -3,7 +3,7 @@ class EsController {
     console.log($rootScope.config);
 
 
-      $scope.ess = [{no:'1',index:'qingdao-goods-v1',type:'goods'},{no:'2',index:'qingdao-category-v1',type:'category'} ];
+      $scope.ess = [{no:'1',index:'bdg-goods-v1',type:'goods'},{no:'2',index:'bdg-category-v1',type:'category'} ];
 
     $scope.search = function (initCurrentPage) {
       var promise = $http({

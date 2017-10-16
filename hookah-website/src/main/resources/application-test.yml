@@ -13,6 +13,7 @@ myconf:
     prefix: /
     suffix: .html
     cache: false
+
   host:
     domain: galaxybigdata.com
     website: ${server.http.protocal}www.galaxybigdata.com
@@ -33,12 +34,12 @@ myconf:
   redis:
     ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-    ipPort: 192.168.15.202:8500
+    ipPort: 127.0.0.1:8500
 debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.15.90:27017/hookah
+      uri:  mongodb://192.168.15.90:27017/bdgStore
   mvc:
       static-path-pattern: /static/**
   rabbitmq:

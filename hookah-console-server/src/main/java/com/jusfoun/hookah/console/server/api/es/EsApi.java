@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.console.server.api.es;
-import com.jusfoun.hookah.console.server.config.Constants;
 import com.jusfoun.hookah.console.server.config.ESTransportClient;
-import com.jusfoun.hookah.console.server.util.PropertiesManager;
+import com.jusfoun.hookah.console.server.config.EsProps;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +46,8 @@ public class EsApi {
     ESTransportClient esTransportClient;
     @Autowired
     MgCategoryAttrTypeService mgCategoryAttrTypeService;
+    @Resource
+    EsProps esProps;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize,
@@ -225,17 +227,15 @@ public class EsApi {
         Integer goodsShards = null;
         Integer goodsReplicas = null;
         if("goods".equals(diff)){
-            goodsIndex = PropertiesManager.getInstance().getProperty("goods.index");
-            goodsType = PropertiesManager.getInstance().getProperty("goods.type");
-            goodsShards = Integer.valueOf(PropertiesManager.getInstance().getProperty("goods.index.shards"));
-            goodsReplicas = Integer.valueOf(PropertiesManager.getInstance().getProperty("goods.index.replicas"));
-
+            goodsIndex = esProps.getGoods().get("index");
+            goodsType = esProps.getGoods().get("type");
+            goodsShards = Integer.parseInt(esProps.getGoods().get("shards"));
+            goodsReplicas = Integer.parseInt(esProps.getGoods().get("replicas"));
         }else{
-
-            goodsIndex = PropertiesManager.getInstance().getProperty("category.index");
-            goodsType = PropertiesManager.getInstance().getProperty("category.type");
-            goodsShards = Integer.valueOf(PropertiesManager.getInstance().getProperty("category.index.shards"));
-            goodsReplicas = Integer.valueOf(PropertiesManager.getInstance().getProperty("category.index.replicas"));
+            goodsIndex = esProps.getCategory().get("index");
+            goodsType = esProps.getCategory().get("type");
+            goodsShards = Integer.parseInt(esProps.getCategory().get("shards"));
+            goodsReplicas = Integer.parseInt(esProps.getCategory().get("replicas"));
         }
         String goodsKeyField = null;
         try {
@@ -256,9 +256,9 @@ public class EsApi {
         try {
             /** 初始化category索引*/
             String catKeyField = elasticSearchService.initEs(EsCategory.class, HookahConstants.Analyzer.LC_INDEX.val,
-                    Constants.GOODS_CATEGORY_INDEX, Constants.GOODS_CATEGORY_TYPE, Constants.GOODS_CATEGORY_SHARDS,
-                    Constants.GOODS_CATEGORY_REPLICAS);
-            elasticSearchService.bulkInsert(catKeyField, Constants.GOODS_CATEGORY_INDEX, Constants.GOODS_CATEGORY_TYPE);
+                    esProps.getCategory().get("index"), esProps.getCategory().get("type"), Integer.parseInt(esProps.getCategory().get("shards")),
+                    Integer.parseInt(esProps.getCategory().get("replicas")));
+            elasticSearchService.bulkInsert(catKeyField, esProps.getCategory().get("index"), esProps.getCategory().get("type"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -270,8 +270,8 @@ public class EsApi {
             BoolQueryBuilder queryBuilders = QueryBuilders.boolQuery()
                     .must(termQuery("catIds", id))
                     .must(termQuery("goodsName", "企业"));
-            SearchResponse searchResponse = esTransportClient.getObject().prepareSearch("qingdao-goods-v1")
-                    .setTypes("goods")
+            SearchResponse searchResponse = esTransportClient.getObject().prepareSearch(esProps.getGoods().get("index"))
+                    .setTypes(esProps.getGoods().get("type"))
                     .setQuery(queryBuilders)
 //                    .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
 //                    .setPostFilter(termQuery("catIds", id))

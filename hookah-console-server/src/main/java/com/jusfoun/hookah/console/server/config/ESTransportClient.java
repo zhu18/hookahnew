@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.console.server.config;
 
-import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
@@ -10,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.net.InetAddress;
 import java.util.Properties;
 
@@ -25,9 +24,9 @@ public class ESTransportClient implements FactoryBean<TransportClient>, Initiali
     private Properties properties;
     static final String COLON = ":";
     static final String COMMA = ",";
+    @Resource
+    EsProps esProps;
 
-    @Value("${myconf.es.ipPort}")
-    private String esIpPort;
 
     @Override
     public void destroy() throws Exception {
@@ -63,7 +62,7 @@ public class ESTransportClient implements FactoryBean<TransportClient>, Initiali
 
     protected void buildClient() throws Exception {
         client = new PreBuiltTransportClient(settings());
-        for (String clusterNode : split(esIpPort, COMMA)) {
+        for (String clusterNode : split(esProps.getIpPort(), COMMA)) {
             String hostName = substringBeforeLast(clusterNode, COLON);
             String port = substringAfterLast(clusterNode, COLON);
             client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(hostName), Integer.valueOf(port)));
@@ -76,11 +75,11 @@ public class ESTransportClient implements FactoryBean<TransportClient>, Initiali
             return Settings.builder().put(properties).build();
         }
         return Settings.builder()
-                .put("cluster.name", PropertiesManager.getInstance().getProperty("es.cluster.name"))
-                .put("client.transport.sniff", PropertiesManager.getInstance().getProperty("es.client.transport.sniff"))
-                .put("client.transport.ignore_cluster_name", PropertiesManager.getInstance().getProperty("es.ignore.cluster.name"))
-                .put("client.transport.ping_timeout", PropertiesManager.getInstance().getProperty("es.routing.time"))
-                .put("client.transport.nodes_sampler_interval", PropertiesManager.getInstance().getProperty("es.nodes.interval"))
+                .put("cluster.name", esProps.getCluster().get("name"))
+                .put("client.transport.sniff", esProps.getClientTransport().get("sniff"))
+                .put("client.transport.ignore_cluster_name", esProps.getClientTransport().get("ignore_cluster_name"))
+                .put("client.transport.ping_timeout", esProps.getClientTransport().get("ping_timeout"))
+                .put("client.transport.nodes_sampler_interval", esProps.getClientTransport().get("nodes_sampler_interval"))
                 .build();
     }
 

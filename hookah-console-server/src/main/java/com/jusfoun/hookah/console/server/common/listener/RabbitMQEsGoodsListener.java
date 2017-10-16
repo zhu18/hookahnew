@@ -1,6 +1,6 @@
 package com.jusfoun.hookah.console.server.common.listener;
 
-import com.jusfoun.hookah.console.server.config.Constants;
+import com.jusfoun.hookah.console.server.config.EsProps;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
@@ -13,6 +13,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -25,6 +26,8 @@ public class RabbitMQEsGoodsListener {
     GoodsMapper goodsMapper;
     @Autowired
     ElasticSearchService elasticSearchService;
+    @Resource
+    EsProps esProps;
     /**
      * 当goodsb表数据有更新时，同步更新es
      * @param goodsId
@@ -39,8 +42,8 @@ public class RabbitMQEsGoodsListener {
                 if(HookahConstants.GOODS_STATUS_DELETE.equals(goods.getIsDelete())
                         || HookahConstants.GOODS_STATUS_OFFSALE.equals(goods.getIsOnsale())
                         || HookahConstants.GOODS_STATUS_FORCE_OFFSALE.equals(goods.getIsOnsale())) {
-                    elasticSearchService.deleteById(Constants.GOODS_INDEX,
-                            Constants.GOODS_TYPE, goodsId);
+                    elasticSearchService.deleteById(esProps.getGoods().get("index"),
+                            esProps.getGoods().get("type"), goodsId);
                 }else if(HookahConstants.GOODS_STATUS_UNDELETE.equals(goods.getIsDelete())
                         && HookahConstants.GOODS_STATUS_ONSALE.equals(goods.getIsOnsale())) {
 
@@ -48,16 +51,16 @@ public class RabbitMQEsGoodsListener {
                     if(esGoods != null) {
                         Map<String, Object> map = elasticSearchService.completionEsGoods(esGoods);
                         // 如果isDelete == 1 并且 is_onsale == 1 添加或者修改es中的商品
-                        elasticSearchService.upsertById(Constants.GOODS_INDEX,
-                                Constants.GOODS_TYPE, goodsId, map);
+                        elasticSearchService.upsertById(esProps.getGoods().get("index"),
+                                esProps.getGoods().get("type"), goodsId, map);
                     }else {
                         logger.warn(goodsId + ":esGoods查询为null");
                     }
                 }
             }else {
                 //删除ES中的商品
-                elasticSearchService.deleteById("qingdao-goods-v1",
-                        "goods", goodsId);
+                elasticSearchService.deleteById(esProps.getGoods().get("index"),
+                        esProps.getGoods().get("type"), goodsId);
             }
         }catch (Exception e) {
             logger.error(goodsId + "执行ES添加/删除流程错误！" + e);
