@@ -38,7 +38,7 @@ function initDOM(selector,data) {
         <img class="demandTimeIco" src="/static/images/crowdsourcing/index/demandDetail-ico.png" alt="">\
         <div class="demandDeadData">交付截止日期：'+data[i].deliveryDeadline+'</div>\
         <div class="demandLastTime">报名剩余时间：'+data[i].applyLastTime+'</div>\
-        <div class="demandMoney">￥'+data[i].rewardMoney+'元  </div>\
+        <div class="demandMoney">￥'+ (data[i].rewardMoney / 100 ) +'元  </div>\
         <div class="demandHasApply">已报名：'+data[i].count+'人</div>\
         </div>\
       <div class="demandDetailHide ">\
