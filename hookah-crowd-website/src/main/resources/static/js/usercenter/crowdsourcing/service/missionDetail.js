@@ -87,12 +87,19 @@ function renderPage(data) {
 
   let domModel = $('.crowdsourcing-status span');
   switch (insertRequirementsData.reqStatus) {
-    case 1:
-      domModel.html('待审核');
+    case 1://工作中
+      domModel.html('工作中');
+      $('.j_myMissionStatus').html('已选中').show();
+      $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">已选中！提交成果</a>');
+      $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id}).hide().prev().show();
+
+      missionApplyInfo(data);
+
+
       break;
     case 2: //未中标
      domModel.html('未中标');
-     $('.missionStatus').html('未中标').show();
+     $('.j_myMissionStatus').html('未中标').show();
       $('.release-first-btnbox div').append('<a class="" href="javascript:void(0)">报名未被选中</a>');
       missionApplyInfo(data);
       $('.j_myMissionResult').hide().prev().show();
@@ -197,6 +204,159 @@ function renderPage(data) {
 }
 
 let commentData={};
+$(document).on('click', '.j_submitResult', function () {
+
+  // 提交成果
+  $.confirm('\
+  <div class="checkMissionBox submitResultBox">\
+    <h5>提交成果</h5>\
+    <table class="myRequirement-table crowdsourcing-table">\
+      <tr>\
+        <td>方案标题：</td>\
+        <td>\
+          <input class="j_resultTitle" type="text" maxlength="20" placeholder="一句话描述您的方案（要求简洁全面，20个汉字以内）">\
+        </td>\
+      </tr>\
+      <tr>\
+        <td valign="top">方案描述：</td>\
+        <td>\
+          <textarea placeholder="请详情描述您的方案，1000汉字以内。" id="resultContent" cols="30" rows="10" maxlength="1000"></textarea>\
+        </td>\
+      </tr>\
+      <tr>\
+        <td valign="top">方案描述：</td>\
+        <td style="padding:0;">\
+          <div class="upload-box">\
+            <input type="file" name="filename" class="fileUploadBtn j_firstPage">\
+            <span class="falseBen j_firstPage">上传附件</span>\
+            <span class="upload-file-notice j_firstPage">最多可上传5个附件，每个附件大小不超过10M。</span>\
+          </div>\
+          <div class="load-file-list j_resultLoadFile">\
+          </div>\
+        </td>\
+      </tr>\
+    </table>\
+  </div>', null, function (type) {
+
+    if (type == 'yes') {
+      let confirmThis=this;
+      let annexList = [];//附件列表
+      let list = $('.j_resultLoadFile dl.load-file');
+      for (let i = 0; i < list.length; i++) {
+        let tempObj = {
+          fileName: list.eq(i).attr('fileName'),
+          filePath: list.eq(i).attr('filePath')
+        };
+        annexList.push(tempObj);
+      }
+      let resultData={
+        title:$('.j_resultTitle').val(),
+        applyId:$('.j_myMissionResult').attr("applyId"),
+        requirementId:$('.j_myMissionResult').attr("requirementId"),
+        content:$("#resultContent").val(),
+        zbAnnexes:annexList
+
+    };
+
+      console.log(resultData);
+
+      if(resultData.title && resultData.applyId && resultData.requirementId && resultData.content){
+        console.log(resultData);
+        //TODO：提交成功后的操作：1、标题的回显附件的回显，
+        $.ajax({
+          type: 'post',
+          url: "/api/program/add",
+          cache: false,
+          contentType: 'application/json',
+          data: JSON.stringify(resultData),
+          success: function (data) {
+            console.log(data);
+            if(data.code==1){
+              $('.missionTitle').html(resultData.title);
+              $('.missionResultDes').html(resultData.content);
+              $('.j_missionResult-load-file-list').html($('.j_resultLoadFile').html());
+
+
+              $('.j_myMissionResult').show().prev().hide(); //显示评价模块
+
+
+              confirmThis.hide();// 隐藏弹出框
+              $('.j_submitResult').remove();//删除评价按钮
+
+            }else{
+              $.alert(data.message)
+            }
+          }
+        });
+
+
+      }else{
+        $.alert('请填写提交成果内容!')
+      }
+
+    } else {
+      this.hide();
+
+    }
+
+  });
+
+  $('.fileUploadBtn').fileupload(
+    {//激活上传附件功能
+      url: host.static + '/upload/other',
+      dataType: 'json',
+      maxFileSize: 10240000,
+      add: function (e, data) {
+        var filesize = data.files[0].size;
+        if(Math.ceil(filesize / 1024) > 1024*10){
+          console.log('文件过大'+filesize);
+          $.alert('附件大小不得超过10M！');
+          return;
+        }
+        data.submit();
+      },
+      done: function (e, data) {
+        console.log('上传完毕');
+        if ($('.j_resultLoadFile dl').length == 5) {
+          $('.upload-file-notice').addClass('color-red');
+          setTimeout(function () {
+            $('.upload-file-notice').removeClass('color-red');
+          }, 2000)
+          return;
+        } else {
+          $('.upload-file-notice').removeClass('color-red');
+        }
+        if (data.result.code == 1) {
+          var obj = data.result.data[0];
+          console.log(data);
+          console.log(obj.filePath);
+          console.log(data.files[0].name);
+          var className = fileTypeClassName(data.files[0].name);
+          console.log(className);
+          var tempHtml = '\
+        <dl fileName="' + data.files[0].name + '" filePath="' + obj.absPath + '" class="load-file ' + className + '">\
+          <dt><a href="javascript:void(0)" title=""><img src="' + obj.absPath + '"></a></dt>\
+          <dd>\
+          <span class="overflowpoint">' + data.files[0].name + '</span>\
+          <div class="crowdsourcing-table-edit">\
+          <a href="' + obj.absPath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
+          <a href="javascript:void (0)" class="del j_firstPage" ><img src="/static/images/crowdsourcing/del.png" alt=""></a>\
+          </div>\
+          </dd>\
+        </dl>';
+
+          $('.j_resultLoadFile').append(tempHtml)
+
+        } else {
+          $.alert(data.result.message)
+        }
+      },
+      progressall: function (e, data) {
+      }
+    });
+
+
+});
 $(document).on('click', '.j_commentBtn', function () { // 评价
   $.confirm('\
   <div class="checkMissionBox">\
@@ -515,4 +675,5 @@ function fileTypeClassName(fileName) { //返回class
   }
   return attachmentListClassName;
 }
+
 
