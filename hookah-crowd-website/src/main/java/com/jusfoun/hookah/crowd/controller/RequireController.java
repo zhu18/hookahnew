@@ -2,11 +2,11 @@ package com.jusfoun.hookah.crowd.controller;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
-import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.crowd.service.ZbRecommendService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.springframework.stereotype.Controller;
@@ -21,6 +21,9 @@ public class RequireController extends BaseController {
 
     @Resource
     ZbRequireService zbRequireService;
+
+    @Resource
+    ZbRecommendService zbRecommendService;
 
     @RequestMapping("/require/insertRequire")
     public void insertRequire() {
@@ -148,13 +151,25 @@ public class RequireController extends BaseController {
     }
 
     /**
-     * 数据众包--首页--分类查询需求信息
+     * 数据众包首页--分类查询需求信息
      * @author zhaoshuai
      * @return
      */
     @ResponseBody
-    @RequestMapping("/api/require/requirementTypeInfo")
+    @RequestMapping("/require/requirementTypeInfo")
     public ReturnData requirementTypeInfo(){
         return zbRequireService.selectRequirementTypeInfo();
+    }
+
+    /**
+     * 数据众包首页--推荐任务信息
+     * @author zhaoshuai
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/require/recommendTasks")
+    public ReturnData recommendTasksInfo(){
+        //return zbRecommendService.selectRecommendTasksInfo();
+        return null;
     }
 }
