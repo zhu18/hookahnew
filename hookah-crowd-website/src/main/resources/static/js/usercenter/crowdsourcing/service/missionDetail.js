@@ -31,7 +31,7 @@ getRequirementType();
 function showDetail() { //修改，从我的发布点击'查看'调转过来的
   $.ajax({
     type: 'get',
-    url: "/api/release/releaseStatus?id=" + crowdSourcingId,
+    url: "/api/myTask/getRequirementDetail?reqId=" + crowdSourcingId,
     cache: false,
     success: function (data) {
       console.log(data);
@@ -45,24 +45,16 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
 
 function renderPage(data) {
   let insertRequirementsData = data;
-  $('.j_title').html(insertRequirementsData.zbRequirement.title);
-  $('.j_username').html(insertRequirementsData.zbRequirement.contactName);
-  $('.j_phone').html(insertRequirementsData.zbRequirement.contactPhone);
-  $('.j_description').html(insertRequirementsData.zbRequirement.description);
-  $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
-  $('.j_date').html(insertRequirementsData.zbRequirement.deliveryDeadline);
-  $('.j_money').html('￥ <i>' + insertRequirementsData.zbRequirement.rewardMoney / 100 + '</i> 元');
-  let temTagHtml = '';
-  let temTagArr = insertRequirementsData.zbRequirement.tag.split(',');
-  if (temTagArr[0]) {
-    for (let t = 0; t < temTagArr.length; t++) {
-      temTagHtml += '<i class="type-span">' + temTagArr[t] + '</i>'
-    }
-  }
-  $('.j_tag').html(temTagHtml);
-  $('.j_checkRemark').html(insertRequirementsData.zbRequirement.checkRemark);
+  $('.j_title').html(insertRequirementsData.zbRequirementSPVo.title);
+  $('.j_username').html(insertRequirementsData.zbRequirementSPVo.contactName);
+  $('.j_phone').html(insertRequirementsData.zbRequirementSPVo.contactPhone);
+  $('.j_description').html(insertRequirementsData.zbRequirementSPVo.description);
+  $('.j_date').html(insertRequirementsData.zbRequirementSPVo.deliveryDeadline);
+  $('.j_money').html('￥ <i>' + insertRequirementsData.zbRequirementSPVo.rewardMoney / 100 + '</i> 元');
+
+  $('.j_checkRemark').html(insertRequirementsData.zbRequirementSPVo.checkRemark);
   let tempTypeHtml = '';
-  switch (Number(insertRequirementsData.zbRequirement.type)) { //需求标签
+  switch (Number(insertRequirementsData.zbRequirementSPVo.type)) { //需求标签
     case 1 : {
       $('.requirement-type-active span').html('数据采集');
       break;
@@ -89,18 +81,23 @@ function renderPage(data) {
     }
   }
 
-  let loadfileHtml=renderLoadFile(data.zbRequirementFiles);
+  let loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'true');
   $('.j_load-file-list').append(loadfileHtml);
 
 
   let domModel = $('.crowdsourcing-status span');
-  switch (insertRequirementsData.zbRequirement.status) {
+  switch (insertRequirementsData.reqStatus) {
     case 1:
       domModel.html('待审核');
       break;
-    /*case 2:
-     domModel.html('审核未通过');
-     break;*/
+    case 2: //未中标
+     domModel.html('未中标');
+     $('.missionStatus').html('未中标').show();
+      $('.release-first-btnbox div').append('<a class="" href="javascript:void(0)">报名未被选中</a>');
+      missionApplyInfo(data);
+      $('.j_myMissionResult').hide().prev().show();
+
+     break;
     case 3:
 
       domModel.html('审核通过<br>待托管赏金');
@@ -194,7 +191,7 @@ function renderPage(data) {
 
       break;
   }
-  rewardMoney = insertRequirementsData.zbRequirement.rewardMoney;
+  rewardMoney = insertRequirementsData.zbRequirementSPVo.rewardMoney;
   $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
 
 }
@@ -351,23 +348,21 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
 
 function missionApplyInfo(data) { //任务报名信息显示
   $('.detailMoneyBox,.otherDetailBox,.applyDeadlineBox').show();//显示下方tab
-  $('.managedMoneyNotice,.moneyAdd,.moneySub').hide();//隐藏托管30%提示 隐藏调整托管比例
-  $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
+  // $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
 
   //任务报名内容
-  $('.j_peopleCount').html(data.count);
-  $('.j_companyName').html(data.user.orgName);
-  $('.j_SignUpTime').html(data.applyTime);
-  $('.j_contentName').html(data.user.contactName);
+  $('.addTime').html(data.zbRequirementApplyVo.addTime);
+  $('.applyContent').html(data.zbRequirementApplyVo.applyContent);
+  $('.j_applyPhone').html(data.zbRequirementApplyVo.mobile);
+  $('.j_hasApply').html(data.zbRequirementApplyVo.applyNumber);
 
-  $('.j_contentPhone').html(data.user.contactPhone);
   //任务成果内容
-  $('.j_applyDeadline').html(data.zbRequirement.applyDeadline);
-  $('.missionTitle').html(data.zbProgram.title).attr('acceptanceAdviceId',data.zbProgram.id);
+  $('.j_applyDeadline').html(data.zbRequirementSPVo.deliveryDeadline);
+  $('.missionTitle').html(data.zbProgramVo.title).attr('acceptanceAdviceId',data.zbProgramVo.id);
 
-  $('.missionResultDes').html(data.zbProgram.content);
+  $('.missionResultDes').html(data.zbProgramVo.content);
   //方案附件列表
-  let missionResultLoadfileHtml=renderLoadFile(data.programFiles);
+  let missionResultLoadfileHtml=renderLoadFile(data.zbProgramVo.zbAnnexes);
 
 
   $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
@@ -426,9 +421,15 @@ $('.tagNotice').on('mouseover', function () { //鼠标离开描述显示工具�
 });
 
 
-function renderLoadFile(loadFileList) { //渲染附件列表
+function renderLoadFile(loadFileList,noDownloadIco='false') { //渲染附件列表
   let tempHtml = '';
   for (let c = 0; c < loadFileList.length; c++) { //渲染附件
+    let NoDownLoadIcoDom='';
+    if(noDownloadIco !== 'true'){
+      NoDownLoadIcoDom='<div class="crowdsourcing-table-edit">\
+            <a href="' + loadFileList[c].filePath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
+          </div>';
+    }
 
     let className = fileTypeClassName(loadFileList[c].filePath);
     tempHtml += '\
@@ -436,9 +437,7 @@ function renderLoadFile(loadFileList) { //渲染附件列表
           <dt><a href="javascript:void(0)" title=""><img src="' + loadFileList[c].filePath + '"></a></dt>\
           <dd>\
           <span class="overflowpoint">' + loadFileList[c].fileName + '</span>\
-          <div class="crowdsourcing-table-edit">\
-          <a href="' + loadFileList[c].filePath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
-          </div>\
+          '+NoDownLoadIcoDom+'\
           </dd>\
         </dl>';
   }

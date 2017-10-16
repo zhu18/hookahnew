@@ -29,12 +29,12 @@ var htmlPart = {
             <span>---</span>
           </div>
           <ul class="crowdsourcing-progress-box">
-            <li><span class="step">1</span><span class="progress-content">发布需求</span> <span class="addtime"></span> </li>
-            <li><span class="step">2</span><span class="progress-content">平台审核</span></li>
-            <li><span class="step">3</span><span class="progress-content">悬赏费用托管</span></li>
-            <li><span class="step">4</span><span class="progress-content">平台发布</span></li>
-            <li><span class="step">5</span><span class="progress-content">服务商工作</span></li>
-            <li><span class="step">6</span><span class="progress-content">验收付款</span></li>
+            <li><span class="step">1</span><span class="progress-content">报名</span> <span class="addtime"></span> </li>
+            <li><span class="step">2</span><span class="progress-content">资格评选</span></li>
+            <li><span class="step">3</span><span class="progress-content">提交成果</span></li>
+            <li><span class="step">4</span><span class="progress-content">平台预测</span></li>
+            <li><span class="step">5</span><span class="progress-content">需求方验收</span></li>
+            <li><span class="step">6</span><span class="progress-content">付款</span></li>
             <li><span class="step">7</span><span class="progress-content">评价</span></li>
           </ul>
       </div>
@@ -45,26 +45,14 @@ var htmlPart = {
           <td valign="top">需求标题</td>
           <td>
             <div class="secondPage j_title">-</div>
-            <div class="crowdsourcing-user">
-              <span>需求联系人</span>
-              <i class="secondPage j_username">-</i>
-              <i class="secondPage j_phone">-</i>
-            </div>
+
           </td>
         </tr>
         <tr>
           <td>需求类型</td>
           <td>
             <div class="secondPage j_type requirement-type-active"><span>----</span></div>
-            <div class="crowdsourcing-user">
-              <span>需求标签</span>
-              <div class="secondPage tagList j_tag">
-                <i>----</i>
-                <i>----</i>
-                <i>----</i>
-                <i>----</i>
-              </div>
-            </div>
+
           </td>
         </tr>
         <tr>
@@ -111,14 +99,14 @@ var htmlPart = {
           <td>悬赏金额</td>
           <td>
             <div class="secondPage j_money">---- 元</div>
-            <div class="crowdsourcing-user detailMoneyBox">
-              <span class="managedMoneySpan"><i class="managedMoneySpanText">托管比例:</i> <i class="moneyHow">--</i>% <i class="moneyAdd"></i> <i class="moneySub"></i></span>
+            <!--<div class="crowdsourcing-user detailMoneyBox">
+              <span class="managedMoneySpan"><i class="managedMoneySpanText">托管比例:</i> <i class="moneyHow">&#45;&#45;</i>% <i class="moneyAdd"></i> <i class="moneySub"></i></span>
               <div class="secondPage tagList ">
-                ￥ <i class="moneyManageMoeny">---</i> 元
+                ￥ <i class="moneyManageMoeny">-&#45;&#45;</i> 元
               </div>
               <i class="managedMoneyNotice">托管金额至少赏金的30%，可以上调到100%</i>
               <div class="cancleStatusNotice"><i class="fa fa-times" aria-hidden="true"></i> <i class="cancleStatusNoticeContent">需方驳回，交易取消已退款</i></div>
-            </div>
+            </div>-->
 
         </tr>
         <tr>
@@ -132,23 +120,53 @@ var htmlPart = {
       </table>
       <div class="otherDetailBox">
         <ul class="otherDetailBoxNav">
-          <li class="active">任务报名</li>
-          <li>任务成果</li>
+          <li class="active">我的报名</li>
+          <li>我的成果</li>
           <li>交易说明</li>
         </ul>
         <div class="otherDetailBoxList">
           <div class="otherDetailBoxItem active">
             <p class="missionResultEmpty"  style="display:none;">暂无报名信息</p>
-            <div class="missionApply">
-              至报名截止日期： 已报名 <span class="j_peopleCount">---</span>人 <br>
-              已为你筛选如下用户：<br>
-              <span class="j_companyName">---</span>，信誉---分 <span class="j_SignUpTime"> ---</span>报名 联系人 <span class="j_contentName">---</span> 手机 <span class="j_contentPhone">---</span>，该用户将为您提供工作成果。
+            <div class="myMissionApply">
+              <table class="missionResult myRequirement-table">
+                <tbody>
+                <tr>
+                  <td>报名时间</td>
+                  <td>
+                    <span class="addTime">---</span>
+                    <div class="missionStatus"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">自存理由</td>
+                  <td>
+                    自荐理由描述如下：
+                    <p class="applyContent">---</p>
+                    <div class="checkAdviceDetailBox"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">联系手机</td>
+                  <td>
+                    <span class="j_applyPhone">---</span>
+
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">已报名</td>
+                  <td>
+                    <span class="j_hasApply">---</span> 人
+
+                  </td>
+                </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           <div class="otherDetailBoxItem">
             <div class="canNotSelect"></div>
-            <p class="missionResultEmpty"  style="display:none;">暂无任务成果</p>
-            <table class="missionResult myRequirement-table">
+            <p class="missionResultEmpty"  style="display:none;">暂无成果信息</p>
+            <table class="missionResult myRequirement-table j_myMissionResult">
               <tbody>
                 <tr>
                   <td>方案标题</td>
@@ -210,7 +228,6 @@ var htmlPart = {
         </div>
       </div>
       <div>
-        <span class="release-notice">温馨提示： 发布需求不收取任何佣金，请放心发布。如没有匹配到供应商，全额退款。整个交易过程平台会担保您的赏金安全，并保障交易效果。</span>
         <div class="release-first-btnbox">
           <div>
             <a href="/usercenter/myRequirements" id="J_nextPage">返回</a>

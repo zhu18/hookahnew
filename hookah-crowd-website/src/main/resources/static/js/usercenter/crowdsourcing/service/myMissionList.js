@@ -28,36 +28,36 @@ function loadPageData(data) { //渲染页面数据
         break;
       case 1:
         tempState = '工作中';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">提交成果</a>';
+        tempEdit = '<a href="/usercenter/missionDetail?id=' + data[i].id + '" class="signUp">提交成果</a>';
         break;
       case 2:
         tempState = '未中标';
-        tempEdit = '<a href="/usercenter/crowdsourcingRelease?id=' + data[i].id + '" class="signUp">查看</a>';
+        tempEdit = '<a href="/usercenter/missionDetail?id=' + data[i].id + '" class="signUp">查看</a>';
 
         break;
       case 3:
         tempState = '评审中';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">评审结果</a>';
+        tempEdit = '<a href="/usercenter/missionDetail?id=' + data[i].id + '" class="signUp">评审结果</a>';
         break;
       case 4:
         tempState = '验收中';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">验收结果</a>';
+        tempEdit = '<a href="/usercenter/missionDetail?id=' + data[i].id + '" class="signUp">验收结果</a>';
         break;
       case 5:
         tempState = '待付款';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
+        tempEdit = '<a href="/usercenter/missionDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
       case 6:
         tempState = '待评价';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">去评价</a>';
+        tempEdit = '<a href="/usercenter/missionDetail?id=' + data[i].id + '" class="signUp">去评价</a>';
         break;
       case 7:
         tempState = '交易取消';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
+        tempEdit = '<a href="/usercenter/missionDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
       case 8:
         tempState = '交易完成';
-        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
+        tempEdit = '<a href="/usercenter/missionDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
      }
     tempHtml += '<tr>\
