@@ -1,7 +1,5 @@
 package com.jusfoun.hookah.crowd.service;
 
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 
 public interface PayService {
@@ -13,5 +11,5 @@ public interface PayService {
      * @param request
      * @return
      */
-    ModelAndView handleZFBRs(HttpServletRequest request);
+    boolean handleZFBRs(HttpServletRequest request);
 }

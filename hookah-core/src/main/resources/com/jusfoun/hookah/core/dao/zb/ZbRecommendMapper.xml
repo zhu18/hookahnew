@@ -28,4 +28,12 @@
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR},
       #{status,jdbcType=INTEGER}, #{recommendLength,jdbcType=INTEGER})
   </insert>
+
+  <select id="selectRecommendTasksInfo" resultType="com.jusfoun.hookah.core.domain.zb.vo.ZbRecommendVo">
+    SELECT * FROM zb_recommend a
+    LEFT JOIN zb_requirement b
+    ON a.requirement_id = b.id
+    WHERE a.order_num IS NOT NULL
+    ORDER BY a.order_num
+  </select>
 </mapper>

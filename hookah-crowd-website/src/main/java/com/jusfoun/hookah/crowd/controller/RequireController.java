@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.crowd.service.ZbRecommendService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class RequireController extends BaseController {
 
     @Resource
     ZbRequireService zbRequireService;
+
+    @Resource
+    ZbRecommendService zbRecommendService;
 
 
     @RequestMapping("/require/insertRequire")
@@ -166,6 +170,6 @@ public class RequireController extends BaseController {
     @ResponseBody
     @RequestMapping("/require/recommendTasks")
     public ReturnData recommendTasksInfo(){
-        return null;
+        return zbRecommendService.selectRecommendTasksInfo();
     }
 }
