@@ -1,8 +1,11 @@
 package com.jusfoun.hookah.core.domain.zb.vo;
 
 import com.jusfoun.hookah.core.domain.zb.ZbComment;
+import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
 import com.jusfoun.hookah.core.generic.GenericModel;
+
+import java.util.List;
 
 /**
  * 服务商 - 查看需求
@@ -21,6 +24,16 @@ public class ZbServiceProviderRequireVo extends GenericModel {
     private ZbCommentVo zbCommentVo;//评价
 
     private MgZbRequireStatus mgZbRequireStatus;//进度条状态时间
+
+    private List<ZbRequirement>  analogyTask;//类似任务
+
+    public List<ZbRequirement> getAnalogyTask() {
+        return analogyTask;
+    }
+
+    public void setAnalogyTask(List<ZbRequirement> analogyTask) {
+        this.analogyTask = analogyTask;
+    }
 
     public MgZbRequireStatus getMgZbRequireStatus() {
         return mgZbRequireStatus;
