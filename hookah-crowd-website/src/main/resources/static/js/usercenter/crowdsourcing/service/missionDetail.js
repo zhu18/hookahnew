@@ -257,12 +257,11 @@ $(document).on('click', '.j_submitResult', function () {
         zbAnnexes:annexList
 
     };
-
+      //TODO：上传成功之后 请求过来的 还是之前的内容
       console.log(resultData);
 
       if(resultData.title && resultData.applyId && resultData.requirementId && resultData.content){
         console.log(resultData);
-        //TODO：提交成功后的操作：1、标题的回显附件的回显，
         $.ajax({
           type: 'post',
           url: "/api/program/add",
@@ -275,11 +274,7 @@ $(document).on('click', '.j_submitResult', function () {
               $('.missionTitle').html(resultData.title);
               $('.missionResultDes').html(resultData.content);
               $('.j_missionResult-load-file-list').html($('.j_resultLoadFile').html());
-
-
               $('.j_myMissionResult').show().prev().hide(); //显示评价模块
-
-
               confirmThis.hide();// 隐藏弹出框
               $('.j_submitResult').remove();//删除评价按钮
 

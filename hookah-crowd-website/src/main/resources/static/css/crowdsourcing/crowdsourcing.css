@@ -195,10 +195,12 @@
 .checkMissionBox h5{ font-size: 16px; font-weight: normal;}
 .checkMissionBox table{ margin-top: 10px; width: 100%;}
 .checkMissionBox table tr:first-child{line-height: 47px;}
-.checkMissionBox table th{ font-weight: normal;}
+.checkMissionBox table th{width: 80px; font-weight: normal;}
 .checkMissionBox table td label{ margin-right:20px; cursor:pointer; }
 .checkMissionBox table td input{ vertical-align:middle}
-.checkMissionBox table td textarea{margin: 0; height: 156px; width: 100%;}
+.checkMissionBox table td textarea{margin: 10px 0 0 0; height: 156px; width: 420px;}
+.submitResultBox{width: 970px;}
+.checkMissionBox table td textarea{ width: 789px;}
 
 
 .checkAdviceDetailBox{display: none;    line-height: 22px;  position: absolute; height: 100%; width: 100%; top: 0; left: 0;  background: #e4e4e4;     padding: 5px; box-sizing: border-box;border-bottom: 1px solid #d2d2d2;    z-index: 3;}

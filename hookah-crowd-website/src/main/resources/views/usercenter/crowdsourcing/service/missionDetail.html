@@ -1,9 +1,8 @@
 <%
 var head = {
 %>
-<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
 <script type="text/javascript" src="/static/js/plugins/vendor/jquery.raty.js"></script>
-
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
 <script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
 <script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
@@ -134,7 +133,7 @@ var htmlPart = {
                   <td>报名时间</td>
                   <td>
                     <span class="addTime">---</span>
-                    <div class="missionStatus"></div>
+                    <div class="missionStatus j_myMissionStatus"></div>
                   </td>
                 </tr>
                 <tr>
@@ -230,7 +229,7 @@ var htmlPart = {
       <div>
         <div class="release-first-btnbox">
           <div>
-            <a href="/usercenter/myRequirements" id="J_nextPage">返回</a>
+            <a href="/usercenter/myMissionList" id="J_nextPage">返回</a>
           </div>
 
         </div>
