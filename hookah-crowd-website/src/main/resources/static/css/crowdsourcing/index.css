@@ -45,7 +45,7 @@
 .toBeServiceBottomBoxLeft img{ margin-top:14px;}
 .toBeServiceBottomBoxLeft span{ font-size:24px;color:#48c8e3; display: block; }
 .toBeServiceBottomBoxRight{ float: left; width: 1043px; overflow: hidden;}
-.toBeServiceBottomBoxRight li{ position: relative; float: left; margin:0 34px 0 26px;}
+.toBeServiceBottomBoxRight li{ position: relative; float: left; margin:0 34px 0 23px;}
 .toBeServiceBottomBoxRight li:last-child{ margin-right:0;}
 
 .toBeServiceDemandName{ margin:16px 0 5px 0 ; font-size: 18px; color: #535353;}
@@ -53,4 +53,79 @@
 .toBeServiceLastTime{ margin-top:4px;color: #959494;font-size: 14px;}
 .toBeServiceMoney{ font-size: 18px; color: #ffc600;}
 .toBeServiceHasApply{ font-size: 14px;color:#cccbcb}
-.toBeServiceApply{ padding:2px 8px 3px; position: absolute; right:0; bottom:0; background-color: #48c8e3;color:#fff; border-radius: 4px;}
+.applyBtn{ padding:2px 8px 3px;  background-color: #48c8e3;color:#fff; border-radius: 4px;}
+.toBeServiceApply{  position: absolute; right:0; bottom:0;}
+
+
+.demandList{ padding-bottom:25px;}
+.demandListTitle{position: relative;  height:35px; margin:18px 0 10px;  font-weight: normal;  overflow: hidden;}
+.demandListTitle img{ float: left;margin-right: 10px;}
+.demandListTitle span{ float: left; font-size: 24px; color:#535353;  }
+.demandListTitle a{ position: absolute; right:0;color:#959494; font-size:14px;  line-height:35px;}
+
+.demandListBox{ overflow: hidden;}
+.demandListImg{ float: left; width: 299px;}
+.demandDetail{ float: left; width:899px;height: 322px; overflow: hidden; border: 1px solid #d2d2d2;}
+.demandDetail li{ position: relative; float: left; width:299px; height: 161px; overflow: hidden; border-right:1px solid #d2d2d2; border-bottom: 1px solid #d2d2d2;}
+.demandDetail li:nth-child(3n+0){ border-right:none;}
+.demandDetail li:nth-child(n+4){ border-bottom:none;}
+
+.demandDetailShow{ padding: 16px 0 0 23px; }
+.demandDetailTitle{     margin-bottom: 5px;font-size: 18px; color:#535353;}
+.demandTimeIco{ float: left;margin: 9px 10px 0 0;}
+.demandDeadData{ float: left; font-size: 14px; color:#959494}
+.demandLastTime{ float: left; font-size: 14px; color:#959494}
+.demandMoney{    padding-top: 7px; clear: both; font-size: 18px; color: #ffc600; }
+.demandHasApply{font-size: 14px;color:#cccbcb}
+
+.demandDetailHide{ display: block; opacity:0; position: absolute; left:0;top:0; height:100%;width:100%; background-color: #f2f8fc; text-align: center; transition: all .3s ease-in-out;}
+.demandDetail li:hover .demandDetailHide{ display: block; top:0; opacity:1;}
+
+.demandDetail li .demandDetailHide:before{ content: ''; display: block; height:3px; width:26px; background-color: #48c8e3; position: absolute; left:20px; top:2px; transition: all .3s ease-in-out;}
+.demandDetail li .demandDetailHide:after{ content: ''; display: block; height:26px; width:3px; background-color: #48c8e3; position: absolute; left:2px; top:20px; transition: all .3s ease-in-out;}
+
+.demandDetail li:hover .demandDetailHide:before{left:2px; top:2px;}
+.demandDetail li:hover .demandDetailHide:after{ left:2px; top:2px;}
+
+.demandDetail li .demandDetailCon:before{ content: ''; display: block; height:3px; width:26px; background-color: #48c8e3; position: absolute; right:20px; bottom:2px; transition: all .3s ease-in-out;}
+.demandDetail li .demandDetailCon:after{ content: ''; display: block; height:26px; width:3px; background-color: #48c8e3; position: absolute; right:2px; bottom:20px; transition: all .3s ease-in-out;}
+
+.demandDetail li:hover .demandDetailCon:before{ right:2px; bottom:2px;}
+.demandDetail li:hover .demandDetailCon:after{  right:2px; bottom:2px;}
+
+
+
+.demandDetailHide.active{ display: block}
+.demandDetailCon{ padding: 27px 22px 0;margin-bottom: 24px; height: 70px;line-height:22px; text-align: left; font-size: 14px; color:#959494;word-break:break-all;  word-wrap:break-word; overflow: hidden;}
+.demandApply{}
+.img-animate{ transform: scale(1.1); transition: transform .5s ease-in-out;}
+
+
+
+div#welcome img{
+  transform: scale(1.1); transition: transform .5s ease-in-out;}
+
+div#welcome:hover img {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

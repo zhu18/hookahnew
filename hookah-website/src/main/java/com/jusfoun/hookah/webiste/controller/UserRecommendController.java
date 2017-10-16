@@ -40,7 +40,7 @@ public class UserRecommendController extends BaseController{
             //将推荐人数（inviteeNum），推荐获得奖金（rewardMoney）返回页面
             request.setAttribute("inviteeInfo",map);
             //将我的专属推广链接返回页面
-            request.setAttribute("recommendUrl",url+"?token="+secret);
+            request.setAttribute("recommendUrl",url+"?recommendToken="+secret);
         }catch (Exception e){
             e.printStackTrace();
         }
