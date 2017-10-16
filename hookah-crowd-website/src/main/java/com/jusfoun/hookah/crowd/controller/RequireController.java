@@ -22,8 +22,8 @@ public class RequireController extends BaseController {
     @Resource
     ZbRequireService zbRequireService;
 
-    @Resource
-    ZbRecommendService zbRecommendService;
+    //@Resource
+    //ZbRecommendService zbRecommendService;
 
     @RequestMapping("/require/insertRequire")
     public void insertRequire() {
