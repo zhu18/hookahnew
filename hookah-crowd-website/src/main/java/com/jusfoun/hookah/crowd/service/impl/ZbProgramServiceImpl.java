@@ -97,7 +97,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
             zbRequirementApply.setId(zbProgramVo.getApplyId());
             zbRequirementApply.setStatus(Integer.valueOf(3).shortValue());//记得改成常量
-            zbRequirementApplyMapper.updateByPrimaryKey(zbRequirementApply);
+            zbRequirementApplyMapper.updateByPrimaryKeySelective(zbRequirementApply);
 
             returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
             logger.info("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
@@ -267,6 +267,70 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             returnData.setCode(ExceptionConst.Error);
             returnData.setData(ExceptionConst.get(ExceptionConst.Error));
         }
+        return returnData;
+    }
+
+    @Override
+    public ReturnData save(ZbProgramVo zbProgramVo) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        //参数校验
+        if(Objects.isNull(zbProgramVo) || Objects.isNull(zbProgramVo.getRequirementId()) || Objects.isNull(zbProgramVo.getApplyId())){
+            returnData.setCode(ExceptionConst.AssertFailed);
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+            return returnData;
+        }
+
+        String username = null;
+        try {
+            User user = this.getCurrentUser();
+
+            List<Condition> filters = new ArrayList<Condition>();
+            filters.add(Condition.eq("applyId",zbProgramVo.getApplyId()));
+            filters.add(Condition.eq("requirementId",zbProgramVo.getRequirementId()));
+            filters.add(Condition.eq("userId",user.getUserId()));
+            List<ZbProgram> zbPrograms = this.selectList(filters);
+            if(null != zbPrograms && zbPrograms.size() > 0){
+
+            } else {
+                username = user.getUserName();
+                //设置方案默认值
+                zbProgramVo.setAddTime(new Date());
+                zbProgramVo.setStatus(ZbContants.Program_Status.DEFAULT.getCode());
+                zbProgramVo.setUserId(user.getUserId());
+                int zbId = zbProgramMapper.insertAndGetId(zbProgramVo);//创建方案
+            }
+
+
+
+            //附件
+            List<ZbAnnex> zbAnnexes = zbProgramVo.getZbAnnexes();
+            if(Objects.nonNull(zbAnnexes) && zbAnnexes.size() > 0){
+                for(ZbAnnex zbAnnex : zbAnnexes){
+                    zbAnnex.setAddTime(new Date());
+                    zbAnnex.setCorrelationId(zbProgramVo.getId());
+                    zbAnnex.setType(ZbContants.ZB_ANNEX_TYPE_PROGRAM);
+                    zbAnnex.setStatus(ZbContants.Program_Status.DEFAULT.getCode());
+                    zbAnnexService.insert(zbAnnex);
+                }
+            }
+
+            //修改apply状态
+            ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
+            zbRequirementApply.setId(zbProgramVo.getApplyId());
+            zbRequirementApply.setStatus(Integer.valueOf(3).shortValue());//记得改成常量
+            zbRequirementApplyMapper.updateByPrimaryKey(zbRequirementApply);
+
+            returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
+            logger.info("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
+        } catch (Exception e) {
+            logger.error("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案失败@");
+            e.printStackTrace();
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setData(ExceptionConst.get(ExceptionConst.Error));
+        }
+
         return returnData;
     }
 }
