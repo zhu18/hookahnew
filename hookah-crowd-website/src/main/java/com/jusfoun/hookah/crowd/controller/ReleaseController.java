@@ -135,8 +135,8 @@ public class ReleaseController extends BaseController{
      */
     @ResponseBody
     @RequestMapping(value = "/managedMoney", method = RequestMethod.GET)
-    public String managedMoney(String requirementId){
-        return releaseService.getManagedMoney(requirementId);
+    public String managedMoney(String requirementId, String trusteePercent){
+        return releaseService.getManagedMoney(requirementId, trusteePercent);
     }
 
     /**

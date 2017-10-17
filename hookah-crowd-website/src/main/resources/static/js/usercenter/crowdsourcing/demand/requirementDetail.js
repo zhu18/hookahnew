@@ -414,15 +414,8 @@ $(document).on('click', '.otherDetailBoxNav li', function () { //需求详情下
 });
 
 $(document).on('click', '#J_goPay', function () { //
-    location.href= "/api/release/managedMoney?requirementId="+$(this).attr('requirementId');
-    /*$.ajax({
-        type: 'get',
-        url: "/api/release/managedMoney?requirementId="+$(this).attr('requirementId'),
-        cache: false,
-        success: function (data) {
-            console.log(data);
-        }
-    });*/
+    location.href= "/api/release/managedMoney?requirementId=" + $(this).attr('requirementId') + "&trusteePercent=" + $("#trusteePercent1").html();
+
 });
 
 
