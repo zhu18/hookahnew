@@ -329,7 +329,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     }
 
     //属于推送资源需要推送中央通知地方下架
-    private void operaChannelGoods(String goodsId){
+    public void operaChannelGoods(String goodsId){
         Goods goods =  this.selectById(goodsId);
         //推送商品
         if(Objects.nonNull(goods) && HookahConstants.GOODS_IS_PUSH_YES.equals(goods.getIsPush())){

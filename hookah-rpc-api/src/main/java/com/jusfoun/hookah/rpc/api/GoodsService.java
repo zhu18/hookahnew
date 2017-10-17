@@ -50,4 +50,6 @@ public interface GoodsService extends GenericService<Goods,String> {
     void changeConcatInfo(String goodsId, Byte isOffline, Byte goodsType, MgGoods.OffLineInfoBean concatInfo);
 
     public GoodsVo findGoodsByIdChannel(String goodsId);
+
+    public void operaChannelGoods(String goodsId);
 }
