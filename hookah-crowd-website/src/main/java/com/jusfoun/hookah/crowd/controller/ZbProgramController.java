@@ -70,6 +70,6 @@ public class ZbProgramController extends BaseController {
     @RequestMapping(value = "save",method = RequestMethod.POST)
     @ResponseBody
     public ReturnData save(@RequestBody ZbProgramVo zbProgramVo) {
-        return zbProgramService.editProgram(zbProgramVo);
+        return zbProgramService.save(zbProgramVo);
     }
 }
