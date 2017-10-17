@@ -193,19 +193,29 @@ public class ZbContants {
         }
     }
 
-//    public enum ZbRequireMentApplyStatus {
-//
-//        //状态；0 ：已报名；1：已被选中(工作中) 2:未中标  3：评审中 4：验收中 5：待付款 6：待评价 7：交易取消 8：交易完成
-//
-//        public Integer code;
-//
-//        ZbRequireMentApplyStatus(Integer code) {
-//            this.code = code;
-//        }
-//
-//        public Integer getCode() {
-//            return code;
-//        }
-//    }
+    public enum ZbRequireMentApplyStatus {
+
+        //状态；0 ：已报名；1：已被选中(工作中) 2:未中标  3：评审中 4：验收中 5：待付款 6：待评价 7：交易取消 8：交易完成
+
+        APPLY_SUCCESS(0),
+        WORKING(1),
+        LOSE_BID(2),
+        REVIEW(3),
+        ACCEPTANCE(4),
+        PAYMENT_ING(5),
+        COMMENT_ING(6),
+        DEAL_CANCE(7),
+        DEAL_SUCCESS(8);
+
+        public Integer code;
+
+        ZbRequireMentApplyStatus(Integer code) {
+            this.code = code;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+    }
 
 }

@@ -54,6 +54,9 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
     ZbRequirementApplyMapper zbRequirementApplyMapper;
 
     @Resource
+    ZbRequireApplyWebsiteService zbRequireApplyWebsiteService;
+
+    @Resource
     public void setDao(ZbProgramMapper ZbProgramMapper) {
         super.setDao(ZbProgramMapper);
     }
@@ -96,7 +99,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             //修改apply状态
             ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
             zbRequirementApply.setId(zbProgramVo.getApplyId());
-            zbRequirementApply.setStatus(Integer.valueOf(3).shortValue());//记得改成常量
+            zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.REVIEW.getCode()).shortValue());//记得改成常量
             zbRequirementApplyMapper.updateByPrimaryKeySelective(zbRequirementApply);
 
             returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
@@ -260,8 +263,14 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             }
 
             //修改报名表状态
+            List<Condition> filters = new ArrayList<Condition>();
+            filters.add(Condition.eq("requirementId",zbComment.getRequirementId()));
+            filters.add(Condition.eq("userId",user.getUserId()));
+            ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
+            zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.REVIEW.getCode()).shortValue());//记得改成常量
+            zbRequireApplyWebsiteService.updateByCondition(zbRequirementApply,filters);
 
-
+            returnData.setData(zbComment);
         } catch (Exception e) {
             e.printStackTrace();
             returnData.setCode(ExceptionConst.Error);
@@ -332,7 +341,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             //修改apply状态
             ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
             zbRequirementApply.setId(zbProgramVo.getApplyId());
-            zbRequirementApply.setStatus(Integer.valueOf(3).shortValue());//记得改成常量
+            zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.REVIEW.getCode()).shortValue());//记得改成常量
             zbRequirementApplyMapper.updateByPrimaryKeySelective(zbRequirementApply);
 
             returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求保存方案成功@");
