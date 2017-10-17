@@ -2,9 +2,9 @@
  * Created by Dajun on 2017-9-19.
  */
 
-
 let crowdSourcingId = GetUrlValue('id');
 let rewardMoney = null;
+let commentData={};
 
 // 获取需求类型
 function getRequirementType() {
@@ -80,9 +80,7 @@ function renderPage(data) {
       break;
     }
   }
-
-  let loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'true');
-  $('.j_load-file-list').append(loadfileHtml);
+  let loadfileHtml=null;
 
 
   let domModel = $('.crowdsourcing-status span');
@@ -93,117 +91,151 @@ function renderPage(data) {
       $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">已选中！提交成果</a>');
       $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id}).hide().prev().show();
 
+      loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
+
       missionApplyInfo(data);
 
 
       break;
     case 2: //未中标
-     domModel.html('未中标');
-     $('.j_myMissionStatus').html('未中标').show();
+      domModel.html('未中标');
+      $('.j_myMissionStatus').html('未中标').show();
       $('.release-first-btnbox div').append('<a class="" href="javascript:void(0)">报名未被选中</a>');
       missionApplyInfo(data);
       $('.j_myMissionResult').hide().prev().show();
 
-     break;
-    case 3:
-
-      domModel.html('审核通过<br>待托管赏金');
-      $('.detailMoneyBox').show();
-      $('.release-first-btnbox div').append('<a href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.managedMoney / 10000 + '">去托管赏金</a>');
-      break;
-    case 7: //二次托管
-      domModel.html('报名结束<br>待托管赏金');
-      $('.managedMoneySpanText').html('已托管比例');
-      $('.detailMoneyBox,.otherDetailBox').show();
-      $('.managedMoneyNotice').hide();
-      $('.moneyAdd,.moneySub').hide(); //百分比
-      $('.missionResult').hide().prev().show(); //百分比
-      missionApplyInfo(data); //任务报名信息显示
-      $('.release-first-btnbox div').append('<a class="j_goTwiceMoney" href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.zbRequirement.rewardMoney*(100-insertRequirementsData.zbRequirement.trusteePercent)/100/100 + '">去托管剩余'+(100-insertRequirementsData.zbRequirement.trusteePercent)+'% 赏金</a>');
-      $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
+      loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'true');//没有下载按钮的附件列表
 
       break;
-    case 8: //工作中
-      domModel.html('工作中');
-      missionApplyInfo(data); //任务报名信息显示
+    case 3: //预评中
+      domModel.html('预评中');
+      missionApplyInfo(data);
+      $('.j_myMissionStatus').html('已选中').show();
+
+      loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
+      $('.j_load-file-list').append(loadfileHtml);
+
+      switch (data.zbProgramVo.status){
+        case 0:
+          $('.j_resultStatus').html('待预评').show();
+          break;
+        case 2:
+          $('.missionStatusResult').html('预评不通过，待修改');
+          $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
+          $('.j_resultStatus').show();
+          $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">重新提交成果</a>');
+          $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id});
+
+          break;
+      }
+
       break;
-    case 10:
-      domModel.html('待验收');//TODO:验收要根据成果验收的三个状态显示
-      missionApplyInfo(data); //任务报名信息显示
+    case 4://验收中
+      domModel.html('验收中');
+      missionApplyInfo(data);
+      $('.j_myMissionStatus').html('已选中').show();
 
-      $('.release-first-btnbox div').append('<a class="j_checkMission" href="javascript:void(0)">成果验收</a>');
+      loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
+      $('.j_load-file-list').append(loadfileHtml);
+
+      switch (data.zbProgramVo.status){
+        case 1:
+          $('.missionStatusResult').html('预评通过，待验收');
+          $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
+          $('.j_resultStatus').show();
+
+          break;
+        case 3:
+          $('.missionStatusResult').html('验收不通过，待修改');
+          $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
+          $('.j_resultStatus').show();
+          $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">重新提交成果</a>');
+          $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id});
+
+          break;
+      }
 
 
       break;
-    case 13:
-      domModel.html('已付款<br>待评价');
+    case 5://待付款
+      domModel.html('待付款');//
+      missionApplyInfo(data);
+      $('.j_myMissionStatus').html('已选中').show();
+
+      loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
+      $('.j_load-file-list').append(loadfileHtml);
+
+      $('.missionStatusResult').html('预评通过，待验收');
+      $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
+      $('.j_resultStatus').show();
+      $('.hasPayMoney').append('<span class="signUp">待付款</span>');
+
+      break;
+    case 6:
+      domModel.html('待评价');
       missionApplyInfo(data); //任务报名信息显示
       $('.missionStatus').show();
+      $('.hasPayMoney').append('<span class="signUp">已付款</span>');
+      $('.j_myMissionResult').attr("requirementId",insertRequirementsData.zbRequirementSPVo.id);
+      loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
+      $('.j_load-file-list').append(loadfileHtml);
 
       $.fn.raty.defaults.path = '/static/images/crowdsourcing';//初始化星星图标位置
 
-      if(insertRequirementsData.zbComment){
-        $('.serviceCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbComment.level });
-        $('.serviceCommentDetail').html(insertRequirementsData.zbComment.content);
-        $('.serviceCommentTime').html(insertRequirementsData.zbComment.addTime);
+      if(insertRequirementsData.zbCommentVo.servicerComment.addTime){
+        $('.serviceCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbCommentVo.servicerComment.level });
+        $('.serviceCommentDetail').html(insertRequirementsData.zbCommentVo.servicerComment.content);
+        $('.serviceCommentTime').html(insertRequirementsData.zbCommentVo.servicerComment.addTime);
       }
       $('.missionStatusResult').html('验收通过且已付款，待评价！');
-      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
+      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgramVo.checkAdvice);//验收意见
       $('.release-first-btnbox div').append('<a class="j_commentBtn" href="javascript:void(0)">评价</a>');
 
 
 
       break;
-    case 14:
+    case 7:
       domModel.html('交易取消');
-      $('.missionStatusResult').html('方案不符合需求方要求，验收驳回！');
-      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
-      $('.canNotSelect').show();//禁止选择
-      $('.missionStatus').show();//验收结果和查看验收意见按钮
-      $('.cancleStatusNotice').show();// 悬赏金额 最右侧提示
-      $('.cancleStatusNoticeContent').html('需方驳回，交易取消已退款');//悬赏金额 最右侧提示内容
+      missionApplyInfo(data);
+      $('.j_myMissionStatus').html('已选中').show();
 
-      missionApplyInfo(data); //任务报名信息显示
+      loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
+      $('.j_load-file-list').append(loadfileHtml);
+
+      $('.missionStatusResult').html('方案不符合需求方要求，驳回交易失败');
+      $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
+      $('.j_resultStatus').show();
 
       break;
-    case 15:
-      domModel.html('交易成功');
+    case 8:
+      domModel.html('交易完成');
+      loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
+      $('.j_load-file-list').append(loadfileHtml);
+
       $.fn.raty.defaults.path = '/static/images/crowdsourcing';//初始化星星图标位置
 
+      $('.myCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbCommentVo.requireZbComment.level });
+      $('.myCommentDetail').html(insertRequirementsData.zbCommentVo.requireZbComment.content);
+      $('.myCommentTime').html(insertRequirementsData.zbCommentVo.requireZbComment.addTime);
 
-      $('.myCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbDemandComment.level });
-      $('.myCommentDetail').html(insertRequirementsData.zbDemandComment.content);
-      $('.myCommentTime').html(insertRequirementsData.zbDemandComment.addTime);
-
-      $('.serviceCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbComment.level });
-      $('.serviceCommentDetail').html(insertRequirementsData.zbComment.content);
-      $('.serviceCommentTime').html(insertRequirementsData.zbComment.addTime);
+      $('.serviceCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbCommentVo.servicerComment.level });
+      $('.serviceCommentDetail').html(insertRequirementsData.zbCommentVo.servicerComment.content);
+      $('.serviceCommentTime').html(insertRequirementsData.zbCommentVo.servicerComment.addTime);
       $('.commentBox').show(); //显示评价模块
-
+      $('.j_resultStatus').html('需求方验收通过').show();
 
       missionApplyInfo(data); //任务报名信息显示
-
-
       break;
-    case 16:
-      domModel.html('待退款');
-      break;
-    case 19: //流标
-      domModel.html('交易取消');
-      $('.cancleStatusNotice').show().prev().hide();// 悬赏金额 最右侧提示
-      $('.cancleStatusNoticeContent').html('无报名流标，交易取消已退款 。');//悬赏金额 最右侧提示内容
-      $('.detailMoneyBox').show();
+   }
+  $('.j_load-file-list').append(loadfileHtml);
 
-
-
-      break;
-  }
   rewardMoney = insertRequirementsData.zbRequirementSPVo.rewardMoney;
   $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
 
 }
 
-let commentData={};
+
+
 $(document).on('click', '.j_submitResult', function () {
 
   // 提交成果
@@ -259,7 +291,6 @@ $(document).on('click', '.j_submitResult', function () {
     };
       //TODO：上传成功之后 请求过来的 还是之前的内容
       console.log(resultData);
-
       if(resultData.title && resultData.applyId && resultData.requirementId && resultData.content){
         console.log(resultData);
         $.ajax({
@@ -277,7 +308,7 @@ $(document).on('click', '.j_submitResult', function () {
               $('.j_myMissionResult').show().prev().hide(); //显示评价模块
               $('.j_resultStatus').html('待预评').show();
               confirmThis.hide();// 隐藏弹出框
-              $('.j_submitResult').html('重新上传');//上传按钮
+              $('.j_submitResult').remove();//上传按钮
               $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
 
             }else{
@@ -354,22 +385,28 @@ $(document).on('click', '.j_submitResult', function () {
 
 
 });
+
+
+$(document).on('click', '.del', function () { //鼠标离开描述显示工具栏
+  $(this).parent().parent().parent().remove();
+});
+
 $(document).on('click', '.j_commentBtn', function () { // 评价
   $.confirm('\
   <div class="checkMissionBox">\
-    <h5>对服务商的评价</h5>\
-    <span>请您根据本次交易，给予真实客观评价。您的评价将影响服务商的信用。</span>\
-    <table>\
+    <h5>对需求方的评价</h5>\
+    <span>请您根据本次交易，给予真实客观评价。您的评价将影响需求方的信用</span>\
+    <table class="crowdsourcing-table myRequirement-table">\
       <tr>\
-        <th>验收结果：</th>\
+        <td>验收结果：</td>\
         <td>\
           <div class="j_starBox"></div>\
         </td>\
       </tr>\
       <tr>\
-        <th valign="top">评价内容：</th>\
+        <td valign="top">评价内容：</td>\
         <td>\
-          <textarea placeholder="写下您对服务商的评价吧，100个字以内。" id="commentContent" cols="30" rows="10" maxlength="100"></textarea>\
+          <textarea placeholder="写下您对需求方的评价吧，100个字以内。" id="commentContent" cols="30" rows="10" maxlength="100"></textarea>\
         </td>\
       </tr>\
     </table>\
@@ -379,13 +416,15 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
       let confirmThis=this;
       commentData.programId=$('.missionTitle').attr('acceptanceAdviceId');
       commentData.content=$("#commentContent").val();
+      commentData.requirementId=$('.j_myMissionResult').attr("requirementId");
+
       console.log(commentData);
 
       if(commentData.level && commentData.programId && commentData.content){
         console.log(1);
         $.ajax({
           type: 'post',
-          url: "/api/release/insertEvaluation",
+          url: "/api/program/addComment",
           cache: false,
           data:commentData,
           success: function (data) {
@@ -393,7 +432,7 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
             if(data.code==1){
               $('.myCommentStar').raty({ readOnly: true, score: commentData.level });
               $('.myCommentDetail').html(commentData.content);
-              $('.myCommentTime').html(data.data.addTime);
+              $('.myCommentTime').html(data.data.addTime);//TODO:评价添加时间要检测一下
               $('.commentBox').show(); //显示评价模块
 
 

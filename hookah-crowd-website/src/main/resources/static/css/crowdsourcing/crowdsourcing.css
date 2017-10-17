@@ -198,10 +198,10 @@
 .checkMissionBox table th{width: 80px; font-weight: normal;}
 .checkMissionBox table td label{ margin-right:20px; cursor:pointer; }
 .checkMissionBox table td input{ vertical-align:middle}
-.checkMissionBox table td textarea{margin: 10px 0 0 0; height: 156px; width: 420px;}
+.checkMissionBox table td textarea{margin: 10px 0 0 0; height: 156px; width: 418px;}
 .submitResultBox{width: 970px;}
-.checkMissionBox table td textarea{ width: 789px;}
-
+.submitResultBox table td textarea{ width: 789px;}
+.hasPayMoney{ display: inline-block;    margin-left: 50px;}
 
 .checkAdviceDetailBox{display: none;    line-height: 22px;  position: absolute; height: 100%; width: 100%; top: 0; left: 0;  background: #e4e4e4;     padding: 5px; box-sizing: border-box;border-bottom: 1px solid #d2d2d2;    z-index: 3;}
 .commentBox { display: none;}

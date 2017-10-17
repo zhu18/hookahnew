@@ -33,7 +33,6 @@ function loadPageData(data) { //渲染页面数据
       case 2:
         tempState = '未中标';
         tempEdit = '<a href="/usercenter/missionDetail?id=' + data[i].id + '" class="signUp">查看</a>';
-
         break;
       case 3:
         tempState = '评审中';
