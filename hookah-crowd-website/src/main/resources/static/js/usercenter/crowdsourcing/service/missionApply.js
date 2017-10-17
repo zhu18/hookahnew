@@ -4,7 +4,7 @@
 
 let crowdSourcingId = GetUrlValue('id');
 let rewardMoney = null;
-let commentData={};
+let applyData={};
 
 // 获取需求类型
 function getRequirementType() {
@@ -41,7 +41,7 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
 
 function renderPage(data) {
   let insertRequirementsData = data;
-  $('.j_title').html(insertRequirementsData.zbRequirementSPVo.title);
+  $('.j_title').html(insertRequirementsData.zbRequirementSPVo.title).attr('requirementid',insertRequirementsData.zbRequirementSPVo.id);
   $('.j_username').html(insertRequirementsData.zbRequirementSPVo.contactName);
   $('.j_phone').html(insertRequirementsData.zbRequirementSPVo.contactPhone);
   $('.j_description').html(insertRequirementsData.zbRequirementSPVo.description);
@@ -83,14 +83,26 @@ function renderPage(data) {
   switch (insertRequirementsData.reqStatus) {
     case -1://报名中
       domModel.html('报名中');
-      $('.j_myMissionStatus').html('已选中').show();
+      $('.j_myMissionStatus').html('待评选').show();
       $('.release-first-btnbox div').append('<a class="j_commentBtn" href="javascript:void(0)">我要报名</a>');
 
       loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
       $('.applyDeadlineBox .j_applyDeadline').html(data.zbRequirementSPVo.deliveryDeadline).parent().parent().show();
+      break;
 
-      // missionApplyInfo(data);
+    case 0://报名中
+      domModel.html('报名中');
+      $('.j_myMissionStatus').html('待评选').show();
+      $('.release-first-btnbox div').append('<a href="javascript:void(0)">报名成功，待评选</a>');
 
+      loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
+      $('.applyDeadlineBox .j_applyDeadline').html(data.zbRequirementSPVo.deliveryDeadline).parent().parent().show();
+
+      $('.addTime').html(data.zbRequirementApplyVo.addTime);
+      $('.applyContent').html(data.zbRequirementApplyVo.applyContent);
+      $('.j_applyPhone').html(data.zbRequirementApplyVo.mobile);
+      $('.j_hasApply').html(data.zbRequirementApplyVo.applyNumber);
+      $('.otherDetailBox').show();
 
       break;
 
@@ -122,31 +134,31 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
 
     if (type == 'yes') {
       let confirmThis=this;
-      commentData.programId=$('.missionTitle').attr('acceptanceAdviceId');
-      commentData.content=$("#commentContent").val();
-      commentData.requirementId=$('.j_myMissionResult').attr("requirementId");
+      applyData.requirementId=$('.j_title').attr('requirementid');
+      applyData.applyContent=$("#commentContent").val();
 
-      console.log(commentData);
+      console.log(applyData);
 
-      if(commentData.level && commentData.programId && commentData.content){
-        console.log(1);
+      if(applyData.applyContent && applyData.requirementId){
         $.ajax({
           type: 'post',
-          url: "/api/program/addComment",
+          url: " /api/apply/add",
           cache: false,
-          data:commentData,
+          data:applyData,
           success: function (data) {
             console.log(data);
-            if(data.code==1){
-              $('.myCommentStar').raty({ readOnly: true, score: commentData.level });
-              $('.myCommentDetail').html(commentData.content);
-              $('.myCommentTime').html(data.data.addTime);//TODO:评价添加时间要检测一下
-              $('.commentBox').show(); //显示评价模块
 
+            console.log(data);
+            if(data.code==1){
+
+              $('.addTime').html(data.data.addTime);
+              $('.applyContent').html(data.data.applyContent);
+              $('.j_applyPhone').html(data.data.mobile);
+              $('.j_hasApply').html(data.data.applyNumber);
+              $('.otherDetailBox').show();
 
               confirmThis.hide();// 隐藏弹出框
-              $('.j_commentBtn').remove();//删除评价按钮
-
+              $('.j_commentBtn').html('报名成功，待评选').removeClass('j_commentBtn')
             }else{
               $.alert(data.message)
             }

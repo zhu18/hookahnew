@@ -24,7 +24,7 @@ function loadPageData(data) { //渲染页面数据
     switch (data[i].operStatus) {
       case 0:
         tempState = '待评选';
-        tempEdit = '<span class="signUp">查看</span>';
+        tempEdit = '<a href="/usercenter/missionApply?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
       case 1:
         tempState = '工作中';
