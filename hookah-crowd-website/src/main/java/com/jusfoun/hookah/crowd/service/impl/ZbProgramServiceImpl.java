@@ -270,6 +270,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
         return returnData;
     }
 
+    /**保存方案(提交&重新提交)**/
     @Override
     public ReturnData save(ZbProgramVo zbProgramVo) {
         ReturnData returnData = new ReturnData();
@@ -291,8 +292,22 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             filters.add(Condition.eq("requirementId",zbProgramVo.getRequirementId()));
             filters.add(Condition.eq("userId",user.getUserId()));
             List<ZbProgram> zbPrograms = this.selectList(filters);
-            if(null != zbPrograms && zbPrograms.size() > 0){
 
+
+            if(null != zbPrograms && zbPrograms.size() > 0){
+                ZbProgram zbProgram = zbPrograms.get(0);
+                //修改方案
+                zbProgramVo.setId(zbProgram.getId());
+                zbProgramVo.setStatus(program_status_defaule);//修改为默认状态
+                zbProgramVo.setUserId(user.getUserId());
+                zbProgramVo.setAddTime(new Date());//添加时间
+                this.updateByIdSelective(zbProgramVo);
+
+                //修改附件（先删除 后添加）
+                filters.clear();
+                filters.add(Condition.eq("correlationId",zbProgramVo.getId()));
+                filters.add(Condition.eq("type",ZbContants.ZB_ANNEX_TYPE_PROGRAM));
+                zbAnnexService.deleteByCondtion(filters);
             } else {
                 username = user.getUserName();
                 //设置方案默认值
@@ -302,9 +317,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
                 int zbId = zbProgramMapper.insertAndGetId(zbProgramVo);//创建方案
             }
 
-
-
-            //附件
+            //添加附件
             List<ZbAnnex> zbAnnexes = zbProgramVo.getZbAnnexes();
             if(Objects.nonNull(zbAnnexes) && zbAnnexes.size() > 0){
                 for(ZbAnnex zbAnnex : zbAnnexes){
@@ -320,12 +333,12 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
             zbRequirementApply.setId(zbProgramVo.getApplyId());
             zbRequirementApply.setStatus(Integer.valueOf(3).shortValue());//记得改成常量
-            zbRequirementApplyMapper.updateByPrimaryKey(zbRequirementApply);
+            zbRequirementApplyMapper.updateByPrimaryKeySelective(zbRequirementApply);
 
-            returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
-            logger.info("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
+            returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求保存方案成功@");
+            logger.info("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求保存方案成功@");
         } catch (Exception e) {
-            logger.error("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案失败@");
+            logger.error("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求保存方案失败@");
             e.printStackTrace();
             returnData.setCode(ExceptionConst.Error);
             returnData.setData(ExceptionConst.get(ExceptionConst.Error));

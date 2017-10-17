@@ -63,4 +63,13 @@ public class ZbProgramController extends BaseController {
         return zbProgramService.addRequirementComment(zbComment);
     }
 
+    /**
+     *前台选中方案重新提交
+     * @return
+     */
+    @RequestMapping(value = "save",method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnData save(@RequestBody ZbProgramVo zbProgramVo) {
+        return zbProgramService.editProgram(zbProgramVo);
+    }
 }
