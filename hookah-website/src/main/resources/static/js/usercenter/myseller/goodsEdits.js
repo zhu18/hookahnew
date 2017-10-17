@@ -452,7 +452,7 @@ function uploadGoodsImg(){ //上传商品图片
 			if(data.result.code == 1){
 				var obj = data.result.data[0];
 				$("#preview-img").attr("src", obj.absPath);
-				$('input[name="goodsImges"]').val(obj.filePath);
+				$('input[name="goodsImges"]').val(obj.absPath);
 			}else{
 				$.alert(data.result.message)
 			}
@@ -737,7 +737,7 @@ function submitGoodsPublish(){
 		attrTypeList.attrList =attrBs;
 		data.attrTypeList.push(attrTypeList);
 	});
-	data.goodsImg = $("input[name='goodsImges']").val();
+	data.goodsImg = $('#preview-img').attr('src');
 	data.dataSample = $("input[name='dataSample_s']").val();
 	data.trialRange = $('textarea[name="trialRange"]').val();
 	if($("#isPush").prop('checked')){
@@ -1042,6 +1042,14 @@ function renderData(data){//渲染页面
 	$('#J-ver').val(data.ver);//版本号
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#goodsBriefes').val(data.goodsBrief);//简介
+	if(data.isPush == 1){
+		$('#isPush').attr('checked',true);
+		$('#isLocal').val('1');
+	}else{
+		$('#isPush').attr('checked',false);
+		$('#isLocal').val('0');
+	}
+
 	$('#keywords').val(data.keywords);//标签
 	$('#showcontent').html(getLength(data.goodsName));//商品名称长度
 	$('.showcontentes').html(getLength(data.goodsBrief));//商品名称长度
@@ -1199,7 +1207,7 @@ function renderData(data){//渲染页面
 		});
 	});
 	console.log(host.static+data.goodsImg);
-	$('#preview-img').attr('src',host.static+'/'+data.goodsImg);//图片
+	$('#preview-img').attr('src',data.goodsImg);//图片
 	$('input[name="goodsImg"]').val(data.goodsImg);
 	$('input[name="goodsImges"]').val(data.goodsImg);
 	$('#preview-div').mouseover(function(){

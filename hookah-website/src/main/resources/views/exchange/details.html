@@ -42,7 +42,7 @@ var htmlPart = {
 			<div class="goods-details clearfix">
 				<div class="goods-details-img grid-left bdg-row">
 					<div class="img-box">
-						<img src="${host.static}/${goodsDetails.goodsImg}" alt="" id="J_goodsImg">
+						<img src="${goodsDetails.goodsImg}" alt="" id="J_goodsImg">
 					</div>
 					<div class="collect-box margin-top-20">
 						<p class="" title="销量">
@@ -401,7 +401,7 @@ var htmlPart = {
 					<%for(item in reCommData.goods){%>
 					<li>
 						<a class="display-block" target="_blank" href="${host.website}/exchange/details?id=${item.goodsId}">
-							<img src="${host.static}/${item.goodsImg}" alt="">
+							<img src="${item.goodsImg}" alt="">
 							<div class="img-info">
 								<p class="title">${item.goodsName}</p>
 								<%if(item.isDiscussPrice == 1){%>
