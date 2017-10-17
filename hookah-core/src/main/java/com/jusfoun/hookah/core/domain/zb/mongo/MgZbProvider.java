@@ -52,6 +52,27 @@ public class MgZbProvider extends GenericModel {
 
     private String checkTime;                           //审核时间
 
+    public static class CertPaths implements Serializable {
+        private String certName;//材料名称
+        private String certPath;//证明材料
+
+        public String getCertName() {
+            return certName;
+        }
+
+        public void setCertName(String certName) {
+            this.certName = certName;
+        }
+
+        public String getCertPath() {
+            return certPath;
+        }
+
+        public void setCertPath(String certPath) {
+            this.certPath = certPath;
+        }
+    }
+
     /**
      * 个人服务商认证
      */
@@ -70,8 +91,15 @@ public class MgZbProvider extends GenericModel {
         private String endTime;       //结束时间
         private String edu;         //学历
         private Integer orExam;     //是否统招
-//        private List<String> certPath;//证明材料
-        private String certPath;//证明材料
+        private List<CertPaths> certPathsList;//证明材料
+
+        public List<CertPaths> getCertPathsList() {
+            return certPathsList;
+        }
+
+        public void setCertPathsList(List<CertPaths> certPathsList) {
+            this.certPathsList = certPathsList;
+        }
 
         public String getSn() {
             return sn;
@@ -129,13 +157,7 @@ public class MgZbProvider extends GenericModel {
             this.orExam = orExam;
         }
 
-        public String getCertPath() {
-            return certPath;
-        }
 
-        public void setCertPath(String certPath) {
-            this.certPath = certPath;
-        }
     }
 
     public static class WorksExp implements Serializable {
@@ -146,8 +168,16 @@ public class MgZbProvider extends GenericModel {
         private String startTime;             //开始花间
         private String endTime;               //结束时间
         private String position;            //职位
-//        private List<String> certPath;      //证明材料
-        private String certPath;      //证明材料
+        private List<CertPaths> certPathsList;//证明材料
+
+        public List<CertPaths> getCertPathsList() {
+            return certPathsList;
+        }
+
+        public void setCertPathsList(List<CertPaths> certPathsList) {
+            this.certPathsList = certPathsList;
+        }
+
 
         public String getSn() {
             return sn;
@@ -197,13 +227,6 @@ public class MgZbProvider extends GenericModel {
             this.position = position;
         }
 
-        public String getCertPath() {
-            return certPath;
-        }
-
-        public void setCertPath(String certPath) {
-            this.certPath = certPath;
-        }
     }
 
     public static class ProjectsExp implements Serializable {
@@ -279,9 +302,17 @@ public class MgZbProvider extends GenericModel {
         private String caseName;    //应用案例名称
         private String startTime;     //开始时间
         private String endTime;       //结束时间
+        private String caseView;    //案例概述
         private String caseDesc;    //解决方案
-//        private List<String> certPath;//证明材料
-        private String certPath;//证明材料
+        private List<CertPaths> certPathsList;//证明材料
+
+        public List<CertPaths> getCertPathsList() {
+            return certPathsList;
+        }
+
+        public void setCertPathsList(List<CertPaths> certPathsList) {
+            this.certPathsList = certPathsList;
+        }
 
         public String getSn() {
             return sn;
@@ -323,12 +354,12 @@ public class MgZbProvider extends GenericModel {
             this.caseDesc = caseDesc;
         }
 
-        public String getCertPath() {
-            return certPath;
+        public String getCaseView() {
+            return caseView;
         }
 
-        public void setCertPath(String certPath) {
-            this.certPath = certPath;
+        public void setCaseView(String caseView) {
+            this.caseView = caseView;
         }
     }
 
@@ -339,8 +370,15 @@ public class MgZbProvider extends GenericModel {
         private String publicTime;      //  首次发表日期
         private String registerNum;     //  登记号
         private String purpose;         //  软件用途
-        private String certPath;        //  证明材料
-//        private List<String> certPath;  //  证明材料
+        private List<CertPaths> certPathsList;//证明材料
+
+        public List<CertPaths> getCertPathsList() {
+            return certPathsList;
+        }
+
+        public void setCertPathsList(List<CertPaths> certPathsList) {
+            this.certPathsList = certPathsList;
+        }
 
         public String getSn() {
             return sn;
@@ -381,22 +419,6 @@ public class MgZbProvider extends GenericModel {
         public void setPurpose(String purpose) {
             this.purpose = purpose;
         }
-
-//        public List<String> getCertPath() {
-//            return certPath;
-//        }
-//        public void setCertPath(List<String> certPath) {
-//            this.certPath = certPath;
-//        }
-
-
-        public String getCertPath() {
-            return certPath;
-        }
-
-        public void setCertPath(String certPath) {
-            this.certPath = certPath;
-        }
     }
 
     public static class InventionPatent implements Serializable {
@@ -406,8 +428,15 @@ public class MgZbProvider extends GenericModel {
         private String PatentNum;       //  专利号
         private String applyTime;         //  申请日期
         private String PatentDesc;     //   专利概述
-        private String certPath;  //  证明材料
-//        private List<String> certPath;  //  证明材料
+        private List<CertPaths> certPathsList;//证明材料
+
+        public List<CertPaths> getCertPathsList() {
+            return certPathsList;
+        }
+
+        public void setCertPathsList(List<CertPaths> certPathsList) {
+            this.certPathsList = certPathsList;
+        }
 
         public String getSn() {
             return sn;
@@ -449,22 +478,11 @@ public class MgZbProvider extends GenericModel {
             PatentDesc = patentDesc;
         }
 
-//        public List<String> getCertPath() {
-//            return certPath;
-//        }
-//        public void setCertPath(List<String> certPath) {
-//            this.certPath = certPath;
-//        }
-
-        public String getCertPath() {
-            return certPath;
-        }
-
-        public void setCertPath(String certPath) {
-            this.certPath = certPath;
-        }
     }
 
+    /**
+     * 评论级别
+     */
     public static class Evalevel implements Serializable{
 
         private Integer starsNum;

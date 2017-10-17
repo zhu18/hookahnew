@@ -73,9 +73,6 @@ public class AuthController extends BaseController {
     @ResponseBody
     public boolean isAuthRealName(Model model) {
         try {
-
-//            String userId = this.getCurrentUser().getUserId();
-//            System.out.println(userId);
             return mgZbProviderService.isAuthRealName();
         } catch (Exception e) {
             return false;
@@ -127,7 +124,7 @@ public class AuthController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/api/auth/optAuthInfo")
+    @RequestMapping(value = "/auth/optAuthInfo")
     @ResponseBody
     public ReturnData optAuthInfo(@RequestBody MgZbProviderVo vo) {
 
@@ -152,7 +149,6 @@ public class AuthController extends BaseController {
 
         try {
             String userId = getCurrentUser().getUserId();
-//            String userId = "1234567890";
             vo.setCheckerId(userId);
             return mgZbProviderService.checkAuthInfo(vo);
         } catch (Exception e) {
@@ -161,24 +157,21 @@ public class AuthController extends BaseController {
         }
     }
 
-//    /**
-//     * 服务商名片
-//     * @return
-//     */
-//    @RequestMapping(value = "/auth/providerCard", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ReturnData providerCard() {
-//
-//        try {
-////            String userId = getCurrentUser().getUserId();
-//            String userId = "1234567890";
-////            vo.setCheckerId(userId);
-//            return mgZbProviderService.providerCard(userId);
-//        }catch (Exception e){
-//            logger.error("认证信息审核异常", e);
-//            return ReturnData.error("系统繁忙，请稍后再试！[check]^_^");
-//        }
-//    }
+    /**
+     * 服务商名片
+     * @return
+     */
+    @RequestMapping(value = "/api/auth/providerCard")
+    @ResponseBody
+    public ReturnData providerCard() {
+
+        try {
+            return mgZbProviderService.getProviderCard();
+        }catch (Exception e){
+            logger.error("认证信息审核异常", e);
+            return ReturnData.error("系统繁忙，请稍后再试！[check]^_^");
+        }
+    }
 
 
 }

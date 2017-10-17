@@ -59,6 +59,9 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
     @Resource
     ZbRequirementMapper zbRequirementMapper;
 
+    @Resource
+    ZbCommentService zbCommentService;
+
     @Override
     public ReturnData getAuthInfo(String optAuthType, String optArrAySn) {
 
@@ -164,6 +167,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                         break;
                 }
             }
+
             return returnData;
         }catch (Exception e){
             logger.error("认证信息获取失败", e);
@@ -273,6 +277,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     mzp.setRegisterAddr((organization.getRegion() == null || "".equals(organization.getRegion())) ? "" : DictionaryUtil.getRegionById(organization.getRegion()).getMergerName());
                     mzp.setCreditCode(organization.getCreditCode());
                     mzp.setScopeOfBuss(organization.getIndustry());
+                    mzp.setAuthType(4);//企业
                 }else if(this.getCurrentUser().getUserType().equals(2)){
                     String userId = this.getCurrentUser().getUserId();
                     User user = userService.selectById(userId);
@@ -282,11 +287,13 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     mzp.setPhoneNum(user.getContactPhone());
                     mzp.setUpname(user.getUserName());
                     mzp.setRegisterAddr(user.getContactAddress());
+                    mzp.setAuthType(2);//个人
                 }else{
                     return ReturnData.error("请先认证！");
                 }
                 mzp.setAddTime(new Date());
                 mzp.setUpdateTime(new Date());
+                mzp.setStatus(ZbContants.Provider_Auth_Status.AUTH_CHECKING.code);
                 mongoTemplate.insert(mzp);
                 return ReturnData.success("认证信息添加成功");
             }else{
@@ -419,6 +426,9 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                                 add.addToSet("inPatentsList", vo.getInPatentsList().get(0));
                                 break;
                         }
+
+                        add.set("status", ZbContants.Provider_Auth_Status.AUTH_CHECKING.code);
+
                         mongoTemplate.upsert(query, add, MgZbProvider.class);
                     }else{
                         return ReturnData.error("操作类型有误！^_^");
@@ -437,22 +447,6 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
 
         try {
             Integer userType = this.getCurrentUser().getUserType();
-//            User user = userService.selectById(userId);
-
-//            org与detail中的实名认证状态无用
-//            if(user.getUserType() == 4){
-//                Organization organization = organizationService.findOrgByUserId(user.getUserId());
-//                if(organization == null || !organization.getIsAuth().equals(Byte.valueOf("2"))){
-//                    return false;
-//                }
-//            }else if(user.getUserType() == 2){
-//                UserDetail userDetail = userDetailService.selectById(user.getUserId());
-//                if(userDetail == null || !userDetail.getIsAuth().equals(Byte.valueOf("2"))){
-//                    return false;
-//                }
-//            }else{
-//                return false;
-//            }
 
 //          现在只需要判断是否等于4（企业）和是否等于2（个人）
             if(userType.equals(4) || userType.equals(2)){
@@ -471,6 +465,24 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
         return null;
     }
 
+
+    @Override
+    public ReturnData getProviderCard() {
+
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+
+            MgZbProvider mgZbProvider = mongoTemplate.findById(this.getCurrentUser().getUserId(), MgZbProvider.class);
+            returnData.setData(mgZbProvider);
+            returnData.setData2(zbCommentService.getLevelCountByUserId(this.getCurrentUser().getUserId()));
+
+        }catch (Exception e){
+            logger.error("服务商名片获取异常{}", e);
+        }
+        return returnData;
+    }
 
     public static void main(String[] args){
 

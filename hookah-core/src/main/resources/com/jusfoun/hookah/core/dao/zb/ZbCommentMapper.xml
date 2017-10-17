@@ -47,4 +47,14 @@
     #{status,jdbcType=INTEGER},#{userType,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
 
+  <select id="getLevelCountByUserId" resultType="com.jusfoun.hookah.core.domain.zb.vo.ZbCommentShowVo">
+        SELECT
+            zc.`level` AS CommentLevel,
+            COUNT(zc.`level`) AS commentNum
+        FROM
+            zb_comment zc
+        LEFT JOIN zb_requirement zr ON zc.requirement_id = zr.id
+        WHERE zr.user_id = #{userId} GROUP BY `level`
+  </select>
+
 </mapper>

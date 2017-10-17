@@ -26,4 +26,6 @@ public interface MgZbProviderService extends GenericService<MgZbProvider, String
 
     @Query(value="{'_id': ?0},{'educationsExpList':{'$elemMatch':{'sn': ?1}}}", fields="{ 'educationsExpList' : 1}")
     List<MgZbProvider> findByTheMgZbProviderIdAndSn(String _id, String sn);
+
+    ReturnData getProviderCard();
 }
