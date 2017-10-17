@@ -48,4 +48,13 @@ public class RequireServicerController {
         return serviceProviderService.findByRequirementId(reqId);
     }
 
+    /**
+     * 平台前端 - 数据众包首页 - 引导页 - 查看需求详情
+     * @author ctp
+     */
+    @RequestMapping(value = "/front/getRequirementDetail")
+    public ReturnData websiteRequirementDetail(Long reqId) {
+        return serviceProviderService.findByRequirementId(reqId);
+    }
+
 }

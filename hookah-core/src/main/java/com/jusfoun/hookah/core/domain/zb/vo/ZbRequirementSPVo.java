@@ -15,6 +15,16 @@ public class ZbRequirementSPVo extends ZbRequirement{
 
     private Integer operStatus;//可操作状态 是否已报名 或者 报名状态
 
+    private Integer annexIsOperate = 1;//附件是否可下载 0不可下载 1可下载
+
+    public Integer getAnnexIsOperate() {
+        return annexIsOperate;
+    }
+
+    public void setAnnexIsOperate(Integer annexIsOperate) {
+        this.annexIsOperate = annexIsOperate;
+    }
+
     public Integer getOperStatus() {
         return operStatus;
     }

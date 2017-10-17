@@ -62,60 +62,6 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
     }
 
     @Override
-    @Transactional
-    public ReturnData insertRecord(ZbProgramVo zbProgramVo) {
-        ReturnData returnData = new ReturnData();
-        returnData.setCode(ExceptionConst.Success);
-
-        //参数校验
-        if(Objects.isNull(zbProgramVo) || Objects.isNull(zbProgramVo.getRequirementId()) || Objects.isNull(zbProgramVo.getApplyId())){
-            returnData.setCode(ExceptionConst.AssertFailed);
-            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
-            return returnData;
-        }
-
-        String username = null;
-        try {
-            User user = this.getCurrentUser();
-            username = user.getUserName();
-           //设置方案默认值
-            zbProgramVo.setAddTime(new Date());
-            zbProgramVo.setStatus(ZbContants.Program_Status.DEFAULT.getCode());
-            zbProgramVo.setUserId(user.getUserId());
-            int zbId = zbProgramMapper.insertAndGetId(zbProgramVo);//创建方案
-
-            //附件
-            List<ZbAnnex> zbAnnexes = zbProgramVo.getZbAnnexes();
-            if(Objects.nonNull(zbAnnexes) && zbAnnexes.size() > 0){
-                for(ZbAnnex zbAnnex : zbAnnexes){
-                    zbAnnex.setAddTime(new Date());
-                    zbAnnex.setCorrelationId(zbProgramVo.getId());
-                    zbAnnex.setType(ZbContants.ZB_ANNEX_TYPE_PROGRAM);
-                    zbAnnex.setStatus(ZbContants.Program_Status.DEFAULT.getCode());
-                    zbAnnexService.insert(zbAnnex);
-                }
-            }
-
-            //修改apply状态
-            ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
-            zbRequirementApply.setId(zbProgramVo.getApplyId());
-            zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.REVIEW.getCode()).shortValue());//记得改成常量
-            zbRequirementApplyMapper.updateByPrimaryKeySelective(zbRequirementApply);
-
-            returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
-            logger.info("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
-        } catch (Exception e) {
-            logger.error("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案失败@");
-            e.printStackTrace();
-            returnData.setCode(ExceptionConst.Error);
-            returnData.setData(ExceptionConst.get(ExceptionConst.Error));
-        }
-
-        return returnData;
-    }
-
-
-    @Override
     public ReturnData updataStatus(Long progId, Short status) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
@@ -134,55 +80,6 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             logger.info("修改方案ID为" + progId + "的需求提交方案状态成功@");
         } catch (Exception e) {
             logger.error("修改方案ID为" + progId + "的需求提交方案状态失败@");
-            e.printStackTrace();
-            returnData.setCode(ExceptionConst.Error);
-            returnData.setData(ExceptionConst.get(ExceptionConst.Error));
-        }
-        return returnData;
-    }
-
-    @Override
-    @Transactional
-    public ReturnData editProgram(ZbProgramVo zbProgramVo) {
-        ReturnData returnData = new ReturnData();
-        returnData.setCode(ExceptionConst.Success);
-
-        //参数校验
-        if(Objects.isNull(zbProgramVo) || Objects.isNull(zbProgramVo.getId())
-                || Objects.isNull(zbProgramVo.getRequirementId()) || Objects.isNull(zbProgramVo.getApplyId())){
-            returnData.setCode(ExceptionConst.AssertFailed);
-            returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
-            return returnData;
-        }
-
-        String username = null;
-        try {
-            User user = this.getCurrentUser();
-            //修改方案
-            zbProgramVo.setStatus(program_status_defaule);//修改为默认状态
-            zbProgramVo.setUserId(user.getUserId());
-            zbProgramVo.setAddTime(new Date());//添加时间
-            this.updateByIdSelective(zbProgramVo);
-
-            //修改附件（先删除 后添加）
-            List<Condition> filters = new ArrayList<Condition>();
-            filters.add(Condition.eq("correlationId",zbProgramVo.getId()));
-            filters.add(Condition.eq("type",ZbContants.ZB_ANNEX_TYPE_PROGRAM));
-            zbAnnexService.deleteByCondtion(filters);
-            List<ZbAnnex> zbAnnexes = zbProgramVo.getZbAnnexes();
-            if(Objects.nonNull(zbAnnexes) && zbAnnexes.size() > 0){
-                for(ZbAnnex zbAnnex : zbAnnexes){
-                    zbAnnex.setAddTime(new Date());
-                    zbAnnex.setCorrelationId(zbProgramVo.getId());
-                    zbAnnex.setType(ZbContants.ZB_ANNEX_TYPE_PROGRAM);
-                    zbAnnex.setStatus(ZbContants.Program_Status.DEFAULT.getCode());
-                    zbAnnexService.insert(zbAnnex);
-                }
-            }
-            returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求修改方案成功@");
-            logger.info("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求修改方案成功@");
-        } catch (Exception e) {
-            logger.error("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求修改方案失败@");
             e.printStackTrace();
             returnData.setCode(ExceptionConst.Error);
             returnData.setData(ExceptionConst.get(ExceptionConst.Error));
@@ -280,6 +177,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
 
     /**保存方案(提交&重新提交)**/
     @Override
+    @Transactional
     public ReturnData save(ZbProgramVo zbProgramVo) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
