@@ -32,18 +32,18 @@ myconf:
     userInfoUrl: http://auth.galaxybigdata.com/userInfo
     redirectUrl: http://auth.galaxybigdata.com/login
   redis:
-    ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
+    ipPort: 192.168.15.203:7000,192.168.15.203:7001,192.168.15.203:7002
   consul:
-    ipPort: 127.0.0.1:8500
+    ipPort: 192.168.15.203:8500
 debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.15.90:27017/bdgStore
+      uri:  mongodb://192.168.15.203:27017/hookah
   mvc:
       static-path-pattern: /static/**
   rabbitmq:
-      addresses: 192.168.200.116:5672
+      addresses: 192.168.15.203:5672
       username: root
       password: password
       publisher-confirms: true
