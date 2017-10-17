@@ -44,14 +44,14 @@ public class ZBPayController {
 
             if (flag){
                 modelAndView.addObject("money", total_fee);
-                modelAndView.setViewName("pay/success");
+                modelAndView.setViewName("zbPay/success");
             }else {
                 modelAndView.addObject("orderSn", tradeSn);
-                modelAndView.setViewName("pay/fail");
+                modelAndView.setViewName("zbPay/fail");
             }
         }catch (Exception e){
             modelAndView.addObject("orderSn", "");
-            modelAndView.setViewName("pay/fail");
+            modelAndView.setViewName("zbPay/fail");
             return modelAndView;
         }
 

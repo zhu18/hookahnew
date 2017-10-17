@@ -514,17 +514,19 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 //            if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_TG.getCode())){
             if(zbRequirement.getStatus().equals(Short.parseShort("3"))){
                 //第一次托管
+                zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
                 zbTrusteeRecord.setTrusteeNum(1);
 //            }else if (zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode())){
             }else if (zbRequirement.getStatus().equals(Short.parseShort("7"))){
                 //第二次托管
+                zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney()*(100-zbRequirement.getTrusteePercent()));
                 zbTrusteeRecord.setTrusteeNum(2);
             }else{
                 return "状态有误";
             }
             zbTrusteeRecord.setSerialNo(CommonUtils.getRequireSn("ZB","ZFB"));
             zbTrusteeRecord.setStatus(ZbContants.Trustee_Record_Status.RECORD_INITIAL.getCode());
-            zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());//本次托管金额除以10000
+            //zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());//本次托管金额除以10000
             zbTrusteeRecord.setAddTime(new Date());
             zbTrusteeRecordService.insert(zbTrusteeRecord);
 

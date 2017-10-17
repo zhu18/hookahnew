@@ -35,4 +35,9 @@ public interface ZbProgramService extends GenericService<ZbProgram, Long> {
      * 对需求方评价
      */
     ReturnData addRequirementComment(ZbComment zbComment);
+
+    /**
+     * 提交&重新提交
+     */
+    ReturnData save(ZbProgramVo zbProgramVo);
 }

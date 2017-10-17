@@ -105,7 +105,7 @@ function renderPage(data) {
 
       domModel.html('审核通过<br>待托管赏金');
       $('.detailMoneyBox').show();
-      $('.release-first-btnbox div').append('<a href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.managedMoney / 10000 + '">去托管赏金</a>');
+      $('.release-first-btnbox div').append('<a id="J_goPay" requirementId="' + insertRequirementsData.zbRequirement.id + '" href="javascript:void(0)">去托管赏金</a>');
       break;
     case 7: //二次托管
       domModel.html('报名结束<br>待托管赏金');
@@ -115,7 +115,7 @@ function renderPage(data) {
       $('.moneyAdd,.moneySub').hide(); //百分比
       $('.missionResult').hide().prev().show(); //百分比
       missionApplyInfo(data); //任务报名信息显示
-      $('.release-first-btnbox div').append('<a class="j_goTwiceMoney" href="' + host.website + '/payAccount/userRecharge?money=' + insertRequirementsData.zbRequirement.rewardMoney*(100-insertRequirementsData.zbRequirement.trusteePercent)/100/100 + '">去托管剩余'+(100-insertRequirementsData.zbRequirement.trusteePercent)+'% 赏金</a>');
+      $('.release-first-btnbox div').append('<a id="J_goPay" requirementId="' + insertRequirementsData.zbRequirement.id + '" href="javascript:void(0)">去托管剩余"+(100-insertRequirementsData.zbRequirement.trusteePercent)+"% 赏金</a>');
       $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
 
       break;
@@ -410,7 +410,19 @@ $(document).on('mouseenter', '.load-file', function () { //鼠标滑过描述显
 });
 
 $(document).on('click', '.otherDetailBoxNav li', function () { //需求详情下面的tab
-  $(this).addClass('active').siblings().removeClass('active').parent().next().children().removeClass('active').eq($(this).index()).addClass('active');
+    $(this).addClass('active').siblings().removeClass('active').parent().next().children().removeClass('active').eq($(this).index()).addClass('active');
+});
+
+$(document).on('click', '#J_goPay', function () { //
+    location.href= "/api/release/managedMoney?requirementId="+$(this).attr('requirementId');
+    /*$.ajax({
+        type: 'get',
+        url: "/api/release/managedMoney?requirementId="+$(this).attr('requirementId'),
+        cache: false,
+        success: function (data) {
+            console.log(data);
+        }
+    });*/
 });
 
 
