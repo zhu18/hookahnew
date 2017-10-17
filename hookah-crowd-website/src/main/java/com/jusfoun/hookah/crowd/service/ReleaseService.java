@@ -23,7 +23,7 @@ public interface ReleaseService extends GenericService<ZbRequirement, String> {
 
     ReturnData deleteRequirement(Long id);
 
-    String getManagedMoney(String requirementId);
+    String getManagedMoney(String requirementId, String trusteePercent);
 
     ReturnData updateMoneyStatus(String requireSn);
 
