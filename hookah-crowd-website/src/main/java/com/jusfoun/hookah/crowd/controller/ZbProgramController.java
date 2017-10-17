@@ -24,26 +24,6 @@ public class ZbProgramController extends BaseController {
     ZbProgramService zbProgramService;
 
     /**
-     *前台选中方案提交
-     * @return
-     */
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
-    @ResponseBody
-    public ReturnData add(@RequestBody ZbProgramVo zbProgramVo){
-        return zbProgramService.insertRecord(zbProgramVo);
-    }
-
-    /**
-     *前台选中方案重新提交
-     * @return
-     */
-    @RequestMapping(value = "edit",method = RequestMethod.POST)
-    @ResponseBody
-    public ReturnData edit(@RequestBody ZbProgramVo zbProgramVo){
-        return zbProgramService.editProgram(zbProgramVo);
-    }
-
-    /**
      *前台选中方案详情
      * @return
      */
@@ -64,7 +44,7 @@ public class ZbProgramController extends BaseController {
     }
 
     /**
-     *前台选中方案重新提交
+     *前台选中方案提交&重新提交
      * @return
      */
     @RequestMapping(value = "save",method = RequestMethod.POST)

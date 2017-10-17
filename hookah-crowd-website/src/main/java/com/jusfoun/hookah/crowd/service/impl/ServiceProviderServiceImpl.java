@@ -17,16 +17,14 @@ import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -203,9 +201,18 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             return returnData;
         }
         try{
-            ZbServiceProviderRequireVo zbServiceProviderRequireVo = new ZbServiceProviderRequireVo();
+            //从session获取用户信息
+            Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
+            ZbRequirementSPVo zbRequirementSPVo = new ZbRequirementSPVo();
             //----需求信息 start----
             ZbRequirement zbRequirement = zbRequirementMapper.selectByPrimaryKey(reqId);
+
+            //需求不存在
+            if(null == zbRequirement){
+                returnData.setData(userMap==null ? zbRequirementSPVo : new ZbServiceProviderRequireVo());
+                return returnData;
+            }
+
             List<Condition> filters = new ArrayList<>();
             if (zbRequirement.getId() != null) {
                 filters.add(Condition.eq("correlationId", zbRequirement.getId()));
@@ -213,43 +220,71 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             filters.add(Condition.eq("type", 0));
             //需求附件
             List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters);
-            ZbRequirementSPVo zbRequirementSPVo = new ZbRequirementSPVo();
             BeanUtils.copyProperties(zbRequirement,zbRequirementSPVo);
             zbRequirementSPVo.setAnnex(zbAnnexes);
             //----需求信息 end----
 
-            //方案信息
-            ZbProgramVo zbProgramVo = zbProgramService.selectProgramByReqId(reqId) == null ? new ZbProgramVo() : (ZbProgramVo) zbProgramService.selectProgramByReqId(reqId).getData();
+            //判断是否登录
+            if(null == userMap){
+                //未登录
+                zbRequirementSPVo.setAnnexIsOperate(0);//不可下载
+                returnData.setData(zbRequirementSPVo);
+            } else {
+                //已登录
+                ZbServiceProviderRequireVo zbServiceProviderRequireVo = new ZbServiceProviderRequireVo();
+                zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);
+                returnData.setData(loginRequirementDetail(reqId,zbServiceProviderRequireVo));
+            }
 
-            //报名信息
-            ZbRequirementApplyVo zbRequirementApplyVo = zbRequireApplyWebsiteService.selectByReqId(reqId) == null ? new ZbRequirementApplyVo() : (ZbRequirementApplyVo) zbRequireApplyWebsiteService.selectByReqId(reqId).getData();
-
-            //时间条信息
-            MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
-
-            //类似任务
-            filters.clear();
-            filters.add(Condition.eq("type",zbRequirement.getType()));
-            filters.add(Condition.eq("status", ZbContants.Zb_Require_Status.SINGING.getCode().shortValue()));
-            List<OrderBy> orderBys = new ArrayList<>();
-            orderBys.add(OrderBy.desc("pressTime"));
-            List<ZbRequirement> anTaskRequires = this.selectList(filters,orderBys);
-
-            zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);//需求信息
-            zbServiceProviderRequireVo.setZbProgramVo(zbProgramVo);//方案信息
-            zbServiceProviderRequireVo.setZbRequirementApplyVo(zbRequirementApplyVo);//报名信息
-            zbServiceProviderRequireVo.setMgZbRequireStatus(mgZbRequireStatus);//时间条信息
-            zbServiceProviderRequireVo.setReqStatus(zbRequirementApplyVo == null ? -1 : zbRequirementApplyVo.getStatus());//当前用户的需求状态
-            zbServiceProviderRequireVo.setZbCommentVo(buildZbCommentVo(zbProgramVo == null ? null : zbProgramVo.getId()));//评论信息
-            zbServiceProviderRequireVo.setAnalogyTask(anTaskRequires);//类似任务
-
-            returnData.setData(zbServiceProviderRequireVo);
         } catch (Exception e) {
             e.printStackTrace();
             returnData.setCode(ExceptionConst.Error);
             returnData.setData(ExceptionConst.get(ExceptionConst.Error));
         }
         return returnData;
+    }
+
+
+    private ZbServiceProviderRequireVo loginRequirementDetail(Long reqId,ZbServiceProviderRequireVo zbServiceProviderRequireVo){
+        //----需求信息 start----
+        ZbRequirement zbRequirement = zbRequirementMapper.selectByPrimaryKey(reqId);
+        List<Condition> filters = new ArrayList<>();
+        if (zbRequirement.getId() != null) {
+            filters.add(Condition.eq("correlationId", zbRequirement.getId()));
+        }
+        filters.add(Condition.eq("type", 0));
+        //需求附件
+        List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters);
+        ZbRequirementSPVo zbRequirementSPVo = new ZbRequirementSPVo();
+        BeanUtils.copyProperties(zbRequirement,zbRequirementSPVo);
+        zbRequirementSPVo.setAnnex(zbAnnexes);
+        //----需求信息 end----
+
+        //方案信息
+        ZbProgramVo zbProgramVo = zbProgramService.selectProgramByReqId(reqId) == null ? new ZbProgramVo() : (ZbProgramVo) zbProgramService.selectProgramByReqId(reqId).getData();
+
+        //报名信息
+        ZbRequirementApplyVo zbRequirementApplyVo = zbRequireApplyWebsiteService.selectByReqId(reqId) == null ? new ZbRequirementApplyVo() : (ZbRequirementApplyVo) zbRequireApplyWebsiteService.selectByReqId(reqId).getData();
+
+        //时间条信息
+        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
+
+        //类似任务
+        filters.clear();
+        filters.add(Condition.eq("type",zbRequirement.getType()));
+        filters.add(Condition.eq("status", ZbContants.Zb_Require_Status.SINGING.getCode().shortValue()));
+        List<OrderBy> orderBys = new ArrayList<>();
+        orderBys.add(OrderBy.desc("pressTime"));
+        List<ZbRequirement> anTaskRequires = this.selectList(filters,orderBys);
+
+        zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);//需求信息
+        zbServiceProviderRequireVo.setZbProgramVo(zbProgramVo);//方案信息
+        zbServiceProviderRequireVo.setZbRequirementApplyVo(zbRequirementApplyVo);//报名信息
+        zbServiceProviderRequireVo.setMgZbRequireStatus(mgZbRequireStatus);//时间条信息
+        zbServiceProviderRequireVo.setReqStatus(zbRequirementApplyVo == null ? -1 : zbRequirementApplyVo.getStatus());//当前用户的需求状态
+        zbServiceProviderRequireVo.setZbCommentVo(buildZbCommentVo(zbProgramVo == null ? null : zbProgramVo.getId()));//评论信息
+        zbServiceProviderRequireVo.setAnalogyTask(anTaskRequires);//类似任务
+        return zbServiceProviderRequireVo;
     }
 
     //获取当前需求的评价
