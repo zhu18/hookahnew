@@ -46,6 +46,16 @@ public class MgZbRequireStatus extends GenericModel {
 
     // 需求方验收
     private String requiredAcceptTime;
+    //服务商对需求方评价时间
+    private String requireCommentTime;
+
+    public String getRequireCommentTime() {
+        return requireCommentTime;
+    }
+
+    public void setRequireCommentTime(String requireCommentTime) {
+        this.requireCommentTime = requireCommentTime;
+    }
 
     public String getRequirementNum() {
         return requirementNum;

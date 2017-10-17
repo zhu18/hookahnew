@@ -1,19 +1,17 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
 import com.jusfoun.hookah.core.dao.zb.ZbProgramMapper;
+import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.domain.zb.ZbAnnex;
-import com.jusfoun.hookah.core.domain.zb.ZbComment;
-import com.jusfoun.hookah.core.domain.zb.ZbProgram;
+import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbProgramVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
-import com.jusfoun.hookah.crowd.service.ZbAnnexService;
-import com.jusfoun.hookah.crowd.service.ZbCommentService;
-import com.jusfoun.hookah.crowd.service.ZbProgramService;
+import com.jusfoun.hookah.crowd.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -38,6 +36,9 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
     private static final Short program_status_defaule = 0;
 
     @Resource
+    private ZbRequireService zbRequireService;
+
+    @Resource
     private ZbProgramMapper zbProgramMapper;
 
     @Resource
@@ -45,6 +46,12 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
 
     @Resource
     ZbCommentService zbCommentService;
+
+    @Resource
+    MgZbRequireStatusService mgZbRequireStatusService;
+
+    @Resource
+    ZbRequirementApplyMapper zbRequirementApplyMapper;
 
     @Resource
     public void setDao(ZbProgramMapper ZbProgramMapper) {
@@ -85,6 +92,13 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
                     zbAnnexService.insert(zbAnnex);
                 }
             }
+
+            //修改apply状态
+            ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
+            zbRequirementApply.setId(zbProgramVo.getApplyId());
+            zbRequirementApply.setStatus(Integer.valueOf(3).shortValue());//记得改成常量
+            zbRequirementApplyMapper.updateByPrimaryKey(zbRequirementApply);
+
             returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
             logger.info("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求提交方案成功@");
         } catch (Exception e) {
@@ -217,19 +231,37 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
         }
         return returnData;
     }
-
+    /** 服务商添加需求方评价 **/
     @Override
     @Transactional
     public ReturnData addRequirementComment(ZbComment zbComment) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
         try {
+
+            //参数校验
+            if(Objects.isNull(zbComment) || null == zbComment.getProgramId() || null==zbComment.getRequirementId()){
+                returnData.setCode(ExceptionConst.AssertFailed);
+                returnData.setMessage(ExceptionConst.get(ExceptionConst.AssertFailed));
+                return returnData;
+            }
+
             User user = this.getCurrentUser();
             zbComment.setAddTime(new Date());
             zbComment.setStatus(ZbContants.Comment_Status.WAIT_CHECK.getCode());
             zbComment.setUserType(1);//1需方2供方
             zbComment.setUserId(user == null?"":user.getUserId());
             zbCommentService.insert(zbComment);
+
+            //修改评价服务商评价需求方时间
+            ZbRequirement zbRequirement = zbRequireService.selectById(zbComment.getRequirementId());
+            if(Objects.nonNull(zbRequirement)){
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),"requireCommentTime", DateUtils.getCurrentTimeFormat(new Date()));
+            }
+
+            //修改报名表状态
+
+
         } catch (Exception e) {
             e.printStackTrace();
             returnData.setCode(ExceptionConst.Error);

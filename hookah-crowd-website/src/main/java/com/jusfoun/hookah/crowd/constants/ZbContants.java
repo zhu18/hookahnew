@@ -193,5 +193,19 @@ public class ZbContants {
         }
     }
 
+//    public enum ZbRequireMentApplyStatus {
+//
+//        //状态；0 ：已报名；1：已被选中(工作中) 2:未中标  3：评审中 4：验收中 5：待付款 6：待评价 7：交易取消 8：交易完成
+//
+//        public Integer code;
+//
+//        ZbRequireMentApplyStatus(Integer code) {
+//            this.code = code;
+//        }
+//
+//        public Integer getCode() {
+//            return code;
+//        }
+//    }
 
 }
