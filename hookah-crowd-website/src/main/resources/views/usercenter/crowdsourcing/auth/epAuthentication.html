@@ -1,0 +1,346 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
+<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+<script src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
+
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<link rel="stylesheet" href="/static/css/usercenter/auth/authentication.css">
+
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box  margin-bottom-20">
+            <div class="header clearfix">
+                <h4 class="grid-left center-title">企业认证</h4>
+            </div>
+            <div class="Authentication">
+                <div class="info">
+                    <div class="info-header">
+                        <label for="AuthProvider">认证状态：</label>
+                        <span id="AuthProvider"></span>
+                        <a href="javascript:void (0)" id="infoAdd"><i class="fa fa-pencil-square-o font-size-20"
+                                                                      aria-hidden="true"></i></a>
+                    </div>
+                    <div class="info-show">
+                        <div class="item">
+                            <label>擅长领域：</label>
+                            <div class="display-inline-block tag-box">
+
+                            </div>
+                        </div>
+                        <div class="item">
+                            <label>企业介绍：</label>
+                            <div class="providerDesc">
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="info-edit">
+                        <div class="item">
+                            <label for="">擅长领域：</label>
+                            <div class="display-inline-blocks tag-box">
+
+                            </div>
+                        </div>
+                        <div class="item">
+                            <label for="providerDesc">企业介绍：</label>
+                            <textarea name="providerDesc" id="providerDesc" class="providerDesc" cols="100" rows="5"
+                                      placeholder="请介绍您的企业，可以是企业简介、发展历史、企业主营业务等，字数在500字以内。"></textarea>
+                        </div>
+                        <div class="item">
+                            <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 "
+                                    id="infoAddSave">保存
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Authentication-itemBox">
+                    <div class="Authentication-title clearfix">
+                        <div class="psp-title-left grid-left">
+                            <i class="fa fa-graduation-cap" aria-hidden="true"> </i>应用案例 必填
+                        </div>
+                        <div class="psp-title-right grid-right" id="educationAdd">
+                            <i class="fa fa-plus" aria-hidden="true"></i>添加
+                        </div>
+                    </div>
+                    <div class="Authentication-content">
+                        <!--<div>-->
+                        <!--教育经历最能体现你的学习和专业能力，且完善后才可完成认证！-->
+                        <!--</div>-->
+                        <div class="content-appCaseList content">
+                            <dl>
+                                <dt class="clearfix">
+                                <div class="grid-left">
+                                    <span class="caseName sub-title">山东科技职业学院</span>
+                                    <span class="">(2017/10-2018/9)</span>
+                                </div>
+                                <div class="grid-right">
+                                    <a href="javascript:void (0)" class="educationEdit" data-sn=""> <i
+                                            class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a>
+                                    <a href="javascript:void (0)" class="educationDelete" data-sn=""><i
+                                            class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a>
+                                </div>
+                                </dt>
+                                <dd>
+                                    <label for="">案例概述:</label>
+                                    <div></div>
+                                </dd>
+                                <dd>
+                                    <label for="">解决方案:</label>
+                                    <div></div>
+                                </dd>
+                                <dd>
+                                    <label for="">证明材料:</label>
+                                    <div></div>
+                                </dd>
+                            </dl>
+                        </div>
+                        <!--<div>-->
+                        <!--<dl>-->
+                        <!--<form action="" id="form">-->
+                        <!--<table id="education">-->
+                        <!--<tr>-->
+                        <!--<td>-->
+                        <!--<div>-->
+                        <!--<label for="schoolName"><span class="color-red">*</span>学校名称</label>-->
+                        <!--<input type="text" id="schoolName" name="schoolName" placeholder="请输入学校名称" required>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                        <!--<div>-->
+                        <!--<label for="major"><span class="color-red">*</span>专业名称</label>-->
+                        <!--<input type="text" id="major" name="major" placeholder="请输入专业名称" required>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td>-->
+                        <!--<div>-->
+                        <!--<label for=""><span class="color-red">*</span>就学时间</label>-->
+                        <!--<div class="display-inline-block">-->
+                        <!--<input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >-->
+                        <!--至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                        <!--<div>-->
+                        <!--<label for="edu"><span class="color-red">*</span>学历</label>-->
+                        <!--<select name="edu" id="edu" required >-->
+                        <!--<option value="大专">大专</option>-->
+                        <!--<option value="本科">本科</option>-->
+                        <!--<option value="硕士">硕士</option>-->
+                        <!--<option value="博士">博士</option>-->
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td>-->
+                        <!--<span class="color-red">*</span>-->
+                        <!--<input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招-->
+                        <!--</td>-->
+                        <!--<td>-->
+                        <!--<div><label for="">证明材料</label>-->
+                        <!--<div class="upload-box display-inline-block">-->
+                        <!--<input type="file" name="filename" multiple="multiple" class="fileUploadBtn j_firstPage">-->
+                        <!--<span class="falseBen j_firstPage">上传附件</span>-->
+                        <!--<span class="fileTip"></span>-->
+                        <!--<input type="hidden" name="filename" value="" id="file">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td colspan="2">-->
+                        <!--<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" onclick="educationAddSave();">保存</button>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--</table>-->
+                        <!--</form>-->
+                        <!--</dl>-->
+                        <!--</div>-->
+
+                        <!--<div>-->
+                        <!--<dl>-->
+                        <!--<form action="" id="form">-->
+                        <!--<table id="education">-->
+                        <!--<tr>-->
+                        <!--<td>-->
+                        <!--<div>-->
+                        <!--<label for="companyName"><span class="color-red">*</span>公司名称</label>-->
+                        <!--<input type="text" id="companyName" name="companyName" placeholder="请输入公司名称" required>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                        <!--<div>-->
+                        <!--<label for="departName"><span class="color-red">*</span>部门名称</label>-->
+                        <!--<input type="text" id="departName" name="departName" placeholder="请输入部门名称" required>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td>-->
+                        <!--<div>-->
+                        <!--<label for=""><span class="color-red">*</span>工作时间</label>-->
+                        <!--<div class="display-inline-block">-->
+                        <!--<input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >-->
+                        <!--至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                        <!--<div>-->
+                        <!--<label for="position"><span class="color-red">*</span>职位</label>-->
+                        <!--<input type="text" name="position" id="position">-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td>-->
+                        <!--<div><label for="">证明材料</label>-->
+                        <!--<div class="upload-box display-inline-block">-->
+                        <!--<input type="file" name="filename" multiple="multiple" class="fileUploadBtn j_firstPage">-->
+                        <!--<span class="falseBen j_firstPage">上传附件</span>-->
+                        <!--<span class="fileTip"></span>-->
+                        <!--<input type="hidden" name="filename" value="" id="file">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td colspan="2">-->
+                        <!--<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" onclick="educationAddSave();">保存</button>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <!--</table>-->
+                        <!--</form>-->
+                        <!--</dl>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div class="Authentication-itemBox">
+                    <div class="Authentication-title clearfix">
+                        <div class="psp-title-left grid-left">
+                            <i class="fa fa-graduation-cap" aria-hidden="true"> </i>软件著作权 必填
+                        </div>
+                        <div class="psp-title-right grid-right" id="workAdd">
+                            <i class="fa fa-plus" aria-hidden="true"></i>添加
+                        </div>
+                    </div>
+                    <div class="Authentication-content">
+                        <!--<div>-->
+                        <!--工作经历最能体现你的能力，且完善后才可完成认证！-->
+                        <!--</div>-->
+                        <div class="content-swpList content">
+                            <dl>
+                                <dt class="clearfix">
+                                <div class="grid-left">
+                                    <span class="softWareName sub-title">山东科技职业学院</span>
+                                    <span class="">(2017/10-2018/9)</span>
+                                </div>
+                                <div class="grid-right">
+                                    <a href="javascript:void (0)" class="educationEdit" data-sn=""> <i
+                                            class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a>
+                                    <a href="javascript:void (0)" class="educationDelete" data-sn=""><i
+                                            class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a>
+                                </div>
+                                </dt>
+                                <dd>
+                                    <label for="">案例概述:</label>
+                                    <div></div>
+                                </dd>
+                                <dd>
+                                    <label for="">解决方案:</label>
+                                    <div></div>
+                                </dd>
+                                <dd>
+                                    <label for="">证明材料:</label>
+                                    <div></div>
+                                </dd>
+                            </dl>
+                            <!--<dl>-->
+                            <!--<dt class="clearfix">-->
+                            <!--<div class="grid-left"><span class="schoolName">山东科技职业学院</span> <span class="">(2017/10-2018/9)</span>-->
+                            <!--</div>-->
+                            <!--<div class="grid-right">-->
+                            <!--<a href="javascript:void (0)" class="educationEdit" data-sn=""> <i-->
+                            <!--class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a>-->
+                            <!--<a href="javascript:void (0)" class="educationDelete" data-sn=""><i-->
+                            <!--class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a>-->
+                            <!--</div>-->
+                            <!--</dt>-->
+                            <!--<dd>-->
+                            <!--<span class="major">公司名称：九次方大数据</span>-->
+                            <!--<span class="edu">部门名称：web前端</span>-->
+                            <!--<span class="orExam">材料</span>-->
+                            <!--</dd>-->
+                            <!--</dl>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="Authentication-itemBox">
+                    <div class="Authentication-title clearfix">
+                        <div class="psp-title-left grid-left">
+                            <i class="fa fa-graduation-cap" aria-hidden="true"> </i>发明专利 必填
+                        </div>
+                        <div class="psp-title-right grid-right" id="projectAdd">
+                            <i class="fa fa-plus" aria-hidden="true"></i>添加
+                        </div>
+                    </div>
+                    <div class="Authentication-content">
+                        <!--<div>-->
+                        <!--工作经历最能体现你的能力，且完善后才可完成认证！-->
+                        <!--</div>-->
+                        <div class="content-inPatentsList content">
+                            <dl>
+                                <dt class="clearfix">
+                                <div class="grid-left">
+                                    <span class="softWareName sub-title">山东科技职业学院</span>
+                                    <span class="">(2017/10-2018/9)</span>
+                                </div>
+                                <div class="grid-right">
+                                    <a href="javascript:void (0)" class="educationEdit" data-sn=""> <i
+                                            class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a>
+                                    <a href="javascript:void (0)" class="educationDelete" data-sn=""><i
+                                            class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a>
+                                </div>
+                                </dt>
+                                <dd>
+                                    <label for="">案例概述:</label>
+                                    <div></div>
+                                </dd>
+                                <dd>
+                                    <label for="">解决方案:</label>
+                                    <div></div>
+                                </dd>
+                                <dd>
+                                    <label for="">证明材料:</label>
+                                    <div></div>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script src="/static/js/usercenter/auth/epAuthentication.js"></script>
+

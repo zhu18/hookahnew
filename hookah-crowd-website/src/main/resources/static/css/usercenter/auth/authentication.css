@@ -1,0 +1,152 @@
+.Authentication{
+    margin-top: 20px;
+    border: 1px solid #e5e5e5;
+    padding: 0 10px;
+}
+.Authentication button{
+    cursor: pointer;
+}
+.Authentication .item label{
+    display: inline-block;
+    width: 80px;
+}
+.Authentication .item div{
+    display: inline-block;
+}
+.Authentication table{
+    width: 100%;
+    border: 1px solid #e5e5e5;
+}
+.Authentication table tr{
+    height: 39px;
+    line-height: 39px;
+}
+.Authentication table tr td{
+    text-align: center;
+    border: 1px solid #e5e5e5;
+}
+.Authentication table tr td a{
+    text-align: center;
+}
+
+ /*基本信息*/
+.Authentication .info{
+    border-bottom: 1px solid #e5e5e5;
+}
+.info .item{
+    padding: 10px 0;
+}
+.info .info-header{
+    line-height: 39px;
+}
+.info .tag-box span{
+    display: inline-block;
+    background-color: #e6e6e6;
+    margin-right: 3px;
+    padding: 3px 9px;
+    cursor: pointer;
+}
+.info .tag-box span.active{
+    background-color: #078cfc;
+    color: #ffffff;
+}
+.info .info-edit{
+    display: none;
+}
+
+
+.Authentication-itemBox{
+    width: 100%;
+}
+.Authentication-itemBox .Authentication-title{
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
+.Authentication-itemBox .Authentication-content{
+    padding: 10px
+}
+.Authentication-itemBox .Authentication-content .content{}
+.content dl{border-bottom: 1px solid #e5e5e5}
+.content dl dt,.content dl dd{
+    padding: 10px 0;
+}
+.content dl dt div{display: inline-block;}
+.content dl dt .sub-title{ font-weight: bold;font-size: 14px}
+.content dl dd {font-size: 0}
+.content dl dd label{ display: inline-block;font-size: 14px; width: 10%; vertical-align: top;}
+.content dl dd div{ display: inline-block;font-size: 14px; width: 80%; }
+
+.Authentication-itemBox .Authentication-content .contentP{}
+
+.contentP dl{border-bottom: 1px solid #e5e5e5}
+.contentP dl dt,.contentP dl dd{
+    padding: 10px 0;
+}
+.contentP dl dt div{display: inline-block;}
+.contentP dl dt .sub-title{ font-weight: bold;font-size: 14px}
+.contentP dl dd {font-size: 0}
+.contentP dl dd span{ display: inline-block;font-size: 14px; width: 25%; }
+
+.Authentication-itemBox .Authentication-content .content-span-33{}
+.content-span-33{} dl dd span{ display: inline-block;font-size: 14px; width: 33.33%; }
+
+
+.from{
+
+}
+.from td{
+    width: 50%;
+}
+.from td label{
+    display: inline-block;
+    width: 70px;
+}
+.from td input{
+    height: 25px;
+    width: 160px;
+    border: 1px solid #e5e5e5;
+    padding-left: 5px;
+}
+.from td input[type="checkbox"]{
+    height: 14px;
+    width: 20px;
+    vertical-align: text-bottom;
+}
+.from td select{
+    height: 25px;
+    width: 167px;
+    border: 1px solid #e5e5e5;
+}
+
+.from .upload-box {
+    position: relative;
+}
+.from input.fileUploadBtn {
+    min-width: 70px;
+    width: 70px;
+    position: relative;
+    z-index: 1;
+    background-color: #ff0000;
+    opacity: 0;
+}
+.from  .falseBen {
+    width: 70px;
+    height: 25px;
+    display: inline-block;
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    line-height: 25px;
+    text-align: center;
+    background-color: #078cfc;
+    color: #fff;
+    border-color: #078cfc;
+}
+
+
+.help-block{
+    color:#E34F4F ;
+}
+
+textarea{ resize:none;}

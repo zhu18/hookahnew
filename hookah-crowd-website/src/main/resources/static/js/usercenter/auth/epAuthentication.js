@@ -20,7 +20,6 @@ $('#infoAddSave').on('click',function () {
         }
     });
     var data=JSON.stringify({
-        "authType": "1",
         "providerDesc":$('#providerDesc').val(),
         "specialSkills":tabList
     });
@@ -67,11 +66,11 @@ $("#educationAdd").on('click',function () {
         '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
         '<td> <div> <label for="edu"><span class="color-red">*</span>学历</label> <select name="edu" id="edu" required > <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> ' +
         '</td> </tr>' +
-        ' <tr> <td> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
+        ' <tr> <td> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" multiple="multiple" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
         ' <tr> <td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="null">保存</button> </td>' +
         ' </tr> </table> </form> </dl>'
 
-         $(".content-education").append(html);
+         $(".pspAuthentication-edu-content").append(html);
          $("#educationAddSave").on('click',educationAddSave);
          $("#educationAdd").hide();
          jeDate();
@@ -98,10 +97,10 @@ $("#workAdd").on('click',function () {
         '<input type="text" name="position" id="position"> </div> </td> </tr> ' +
         '<tr> <td> <div>' +
         '<span class="color-red">*</span>'+
-        '<label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
+        '<label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" multiple="multiple" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
         '<tr> <td colspan="2"> ' +
         '<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="workAddSave" data-sn="null">保存</button> </td> </tr> </table> </form> </dl>'
-    $(".content-work").append(html);
+    $(".pspAuthentication-work-content").append(html);
     $("#workAddSave").on('click',workAddSave);
     $("#workAdd").hide();
     jeDate();
@@ -128,7 +127,7 @@ $("#projectAdd").on('click',function () {
         '<textarea name="projectDesc" id="projectDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
         '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="projectAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
-    $(".content-project").append(html);
+    $(".pspAuthentication-project-content").append(html);
     $("#projectAddSave").on('click',projectAddSave);
     $("#projectAdd").hide();
     jeDate();
@@ -205,19 +204,24 @@ function projectDelete(r) {
 // 教育经历单个修改
 function educationEdit(r) {
     console.log("修改");
+    console.log($(r.currentTarget.parentNode.parentNode.parentNode)[0]);
+    console.log($(r));
+    console.log($(this).parent().parent().parent().html());
     var _this=$(this);
     $.ajax({
-        type: 'get',
+        type: 'post',
         url: "/api/auth/getAuthInfo",
-        data:{
+        dataType: 'json',
+        contentType: 'application/json',
+        data:JSON.stringify({
             optArrAySn:r.currentTarget.attributes[2].nodeValue,
             optAuthType: "1"
-        },
+        }),
         success: function (data) {
-            console.log(data);
+            console.log();
             if(data.code==1){
                 var html= '<form action="" id="form">' +
-                    ' <table id="education" class="from"> ' +
+                    ' <table id="education"> ' +
                     '<tr> ' +
                     '<td>' +
                     ' <div> ' +
@@ -237,20 +241,12 @@ function educationEdit(r) {
                     '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
                     '<td> <div> <label for="edu"><span class="color-red">*</span>学历</label> <select name="edu" id="edu" required > <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> ' +
                     '</td> </tr>' +
-                    ' <tr> <td> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
+                    ' <tr> <td> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" multiple="multiple" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
                     ' <tr> <td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'">保存</button> </td>' +
                     ' </tr> </table> </form>'
                 // var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
                 // $(".education tr").eq(index).html(html);
                 _this.parent().parent().parent().html(html);
-
-                $('#schoolName').val(data.data.schoolName);
-                $('#major').val(data.data.major);
-                $('#startDate').val(data.data.startTime);
-                $('#endDate').val(data.data.endTime);
-                $('#orExam').attr("checked",data.data.orExam==0?false:true);
-                $('#edu').val(data.data.edu);
-
                 $("#educationAddSave").on('click',educationAddSave);
                 $("#educationAdd").hide();
                 jeDate();
@@ -298,19 +294,12 @@ function workEdit(r) {
                     '<input type="text" name="position" id="position"> </div> </td> </tr> ' +
                     '<tr> <td> <div>' +
                     '<span class="color-red">*</span>'+
-                    '<label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
+                    '<label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" multiple="multiple" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
                     '<tr> <td colspan="2"> ' +
                     '<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="workAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'">保存</button> </td> </tr> </table> </form> </dl>'
                 // var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
                 // $(".education tr").eq(index).html(html);
                 _this.parent().parent().parent().html(html);
-
-                $('#companyName').val(data.data.companyName);
-                $('#departName').val(data.data.departName);
-                $('#startDate').val(data.data.startTime);
-                $('#endDate').val(data.data.endTime);
-                $('#position').val(data.data.position);
-
                 $("#workAddSave").on('click',workAddSave);
                 $("#workAdd").hide();
                 jeDate();
@@ -391,7 +380,7 @@ function educationAddSave(r) {
                     "startTime": $("#startDate").val() || null,
                     "endTime": $("#endDate").val() || null,
                     "edu": $('#edu').val() || null,
-                    "orExam": $('#orExam').is(':checked')?"1":"0",
+                    "orExam": $('#orExam').attr('checked')?"1":"0",
                     "certPath":$('input[type="hidden"]').val()
 
                 }]
@@ -537,7 +526,7 @@ function projectAddSave(r) {
             }
         });
     }else {
-
+        // $('#educationAddSave').attr('disabled',true)
     }
 
 }
@@ -569,9 +558,9 @@ function reader() {
                         html+='<dl> ' +
                             '<dt class="clearfix"> ' +
                             '<div class="grid-left">' +
-                            '<span class="schoolName sub-title">'+item.schoolName+'</span> ' +
+                            '<span class="schoolName">'+item.schoolName+'</span> ' +
                             '<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span></div> ' +
-                            '<div class="grid-right operation"> ' +
+                            '<div class="grid-right"> ' +
                             '<a href="javascript:void (0)" class="educationEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
                             '<a href="javascript:void (0)" class="educationDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> ' +
                             '</dt> ' +
@@ -583,7 +572,7 @@ function reader() {
                             '</dd> ' +
                             '</dl>'
                     }
-                    $('.content-education').html(html);
+                    $('.pspAuthentication-edu-content').html(html);
                     $(".educationEdit").on('click',educationEdit);
                     $(".educationDelete").on('click',educationDelete);
                     $("#educationAdd").show();
@@ -595,7 +584,7 @@ function reader() {
                         html+='<dl> ' +
                             '<dt class="clearfix"> ' +
                             '<div class="grid-left">' +
-                            '<span class="companyName sub-title">'+item.companyName+'</span> ' +
+                            '<span class="companyName">'+item.companyName+'</span> ' +
                             '<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span></div> ' +
                             '<div class="grid-right"> ' +
                             '<a href="javascript:void (0)" class="workEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
@@ -607,7 +596,7 @@ function reader() {
                             '</dd> ' +
                             '</dl>'
                     }
-                    $('.content-work').html(html);
+                    $('.pspAuthentication-work-content').html(html);
                     $(".workEdit").on('click',workEdit);
                     $(".workDelete").on('click',workDelete);
                     $("#workAdd").show();
@@ -620,7 +609,7 @@ function reader() {
                         html='<dl> ' +
                             '<dt class="clearfix"> ' +
                             '<div class="grid-left">' +
-                            '<span class="projectName sub-title">'+item.projectName+'</span> ' +
+                            '<span class="projectName">'+item.projectName+'</span> ' +
                             '<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span> </div> ' +
                             '<div class="grid-right"> ' +
                             '<a href="javascript:void (0)" class="projectEdit" data-sn=""> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
@@ -632,7 +621,7 @@ function reader() {
                             '<label for="">项目描述:</label> ' +
                             '<div>'+item.projectDesc+'</div> </dd> </dl>'
                     }
-                    $('.content-project').html(html);
+                    $('.pspAuthentication-project-content').html(html);
                     $(".projectEdit").on('click',projectEdit);
                     $(".projectDelete").on('click',projectDelete);
                     $("#projectAdd").show();
@@ -687,20 +676,19 @@ function fileUpload() {
             dataType: 'json',
             maxFileSize: 10240000,
             add: function (e, data) {
-                var filesize = data.files[0].size;
-                if(Math.ceil(filesize / 1024) > 1024*10){
-                    console.log('文件过大'+filesize);
-                    $.alert('附件大小不得超过10M！');
-                    return;
-                }
-                data.submit();
+                // var filesize = data.files[0].size;
+                // if(Math.ceil(filesize / 1024) > 1024*10){
+                //     console.log('文件过大'+filesize);
+                //     $.alert('附件大小不得超过10M！');
+                //     return;
+                // }
+                // data.submit();
             },
             done: function (e, data) {
                 console.log('上传完毕');
                 var obj = data.result.data[0];
-                $('input[type="hidden"]').val(obj.absPath);
+                $('input[type="hidden"]').val(obj.filePath);
                 $('.fileTip').html(data.files[0].name);
-                $('.j_firstPage').html('更换附件');
                 console.log(data);
                 console.log(obj.filePath);
                 console.log(data.files[0].name);

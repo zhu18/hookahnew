@@ -105,7 +105,14 @@ public class CrowdSourcingController {
      */
     @RequestMapping(value = "/usercenter/pspAuthentication", method = RequestMethod.GET)
     public String pspAuthentication(Model model) {
-        return "usercenter/auth/pspAuthentication";
+        return "usercenter/crowdsourcing/auth/pspAuthentication";
+    }
+    /**
+     * 服务商 企业认证
+     */
+    @RequestMapping(value = "/usercenter/epAuthentication", method = RequestMethod.GET)
+    public String epAuthentication(Model model) {
+        return "usercenter/crowdsourcing/auth/epAuthentication";
     }
 
 }
