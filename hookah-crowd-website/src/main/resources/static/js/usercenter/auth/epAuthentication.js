@@ -41,9 +41,10 @@ $('#infoAddSave').on('click',function () {
     });
 
 });
-// 添加教育经历
 
-$("#educationAdd").on('click',function () {
+// 应用案例添加
+
+$("#appCaseAdd").on('click',function () {
     var html='<dl> ' +
         '<form action="" id="form">' +
         ' <table id="education" class="from"> ' +
@@ -538,10 +539,14 @@ function reader() {
         success: function (data) {
             console.log(data);
             if(data.code==1){
+                var specialSkills=data.data.specialSkills;
                 var educationsExpList=data.data.educationsExpList;
                 var worksExpList=data.data.worksExpList;
                 var projectsExpList=data.data.projectsExpList;
-                var specialSkills=data.data.specialSkills;
+                var appCaseList=data.data.appCaseList;
+                var swpList=data.data.swpList;
+                var inPatentsList=data.data.inPatentsList;
+
                 $('.providerDesc').val(data.data.providerDesc);
                 $('.providerDesc').html(data.data.providerDesc);
                 if(specialSkills){
@@ -606,7 +611,7 @@ function reader() {
                     var html=''
                     for (var i=0,len=projectsExpList.length;i<len;i++){
                         var item=projectsExpList[i];
-                        html='<dl> ' +
+                        html +='<dl> ' +
                             '<dt class="clearfix"> ' +
                             '<div class="grid-left">' +
                             '<span class="projectName">'+item.projectName+'</span> ' +
@@ -626,6 +631,91 @@ function reader() {
                     $(".projectDelete").on('click',projectDelete);
                     $("#projectAdd").show();
                 }
+                if(appCaseList){
+                    var html=''
+                    for (var i=0,len=appCaseList.length;i<len;i++){
+                        var item=appCaseList[i];
+                        html +='<dl> ' +
+                            '<dt class="clearfix"> ' +
+                            '<div class="grid-left"> ' +
+                            '<span class="caseName sub-title">'+item.caseName+'</span> ' +
+                            '<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span> </div> ' +
+                            '<div class="grid-right"> ' +
+                            '<a href="javascript:void (0)" class="appCaseEdit" data-sn=""> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
+                            '<a href="javascript:void (0)" class="appCaseDelete" data-sn=""><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> ' +
+                            '<dd> ' +
+                            '<label>案例概述:</label> ' +
+                            '<div >'+item.caseDesc+'</div> </dd> ' +
+                            '<dd>' +
+                            ' <label>解决方案:</label> ' +
+                            '<div>'+item.caseDesc+'</div> </dd> <dd> ' +
+                            '<label>证明材料:</label> ' +
+                            '<div></div>' +
+                            '</dd> </dl>'
+
+                    }
+                    $('.content-appCase').html(html);
+                    $(".appCaseEdit").on('click',appCaseEdit);
+                    $(".appCaseDelete").on('click',appCaseDelete);
+                    $("#appCaseAdd").show();
+                }
+                if(swpList){
+                    var html=''
+                    for (var i=0,len=swpList.length;i<len;i++){
+                        var item=swpList[i];
+                        html +='<dl> ' +
+                            '<dt class="clearfix"> ' +
+                            '<div class="grid-left"> ' +
+                            '<span class="caseName sub-title">'+item.softWareName+'</span> ' +
+                            '<span class="">(首次发表日期:'+item.publicTime+')</span> </div> ' +
+                            '<div class="grid-right"> ' +
+                            '<a href="javascript:void (0)" class="appCaseEdit" data-sn=""> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
+                            '<a href="javascript:void (0)" class="appCaseDelete" data-sn=""><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> ' +
+                            '<dd> ' +
+                            '<label>登记号:</label> ' +
+                            '<div >'+item.registerNum+'</div> </dd> ' +
+                            '<dd>' +
+                            ' <label>软件用途:</label> ' +
+                            '<div>'+item.purpose+'</div> </dd> <dd> ' +
+                            '<label>证明材料:</label> ' +
+                            '<div></div>' +
+                            '</dd> </dl>'
+
+                    }
+                    $('.content-swp').html(html);
+                    $(".swpEdit").on('click',swpEdit);
+                    $(".swpDelete").on('click',swpDelete);
+                    $("#swpAdd").show();
+                }
+                if(inPatentsList){
+                    var html=''
+                    for (var i=0,len=inPatentsList.length;i<len;i++){
+                        var item=inPatentsList[i];
+                        html +='<dl> ' +
+                            '<dt class="clearfix"> ' +
+                            '<div class="grid-left"> ' +
+                            '<span class="caseName sub-title">'+item.patentName+'</span> ' +
+                            '<span class="">(首次发表日期:'+item.applyTime+')</span> </div> ' +
+                            '<div class="grid-right"> ' +
+                            '<a href="javascript:void (0)" class="appCaseEdit" data-sn=""> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
+                            '<a href="javascript:void (0)" class="appCaseDelete" data-sn=""><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> ' +
+                            '<dd> ' +
+                            '<label>专利号:</label> ' +
+                            '<div >'+item.PatentNum+'</div> </dd> ' +
+                            '<dd>' +
+                            ' <label>专利概述:</label> ' +
+                            '<div>'+item.PatentDesc+'</div> </dd> <dd> ' +
+                            '<label>证明材料:</label> ' +
+                            '<div></div>' +
+                            '</dd> </dl>'
+
+                    }
+                    $('.content-inPatents').html(html);
+                    $(".inPatentsEdit").on('click',inPatentsEdit);
+                    $(".inPatentsDelete").on('click',inPatentsDelete);
+                    $("#inPatentsAdd").show();
+                }
+
             }
         }
     });

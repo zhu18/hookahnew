@@ -263,19 +263,17 @@ function educationEdit(r) {
 }
 function workEdit(r) {
     console.log("修改");
-    console.log($(r.currentTarget.parentNode.parentNode.parentNode)[0]);
-    console.log($(r));
-    console.log($(this).parent().parent().parent().html());
+    // console.log($(r.currentTarget.parentNode.parentNode.parentNode)[0]);
+    // console.log($(r));
+    // console.log($(this).parent().parent().parent().html());
     var _this=$(this);
     $.ajax({
-        type: 'post',
+        type: 'get',
         url: "/api/auth/getAuthInfo",
-        dataType: 'json',
-        contentType: 'application/json',
-        data:JSON.stringify({
+        data:{
             optArrAySn:r.currentTarget.attributes[2].nodeValue,
             optAuthType: "2"
-        }),
+        },
         success: function (data) {
             console.log();
             if(data.code==1){
@@ -562,7 +560,8 @@ function reader() {
                     }
                     $('.info .info-show .tag-box').html(html);
                 }
-                if(educationsExpList){
+                if( educationsExpList && educationsExpList.length>0){
+                    $('.content-education-noData').hide();
                     var html='';
                     for (var i=0,len=educationsExpList.length;i<len;i++){
                         var item=educationsExpList[i];
@@ -587,8 +586,11 @@ function reader() {
                     $(".educationEdit").on('click',educationEdit);
                     $(".educationDelete").on('click',educationDelete);
                     $("#educationAdd").show();
+                }else {
+                    $('.content-education-noData').show();
                 }
-                if(worksExpList){
+                if(worksExpList && worksExpList.length>0){
+                    $('.content-work-noData').hide();
                     var html=''
                     for (var i=0,len=worksExpList.length;i<len;i++){
                         var item=worksExpList[i];
@@ -612,19 +614,22 @@ function reader() {
                     $(".workDelete").on('click',workDelete);
                     $("#workAdd").show();
 
+                }else {
+                    $('.content-work-noData').show()
                 }
-                if(projectsExpList){
+                if(projectsExpList && projectsExpList.length>0){
+                    $('.content-project-noData').hide()
                     var html=''
                     for (var i=0,len=projectsExpList.length;i<len;i++){
                         var item=projectsExpList[i];
-                        html='<dl> ' +
+                        html+='<dl> ' +
                             '<dt class="clearfix"> ' +
                             '<div class="grid-left">' +
                             '<span class="projectName sub-title">'+item.projectName+'</span> ' +
                             '<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span> </div> ' +
                             '<div class="grid-right"> ' +
-                            '<a href="javascript:void (0)" class="projectEdit" data-sn=""> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
-                            '<a href="javascript:void (0)" class="projectDelete" data-sn=""><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> ' +
+                            '<a href="javascript:void (0)" class="projectEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
+                            '<a href="javascript:void (0)" class="projectDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> ' +
                             '<dd> ' +
                             '<label for="">项目职责:</label> ' +
                             '<div>'+item.projectDuty+'</div> </dd> ' +
@@ -636,6 +641,8 @@ function reader() {
                     $(".projectEdit").on('click',projectEdit);
                     $(".projectDelete").on('click',projectDelete);
                     $("#projectAdd").show();
+                }else {
+                    $('.content-project-noData').show()
                 }
             }
         }

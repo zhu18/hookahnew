@@ -124,10 +124,9 @@ public class AuthController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/auth/optAuthInfo")
+    @RequestMapping(value = "/api/auth/optAuthInfo")
     @ResponseBody
     public ReturnData optAuthInfo(@RequestBody MgZbProviderVo vo) {
-
         try {
             String userId = getCurrentUser().getUserId();
             vo.setUserId(userId);
