@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -23,17 +24,17 @@ import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import com.jusfoun.hookah.crowd.util.DictionaryUtil;
 import com.mongodb.BasicDBObject;
-import com.mongodb.CommandResult;
-import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,57 +78,91 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                 Query query = new Query();
                 switch (optAuthType) {
                     case "1":
-//                        query.addCriteria(Criteria.where("_id").is(userId).and("educationsExpList.sn").is(optArrAySn));
-//                        mgZbProvider = mongoTemplate.findOne(query, MgZbProvider.class, "educationsExpList");
-//                        MgZbProvider mgZbProvider2 = mongoTemplate.findOne(query, MgZbProvider.class);
-
-//                        query.addCriteria(Criteria.where("_id").is(userId).
-//                                and("educationsExpList").elemMatch(Criteria.where("sn").is(userId)).is(optArrAySn));
-//                        query.addCriteria(new Criteria().elemMatch(Criteria.where("_id").is(userId).and("educationsExpList.sn").is(optArrAySn)));
-
-//                        String jsonSql = "{'_id':'73b93bda947611e7b7dd26d6fa745dc9'},{'educationsExpList':{'$elemMatch':{'sn':'SN_1_1507875843788'}}}";
-//                        String jsonSql = "{'_id': '" + userId + "'},{'educationsExpList':{'$elemMatch':{'sn': '" + optArrAySn + "'}}}";
-//                        CommandResult commandResult = mongoTemplate.executeCommand(jsonSql);
-//                        CommandResult commandResult = mongoTemplate.executeCommand((DBObject)JSON.parseObject(jsonSql));
-
-
-//                        query.addCriteria(Criteria.where("_id").is(userId))
-//                                .addCriteria(Criteria.where("educationsExpList")
-//                                        .elemMatch(Criteria.where("sn").is(optArrAySn)));
-
-                        Criteria criatira = new Criteria();
-                        criatira.andOperator(Criteria.where("_id").is(userId),
-                                Criteria.where("educationsExpList")
-                                        .elemMatch(Criteria.where("sn").is(optArrAySn)));
-
-//                        Query query2 = new Query(Criteria.where("educationsExpList").elemMatch(Criteria.where("sn").is(optArrAySn)));
-//                        query2.addCriteria(Criteria.where("_id").is(userId));
-//                        query2.fields().include("educationsExpList");
-
-//                        query.addCriteria(Criteria.where("_id").is(userId));
-//                        query.addCriteria(Criteria.where("educationsExpList").elemMatch(Criteria.where("sn").is(optArrAySn)));
-
-                        mgZbProvider = mongoTemplate.findOne(new Query(criatira), MgZbProvider.class);
-
-                        returnData.setData(mgZbProvider.getEducationsExpList());
+                        query.addCriteria(Criteria.where("_id").is(userId).and("educationsExpList.sn").is(optArrAySn));
+                        mgZbProvider = mongoTemplate.findOne(query, MgZbProvider.class);
+                        if(mgZbProvider != null){
+                            if(mgZbProvider.getEducationsExpList() != null){
+                                mgZbProvider.getEducationsExpList().forEach(
+                                        educationsExp -> {
+                                            if(educationsExp.getSn().equals(optArrAySn)){
+                                                returnData.setData(educationsExp);
+                                            }
+                                        }
+                                );
+                            }
+                        }
                         break;
                     case "2":
                         query.addCriteria(Criteria.where("_id").is(userId).and("worksExpList.sn").is(optArrAySn));
+                        if(mgZbProvider != null){
+                            if(mgZbProvider.getWorksExpList() != null){
+                                mgZbProvider.getWorksExpList().forEach(
+                                        worksExp -> {
+                                            if(worksExp.getSn().equals(optArrAySn)){
+                                                returnData.setData(worksExp);
+                                            }
+                                        }
+                                );
+                            }
+                        }
                         break;
                     case "3":
                         query.addCriteria(Criteria.where("_id").is(userId).and("projectsExpList.sn").is(optArrAySn));
+                        if(mgZbProvider != null){
+                            if(mgZbProvider.getProjectsExpList() != null){
+                                mgZbProvider.getProjectsExpList().forEach(
+                                        projectsExp -> {
+                                            if(projectsExp.getSn().equals(optArrAySn)){
+                                                returnData.setData(projectsExp);
+                                            }
+                                        }
+                                );
+                            }
+                        }
                         break;
                     case "4":
                         query.addCriteria(Criteria.where("_id").is(userId).and("appCaseList.sn").is(optArrAySn));
+                        if(mgZbProvider != null){
+                            if(mgZbProvider.getAppCaseList() != null){
+                                mgZbProvider.getAppCaseList().forEach(
+                                        appCase -> {
+                                            if(appCase.getSn().equals(optArrAySn)){
+                                                returnData.setData(appCase);
+                                            }
+                                        }
+                                );
+                            }
+                        }
                         break;
                     case "5":
                         query.addCriteria(Criteria.where("_id").is(userId).and("swpList.sn").is(optArrAySn));
+                        if(mgZbProvider != null){
+                            if(mgZbProvider.getSwpList() != null){
+                                mgZbProvider.getSwpList().forEach(
+                                        swp -> {
+                                            if(swp.getSn().equals(optArrAySn)){
+                                                returnData.setData(swp);
+                                            }
+                                        }
+                                );
+                            }
+                        }
                         break;
                     default:
                         query.addCriteria(Criteria.where("_id").is(userId).and("inPatentsList.sn").is(optArrAySn));
+                        if(mgZbProvider != null){
+                            if(mgZbProvider.getInPatentsList() != null){
+                                mgZbProvider.getInPatentsList().forEach(
+                                        inventionPatent -> {
+                                            if(inventionPatent.getSn().equals(optArrAySn)){
+                                                returnData.setData(inventionPatent);
+                                            }
+                                        }
+                                );
+                            }
+                        }
                         break;
                 }
-
             }
             return returnData;
         }catch (Exception e){
@@ -224,18 +259,11 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
 
             MgZbProvider mgZbProvider = mongoTemplate.findById(vo.getUserId(), MgZbProvider.class);
             if(mgZbProvider == null){
-
-//                String userId = this.getCurrentUser().getUserId();
-//                User user = userService.selectById(userId);
                 MgZbProvider mzp = new MgZbProvider();
                 BeanUtils.copyProperties(vo, mzp);
 
                 if(this.getCurrentUser().getUserType().equals(4)){
                     Organization organization = organizationService.findOrgByUserId(this.getCurrentUser().getUserId());
-//                    这段注释的代码可能不需要了
-//                    if(organization == null || !organization.getIsAuth().equals(Byte.valueOf("2"))){
-//                        return ReturnData.error("请先进行企业认证！");
-//                    }
                     mzp.setAuthType(ZbContants.ProviderAuthType.COMPANY.code);
                     mzp.setUpname(organization.getOrgName());
                     mzp.setUcity((organization.getRegion() == null || "".equals(organization.getRegion())) ? "" : DictionaryUtil.getRegionById(organization.getRegion()).getMergerName());
@@ -249,15 +277,10 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     String userId = this.getCurrentUser().getUserId();
                     User user = userService.selectById(userId);
                     UserDetail userDetail = userDetailService.selectById(user.getUserId());
-//                    这段注释的代码可能不需要了
-//                    if(userDetail == null || !userDetail.getIsAuth().equals(Byte.valueOf("2"))){
-//                        return ReturnData.error("请先进行个人认证！");
-//                    }
                     mzp.setAuthType(ZbContants.ProviderAuthType.PERSON.code);
                     mzp.setRegisterTime(DateUtil.getSimpleDate(new Date()));
                     mzp.setPhoneNum(user.getContactPhone());
                     mzp.setUpname(user.getUserName());
-//                    mzp.setUcity((userDetail.getAddress() == null || "".equals(userDetail.getAddress())) ? "" : DictionaryUtil.getRegionById(userDetail.getAddress()).getMergerName());
                     mzp.setRegisterAddr(user.getContactAddress());
                 }else{
                     return ReturnData.error("请先认证！");
@@ -278,7 +301,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     }
 
                     if(vo.getSpecialSkills() != null && vo.getSpecialSkills().size() > 0){
-                        update.addToSet("specialSkills").each(vo.getSpecialSkills());
+                        update.set("specialSkills", vo.getSpecialSkills().toArray());
                     }
 
                     if(vo.getEducationsExpList() != null && vo.getEducationsExpList().size() > 0){
@@ -441,5 +464,25 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<MgZbProvider> findByTheMgZbProviderIdAndSn(String _id, String sn) {
+        return null;
+    }
+
+
+    public static void main(String[] args){
+
+        List<String> list = new ArrayList<>();
+        list.add("张三");
+        list.add("李四");
+        list.add("王五");
+
+        String[] strings = new String[list.size()];
+
+        list.toArray(strings);
+        System.out.println(strings);
+
     }
 }
