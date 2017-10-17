@@ -1,9 +1,12 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
+import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbTrusteeRecord;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.PayService;
+import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import com.jusfoun.hookah.crowd.service.ZbTrusteeRecordService;
 import com.jusfoun.hookah.crowd.util.AlipayConfig;
 import com.jusfoun.hookah.crowd.util.AlipayNotify;
@@ -24,6 +27,9 @@ public class PayServiceImpl implements PayService {
 
     @Resource
     private ZbTrusteeRecordService zbTrusteeRecordService;
+
+    @Resource
+    private ZbRequireService zbRequireService;
 
     @Override
     public String toPayByZFB(String requirementSn, String tradeSn, Long amount, String flagNum, String notify_url, String return_url) {
@@ -108,6 +114,16 @@ public class PayServiceImpl implements PayService {
             }
 
             if(tradeStatus.equals("TRADE_FINISHED") || tradeStatus.equals("TRADE_SUCCESS")){
+                if(zbTrusteeRecord.getRequirementId() != null){
+                    ZbRequirement zbRequirement = zbRequireService.selectById(zbTrusteeRecord.getRequirementId());
+                    if(zbTrusteeRecord.getTrusteeNum() == 1){
+                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_FB.getCode().shortValue());
+                    }else if(zbTrusteeRecord.getTrusteeNum() == 2){
+                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.WORKINGING.getCode().shortValue());
+                        zbRequirement.setTrusteePercent(100);
+                    }
+                    zbRequireService.updateByIdSelective(zbRequirement);
+                }
                 zbTrusteeRecord.setStatus(Short.parseShort("1"));
                 int n = zbTrusteeRecordService.updateByIdSelective(zbTrusteeRecord);
                 logger.info("支付宝支付成功====>" + n);
