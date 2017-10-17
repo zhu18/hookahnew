@@ -241,7 +241,6 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
         try {
-
             //参数校验
             if(Objects.isNull(zbComment) || null == zbComment.getProgramId() || null==zbComment.getRequirementId()){
                 returnData.setCode(ExceptionConst.AssertFailed);
@@ -262,12 +261,12 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),"requireCommentTime", DateUtils.getCurrentTimeFormat(new Date()));
             }
 
-            //修改报名表状态
+            //修改报名表状态(交易完成)
             List<Condition> filters = new ArrayList<Condition>();
             filters.add(Condition.eq("requirementId",zbComment.getRequirementId()));
             filters.add(Condition.eq("userId",user.getUserId()));
             ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
-            zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.REVIEW.getCode()).shortValue());//记得改成常量
+            zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.DEAL_SUCCESS.getCode()).shortValue());//记得改成常量
             zbRequireApplyWebsiteService.updateByCondition(zbRequirementApply,filters);
 
             returnData.setData(zbComment);
@@ -343,7 +342,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             zbRequirementApply.setId(zbProgramVo.getApplyId());
             zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.REVIEW.getCode()).shortValue());//记得改成常量
             zbRequirementApplyMapper.updateByPrimaryKeySelective(zbRequirementApply);
-
+            returnData.setData(zbProgramVo);
             returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求保存方案成功@");
             logger.info("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求保存方案成功@");
         } catch (Exception e) {

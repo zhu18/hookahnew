@@ -59,6 +59,7 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
             zbRequirementApply.setUserId(user == null ? "" : user.getUserId());
             zbRequirementApply.setStatus(Short.valueOf("0"));//默认已报名
             zbRequirementApplyMapper.insertAndGetId(zbRequirementApply);
+            returnData.setData(buildZbRequirementApplyVo(zbRequirementApply,user.getUserId()));
             logger.info("@用户" +user==null?"":user.getUserName()+ "报名需求ID为" + zbRequirementApply.getRequirementId() + "的需求成功@");
         } catch (Exception e) {
             logger.error("@用户报名需求ID为" + zbRequirementApply.getRequirementId() + "的需求失败@");
@@ -90,7 +91,11 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
             filters.add(Condition.eq("userId",userId));
             ZbRequirementApply zbRequirementApply = this.selectOne(filters);
             returnData.setData(buildZbRequirementApplyVo(zbRequirementApply,userId));
-            logger.info("@查询报名[id:" + zbRequirementApply==null?"未报名":zbRequirementApply.getId() + "]成功@");
+            if(null != zbRequirementApply){
+                logger.info("@查询报名[id:" + zbRequirementApply.getId() + "]成功@");
+            } else {
+                logger.info("该用户没有报名");
+            }
         } catch (Exception e) {
             logger.error("@查询需求[id:" + reqId + "]报名信息失败@");
             e.printStackTrace();

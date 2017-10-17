@@ -194,6 +194,14 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 zbRequirementApply.setId(applyId);
                 zbRequirementApply.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
                zbRequireApplyService.updateByIdSelective(zbRequirementApply);
+
+               //其他未选中用户改为未中标
+                List<Condition> filters = new ArrayList<>();
+                filters.add(Condition.eq("requirementId",id));
+                filters.add(Condition.ne("userId",zbRequirementApply.getUserId()));
+                ZbRequirementApply cancelApply = new ZbRequirementApply();
+                cancelApply.setStatus(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.getCode().shortValue());
+                zbRequireApplyService.updateByCondition(cancelApply,filters);
             }
             ZbProgram zbProgram = zbProgramMapper.selectByPrimaryKey(programId);
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue())&& zbProgram.getStatus()!=null){
@@ -206,6 +214,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                     zbProgram.setCheckAdvice(checkAdvice);
                 }
               zbProgramService.updateByIdSelective(zbProgram);
+              //修改报名表状态为验收中（ACCEPTANCE）
+                ZbRequirementApply apply = new ZbRequirementApply();
+                apply.setId(applyId);
+                apply.setStatus(ZbContants.ZbRequireMentApplyStatus.ACCEPTANCE.getCode().shortValue());
+                zbRequireApplyService.updateByIdSelective(apply);
             }
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_FK.getCode().shortValue())&& zbProgram.getStatus()!=null){
                 zbProgram.setId(programId);
@@ -214,6 +227,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                     zbProgram.setCheckAdvice(checkAdvice);
                 }
                 zbProgramService.updateByIdSelective(zbProgram);
+                //平台审核不通过 修改报名表状态为工作中
+                ZbRequirementApply apply = new ZbRequirementApply();
+                apply.setId(applyId);
+                apply.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.getCode().shortValue());
+                zbRequireApplyService.updateByIdSelective(apply);
             }
             super.updateByIdSelective(zbRequirement);
             ZbRequirement zbRequirement1 =zbRequirementMapper.selectByPrimaryKey(id);
