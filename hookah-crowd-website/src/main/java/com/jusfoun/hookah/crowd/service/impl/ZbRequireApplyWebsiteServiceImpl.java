@@ -90,7 +90,7 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
             filters.add(Condition.eq("userId",userId));
             ZbRequirementApply zbRequirementApply = this.selectOne(filters);
             returnData.setData(buildZbRequirementApplyVo(zbRequirementApply,userId));
-            logger.info("@查询报名[id:" + zbRequirementApply.getId() + "]成功@");
+            logger.info("@查询报名[id:" + zbRequirementApply==null?"未报名":zbRequirementApply.getId() + "]成功@");
         } catch (Exception e) {
             logger.error("@查询需求[id:" + reqId + "]报名信息失败@");
             e.printStackTrace();
