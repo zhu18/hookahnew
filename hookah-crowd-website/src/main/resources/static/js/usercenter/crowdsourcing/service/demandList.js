@@ -24,10 +24,10 @@ function loadPageData(data) { //渲染页面数据
       tempState = '报名中';
       switch (data[i].operStatus) {
         case 0:
-          tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp ">我要报名</a>';
+          tempEdit = '<a href="/usercenter/missionApply?id=' + data[i].id + '" class="signUp ">我要报名</a>';
           break;
         case 1:
-          tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">已报名</a>';
+          tempEdit = '<a href="/usercenter/missionApply?id=' + data[i].id + '" class="signUp">已报名</a>';
           break;
       }
     }else{//报名结束
@@ -37,7 +37,7 @@ function loadPageData(data) { //渲染页面数据
           tempEdit = '<a href="javascript:void(0)" class="signUp timeover">我要报名</a>';
           break;
         case 1:
-          tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">已报名</a>';
+          tempEdit = '<a href="/usercenter/missionApply?id=' + data[i].id + '" class="signUp">已报名</a>';
           break;
       }
 

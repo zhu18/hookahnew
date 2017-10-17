@@ -295,7 +295,7 @@ $(document).on('click', '.j_submitResult', function () {
         console.log(resultData);
         $.ajax({
           type: 'post',
-          url: "/api/program/add",
+          url: "/api/program/save",
           cache: false,
           contentType: 'application/json',
           data: JSON.stringify(resultData),

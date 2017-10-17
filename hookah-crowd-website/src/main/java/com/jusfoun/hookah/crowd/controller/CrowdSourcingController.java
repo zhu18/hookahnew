@@ -92,6 +92,13 @@ public class CrowdSourcingController {
     public String missionDetail(Model model) {
         return "usercenter/crowdsourcing/service/missionDetail";
     }
+    /**
+     * 服务商 报名
+     */
+    @RequestMapping(value = "/usercenter/missionApply", method = RequestMethod.GET)
+    public String missionApply(Model model) {
+        return "usercenter/crowdsourcing/service/missionApply";
+    }
 
     /**
      * 服务商 个人认证

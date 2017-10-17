@@ -199,6 +199,7 @@
 .checkMissionBox table td label{ margin-right:20px; cursor:pointer; }
 .checkMissionBox table td input{ vertical-align:middle}
 .checkMissionBox table td textarea{margin: 10px 0 0 0; height: 156px; width: 418px;}
+.applyBox table td textarea{margin: 10px 0 0 0; height: 100px; width: 418px;}
 .submitResultBox{width: 970px;}
 .submitResultBox table td textarea{ width: 789px;}
 .hasPayMoney{ display: inline-block;    margin-left: 50px;}
