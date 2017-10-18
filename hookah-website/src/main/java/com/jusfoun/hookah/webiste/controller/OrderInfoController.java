@@ -685,6 +685,11 @@ public class OrderInfoController extends BaseController {
         return ReturnData.success(map);
     }
 
+    /**
+     * 重新生成api Token
+     * @param mgOrderGoods
+     * @return
+     */
     @RequestMapping(value = "/order/reCreateToken", method = RequestMethod.GET)
     @ResponseBody
     public ReturnData reCreateToken(MgOrderGoods mgOrderGoods){
@@ -693,5 +698,25 @@ public class OrderInfoController extends BaseController {
             map = orderInfoService.reCreateToken(mgOrderGoods);
         }
         return ReturnData.success(map);
+    }
+
+    /**
+     * 查询api调用日志
+     * @return
+     */
+    @RequestMapping(value = "/order/findInvokeStatus", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnData findInvokeStatus(String orderSn, String goodsSn){
+        Map map = new HashMap();
+        try {
+            if (StringUtils.isNotBlank(orderSn) && StringUtils.isNotBlank(goodsSn)){
+                map = orderInfoService.findInvokeStatus(orderSn,goodsSn);
+            }
+            return ReturnData.success(map);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("获取API调用日志失败！{} {}", orderSn, goodsSn);
+            return ReturnData.error(e.getMessage());
+        }
     }
 }
