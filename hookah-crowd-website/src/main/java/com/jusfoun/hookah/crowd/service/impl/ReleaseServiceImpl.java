@@ -417,6 +417,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     filters1.add(Condition.eq("id", zbRequirement.getId()));
                 }
                 if(zbRequirement != null){
+                    //添加需求验收时间
+                    mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.REQUIREDACCEPTTIME, program.getAddTime().toString());
                     //需方验收通过
                     if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_SUCCESS.getCode())){
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_FK.getCode().shortValue());
@@ -440,10 +442,6 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
     public ReturnData getInsertEvaluation(int level, String content, Long programId, String userId){
         if(programId != null){
             List<Condition> filters = new ArrayList<>();
-            List<Condition> filters1 = new ArrayList<>();
-            if(StringUtils.isNotBlank(programId.toString())){
-                filters.add(Condition.eq("programId", programId));
-            }
             ZbProgram zbProgram = zbProgramService.selectById(programId);
             ZbComment zbComment = new ZbComment();
             zbComment.setRequirementId(zbProgram.getRequirementId());
@@ -454,18 +452,19 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             zbComment.setAddTime(new Date());
             zbComment.setUserType(1);
             ZbComment insert = zbCommentService.insert(zbComment);
+
             //评价完之后变更需求状态为交易完成
-            filters.add(Condition.eq("userType", 1));
-            ZbComment comment = zbCommentService.selectOne(filters);
             ZbRequirement zbRequirement = zbRequireService.selectById(zbProgram.getRequirementId());
             if(zbRequirement.getId() != null){
-                filters1.add(Condition.eq("id", zbRequirement.getId()));
+                filters.add(Condition.eq("id", zbRequirement.getId()));
             }
             if(zbRequirement != null){
+                //需求方评价时间
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.NEEDEVALUATETIME, zbComment.getAddTime().toString());
                 if(zbComment != null){
-                    if(comment.getUserType() == 1){
+                    if(zbComment.getUserType() == 1){
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_FAIL.getCode().shortValue());
-                        zbRequireService.updateByCondition(zbRequirement,filters1);
+                        zbRequireService.updateByCondition(zbRequirement,filters);
                     }
                 }
             }
@@ -508,10 +507,12 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         filter.add(Condition.eq("id", requirementId));
         ZbRequirement zbRequirement = zbRequireService.selectOne(filter);
         if(zbRequirement != null){
-            if(trusteePercent != null){
-                zbRequirement.setId(zbRequirement.getId());
-                zbRequirement.setTrusteePercent(Integer.parseInt(trusteePercent));
-                zbRequireService.updateByIdSelective(zbRequirement);
+            if(zbRequirement.getStatus().equals(Short.parseShort("3"))) {
+                if (trusteePercent != null) {
+                    zbRequirement.setId(zbRequirement.getId());
+                    zbRequirement.setTrusteePercent(Integer.parseInt(trusteePercent));
+                    zbRequireService.updateByIdSelective(zbRequirement);
+                }
             }
             ZbTrusteeRecord zbTrusteeRecord = new ZbTrusteeRecord();
             zbTrusteeRecord.setUserId(zbRequirement.getUserId());
@@ -519,6 +520,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             zbTrusteeRecord.setRewardMoney(zbRequirement.getRewardMoney());
             zbTrusteeRecord.setTrusteePercent(zbRequirement.getTrusteePercent());
             if(zbRequirement.getStatus().equals(Short.parseShort("3"))){
+                //添加悬赏费用托管时间
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.TRUSTEETIME, zbTrusteeRecord.getAddTime().toString());
                 //第一次托管
                 zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
                 zbTrusteeRecord.setTrusteeNum(1);

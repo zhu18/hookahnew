@@ -17,6 +17,8 @@ public class ZbContants {
     public static final String SUBMITTIME = "submitTime";
     public static final String PLATEVALTIME = "platevalTime";
     public static final String REQUIREDACCEPTTIME = "requiredAcceptTime";
+    //需求方评价
+    public static final String NEEDEVALUATETIME = "needEvaluateTime";
     //资格评选时间
     public static final String SELECTTIME = "selectTime";
 
