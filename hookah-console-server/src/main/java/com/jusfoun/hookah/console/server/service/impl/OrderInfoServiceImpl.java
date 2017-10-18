@@ -1324,7 +1324,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     public Map findInvokeStatus(String orderSn, String goodsSn) throws Exception{
         Map resultMap = new HashMap();
         String apiRestUrl = myProps.getApi().get("apiRestUrl");
-        apiRestUrl = apiRestUrl+"?orderSn="+orderSn+"&goodsSn="+goodsSn;
+        StringBuilder apiRestUri = new StringBuilder();
+        apiRestUri.append(apiRestUrl).append("?orderSn=").append(orderSn).append("&goodsSn=").append(goodsSn);
+        apiRestUrl = apiRestUri.toString();
         resultMap = HttpClientUtil.GetMethod(apiRestUrl);
         logger.info("获取API调用日志！{} {}", orderSn, goodsSn, JsonUtils.toJson(resultMap));
         return resultMap;
