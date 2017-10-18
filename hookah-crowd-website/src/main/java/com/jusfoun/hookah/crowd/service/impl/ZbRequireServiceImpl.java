@@ -9,6 +9,7 @@ import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.zb.*;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -21,6 +22,7 @@ import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -57,6 +59,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     @Resource
     MgZbRequireStatusService mgZbRequireStatusService;
+
+    @Resource
+    MgZbProviderService mgZbProviderService;
 
 
     @Resource
@@ -368,6 +373,50 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             //return ReturnData.error("系统错误");
         }
 
+    }
+
+    //服务商管理
+
+    @Override
+    public ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize, MgZbProvider mgZbProvider, Date startTime, Date endTime) {
+
+        PageInfo<MgZbProvider> pageInfo = new PageInfo<>();
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(currentPage)) {
+                pageNumberNew = Integer.parseInt(currentPage);
+            }
+            int pageSizeNew = HookahConstants.PAGE_SIZE;
+            if (com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+            PageHelper.startPage(pageNumberNew, pageSizeNew);
+
+            List<Condition> filters = new ArrayList();
+            if (mgZbProvider.getAuthType()!=null) {
+                filters.add(Condition.eq("authType", mgZbProvider.getAuthType()));
+            }
+            if (mgZbProvider.getStatus()!=null &&mgZbProvider.getStatus()!=-1) {
+                filters.add(Condition.eq(" status", mgZbProvider.getStatus()));
+            }
+            if (mgZbProvider.getUpname()!=null) {
+                filters.add(Condition.like("upname", mgZbProvider.getUpname()));
+            }
+            List<Sort> sorts = new ArrayList<>();
+            sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
+
+            Pagination<MgZbProvider> pagination = mgZbProviderService.getListInPageFromMongo(pageNumberNew,pageSizeNew,filters,sorts,startTime,endTime);
+
+            returnData.setData(pagination);
+
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
     }
 
 }

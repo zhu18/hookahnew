@@ -3,6 +3,7 @@ package com.jusfoun.hookah.crowd.controller;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Controller
 public class RequireController extends BaseController {
@@ -171,5 +173,21 @@ public class RequireController extends BaseController {
     @RequestMapping("/require/recommendTasks")
     public ReturnData recommendTasksInfo(){
         return zbRecommendService.selectRecommendTasksInfo();
+    }
+
+    /**
+     * 服务商管理
+     *
+     * @author crs
+     */
+    @RequestMapping("/api/require/AllProvider")
+    @ResponseBody
+    public ReturnData getAllProvider(String currentPage, String pageSize, MgZbProvider mgZbProvider, Date startTime, Date endTime) {
+        try {
+            return zbRequireService.getAllProvider(currentPage,pageSize,mgZbProvider,startTime,endTime);
+        } catch (Exception e) {
+            logger.error("服务商查询失败", e);
+            return ReturnData.error("服务商查询失败");
+        }
     }
 }

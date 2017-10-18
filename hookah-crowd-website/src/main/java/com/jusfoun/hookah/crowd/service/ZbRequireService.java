@@ -3,10 +3,12 @@ package com.jusfoun.hookah.crowd.service;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
@@ -27,4 +29,7 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
     List<ZbRequirement> selectTradeListByUID(String userId);
 
     ReturnData selectRequirementTypeInfo();
+
+    //服务商管理
+    ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize, MgZbProvider mgZbProvider , Date startTime, Date endTime);
 }
