@@ -57,4 +57,18 @@
         WHERE zr.user_id = #{userId} GROUP BY `level`
   </select>
 
+  <select id="getCommentRecordByUserId" resultType="com.jusfoun.hookah.core.domain.zb.ZbComment">
+        SELECT
+            zc.`level`,
+            zc.content,
+            zc.add_time
+        FROM
+            zb_comment zc
+        LEFT JOIN zb_requirement zr ON zc.requirement_id = zr.id
+        WHERE
+            zr.user_id = #{userId}
+        ORDER BY
+            zc.add_time DESC
+  </select>
+
 </mapper>

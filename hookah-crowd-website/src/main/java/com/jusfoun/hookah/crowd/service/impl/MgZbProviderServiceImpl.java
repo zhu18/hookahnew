@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -12,6 +11,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.domain.zb.vo.MgZbProviderVo;
+import com.jusfoun.hookah.core.domain.zb.vo.ProviderQueryVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbCheckVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -26,8 +26,8 @@ import com.jusfoun.hookah.crowd.util.DictionaryUtil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -72,22 +72,24 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
 
             String userId = this.getCurrentUser().getUserId();
             MgZbProvider mgZbProvider = null;
-            if(!StringUtils.isNotBlank(optArrAySn) || !StringUtils.isNotBlank(optAuthType)){
+            if (!StringUtils.isNotBlank(optArrAySn) || !StringUtils.isNotBlank(optAuthType)) {
                 mgZbProvider = mongoTemplate.findById(userId, MgZbProvider.class);
                 returnData.setData(mgZbProvider);
                 returnData.setMessage("查询成功");
-            }else{
+            } else {
 
                 Query query = new Query();
+                query.addCriteria(Criteria.where("_id").is(userId));
+                mgZbProvider = mongoTemplate.findOne(query, MgZbProvider.class);
                 switch (optAuthType) {
                     case "1":
-                        query.addCriteria(Criteria.where("_id").is(userId).and("educationsExpList.sn").is(optArrAySn));
-                        mgZbProvider = mongoTemplate.findOne(query, MgZbProvider.class);
-                        if(mgZbProvider != null){
-                            if(mgZbProvider.getEducationsExpList() != null){
+//                        query.addCriteria(Criteria.where("_id").is(userId).and("educationsExpList.sn").is(optArrAySn));
+//                        mgZbProvider = mongoTemplate.findOne(query, MgZbProvider.class);
+                        if (mgZbProvider != null) {
+                            if (mgZbProvider.getEducationsExpList() != null) {
                                 mgZbProvider.getEducationsExpList().forEach(
                                         educationsExp -> {
-                                            if(educationsExp.getSn().equals(optArrAySn)){
+                                            if (educationsExp.getSn().equals(optArrAySn)) {
                                                 returnData.setData(educationsExp);
                                             }
                                         }
@@ -96,12 +98,13 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                         }
                         break;
                     case "2":
-                        query.addCriteria(Criteria.where("_id").is(userId).and("worksExpList.sn").is(optArrAySn));
-                        if(mgZbProvider != null){
-                            if(mgZbProvider.getWorksExpList() != null){
+//                        query.addCriteria(Criteria.where("_id").is(userId));
+//                        mgZbProvider = mongoTemplate.findOne(query, MgZbProvider.class);
+                        if (mgZbProvider != null) {
+                            if (mgZbProvider.getWorksExpList() != null) {
                                 mgZbProvider.getWorksExpList().forEach(
                                         worksExp -> {
-                                            if(worksExp.getSn().equals(optArrAySn)){
+                                            if (worksExp.getSn().equals(optArrAySn)) {
                                                 returnData.setData(worksExp);
                                             }
                                         }
@@ -110,12 +113,12 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                         }
                         break;
                     case "3":
-                        query.addCriteria(Criteria.where("_id").is(userId).and("projectsExpList.sn").is(optArrAySn));
-                        if(mgZbProvider != null){
-                            if(mgZbProvider.getProjectsExpList() != null){
+//                        query.addCriteria(Criteria.where("_id").is(userId).and("projectsExpList.sn").is(optArrAySn));
+                        if (mgZbProvider != null) {
+                            if (mgZbProvider.getProjectsExpList() != null) {
                                 mgZbProvider.getProjectsExpList().forEach(
                                         projectsExp -> {
-                                            if(projectsExp.getSn().equals(optArrAySn)){
+                                            if (projectsExp.getSn().equals(optArrAySn)) {
                                                 returnData.setData(projectsExp);
                                             }
                                         }
@@ -124,12 +127,12 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                         }
                         break;
                     case "4":
-                        query.addCriteria(Criteria.where("_id").is(userId).and("appCaseList.sn").is(optArrAySn));
-                        if(mgZbProvider != null){
-                            if(mgZbProvider.getAppCaseList() != null){
+//                        query.addCriteria(Criteria.where("_id").is(userId).and("appCaseList.sn").is(optArrAySn));
+                        if (mgZbProvider != null) {
+                            if (mgZbProvider.getAppCaseList() != null) {
                                 mgZbProvider.getAppCaseList().forEach(
                                         appCase -> {
-                                            if(appCase.getSn().equals(optArrAySn)){
+                                            if (appCase.getSn().equals(optArrAySn)) {
                                                 returnData.setData(appCase);
                                             }
                                         }
@@ -138,12 +141,12 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                         }
                         break;
                     case "5":
-                        query.addCriteria(Criteria.where("_id").is(userId).and("swpList.sn").is(optArrAySn));
-                        if(mgZbProvider != null){
-                            if(mgZbProvider.getSwpList() != null){
+//                        query.addCriteria(Criteria.where("_id").is(userId).and("swpList.sn").is(optArrAySn));
+                        if (mgZbProvider != null) {
+                            if (mgZbProvider.getSwpList() != null) {
                                 mgZbProvider.getSwpList().forEach(
                                         swp -> {
-                                            if(swp.getSn().equals(optArrAySn)){
+                                            if (swp.getSn().equals(optArrAySn)) {
                                                 returnData.setData(swp);
                                             }
                                         }
@@ -152,12 +155,12 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                         }
                         break;
                     default:
-                        query.addCriteria(Criteria.where("_id").is(userId).and("inPatentsList.sn").is(optArrAySn));
-                        if(mgZbProvider != null){
-                            if(mgZbProvider.getInPatentsList() != null){
+//                        query.addCriteria(Criteria.where("_id").is(userId).and("inPatentsList.sn").is(optArrAySn));
+                        if (mgZbProvider != null) {
+                            if (mgZbProvider.getInPatentsList() != null) {
                                 mgZbProvider.getInPatentsList().forEach(
                                         inventionPatent -> {
-                                            if(inventionPatent.getSn().equals(optArrAySn)){
+                                            if (inventionPatent.getSn().equals(optArrAySn)) {
                                                 returnData.setData(inventionPatent);
                                             }
                                         }
@@ -169,7 +172,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             }
 
             return returnData;
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("认证信息获取失败", e);
             return ReturnData.error("认证信息获取失败");
         }
@@ -180,23 +183,23 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
 
         try {
 
-            if(vo.getAutherId() == null || vo.getAutherId() == "" || vo.getCheckStatus() == null){
+            if (vo.getAutherId() == null || vo.getAutherId() == "" || vo.getCheckStatus() == null) {
                 return ReturnData.error("参数不能为空！^_^");
             }
 
-            if(vo.getCheckStatus().equals(ZbContants.Provider_Auth_Status.AUTH_FAIL.code)){
-                if(vo.getCheckContent() == null || vo.getCheckContent() == ""){
+            if (vo.getCheckStatus().equals(ZbContants.Provider_Auth_Status.AUTH_FAIL.code)) {
+                if (vo.getCheckContent() == null || vo.getCheckContent() == "") {
                     return ReturnData.error("审核意见不能为空！^_^");
                 }
             }
 
             MgZbProvider mgZbProvider = mongoTemplate.findById(vo.getAutherId(), MgZbProvider.class);
 
-            if(mgZbProvider == null){
+            if (mgZbProvider == null) {
                 return ReturnData.error("服务商待审核信息不存在！^_^");
             }
 
-            if(mgZbProvider.getStatus().equals(ZbContants.Provider_Auth_Status.AUTH_CHECKING.code)){
+            if (mgZbProvider.getStatus().equals(ZbContants.Provider_Auth_Status.AUTH_CHECKING.code)) {
                 Query query = new Query(Criteria.where("_id").is(mgZbProvider.getUserId()));
                 Update update = new Update();
                 update.set("status", vo.getCheckStatus());
@@ -208,7 +211,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             }
 
             return ReturnData.success("认证信息审核成功");
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("认证信息审核异常", e);
             return ReturnData.error("系统繁忙，请稍后再试！[check]^_^");
         }
@@ -243,7 +246,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             pagination.setList(pageInfo.getList());
             returnData.setData(pagination);
             return returnData;
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("mg交易记录查询失败", e);
             return ReturnData.error("系统繁忙，请稍后再试！[trade]^_^");
         }
@@ -257,16 +260,16 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
 
         try {
 
-            if(!StringUtils.isNotBlank(vo.getUserId())){
+            if (!StringUtils.isNotBlank(vo.getUserId())) {
                 return ReturnData.error("未获取有效的用户信息！^_^");
             }
 
             MgZbProvider mgZbProvider = mongoTemplate.findById(vo.getUserId(), MgZbProvider.class);
-            if(mgZbProvider == null){
+            if (mgZbProvider == null) {
                 MgZbProvider mzp = new MgZbProvider();
                 BeanUtils.copyProperties(vo, mzp);
 
-                if(this.getCurrentUser().getUserType().equals(4)){
+                if (this.getCurrentUser().getUserType().equals(4)) {
                     Organization organization = organizationService.findOrgByUserId(this.getCurrentUser().getUserId());
                     mzp.setAuthType(ZbContants.ProviderAuthType.COMPANY.code);
                     mzp.setUpname(organization.getOrgName());
@@ -278,7 +281,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     mzp.setCreditCode(organization.getCreditCode());
                     mzp.setScopeOfBuss(organization.getIndustry());
                     mzp.setAuthType(4);//企业
-                }else if(this.getCurrentUser().getUserType().equals(2)){
+                } else if (this.getCurrentUser().getUserType().equals(2)) {
                     String userId = this.getCurrentUser().getUserId();
                     User user = userService.selectById(userId);
                     UserDetail userDetail = userDetailService.selectById(user.getUserId());
@@ -288,7 +291,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     mzp.setUpname(user.getUserName());
                     mzp.setRegisterAddr(user.getContactAddress());
                     mzp.setAuthType(2);//个人
-                }else{
+                } else {
                     return ReturnData.error("请先认证！");
                 }
                 mzp.setAddTime(new Date());
@@ -296,42 +299,42 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                 mzp.setStatus(ZbContants.Provider_Auth_Status.AUTH_CHECKING.code);
                 mongoTemplate.insert(mzp);
                 return ReturnData.success("认证信息添加成功");
-            }else{
+            } else {
 
-                if(vo.getOptType() == null){ //  插入1删除2修改3
+                if (vo.getOptType() == null) { //  插入1删除2修改3
 
                     Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
                     Update update = new Update();
 
-                    if(StringUtils.isNotBlank(vo.getProviderDesc())){
+                    if (StringUtils.isNotBlank(vo.getProviderDesc())) {
                         update.set("providerDesc", vo.getProviderDesc());
                     }
 
-                    if(vo.getSpecialSkills() != null && vo.getSpecialSkills().size() > 0){
+                    if (vo.getSpecialSkills() != null && vo.getSpecialSkills().size() > 0) {
                         update.set("specialSkills", vo.getSpecialSkills().toArray());
                     }
 
-                    if(vo.getEducationsExpList() != null && vo.getEducationsExpList().size() > 0){
+                    if (vo.getEducationsExpList() != null && vo.getEducationsExpList().size() > 0) {
                         update.addToSet("educationsExpList", vo.getEducationsExpList().get(0));
                     }
 
-                    if(vo.getWorksExpList() != null && vo.getWorksExpList().size() > 0){
+                    if (vo.getWorksExpList() != null && vo.getWorksExpList().size() > 0) {
                         update.addToSet("worksExpList", vo.getWorksExpList().get(0));
                     }
 
-                    if(vo.getProjectsExpList() != null && vo.getProjectsExpList().size() > 0){
+                    if (vo.getProjectsExpList() != null && vo.getProjectsExpList().size() > 0) {
                         update.addToSet("projectsExpList", vo.getProjectsExpList().get(0));
                     }
 
-                    if(vo.getAppCaseList() != null && vo.getAppCaseList().size() > 0){
+                    if (vo.getAppCaseList() != null && vo.getAppCaseList().size() > 0) {
                         update.addToSet("appCaseList", vo.getAppCaseList().get(0));
                     }
 
-                    if(vo.getSwpList() != null && vo.getSwpList().size() > 0){
+                    if (vo.getSwpList() != null && vo.getSwpList().size() > 0) {
                         update.addToSet("swpList", vo.getSwpList().get(0));
                     }
 
-                    if(vo.getInPatentsList() != null && vo.getInPatentsList().size() > 0){
+                    if (vo.getInPatentsList() != null && vo.getInPatentsList().size() > 0) {
                         update.addToSet("inPatentsList", vo.getInPatentsList().get(0));
                     }
 
@@ -340,16 +343,16 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     update.set("status", ZbContants.Provider_Auth_Status.AUTH_CHECKING.code);
 
                     mongoTemplate.upsert(query, update, MgZbProvider.class);
-                }else{
+                } else {
 
-                    if(vo.getOptType().equals(2)){  //插入1删除2修改3
+                    if (vo.getOptType().equals(2)) {  //插入1删除2修改3
                         Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
                         Update update = new Update();
-                        if(!StringUtils.isNotBlank(vo.getOptArrAySn())){
+                        if (!StringUtils.isNotBlank(vo.getOptArrAySn())) {
                             return ReturnData.error("认证编号参数不能为空！^_^");
                         }
                         String optSn = vo.getOptArrAySn();
-                        switch (vo.getOptAuthType()){
+                        switch (vo.getOptAuthType()) {
                             case "1":
                                 update.pull("educationsExpList", new BasicDBObject("sn", optSn));
                                 break;
@@ -370,13 +373,13 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                                 break;
                         }
                         mongoTemplate.updateFirst(query, update, MgZbProvider.class);
-                    }else if(vo.getOptType().equals(3)){ //插入1删除2修改3
+                    } else if (vo.getOptType().equals(3)) { //插入1删除2修改3
                         Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
                         Update del = new Update();
                         Update add = new Update();
-                        switch (vo.getOptAuthType()){
+                        switch (vo.getOptAuthType()) {
                             case "1":
-                                if(vo.getEducationsExpList() == null || vo.getEducationsExpList().size() < 1){
+                                if (vo.getEducationsExpList() == null || vo.getEducationsExpList().size() < 1) {
                                     return ReturnData.error("教育经历认证信息不能为空！^_^");
                                 }
                                 //先删除再添加
@@ -386,7 +389,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                                 add.addToSet("educationsExpList").each(vo.getEducationsExpList());
                                 break;
                             case "2":
-                                if(vo.getWorksExpList() == null || vo.getWorksExpList().size() < 1){
+                                if (vo.getWorksExpList() == null || vo.getWorksExpList().size() < 1) {
                                     return ReturnData.error("工作经历认证信息不能为空！^_^");
                                 }
                                 del.pull("worksExpList", new BasicDBObject("sn", vo.getWorksExpList().get(0).getSn()));
@@ -394,7 +397,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                                 add.addToSet("worksExpList", vo.getWorksExpList().get(0));
                                 break;
                             case "3":
-                                if(vo.getProjectsExpList() == null || vo.getProjectsExpList().size() < 1){
+                                if (vo.getProjectsExpList() == null || vo.getProjectsExpList().size() < 1) {
                                     return ReturnData.error("项目经历认证信息不能为空！^_^");
                                 }
                                 del.pull("projectsExpList", new BasicDBObject("sn", vo.getProjectsExpList().get(0).getSn()));
@@ -402,7 +405,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                                 add.addToSet("projectsExpList", vo.getProjectsExpList().get(0));
                                 break;
                             case "4":
-                                if(vo.getAppCaseList() == null || vo.getAppCaseList().size() < 1){
+                                if (vo.getAppCaseList() == null || vo.getAppCaseList().size() < 1) {
                                     return ReturnData.error("应用案例认证信息不能为空！^_^");
                                 }
                                 del.pull("appCaseList", new BasicDBObject("sn", vo.getAppCaseList().get(0).getSn()));
@@ -410,7 +413,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                                 add.addToSet("appCaseList", vo.getAppCaseList().get(0));
                                 break;
                             case "5":
-                                if(vo.getSwpList() == null || vo.getSwpList().size() < 1){
+                                if (vo.getSwpList() == null || vo.getSwpList().size() < 1) {
                                     return ReturnData.error("软件著作权认证信息不能为空！^_^");
                                 }
                                 del.pull("swpList", new BasicDBObject("sn", vo.getSwpList().get(0).getSn()));
@@ -418,7 +421,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                                 add.addToSet("swpList", vo.getSwpList().get(0));
                                 break;
                             default:
-                                if(vo.getInPatentsList() == null || vo.getInPatentsList().size() < 1){
+                                if (vo.getInPatentsList() == null || vo.getInPatentsList().size() < 1) {
                                     return ReturnData.error("发明专利认证信息不能为空！^_^");
                                 }
                                 del.pull("inPatentsList", new BasicDBObject("sn", vo.getInPatentsList().get(0).getSn()));
@@ -430,13 +433,13 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                         add.set("status", ZbContants.Provider_Auth_Status.AUTH_CHECKING.code);
 
                         mongoTemplate.upsert(query, add, MgZbProvider.class);
-                    }else{
+                    } else {
                         return ReturnData.error("操作类型有误！^_^");
                     }
                 }
             }
             return ReturnData.success("认证信息操作成功！^_^");
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("认证信息操作失败！^_^", e);
             return ReturnData.error("认证信息操作失败！^_^");
         }
@@ -449,9 +452,9 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             Integer userType = this.getCurrentUser().getUserType();
 
 //          现在只需要判断是否等于4（企业）和是否等于2（个人）
-            if(userType.equals(4) || userType.equals(2)){
+            if (userType.equals(4) || userType.equals(2)) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         } catch (HookahException e) {
@@ -478,13 +481,70 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             returnData.setData(mgZbProvider);
             returnData.setData2(zbCommentService.getLevelCountByUserId(this.getCurrentUser().getUserId()));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("服务商名片获取异常{}", e);
         }
         return returnData;
     }
 
-    public static void main(String[] args){
+    @Override
+    public List<MgZbProvider> selectListByCondition(ProviderQueryVo vo) {
+
+        Query query = new Query();
+//        if(vo.getAuthType() != null){
+//            query.addCriteria(Criteria.where("authType").is(vo.getAuthType()));
+//        }
+//
+//        if(vo.getAuthStatus() != null){
+//            query.addCriteria(Criteria.where("status").is(vo.getAuthStatus()));
+//        }
+//
+//        if(StringUtils.isNotBlank(vo.getUpName())){
+//            query.addCriteria(Criteria.where("upname").alike());
+//        }
+
+        Criteria criatira = new Criteria();
+
+        if (vo.getAuthType() != null) {
+            criatira.and("authType").is(vo.getAuthType());
+        }
+
+        if (vo.getAuthStatus() != null) {
+            criatira.and("status").is(vo.getAuthStatus());
+        }
+
+        if (StringUtils.isNotBlank(vo.getUpName())) {
+//            criatira.and("upname").regex(vo.getUpName());
+            criatira.and("upname").regex(".*?" + vo.getUpName() + ".*");
+        }
+
+        if (StringUtils.isNotBlank(vo.getStartTime())) {
+            criatira.and("addTime").gte(vo.getStartTime());
+        }
+
+        if (StringUtils.isNotBlank(vo.getUpName())) {
+            criatira.and("addTime").lte(vo.getEndTime());
+        }
+
+        query.addCriteria(criatira);
+
+//        List<Sort> orders = new ArrayList<>();
+//        orders.add(new Sort(Sort.Direction.DESC, vo.getSortField()));
+
+        if(StringUtils.isNotBlank(vo.getSortField())){
+            query.with(new Sort(Sort.Direction.DESC, vo.getSortField()));
+        }
+
+
+
+
+
+
+
+        return null;
+    }
+
+    public static void main(String[] args) {
 
         List<String> list = new ArrayList<>();
         list.add("张三");

@@ -14,6 +14,7 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.CommonUtils;
+import com.jusfoun.hookah.crowd.util.DateUtil;
 import com.jusfoun.hookah.crowd.util.PayConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -502,44 +503,78 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
 
     public String getManagedMoney(String requirementId, String trusteePercent){
-        String html = null;
-        List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("id", requirementId));
-        ZbRequirement zbRequirement = zbRequireService.selectOne(filter);
-        if(zbRequirement != null){
-            if(zbRequirement.getStatus().equals(Short.parseShort("3"))) {
-                if (trusteePercent != null) {
-                    zbRequirement.setId(zbRequirement.getId());
-                    zbRequirement.setTrusteePercent(Integer.parseInt(trusteePercent));
-                    zbRequireService.updateByIdSelective(zbRequirement);
-                }
-            }
-            ZbTrusteeRecord zbTrusteeRecord = new ZbTrusteeRecord();
-            zbTrusteeRecord.setUserId(zbRequirement.getUserId());
-            zbTrusteeRecord.setRequirementId(Long.parseLong(requirementId));
-            zbTrusteeRecord.setRewardMoney(zbRequirement.getRewardMoney());
-            zbTrusteeRecord.setTrusteePercent(zbRequirement.getTrusteePercent());
-            if(zbRequirement.getStatus().equals(Short.parseShort("3"))){
-                //添加悬赏费用托管时间
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.TRUSTEETIME, zbTrusteeRecord.getAddTime().toString());
-                //第一次托管
-                zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
-                zbTrusteeRecord.setTrusteeNum(1);
-            }else if (zbRequirement.getStatus().equals(Short.parseShort("7"))){
-                //第二次托管
-                zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney()*(100-zbRequirement.getTrusteePercent()));
-                zbTrusteeRecord.setTrusteeNum(2);
-            }else{
-                return "状态有误";
-            }
-            zbTrusteeRecord.setSerialNo(CommonUtils.getRequireSn("ZB","ZFB"));
-            zbTrusteeRecord.setStatus(ZbContants.Trustee_Record_Status.RECORD_INITIAL.getCode());
-            zbTrusteeRecord.setAddTime(new Date());
-            zbTrusteeRecordService.insert(zbTrusteeRecord);
 
-            html = payService.toPayByZFB(zbRequirement.getRequireSn(), zbTrusteeRecord.getSerialNo(), zbTrusteeRecord.getActualMoney() / 100, zbTrusteeRecord.getTrusteeNum().toString(), PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
-            System.out.print(html);
+        String html = null;
+
+        try {
+
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("id", requirementId));
+            ZbRequirement zbRequirement = zbRequireService.selectOne(filter);
+            if(zbRequirement != null){
+                if(zbRequirement.getStatus().equals(Short.parseShort("3"))) {
+                    if (com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(trusteePercent) && !trusteePercent.equals("30")) {
+                        zbRequirement.setId(zbRequirement.getId());
+                        zbRequirement.setTrusteePercent(Integer.parseInt(trusteePercent));
+                        zbRequireService.updateByIdSelective(zbRequirement);
+                    }
+                }
+
+                List<Condition> zbTrusFilter = new ArrayList<>();
+                zbTrusFilter.add(Condition.eq("requirementId", requirementId));
+                zbTrusFilter.add(Condition.eq("status", Short.parseShort("0")));
+                zbTrusFilter.add(Condition.eq("userId", getCurrentUser().getUserId()));
+                ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(zbTrusFilter);
+                if(zbTrusteeRecord != null){
+                    if(zbRequirement.getStatus().equals(Short.parseShort("3"))){
+                        //第一次托管
+                        zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                        zbTrusteeRecord.setTrusteeNum(1);
+                    }else if (zbRequirement.getStatus().equals(Short.parseShort("7"))){
+                        //第二次托管
+                        zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney()*(100-zbRequirement.getTrusteePercent()));
+                        zbTrusteeRecord.setTrusteeNum(2);
+                    }else{
+                        return "状态有误";
+                    }
+                    zbTrusteeRecordService.updateById(zbTrusteeRecord);
+
+                }else{
+                    zbTrusteeRecord = new ZbTrusteeRecord();
+                    zbTrusteeRecord.setUserId(zbRequirement.getUserId());
+                    zbTrusteeRecord.setRequirementId(Long.parseLong(requirementId));
+                    zbTrusteeRecord.setRewardMoney(zbRequirement.getRewardMoney());
+                    zbTrusteeRecord.setTrusteePercent(zbRequirement.getTrusteePercent());
+                    if(zbRequirement.getStatus().equals(Short.parseShort("3"))){
+                        //第一次托管
+                        zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney()*zbRequirement.getTrusteePercent());
+                        zbTrusteeRecord.setTrusteeNum(1);
+                    }else if (zbRequirement.getStatus().equals(Short.parseShort("7"))){
+                        //第二次托管
+                        zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney()*(100-zbRequirement.getTrusteePercent()));
+                        zbTrusteeRecord.setTrusteeNum(2);
+                    }else{
+                        return "状态有误";
+                    }
+                    zbTrusteeRecord.setSerialNo(CommonUtils.getRequireSn("ZB","ZFB"));
+                    zbTrusteeRecord.setStatus(ZbContants.Trustee_Record_Status.RECORD_INITIAL.getCode());
+                    zbTrusteeRecord.setAddTime(new Date());
+                    zbTrusteeRecordService.insert(zbTrusteeRecord);
+                }
+
+                if(zbRequirement.getStatus().equals(Short.parseShort("3"))){
+                    //添加悬赏费用托管时间
+                    mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.TRUSTEETIME, DateUtil.getSimpleDate(new Date()));
+                }
+
+                html = payService.toPayByZFB(zbRequirement.getRequireSn(), zbTrusteeRecord.getSerialNo(), zbTrusteeRecord.getActualMoney() / 100, zbTrusteeRecord.getTrusteeNum().toString(), PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
+                System.out.print(html);
+            }
+
+        }catch (Exception e){
+            logger.error("支付回调后续处理异常{}", e);
         }
+
         return html;
     }
 }

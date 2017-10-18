@@ -2,6 +2,7 @@ package com.jusfoun.hookah.crowd.service;
 
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.domain.zb.vo.MgZbProviderVo;
+import com.jusfoun.hookah.core.domain.zb.vo.ProviderQueryVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbCheckVo;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -28,4 +29,6 @@ public interface MgZbProviderService extends GenericService<MgZbProvider, String
     List<MgZbProvider> findByTheMgZbProviderIdAndSn(String _id, String sn);
 
     ReturnData getProviderCard();
+
+    List<MgZbProvider> selectListByCondition(ProviderQueryVo vo);
 }

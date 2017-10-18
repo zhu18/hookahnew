@@ -28,4 +28,9 @@ public class zbCommentServiceImpl extends GenericServiceImpl<ZbComment, Long> im
     public List<ZbCommentShowVo> getLevelCountByUserId(String userId) {
         return zbCommentMapper.getLevelCountByUserId(userId);
     }
+
+    @Override
+    public List<ZbComment> getCommentRecordByUserId(String userId) {
+        return zbCommentMapper.getCommentRecordByUserId(userId);
+    }
 }

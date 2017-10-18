@@ -12,4 +12,6 @@ public interface ZbCommentMapper extends GenericDao<ZbComment> {
     int insertAndGetId(ZbComment zbComment);
 
     List<ZbCommentShowVo> getLevelCountByUserId(@Param("userId") String userId);
+
+    List<ZbComment> getCommentRecordByUserId(@Param("userId") String userId);
 }

@@ -17,4 +17,6 @@ public interface ZbCommentService extends GenericService<ZbComment, Long> {
      * @return
      */
     List<ZbCommentShowVo> getLevelCountByUserId(String userId);
+
+    List<ZbComment> getCommentRecordByUserId(String userId);
 }
