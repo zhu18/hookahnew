@@ -67,25 +67,24 @@ function renderDOM() { //请求数据
 
 
 function initOneDataRequirementTypeInfoDOM(selector,data){
-  if(!data.length){
-    $(selector).html('无信息');
-
-    return;
+  if(data.length){
+    console.log(data[0].title);
+    let initOneDataRequirementTypeInfoDOM='';
+    initOneDataRequirementTypeInfoDOM+='\
+          <div class="toBeServiceDemandName">'+data[0].title+'</div>\
+        <div class="toBeServiceDeadData">交付截止日期：'+data[0].deliveryDeadline+'</div>\
+        <div class="toBeServiceLastTime">报名剩余时间：'+data[0].applyLastTime+'</div>\
+        <div class="toBeServiceMoney">￥'+ (data[0].rewardMoney / 100 ) +'元  </div>\
+        <div class="toBeServiceHasApply">已报名：'+data[0].count+'人</div>\
+        <a class="applyBtn toBeServiceApply" href="'+data[0].id+'">我要报名</a>';
+    $(selector).html(initOneDataRequirementTypeInfoDOM);
+  }else{
+    $(selector).prev().html('找数据<br>就上数据星河').addClass('mt90');
+    $(selector).next().remove();
+    $("<a href='#' class='noDataButton'>立即发需求</a>").insertAfter(selector);
+    $(selector).remove();
   }
-  console.log(data[0].title);
-  let initOneDataRequirementTypeInfoDOM='';
-  initOneDataRequirementTypeInfoDOM+='\
-        <div class="toBeServiceDemandName">'+data[0].title+'</div>\
-      <div class="toBeServiceDeadData">交付截止日期：'+data[0].deliveryDeadline+'</div>\
-      <div class="toBeServiceLastTime">报名剩余时间：'+data[0].applyLastTime+'</div>\
-      <div class="toBeServiceMoney">￥'+ (data[0].rewardMoney / 100 ) +'元  </div>\
-      <div class="toBeServiceHasApply">已报名：'+data[0].count+'人</div>\
-      <a class="applyBtn toBeServiceApply" href="'+data[0].id+'">我要报名</a>';
-  console.log(data[0]);
-
-  $(selector).html(initOneDataRequirementTypeInfoDOM);
 }
-
 
 
 function requirementTypeInfo(selector,data) {
