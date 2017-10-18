@@ -48,7 +48,6 @@ class auditingController {
                     requirementId:$scope.id,
                     checkContent:$scope.checkContent,
                     checkStatus:checkStatus
-
                 }
             });
             promise.then(function (res, status, config, headers) {

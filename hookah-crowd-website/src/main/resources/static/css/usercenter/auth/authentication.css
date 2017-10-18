@@ -66,6 +66,7 @@
 .Authentication-itemBox .Authentication-content{
     padding: 10px
 }
+.Authentication-itemBox .Authentication-content .no-data{padding: 20px;display: none}
 .Authentication-itemBox .Authentication-content .content{}
 .content dl{border-bottom: 1px solid #e5e5e5}
 .content dl dt,.content dl dd{
@@ -100,7 +101,7 @@
 }
 .from td label{
     display: inline-block;
-    width: 70px;
+    width: 85px;
 }
 .from td input{
     height: 25px;

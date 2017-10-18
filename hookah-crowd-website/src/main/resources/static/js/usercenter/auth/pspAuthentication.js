@@ -43,7 +43,6 @@ $('#infoAddSave').on('click',function () {
 
 });
 // 添加教育经历
-
 $("#educationAdd").on('click',function () {
     var html='<dl> ' +
         '<form action="" id="form">' +
@@ -72,8 +71,32 @@ $("#educationAdd").on('click',function () {
         ' </tr> </table> </form> </dl>'
 
          $(".content-education").append(html);
-         $("#educationAddSave").on('click',educationAddSave);
+         $('.content-education-noData').hide();
+         $("#educationAddSave").on('click',function (r) {
+             var data=JSON.stringify({
+                 educationsExpList:[{
+                     "sn": "SN_1_"+time(),
+                     "schoolName": $("#schoolName").val(),
+                     "major": $("#major").val(),
+                     "startTime": $("#startDate").val() || null,
+                     "endTime": $("#endDate").val() || null,
+                     "edu": $('#edu').val() || null,
+                     "orExam": $('#orExam').is(':checked')?"1":"0",
+                     "certPathsList":[
+                         {
+                             "certName":$('.fileTip').html(),
+                             "certPath":$('input[type="hidden"]').val()
+                         }
+                     ]
+                 }]
+             });
+             addSave({
+                 data:data,
+                 dom:'#education'
+             });
+         });
          $("#educationAdd").hide();
+         $('.content-education-noData').hide();
          jeDate();
          fileUpload();
          validate();
@@ -102,7 +125,29 @@ $("#workAdd").on('click',function () {
         '<tr> <td colspan="2"> ' +
         '<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="workAddSave" data-sn="null">保存</button> </td> </tr> </table> </form> </dl>'
     $(".content-work").append(html);
-    $("#workAddSave").on('click',workAddSave);
+    $('.content-work-noData').hide();
+    $("#workAddSave").on('click',function () {
+        var data=JSON.stringify({
+            worksExpList:[{
+                "sn": "SN_2_"+time(),
+                "companyName": $("#companyName").val(),
+                "departName": $("#departName").val(),
+                "startTime": $("#startDate").val() || null,
+                "endTime": $("#endDate").val() || null,
+                "position": $('#position').val() || null,
+                "certPathsList":[
+                    {
+                        "certName":$('.fileTip').html(),
+                        "certPath":$('input[type="hidden"]').val()
+                    }
+                ]
+            }]
+        });
+        addSave({
+            data:data,
+            dom:'#work'
+        })
+    });
     $("#workAdd").hide();
     jeDate();
     fileUpload();
@@ -129,80 +174,242 @@ $("#projectAdd").on('click',function () {
         '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="projectAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
     $(".content-project").append(html);
-    $("#projectAddSave").on('click',projectAddSave);
+    $('.content-project-noData').hide();
+    $("#projectAddSave").on('click',function () {
+        var data=JSON.stringify({
+            projectsExpList:[{
+                "sn": "SN_3_"+time(),
+                "projectName": $("#projectName").val(),
+                "projectDuty": $("#projectDuty").val(),
+                "startTime": $("#startDate").val() || null,
+                "endTime": $("#endDate").val() || null,
+                "projectDesc": $('#projectDesc').val() || null
+            }]
+        })
+        addSave({
+            data:data,
+            dom:'#project'
+        })
+    });
     $("#projectAdd").hide();
     jeDate();
     fileUpload();
     validate();
 });
-// 教育经历单个删除
-function educationDelete(r) {
+$("#appCaseAdd").on('click',function () {
+    var html='<dl>' +
+        '<form action="" id="form">' +
+        '<table id="appCase" class="from"> ' +
+        '<tr> ' +
+        '<td> ' +
+        '<div> ' +
+        '<label for="caseName"><span class="color-red">*</span>案例名称</label> ' +
+        '<input type="text" id="caseName" name="caseName" placeholder="请输入案例名称" required> </div> </td>' +
+        '<td> <div>' +
+        '<label for="caseView"><span class="color-red">*</span>案例概述</label> ' +
+        '<input type="text" id="caseView" name="caseView" placeholder="请输入案例概述"required> </div> </td>' +
+        ' </tr> <tr> ' +
+        '<td> <div> ' +
+        '<label for=""><span class="color-red">*</span>项目时间</label> ' +
+        '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择开始时间" readonly="" required>至 <input id="endDate" name="endDate" type="text"placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
+        '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+        ' <tr> <td colspan="2"> ' +
+        '<label for="caseDesc">解决方案</label> ' +
+        '<textarea name="caseDesc" id="caseDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
+        '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="appCaseAddSave" data-sn="null"' +
+        '>保存 </button> </td> </tr> </table> </form> </dl>';
+
+    $(".content-appCase").append(html);
+    $('.content-appCase-noData').hide();
+    $("#appCaseAddSave").on('click',function () {
+        var data=JSON.stringify({
+            appCaseList:[{
+                "sn": "SN_4_"+time(),
+                "caseName": $("#caseName").val(),
+                "caseView": $("#caseView").val(),
+                "startTime": $("#startDate").val() || null,
+                "endTime": $("#endDate").val() || null,
+                "caseDesc": $('#caseDesc').val() || null,
+                "certPathsList":[
+                    {
+                        "certName":$('.fileTip').html(),
+                        "certPath":$('input[type="hidden"]').val()
+                    }
+                ]
+            }]
+        })
+        addSave({
+            data:data,
+            dom:'#appCase'
+        })
+    });
+    $("#appCaseAdd").hide();
+    jeDate();
+    fileUpload();
+    validate();
+});
+$("#swpAdd").on('click',function () {
+    var html='<dl>' +
+        '<form action="" id="form">' +
+        '<table id="swp" class="from"> ' +
+        '<tr>' +
+        '<td>' +
+        '<div>' +
+        '<label for="softWareName"><span class="color-red">*</span>软件名称</label> ' +
+        '<input type="text" id="softWareName" name="softWareName" placeholder="请输入软件名称" required> </div> </td>' +
+        '<td><div>' +
+        '<label for="registerNum"><span class="color-red">*</span>登记号</label> ' +
+        '<input type="text" id="registerNum" name="registerNum" placeholder="请输入登记号" required> </div> </td>' +
+        ' </tr> <tr> ' +
+        '<td> <div> ' +
+        '<label for=""><span class="color-red">*</span>首次发表日期</label> ' +
+        '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
+        '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+        ' <tr> <td colspan="2"> ' +
+        '<label for="purpose">软件用途</label> ' +
+        '<textarea name="purpose" id="purpose" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
+        '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="swpAddSave" data-sn="null"' +
+        '>保存 </button> </td> </tr> </table> </form> </dl>';
+
+    $(".content-swp").append(html);
+    $('.content-swp-noData').hide();
+    $("#swpAddSave").on('click',function () {
+        var data=JSON.stringify({
+            swpList:[{
+                "sn": "SN_5_"+time(),
+                "softWareName": $("#softWareName").val(),
+                "registerNum": $("#registerNum").val(),
+                "publicTime": $("#startDate").val() || null,
+                "purpose": $('#purpose').val() || null,
+                "certPathsList":[
+                    {
+                        "certName":$('.fileTip').html(),
+                        "certPath":$('input[type="hidden"]').val()
+                    }
+                ]
+            }]
+        })
+        addSave({
+            data:data,
+            dom:'#swp'
+        })
+    });
+    $("#swpCaseAdd").hide();
+    jeDate();
+    fileUpload();
+    validate();
+});
+$("#inPatentsAdd").on('click',function () {
+    var html='<dl>' +
+        '<form action="" id="form">' +
+        '<table id="inPatents" class="from"> ' +
+        '<tr>' +
+        '<td>' +
+        '<div>' +
+        '<label for="patentName"><span class="color-red">*</span>发明名称</label> ' +
+        '<input type="text" id="patentName" name="patentName" placeholder="请输入软件名称" required> </div> </td>' +
+        '<td><div>' +
+        '<label for="PatentNum"><span class="color-red">*</span>专利号</label> ' +
+        '<input type="text" id="PatentNum" name="PatentNum" placeholder="请输入登记号" required> </div> </td>' +
+        ' </tr> <tr> ' +
+        '<td> <div> ' +
+        '<label for=""><span class="color-red">*</span>申请日期</label> ' +
+        '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
+        '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+        ' <tr> <td colspan="2"> ' +
+        '<label for="PatentDesc">专利概述</label> ' +
+        '<textarea name="PatentDesc" id="PatentDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
+        '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="inPatentsAddSave" data-sn="null"' +
+        '>保存 </button> </td> </tr> </table> </form> </dl>';
+
+    $(".content-inPatents").append(html);
+    $('.content-inPatents-noData').hide();
+    $("#inPatentsAddSave").on('click',function () {
+        var data=JSON.stringify({
+            inPatentsList:[{
+                "sn": "SN_5_"+time(),
+                "patentName": $("#patentName").val(),
+                "PatentNum": $("#PatentNum").val(),
+                "applyTime": $("#startDate").val() || null,
+                "PatentDesc": $('#PatentDesc').val() || null,
+                "certPathsList":[
+                    {
+                        "certName":$('.fileTip').html(),
+                        "certPath":$('input[type="hidden"]').val()
+                    }
+                ]
+            }]
+        })
+        addSave({
+            data:data,
+            dom:'#inPatents'
+        })
+    });
+    $("#inPatentsCaseAdd").hide();
+    jeDate();
+    fileUpload();
+    validate();
+});
+//删除
+function itemDelete(r,optAuthType) {
     console.log("删除");
-    r.target.parentNode.parentNode.parentNode.parentNode.remove();
-    $.ajax({
-        type: 'post',
-        url: "/api/auth/optAuthInfo",
-        dataType: 'json',
-        contentType: 'application/json',
-        data:JSON.stringify({
-            optArrAySn:r.currentTarget.attributes[2].nodeValue,
-            optType: "2",
-            optAuthType: "1"
-        }),
-        success: function (data) {
-            console.log(data);
-            if(data.code==1){
-                $("#education").parent().parent().remove();
-                $.alert("删除成功！")
-            }
+    console.log(r);
+    console.log(optAuthType);
+    $.confirm('确定要删除该项吗？', null, function (type) {
+        if (type == 'yes') {
+            $.ajax({
+                type: 'post',
+                url: "/api/auth/optAuthInfo",
+                dataType: 'json',
+                contentType: 'application/json',
+                data:JSON.stringify({
+                    optArrAySn:r.currentTarget.attributes[2].nodeValue,
+                    optType: "2",
+                    optAuthType: optAuthType
+                }),
+                success: function (data) {
+                    console.log(data);
+                    if(data.code==1){
+
+                        r.target.parentNode.parentNode.parentNode.parentNode.remove();
+                        reader();
+                        $.alert("删除成功！")
+                    }
+                }
+            });
+            this.hide();
+        } else {
+            this.hide();
         }
     });
 }
-function workDelete(r) {
-    console.log("删除");
-    r.target.parentNode.parentNode.parentNode.parentNode.remove();
-    $.ajax({
-        type: 'post',
-        url: "/api/auth/optAuthInfo",
-        dataType: 'json',
-        contentType: 'application/json',
-        data:JSON.stringify({
-            optArrAySn:r.currentTarget.attributes[2].nodeValue,
-            optType: "2",
-            optAuthType: "2"
-        }),
-        success: function (data) {
-            console.log(data);
-            if(data.code==1){
-                $("#work").parent().parent().remove();
-                $.alert("删除成功！")
+//保存按钮
+function addSave(data) {
+    // var sn=$(r)[0].target.attributes[2].nodeValue;
+    if($("#form").valid()){
+        $.ajax({
+            type: 'post',
+            url: "/api/auth/optAuthInfo",
+            dataType: 'json',
+            contentType: 'application/json',
+            data:data.data,
+            success: function (data) {
+                if(data.code==1){
+                    $(data.dom).parent().parent().remove();
+                    reader();
+                }else {
+                    $.alert(data.message);
+                }
             }
-        }
-    });
-}
-function projectDelete(r) {
-    console.log("删除");
-    r.target.parentNode.parentNode.parentNode.parentNode.remove();
-    $.ajax({
-        type: 'post',
-        url: "/api/auth/optAuthInfo",
-        dataType: 'json',
-        contentType: 'application/json',
-        data:JSON.stringify({
-            optArrAySn:r.currentTarget.attributes[2].nodeValue,
-            optType: "2",
-            optAuthType: "3"
-        }),
-        success: function (data) {
-            console.log(data);
-            if(data.code==1){
-                $("#project").parent().parent().remove();
-                $.alert("删除成功！")
-            }
-        }
-    });
-}
-// 教育经历单个修改
+        });
+    }else {
+
+    }
+
+
+};
+
+//教育经历单个修改
 function educationEdit(r) {
     console.log("修改");
     var _this=$(this);
@@ -250,8 +457,35 @@ function educationEdit(r) {
                 $('#endDate').val(data.data.endTime);
                 $('#orExam').attr("checked",data.data.orExam==0?false:true);
                 $('#edu').val(data.data.edu);
+                console.log($('#educationAddSave').attr('data-sn'));
 
-                $("#educationAddSave").on('click',educationAddSave);
+                $("#educationAddSave").on('click',function () {
+                    var data=JSON.stringify({
+                        optArrAySn:$('#educationAddSave').attr('data-sn'),
+                        optType: "3",
+                        optAuthType: "1",
+                        educationsExpList:[{
+                            "sn":$('#educationAddSave').attr('data-sn'),
+                            "schoolName": $("#schoolName").val(),
+                            "major": $("#major").val(),
+                            "startTime": $("#startDate").val() || null,
+                            "endTime": $("#endDate").val() || null,
+                            "edu": $('#edu').val() || null,
+                            "orExam": $('#orExam').is(':checked')?"1":"0",
+                            "certPathsList":[
+                                {
+                                    "certName":$('.fileTip').html(),
+                                    "certPath":$('input[type="hidden"]').val()
+                                }
+                            ]
+
+                        }]
+                    });
+                    addSave({
+                        data:data,
+                        dom:'#education'
+                    });
+                });
                 $("#educationAdd").hide();
                 jeDate();
                 fileUpload();
@@ -262,10 +496,6 @@ function educationEdit(r) {
 
 }
 function workEdit(r) {
-    console.log("修改");
-    // console.log($(r.currentTarget.parentNode.parentNode.parentNode)[0]);
-    // console.log($(r));
-    // console.log($(this).parent().parent().parent().html());
     var _this=$(this);
     $.ajax({
         type: 'get',
@@ -309,7 +539,31 @@ function workEdit(r) {
                 $('#endDate').val(data.data.endTime);
                 $('#position').val(data.data.position);
 
-                $("#workAddSave").on('click',workAddSave);
+                $("#workAddSave").on('click',function () {
+                    var data=JSON.stringify({
+                        optArrAySn:$('#workAddSave').attr('data-sn'),
+                        optType: "3",
+                        optAuthType: "2",
+                        worksExpList:[{
+                            "sn":$('#workAddSave').attr('data-sn'),
+                            "companyName": $("#companyName").val(),
+                            "departName": $("#departName").val(),
+                            "startTime": $("#startDate").val() || null,
+                            "endTime": $("#endDate").val() || null,
+                            "position": $('#position').val() || null,
+                            "certPathsList":[
+                                {
+                                    "certName":$('.fileTip').html(),
+                                    "certPath":$('input[type="hidden"]').val()
+                                }
+                            ]
+                        }]
+                    })
+                    addSave({
+                        data:data,
+                        dom:'#work'
+                    });
+                });
                 $("#workAdd").hide();
                 jeDate();
                 fileUpload();
@@ -321,19 +575,14 @@ function workEdit(r) {
 }
 function projectEdit(r) {
     console.log("修改");
-    console.log($(r.currentTarget.parentNode.parentNode.parentNode)[0]);
-    console.log($(r));
-    console.log($(this).parent().parent().parent().html());
     var _this=$(this);
     $.ajax({
-        type: 'post',
+        type: 'get',
         url: "/api/auth/getAuthInfo",
-        dataType: 'json',
-        contentType: 'application/json',
-        data:JSON.stringify({
+        data:{
             optArrAySn:r.currentTarget.attributes[2].nodeValue,
             optAuthType: "3"
-        }),
+        },
         success: function (data) {
             console.log();
             if(data.code==1){
@@ -359,7 +608,32 @@ function projectEdit(r) {
                     '<textarea name="projectDesc" id="projectDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
                     '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="projectAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'" >保存 </button> </td> </tr> </table> </form> </dl>';
                 _this.parent().parent().parent().html(html);
-                $("#projectAddSave").on('click',projectAddSave);
+
+                $('#projectName').val(data.data.projectName);
+                $('#projectDuty').val(data.data.projectDuty);
+                $('#startDate').val(data.data.startTime);
+                $('#endDate').val(data.data.endTime);
+                $('#projectDesc').val(data.data.projectDesc);
+
+                $("#projectAddSave").on('click',function () {
+                    var data=JSON.stringify({
+                        optArrAySn:$('#projectAddSave').attr('data-sn'),
+                        optType: "3",
+                        optAuthType: "3",
+                        projectsExpList:[{
+                            "sn":$('#projectAddSave').attr('data-sn'),
+                            "projectName": $("#projectName").val(),
+                            "projectDuty": $("#projectDuty").val(),
+                            "startTime": $("#startDate").val() || null,
+                            "endTime": $("#endDate").val() || null,
+                            "projectDesc": $('#projectDesc').val() || null
+                        }]
+                    })
+                    addSave({
+                        data:data,
+                        dom:'#project'
+                    })
+                });
                 $("#projectAdd").hide();
                 jeDate();
                 fileUpload();
@@ -369,176 +643,164 @@ function projectEdit(r) {
     });
 
 }
-// 教育经历单个保存按钮
-function educationAddSave(r) {
-    console.log(5);
-    console.log($(r)[0].target.attributes[2].nodeValue);
-    var sn=$(r)[0].target.attributes[2].nodeValue;
-    if($("#form").valid()){
-        console.log(4);
-        // $('#educationAddSave').attr('disabled',false);
-        if(sn){
-            var data=JSON.stringify({
-                optArrAySn:sn,
-                optType: "3",
-                optAuthType: "1",
-                educationsExpList:[{
-                    "sn":sn,
-                    "schoolName": $("#schoolName").val(),
-                    "major": $("#major").val(),
-                    "startTime": $("#startDate").val() || null,
-                    "endTime": $("#endDate").val() || null,
-                    "edu": $('#edu').val() || null,
-                    "orExam": $('#orExam').is(':checked')?"1":"0",
-                    "certPath":$('input[type="hidden"]').val()
+function appCaseEdit(r) {
+    console.log("修改");
+    var _this=$(this);
+    $.ajax({
+        type: 'get',
+        url: "/api/auth/getAuthInfo",
+        data:{
+            optArrAySn:r.currentTarget.attributes[2].nodeValue,
+            optAuthType: "4"
+        },
+        success: function (data) {
+            console.log();
+            if(data.code==1){
+                // var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
+                // $(".education tr").eq(index).html(html);
+                var html='<dl>' +
+                    '<form action="" id="form">' +
+                    '<table id="appCase" class="from"> ' +
+                    '<tr> ' +
+                    '<td> ' +
+                    '<div> ' +
+                    '<label for="caseName"><span class="color-red">*</span>案例名称</label> ' +
+                    '<input type="text" id="caseName" name="caseName" placeholder="请输入案例名称" required> </div> </td>' +
+                    '<td> <div>' +
+                    '<label for="caseView"><span class="color-red">*</span>案例概述</label> ' +
+                    '<input type="text" id="caseView" name="caseView" placeholder="请输入案例概述"required> </div> </td>' +
+                    ' </tr> <tr> ' +
+                    '<td> <div> ' +
+                    '<label for=""><span class="color-red">*</span>项目时间</label> ' +
+                    '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择开始时间" readonly="" required>至 <input id="endDate" name="endDate" type="text"placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
+                    '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+                    ' <tr> <td colspan="2"> ' +
+                    '<label for="caseDesc">解决方案</label> ' +
+                    '<textarea name="caseDesc" id="caseDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
+                    '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="appCaseAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
+                    '>保存 </button> </td> </tr> </table> </form> </dl>';
 
-                }]
-            })
-        }else {
-            var data=JSON.stringify({
-                educationsExpList:[{
-                    "sn": "SN_1_"+time(),
-                    "schoolName": $("#schoolName").val(),
-                    "major": $("#major").val(),
-                    "startTime": $("#startDate").val() || null,
-                    "endTime": $("#endDate").val() || null,
-                    "edu": $('#edu').val() || null,
-                    "orExam": $('#orExam').attr('checked')?"1":"0",
-                    "certPath":$('input[type="hidden"]').val()
-                }]
-            })
-        }
-        $.ajax({
-            type: 'post',
-            url: "/api/auth/optAuthInfo",
-            dataType: 'json',
-            contentType: 'application/json',
-            data:data,
-            success: function (data) {
-                if(data.code==1){
-                    $("#education").parent().parent().remove();
-                    reader();
-                }else {
-                    $.alert(data.message);
-                }
+                _this.parent().parent().parent().html(html);
+
+                $('#caseName').val(data.data.caseName);
+                $('#caseView').val(data.data.caseView);
+                $('#startDate').val(data.data.startTime);
+                $('#endDate').val(data.data.endTime);
+                $('#caseDesc').val(data.data.caseDesc);
+
+                $("#appCaseAddSave").on('click',function () {
+                    var data=JSON.stringify({
+                        optArrAySn:$('#appCaseAddSave').attr('data-sn'),
+                        optType: "3",
+                        optAuthType: "4",
+                        appCaseList:[{
+                            "sn":$('#appCaseAddSave').attr('data-sn'),
+                            "caseName": $("#caseName").val(),
+                            "caseView": $("#caseView").val(),
+                            "startTime": $("#startDate").val() || null,
+                            "endTime": $("#endDate").val() || null,
+                            "caseDesc": $('#caseDesc').val() || null,
+                            "certPathsList":[
+                                {
+                                    "certName":$('.fileTip').html(),
+                                    "certPath":$('input[type="hidden"]').val()
+                                }
+                            ]
+                        }],
+
+                    })
+                    addSave({
+                        data:data,
+                        dom:'#appCase'
+                    })
+                });
+                $("#appCaseAdd").hide();
+                jeDate();
+                fileUpload();
+                validate();
             }
-        });
-    }else {
-       // $('#educationAddSave').attr('disabled',true)
-    }
-
-
-};
-
-// 工作经历单个保存按钮
-function workAddSave(r) {
-    console.log(5);
-    console.log($(r)[0].target.attributes[2].nodeValue);
-    var sn=$(r)[0].target.attributes[2].nodeValue;
-    if($("#form").valid()){
-        console.log(4);
-        // $('#educationAddSave').attr('disabled',false);
-        if(sn!='null'){
-            var data=JSON.stringify({
-                optArrAySn:sn,
-                optType: "3",
-                optAuthType: "2",
-                worksExpList:[{
-                    "sn":sn,
-                    "companyName": $("#companyName").val(),
-                    "departName": $("#departName").val(),
-                    "startTime": $("#startDate").val() || null,
-                    "endTime": $("#endDate").val() || null,
-                    "position": $('#position').val() || null,
-                    "certPath":$('input[type="hidden"]').val()
-                }]
-            })
-        }else {
-            var data=JSON.stringify({
-                worksExpList:[{
-                    "sn": "SN_2_"+time(),
-                    "companyName": $("#companyName").val(),
-                    "departName": $("#departName").val(),
-                    "startTime": $("#startDate").val() || null,
-                    "endTime": $("#endDate").val() || null,
-                    "position": $('#position').val() || null,
-                    "certPath":$('input[type="hidden"]').val()
-                }]
-            })
         }
-        $.ajax({
-            type: 'post',
-            url: "/api/auth/optAuthInfo",
-            dataType: 'json',
-            contentType: 'application/json',
-            data:data,
-            success: function (data) {
-                if(data.code==1){
-                    $("#work").parent().parent().remove();
-                    reader();
-                }else {
-                    $.alert(data.message);
-                }
-            }
-        });
-    }else {
-       // $('#educationAddSave').attr('disabled',true)
-    }
-
-
-};
-
-function projectAddSave(r) {
-    console.log(5);
-    console.log($(r)[0].target.attributes[2].nodeValue);
-    var sn=$(r)[0].target.attributes[2].nodeValue;
-    if($("#form").valid()){
-        if(sn!='null'){
-            var data=JSON.stringify({
-                optArrAySn:sn,
-                optType: "3",
-                optAuthType: "3",
-                projectsExpList:[{
-                    "sn":sn,
-                    "projectName": $("#projectName").val(),
-                    "projectDuty": $("#projectDuty").val(),
-                    "startTime": $("#startDate").val() || null,
-                    "endTime": $("#endDate").val() || null,
-                    "projectDesc": $('#projectDesc').val() || null
-                }]
-            })
-        }else {
-            var data=JSON.stringify({
-                projectsExpList:[{
-                    "sn": "SN_3_"+time(),
-                    "projectName": $("#projectName").val(),
-                    "projectDuty": $("#projectDuty").val(),
-                    "startTime": $("#startDate").val() || null,
-                    "endTime": $("#endDate").val() || null,
-                    "projectDesc": $('#projectDesc').val() || null
-                }]
-            })
-        }
-        $.ajax({
-            type: 'post',
-            url: "/api/auth/optAuthInfo",
-            dataType: 'json',
-            contentType: 'application/json',
-            data:data,
-            success: function (data) {
-                if(data.code==1){
-                    $("#project").parent().parent().remove();
-                    reader();
-                }else {
-                    $.alert(data.message);
-                }
-            }
-        });
-    }else {
-
-    }
+    });
 
 }
+function swpEdit(r) {
+    console.log("修改");
+    var _this=$(this);
+    $.ajax({
+        type: 'get',
+        url: "/api/auth/getAuthInfo",
+        data:{
+            optArrAySn:r.currentTarget.attributes[2].nodeValue,
+            optAuthType: "5"
+        },
+        success: function (data) {
+            console.log();
+            if(data.code==1){
+                // var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
+                // $(".education tr").eq(index).html(html);
+                var html='<dl>' +
+                    '<form action="" id="form">' +
+                    '<table id="swp" class="from"> ' +
+                    '<tr>' +
+                    '<td>' +
+                    '<div>' +
+                    '<label for="softWareName"><span class="color-red">*</span>软件名称</label> ' +
+                    '<input type="text" id="softWareName" name="softWareName" placeholder="请输入软件名称" required> </div> </td>' +
+                    '<td><div>' +
+                    '<label for="registerNum"><span class="color-red">*</span>登记号</label> ' +
+                    '<input type="text" id="registerNum" name="registerNum" placeholder="请输入登记号" required> </div> </td>' +
+                    ' </tr> <tr> ' +
+                    '<td> <div> ' +
+                    '<label for=""><span class="color-red">*</span>首次发表日期</label> ' +
+                    '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
+                    '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+                    ' <tr> <td colspan="2"> ' +
+                    '<label for="purpose">软件用途</label> ' +
+                    '<textarea name="purpose" id="purpose" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
+                    '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="swpAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
+                    '>保存 </button> </td> </tr> </table> </form> </dl>';
+
+                _this.parent().parent().parent().html(html);
+
+                $('#softWareName').val(data.data.softWareName);
+                $('#registerNum').val(data.data.registerNum);
+                $('#startDate').val(data.data.publicTime);
+                $('#purpose').val(data.data.purpose);
+
+                $("#swpAddSave").on('click',function () {
+                    var data=JSON.stringify({
+                        optArrAySn:$('#swpAddSave').attr('data-sn'),
+                        optType: "3",
+                        optAuthType: "5",
+                        swpList:[{
+                            "sn":$('#swpAddSave').attr('data-sn'),
+                            "softWareName": $("#softWareName").val(),
+                            "registerNum": $("#registerNum").val(),
+                            "publicTime": $("#startDate").val() || null,
+                            "purpose": $('#purpose').val() || null,
+                            "certPathsList":[
+                                {
+                                    "certName":$('.fileTip').html(),
+                                    "certPath":$('input[type="hidden"]').val()
+                                }
+                            ]
+                        }]
+                    })
+                    addSave({
+                        data:data,
+                        dom:'#swp'
+                    })
+                });
+                $("#swpAdd").hide();
+                jeDate();
+                fileUpload();
+                validate();
+            }
+        }
+    });
+
+}
+//渲染页面
 function reader() {
     $.ajax({
         type: 'get',
@@ -547,9 +809,12 @@ function reader() {
         success: function (data) {
             console.log(data);
             if(data.code==1){
-                var educationsExpList=data.data.educationsExpList;
+                var educationsExpList=data.data.educationsExpList || null;
                 var worksExpList=data.data.worksExpList;
                 var projectsExpList=data.data.projectsExpList;
+                var appCaseList=data.data.appCaseList;
+                var swpList=data.data.swpList;
+                var inPatentsList=data.data.inPatentsList;
                 var specialSkills=data.data.specialSkills;
                 $('.providerDesc').val(data.data.providerDesc);
                 $('.providerDesc').html(data.data.providerDesc);
@@ -560,31 +825,35 @@ function reader() {
                     }
                     $('.info .info-show .tag-box').html(html);
                 }
-                if( educationsExpList && educationsExpList.length>0){
+                if( educationsExpList && educationsExpList.length>0){ //教育
                     $('.content-education-noData').hide();
                     var html='';
                     for (var i=0,len=educationsExpList.length;i<len;i++){
                         var item=educationsExpList[i];
-                        html+='<dl> ' +
-                            '<dt class="clearfix"> ' +
-                            '<div class="grid-left">' +
-                            '<span class="schoolName sub-title">'+item.schoolName+'</span> ' +
-                            '<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span></div> ' +
-                            '<div class="grid-right operation"> ' +
-                            '<a href="javascript:void (0)" class="educationEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
-                            '<a href="javascript:void (0)" class="educationDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> ' +
-                            '</dt> ' +
-                            '<dd> ' +
-                            '<span class="major">专业名称：'+item.major+'</span>' +
-                            ' <span class="edu">学历：'+item.edu+'</span>' +
-                            ' <span class="orExam">是否统招：'+(item.orExam=="1"?"是":"否")+'</span> ' +
-                            '<span class="certPath"></span> ' +
-                            '</dd> ' +
-                            '</dl>'
+                        console.log(item);
+                        html+='<dl> '
+                        html+='<dt class="clearfix"> '
+                        html+='<div class="grid-left">'
+                        html+='<span class="schoolName sub-title">'+item.schoolName+'</span> '
+                        html+='<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span></div> '
+                        html+='<div class="grid-right operation"> '
+                        html+='<a href="javascript:void (0)" class="educationEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
+                        html+='<a href="javascript:void (0)" class="educationDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> '
+                        html+='</dt><dd>'
+                        html+='<span class="major">专业名称：'+item.major+'</span>'
+                        html+='<span class="edu">学历：'+item.edu+'</span>'
+                        html+='<span class="orExam">是否统招：'+(item.orExam=="1"?"是":"否")+'</span> '
+                        if(item.certPathsList && item.certPathsList.length>0) {
+                            html += '<span class="certPath"><i class="fa fa-download" aria-hidden="true"></i><a href="'+item.certPathsList[0].certPath+'">材料证明</a> </span> '
+                        }
+                        html+= '</dd></dl>'
+
                     }
                     $('.content-education').html(html);
                     $(".educationEdit").on('click',educationEdit);
-                    $(".educationDelete").on('click',educationDelete);
+                    $(".educationDelete").on('click',function (r) {
+                        itemDelete(r,"1")
+                    });
                     $("#educationAdd").show();
                 }else {
                     $('.content-education-noData').show();
@@ -594,24 +863,28 @@ function reader() {
                     var html=''
                     for (var i=0,len=worksExpList.length;i<len;i++){
                         var item=worksExpList[i];
-                        html+='<dl> ' +
-                            '<dt class="clearfix"> ' +
-                            '<div class="grid-left">' +
-                            '<span class="companyName sub-title">'+item.companyName+'</span> ' +
-                            '<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span></div> ' +
-                            '<div class="grid-right"> ' +
-                            '<a href="javascript:void (0)" class="workEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
-                            '<a href="javascript:void (0)" class="workDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> ' +
-                            '</dt> ' +
-                            '<dd> ' +
-                            '<span class="departName">部门名称：'+item.departName+'</span>' +
-                            ' <span class="position">职位：'+item.position+'</span>' +
-                            '</dd> ' +
-                            '</dl>'
+                        html+='<dl> '
+                        html+='<dt class="clearfix"> '
+                        html+='<div class="grid-left">'
+                        html+='<span class="companyName sub-title">'+item.companyName+'</span> '
+                        html+='<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span></div> '
+                        html+='<div class="grid-right"> '
+                        html+='<a href="javascript:void (0)" class="workEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
+                        html+='<a href="javascript:void (0)" class="workDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> '
+                        html+='</dt> '
+                        html+='<dd> '
+                        html+='<span class="departName">部门名称：'+item.departName+'</span>'
+                        html+=' <span class="position">职位：'+item.position+'</span>'
+                        if(item.certPathsList && item.certPathsList.length>0) {
+                            html += '<span class="certPath"><i class="fa fa-download" aria-hidden="true"></i><a href="'+item.certPathsList[0].certPath+'">材料证明</a> </span> '
+                        }
+                        html+='</dd> </dl>'
                     }
                     $('.content-work').html(html);
                     $(".workEdit").on('click',workEdit);
-                    $(".workDelete").on('click',workDelete);
+                    $(".workDelete").on('click',function (r) {
+                        itemDelete(r,"2")
+                    });
                     $("#workAdd").show();
 
                 }else {
@@ -639,16 +912,128 @@ function reader() {
                     }
                     $('.content-project').html(html);
                     $(".projectEdit").on('click',projectEdit);
-                    $(".projectDelete").on('click',projectDelete);
+                    $(".projectDelete").on('click',function (r) {
+                        itemDelete(r,"3")
+                    });
                     $("#projectAdd").show();
                 }else {
                     $('.content-project-noData').show()
+                }
+
+                if(appCaseList && appCaseList.length>0){
+                    $('.content-appCase-noData').hide();
+                    var html=''
+                    for (var i=0,len=appCaseList.length;i<len;i++){
+                        var item=appCaseList[i];
+                        html +='<dl> '
+                        html +='<dt class="clearfix"> '
+                        html +='<div class="grid-left"> '
+                        html +='<span class="caseName sub-title">'+item.caseName+'</span> '
+                        html +='<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span> </div> '
+                        html +='<div class="grid-right"> '
+                        html +='<a href="javascript:void (0)" class="appCaseEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
+                        html +='<a href="javascript:void (0)" class="appCaseDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
+                        html +='<dd> '
+                        html +='<label>案例概述:</label> '
+                        html +='<div >'+item.caseDesc+'</div> </dd> '
+                        html +='<dd>'
+                        html +=' <label>解决方案:</label> '
+                        html +='<div>'+item.caseDesc+'</div> </dd> <dd> '
+                        html +='<label>证明材料:</label> '
+                        html +='<div>'
+                        if(item.certPathsList && item.certPathsList.length>0) {
+                            html +='<span class="certPath"><i class="fa fa-download" aria-hidden="true"></i><a href="'+item.certPathsList[0].certPath+'">材料证明</a> </span> '
+                        }
+                        html +='</div></dd></dl>'
+
+                    }
+                    $('.content-appCase').html(html);
+                    $(".appCaseEdit").on('click',appCaseEdit);
+                    $(".appCaseDelete").on('click',function (r) {
+                        itemDelete(r,'4')
+                    });
+                    $("#appCaseAdd").show();
+                }else {
+                    $('.content-appCase-noData').show()
+
+                }
+                if(swpList && swpList.length>0){
+                    $('.content-swp-noData').hide();
+                    var html=''
+                    for (var i=0,len=swpList.length;i<len;i++){
+                        var item=swpList[i];
+                        html +='<dl> '
+                        html +='<dt class="clearfix"> '
+                        html +='<div class="grid-left"> '
+                        html +='<span class="caseName sub-title">'+item.softWareName+'</span> '
+                        html +='<span class="">(首次发表日期:'+item.publicTime+')</span> </div> '
+                        html +='<div class="grid-right"> '
+                        html +='<a href="javascript:void (0)" class="swpEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
+                        html +='<a href="javascript:void (0)" class="swpDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
+                        html +='<dd> '
+                        html +='<label>登记号:</label>'
+                        html +='<div >'+item.registerNum+'</div> </dd> '
+                        html +='<dd>'
+                        html +='<label>软件用途:</label> '
+                        html +='<div>'+item.purpose+'</div> </dd> <dd> '
+                        html +='<label>证明材料:</label> '
+                        html +='<div>'
+                        if(item.certPathsList && item.certPathsList.length>0) {
+                            html +='<span class="certPath"><i class="fa fa-download" aria-hidden="true"></i><a href="'+item.certPathsList[0].certPath+'">材料证明</a> </span> '
+                        }
+                        html +='</div></dd></dl>'
+
+                    }
+                    $('.content-swp').html(html);
+                    $(".swpEdit").on('click',swpEdit);
+                    $(".swpDelete").on('click',function (r) {
+                        itemDelete(r,'5')
+                    });
+                    $("#swpAdd").show();
+                }else {
+                    $('.content-swp-noData').show()
+
+                }
+                if(inPatentsList && inPatentsList.length>0){
+                    $('.content-inPatents-noData').hide();
+                    var html=''
+                    for (var i=0,len=inPatentsList.length;i<len;i++){
+                        var item=inPatentsList[i];
+                        html +='<dl> '
+                        html +='<dt class="clearfix"> '
+                        html +='<div class="grid-left"> '
+                        html +='<span class="caseName sub-title">'+item.patentName+'</span> '
+                        html +='<span class="">(首次发表日期:'+item.applyTime+')</span> </div> '
+                        html +='<div class="grid-right"> '
+                        html +='<a href="javascript:void (0)" class="inPatentsEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
+                        html +='<a href="javascript:void (0)" class="inPatentsDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
+                        html +='<dd> '
+                        html +='<label>专利号:</label> '
+                        html +='<div >'+item.PatentNum+'</div> </dd> '
+                        html +='<dd>'
+                        html +=' <label>专利概述:</label> '
+                        html +='<div>'+item.PatentDesc+'</div> </dd> <dd> '
+                        html +='<label>证明材料:</label> '
+                        html +='<div>'
+                        if(item.certPathsList && item.certPathsList.length>0) {
+                            html +='<span class="certPath"><i class="fa fa-download" aria-hidden="true"></i><a href="'+item.certPathsList[0].certPath+'">材料证明</a> </span> '
+                        }
+                        html +='</div></dd></dl>'
+
+                    }
+                    $('.content-inPatents').html(html);
+                    // $(".inPatentsEdit").on('click',inPatentsEdit);
+                    $(".inPatentsDelete").on('click',function (r) {
+                        itemDelete(r,'6');
+                    });
+                    $("#inPatentsAdd").show();
+                }else {
+                    $('.content-inPatents-noData').show()
                 }
             }
         }
     });
 }
-
 
 //获得时间戳
 function time() {
@@ -664,7 +1049,7 @@ function formatDate(d){
     return year+"/"+month;
 }
 
-// 日历插件开始
+// 日历插件
 function jeDate() {
     var start = {
         format: "YYYY-MM-DD hh:mm:ss",
@@ -685,8 +1070,7 @@ function jeDate() {
     $.jeDate("#startDate", start);
     $.jeDate("#endDate", end);
 }
-
-// 日历插件结束
+// 上传插件
 function fileUpload() {
     $('.fileUploadBtn').fileupload(
         {
@@ -717,6 +1101,7 @@ function fileUpload() {
             }
         });
 }
+// 表单验证
 function validate() {
     // 表格验证开始
     var regex = {  //手机号验证正则
