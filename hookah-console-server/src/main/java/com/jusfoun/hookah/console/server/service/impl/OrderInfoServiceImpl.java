@@ -1320,6 +1320,18 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return resultMap;
     }
 
+    @Override
+    public Map findInvokeStatus(String orderSn, String goodsSn) throws Exception{
+        Map resultMap = new HashMap();
+        String apiRestUrl = myProps.getApi().get("apiRestUrl");
+        StringBuilder apiRestUri = new StringBuilder();
+        apiRestUri.append(apiRestUrl).append("?orderSn=").append(orderSn).append("&goodsSn=").append(goodsSn);
+        apiRestUrl = apiRestUri.toString();
+        resultMap = HttpClientUtil.GetMethod(apiRestUrl);
+        logger.info("获取API调用日志！{} {}", orderSn, goodsSn, JsonUtils.toJson(resultMap));
+        return resultMap;
+    }
+
     @Scheduled(cron = "0 0/10 * * * ?")
     @Transactional
     public void deleteOrderByTime(){
@@ -1581,11 +1593,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         total = goodsService.count(goodsFifters);
         return total;
     }
-
-
-
-
-
 
     /**
      * 开始时间

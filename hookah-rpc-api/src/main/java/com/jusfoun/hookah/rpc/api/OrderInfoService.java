@@ -98,4 +98,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     void deleteOrder(String id);
 
     Map reCreateToken(MgOrderGoods mgOrderGoods);
+
+    Map findInvokeStatus(String orderSn, String goodsSn) throws Exception;
 }
