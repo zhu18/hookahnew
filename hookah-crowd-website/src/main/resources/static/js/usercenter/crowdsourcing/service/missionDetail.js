@@ -60,19 +60,19 @@ function renderPage(data) {
       break;
     }
     case 2 : {
-      $('.requirement-type-active span').html('数据加工');
+      $('.requirement-type-active span').html('数据清洗');
       break;
     }
     case 3 : {
-      $('.requirement-type-active span').html('数据模型');
+      $('.requirement-type-active span').html('数据分析');
       break;
     }
     case 4 : {
-      $('.requirement-type-active span').html('数据应用');
+      $('.requirement-type-active span').html('数据模型');
       break;
     }
     case 5 : {
-      $('.requirement-type-active span').html('数据清洗');
+      $('.requirement-type-active span').html('数据应用');
       break;
     }
     case 6 : {

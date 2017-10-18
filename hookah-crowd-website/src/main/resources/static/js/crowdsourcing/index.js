@@ -4,31 +4,91 @@
 
 /*
  1.数据采集--dataCollection
- 2.数据加工--dataProcess
+ 2.数据清洗--dataProcess
  3.数据分析--dataCleansing
  4.数据模型--dataModel
  5.数据应用--datApplication
  6.其他--otherData
 
 */
-function renderDOM() {
+
+
+
+
+
+function recommendTasks() { //推荐任务
+  $.ajax({
+    type: 'get',
+    url: "/require/recommendTasks",
+    success: function (data) {
+      console.log('推荐任务');
+      console.log(data);
+      console.log('推荐任务');
+      if(data.code==1){
+        initRecommendTasksDOM('.toBeServiceBottomBoxRight',data.data.zbRecommendVos)
+      }
+    }
+  })
+}
+function initRecommendTasksDOM(selector,data){
+  let initRecommendTasksDOM='';
+  for(let i=0;i < 4;i++){
+    initRecommendTasksDOM+='\
+   <li>\
+      <div class="toBeServiceDemandName">'+data[i].title+'</div>\
+    <div class="toBeServiceDeadData">交付截止日期：'+data[i].deliveryDeadline+'</div>\
+    <div class="toBeServiceLastTime">报名剩余时间：'+data[i].applyLastTime+'</div>\
+    <div class="toBeServiceMoney">￥'+ (data[i].rewardMoney / 100 ) +'元  </div>\
+    <div class="toBeServiceHasApply">已报名：'+data[i].count+'人</div>\
+    <a class="applyBtn toBeServiceApply" href="'+data[i].id+'">我要报名</a>\
+      </li>'
+  }
+  $(selector).html(initRecommendTasksDOM);
+}
+
+
+function renderDOM() { //请求数据
   $.ajax({
     type: 'get',
     url: "/require/requirementTypeInfo",
     success: function (data) {
       console.log(data);
       if(data.code==1){
-        initDOM('.j_dataCollection',data.data.dataCollection);
-        initDOM('.j_dataProcess',data.data.dataProcess);
-        initDOM('.j_dataCleansing',data.data.dataCleansing);
-        initDOM('.j_dataModel',data.data.dataModel);
-        initDOM('.j_datApplication',data.data.datApplication);
-        initDOM('.j_otherData',data.data.otherData);
+        requirementTypeInfo('.j_dataCollection',data.data.dataCollection);
+        requirementTypeInfo('.j_dataProcess',data.data.dataProcess);
+        initOneDataRequirementTypeInfoDOM('.j_dataCleansing',data.data.dataCleansing);
+        initOneDataRequirementTypeInfoDOM('.j_dataModel',data.data.dataModel);
+        initOneDataRequirementTypeInfoDOM('.j_datApplication',data.data.datApplication);
+        initOneDataRequirementTypeInfoDOM('.j_otherData',data.data.otherData);
       }
     }
   })
 }
-function initDOM(selector,data) {
+
+
+function initOneDataRequirementTypeInfoDOM(selector,data){
+  if(!data.length){
+    $(selector).html('无信息');
+
+    return;
+  }
+  console.log(data[0].title);
+  let initOneDataRequirementTypeInfoDOM='';
+  initOneDataRequirementTypeInfoDOM+='\
+        <div class="toBeServiceDemandName">'+data[0].title+'</div>\
+      <div class="toBeServiceDeadData">交付截止日期：'+data[0].deliveryDeadline+'</div>\
+      <div class="toBeServiceLastTime">报名剩余时间：'+data[0].applyLastTime+'</div>\
+      <div class="toBeServiceMoney">￥'+ (data[0].rewardMoney / 100 ) +'元  </div>\
+      <div class="toBeServiceHasApply">已报名：'+data[0].count+'人</div>\
+      <a class="applyBtn toBeServiceApply" href="'+data[0].id+'">我要报名</a>';
+  console.log(data[0]);
+
+  $(selector).html(initOneDataRequirementTypeInfoDOM);
+}
+
+
+
+function requirementTypeInfo(selector,data) {
   let tempLiDom='';
   for(let i=0;i<data.length;i++){
     tempLiDom+='\
@@ -49,4 +109,5 @@ function initDOM(selector,data) {
   }
   $(selector).html(tempLiDom);
 }
-renderDOM();
+recommendTasks();//推荐任务
+renderDOM();//6大类数据请求

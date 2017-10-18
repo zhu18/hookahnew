@@ -31,6 +31,10 @@ $(document).ready(function () {
 		if(pathname.indexOf('/crowdsourcing') >= 0){
 			$('#navList li:nth-child(3)').addClass('active');
 		}
+		if(pathname.indexOf('/crowdsourcingRelease') >= 0){
+      $('#navList li:nth-child(3)').removeClass('active');
+
+    }
 		if(pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0){
 			$('#navList li:nth-child(2)').addClass('active');
 		}

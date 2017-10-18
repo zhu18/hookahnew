@@ -1,7 +1,8 @@
 .bannerBox{ width: 100%; height:425px; background-color: #48c8e3;}
 .banner{ height:100%; background:url("../../images/crowdsourcing/index/banner.png") 0 0 no-repeat;}
 .banner-btn{ display: inline-block;height:31px; width: 128px; margin-top:302px;border:3px solid #b6e9f4; border-radius:18px; text-align: center; text-decoration: none; color:#fff; font-size: 24px; line-height: 29px;;}
-.banner-btn.active{ color:#f9d657; background-color: #fff; border:3px solid #fff; margin:302px 100px 0 59px;}
+.banner-btn:first-child{  margin:302px 100px 0 59px;}
+.banner-btn:hover{ color:#f9d657; background-color: #fff; border:3px solid #fff; }
 
 .advantagesBox{ height:284px; overflow: hidden;}
 .advantagesUl { overflow: hidden; padding-left: 83px;}
@@ -31,7 +32,8 @@
 .toBeServiceUl dd{ float: left; width:456px;}
 .toBeServiceTitle{margin:42px 0 12px 0; font-size:18px; font-weight: bold; }
 .toBeServiceContent{ line-height: 24px;font-size: 14px;}
-.toBeServiceTitle a{ font-size:14px; font-style: italic;  color:#fff; font-weight:normal;}
+.toBeServiceTitle a{ font-size:14px; font-style: italic;  color:#fff; font-weight:normal;margin-left: 20px;}
+.toBeServiceTitle a:active{ text-decoration: underline}
 .toBeServiceTopBoxRight{ float: left; width: 595px; background-color: #fff;}
 .toBeServiceNotice{ overflow: hidden;}
 .toBeServiceNotice li{ float: left; width: 168px; line-height: 23px;}
@@ -54,16 +56,18 @@
 .toBeServiceMoney{ font-size: 18px; color: #ffc600;}
 .toBeServiceHasApply{ font-size: 14px;color:#cccbcb}
 .applyBtn{ padding:2px 8px 3px;  background-color: #48c8e3;color:#fff; border-radius: 4px;}
+.applyBtn:hover{ background-color: #019cbd;}
 .toBeServiceApply{  position: absolute; right:0; bottom:0;}
 
 
-.demandList{ padding-bottom:25px;}
-.demandListTitle{position: relative;  height:35px; margin:18px 0 10px;  font-weight: normal;  overflow: hidden;}
-.demandListTitle img{ float: left;margin-right: 10px;}
-.demandListTitle span{ float: left; font-size: 24px; color:#535353;  }
-.demandListTitle a{ position: absolute;right: 15px;;color:#959494; font-size:14px;  line-height:35px;}
-
-.demandListBox{ overflow: hidden;}
+.demandList { padding-bottom: 30px; }
+.missionTitle{ text-align: center; font-size: 30px; color:#48c8e3}
+.missionTitle div{margin:30px 0 10px;background:url("../../images/crowdsourcing/index/missionTitleBg.png") no-repeat  center center; font-weight:bold;}
+.missionTitle span{ display: block; font-size: 14px; color:#9d9c9c; line-height:25px;}
+.demandTypeTitle { float: left; width: 899px; position: relative; line-height:45px; font-size: 18px; color:#acacac; }
+.demandTypeTitle a{ position: absolute; right: 15px; color: #959494; font-size: 14px;}
+.demandTypeTitle span{ padding-left:25px; font-style: italic; }
+.demandListBox{ overflow: hidden; margin-top:25px;}
 .demandListImg{ float: left; width: 299px;}
 .demandDetail{ float: left; width:899px;height: 322px; overflow: hidden; border: 1px solid #d2d2d2;}
 .demandDetail li{ position: relative; float: left; width:299px; height: 161px; overflow: hidden; border-right:1px solid #d2d2d2; border-bottom: 1px solid #d2d2d2;}
@@ -93,8 +97,6 @@
 .demandDetail li:hover .demandDetailCon:before{ right:2px; bottom:2px;}
 .demandDetail li:hover .demandDetailCon:after{  right:2px; bottom:2px;}
 
-
-
 .demandDetailHide.active{ display: block}
 .demandDetailCon{ padding: 27px 22px 0;margin-bottom: 24px; height: 70px;line-height:22px; text-align: left; font-size: 14px; color:#959494;word-break:break-all;  word-wrap:break-word; overflow: hidden;}
 .demandApply{}
@@ -102,12 +104,86 @@
 
 
 
+.demandTitle{ margin-top:15px;font-size: 24px; color: #fff; line-height:35px; }
+.demandAnimateDetail{position: relative; width: 248px; height:169px;margin: 20px auto 0; border:1px dotted #fff; background-color: rgba(255, 255, 255, 0.1); text-align: left;}
+.demandAnimateDetail>div{ color:#fff; margin-left:15px;}
+.demandAnimateDetail .toBeServiceApply{ right:12px;bottom:22px;}
+.demandAnimateDetail .toBeServiceMoney{ color:#ffc600}
+.demandAnimateDetail .applyBtn{ padding: 0 6px; }
+.demandAnimateDetail .toBeServiceDemandName{ margin: 12px 0 9px 15px}
+  /*翻页动画*/
 
+.develop-ul { width: 100%; margin-top:30px;}
+.develop-ul li {  float: left; position: relative; height: 345px; width: 285px; margin-right:20px; text-align: center; font-size: 14px}
+.develop-ul li:last-child{ margin-right:0;}
+.develop-ul li .ch-info-wrap { position: absolute; left: 0; top: 0; width: 100%; height: 100%; -webkit-perspective: 800px; perspective: 800px;
+  -webkit-transition: all .7s ease-in-out;
+  transition: all .7s ease-in-out
+}
 
+.develop-ul li .ch-info { position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  -webkit-transition: all .7s ease-in-out;
+  transition: all .7s ease-in-out;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
 
+.develop-ul li .develop-div { position: absolute; left: 0; top: 0; height: 345px; width: 285px;  backface-visibility: hidden;  color: #fff;
+  -webkit-backface-visibility: hidden;
+  transform: translateX(0);
+}
 
+.develop-ul li .develop-div a { display: inline-block;   border: 1px solid #fff;  color: #fff}
 
+.develop-ul li .develop-div p { padding:  0; height: 200px; line-height: 26px; font-weight: 400; text-align: left}
 
+.develop-ul li .develop-3d {
+  -webkit-transform: rotate3d(0,1,0,180deg);
+  -moz-transform: rotate3d(0,1,0,180deg);
+  -o-transform: rotate3d(0,1,0,180deg);
+  -ms-transform: rotate3d(0,1,0,180deg);
+  transform: rotate3d(0,1,0,180deg);
+  box-shadow: 0 0 6px 0 #8a8a8a;;
+}
+.firstPageATag{position: absolute;bottom: 15px;left:93px; width: 94px; height:24px;border-radius:24px; line-height:24px;}
+.develop-ul li .develop-div1 {height: 343px; width: 283px; background: url("../../images/crowdsourcing/index/demandTypeBg.png") 0 0 no-repeat; color: #01e3ab; border:1px solid #d2d2d2;}
+.develop-ul li .develop-div1 a.firstPageATag { background-color: #00a850;}
+.develop-ul li .develop-div2 { background: url("../../images/crowdsourcing/index/demandTypeBg.png") 0 -345px no-repeat }
+.develop-ul li .develop-div2 a.firstPageATag {background-color: #fff;border-color: #fff;color: #00a850}
+.develop-ul li .develop-div2 a.firstPageATag:hover { box-shadow:0 0 5px 0 #5d5d5d;}
+.develop-ul li .develop-div2 .applyBtn { background-color: #027e3d;border:none;}
+.develop-ul li .develop-div2 .applyBtn:hover { background-color: #027e3d; color:#00ff12}
+
+.develop-ul li .develop-div3 {height: 343px; width: 283px; background: url("../../images/crowdsourcing/index/demandTypeBg.png") -285px 0 no-repeat; color: #00aeff ; border:1px solid #d2d2d2;}
+.develop-ul li .develop-div3 a.firstPageATag { background-color: #e77e00;}
+.develop-ul li .develop-div4 { background: url("../../images/crowdsourcing/index/demandTypeBg.png") -285px -345px no-repeat }
+.develop-ul li .develop-div4 a.firstPageATag { background-color: #fff;color: #e77e00;}
+.develop-ul li .develop-div4 a.firstPageATag:hover { box-shadow:0 0 5px 0 #5d5d5d;}
+.develop-ul li .develop-div4 .applyBtn { background-color: #b46301;border:none;}
+.develop-ul li .develop-div4 .applyBtn:hover { background-color: #b46301; color:#fbd60a}
+
+.develop-ul li .develop-div5 {height: 343px; width: 283px; background: url("../../images/crowdsourcing/index/demandTypeBg.png") -570px 0 no-repeat; color: #fed046 ; border:1px solid #d2d2d2;}
+.develop-ul li .develop-div5 a.firstPageATag { background-color: #8a46b3;}
+.develop-ul li .develop-div6 { background: url("../../images/crowdsourcing/index/demandTypeBg.png") -570px -345px no-repeat }
+.develop-ul li .develop-div6 a.firstPageATag { background-color: #fff;color: #8a46b3;}
+.develop-ul li .develop-div6 a.firstPageATag:hover { box-shadow:0 0 5px 0 #5d5d5d;}
+.develop-ul li .develop-div6 .applyBtn { background-color: #5f0a92;border:none;}
+.develop-ul li .develop-div6 .applyBtn:hover { background-color: #5f0a92; color:#ea97ff}
+
+                                                                                         .develop-ul li .develop-div7 {height: 343px; width: 283px; background: url("../../images/crowdsourcing/index/demandTypeBg.png") -855px 0 no-repeat; color: #00aeff ; border:1px solid #d2d2d2;}
+.develop-ul li .develop-div7 a.firstPageATag { background-color: #313a4b;}
+.develop-ul li .develop-div8 { background: url("../../images/crowdsourcing/index/demandTypeBg.png") -855px -345px no-repeat }
+.develop-ul li .develop-div8 a.firstPageATag { background-color: #fff;color: #313a4b;}
+.develop-ul li .develop-div8 a.firstPageATag:hover { box-shadow:0 0 5px 0 #5d5d5d;}
+.develop-ul li .develop-div8 .applyBtn { background-color: #090d13;border:none;}
+.develop-ul li .develop-div8 .applyBtn:hover { background-color: #090d13; color:#91b5eb}
+
+.develop-ul li:hover .ch-info { -webkit-transform: rotate3d(0,1,0,-180deg);
+  -moz-transform: rotate3d(0,1,0,-180deg);
+  -o-transform: rotate3d(0,1,0,-180deg);
+  -ms-transform: rotate3d(0,1,0,-180deg);
+  transform: rotate3d(0,1,0,-180deg)
+}
 
 
 
