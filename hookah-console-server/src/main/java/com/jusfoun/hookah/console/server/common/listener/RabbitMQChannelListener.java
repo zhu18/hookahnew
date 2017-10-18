@@ -94,7 +94,7 @@ public class RabbitMQChannelListener {
         relationData.setOpera(opera);
         relationData.setData(obj);
         data.setTimestamp(new Date().getTime());
-        String skey = PropertiesManager.getInstance().getProperty("platformCode") + HookahConstants.CHANNEL_KEY;
+        String skey = HookahConstants.platformCode + HookahConstants.CHANNEL_KEY;
         skey += data.getTimestamp().toString().substring(16 - skey.length());
         data.setTransData(DESUtils.enPass(JSON.toJSONString(relationData), skey));
         data.setCheckCode(Md5Utils.encoderByMd5(SHAUtils.encryptSHA(JSON.toJSONString(relationData))));

@@ -137,9 +137,9 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             User user = userService.selectById(currentUser.getUserId());
             if(user != null){
 
-                goodsSn.append(StringUtils.isNotBlank(user.getUserSn()) ? user.getUserSn() : PropertiesManager.getInstance().getProperty("platformCode"));
+                goodsSn.append(StringUtils.isNotBlank(user.getUserSn()) ? user.getUserSn() : HookahConstants.platformCode);
             }else {
-                goodsSn.append(PropertiesManager.getInstance().getProperty("platformCode"));
+                goodsSn.append(HookahConstants.platformCode);
 
             }
 
@@ -150,13 +150,13 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             goodsSn.append(String.format("%06d", Integer.parseInt(redisOperate.incr(PropertiesManager.getInstance().getProperty("jusfounCode")))));
 
         }else{
-            goodsSn.append(PropertiesManager.getInstance().getProperty("platformCode"));
+            goodsSn.append(HookahConstants.platformCode);
 
             // 分类
             goodsSn.append(obj.getCatId().substring(0, 3));
 
             // 编号
-            goodsSn.append(String.format("%06d", Integer.parseInt(redisOperate.incr(PropertiesManager.getInstance().getProperty("platformCode")))));
+            goodsSn.append(String.format("%06d", Integer.parseInt(redisOperate.incr(HookahConstants.platformCode))));
 
         }
 

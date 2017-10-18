@@ -4,6 +4,10 @@ package com.jusfoun.hookah.core.constants;
  * Created by wangjl on 2017-3-22.
  */
 public class HookahConstants {
+
+    /*平台用户、产品编码前缀*/
+    public static final String platformCode="JF";
+
     /*交易中心虚拟账户Id*/
     public static final Long TRADECENTERACCOUNT = 8L;
     /*交易中心userId*/

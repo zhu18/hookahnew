@@ -219,7 +219,7 @@ public class ChannelServiceImpl extends GenericServiceImpl<Goods,String> impleme
 
     //解密
     private static String deCrypt(Long timestamp, String transData){
-        String skey = PropertiesManager.getInstance().getProperty("platformCode") + HookahConstants.CHANNEL_KEY;
+        String skey = HookahConstants.platformCode + HookahConstants.CHANNEL_KEY;
         skey += String.valueOf(timestamp).substring(16 - skey.length());
         String data = DESUtils.dePass(transData, skey);
         return data;

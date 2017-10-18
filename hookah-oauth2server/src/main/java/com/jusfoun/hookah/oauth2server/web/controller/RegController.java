@@ -175,9 +175,9 @@ public class RegController {
         List<Condition> filter = new ArrayList<>();
         filter.clear();
         long count = userService.count(filter)+1;
-        String number = "000000" + count;
-        String key = "QD" + date + number.substring(number.length()-6);
-        user.setUserSn(key);
+//        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
+        String userSn = HookahConstants.platformCode + date + String.format("%06d",count);
+        user.setUserSn(userSn);
 
         User regUser = userService.insert((User) user);
         //redirectAttributes.addAttribute(regUser);
