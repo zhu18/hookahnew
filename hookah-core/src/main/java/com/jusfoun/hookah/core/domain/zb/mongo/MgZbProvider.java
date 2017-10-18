@@ -425,9 +425,9 @@ public class MgZbProvider extends GenericModel {
 
         private String sn;
         private String patentName;      //  专利名称
-        private String PatentNum;       //  专利号
+        private String patentNum;       //  专利号
         private String applyTime;         //  申请日期
-        private String PatentDesc;     //   专利概述
+        private String patentDesc;     //   专利概述
         private List<CertPaths> certPathsList;//证明材料
 
         public List<CertPaths> getCertPathsList() {
@@ -454,14 +454,6 @@ public class MgZbProvider extends GenericModel {
             this.patentName = patentName;
         }
 
-        public String getPatentNum() {
-            return PatentNum;
-        }
-
-        public void setPatentNum(String patentNum) {
-            PatentNum = patentNum;
-        }
-
         public String getApplyTime() {
             return applyTime;
         }
@@ -470,14 +462,21 @@ public class MgZbProvider extends GenericModel {
             this.applyTime = applyTime;
         }
 
+        public String getPatentNum() {
+            return patentNum;
+        }
+
+        public void setPatentNum(String patentNum) {
+            this.patentNum = patentNum;
+        }
+
         public String getPatentDesc() {
-            return PatentDesc;
+            return patentDesc;
         }
 
         public void setPatentDesc(String patentDesc) {
-            PatentDesc = patentDesc;
+            this.patentDesc = patentDesc;
         }
-
     }
 
     /**

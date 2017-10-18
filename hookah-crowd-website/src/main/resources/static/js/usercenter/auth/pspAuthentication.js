@@ -327,11 +327,11 @@ $("#inPatentsAdd").on('click',function () {
     $("#inPatentsAddSave").on('click',function () {
         var data=JSON.stringify({
             inPatentsList:[{
-                "sn": "SN_5_"+time(),
+                "sn": "SN_6_"+time(),
                 "patentName": $("#patentName").val(),
-                "PatentNum": $("#PatentNum").val(),
+                "patentNum": $("#PatentNum").val(),
                 "applyTime": $("#startDate").val() || null,
-                "PatentDesc": $('#PatentDesc').val() || null,
+                "patentDesc": $('#PatentDesc').val() || null,
                 "certPathsList":[
                     {
                         "certName":$('.fileTip').html(),
@@ -345,7 +345,7 @@ $("#inPatentsAdd").on('click',function () {
             dom:'#inPatents'
         })
     });
-    $("#inPatentsCaseAdd").hide();
+    $("#inPatentsAdd").hide();
     jeDate();
     fileUpload();
     validate();
@@ -723,6 +723,7 @@ function appCaseEdit(r) {
     });
 
 }
+
 function swpEdit(r) {
     console.log("修改");
     var _this=$(this);
@@ -792,6 +793,84 @@ function swpEdit(r) {
                     })
                 });
                 $("#swpAdd").hide();
+                jeDate();
+                fileUpload();
+                validate();
+            }
+        }
+    });
+
+}
+function inPatentsEdit(r) {
+    console.log("修改");
+    var _this=$(this);
+    $.ajax({
+        type: 'get',
+        url: "/api/auth/getAuthInfo",
+        data:{
+            optArrAySn:r.currentTarget.attributes[2].nodeValue,
+            optAuthType: "6"
+        },
+        success: function (data) {
+            console.log();
+            if(data.code==1){
+                // var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
+                // $(".education tr").eq(index).html(html);
+
+                var html='<dl>' +
+                    '<form action="" id="form">' +
+                    '<table id="inPatents" class="from"> ' +
+                    '<tr>' +
+                    '<td>' +
+                    '<div>' +
+                    '<label for="patentName"><span class="color-red">*</span>发明名称</label> ' +
+                    '<input type="text" id="patentName" name="patentName" placeholder="请输入软件名称" required> </div> </td>' +
+                    '<td><div>' +
+                    '<label for="patentNum"><span class="color-red">*</span>专利号</label> ' +
+                    '<input type="text" id="patentNum" name="patentNum" placeholder="请输入登记号" required> </div> </td>' +
+                    ' </tr> <tr> ' +
+                    '<td> <div> ' +
+                    '<label for=""><span class="color-red">*</span>申请日期</label> ' +
+                    '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
+                    '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+                    ' <tr> <td colspan="2"> ' +
+                    '<label for="patentDesc">专利概述</label> ' +
+                    '<textarea name="patentDesc" id="patentDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
+                    '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="inPatentsAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
+                    '>保存 </button> </td> </tr> </table> </form> </dl>';
+
+                _this.parent().parent().parent().html(html);
+
+                $('#patentName').val(data.data.patentName);
+                $('#patentNum').val(data.data.patentNum);
+                $('#startDate').val(data.data.applyTime);
+                $('#patentDesc').val(data.data.patentDesc);
+
+                $("#inPatentsAddSave").on('click',function () {
+                    var data=JSON.stringify({
+                        optArrAySn:$('#inPatentsAddSave').attr('data-sn'),
+                        optType: "3",
+                        optAuthType: "6",
+                        inPatentsList:[{
+                            "sn":$('#inPatentsAddSave').attr('data-sn'),
+                            "patentName": $("#patentName").val(),
+                            "patentNum": $("#patentNum").val(),
+                            "applyTime": $("#startDate").val() || null,
+                            "patentDesc": $('#patentDesc').val() || null,
+                            "certPathsList":[
+                                {
+                                    "certName":$('.fileTip').html(),
+                                    "certPath":$('input[type="hidden"]').val()
+                                }
+                            ]
+                        }]
+                    })
+                    addSave({
+                        data:data,
+                        dom:'#inPatents'
+                    })
+                });
+
                 jeDate();
                 fileUpload();
                 validate();
@@ -1009,10 +1088,10 @@ function reader() {
                         html +='<a href="javascript:void (0)" class="inPatentsDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
                         html +='<dd> '
                         html +='<label>专利号:</label> '
-                        html +='<div >'+item.PatentNum+'</div> </dd> '
+                        html +='<div >'+item.patentNum+'</div> </dd> '
                         html +='<dd>'
                         html +=' <label>专利概述:</label> '
-                        html +='<div>'+item.PatentDesc+'</div> </dd> <dd> '
+                        html +='<div>'+item.patentDesc+'</div> </dd> <dd> '
                         html +='<label>证明材料:</label> '
                         html +='<div>'
                         if(item.certPathsList && item.certPathsList.length>0) {
@@ -1022,7 +1101,7 @@ function reader() {
 
                     }
                     $('.content-inPatents').html(html);
-                    // $(".inPatentsEdit").on('click',inPatentsEdit);
+                    $(".inPatentsEdit").on('click',inPatentsEdit);
                     $(".inPatentsDelete").on('click',function (r) {
                         itemDelete(r,'6');
                     });

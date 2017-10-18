@@ -114,5 +114,19 @@ public class CrowdSourcingController {
     public String epAuthentication(Model model) {
         return "usercenter/crowdsourcing/auth/epAuthentication";
     }
+    /**
+     * 服务商 个人名片
+     */
+    @RequestMapping(value = "/usercenter/pBusinessCard", method = RequestMethod.GET)
+    public String pBusinessCard(Model model) {
+        return "usercenter/crowdsourcing/service/pBusinessCard";
+    }
+    /**
+     * 服务商 企业名片
+     */
+    @RequestMapping(value = "/usercenter/eBusinessCard", method = RequestMethod.GET)
+    public String eBusinessCard(Model model) {
+        return "usercenter/crowdsourcing/service/eBusinessCard";
+    }
 
 }

@@ -1,0 +1,37 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
+<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+<script src="/static/js/plugins/validate/jquery-validate.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
+
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
+<link rel="stylesheet" href="/static/css/usercenter/auth/businessCard.css">
+
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box  margin-bottom-20">
+            <div class="header clearfix">
+                <h4 class="grid-left center-title">服务商名片</h4>
+            </div>
+            <div class="businessCard">
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script src="/static/js/usercenter/auth/businessCard.js"></script>
+
