@@ -23,7 +23,7 @@ var htmlPart = {
   var pageType = 'get';
   var dataParm = {};
   dataParm.pageNumber = 1;
-  dataParm.pageSize = 32;
+  dataParm.pageSize = 6;
   dataParm.type = '';
   dataParm.status = '';
   dataParm.timeType = '';
@@ -66,7 +66,9 @@ var htmlPart = {
             <li value="month">一月以内</li>
             <li value="gtmonth">一月以上</li>
           </ul>
-          <span style="margin-left:50px;">
+        </li>
+        <li>
+          <span>
           状态：
           </span>
           <ul class="j_searchLi" id="status" value="">

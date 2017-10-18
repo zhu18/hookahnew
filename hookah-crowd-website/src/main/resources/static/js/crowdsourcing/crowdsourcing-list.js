@@ -2,7 +2,7 @@
  * Created by Dajun on 2017-9-19.
  */
 function loadPageData(data) { //渲染页面数据
-  data = data.data.list;
+  data = data.data.list; console.log(data)
   let demandList = '';
   for (let i = 0; i < data.length; i++) {
     let tempState = '';
@@ -24,11 +24,13 @@ function loadPageData(data) { //渲染页面数据
     }
     demandList+='<li>\
             <div class="demandDetailTitle">' + data[i].title + '</div>\
-            <img class="demandTimeIco" src="/static/images/crowdsourcing/index/demandDetail-ico.png" alt="">\
-            <div class="demandDeadData">交付截止日期：' + data[i].deliveryDeadline + '</div>\
-            <div class="demandLastTime">报名剩余时间：'+data[i].remainTime+'</div>\
-            <div class="demandMoney">￥ ' + data[i].rewardMoney/100 + ' 元  </div>\
-            <div class="demandHasApply">已报名：0人</div>\
+            <img class="demandTimeIco mt15" src="/static/images/crowdsourcing/index/demandDetail-ico.png" alt="">\
+            <div class="demandDeadData mt6">交付截止日期：' + data[i].deliveryDeadline + '</div>\
+            <div class="demandLastTime">报名剩余时间：'+data[i].remainTime+'</div>\            \
+            <img class="demandTimeIco mt33" src="/static/images/crowdsourcing/crowdsourcing-list/demandDetail-ico02.png" alt="">\
+            <div class="demandDeadData demandDeadDes mt15">' + data[i].checkRemark + '</div>\
+            <div class="demandMoney">￥' + data[i].rewardMoney/100 + ' 元  <span class="demandHasApply">已报名：' + data[i].count + '人</span></div>\
+            \
             <a class="applyBtn demandApply ' + tempState + '" href="6">' + tempState + '</a>\
           </li>\
       ';

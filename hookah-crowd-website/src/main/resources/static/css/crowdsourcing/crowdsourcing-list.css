@@ -19,24 +19,30 @@
 .lastTime{ display: inline-block; width: 100px;}
 
 
-.demandList{ overflow: hidden; border:1px solid #d2d2d2; border-bottom: none;}
-.demandList li{ position: relative; float: left; width:276px; height: 145px; padding:16px 0 0 23px; overflow: hidden; border-right:1px solid #d2d2d2; border-bottom: 1px solid #d2d2d2;transition: all .3s ease-in-out;}
-.demandList li:hover{ background-color: #f2f8fc;}
+.demandList{ }
+.demandList:after{ content: ''; clear: both; display: block; height:0; width: 0;}
+.demandList li{ position: relative; float: left;width: 370px; height: 244px; padding:14px 0 0 17px; margin:16px 16px 0 0; overflow: hidden; border: 1px solid #d2d2d2;transition: all .3s ease-in-out;}
+.demandList li:hover{ background-color: #f2f8fc; border: 1px solid #f2f8fc;box-shadow:0 0 7px 0 #afafaf}
 .demandList li:hover .applyBtn{ background-color: #ffc600;}
 .demandList li:hover .applyBtn.timeOver{ background-color: #c9c9c9;}
-.demandList li:nth-child(4n+0){ border-right:none;width:275px; }
+.demandList li:nth-child(3n+0){ margin-right:0;}
 
-.applyBtn{ padding:2px 8px 3px;  background-color: #48c8e3;color:#fff; border-radius: 4px; transition: all .3s ease-in-out;}
-.demandApply{  position: absolute; right:19px; bottom:19px;}
+.applyBtn{ padding:3px 12px 4px; background-color: #48c8e3;color:#fff; border-radius: 4px; transition: all .3s ease-in-out;}
+.demandApply{  margin: 0 0 0 40px;}
 .timeOver{ background-color: #c9c9c9;}
 
 .demandDetailShow{ padding: 16px 0 0 23px; }
 .demandDetailTitle{     margin-bottom: 5px;font-size: 18px; color:#535353;}
-.demandTimeIco{ float: left;margin: 9px 10px 0 0;}
-.demandDeadData{ float: left; font-size: 14px; color:#959494}
-.demandLastTime{ float: left; font-size: 14px; color:#959494}
-.demandMoney{    padding-top: 7px; clear: both; font-size: 18px; color: #ffc600; }
-.demandHasApply{font-size: 14px;color:#cccbcb}
+.demandTimeIco{ clear: both; float: left;margin: 9px 4px 0 0;}
+.demandDeadData{width: 310px;  padding-left:8px;float: left; font-size: 14px; color:#959494; border-left: 2px solid #d2d2d2;}
+.demandDeadDes{ height:66px;line-height: 24px;}
+.demandLastTime{ float: left; padding-left:8px;font-size: 14px; color:#959494;border-left: 2px solid #d2d2d2;}
+.demandMoney{    padding: 12px 0 12px 40px; clear: both; font-size: 18px; color: #ffc600; }
+.demandHasApply{padding-left: 16px;font-size: 14px;color:#cccbcb}
+
+.mt15{ margin-top:15px;}
+.mt33{ margin-top:33px;}
+.mt6{ margin-top:6px;}
 
 .demandList li:before{ content: ''; display: block; height:3px; width:26px; opacity:0;background-color: #48c8e3; position: absolute; left:20px; top:2px; transition: all .3s ease-in-out;}
 .demandList li:after{ content: ''; display: block; height:26px; width:3px; opacity:0; background-color: #48c8e3; position: absolute; left:2px; top:20px; transition: all .3s ease-in-out;}
