@@ -393,19 +393,18 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 pageSizeNew = Integer.parseInt(pageSize);
             }
             PageHelper.startPage(pageNumberNew, pageSizeNew);
-
             List<Condition> filters = new ArrayList();
             if (mgZbProvider.getAuthType()!=null) {
                 filters.add(Condition.eq("authType", mgZbProvider.getAuthType()));
             }
             if (mgZbProvider.getStatus()!=null &&mgZbProvider.getStatus()!=-1) {
-                filters.add(Condition.eq(" status", mgZbProvider.getStatus()));
+                filters.add(Condition.eq("status", mgZbProvider.getStatus()));
             }
             if (mgZbProvider.getUpname()!=null) {
                 filters.add(Condition.like("upname", mgZbProvider.getUpname()));
             }
             List<Sort> sorts = new ArrayList<>();
-            sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
+           sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
 
             Pagination<MgZbProvider> pagination = mgZbProviderService.getListInPageFromMongo(pageNumberNew,pageSizeNew,filters,sorts,startTime,endTime);
 
