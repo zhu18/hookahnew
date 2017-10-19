@@ -21,6 +21,8 @@
 .signUp{ display: block; width: 285px; height: 48px; font-size:18px; margin: 20px auto 36px; line-height:48px; border-radius:3px; background-color: #48c8e3;color: #fff; text-align: center;}
 .signUp:hover{ background-color: #e10000;}
 .des{line-height: 25px; margin-top: 5px; padding-bottom: 5px;transition: all .3s ease-in-out;}
+.bgc-a7a7a7{ background-color: #a7a7a7;}
+.bgc-a7a7a7:hover{ background-color: #a7a7a7;}
 
 .similarMissionBox{ height: 177px; margin:50px auto; position: relative; border:2px solid #48c6e3;}
 

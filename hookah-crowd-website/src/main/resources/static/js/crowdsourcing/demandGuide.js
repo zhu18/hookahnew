@@ -4,6 +4,7 @@
 
 
 let crowdSourcingId = GetUrlValue('id');
+let userType = null;
 
 
 function recommendTasks() { //推荐任务
@@ -34,8 +35,6 @@ function initRecommendTasksDOM(selector,data){//推荐任务渲染函数
   $(selector).html(initRecommendTasksDOM).css('width',data.length*(215+34));
 }
 
-
-
 function demandDetail() { //需求详情
   $.ajax({
     type: 'get',
@@ -43,40 +42,20 @@ function demandDetail() { //需求详情
     cache: false,
     success: function (data) {
       console.log(data);
+      if(data.data.zbRequirementSPVo.status==6){
+        console.log($('.demandStatus').addClass('bgc-a7a7a7').children('span').eq(0).html('报名结束'));
+        $('.signUp').addClass('bgc-a7a7a7').attr('href','javascript:void(0)');
+      }
+      userType=data.data.userType;
+      console.log(data.data.zbRequirementSPVo.status);
       $('.demandTitle').html(data.data.zbRequirementSPVo.title);
       $('.demandDes').html(data.data.zbRequirementSPVo.description.substring(0,45)+'...').attr({'shotStr':(data.data.zbRequirementSPVo.description.substring(0,45)+'...'),'allStr':data.data.zbRequirementSPVo.description});
       $('.j_deliveryDeadline').html(data.data.zbRequirementSPVo.deliveryDeadline);
       $('.j_applyDeadline').html(data.data.zbRequirementSPVo.applyDeadline);
       $('.rewardMoney span').html(data.data.zbRequirementSPVo.rewardMoney/100);
       $('.j_checkRemark').html(data.data.zbRequirementSPVo.checkRemark.substring(0,45)+'...').attr({'shotStr':(data.data.zbRequirementSPVo.checkRemark.substring(0,45)+'...'),'allStr':data.data.zbRequirementSPVo.checkRemark});
+      $('.demandType').html(data.data.zbRequirementSPVo.typeName);
 
-
-      switch (Number(data.data.zbRequirementSPVo.type)) {
-        case 1 : {
-          $('.demandType').html('数据采集');
-          break;
-        }
-        case 2 : {
-          $('.demandType').html('数据清洗');
-          break;
-        }
-        case 3 : {
-          $('.demandType').html('数据分析');
-          break;
-        }
-        case 4 : {
-          $('.demandType').html('数据模型');
-          break;
-        }
-        case 5 : {
-          $('.demandType').html('数据应用');
-          break;
-        }
-        case 6 : {
-          $('.demandType').html('其他');
-          break;
-        }
-      }
     }
   });
 }
@@ -91,8 +70,6 @@ $('.prev').on('click',function () {
   if(boxLeft>leftVal){
     box.css('left',boxLeft-=215+34)
   }
-
-
 });
 $('.next').on('click',function () {
   let boxLeft=parseFloat(box.css('left'));
@@ -107,23 +84,45 @@ $('.des').on('mouseenter',function () {
   $(this).html($(this).attr('shotStr'));
 });
 
+$(document).on('click','.signUp',function () {
+
+  if(userType !== -1){ //已经登录
+    isLogin()
+  }else{ //未登录
+    window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/crowdsourcing/demandGuide?id='+crowdSourcingId);
+  }
 
 
+});
 
+function isLogin() {  //已经登录
+  $.ajax({
+    url: '/api/isAuthProvider',
+    type: 'post',
+    success: function (data) {
+      if(data){ //已经认证
 
+        window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/missionApply?id='+crowdSourcingId);
 
+      }else{ //未认证
+        $.confirm('<div style="padding: 15px; text-align:left;">您好！<span style="color:red">您还不是服务商</span>，不能参加需求任务报名，<br>如想报名请点击 【确定】 申请成为服务商，<br>按要求提交信息即可通过服务商认证。 </div>',null,function(type){
+          if(type == 'yes'){
+            if(userType==2){
+              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
+            }else{
+              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
+            }
+            this.hide();
+          }else{
+            this.hide();
 
+          }
+        })
 
-
-
-
-
-
-
-
-
-
-
+      }
+    }
+  });
+}
 
 
 

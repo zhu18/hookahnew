@@ -32,8 +32,13 @@ function recommendTasks() { //推荐任务
 }
 function initRecommendTasksDOMFn(selector,data){ //推荐任务
   let initRecommendTasksDOM='';
-  for(let i=0;i < 4;i++){
-    console.log(data[i]);
+  let tempLength=null;
+  if(data.length>3){
+    tempLength=3;
+  }else{
+    tempLength=data.length;
+  }
+  for(let i=0;i < tempLength;i++){
     initRecommendTasksDOM+='\
    <li>\
       <div class="toBeServiceDemandName">'+data[i].title+'</div>\
@@ -90,6 +95,7 @@ function initOneDataRequirementTypeInfoDOM(selector,data){
 function requirementTypeInfo(selector,data) {
   let tempLiDom='';
   for(let i=0;i<data.length;i++){
+
     tempLiDom+='\
     <li>\
       <div class="demandDetailShow">\
