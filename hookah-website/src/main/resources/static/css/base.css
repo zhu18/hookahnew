@@ -1,3 +1,6 @@
+html{
+	min-width: 1200px;
+}
 .header-top-bar {
 	background: #f5f5f5;
 	height: 30px;
@@ -12,7 +15,7 @@
 .header-centerbar {
 	width: 100%;
 	height: 75px;
-	min-width: 1230px;
+	min-width: 1200px;
 	border-bottom: 1px solid rgb(81, 1, 15);
 	border-image: initial;
 	background: url("/static/images/top-header.png") center top no-repeat rgb(15, 16, 55);
