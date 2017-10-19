@@ -38,6 +38,13 @@ public class CrowdSourcingController {
         return "crowdsourcing/index";
     }
     /**
+     * 数据众包首页
+     */
+    @RequestMapping(value = "/crowdsourcing/demandGuide", method = RequestMethod.GET)
+    public String demandGuide(Model model) {
+        return "crowdsourcing/demandGuide";
+    }
+    /**
      * 官网展示 更多需求列表
      */
     @RequestMapping(value = "/crowdsourcing-list", method = RequestMethod.GET)

@@ -1,0 +1,52 @@
+.banner{min-height: 334px;  background:url("../../images/crowdsourcing/demandGuide/banner.png") 0 32px  no-repeat;}
+.banner-btn{ display: inline-block;height:38px; width: 191px; margin-top:302px;border:3px solid #b6e9f4; border-radius:38px; text-align: center; text-decoration: none; color:#fff; font-size: 26px; line-height: 38px;;}
+.bannerBox{ width: 100%; height:361px; background: #48c8e3 url("../../images/crowdsourcing/demandGuide/bannerBg.gif") 0 32px repeat;}
+.banner-btn{  margin:283px 0 0 5px;}
+.banner-btn:hover{ color:#48c8e3; background-color: #cde6ec; border:3px solid #cde6ec; }
+.progress{ height:222px;}
+
+.demandBody{ position: relative;}
+.demandInfo{ position: absolute; right: 0 ;top:33px; width:492px; min-height:557px; background-color: #fff;border-radius:3px;box-shadow:0 0 6px 0 #c1c1c1; z-index:1;transition: all .3s ease-in-out;}
+.demandStatus{ height:73px; font-size:24px; background-color: #f7b52c; color: #ffffff; text-align: center; line-height:73px; border-radius: 3px 3px 0 0}
+.demandStatus img{ vertical-align: middle; margin-right:12px;}
+.demandTitle{ color:#666; text-align: center; font-size:24px; line-height:70px;}
+.demandTable{ font-size:14px;width: 100%; }
+.demandTable tr td:first-child{ width: 125px; text-align: right; line-height:42px;}
+.demandTable tr td:last-child{ padding:0 15px; color:#666666}
+.demandTable tr:hover{ background-color: #eeeeee;}
+.loadFile{padding:0 12px;border-radius:3px; background-color: #f7b52c;color:#fff;}
+.demandTable tr td:last-child.rewardMoney{ color:#e10000;}
+.rewardMoney span{ font-size:20px;}
+.demandDes{}
+.signUp{ display: block; width: 285px; height: 48px; font-size:18px; margin: 20px auto 36px; line-height:48px; border-radius:3px; background-color: #48c8e3;color: #fff; text-align: center;}
+.signUp:hover{ background-color: #e10000;}
+.des{line-height: 25px; margin-top: 5px; padding-bottom: 5px;transition: all .3s ease-in-out;}
+
+.similarMissionBox{ height: 177px; margin:50px auto; position: relative; border:2px solid #48c6e3;}
+
+.similarMissionBottomBox{ position: absolute; left:-2px; top: 15px; background-color: #fff; width: 1204px;  overflow: hidden;}
+.similarMissionBottomBoxLeft{ margin-top:13px; height:135px; width:109px; border-right:1px solid #48c8e3;text-align: center; float: left;}
+.similarMissionBottomBoxLeft img{ margin-top:14px;
+
+  filter: "gray";
+}
+.similarMissionBottomBoxLeft span{ font-size:24px;color:#48c8e3; display: block; }
+
+.similarMissionOutBox{width: 1013px; overflow: hidden; position: absolute; left: 153px;height: 147px;}
+.similarMissionBottomBoxRight{position: absolute; left: 0;transition: all .3s ease-in-out;}
+.similarMissionBottomBoxRight li{ position: relative; width: 215px; float: left; margin:0 17px;}
+.similarMissionBottomBoxRight li:last-child{ margin-right:0;}
+
+.similarMissionDemandName{ margin:16px 0 5px 0 ; font-size: 18px; color: #535353;}
+.similarMissionDeadData{ color: #959494;font-size: 14px;}
+.similarMissionLastTime{ margin-top:4px;color: #959494;font-size: 14px;}
+.similarMissionMoney{ font-size: 18px; color: #ffc600;}
+.similarMissionHasApply{ font-size: 14px;color:#cccbcb}
+.applyBtn{ padding:2px 8px 3px;  background-color: #48c8e3;color:#fff; border-radius: 4px;}
+.applyBtn:hover{ background-color: #019cbd;}
+.similarMissionApply{  position: absolute; right:0; bottom:0;}
+
+.prev,.next{ display: block; height:135px; width:42px; position: absolute; top:13px; cursor:pointer;}
+.prev{left:110px; background:url("../../images/crowdsourcing/demandGuide/prev.png") 0 0;}
+.next{right:2px; background:url("../../images/crowdsourcing/demandGuide/next.png") 0 0;}
+.prev:hover,.next:hover{ background-position: -40px 0;}

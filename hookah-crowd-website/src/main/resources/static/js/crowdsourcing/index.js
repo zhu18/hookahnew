@@ -25,14 +25,15 @@ function recommendTasks() { //推荐任务
       console.log(data);
       console.log('推荐任务');
       if(data.code==1){
-        initRecommendTasksDOM('.toBeServiceBottomBoxRight',data.data.zbRecommendVos)
+        initRecommendTasksDOMFn('.toBeServiceBottomBoxRight',data.data.zbRecommendVos)
       }
     }
   })
 }
-function initRecommendTasksDOM(selector,data){
+function initRecommendTasksDOMFn(selector,data){ //推荐任务
   let initRecommendTasksDOM='';
   for(let i=0;i < 4;i++){
+    console.log(data[i]);
     initRecommendTasksDOM+='\
    <li>\
       <div class="toBeServiceDemandName">'+data[i].title+'</div>\
@@ -40,7 +41,7 @@ function initRecommendTasksDOM(selector,data){
     <div class="toBeServiceLastTime">报名剩余时间：'+data[i].applyLastTime+'</div>\
     <div class="toBeServiceMoney">￥'+ (data[i].rewardMoney / 100 ) +'元  </div>\
     <div class="toBeServiceHasApply">已报名：'+data[i].count+'人</div>\
-    <a class="applyBtn toBeServiceApply" href="'+data[i].id+'">我要报名</a>\
+    <a class="applyBtn toBeServiceApply" href="/crowdsourcing/demandGuide?id='+data[i].requirementId+'">我要报名</a>\
       </li>'
   }
   $(selector).html(initRecommendTasksDOM);
@@ -68,7 +69,6 @@ function renderDOM() { //请求数据
 
 function initOneDataRequirementTypeInfoDOM(selector,data){
   if(data.length){
-    console.log(data[0].title);
     let initOneDataRequirementTypeInfoDOM='';
     initOneDataRequirementTypeInfoDOM+='\
           <div class="toBeServiceDemandName">'+data[0].title+'</div>\
@@ -102,7 +102,7 @@ function requirementTypeInfo(selector,data) {
         </div>\
       <div class="demandDetailHide ">\
         <div class="demandDetailCon">'+data[i].description+'</div>\
-        <a class="applyBtn demandApply" href="'+data[i].id+'">我要报名</a>\
+        <a class="applyBtn demandApply" href="/crowdsourcing/demandGuide?id='+data[i].id+'">我要报名</a>\
           </div>\
       </li>'
   }

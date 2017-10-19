@@ -1,0 +1,119 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/crowdsourcing/demandGuide.css">
+
+<%};%>
+<%
+var htmlPart = {
+%>
+<script type="text/javascript">
+  $.getUrlParam = function (key) {
+    var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+    var result = window.location.search.substr(1).match(reg);
+    return result ? decodeURIComponent(result[2]) : null;
+  };
+  var catId = $.getUrlParam('catId');
+  var prId = $.getUrlParam('prId');
+  var prNm = $.getUrlParam('prNm');
+  var msId = $.getUrlParam('msId');
+  var msNm = $.getUrlParam('msNm');
+  var names = $.getUrlParam('names');
+  var pagePath = '/require/getRequirementList';
+  var pageType = 'get';
+  var dataParm = {};
+  dataParm.pageNumber = 1;
+  dataParm.pageSize = 10;
+  dataParm.type = '';
+  dataParm.status = '';
+  dataParm.timeType = '';
+  dataParm.order = 'apply_deadline';
+  dataParm.sort = 'desc';
+</script>
+
+<div class="bannerBox">
+
+  <div class="grid-row demandBody ">
+    <div class="banner"><a href="#" class="banner-btn ">成为服务商</a></div>
+    <div class="demandInfo">
+      <div class="demandStatus"><img src="/static/images/crowdsourcing/demandGuide/demandStatusIcon.png" alt=""><span>报名中</span></div>
+      <div class="demandTitle">数据商城所需数据源</div>
+      <table class="demandTable">
+        <tr>
+          <td>需求类型</td>
+          <td class="demandType">---</td>
+        </tr>
+        <tr>
+          <td valign="top">需求描述</td>
+          <td><div class="des demandDes">--</div></td>
+        </tr>
+        <tr>
+          <td>交付截止日期</td>
+          <td class=" j_deliveryDeadline">--</td>
+        </tr>
+        <tr>
+          <td>报名截止日期</td>
+          <td class=" j_applyDeadline">--</td>
+        </tr>
+        <tr>
+          <td>需求附件</td>
+          <td ><span class="loadFile">登录报名后可下载</span></td>
+        </tr>
+        <tr>
+          <td>悬赏金额</td>
+          <td class="rewardMoney">￥<span>--</span></td>
+        </tr>
+        <tr>
+          <td valign="top">交付验收要求</td>
+          <td><div class="des j_checkRemark">--</div></td>
+        </tr>
+      </table>
+      <a href="#" class="signUp">我要报名</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="grid-0 exchange-list ">
+  <div class="grid-row ">
+    <div class="progress"><img src="/static/images/crowdsourcing/demandGuide/progress.png" alt=""></div>
+  </div>
+
+</div>
+
+<div class="grid-0 exchange-list ">
+  <div class="grid-row similarMissionBox">
+    <div class="similarMission">
+      <div class="similarMissionBottomBox">
+        <div class="similarMissionBottomBoxLeft">
+          <img src="/static/images/crowdsourcing/demandGuide/similarMissionIco.png" alt="">
+          <span>推荐任务</span>
+        </div>
+        <div class="similarMissionOutBox">
+          <ul class="similarMissionBottomBoxRight">
+            <li>
+  <!--
+              <div class="similarMissionDemandName">3D中国一级行政区板块</div>
+              <div class="similarMissionDeadData">交付截止日期：2017-07-15</div>
+              <div class="similarMissionLastTime">报名剩余时间：2天12小时37分钟</div>
+              <div class="similarMissionMoney">￥2000.00元  </div>
+              <div class="similarMissionHasApply">已报名：10人</div>
+              <a class="applyBtn similarMissionApply" href="#">我要报名</a>
+  -->
+            </li>
+          </ul>
+        </div>
+        <span class="prev"></span>
+        <span class="next"></span>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script src="/static/js/crowdsourcing/demandGuide.js"></script>
+
