@@ -22,6 +22,7 @@ import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -332,9 +333,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     //计算截止报名时间的剩余时间
     public Object applyLastTime(Short type){
-        Map<String, Object> map = new HashMap<>(6);
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("type",type));
+        filters.add(Condition.in("status", new Short[]{5, 6}));
         List<ZbRequirement> zbRequirement = this.selectList(filters);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long day = 0;
@@ -364,6 +365,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                     List<Condition> filters2 = new ArrayList<>();
                     filters2.add(Condition.eq("requirementId", zb.getId()));
                     List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
+                    //从session获取用户信息
+                    Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
+                    if(userMap != null){
+                        zb.setApplyStatus(zbRequirementApplies.size() > 0 ? Short.parseShort("0") : null);
+                    }
                     zb.setCount(zbRequirementApplies.size());
                 }
             }
@@ -371,13 +377,10 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         } catch (Exception e) {
             logger.error("系统错误",e);
             return "系统错误";
-            //return ReturnData.error("系统错误");
         }
-
     }
 
     //服务商管理
-
     @Override
     public ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize, MgZbProvider mgZbProvider, Date startTime, Date endTime) {
 

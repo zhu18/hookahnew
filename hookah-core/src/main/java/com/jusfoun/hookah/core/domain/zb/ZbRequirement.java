@@ -650,6 +650,10 @@ public class ZbRequirement extends GenericModel {
     @Transient
     private int count;
 
+    //报名状态
+    @Transient
+    private Short applyStatus;
+
     public String getApplyLastTime() {
         return applyLastTime;
     }
@@ -664,5 +668,13 @@ public class ZbRequirement extends GenericModel {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public Short getApplyStatus() {
+        return applyStatus;
+    }
+
+    public void setApplyStatus(Short applyStatus) {
+        this.applyStatus = applyStatus;
     }
 }
