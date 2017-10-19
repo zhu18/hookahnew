@@ -155,7 +155,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             //修改评价服务商评价需求方时间
             ZbRequirement zbRequirement = zbRequireService.selectById(zbComment.getRequirementId());
             if(Objects.nonNull(zbRequirement)){
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),"requireCommentTime", DateUtils.getCurrentTimeFormat(new Date()));
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.REQUIRECOMMENTTIME, DateUtils.getCurrentTimeFormat(new Date()));
             }
 
             //修改报名表状态(交易完成)
@@ -240,6 +240,13 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             zbRequirementApply.setId(zbProgramVo.getApplyId());
             zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.REVIEW.getCode()).shortValue());//记得改成常量
             zbRequirementApplyMapper.updateByPrimaryKeySelective(zbRequirementApply);
+
+            //保存方案提交时间
+            ZbRequirement zbRequirement = zbRequireService.selectById(zbProgramVo.getRequirementId());
+            if(Objects.nonNull(zbRequirement)){
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.REQUIRECOMMENTTIME, DateUtils.getCurrentTimeFormat(new Date()));
+            }
+
             returnData.setData(zbProgramVo);
             returnData.setMessage("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求保存方案成功@");
             logger.info("@用户" + username + "向需求ID为" + zbProgramVo.getRequirementId() + "的需求保存方案成功@");
