@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.dao.zb.ZbCommentMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbProgramMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -69,8 +70,9 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         filter.add(Condition.eq("correlationId", zbRequirement.getId()));
         List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
         for (ZbRequirementApply zbRequirementApply:zbRequirementApplies){
-           zbRequirementApply.setUserName(userService.selectById(zbRequirement.getUserId()).getUserName());
-           zbRequirementApply.setMobile(userService.selectById(zbRequirement.getUserId()).getMobile());
+            User user = userService.selectById(zbRequirementApply.getUserId());
+            zbRequirementApply.setUserName(user.getUserName());
+           zbRequirementApply.setMobile(user.getMobile());
             if (Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue())){
                 filters.clear();
                 filters.add(Condition.eq("applyId",zbRequirementApply.getId()));
