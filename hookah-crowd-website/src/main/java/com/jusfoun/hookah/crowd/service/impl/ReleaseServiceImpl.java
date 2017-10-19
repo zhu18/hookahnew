@@ -64,6 +64,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
     private ZbRequirementMapper zbRequirementMapper;
 
     @Resource
+    ZbRequireApplyWebsiteService zbRequireApplyWebsiteService;
+
+    @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
         super.setDao(zbRequirementMapper);
     }
@@ -418,15 +421,29 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     filters1.add(Condition.eq("id", zbRequirement.getId()));
                 }
                 if(zbRequirement != null){
-                    //添加需求验收时间
-                    mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.REQUIREDACCEPTTIME, program.getAddTime().toString());
+
                     //需方验收通过
                     if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_SUCCESS.getCode())){
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_FK.getCode().shortValue());
+
+                        //添加需求验收时间
+                        mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.REQUIREDACCEPTTIME, program.getAddTime().toString());
+
+                        //修改报名状态为待付款
+                        zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.PAYMENT_ING.getCode());
+
                     }else if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_FAIL.getCode())){//验收不通过
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.TWO_WORKING.getCode().shortValue());
+
+                        //修改报名状态为工作中
+                        zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.WORKING.getCode());
+
                     }else if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_REJECT.getCode())){//验收驳回
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TK.getCode().shortValue());
+
+                        //修改报名状态为交易取消
+                        zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode());
+
                     }
                     zbRequireService.updateByCondition(zbRequirement,filters1);
                 }

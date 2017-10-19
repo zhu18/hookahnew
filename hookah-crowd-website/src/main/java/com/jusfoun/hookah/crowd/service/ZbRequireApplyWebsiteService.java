@@ -19,4 +19,9 @@ public interface ZbRequireApplyWebsiteService extends GenericService<ZbRequireme
      */
     ReturnData selectByReqId(Long reqId);
 
+    /**
+     *修改报名表状态
+     */
+    ReturnData updateStatus(Long applyId,Integer status);
+
 }
