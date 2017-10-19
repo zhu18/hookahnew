@@ -86,11 +86,10 @@ class detailsController {
                 modalInstance.result.then(function () {
                     var promise = $http({
                         method: 'GET',
-                        url: $rootScope.site.crowdServer + "/api/require/updateStatus",
+                        url: $rootScope.site.crowdServer + "/api/require/checkEnroll",
                         params: {
-                            id:$scope.id,
-                            status:8,
-                            applyId:$scope.apply.id
+                            id:$scope.apply.id,
+                            requirementId:$scope.id
                         }
                     });
                     promise.then(function (res, status, config, headers) {

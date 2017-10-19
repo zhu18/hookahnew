@@ -1,0 +1,132 @@
+.businessCard{
+    font-size: 14px;
+}
+.businessCard .businessCard-top{
+    height: 345px;
+}
+.businessCard .businessCard-top .title{
+    line-height: 40px;
+    font-size: 18px;
+    padding-left: 24px;
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #e5e5e5;
+}
+.businessCard .businessCard-top .card{
+    display: inline-block;
+    width: 590px;
+    height: 100%;
+    border: 1px solid #e5e5e5;
+}
+.businessCard .businessCard-top .card-content{
+    padding: 15px;
+}
+.businessCard .businessCard-top .card-content .card-content-left{
+    width: 120px;
+    display: inline-block;
+}
+.businessCard .businessCard-top .card-content .card-content-left img{
+    width: 90px;
+    height: 92px;
+    display: inline-block;
+    margin: 0 15px;
+    background-color: #00A1CB;
+}
+.businessCard .businessCard-top .card-content .card-content-left .icon-box{
+    height: 42px;
+    font-size: 0;
+}
+.businessCard .businessCard-top .card-content .card-content-left .icon-box span{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 4px;
+    background-color: #0a9e00;
+}
+.businessCard .businessCard-top .card-content .card-content-right{
+    width: 415px;
+}
+.businessCard .businessCard-top .card-content .card-content-right .item{
+      margin-bottom: 5px;
+}
+.businessCard .businessCard-top .card-content .card-content-right .item label{
+    height: 40px;
+    width: 72px;
+    display: inline-block;
+    vertical-align: top;
+}
+.businessCard .businessCard-top .card-content .card-content-right .item div{
+    display: inline-block;
+    width: 325px;
+    vertical-align: top;
+}
+.businessCard .businessCard-top .card-content .card-content-right .item .tag-box{
+
+}
+.businessCard .businessCard-top .card-content .card-content-right .item .tag-box span{
+    display: inline-block;
+    width: 75px;
+    height: 21px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    line-height: 21px;
+    margin-bottom: 10px;
+    text-align: center;
+    vertical-align: top;
+}
+.businessCard .businessCard-top .card-content .card-content-right .item .tag-box .info{
+
+}
+.businessCard .businessCard-top .comment{
+    display: inline-block;
+    width: 368px;
+    height: 100%;
+    border: 1px solid #e5e5e5;
+
+}
+.businessCard .businessCard-top .comment .comment-content{
+    padding: 60px 45px;
+}
+ .comment .comment-content .demo div{
+    display: inline-block;
+}
+ .comment .comment-content .demo .bar{
+     position: relative;
+     width: 80px;
+     height: 10px;
+     background-color: #EEEEEE;
+     border-radius: 5px;
+     top: -3px;
+     margin: 0px 5px;
+}
+ .comment .comment-content .demo .bar .bar-progress{
+     display: inline-block;
+     background-color: #F17D17;
+     height: 100%;
+     width: 22px;
+     position: absolute;
+     top: 0;
+     border-radius: 5px;
+}
+ .comment .comment-content .demo .num{
+     vertical-align: text-bottom;
+}
+.businessCard .businessCard-down {
+    border: 1px solid #e5e5e5;
+    margin-top: 20px;
+    padding:10px;
+}
+.businessCard .businessCard-down .businessCard-down-header {
+    height: 32px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.businessCard .businessCard-down .businessCard-down-header ul li{
+    float: left;
+    padding: 0 5px;
+    cursor: pointer;
+    line-height:32px;
+}
+.businessCard .businessCard-down .businessCard-down-header ul li.active{
+    border-bottom: 1px solid #00A1CB;
+    color: #00A1CB;
+}
