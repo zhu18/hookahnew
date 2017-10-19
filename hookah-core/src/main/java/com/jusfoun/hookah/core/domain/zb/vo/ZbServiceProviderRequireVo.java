@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class ZbServiceProviderRequireVo extends GenericModel {
 
+    private Integer userType;//当前用户类型
+
     private Short reqStatus;//当前需求状态
 
     private ZbRequirementSPVo zbRequirementSPVo;//需求
@@ -26,6 +28,14 @@ public class ZbServiceProviderRequireVo extends GenericModel {
     private MgZbRequireStatus mgZbRequireStatus;//进度条状态时间
 
     private List<ZbRequirement>  analogyTask;//类似任务
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
 
     public List<ZbRequirement> getAnalogyTask() {
         return analogyTask;

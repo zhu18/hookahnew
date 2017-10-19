@@ -61,6 +61,9 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
     ZbCommentService zbCommentService;
 
     @Resource
+    UserService userService;
+
+    @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
         super.setDao(zbRequirementMapper);
     }
@@ -203,26 +206,14 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
         try{
             //从session获取用户信息
             Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
-            ZbRequirementSPVo zbRequirementSPVo = new ZbRequirementSPVo();
-            //----需求信息 start----
-            ZbRequirement zbRequirement = zbRequirementMapper.selectByPrimaryKey(reqId);
+            //获取需求详情数据VO
+            ZbRequirementSPVo zbRequirementSPVo = buildZbRequireSPVo(reqId);
 
             //需求不存在
-            if(null == zbRequirement){
+            if(null == zbRequirementSPVo){
                 returnData.setData(userMap==null ? zbRequirementSPVo : new ZbServiceProviderRequireVo());
                 return returnData;
             }
-
-            List<Condition> filters = new ArrayList<>();
-            if (zbRequirement.getId() != null) {
-                filters.add(Condition.eq("correlationId", zbRequirement.getId()));
-            }
-            filters.add(Condition.eq("type", 0));
-            //需求附件
-            List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters);
-            BeanUtils.copyProperties(zbRequirement,zbRequirementSPVo);
-            zbRequirementSPVo.setAnnex(zbAnnexes);
-            //----需求信息 end----
 
             ZbServiceProviderRequireVo zbServiceProviderRequireVo = new ZbServiceProviderRequireVo();
             //判断是否登录
@@ -230,11 +221,17 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
                 //未登录
                 zbRequirementSPVo.setAnnexIsOperate(0);//不可下载
                 zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);
+                zbServiceProviderRequireVo.setUserType(-1);//用户类型 未登录
                 returnData.setData(zbServiceProviderRequireVo);
             } else {
                 //已登录
-                zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);
-                returnData.setData(loginRequirementDetail(reqId,zbServiceProviderRequireVo));
+
+                String userId = (String) userMap.get("userId");
+                User user = userService.selectById(userId);
+                //获取用户类型
+                zbServiceProviderRequireVo.setUserType(user.getUserType());
+                zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);//需求信息
+                returnData.setData(loginRequirementDetail(reqId,zbServiceProviderRequireVo,zbRequirementSPVo));
             }
 
         } catch (Exception e) {
@@ -246,21 +243,9 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
     }
 
 
-    private ZbServiceProviderRequireVo loginRequirementDetail(Long reqId,ZbServiceProviderRequireVo zbServiceProviderRequireVo){
-        //----需求信息 start----
-        ZbRequirement zbRequirement = zbRequirementMapper.selectByPrimaryKey(reqId);
-        List<Condition> filters = new ArrayList<>();
-        if (zbRequirement.getId() != null) {
-            filters.add(Condition.eq("correlationId", zbRequirement.getId()));
-        }
-        filters.add(Condition.eq("type", 0));
-        //需求附件
-        List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters);
-        ZbRequirementSPVo zbRequirementSPVo = new ZbRequirementSPVo();
-        BeanUtils.copyProperties(zbRequirement,zbRequirementSPVo);
-        zbRequirementSPVo.setAnnex(zbAnnexes);
-        //----需求信息 end----
+    private ZbServiceProviderRequireVo loginRequirementDetail(Long reqId,ZbServiceProviderRequireVo zbServiceProviderRequireVo,ZbRequirement zbRequirement){
 
+        List<Condition> filters = new ArrayList<>();
         //方案信息
         ZbProgramVo zbProgramVo = zbProgramService.selectProgramByReqId(reqId) == null ? new ZbProgramVo() : (ZbProgramVo) zbProgramService.selectProgramByReqId(reqId).getData();
 
@@ -278,7 +263,6 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
         orderBys.add(OrderBy.desc("pressTime"));
         List<ZbRequirement> anTaskRequires = this.selectList(filters,orderBys);
 
-        zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);//需求信息
         zbServiceProviderRequireVo.setZbProgramVo(zbProgramVo);//方案信息
         zbServiceProviderRequireVo.setZbRequirementApplyVo(zbRequirementApplyVo);//报名信息
         zbServiceProviderRequireVo.setMgZbRequireStatus(mgZbRequireStatus);//时间条信息
@@ -286,6 +270,37 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
         zbServiceProviderRequireVo.setZbCommentVo(buildZbCommentVo(zbProgramVo == null ? null : zbProgramVo.getId()));//评论信息
         zbServiceProviderRequireVo.setAnalogyTask(anTaskRequires);//类似任务
         return zbServiceProviderRequireVo;
+    }
+
+    //封装需求详情数据
+    private ZbRequirementSPVo buildZbRequireSPVo(Long reqId){
+        ZbRequirementSPVo zbRequirementSPVo = new ZbRequirementSPVo();
+        //----需求信息 start----
+        ZbRequirement zbRequirement = zbRequirementMapper.selectByPrimaryKey(reqId);
+
+        //需求不存在
+        if(null == zbRequirement){
+            return null;
+        }
+
+        //需求类型
+        Short typeId = zbRequirement.getType();
+        ZbType zbType = zbTypeMapper.selectByPrimaryKey(typeId.intValue());
+        zbRequirement.setTypeName(zbType == null? "未知类型" : zbType.getTypeName());
+
+        List<Condition> filters = new ArrayList<>();
+        if (zbRequirement.getId() != null) {
+            filters.add(Condition.eq("correlationId", zbRequirement.getId()));
+        }
+        filters.add(Condition.eq("type", 0));
+        //需求附件
+        List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters);
+        BeanUtils.copyProperties(zbRequirement,zbRequirementSPVo);
+        zbRequirementSPVo.setAnnex(zbAnnexes);
+
+
+        //----需求信息 end----
+        return zbRequirementSPVo;
     }
 
     //获取当前需求的评价
