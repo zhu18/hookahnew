@@ -193,11 +193,13 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             zbRequirement.setId(Long.parseLong(id));
             zbRequirement.setStatus(Short.parseShort(status));
             zbRequirement.setPressTime(new Date());
-            zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
+            if (applyDeadline!=null){
+                zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
+            }
             ZbRequirementApply zbRequirementApply= zbRequirementApplyMapper.selectByPrimaryKey(applyId);
-            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue())&& zbRequirementApply.getStatus()!=null){
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue())&& zbRequirementApply.getStatus()!=null){
                 zbRequirementApply.setId(applyId);
-                zbRequirementApply.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
+                zbRequirementApply.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.getCode().shortValue());
                zbRequireApplyService.updateByIdSelective(zbRequirementApply);
 
                //其他未选中用户改为未中标
@@ -206,7 +208,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 filters.add(Condition.ne("userId",zbRequirementApply.getUserId()));
                 ZbRequirementApply cancelApply = new ZbRequirementApply();
                 cancelApply.setStatus(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.getCode().shortValue());
-                zbRequireApplyService.updateByCondition(cancelApply,filters);
+                zbRequireApplyService.updateByConditionSelective(cancelApply,filters);
             }
             ZbProgram zbProgram = zbProgramMapper.selectByPrimaryKey(programId);
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue())&& zbProgram.getStatus()!=null){
@@ -238,10 +240,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 apply.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.getCode().shortValue());
                 zbRequireApplyService.updateByIdSelective(apply);
             }
+            zbRequirement.setUpdateTime(new Date());
             super.updateByIdSelective(zbRequirement);
-            ZbRequirement zbRequirement1 =zbRequirementMapper.selectByPrimaryKey(id);
-            zbRequirement.setUpdateTime(zbRequirement1.getUpdateTime());
-            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WORKINGING.getCode().shortValue())){
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue())){
                 //添加资格评选时间
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.SELECTTIME, DateUtil.getSimpleDate(zbRequirement.getUpdateTime()));
             }
