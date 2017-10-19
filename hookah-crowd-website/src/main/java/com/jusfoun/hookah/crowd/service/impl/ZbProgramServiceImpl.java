@@ -239,6 +239,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             ZbRequirement zbRequirementStatus = new ZbRequirement();
             zbRequirementStatus.setId(zbProgramVo.getRequirementId());
             zbRequirementStatus.setStatus(ZbContants.Zb_Require_Status.WAIT_PLAT_YS.getCode().shortValue());
+            zbRequireService.updateByIdSelective(zbRequirementStatus);
 
             //修改apply状态
             ZbRequirementApply zbRequirementApply = new ZbRequirementApply();

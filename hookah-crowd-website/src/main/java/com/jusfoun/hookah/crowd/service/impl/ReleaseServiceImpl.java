@@ -242,7 +242,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 //已选中信息
                 List<Condition> filters6 = new ArrayList<>();
                 filters6.add(Condition.eq("requirementId", zbRequirement.getId()));
-                filters6.add(Condition.eq("status", 1));
+                filters6.add(Condition.notIn("status", new Short[]{0, 2}));
                 apply = zbRequireApplyService.selectOne(filters6);
                 if(apply != null){
                     user = zbRequirementMapper.selectReleaseInfo(apply.getUserId());
