@@ -119,11 +119,11 @@ var htmlPart = {
                  <div class="businessCard-down">
                      <div class="businessCard-down-header">
                          <ul class="clearfix">
-                             <li class="active">交易记录</li>
-                             <li>客户评价</li>
+                             <li class="active" data-flag="tab-trade">交易记录</li>
+                             <li data-flag="tab-comment">客户评价</li>
                          </ul>
                      </div>
-                     <div>
+                     <div class="tab-trade ">
                          <table>
                              <thead>
                              <tr>
@@ -140,7 +140,7 @@ var htmlPart = {
                          </table>
                          <%include("/layout/pageaction.html"){} %>
                      </div>
-                     <div>
+                     <div class="tab-comment tab">
                          <table>
                              <tbody class="">
                                   <tr>

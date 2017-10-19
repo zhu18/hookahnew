@@ -435,7 +435,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             ZbRequirement zbRequirement = this.selectById(requirementId);
             int i = 0;
             if(zbRequirement != null){
-                zbRequirement.setStatus(ZbContants.Zb_Require_Status.WORKINGING.code.shortValue());
+                zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
                 i = this.updateById(zbRequirement);
             }
             return ReturnData.success(i);

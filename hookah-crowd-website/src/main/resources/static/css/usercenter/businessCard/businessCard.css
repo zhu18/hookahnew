@@ -122,11 +122,18 @@
 }
 .businessCard .businessCard-down .businessCard-down-header ul li{
     float: left;
-    padding: 0 5px;
+    padding: 0 15px;
     cursor: pointer;
     line-height:32px;
 }
 .businessCard .businessCard-down .businessCard-down-header ul li.active{
     border-bottom: 1px solid #00A1CB;
     color: #00A1CB;
+}
+.businessCard .businessCard-down  .tab{
+    display: none;
+}
+.businessCard .businessCard-down table{
+    width: 100%;
+    margin-top: 20px;
 }

@@ -26,3 +26,14 @@ for(var  i=0;i<5;i++){
     // })(i)
 
 }
+$('.businessCard-down-header ul li').on('click',function () {
+    $(this).addClass('active').siblings().removeClass('active');
+    if($(this).attr('data-flag')=='tab-trade'){
+        $('.tab-trade').show();
+        $('.tab-comment').hide();
+    }else {
+        $('.tab-trade').hide();
+        $('.tab-comment').show();
+    }
+
+});
