@@ -224,14 +224,15 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             zbRequirementSPVo.setAnnex(zbAnnexes);
             //----需求信息 end----
 
+            ZbServiceProviderRequireVo zbServiceProviderRequireVo = new ZbServiceProviderRequireVo();
             //判断是否登录
             if(null == userMap){
                 //未登录
                 zbRequirementSPVo.setAnnexIsOperate(0);//不可下载
-                returnData.setData(zbRequirementSPVo);
+                zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);
+                returnData.setData(zbServiceProviderRequireVo);
             } else {
                 //已登录
-                ZbServiceProviderRequireVo zbServiceProviderRequireVo = new ZbServiceProviderRequireVo();
                 zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);
                 returnData.setData(loginRequirementDetail(reqId,zbServiceProviderRequireVo));
             }
