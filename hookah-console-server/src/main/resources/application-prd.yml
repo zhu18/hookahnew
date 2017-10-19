@@ -95,6 +95,7 @@ myconf:
     url: http://202.106.10.250:5555/gateway/insert
     tokenUrl: http://202.106.10.250:5555/gateway/getToken
     changeUrl: http://202.106.10.250:5555/gateway/changeToken
+    apiRestUrl: http://202.106.10.250:5555/apirest/findInvokeStatus
   redis:
     ipPort: 172.16.201.41:7000,172.16.201.41:7001,172.16.201.41:7002
   consul:
