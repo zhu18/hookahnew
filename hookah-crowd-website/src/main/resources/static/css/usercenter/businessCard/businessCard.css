@@ -3,6 +3,7 @@
 }
 .businessCard .businessCard-top{
     height: 345px;
+    position: relative;
 }
 .businessCard .businessCard-top .title{
     line-height: 40px;
@@ -14,11 +15,14 @@
 .businessCard .businessCard-top .card{
     display: inline-block;
     width: 590px;
-    height: 100%;
+    position: absolute;
+    background-color: #fff;
     border: 1px solid #e5e5e5;
 }
 .businessCard .businessCard-top .card-content{
     padding: 15px;
+    background-color: #fff;
+    height: 274px;
 }
 .businessCard .businessCard-top .card-content .card-content-left{
     width: 120px;
@@ -76,6 +80,13 @@
 }
 .businessCard .businessCard-top .card-content .card-content-right .item .tag-box .info{
 
+}
+.businessCard .businessCard-top .card-content .card-content-right .info .active{
+     overflow: hidden;
+     text-overflow: ellipsis;
+     display: -webkit-box;
+     -webkit-line-clamp: 3;
+     -webkit-box-orient: vertical;
 }
 .businessCard .businessCard-top .comment{
     display: inline-block;
@@ -136,4 +147,18 @@
 .businessCard .businessCard-down table{
     width: 100%;
     margin-top: 20px;
+}
+.businessCard .businessCard-down table thead{
+    border: 1px solid #e5e5e5;
+}
+.businessCard .businessCard-down table thead th{
+    height: 39px;
+    line-height: 39px;
+    text-align: center;
+    background-color: #F4F4F4;
+}
+.businessCard .businessCard-down table tbody td{
+    padding: 10px 0;
+    text-align: center;
+    border-bottom:1px dashed #e5e5e5;
 }

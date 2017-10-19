@@ -11,7 +11,13 @@ var head = {
 
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <link rel="stylesheet" href="/static/css/usercenter/businessCard/businessCard.css">
-
+<script type="text/javascript">
+    var pagePath = host.website+'/fund/pageData';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.currentPage = 1;
+    dataParm.pageSize = 10;
+</script>
 <%};%>
 
 <%
@@ -30,9 +36,9 @@ var htmlPart = {
                          <div class="title">
                              服务商名片
                          </div>
-                         <div class="card-content margin-top-15 clearfix">
+                         <div class="card-content  clearfix">
                               <div class="card-content-left  grid-left">
-                                  <img src="" alt="">
+                                  <img src="/static/images/user-safe-head.png" alt="">
                                   <div class="icon-box">
                                       <span></span>
                                       <span></span>
@@ -41,32 +47,32 @@ var htmlPart = {
                               </div>
                               <div class="card-content-right margin-left-10 grid-left">
                                   <div class="item">
-                                      <label for="">姓名</label>
-                                      <div></div>
+                                      <label for="" class="upname"></label>
+
                                   </div>
                                   <div class="item">
                                       <label for="">所在城市：</label>
-                                      <div>介绍的回家的时候</div>
+                                      <div class="ucity"></div>
                                   </div>
                                   <div class="item">
                                       <label for="">擅长领域：</label>
-                                      <div class="tag-box">
-                                          <span>数据采集</span>
-                                          <span>数据采集</span>
-                                          <span>数据采集</span>
-                                          <span>数据采集</span>
-                                          <span>数据采集</span>
+                                      <div class="tag-box specialSkills">
+
                                       </div>
                                   </div>
                                   <div class="item">
                                       <label for="">个人自评:</label>
-                                      <div class="info">
-                                          时间段富士康的家伙斯柯达减肥的发生快递费哈士大夫阿克苏电话费肯定会发加上快递费卡萨接电话发送到 撒都很费劲的护发素
+                                      <div class="info ">
+                                            <div class="providerDesc"></div>
                                       </div>
                                   </div>
                                   <div class="item">
                                       <label for="">最后学历:</label>
-                                      <div>本科-硕士-博士</div>
+                                      <div class="education">
+                                          <span class="school"></span>
+                                          <span class="major"></span>
+                                          <span class="edu"></span>
+                                      </div>
                                   </div>
                               </div>
                          </div>
@@ -82,35 +88,35 @@ var htmlPart = {
 								<div  class="bar">
                                     <div class="bar-progress bar-progress-0 "></div>
                                 </div>
-                                <div class="num">（55555）</div>
+                                <div class="num-0"></div>
 							</div>
                              <div class="demo">
 								<div  class="function-demo-1 target-demo"></div>
                                  <div  class="bar">
                                      <div class="bar-progress bar-progress-0 "></div>
                                  </div>
-                                 <div class="num">（55555）</div>
+                                 <div class="num-1"></div>
 							</div>
                              <div class="demo">
 								<div  class="function-demo-2 target-demo"></div>
                                  <div  class="bar">
                                      <div class="bar-progress bar-progress-0 "></div>
                                  </div>
-                                 <div class="num">（55555）</div>
+                                 <div class="num-2"></div>
 							</div>
                              <div class="demo">
 								<div  class="function-demo-3 target-demo"></div>
                                  <div  class="bar">
                                      <div class="bar-progress bar-progress-0 "></div>
                                  </div>
-                                 <div class="num">（55555）</div>
+                                 <div class="num-3"></div>
 							</div>
                              <div class="demo">
 								<div  class="function-demo-4 target-demo"></div>
                                  <div  class="bar">
                                      <div class="bar-progress bar-progress-0 "></div>
                                  </div>
-                                 <div class="num">（55555）</div>
+                                 <div class="num-4"></div>
 							</div>
                              <a href="javascript:void (0)" class="margin-top-20 display-inline-block">来自165个客户积累评价165次></a>
                          </div>
@@ -135,23 +141,32 @@ var htmlPart = {
                              </tr>
                              </thead>
                              <tbody class="">
-
+                             <tr>
+                                 <td>333</td>
+                                 <td>手机号福建省的合法健身房大世纪东方哈士大夫</td>
+                                 <td>2017-06-01 12:00:00</td>
+                                 <td>2017-06-01 12:00:00</td>
+                                 <td>2017-06-01 12:00:00</td>
+                             </tr>
                              </tbody>
                          </table>
-                         <%include("/layout/pageaction.html"){} %>
                      </div>
                      <div class="tab-comment tab">
                          <table>
-                             <tbody class="">
-                                  <tr>
-                                      <td>2222</td>
-                                      <td>手机号福建省的合法健身房大世纪东方哈士大夫</td>
-                                      <td>2017-06-01 12:00:00</td>
-                                  </tr>
+                             <thead>
+                                <tr>
+                                    <th>评分</th>
+                                    <th>评价描述</th>
+                                    <th>交易日期</th>
+                                </tr>
+                             </thead>
+                             <tbody class="tab-comment-list">
+
                              </tbody>
                          </table>
-                         <%include("/layout/pageaction.html"){} %>
                      </div>
+                     <%include("/layout/pageaction.html"){} %>
+
                  </div>
             </div>
         </div>

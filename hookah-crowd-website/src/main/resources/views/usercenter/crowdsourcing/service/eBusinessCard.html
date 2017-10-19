@@ -7,10 +7,17 @@ var head = {
 <script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
 <script src="/static/js/plugins/validate/jquery-validate.js"></script>
 <script src="/static/js/plugins/validate/messages_zh.js"></script>
+<script type="text/javascript" src="/static/js/plugins/vendor/jquery.raty.js"></script>
 
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
-<link rel="stylesheet" href="/static/css/usercenter/auth/businessCard.css">
-
+<link rel="stylesheet" href="/static/css/usercenter/businessCard/businessCard.css">
+<script type="text/javascript">
+    var pagePath = host.website+'/fund/pageData';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.currentPage = 1;
+    dataParm.pageSize = 10;
+</script>
 <%};%>
 
 <%
@@ -23,8 +30,137 @@ var htmlPart = {
             <div class="header clearfix">
                 <h4 class="grid-left center-title">服务商名片</h4>
             </div>
-            <div class="businessCard">
+            <div class="businessCard c">
+                <div class="businessCard-top clearfix">
+                    <div class="card grid-left">
+                        <div class="title">
+                            服务商名片
+                        </div>
+                        <div class="card-content margin-top-15 clearfix">
+                            <div class="card-content-left  grid-left">
+                                <img src="/static/images/user-safe-head.png" alt="">
+                                <div class="icon-box">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="card-content-right margin-left-10 grid-left">
+                                <div class="item">
+                                    <label for="" class="upname"></label>
 
+                                </div>
+                                <div class="item">
+                                    <label for="">所在城市：</label>
+                                    <div class="ucity"></div>
+                                </div>
+                                <div class="item">
+                                    <label for="">擅长领域：</label>
+                                    <div class="tag-box specialSkills">
+
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <label for="">企业介绍:</label>
+                                    <div class="info providerDesc">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comment grid-right">
+                        <div class="title">
+                            用户评价
+                        </div>
+                        <div class="comment-content">
+                            <div class="demo">
+                                <div  class="function-demo-0 target-demo"></div>
+                                <div  class="bar">
+                                    <div class="bar-progress bar-progress-0 "></div>
+                                </div>
+                                <div class="num-0"></div>
+                            </div>
+                            <div class="demo">
+                                <div  class="function-demo-1 target-demo"></div>
+                                <div  class="bar">
+                                    <div class="bar-progress bar-progress-0 "></div>
+                                </div>
+                                <div class="num-1"></div>
+                            </div>
+                            <div class="demo">
+                                <div  class="function-demo-2 target-demo"></div>
+                                <div  class="bar">
+                                    <div class="bar-progress bar-progress-0 "></div>
+                                </div>
+                                <div class="num-2"></div>
+                            </div>
+                            <div class="demo">
+                                <div  class="function-demo-3 target-demo"></div>
+                                <div  class="bar">
+                                    <div class="bar-progress bar-progress-0 "></div>
+                                </div>
+                                <div class="num-3"></div>
+                            </div>
+                            <div class="demo">
+                                <div  class="function-demo-4 target-demo"></div>
+                                <div  class="bar">
+                                    <div class="bar-progress bar-progress-0 "></div>
+                                </div>
+                                <div class="num-4"></div>
+                            </div>
+                            <a href="javascript:void (0)" class="margin-top-20 display-inline-block">来自165个客户积累评价165次></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="businessCard-down">
+                    <div class="businessCard-down-header">
+                        <ul class="clearfix">
+                            <li class="active" data-flag="tab-trade">交易记录</li>
+                            <li data-flag="tab-comment">客户评价</li>
+                        </ul>
+                    </div>
+                    <div class="tab-trade ">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>需求标题</th>
+                                <th>需求类型</th>
+                                <th>悬赏金额(元)</th>
+                                <th>交易状态</th>
+                                <th>交易日期</th>
+                            </tr>
+                            </thead>
+                            <tbody class="">
+                            <tr>
+                                <td>333</td>
+                                <td>手机号福建省的合法健身房大世纪东方哈士大夫</td>
+                                <td>2017-06-01 12:00:00</td>
+                                <td>2017-06-01 12:00:00</td>
+                                <td>2017-06-01 12:00:00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-comment tab">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>评分</th>
+                                <th>评价描述</th>
+                                <th>交易日期</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tab-comment-list">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <%include("/layout/pageaction.html"){} %>
+
+                </div>
             </div>
         </div>
     </div>
@@ -33,5 +169,5 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script src="/static/js/usercenter/auth/businessCard.js"></script>
+<script src="/static/js/usercenter/crowdsourcing/service/businessCard.js"></script>
 
