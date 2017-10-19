@@ -418,4 +418,29 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         return returnData;
     }
 
+    public ReturnData checkEnroll(Long id, Long requirementId){
+        if(id != null && requirementId != null){
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("requirementId", requirementId));
+            List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
+            for(ZbRequirementApply zb: zbRequirementApplies){
+                //zb.setId(zb.getId());
+                if(zb.getId().equals(id)){
+                    zb.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.code.shortValue());
+                }else {
+                    zb.setStatus(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.code.shortValue());
+                }
+                zbRequireApplyService.updateById(zb);
+            }
+            ZbRequirement zbRequirement = this.selectById(requirementId);
+            int i = 0;
+            if(zbRequirement != null){
+                zbRequirement.setStatus(ZbContants.Zb_Require_Status.WORKINGING.code.shortValue());
+                i = this.updateById(zbRequirement);
+            }
+            return ReturnData.success(i);
+        }
+        return ReturnData.error("任务报名选中失败！");
+    }
+
 }

@@ -32,4 +32,7 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
 
     //服务商管理
     ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize, MgZbProvider mgZbProvider , Date startTime, Date endTime);
+
+    ReturnData checkEnroll(Long id, Long requirementId);
+
 }

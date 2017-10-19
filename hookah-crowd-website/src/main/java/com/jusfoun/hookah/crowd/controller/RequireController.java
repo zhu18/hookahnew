@@ -176,6 +176,18 @@ public class RequireController extends BaseController {
     }
 
     /**
+     * 数据众包后台--选取任务报名
+     * @author zhaoshuai
+     * id 报名表主键
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/api/require/checkEnroll")
+    public ReturnData checkEnroll(Long id, Long requirementId){
+        return zbRequireService.checkEnroll(id,requirementId);
+    }
+
+    /**
      * 服务商管理
      *
      * @author crs
