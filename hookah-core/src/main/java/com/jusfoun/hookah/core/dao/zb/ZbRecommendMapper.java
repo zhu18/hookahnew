@@ -11,5 +11,7 @@ public interface ZbRecommendMapper extends GenericDao<ZbRecommend> {
 
     int insertAndGetId(ZbRequirement zbRequirement);
 
-    List<ZbRecommendVo> selectRecommendTasksInfo();
+    List<ZbRecommendVo> selectRecommendTasksInfo(Object[] objects);
+
+    List<ZbRecommendVo> selectRecommendTasksInfoNo();
 }

@@ -30,10 +30,23 @@
   </insert>
 
   <select id="selectRecommendTasksInfo" resultType="com.jusfoun.hookah.core.domain.zb.vo.ZbRecommendVo">
+  SELECT * FROM zb_recommend a
+  LEFT JOIN zb_requirement b
+  ON a.requirement_id = b.id
+  WHERE b.`status` IN (5) AND
+  a.order_num IS NOT NULL AND
+  b.id NOT IN
+    <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  ORDER BY a.order_num
+</select>
+
+  <select id="selectRecommendTasksInfoNo" resultType="com.jusfoun.hookah.core.domain.zb.vo.ZbRecommendVo">
     SELECT * FROM zb_recommend a
     LEFT JOIN zb_requirement b
     ON a.requirement_id = b.id
-    WHERE b.`status` IN (5, 6) AND
+    WHERE b.`status` IN (5) AND
     a.order_num IS NOT NULL
     ORDER BY a.order_num
   </select>

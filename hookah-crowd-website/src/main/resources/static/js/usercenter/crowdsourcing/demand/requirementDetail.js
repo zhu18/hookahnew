@@ -115,7 +115,7 @@ function renderPage(data) {
       $('.moneyAdd,.moneySub').hide(); //百分比
       $('.missionResult').hide().prev().show(); //百分比
       missionApplyInfo(data); //任务报名信息显示
-      $('.release-first-btnbox div').append('<a id="J_goPay" requirementId="' + insertRequirementsData.zbRequirement.id + '" href="javascript:void(0)">去托管剩余"+(100-insertRequirementsData.zbRequirement.trusteePercent)+"% 赏金</a>');
+      $('.release-first-btnbox div').append('<a id="J_goPay" requirementId="' + insertRequirementsData.zbRequirement.id + '" href="javascript:void(0)">去托管剩余'+(100-insertRequirementsData.zbRequirement.trusteePercent)+'% 赏金</a>');
       $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
 
       break;
