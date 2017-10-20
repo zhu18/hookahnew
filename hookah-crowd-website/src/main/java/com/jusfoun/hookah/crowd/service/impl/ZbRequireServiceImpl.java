@@ -382,7 +382,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     //服务商管理
     @Override
-    public ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize, MgZbProvider mgZbProvider, Date startTime, Date endTime) {
+    public ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize,  Integer authType ,Integer status ,String upname,String userId, Date startTime, Date endTime) {
 
         PageInfo<MgZbProvider> pageInfo = new PageInfo<>();
         ReturnData returnData = new ReturnData<>();
@@ -398,15 +398,20 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             PageHelper.startPage(pageNumberNew, pageSizeNew);
             List<Condition> filters = new ArrayList();
-            if (mgZbProvider.getAuthType()!=null) {
-                filters.add(Condition.eq("authType", mgZbProvider.getAuthType()));
+            if (authType!=null) {
+                filters.add(Condition.eq("authType", authType));
             }
-            if (mgZbProvider.getStatus()!=null &&mgZbProvider.getStatus()!=-1) {
-                filters.add(Condition.eq("status", mgZbProvider.getStatus()));
+
+            if (status!=null &&status!=-1) {
+                filters.add(Condition.eq("status", status));
             }
-            if (mgZbProvider.getUpname()!=null) {
-                filters.add(Condition.like("upname", mgZbProvider.getUpname()));
+            if (upname!=null) {
+                filters.add(Condition.like("upname",upname));
             }
+            if(userId!=null){
+                filters.add(Condition.eq("userId",userId));
+            }
+
             List<Sort> sorts = new ArrayList<>();
            sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
 
@@ -445,6 +450,20 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             return ReturnData.success(i);
         }
         return ReturnData.error("任务报名选中失败！");
+    }
+
+    //服务商审核
+    @Override
+    public ReturnData<MgZbProvider> provideCheck(String userId, Integer status) {
+        try {
+            MgZbProvider mgZbProvider =new MgZbProvider();
+            mgZbProvider.setUserId(userId);
+            mgZbProvider.setStatus(status);
+            mgZbProviderService.updateByIdSelective(mgZbProvider);
+            return ReturnData.success("审核成功");
+        }catch (Exception e){
+            return ReturnData.error("审核失败");
+        }
     }
 
 }
