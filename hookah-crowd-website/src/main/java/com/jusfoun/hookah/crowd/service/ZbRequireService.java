@@ -31,8 +31,10 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
     ReturnData selectRequirementTypeInfo();
 
     //服务商管理
-    ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize, MgZbProvider mgZbProvider , Date startTime, Date endTime);
+    ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize,  Integer authType ,Integer status ,String upname,String userId, Date startTime, Date endTime);
 
     ReturnData checkEnroll(Long id, Long requirementId);
 
+    //服务商审核
+    ReturnData<MgZbProvider> provideCheck(String userId, Integer status);
 }

@@ -53,6 +53,7 @@
 .info .info-edit{
     display: none;
 }
+.info .providerDesc{display: inline-block;  width: 700px;}
 
 
 .Authentication-itemBox{

@@ -1,0 +1,150 @@
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>服务商管理</h5></div>
+            <div class="pull-right">
+                <button class="btn btn-default" data-ng-click="refresh()"><span
+                    class="glyphicon glyphicon-refresh"></span> 刷新
+                </button>
+                <!--<a ui-sref="help.add" class="btn btn-primary">新增</a>-->
+            </div>
+        </div>
+        <div class="row margin-top form-inline">
+            <div class="col-sm-12">
+                <div>
+                    <div>
+                        <label for="">类型:</label>
+                        <div class="searchSection  btn-group">
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio=""
+                                    data-ng-click="search()"> 全部
+                            </button>
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="1"
+                                    data-ng-click="search()"> 个人服务商
+                            </button>
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="4"
+                                    data-ng-click="search()"> 企业服务商
+                            </button>
+
+                        </div>
+                    </div>
+                    <div>
+                        <label for="">状态:</label>
+                        <div class="searchSection  btn-group">
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio=""
+                                    data-ng-click="search()"> 全部
+                            </button>
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="1"
+                                    data-ng-click="search()"> 未认证
+                            </button>
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="4"
+                                    data-ng-click="search()"> 已认证
+                            </button>
+
+                        </div>
+                    </div>
+                    <div>
+                        <label class="control-label">服务商名称：</label>
+                        <input ng-model="title" type="text" class="form-control" placeholder="请输入需求标题">
+                        <label class="control-label">提交日期：</label>
+                        <div style="display: inline-block" >
+                            <label class="control-label">下单时间：</label>
+                            <p class="input-group" style="margin-top: 15px">
+                                <input   style="background-color: transparent;" ng-keypress="$event.preventDefault()" ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions"  close-text="关闭"  clear-text="清除" current-text="今天" readonly="true"/>
+                                <span class="input-group-btn" >
+                         <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                            </p>
+                            <!--<input ng-model="addTime" type="text" class="form-control" placeholder="起始日期">-->
+                            <label class="control-label">至</label>
+                            <p class="input-group" style="margin-top: 15px">
+                                <input style="background-color: transparent;"  ng-keypress="$event.preventDefault()" ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions"  close-text="Close" close-text="关闭"  clear-text="清除" current-text="今天" readonly="true"/>
+                                <span class="input-group-btn" >
+                         <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div style="padding:15px 0 0;">
+
+                    <div class="gridSection">
+                        <table class="table table-hover">
+                            <thead>
+                               <tr>
+                                   <th>序号</th>
+                                   <th>服务商名称</th>
+                                   <th>类型</th>
+                                   <th>手机号码</th>
+                                   <th>注册时间</th>
+                                   <th>擅长领域</th>
+                                   <th>状态</th>
+                                   <th>提交日期</th>
+                                   <th>操作</th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in facilitatorList">
+                                <td data-ng-bind="$index+1"></td>
+                                <td data-ng-bind="item.upname"></td>
+                                <td>
+                                    <span data-ng-show="item.authType==2">个人</span>
+                                    <span data-ng-show="item.authType==4">企业</span>
+                                </td>
+                                <td data-ng-bind="item.phoneNum"></td>
+                                <td data-ng-bind="item.registerTime"></td>
+
+                                <td>
+                                     <span data-ng-repeat="items in item.specialSkills track by $index" data-ng-bind="items"></span>
+                                </td>
+                                <td >
+                                    <span data-ng-show="item.status==0">未认证</span>
+                                    <span data-ng-show="item.status==1">审核中</span>
+                                    <span data-ng-show="item.status==2">已认证</span>
+                                    <span data-ng-show="item.status==3">认证失败</span>
+                                </td>
+                                <td > 5555 </td>
+                                <td >
+                                    <button class="btn btn-primary" data-ng-show="item.status==0"  data-ng-click="auditing(item.id)">去审核</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==1"  data-ng-click="public(item.id)">去查看</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==2"  data-ng-click="screen(item.id)">去查看</button>
+                                    <button class="btn btn-primary" data-ng-show="item.status==3"  data-ng-click="screen(item.id)">去审核</button>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                        <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                            <tr>
+                                <td colspan="9">
+                                    <div class="pull-right page-box">
+                                        <div class="pagination-info">
+                                            共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                        </div>
+                                        <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                            ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                            max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                            force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                            last-text="末页">
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="simple-grid-none-data-wrap">
+                        <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+                            <div class="row-padding row-margin text-center">
+                                <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+                                <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

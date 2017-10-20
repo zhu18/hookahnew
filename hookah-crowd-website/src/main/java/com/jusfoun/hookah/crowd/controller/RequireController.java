@@ -194,12 +194,28 @@ public class RequireController extends BaseController {
      */
     @RequestMapping("/api/require/AllProvider")
     @ResponseBody
-    public ReturnData getAllProvider(String currentPage, String pageSize, MgZbProvider mgZbProvider, Date startTime, Date endTime) {
+    public ReturnData getAllProvider(String currentPage, String pageSize,  Integer authType ,Integer status ,String upname,String userId, Date startTime, Date endTime) {
         try {
-            return zbRequireService.getAllProvider(currentPage,pageSize,mgZbProvider,startTime,endTime);
+            return zbRequireService.getAllProvider(currentPage,pageSize,authType,status,upname,userId,startTime,endTime);
         } catch (Exception e) {
             logger.error("服务商查询失败", e);
             return ReturnData.error("服务商查询失败");
+        }
+    }
+
+    /**
+     * 服务商审核
+     *
+     * @author crs
+     */
+    @RequestMapping("/api/require/provideCheck")
+    @ResponseBody
+    public ReturnData provideCheck(String userId, Integer status) {
+        try {
+            return zbRequireService.provideCheck(userId, status);
+        } catch (Exception e) {
+            logger.error("审核失败", e);
+            return ReturnData.error("审核失败");
         }
     }
 }
