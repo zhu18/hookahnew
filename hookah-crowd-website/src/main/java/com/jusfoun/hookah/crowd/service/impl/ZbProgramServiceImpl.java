@@ -164,7 +164,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             filters.add(Condition.eq("userId",user.getUserId()));
             ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
             zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.DEAL_SUCCESS.getCode()).shortValue());//记得改成常量
-            zbRequireApplyWebsiteService.updateByCondition(zbRequirementApply,filters);
+            zbRequireApplyWebsiteService.updateByConditionSelective(zbRequirementApply,filters);
 
             returnData.setData(zbComment);
         } catch (Exception e) {

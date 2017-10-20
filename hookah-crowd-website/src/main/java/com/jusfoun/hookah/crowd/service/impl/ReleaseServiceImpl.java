@@ -483,7 +483,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 //需求方评价时间
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.NEEDEVALUATETIME, zbComment.getAddTime().toString());
                 if(zbComment != null){
-                    if(zbComment.getUserType() == 1){
+                    if(zbComment.getUserType() == 2){
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_FAIL.getCode().shortValue());
                         zbRequireService.updateByCondition(zbRequirement,filters);
                     }

@@ -9,9 +9,9 @@ import com.jusfoun.hookah.core.generic.GenericModel;
  */
 public class ZbCommentVo extends GenericModel {
 
-    private ZbComment requireZbComment;//需求方评价
+    private ZbComment requireZbComment = new ZbComment();//需求方评价
 
-    private ZbComment servicerComment;//服务商评价
+    private ZbComment servicerComment = new ZbComment();//服务商评价
 
     public ZbComment getRequireZbComment() {
         return requireZbComment;

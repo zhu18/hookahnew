@@ -73,7 +73,7 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
                 Long deadLineTimeLong = date.getTime();
                 Long currTimeLong = System.currentTimeMillis();
 
-                if(deadLineTimeLong > currTimeLong){
+                if(deadLineTimeLong < currTimeLong){
                     returnData.setCode(ExceptionConst.Error);
                     returnData.setMessage("该需求报名已截止");
                     return returnData;
