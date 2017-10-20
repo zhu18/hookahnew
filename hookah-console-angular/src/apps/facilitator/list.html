@@ -46,9 +46,8 @@
                     <div>
                         <label class="control-label">服务商名称：</label>
                         <input ng-model="title" type="text" class="form-control" placeholder="请输入需求标题">
-                        <label class="control-label">提交日期：</label>
                         <div style="display: inline-block" >
-                            <label class="control-label">下单时间：</label>
+                            <label class="control-label">提交日期：</label>
                             <p class="input-group" style="margin-top: 15px">
                                 <input   style="background-color: transparent;" ng-keypress="$event.preventDefault()" ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions"  close-text="关闭"  clear-text="清除" current-text="今天" readonly="true"/>
                                 <span class="input-group-btn" >
@@ -105,7 +104,7 @@
                                     <span data-ng-show="item.status==2">已认证</span>
                                     <span data-ng-show="item.status==3">认证失败</span>
                                 </td>
-                                <td > 5555 </td>
+                                <td data-ng-bind="item.addTime"> </td>
                                 <td >
                                     <button class="btn btn-primary" data-ng-show="item.status==0"  data-ng-click="auditing(item.id)">去审核</button>
                                     <button class="btn btn-primary" data-ng-show="item.status==1"  data-ng-click="public(item.id)">去查看</button>
