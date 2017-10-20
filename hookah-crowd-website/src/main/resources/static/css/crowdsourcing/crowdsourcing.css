@@ -38,8 +38,8 @@
 .crowdsourcing-status{ display: none;width:110px; font-size: 16px; text-align: center; border-right:1px solid #EDEDED;}
 .crowdsourcing-status span{ display: block;margin-top: 27px;}
 .crowdsourcing-progress-box{ flex:1;display: flex; position: relative;}
-.crowdsourcing-progress-box:after{ content: ''; width:100%; height: 4px; position: absolute;top:24px; background-color: #b3e1fb; }
-.crowdsourcing-progress-box li{ position: relative; z-index:1;  flex:1; overflow: hidden; text-align: center; }
+.crowdsourcing-progress-box:after{ content: ''; width:100%; height: 4px; position: absolute;top:24px;left:0; background-color: #b3e1fb; }
+.crowdsourcing-progress-box li{ position: relative; z-index:1; float: left; width: 140px;  flex:1; overflow: hidden; text-align: center; }
 .step{ display: block; height:30px; width:30px; margin:0 auto; margin-top:10px; overflow: hidden; font-size:15px; border-radius:30px; line-height:30px; color:#fff; background-color: #2cabf8;}
 .progress-content{ display: block; margin:10px 0 0; font-size: 15px;}
 .addtime{ display: block; color:#ccc;}
