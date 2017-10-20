@@ -73,7 +73,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
             User user = userService.selectById(zbRequirementApply.getUserId());
             zbRequirementApply.setUserName(user.getUserName());
            zbRequirementApply.setMobile(user.getMobile());
-            if (Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue())){
+            if (!Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.APPLY_SUCCESS.getCode().shortValue())&&!Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.getCode().shortValue())){
                 filters.clear();
                 filters.add(Condition.eq("applyId",zbRequirementApply.getId()));
                 zbPrograms = zbProgramService.selectList(filters);
