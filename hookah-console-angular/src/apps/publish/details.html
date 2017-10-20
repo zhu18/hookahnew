@@ -288,7 +288,8 @@
                                 <tbody>
                                 <tr data-ng-repeat="item in zbComments">
                                     <td>
-
+                                        <span data-ng-show="item.userType==2">需求方对服务商的评价</span>
+                                        <span data-ng-show="item.userType==1">服务商对需求方的评价</span>
                                     </td>
                                     <td>
                                         <span uib-rating ng-model="item.level" max="5" read-only="true" aria-labelledby="default-rating"></span>
