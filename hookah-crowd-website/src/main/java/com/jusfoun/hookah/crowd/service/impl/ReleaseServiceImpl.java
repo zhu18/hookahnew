@@ -318,7 +318,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                     List<Condition> filters4 = new ArrayList<>();
                                     if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                         filters4.add(Condition.eq("programId", zbProgram.getId()));
-                                        filters4.add(Condition.eq("userType", 2));
+                                        filters4.add(Condition.eq("userType", 1));
                                     }
                                     ZbComment zbComment = zbCommentService.selectOne(filters4);
                                     map.put("zbComment",zbComment != null ? zbComment : " ");
@@ -356,7 +356,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 List<Condition> filters4 = new ArrayList<>();
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters4.add(Condition.eq("programId", zbProgram.getId()));
-                                    filters4.add(Condition.eq("userType", 2));
+                                    filters4.add(Condition.eq("userType", 1));
                                 }
                                 ZbComment zbComment = zbCommentService.selectOne(filters4);
                                 map.put("zbComment",zbComment != null ? zbComment : " ");
@@ -364,7 +364,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 List<Condition> filters7 = new ArrayList<>();
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters7.add(Condition.eq("programId", zbProgram.getId()));
-                                    filters7.add(Condition.eq("userType", 1));
+                                    filters7.add(Condition.eq("userType", 2));
                                 }
                                 ZbComment zbDemandComment = zbCommentService.selectOne(filters7);
                                 map.put("zbDemandComment",zbDemandComment != null ? zbDemandComment : " ");
@@ -468,7 +468,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             zbComment.setLevel(level);
             zbComment.setContent(content);
             zbComment.setAddTime(new Date());
-            zbComment.setUserType(1);
+            zbComment.setUserType(2);
             ZbComment insert = zbCommentService.insert(zbComment);
 
             //修改报名状态为待评价
