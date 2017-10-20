@@ -343,6 +343,9 @@ public class GoodsApi extends BaseController{
                 messageCode.setCode(HookahConstants.MESSAGE_503);
                 messageCode.setBusinessId(goodsCheck.getId());
                 mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
+
+                //属于推送资源需要推送中央通知地方下架
+                goodsService.operaChannelGoods(goodsId);
             }
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

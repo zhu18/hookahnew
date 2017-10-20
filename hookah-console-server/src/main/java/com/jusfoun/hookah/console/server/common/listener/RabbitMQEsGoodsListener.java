@@ -34,16 +34,8 @@ public class RabbitMQEsGoodsListener {
         logger.info(goodsId + ":开始执行ES添加/删除流程");
         try {
             Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
-            if(goods != null) {
-                // 如果isDelete == 0 或者 is_onsale == 0 删除es中的商品
-                if(HookahConstants.GOODS_STATUS_DELETE.equals(goods.getIsDelete())
-                        || HookahConstants.GOODS_STATUS_OFFSALE.equals(goods.getIsOnsale())
-                        || HookahConstants.GOODS_STATUS_FORCE_OFFSALE.equals(goods.getIsOnsale())) {
-                    elasticSearchService.deleteById(Constants.GOODS_INDEX,
-                            Constants.GOODS_TYPE, goodsId);
-                }else if(HookahConstants.GOODS_STATUS_UNDELETE.equals(goods.getIsDelete())
-                        && HookahConstants.GOODS_STATUS_ONSALE.equals(goods.getIsOnsale())) {
-
+            if(goods != null && HookahConstants.GOODS_STATUS_UNDELETE.equals(goods.getIsDelete())
+                    && HookahConstants.GOODS_STATUS_ONSALE.equals(goods.getIsOnsale())) {
                     EsGoods esGoods = goodsMapper.getNeedEsGoodsById(goodsId);
                     if(esGoods != null) {
                         Map<String, Object> map = elasticSearchService.completionEsGoods(esGoods);
@@ -53,11 +45,10 @@ public class RabbitMQEsGoodsListener {
                     }else {
                         logger.warn(goodsId + ":esGoods查询为null");
                     }
-                }
             }else {
                 //删除ES中的商品
-                elasticSearchService.deleteById("qingdao-goods-v1",
-                        "goods", goodsId);
+                elasticSearchService.deleteById(Constants.GOODS_INDEX,
+                        Constants.GOODS_TYPE, goodsId);
             }
         }catch (Exception e) {
             logger.error(goodsId + "执行ES添加/删除流程错误！" + e);
