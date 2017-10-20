@@ -40,6 +40,10 @@ class facilitatorController {
         };
 
         $scope.search();
+        $scope.getDetails=function (id) {
+            $state.go('facilitator.details', {id: id});
+
+        }
     }
 }
 

@@ -1,0 +1,219 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>服务商大厅->服务商详情页</h5></div>
+        </div>
+        <div class="row authentication">
+              <div class="authentication-info">
+                  <div class="authentication-title">基本信息</div>
+                  <div class="authentication-content">
+                      <div class="item">
+                          <label for="">姓  名:</label>
+                          <span data-ng-bind="upname"></span>
+                      </div >
+                      <div class="item">
+                          <label for="">手机号码:</label>
+                          <span data-ng-bind="phoneNum"></span>
+                      </div>
+                      <div class="item">
+                          <label for="">注册时间:</label>
+                          <span data-ng-bind="registerTime"></span>
+                      </div>
+                      <div class="item">
+                          <label for="">所在地域:</label>
+                          <span data-ng-bind="registerAddr"></span>
+                      </div>
+                  </div>
+              </div>
+              <div class="authentication-info">
+                <div class=" authentication-title">认证信息</div>
+                <div class=" authentication-content">
+                    <div class="item">
+                        <label for="">认证状态:</label>
+                        <span data-ng-bind="status"></span>
+                    </div>
+                    <div class="item">
+                        <label for="">擅长领域:</label>
+                        <span data-ng-repeat="item in specialSkills track by $index" data-ng-bind="item"></span>
+                    </div>
+                    <div class="item" data-ng-show="authType==2">
+                        <label for="">个人简介:</label>
+                        <span data-ng-bind="providerDesc"></span>
+                    </div>
+                    <div class="item" data-ng-show="authType==4">
+                        <label for="">企业介绍:</label>
+                        <span data-ng-bind="providerDesc"></span>
+                    </div>
+                </div>
+                <div class="authentication-tab" data-ng-if="authType==2">
+                      <table class=" table tab-education">
+                          <thead class="">
+                          <tr>
+                              <th colspan="5">教育经历</th>
+                          </tr>
+                          </thead>
+                          <tbody class="">
+                              <tr data-ng-repeat="item in educationsExpList">
+                                  <td>
+                                      <span data-ng-bind="item.schoolName"></span>
+                                  </td>
+                                  <td>
+                                      <span data-ng-bind="item.startTime"></span>-
+                                      <span data-ng-bind="item.endTime"></span>
+                                  </td>
+                                  <td>
+                                      <span data-ng-bind="item.major"></span>
+                                  </td>
+                                  <td>
+                                      <span data-ng-bind="item.edu"></span>
+                                  </td>
+                                  <td>
+                                      <span data-ng-show="item.orExam==1">统招</span>
+                                      <span data-ng-show="item.orExam==0">非统招</span>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <table class=" table tab-work">
+                          <thead>
+                          <tr>
+                              <th colspan="4">工作经历</th>
+                          </tr>
+                          </thead>
+                          <tbody class="">
+                          <tr data-ng-repeat="item in worksExpList">
+                              <td>
+                                  <span data-ng-bind="item.companyName"></span>
+                              </td>
+                              <td>
+                                  <span data-ng-bind="item.startTime"></span>-
+                                  <span data-ng-bind="item.endTime"></span>
+                              </td>
+                              <td>
+                                  <span data-ng-bind="item.departName"></span>
+                              </td>
+                              <td>
+                                  <span data-ng-bind="item.position"></span>
+                              </td>
+                          </tr>
+                          </tbody>
+                      </table>
+                      <table class=" table tab-project">
+                          <thead>
+                          <tr>
+                              <th colspan="2">项目经验</th>
+                          </tr>
+                          </thead>
+                          <tbody class="">
+                               <table data-ng-repeat="item in projectsExpList">
+                                   <tr>
+                                       <th>名称</th>
+                                       <td><span data-ng-bind="item.projectName"></span></td>
+                                   </tr>
+                                   <tr>
+                                       <th>项目职责：</th>
+                                       <td><span data-ng-bind="item.projectDuty"></span></td>
+                                   </tr>
+                                   <tr>
+                                       <th>项目描述：</th>
+                                       <td><span data-ng-bind="item.projectDesc"></span></td>
+                                   </tr>
+                               </table>
+
+                          </tbody>
+                      </table>
+                  </div>
+                <div class="authentication-tab" data-ng-if="authType==4">
+                    <table class=" table tab-project">
+                          <thead>
+                             <tr>
+                                 <th colspan="2">应用案例</th>
+                             </tr>
+                          </thead>
+                          <tbody class="">
+                          <table data-ng-repeat="item in appCaseList">
+                              <tr>
+                                  <th>名称</th>
+                                  <td><span data-ng-bind="item.caseName"></span></td>
+                              </tr>
+                              <tr>
+                                  <th>案例概述：</th>
+                                  <td><span data-ng-bind="item.caseName"></span></td>
+                              </tr>
+                              <tr>
+                                  <th>解决方案：</th>
+                                  <td><span data-ng-bind="item.caseDesc"></span></td>
+                              </tr>
+                              <tr>
+                                  <th>证明材料：</th>
+                                  <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                              </tr>
+                          </table>
+
+                          </tbody>
+                      </table>
+                    <table class=" table tab-project">
+                        <thead>
+                        <tr>
+                            <th colspan="2">软件著作权</th>
+                        </tr>
+                        </thead>
+                        <tbody class="">
+                        <table data-ng-repeat="item in projectsExpList">
+                            <tr>
+                                <th>名称</th>
+                                <td><span data-ng-bind="item.softWareName"></span></td>
+                            </tr>
+                            <tr>
+                                <th>登记号：</th>
+                                <td><span data-ng-bind="item.registerNum"></span></td>
+                            </tr>
+                            <tr>
+                                <th>软件用途：</th>
+                                <td><span data-ng-bind="item.purpose"></span></td>
+                            </tr>
+                            <tr>
+                                <th>证明材料：</th>
+                                <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                            </tr>
+                        </table>
+
+                        </tbody>
+                    </table>
+                    <table class="table tab-project">
+                        <thead>
+                        <tr>
+                            <th colspan="2">发明专利</th>
+                        </tr>
+                        </thead>
+                        <tbody class="">
+                        <table data-ng-repeat="item in inPatentsList">
+                            <tr>
+                                <th>名称</th>
+                                <td><span data-ng-bind="item.patentName"></span></td>
+                            </tr>
+                            <tr>
+                                <th>专利号：</th>
+                                <td><span data-ng-bind="item.patentNum"></span></td>
+                            </tr>
+                            <tr>
+                                <th>专利概述：</th>
+                                <td><span data-ng-bind="item.patentDesc"></span></td>
+                            </tr>
+                            <tr>
+                                <th>证明材料：</th>
+                                <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                            </tr>
+                        </table>
+
+                        </tbody>
+                    </table>
+                  </div>
+              </div>
+              <div class="authentication-button">
+                  <button class="btn btn-primary" data-ng-click="auditing()">通过认证</button>
+                  <button class="btn btn-default" data-ng-click="back()">返回</button>
+              </div>
+        </div>
+    </div>
+</div>

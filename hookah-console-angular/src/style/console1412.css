@@ -9605,3 +9605,31 @@ table .roundedTwo{
   filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
    opacity: 1;
 }
+
+.authentication{
+  padding: 15px;
+}
+.authentication .authentication-info{
+  border: 1px solid #ddd;
+}
+.authentication-info .authentication-title{
+  height: 39px;
+  line-height: 39px;
+  background-color: #F5F6FA;
+  padding-left: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.authentication-info .authentication-content{
+  padding: 15px;
+
+}
+.authentication-info .authentication-content .item{
+  text-align: center;
+}
+.authentication .authentication-tab .tab-project table{
+  width: 100%;
+  border-bottom: 1px dashed #e5e5e5;
+}
+.authentication .authentication-tab .tab-project table th{
+    text-align: right;
+}
