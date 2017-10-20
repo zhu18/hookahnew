@@ -48,8 +48,9 @@ public class CommonInterceptor implements HandlerInterceptor {
                         User user = userService.selectById(userId);
                         model.put("user", user);
                     }
+                } else {
+                    model.put("user", null);
                 }
-                model.put("user", null);
             }
 
         } catch (UnavailableSecurityManagerException e) {
