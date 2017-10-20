@@ -87,7 +87,7 @@ function renderPage(data) {
       $('.release-first-btnbox div').append('<a class="j_commentBtn" href="javascript:void(0)">我要报名</a>');
 
       loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
-      $('.applyDeadlineBox .j_applyDeadline').html(data.zbRequirementSPVo.deliveryDeadline).parent().parent().show();
+      $('.applyDeadlineBox .j_applyDeadline').html(data.zbRequirementSPVo.applyDeadline).parent().parent().show();
       break;
 
     case 0://报名中
@@ -96,7 +96,7 @@ function renderPage(data) {
       $('.release-first-btnbox div').append('<a href="javascript:void(0)">报名成功，待评选</a>');
 
       loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo.annex,'false');//有下载按钮的附件列表
-      $('.applyDeadlineBox .j_applyDeadline').html(data.zbRequirementSPVo.deliveryDeadline).parent().parent().show();
+      $('.applyDeadlineBox .j_applyDeadline').html(data.zbRequirementSPVo.applyDeadline).parent().parent().show();
 
       $('.addTime').html(data.zbRequirementApplyVo.addTime);
       $('.applyContent').html(data.zbRequirementApplyVo.applyContent);
