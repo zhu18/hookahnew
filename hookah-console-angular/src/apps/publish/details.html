@@ -80,11 +80,11 @@
                         <tr>
                             <th>需求类型</th>
                             <td colspan="3">
-                                <button class="btn btn-info" data-ng-show="type==1">数据采集</button>
-                                <button class="btn btn-info" data-ng-show="type==2">数据加工</button>
-                                <button class="btn btn-info" data-ng-show="type==3">数据模型</button>
-                                <button class="btn btn-info" data-ng-show="type==4">数据应用</button>
-                                <button class="btn btn-info" data-ng-show="type==5">数据清洗</button>
+                                <button class="label label-primary" data-ng-show="type==1">数据采集</button>
+                                <button class="label label-primary" data-ng-show="type==2">数据加工</button>
+                                <button class="label label-primary" data-ng-show="type==3">数据模型</button>
+                                <button class="label label-primary" data-ng-show="type==4">数据应用</button>
+                                <button class="label label-primary" data-ng-show="type==5">数据清洗</button>
                             </td>
                         </tr>
                         <tr>
@@ -168,7 +168,8 @@
                                    </td>
                                    <td>
                                        <span  data-ng-show="item.status==0">报名中</span>
-                                       <span  data-ng-show="item.status==1">已被选中</span>
+                                       <span  data-ng-show="item.status!=0 && item.status!=2">已被选中</span>
+                                       <span  data-ng-show="item.status==2">未中标</span>
                                    </td>
                                    <td>
                                        <span data-ng-bind="item.userName"></span>
@@ -177,23 +178,22 @@
                                        <span data-ng-bind="item.mobile"></span>
                                    </td>
                                    <td>
-                                       <span  ng-model="applyId"></span>
+                                       <span data-ng-bind="item.applyContent"></span>
                                    </td>
                                    <td>
-                                       <div class="roundedTwo" data-ng-if="applyDeadline < currDate">
+                                       <div class="roundedTwo" data-ng-if="(applyDeadline > currDate) && item.status==0">
                                            <input type="radio" value="{{item.id}}" id="{{item.id}}" name="applyId" ng-model="apply.id">
                                            <label for="{{item.id}}"></label>
                                        </div>
-                                       <div class="roundedTwo" data-ng-if="applyDeadline > currDate">
-                                           <button class="btn btn-primary" disabled>选中</button>
-                                           <button class="btn btn-primary" disabled data-ng-show="item.status==1">已被选中</button>
+                                       <div data-ng-if="applyDeadline < currDate">
+                                           <button class="label label-primary" disabled data-ng-show="item.status!=0 && item.status!=2">已被选中</button>
                                        </div>
                                    </td>
                                </tr>
                                </tbody>
                            </table>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
-                            <div style="margin: auto;width: 58px;" data-ng-show="applyDeadline < currDate">
+                            <div style="margin: auto;width: 58px;" data-ng-show="(applyDeadline < currDate) && item.status==0">
                                 <button class="btn btn-primary" data-ng-click="submit()">提交</button>
                             </div>
                         </div>
