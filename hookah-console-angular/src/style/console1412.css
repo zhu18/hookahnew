@@ -9626,10 +9626,3 @@ table .roundedTwo{
 .authentication-info .authentication-content .item{
   text-align: center;
 }
-.authentication .authentication-tab .tab-project table{
-  width: 100%;
-  border-bottom: 1px dashed #e5e5e5;
-}
-.authentication .authentication-tab .tab-project table th{
-    text-align: right;
-}

@@ -98,71 +98,62 @@
                           </tr>
                           </tbody>
                       </table>
-                      <table class=" table tab-project">
-                          <thead>
-                          <tr>
-                              <th colspan="2">项目经验</th>
-                          </tr>
-                          </thead>
-                          <tbody class="">
-                               <table data-ng-repeat="item in projectsExpList">
-                                   <tr>
-                                       <th>名称</th>
-                                       <td><span data-ng-bind="item.projectName"></span></td>
-                                   </tr>
-                                   <tr>
-                                       <th>项目职责：</th>
-                                       <td><span data-ng-bind="item.projectDuty"></span></td>
-                                   </tr>
-                                   <tr>
-                                       <th>项目描述：</th>
-                                       <td><span data-ng-bind="item.projectDesc"></span></td>
-                                   </tr>
-                               </table>
-
-                          </tbody>
-                      </table>
-                  </div>
-                <div class="authentication-tab" data-ng-if="authType==4">
-                    <table class=" table tab-project">
-                          <thead>
-                             <tr>
-                                 <th colspan="2">应用案例</th>
-                             </tr>
-                          </thead>
-                          <tbody class="">
-                          <table data-ng-repeat="item in appCaseList">
+                      <div>
+                        <div class=" authentication-title">项目经验</div>
+                          <table class="table" data-ng-repeat="item in projectsExpList">
                               <tr>
-                                  <th>名称</th>
-                                  <td><span data-ng-bind="item.caseName"></span></td>
+                                  <th>
+                                      <span data-ng-bind="item.projectName"></span>
+                                      (<span data-ng-bind="item.startTime"></span>-
+                                      <span data-ng-bind="item.endTime"></span>)
+                                  </th>
                               </tr>
                               <tr>
-                                  <th>案例概述：</th>
-                                  <td><span data-ng-bind="item.caseName"></span></td>
+                                  <th>项目职责：</th>
+                                  <td><span data-ng-bind="item.projectDuty"></span></td>
                               </tr>
                               <tr>
-                                  <th>解决方案：</th>
-                                  <td><span data-ng-bind="item.caseDesc"></span></td>
-                              </tr>
-                              <tr>
-                                  <th>证明材料：</th>
-                                  <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                                  <th>项目描述：</th>
+                                  <td><span data-ng-bind="item.projectDesc"></span></td>
                               </tr>
                           </table>
+                    </div>
 
-                          </tbody>
-                      </table>
-                    <table class=" table tab-project">
-                        <thead>
-                        <tr>
-                            <th colspan="2">软件著作权</th>
-                        </tr>
-                        </thead>
-                        <tbody class="">
-                        <table data-ng-repeat="item in projectsExpList">
+                  </div>
+                <div class="authentication-tab" data-ng-if="authType==4">
+
+                    <div>
+                        <div class=" authentication-title">应用案例</div>
+                        <table class="table" data-ng-repeat="item in appCaseList">
                             <tr>
-                                <th>名称</th>
-                                <td><span data-ng-bind="item.softWareName"></span></td>
+                                <th colspan="2">
+                                    <span data-ng-bind="item.caseName"></span>
+                                    (<span data-ng-bind="item.startTime"></span>-
+                                    <span data-ng-bind="item.endTime"></span>)
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>案例概述：</th>
+                                <td><span data-ng-bind="item.caseView"></span></td>
+                            </tr>
+                            <tr>
+                                <th>解决方案：</th>
+                                <td><span data-ng-bind="item.caseDesc"></span></td>
+                            </tr>
+                            <tr>
+                                <th>证明材料：</th>
+                                <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <div class=" authentication-title">软件著作权</div>
+                        <table class="table" data-ng-repeat="item in projectsExpList">
+                            <tr>
+                                <th>
+                                    <span data-ng-bind="item.softWareName"></span>
+                                    (首次发表日期：<span data-ng-bind="item.publicTime"></span>)
+                                </th>
                             </tr>
                             <tr>
                                 <th>登记号：</th>
@@ -177,19 +168,15 @@
                                 <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
                             </tr>
                         </table>
-
-                        </tbody>
-                    </table>
-                    <table class="table tab-project">
-                        <thead>
-                        <tr>
-                            <th colspan="2">发明专利</th>
-                        </tr>
-                        </thead>
-                        <tbody class="">
-                        <table data-ng-repeat="item in inPatentsList">
+                    </div>
+                    <div>
+                        <div class=" authentication-title">发明专利</div>
+                        <table class="table" data-ng-repeat="item in inPatentsList">
                             <tr>
-                                <th>名称</th>
+                                <th>
+                                    <span data-ng-bind="item.patentName"></span>
+                                    (申请日期：<span data-ng-bind="item.applyTime"></span>)
+                                </th>
                                 <td><span data-ng-bind="item.patentName"></span></td>
                             </tr>
                             <tr>
@@ -205,9 +192,8 @@
                                 <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
                             </tr>
                         </table>
+                    </div>
 
-                        </tbody>
-                    </table>
                   </div>
               </div>
               <div class="authentication-button">
