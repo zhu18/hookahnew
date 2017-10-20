@@ -74,6 +74,8 @@ public class GoodsApi extends BaseController{
             orderBys.add(OrderBy.desc("lastUpdateTime"));
             //只查询商品状态为未删除的商品
             filters.add(Condition.eq("isDelete", 1));
+            // 本地商品
+            filters.add(Condition.eq("isLocal", 0));
 
             if(StringUtils.isNotBlank(goodsName)){
                 filters.add(Condition.like("goodsName", goodsName.trim()));
@@ -186,10 +188,11 @@ public class GoodsApi extends BaseController{
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("lastUpdateTime"));
 
-            //只查询商品状态为未删除  审核中  下架状态  的商品
+            //只查询商品状态为未删除  审核中  下架状态 本地 的商品
             filters.add(Condition.eq("isDelete", 1));
             filters.add(Condition.eq("checkStatus", 0));
             filters.add(Condition.eq("isOnsale", 1));
+            filters.add(Condition.eq("isLocal", 0));
             if(StringUtils.isNotBlank(goodsName)){
                 filters.add(Condition.like("goodsName", goodsName.trim()));
             }

@@ -31,4 +31,8 @@ public interface GoodsMapper extends GenericDao<Goods> {
     List<GoodsCheckedVo> getListForChecked(@Param("goodsName") String goodsName, @Param("goodsSn") String goodsSn,@Param("orgName") String orgName);
 
     int insertRecord(Goods goods);
+
+    List<Goods> getGoodsInfoByCatIds(String[] ids);
+
+    int updateGoodsInfoByCatIds(String[] ids);
 }

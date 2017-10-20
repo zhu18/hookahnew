@@ -278,7 +278,7 @@
         LEFT JOIN organization org ON org.org_id = u.org_id
         WHERE
         goods.check_status != 0
-        AND goods.is_delete = 1
+        AND goods.is_delete = 1 AND goods.is_local = 0
         <if test="goodsSn != '' and goodsSn != null">
             AND goods.goods_sn like '%${goodsSn}%'
         </if>
@@ -581,5 +581,24 @@
 
         </trim>
     </insert>
+
+    <select id="getGoodsInfoByCatIds" resultMap = "BaseResultMap">
+        SELECT * FROM goods WHERE cat_id NOT IN
+        <foreach collection='array' index='index' item='item' open='(' separator=',' close=')'>
+            #{item}
+        </foreach>
+    </select>
+
+    <update id="updateGoodsInfoByCatIds" >
+
+        UPDATE goods SET is_onsale = 2}
+
+        WHERE   cat_id NOT IN
+
+        <foreach collection="ids" index="index" item="item" open="("  separator="," close=")">
+            #{item}
+        </foreach>
+
+    </update>
 
 </mapper>
