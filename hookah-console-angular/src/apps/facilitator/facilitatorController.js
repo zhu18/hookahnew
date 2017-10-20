@@ -9,11 +9,13 @@ class facilitatorController {
                 method: 'GET',
                 url: $rootScope.site.crowdServer + "/api/require/AllProvider",
                 params: {
-                    // requireSn: $scope.requireSn ? $scope.requireSn : null,
-                    // status: $scope.status,//审核状态
-                    // title: $scope.title ? $scope.title : null,
-                    // currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
-                    // pageSize: $rootScope.pagination.pageSize
+                    authType: $scope.authType ? $scope.authType : null,
+                    status: $scope.status,//审核状态
+                    upname: $scope.upname ? $scope.upname : null,
+                    currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
+                    pageSize: $rootScope.pagination.pageSize,
+                    startTime:$scope.startDate?format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'):null,
+                    endTime:$scope.endDate?format($scope.endDate, 'yyyy-MM-dd HH:mm:ss'):null
                 }
             });
             promise.then(function (res, status, config, headers) {

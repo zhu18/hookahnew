@@ -16,13 +16,13 @@
                     <div>
                         <label for="">类型:</label>
                         <div class="searchSection  btn-group">
-                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio=""
+                            <button class="btn btn-default" data-ng-model="authType " uib-btn-radio=""
                                     data-ng-click="search()"> 全部
                             </button>
-                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="1"
+                            <button class="btn btn-default" data-ng-model="authType " uib-btn-radio="2"
                                     data-ng-click="search()"> 个人服务商
                             </button>
-                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="4"
+                            <button class="btn btn-default" data-ng-model="authType " uib-btn-radio="4"
                                     data-ng-click="search()"> 企业服务商
                             </button>
 
@@ -34,21 +34,28 @@
                             <button class="btn btn-default" data-ng-model="status" uib-btn-radio=""
                                     data-ng-click="search()"> 全部
                             </button>
-                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="1"
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="0"
                                     data-ng-click="search()"> 未认证
                             </button>
-                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="4"
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="1"
+                                    data-ng-click="search()"> 审核中
+                            </button>
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="2"
                                     data-ng-click="search()"> 已认证
+                            </button>
+                            <button class="btn btn-default" data-ng-model="status" uib-btn-radio="3"
+                                    data-ng-click="search()"> 认证失败
                             </button>
 
                         </div>
                     </div>
                     <div>
-                        <label class="control-label">服务商名称：</label>
-                        <input ng-model="title" type="text" class="form-control" placeholder="请输入需求标题">
-                        <label class="control-label">提交日期：</label>
+                        <div>
+                            <label class="control-label">服务商名称：</label>
+                            <input ng-model="upname" type="text" class="form-control" placeholder="请输入需求标题">
+                        </div>
                         <div style="display: inline-block" >
-                            <label class="control-label">下单时间：</label>
+                            <label class="control-label">提交日期：</label>
                             <p class="input-group" style="margin-top: 15px">
                                 <input   style="background-color: transparent;" ng-keypress="$event.preventDefault()" ng-paste="$event.preventDefault()" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions"  close-text="关闭"  clear-text="清除" current-text="今天" readonly="true"/>
                                 <span class="input-group-btn" >
@@ -63,6 +70,11 @@
                          <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                             </p>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" data-ng-click="search()">
+                                搜索
+                            </button>
                         </div>
                     </div>
 
@@ -105,7 +117,7 @@
                                     <span data-ng-show="item.status==2">已认证</span>
                                     <span data-ng-show="item.status==3">认证失败</span>
                                 </td>
-                                <td > 5555 </td>
+                                <td data-ng-bind="item.addTime"> </td>
                                 <td >
                                     <button class="btn btn-primary" data-ng-show="item.status==0"  data-ng-click="auditing(item.id)">去审核</button>
                                     <button class="btn btn-primary" data-ng-show="item.status==1"  data-ng-click="public(item.id)">去查看</button>
