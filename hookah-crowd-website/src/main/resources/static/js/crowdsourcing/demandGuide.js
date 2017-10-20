@@ -105,19 +105,21 @@ function isLogin() {  //已经登录
         window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/missionApply?id='+crowdSourcingId);
 
       }else{ //未认证
-        $.confirm('<div style="padding: 15px; text-align:left;">您好！<span style="color:red">您还不是服务商</span>，不能参加需求任务报名，<br>如想报名请点击 【确定】 申请成为服务商，<br>按要求提交信息即可通过服务商认证。 </div>',null,function(type){
-          if(type == 'yes'){
-            if(userType==2){
-              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
-            }else{
-              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
-            }
-            this.hide();
-          }else{
-            this.hide();
+        window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/missionApply?id='+crowdSourcingId);
+        // TODO:认证还没做好，等做好时候把上面一行删了，下面的注释解开
+        /*        $.confirm('<div style="padding: 15px; text-align:left;">您好！<span style="color:red">您还不是服务商</span>，不能参加需求任务报名，<br>如想报名请点击 【确定】 申请成为服务商，<br>按要求提交信息即可通过服务商认证。 </div>',null,function(type){
+                  if(type == 'yes'){
+                    if(userType==2){
+                      window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
+                    }else{
+                      window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
+                    }
+                    this.hide();
+                  }else{
+                    this.hide();
 
-          }
-        })
+                  }
+                })*/
 
       }
     }

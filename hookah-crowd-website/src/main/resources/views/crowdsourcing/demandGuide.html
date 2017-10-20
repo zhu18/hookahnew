@@ -34,7 +34,22 @@ var htmlPart = {
 <div class="bannerBox">
 
   <div class="grid-row demandBody ">
-    <div class="banner"><a href="#" class="banner-btn ">成为服务商</a></div>
+    <div class="banner">
+      <%if(user==null){%>
+        <a class="banner-btn" href="/usercenter/index">成为服务商</a>
+      <%}else{%>
+        <%if(user.userType == 2){%>
+        <a class="banner-btn" href="/usercenter/pspAuthentication ">成为服务商</a>
+        <%}else if(user.userType == 4){%>
+        <a class="banner-btn" href="/usercenter/epAuthentication">成为服务商</a>
+        <%}%>
+      <%}%>
+
+
+
+
+
+    </div>
     <div class="demandInfo">
       <div class="demandStatus"><img src="/static/images/crowdsourcing/demandGuide/demandStatusIcon.png" alt=""><span>报名中</span></div>
       <div class="demandTitle">-</div>
