@@ -192,7 +192,7 @@ public class RequireController extends BaseController {
      *
      * @author crs
      */
-    @RequestMapping("require/AllProvider")
+    @RequestMapping("/api/require/AllProvider")
     @ResponseBody
     public ReturnData getAllProvider(String currentPage, String pageSize,  Integer authType ,Integer status ,String upname,String userId, Date startTime, Date endTime) {
         try {
@@ -208,7 +208,7 @@ public class RequireController extends BaseController {
      *
      * @author crs
      */
-    @RequestMapping("require/provideCheck")
+    @RequestMapping("/api/require/provideCheck")
     @ResponseBody
     public ReturnData provideCheck(String userId, Integer status) {
         try {
