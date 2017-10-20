@@ -86,7 +86,7 @@ function initOneDataRequirementTypeInfoDOM(selector,data){
   }else{
     $(selector).prev().html('找数据<br>就上数据星河').addClass('mt90');
     $(selector).next().remove();
-    $("<a href='#' class='noDataButton'>立即发需求</a>").insertAfter(selector);
+    $("<a href='/usercenter/crowdsourcingRelease' class='noDataButton'>立即发需求</a>").insertAfter(selector);
     $(selector).remove();
   }
 }
