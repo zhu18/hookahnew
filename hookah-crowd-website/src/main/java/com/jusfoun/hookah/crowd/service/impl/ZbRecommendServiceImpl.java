@@ -11,6 +11,8 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.ZbRecommendService;
 import com.jusfoun.hookah.crowd.service.ZbRequireApplyService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
+import com.jusfoun.hookah.crowd.util.DateUtil;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,40 +39,43 @@ public class ZbRecommendServiceImpl extends GenericServiceImpl<ZbRecommend, Long
     public ReturnData selectRecommendTasksInfo(){
 
         Map<String, Object> map = new HashMap<>(6);
-        List<Condition> filters = new ArrayList<>();
-
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long day = 0;
-        long hour = 0;
-        long min = 0;
-        Date one;//报名截止时间
-        Date two;//当前时间
-        String applyLastTime = null;
-
-        List<ZbRecommendVo> zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfo();
+        List<ZbRecommendVo> zbRecommendVos = null;
         try {
-            for(ZbRecommendVo zb : zbRecommendVos){
-                if(zb != null){
-                    if(zb.getApplyDeadline() != null){
-                        one = df.parse(df.format(zb.getApplyDeadline()));
-                        two = df.parse(df.format(new Date()));
-                        long time1 = one.getTime();
-                        long time2 = two.getTime();
-                        long diff = 0;
-                        if(time1 > time2){
-                            diff = time1 - time2;
-                        }
-                        day = diff / (24 * 60 * 60 * 1000);
-                        hour = (diff / (60 * 60 * 1000) - day * 24);
-                        min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
-                        applyLastTime = day + "天" + hour + "小时" + min + "分";
-                        zb.setApplyLastTime(applyLastTime != null ? applyLastTime : " ");
+            //从session获取用户信息
+            Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
+            if(userMap != null){
+                //登录
+                List<Condition> filters = new ArrayList<>();
+                filters.add(Condition.eq("userId", this.getCurrentUser().getUserId()));
+                List<ZbRequirementApply> applies = zbRequireApplyService.selectList(filters);
+                List list = new ArrayList();
+                for(ZbRequirementApply app : applies){
+                    List<Condition> filters1 = new ArrayList<>();
+                    filters1.add(Condition.eq("id", app.getRequirementId()));
+                    List<ZbRequirement> zbRequirements = zbRequireService.selectList(filters1);
+                    for(ZbRequirement ment : zbRequirements){
+                        list.add(ment.getId());
                     }
-                    List<Condition> filters2 = new ArrayList<>();
-                    if(zb.getRequirementId() != null){
-                        filters2.add(Condition.eq("requirementId", zb.getRequirementId()));
-                        List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
-                        zb.setCount(zbRequirementApplies.size());
+                }
+                Object[] objects = list.toArray();
+                zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfo(objects);
+            }else {
+                //未登录
+                zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfoNo();
+            }
+            if(zbRecommendVos != null){
+                for(ZbRecommendVo zb : zbRecommendVos){
+                    if(zb != null){
+                        if(zb.getApplyDeadline() != null){
+                            String time = DateUtil.timeCountDown(zb.getApplyDeadline());
+                            zb.setApplyLastTime(time != null ? time : " ");
+                        }
+                        List<Condition> filters2 = new ArrayList<>();
+                        if(zb.getRequirementId() != null){
+                            filters2.add(Condition.eq("requirementId", zb.getRequirementId()));
+                            List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
+                            zb.setCount(zbRequirementApplies.size());
+                        }
                     }
                 }
             }
