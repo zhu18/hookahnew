@@ -333,44 +333,45 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     //计算截止报名时间的剩余时间
     public Object applyLastTime(Short type){
-        List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.eq("type",type));
-        filters.add(Condition.in("status", new Short[]{5, 6}));
-        List<ZbRequirement> zbRequirement = this.selectList(filters);
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long day = 0;
-        long hour = 0;
-        long min = 0;
-        Date one;//报名截止时间
-        Date two;//当前时间
-        String applyLastTime = null;
+        List<ZbRequirement> zbRequirement = null;
         try {
-            for(ZbRequirement zb : zbRequirement){
-                if(zb != null){
-                    if(zb.getApplyDeadline() != null){
-                        one = df.parse(df.format(zb.getApplyDeadline()));
-                        two = df.parse(df.format(new Date()));
-                        long time1 = one.getTime();
-                        long time2 = two.getTime();
-                        long diff = 0;
-                        if(time1 > time2){
-                            diff = time1 - time2;
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("type",type));
+            filters.add(Condition.in("status", new Short[]{5}));
+            //从session获取用户信息
+            Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
+            if(userMap != null){
+                //登录
+                List<Condition> filters1 = new ArrayList<>();
+                filters1.add(Condition.eq("userId", this.getCurrentUser().getUserId()));
+                List<ZbRequirementApply> applies = zbRequireApplyService.selectList(filters1);
+                List list = new ArrayList();
+                for(ZbRequirementApply app : applies){
+                    List<Condition> filters3 = new ArrayList<>();
+                    filters3.add(Condition.eq("id", app.getRequirementId()));
+                    List<ZbRequirement> zbRequirements = this.selectList(filters1);
+                    for(ZbRequirement ment : zbRequirements){
+                        list.add(ment.getId());
+                    }
+                }
+                filters.add(Condition.notIn("id",list.toArray()));
+                zbRequirement = this.selectList(filters);
+            }else {
+                //未登录
+                zbRequirement = this.selectList(filters);
+            }
+            if(zbRequirement != null){
+                for(ZbRequirement zb : zbRequirement){
+                    if(zb != null){
+                        if(zb.getApplyDeadline() != null){
+                            String time = DateUtil.timeCountDown(zb.getApplyDeadline());
+                            zb.setApplyLastTime(time != null ? time : "");
                         }
-                        day = diff / (24 * 60 * 60 * 1000);
-                        hour = (diff / (60 * 60 * 1000) - day * 24);
-                        min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
-                        applyLastTime = day + "天" + hour + "小时" + min + "分";
-                        zb.setApplyLastTime(applyLastTime != null ? applyLastTime : "报名结束");
+                        List<Condition> filters2 = new ArrayList<>();
+                        filters2.add(Condition.eq("requirementId", zb.getId()));
+                        List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
+                        zb.setCount(zbRequirementApplies.size());
                     }
-                    List<Condition> filters2 = new ArrayList<>();
-                    filters2.add(Condition.eq("requirementId", zb.getId()));
-                    List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
-                    //从session获取用户信息
-                    Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
-                    if(userMap != null){
-                        zb.setApplyStatus(zbRequirementApplies.size() > 0 ? Short.parseShort("0") : null);
-                    }
-                    zb.setCount(zbRequirementApplies.size());
                 }
             }
             return zbRequirement;
