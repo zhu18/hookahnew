@@ -38,6 +38,7 @@ public class CommonInterceptor implements HandlerInterceptor {
         try {
             if(Objects.nonNull(modelAndView)){
                 Subject subject = SecurityUtils.getSubject();
+                Map<String, Object> model = modelAndView.getModel();
                 if (subject != null && subject.isAuthenticated()) {
                     if (!ajax) {
                         Session session = subject.getSession();
@@ -45,11 +46,12 @@ public class CommonInterceptor implements HandlerInterceptor {
                         String userId = (String)userMap.get("userId");
                         UserService userService = (UserService) factory.getBean("userService");
                         User user = userService.selectById(userId);
-                        Map<String, Object> model = modelAndView.getModel();
                         model.put("user", user);
                     }
                 }
+                model.put("user", null);
             }
+
         } catch (UnavailableSecurityManagerException e) {
 
         }
