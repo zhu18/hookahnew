@@ -80,11 +80,11 @@
                         <tr>
                             <th>需求类型</th>
                             <td colspan="3">
-                                <button class="label label-primary" data-ng-show="type==1">数据采集</button>
-                                <button class="label label-primary" data-ng-show="type==2">数据加工</button>
-                                <button class="label label-primary" data-ng-show="type==3">数据模型</button>
-                                <button class="label label-primary" data-ng-show="type==4">数据应用</button>
-                                <button class="label label-primary" data-ng-show="type==5">数据清洗</button>
+                                <span class="label label-primary" data-ng-show="type==1">数据采集</span>
+                                <span class="label label-primary" data-ng-show="type==2">数据加工</span>
+                                <span class="label label-primary" data-ng-show="type==3">数据模型</span>
+                                <span class="label label-primary" data-ng-show="type==4">数据应用</span>
+                                <span class="label label-primary" data-ng-show="type==5">数据清洗</span>
                             </td>
                         </tr>
                         <tr>
@@ -186,7 +186,7 @@
                                            <label for="{{item.id}}"></label>
                                        </div>
                                        <div data-ng-if="applyDeadline < currDate">
-                                           <button class="label label-primary" disabled data-ng-show="item.status!=0 && item.status!=2">已被选中</button>
+                                           <span class="label label-primary" disabled data-ng-show="item.status!=0 && item.status!=2">已被选中</span>
                                        </div>
                                    </td>
                                </tr>
