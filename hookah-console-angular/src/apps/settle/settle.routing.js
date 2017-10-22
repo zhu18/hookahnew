@@ -1,6 +1,7 @@
 import settleController from "./SettleController";
 import SettleDetailController from './SettleDetailController'
 import transactionManageController from './transactionManageController'
+import SettleAPILogsController from './SettleAPILogsController'
 
 settleRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function settleRouting($stateProvider, $urlRouterProvider) {
@@ -22,6 +23,12 @@ export default function settleRouting($stateProvider, $urlRouterProvider) {
       controller: SettleDetailController,
       permission: 'settleDetails'
 
+    })
+    .state('settle.settleAPILogs', {  //单条订单详情页里API调用日志
+      url: '/settle/settleAPILogs/:goodsSn/:orderSn',
+      template: require('./settleAPILogs.html'),
+      controller: SettleAPILogsController,
+      permission: 'settleDetails'
     })
     .state('settle.transactionManage', {  //单条订单详情页
       url: '/settle/transactionManage/',

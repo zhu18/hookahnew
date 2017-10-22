@@ -55,6 +55,9 @@ class settleDetailController {
     $scope.back = function () {
       history.back();
     };
+    $scope.goAPILogs= function (orderSn) {
+      $state.go('settle.settleAPILogs', {goodsSn: $stateParams.id,orderSn:orderSn});
+    }
   }
 }
 export default settleDetailController;
