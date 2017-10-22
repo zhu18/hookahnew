@@ -1,0 +1,79 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<link rel="stylesheet" href="/static/css/usercenter/myseller/myseller.css">
+<script type="text/javascript">
+    var pagePath = host.website+'/order/findInvokeStatus';
+    var pageType = 'get';
+    if(location.search){
+        var orderSn =  /orderSn=(.*)&goodsSn=(.*)/.exec(location.search)[1],goodsSn=/orderSn=(.*)&goodsSn=(.*)/.exec(location.search)[2];
+    }
+    var dataParm = {
+        pageNumber:1,
+        pageSize:10,
+        orderSn:orderSn,
+       goodsSn:goodsSn
+    };
+</script>
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-left info-center-box ">
+            <div class="user-center-box grid-right">
+                <div class="trade-wrapper">
+                    <div class="wrapper-tab clearfix">
+                        <ul class="wrapper-tab-box">
+                            <li class="first active">调用详情</li>
+                        </ul>
+                    </div>
+                    <div class="searchQuery padding-top-10">
+                        <div class="date grid-left">
+                            <label for="startDate" class="start-date grid-left">开始时间：<input id="startDate" type="text" placeholder="请选择开始时间" readonly=""></label>
+                            <label for="endDate" class="start-date grid-left">结束时间：<input id="endDate" type="text" placeholder="请选择结束时间" readonly=""></label>
+                            <label for="ip" class="grid-left">调取IP：<input type="text" id="ip" style="width: 200px"></label>&nbsp;&nbsp;
+                            <label for="status" class="start-date  grid-left">&nbsp;&nbsp;状态：
+                                <select name="" id="status">
+                                    <option value="">全部</option>
+                                    <option value="">成功</option>
+                                    <option value="">失败</option>
+                                </select>
+                            </label>
+                        </div>
+                        <button id="search-btn" class="search grid-right" style="cursor: pointer;">查询</button>
+                    </div>
+                    <div class="trade-box">
+                        <table class="search-list">
+                            <thead>
+                            <tr>
+                                <th>调取时间</th>
+                                <th>调取IP</th>
+                                <th>调取结果</th>
+                                <th>结果说明</th>
+                                <th>剩余次数</th>
+                            </tr>
+                            </thead>
+                            <tbody class="search-list-content">
+
+                            </tbody>
+                        </table>
+                        <%include("/layout/pageaction.html"){} %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script type="text/javascript" src="/static/js/usercenter/mybuyer/apiLogs.js"></script>
+
+

@@ -212,6 +212,11 @@ public class UserCenterController {
     public String capitalRecord() {
         return "/usercenter/userInfo/capitalRecord";
     }
+    //  api日志页面
+    @RequestMapping(value = "/apiLogs", method = RequestMethod.GET)
+    public String apiLogs() {
+        return "/usercenter/buyer/apiLogs";
+    }
 
     /**
      * 安全设置

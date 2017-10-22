@@ -553,4 +553,10 @@ td{
 #noPaySearch{
     height: 40px;
 }
-
+#ip{
+    height: 25px;
+    border:1px solid #ccc;
+}
+#ip:focus{
+    border:1px solid #ccc;
+}
