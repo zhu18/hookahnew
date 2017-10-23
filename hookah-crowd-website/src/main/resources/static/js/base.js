@@ -313,8 +313,8 @@ function Transformation(price,quotaPrice) {
 * 用法GetUrlValue('id') //27
 * */
 function GetUrlValue(name) {
-  let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
-  let r = window.location.search.substr(1).match(reg);
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+  var r = window.location.search.substr(1).match(reg);
   if (r!=null) return (r[2]); return null;
 }
 //用法

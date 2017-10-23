@@ -21,7 +21,6 @@ function recommendTasks() { //推荐任务
     type: 'get',
     url: "/require/recommendTasks",
     success: function (data) {
-      console.log('推荐任务');
       console.log(data);
       console.log('推荐任务');
       if(data.code==1){
@@ -31,14 +30,14 @@ function recommendTasks() { //推荐任务
   })
 }
 function initRecommendTasksDOMFn(selector,data){ //推荐任务
-  let initRecommendTasksDOM='';
-  let tempLength=null;
+  var  initRecommendTasksDOM='';
+  var tempLength=null;
   if(data.length>3){
     tempLength=3;
   }else{
     tempLength=data.length;
   }
-  for(let i=0;i < tempLength;i++){
+  for(var i=0;i < tempLength;i++){
     initRecommendTasksDOM+='\
    <li>\
       <div class="toBeServiceDemandName">'+data[i].title+'</div>\
@@ -74,14 +73,14 @@ function renderDOM() { //请求数据
 
 function initOneDataRequirementTypeInfoDOM(selector,data){
   if(data.length){
-    let initOneDataRequirementTypeInfoDOM='';
+    var initOneDataRequirementTypeInfoDOM='';
     initOneDataRequirementTypeInfoDOM+='\
           <div class="toBeServiceDemandName">'+data[0].title+'</div>\
         <div class="toBeServiceDeadData">交付截止日期：'+data[0].deliveryDeadline+'</div>\
         <div class="toBeServiceLastTime">报名剩余时间：'+data[0].applyLastTime+'</div>\
         <div class="toBeServiceMoney">￥'+ (data[0].rewardMoney / 100 ) +'元  </div>\
         <div class="toBeServiceHasApply">已报名：'+data[0].count+'人</div>\
-        <a class="applyBtn toBeServiceApply" href="'+data[0].id+'">我要报名</a>';
+        <a class="applyBtn toBeServiceApply" href="/crowdsourcing/demandGuide?id='+data[0].id+'">我要报名</a>';
     $(selector).html(initOneDataRequirementTypeInfoDOM);
   }else{
     $(selector).prev().html('找数据<br>就上数据星河').addClass('mt90');
@@ -93,8 +92,8 @@ function initOneDataRequirementTypeInfoDOM(selector,data){
 
 
 function requirementTypeInfo(selector,data) {
-  let tempLiDom='';
-  for(let i=0;i<data.length;i++){
+  var tempLiDom='';
+  for(var i=0;i<data.length;i++){
 
     tempLiDom+='\
     <li>\

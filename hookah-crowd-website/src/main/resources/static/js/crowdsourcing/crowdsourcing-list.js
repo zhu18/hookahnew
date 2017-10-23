@@ -1,9 +1,11 @@
 /**
  * Created by Dajun on 2017-9-19.
  */
+let reqTypeId = GetUrlValue('typeId');
+$('#type li').removeClass('active').eq(reqTypeId).addClass('active');
 function loadPageData(data) { //渲染页面数据
   data = data.data.list;
-  console.log(data)
+  console.log(data);
   let demandList = '';
   for (let i = 0; i < data.length; i++) {
     let tempState = '';
@@ -29,7 +31,7 @@ function loadPageData(data) { //渲染页面数据
             <div class="demandDeadData mt6">交付截止日期：' + data[i].deliveryDeadline + '</div>\
             <div class="demandLastTime">报名剩余时间：'+data[i].remainTime+'</div>\            \
             <img class="demandTimeIco mt33" src="/static/images/crowdsourcing/crowdsourcing-list/demandDetail-ico02.png" alt="">\
-            <div class="demandDeadData demandDeadDes mt15">' + data[i].checkRemark + '</div>\
+            <div class="demandDeadData demandDeadDes mt15">' + data[i].checkRemark.substring(0,60)+'...' + '</div>\
             <div class="demandMoney">￥' + data[i].rewardMoney/100 + ' 元  <span class="demandHasApply">已报名：' + data[i].count + '人</span></div>\
             \
             <a class="applyBtn demandApply ' + tempState + '" href="/crowdsourcing/demandGuide?id=' + data[i].id + '">' + tempState + '</a>\

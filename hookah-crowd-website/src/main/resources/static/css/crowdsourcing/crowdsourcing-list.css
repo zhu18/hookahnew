@@ -34,7 +34,8 @@
 .demandDetailShow{ padding: 16px 0 0 23px; }
 .demandDetailTitle{     margin-bottom: 5px;font-size: 18px; color:#535353;}
 .demandTimeIco{ clear: both; float: left;margin: 9px 4px 0 0;}
-.demandDeadData{width: 310px;  padding-left:8px;float: left; font-size: 14px; color:#959494; border-left: 2px solid #d2d2d2;}
+.demandDeadData{width: 310px;  padding-left:8px;float: left; font-size: 14px; color:#959494; border-left: 2px solid #d2d2d2;
+  word-wrap: break-word;  word-break: normal; }
 .demandDeadDes{ height:66px;line-height: 24px;}
 .demandLastTime{ float: left; padding-left:8px;font-size: 14px; color:#959494;border-left: 2px solid #d2d2d2;}
 .demandMoney{    padding: 12px 0 12px 40px; clear: both; font-size: 18px; color: #ffc600; }

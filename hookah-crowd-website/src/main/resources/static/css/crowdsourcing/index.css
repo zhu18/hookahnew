@@ -125,15 +125,14 @@
   transition: all .7s ease-in-out
 }
 
-.develop-ul li .ch-info { position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+.develop-ul li .ch-info { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden;
   -webkit-transition: all .7s ease-in-out;
   transition: all .7s ease-in-out;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
+}
+.develop-ul li:hover .ch-info {   box-shadow: 0 0 6px 0 #8a8a8a;
 }
 
 .develop-ul li .develop-div { position: absolute; left: 0; top: 0; height: 345px; width: 285px;  backface-visibility: hidden;  color: #fff;
-  -webkit-backface-visibility: hidden;
   transform: translateX(0);
 }
 
@@ -142,12 +141,15 @@
 .develop-ul li .develop-div p { padding:  0; height: 200px; line-height: 26px; font-weight: 400; text-align: left}
 
 .develop-ul li .develop-3d {
-  -webkit-transform: rotate3d(0,1,0,180deg);
-  -moz-transform: rotate3d(0,1,0,180deg);
-  -o-transform: rotate3d(0,1,0,180deg);
-  -ms-transform: rotate3d(0,1,0,180deg);
-  transform: rotate3d(0,1,0,180deg);
-  box-shadow: 0 0 6px 0 #8a8a8a;;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  left:-20px;
+  opacity:0;
+
+}
+.develop-ul li:hover .develop-3d {
+  opacity:1;
+  left:0;
 }
 .firstPageATag{position: absolute;bottom: 15px;left:93px; width: 94px; height:24px;border-radius:24px; line-height:24px;}
 .develop-ul li .develop-div1 {height: 343px; width: 283px; background: url("../../images/crowdsourcing/index/demandTypeBg.png") 0 0 no-repeat; color: #01e3ab; border:1px solid #d2d2d2;}
@@ -185,13 +187,6 @@
 .develop-ul li .develop-div8 .applyBtn { background-color: #090d13;border:none;}
 .develop-ul li .develop-div8 .applyBtn:hover { background-color: #090d13; color:#91b5eb}
 .develop-ul li .develop-div8 .noDataButton:hover { background-color: #090d13; border-color: #090d13; color:#91b5eb}
-
-.develop-ul li:hover .ch-info { -webkit-transform: rotate3d(0,1,0,-180deg);
-  -moz-transform: rotate3d(0,1,0,-180deg);
-  -o-transform: rotate3d(0,1,0,-180deg);
-  -ms-transform: rotate3d(0,1,0,-180deg);
-  transform: rotate3d(0,1,0,-180deg)
-}
 
 
 
