@@ -99,5 +99,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
     Map reCreateToken(MgOrderGoods mgOrderGoods);
 
-    Map findInvokeStatus(String orderSn, String goodsSn) throws Exception;
+    Pagination findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber, Integer pageSize,
+                         List<Condition> filters) throws Exception;
 }

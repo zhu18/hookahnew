@@ -706,13 +706,22 @@ public class OrderInfoController extends BaseController {
      */
     @RequestMapping(value = "/order/findInvokeStatus", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData findInvokeStatus(String orderSn, String goodsSn){
-        Map map = new HashMap();
+    public ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNum, Integer pageSize){
         try {
+            String userId = getCurrentUser().getUserId();
+            Pagination pagination = new Pagination();
             if (StringUtils.isNotBlank(orderSn) && StringUtils.isNotBlank(goodsSn)){
-                map = orderInfoService.findInvokeStatus(orderSn,goodsSn);
+                List<Condition> filter = new ArrayList<>();
+                filter.add(Condition.eq("orderSn",orderSn));
+                if (!orderInfoService.selectOne(filter).getUserId().equals(userId)){
+                    return ReturnData.success(pagination);
+                }
+                if (pageNum==null) pageNum = Integer.parseInt(PAGE_NUM);
+                if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
+                List<Condition> filters = new ArrayList<>();
+                pagination = orderInfoService.findInvokeStatus(orderSn,goodsSn,pageNum,pageSize,filters);
             }
-            return ReturnData.success(map);
+            return ReturnData.success(pagination);
         }catch (Exception e){
             e.printStackTrace();
             logger.error("获取API调用日志失败！{} {}", orderSn, goodsSn);

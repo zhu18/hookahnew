@@ -1321,15 +1321,31 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public Map findInvokeStatus(String orderSn, String goodsSn) throws Exception{
+    public Pagination findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber,
+                                Integer pageSize, List<Condition> filters) throws Exception{
         Map resultMap = new HashMap();
         String apiRestUrl = myProps.getApi().get("apiRestUrl");
         StringBuilder apiRestUri = new StringBuilder();
-        apiRestUri.append(apiRestUrl).append("?orderSn=").append(orderSn).append("&goodsSn=").append(goodsSn);
+        apiRestUri.append(apiRestUrl).append("?pageNum=").append(pageNumber).append("&pageSize=").append(pageSize)
+                .append("&orderSn=").append(orderSn).append("&goodsSn=").append(goodsSn);
         apiRestUrl = apiRestUri.toString();
+
+        Pagination pagination = new Pagination();
         resultMap = HttpClientUtil.GetMethod(apiRestUrl);
+        if (resultMap.get("resultCode").equals("200")){
+            resultMap = JsonUtils.toObject((String) resultMap.get("result"),Map.class);
+            Map<String, Object> map = (Map) resultMap.get("data");
+            if (resultMap.get("code").equals(1) && map!=null){
+                Map<String , Object> pagenation = (Map<String, Object>) map.get("pagenation");
+                pagination.setTotalItems((long)pagenation.get("count"));
+                pagination.setTotalPage((int)pagenation.get("totalPage"));
+                pagination.setPageSize(pageSize);
+                pagination.setCurrentPage(pageNumber);
+                pagination.setList((List) pagenation.get("invokedLogList"));
+            }
+        }
         logger.info("获取API调用日志！{} {}", orderSn, goodsSn, JsonUtils.toJson(resultMap));
-        return resultMap;
+        return pagination;
     }
 
     @Scheduled(cron = "0 0/10 * * * ?")

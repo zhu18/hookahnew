@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.zb.ZbComment;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbCommentShowVo;
+import com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -39,6 +40,12 @@ public class ZbCommentController extends BaseController{
         return ReturnData.success(list);
     }
 
+    /**
+     * 客户评价
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/api/getCommentRecord")
     public ReturnData getCommentRecord(String currentPage, String pageSize){
@@ -64,6 +71,54 @@ public class ZbCommentController extends BaseController{
             List<ZbComment> list = zbCommentService.getCommentRecordByUserId(getCurrentUser().getUserId());
 
             page = new PageInfo<ZbComment>(list);
+
+            pagination.setTotalItems(page.getTotal());
+            pagination.setPageSize(pageSizeNew);
+            pagination.setCurrentPage(pageNumberNew);
+            pagination.setList(page.getList());
+
+            returnData.setData(pagination);
+
+
+        } catch (HookahException e) {
+            logger.error("评价检索异常{}", e);
+            returnData.setCode(ExceptionConst.Error);
+            return returnData;
+        }
+
+        return returnData;
+    }
+
+    /**
+     * 交易记录
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/api/getTradeRecord")
+    public ReturnData getTradeRecord(String currentPage, String pageSize){
+
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        Pagination<ZbTradeRecord> pagination = new Pagination<>();
+        PageInfo<ZbTradeRecord> page = new PageInfo<>();
+
+        try {
+
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (StringUtils.isNotBlank(currentPage)) {
+                pageNumberNew = Integer.parseInt(currentPage);
+            }
+
+            int pageSizeNew = HookahConstants.PAGE_SIZE;
+            if (StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+
+            PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
+            List<ZbTradeRecord> list = zbCommentService.getTradeRecordByUserId(getCurrentUser().getUserId());
+            page = new PageInfo<ZbTradeRecord>(list);
 
             pagination.setTotalItems(page.getTotal());
             pagination.setPageSize(pageSizeNew);

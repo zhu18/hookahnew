@@ -1,5 +1,7 @@
 package com.jusfoun.hookah.core.domain.zb.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class ZbTradeRecord {
@@ -10,6 +12,7 @@ public class ZbTradeRecord {
 
     private Long rewardMoney;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date pressTime;
 
     private Integer status;
