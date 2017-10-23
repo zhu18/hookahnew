@@ -710,18 +710,15 @@ public class OrderInfoController extends BaseController {
         try {
             String userId = getCurrentUser().getUserId();
             Pagination pagination = new Pagination();
-            if (StringUtils.isNotBlank(orderSn) && StringUtils.isNotBlank(goodsSn)){
-                List<Condition> filter = new ArrayList<>();
-                filter.add(Condition.eq("orderSn",orderSn));
-                if (!orderInfoService.selectOne(filter).getUserId().equals(userId)){
-                    return ReturnData.success(pagination);
-                }
-                if (pageNum==null) pageNum = Integer.parseInt(PAGE_NUM);
-                if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
-                List<Condition> filters = new ArrayList<>();
-                pagination = orderInfoService.findInvokeStatus(orderSn,goodsSn,pageNum,pageSize,filters);
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("orderSn",orderSn));
+            if (!orderInfoService.selectOne(filter).getUserId().equals(userId)){
+                return ReturnData.success(pagination);
             }
-            return ReturnData.success(pagination);
+            if (pageNum==null) pageNum = Integer.parseInt(PAGE_NUM);
+            if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
+            List<Condition> filters = new ArrayList<>();
+            return orderInfoService.findInvokeStatus(orderSn,goodsSn,pageNum,pageSize,filters);
         }catch (Exception e){
             e.printStackTrace();
             logger.error("获取API调用日志失败！{} {}", orderSn, goodsSn);
