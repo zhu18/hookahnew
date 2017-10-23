@@ -8,6 +8,8 @@ public class WaitSettleRecordVo extends WaitSettleRecord{
 
     private String goodsImg;
 
+    private String goodsSn;
+
     public String getOrgName() {
         return orgName;
     }
@@ -22,5 +24,13 @@ public class WaitSettleRecordVo extends WaitSettleRecord{
 
     public void setGoodsImg(String goodsImg) {
         this.goodsImg = goodsImg;
+    }
+
+    public String getGoodsSn() {
+        return goodsSn;
+    }
+
+    public void setGoodsSn(String goodsSn) {
+        this.goodsSn = goodsSn;
     }
 }

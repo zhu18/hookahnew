@@ -81,6 +81,7 @@
         wsr.order_sn AS orderSn,
         wsr.goods_name AS goodsName,
         goods.goods_img AS goodsImg,
+        goods.goods_sn AS goodsSn,
         org.org_name AS orgName,
         wsr.order_amount AS orderAmount,
         wsr.has_settle_amount AS hasSettleAmount,
