@@ -2,6 +2,7 @@ package com.jusfoun.hookah.crowd.service;
 
 import com.jusfoun.hookah.core.domain.zb.ZbComment;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbCommentShowVo;
+import com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord;
 import com.jusfoun.hookah.core.generic.GenericService;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface ZbCommentService extends GenericService<ZbComment, Long> {
     List<ZbCommentShowVo> getLevelCountByUserId(String userId);
 
     List<ZbComment> getCommentRecordByUserId(String userId);
+
+    List<ZbTradeRecord> getTradeRecordByUserId(String userId);
 }

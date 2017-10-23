@@ -14,9 +14,9 @@ public interface MgZbProviderService extends GenericService<MgZbProvider, String
 
     ReturnData getAuthInfo(String optAuthType, String optArrAySn);
 
-    ReturnData checkAuthInfo(ZbCheckVo vo);
+    MgZbProvider getAuthInfo();
 
-    ReturnData getTradeRecod(String userId, String pageNumber, String pageSize);
+    ReturnData checkAuthInfo(ZbCheckVo vo);
 
     ReturnData optAuthInfo(MgZbProviderVo vo);
 

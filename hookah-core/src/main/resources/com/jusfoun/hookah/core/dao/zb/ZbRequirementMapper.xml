@@ -129,23 +129,6 @@
         ORDER BY zr.update_time
     </select>
 
-    <select id="selectTradeRecodes" resultType="com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord">
-
-        SELECT
-            req.title AS title,
-            req.type AS type,
-            req.reward_money AS rewardMoney,
-            req.press_time,
-            CASE zra.`status`
-                    WHEN 0 THEN 34
-                    ELSE req.`status`
-            END AS status
-        FROM
-            zb_requirement req
-        LEFT JOIN zb_requirement_apply zra ON req.id = zra.requirement_id
-        where zra.user_id = #{userId}
-    </select>
-
     <select id="selectForDetail" resultType="com.jusfoun.hookah.core.domain.zb.ZbRequirement">
         SELECT
             *,
