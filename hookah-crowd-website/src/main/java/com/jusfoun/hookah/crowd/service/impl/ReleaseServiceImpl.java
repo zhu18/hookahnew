@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
@@ -427,7 +428,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_FK.getCode().shortValue());
 
                         //添加需求验收时间
-                        mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.REQUIREDACCEPTTIME, program.getAddTime().toString());
+                        mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.REQUIREDACCEPTTIME, DateUtils.toDefaultNowTime());
 
                         //修改报名状态为待付款
                         zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.PAYMENT_ING.getCode());

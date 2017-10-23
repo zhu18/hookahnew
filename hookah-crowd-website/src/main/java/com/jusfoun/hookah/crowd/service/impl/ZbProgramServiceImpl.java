@@ -155,7 +155,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             //修改评价服务商评价需求方时间
             ZbRequirement zbRequirement = zbRequireService.selectById(zbComment.getRequirementId());
             if(Objects.nonNull(zbRequirement)){
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.REQUIRECOMMENTTIME, DateUtils.getCurrentTimeFormat(new Date()));
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.REQUIRECOMMENTTIME, DateUtils.toDefaultNowTime());
             }
 
             //修改报名表状态(交易完成)
@@ -250,7 +250,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             //保存方案提交时间
             ZbRequirement zbRequirement = zbRequireService.selectById(zbProgramVo.getRequirementId());
             if(Objects.nonNull(zbRequirement)){
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.REQUIRECOMMENTTIME, DateUtils.getCurrentTimeFormat(new Date()));
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.REQUIRECOMMENTTIME, DateUtils.toDefaultNowTime());
             }
 
             returnData.setData(zbProgramVo);

@@ -199,7 +199,10 @@ public class ZbContants {
 
     public enum ZbRequireMentApplyStatus {
 
-        //状态；0 ：已报名；1：已被选中(工作中) 2:未中标  3：评审中 4：验收中 5：待付款 6：待评价 7：交易取消 8：交易完成
+        /**
+         * 状态；0 ：已报名；1：已被选中(工作中) 2:未中标  3：评审中 4：验收中 5：待付款 6：待评价 7：驳回失败(交易取消) 8：交易完成
+         *      9:违约失败(交易取消)
+         **/
 
         APPLY_SUCCESS(0),
         WORKING(1),
@@ -209,7 +212,8 @@ public class ZbContants {
         PAYMENT_ING(5),
         COMMENT_ING(6),
         DEAL_CANCE(7),
-        DEAL_SUCCESS(8);
+        DEAL_SUCCESS(8),
+        DEAL_RENEGE_FAIL(9);
 
         public Integer code;
 
