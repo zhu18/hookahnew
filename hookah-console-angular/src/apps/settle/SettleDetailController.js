@@ -55,8 +55,8 @@ class settleDetailController {
     $scope.back = function () {
       history.back();
     };
-    $scope.goAPILogs= function (orderSn) {
-      $state.go('settle.settleAPILogs', {goodsSn: $stateParams.id,orderSn:orderSn});
+    $scope.goAPILogs= function (orderSn,goodsSn) {
+      $state.go('settle.settleAPILogs', {goodsSn: goodsSn,orderSn:orderSn});
     }
   }
 }
