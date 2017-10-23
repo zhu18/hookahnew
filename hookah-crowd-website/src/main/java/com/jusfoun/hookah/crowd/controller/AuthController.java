@@ -119,9 +119,7 @@ public class AuthController extends BaseController {
 
     /**
      * 认证信息操作
-     *
      * @param vo
-     *
      * @return
      */
     @RequestMapping(value = "/api/auth/optAuthInfo")
@@ -171,6 +169,5 @@ public class AuthController extends BaseController {
             return ReturnData.error("系统繁忙，请稍后再试！[check]^_^");
         }
     }
-
 
 }

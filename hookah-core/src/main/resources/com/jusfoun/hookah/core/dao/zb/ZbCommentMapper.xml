@@ -71,4 +71,24 @@
             zc.add_time DESC
   </select>
 
+  <select id="selectTradeRecodeByUserId" resultType="com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord">
+
+        SELECT
+            req.title AS title,
+            req.type AS type,
+            req.reward_money AS rewardMoney,
+            req.press_time AS pressTime,
+            zra.`status` AS status
+        FROM
+            zb_requirement req
+        LEFT JOIN zb_requirement_apply zra ON req.id = zra.requirement_id
+        WHERE
+            zra.user_id = #{userId}
+        AND zra.`status` != 0
+        AND (
+            req.`status` = 14
+            OR req.`status` = 15
+        )
+  </select>
+
 </mapper>

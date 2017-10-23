@@ -218,44 +218,6 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
     }
 
     @Override
-    public ReturnData getTradeRecod(String userId, String pageNumber, String pageSize) {
-
-        Pagination<ZbTradeRecord> pagination = new Pagination<>();
-        PageInfo<ZbTradeRecord> pageInfo = new PageInfo<>();
-        ReturnData returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Success);
-
-        try {
-            int pageNumberNew = HookahConstants.PAGE_NUM;
-            if (StringUtils.isNotBlank(pageNumber)) {
-                pageNumberNew = Integer.parseInt(pageNumber);
-            }
-
-            int pageSizeNew = HookahConstants.PAGE_SIZE;
-            if (StringUtils.isNotBlank(pageSize)) {
-                pageSizeNew = Integer.parseInt(pageSize);
-            }
-
-            PageHelper.startPage(pageNumberNew, pageSizeNew);
-            List<ZbTradeRecord> list = zbRequirementMapper.selectTradeRecodes(userId);
-            pageInfo = new PageInfo<ZbTradeRecord>(list);
-
-            pagination.setTotalItems(pageInfo.getTotal());
-            pagination.setPageSize(pageSizeNew);
-            pagination.setCurrentPage(pageNumberNew);
-            pagination.setList(pageInfo.getList());
-            returnData.setData(pagination);
-            return returnData;
-        } catch (Exception e) {
-            logger.error("mg交易记录查询失败", e);
-            return ReturnData.error("系统繁忙，请稍后再试！[trade]^_^");
-        }
-
-//        List<ZbRequirement> list = zbRequireService.selectTradeListByUID(userId);
-//        return ReturnData.success(zbRequireService.selectTradeListByUID(userId));
-    }
-
-    @Override
     public ReturnData optAuthInfo(MgZbProviderVo vo) {
 
         try {
@@ -468,7 +430,6 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
         return null;
     }
 
-
     @Override
     public ReturnData getProviderCard() {
 
@@ -541,6 +502,11 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
 
 
 
+        return null;
+    }
+
+    @Override
+    public MgZbProvider getAuthInfo() {
         return null;
     }
 
