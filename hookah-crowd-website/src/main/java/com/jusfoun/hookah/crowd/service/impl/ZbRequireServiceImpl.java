@@ -130,9 +130,10 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                     selectListForPageByFilters(zbRequirement.getRequireSn(), zbRequirement.getTitle(), zbStatus);
 
             for (ZbRequirement zbRequirement1:list){
-                if (zbRequirement1.getStatus()==5){
+                if (zbRequirement1.getStatus()==5&&zbRequirement1.getApplyDeadline()!=null){
                     if ( zbRequirement1.getApplyDeadline().getTime()<=new Date().getTime()) {
                         zbRequirement1.setStatus(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue());
+                        zbRequirementMapper.updateByPrimaryKeySelective(zbRequirement1);
                     }
                 }
             }

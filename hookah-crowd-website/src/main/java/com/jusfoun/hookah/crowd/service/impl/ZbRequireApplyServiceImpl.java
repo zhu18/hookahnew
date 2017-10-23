@@ -67,6 +67,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         if (zbRequirement.getStatus() == 5) {
             if (zbRequirement.getApplyDeadline().getTime() <= new Date().getTime()) {
                 zbRequirement.setStatus(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue());
+                zbRequirementMapper.updateByPrimaryKeySelective(zbRequirement);
             }
         }
         MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
