@@ -15,10 +15,7 @@ import com.jusfoun.hookah.crowd.service.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lt on 2017/9/19.
@@ -67,6 +64,11 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("requirementId",requirementId));
         ZbRequirement zbRequirement = zbRequirementMapper.selectForDetail(requirementId);
+        if (zbRequirement.getStatus() == 5) {
+            if (zbRequirement.getApplyDeadline().getTime() <= new Date().getTime()) {
+                zbRequirement.setStatus(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue());
+            }
+        }
         MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
         List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
         List<ZbComment> zbComments = zbCommentService.selectList(filters);
