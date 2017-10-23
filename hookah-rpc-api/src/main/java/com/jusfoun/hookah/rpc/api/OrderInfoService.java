@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.ReturnData;
 
 import java.util.Date;
 import java.util.List;
@@ -99,6 +100,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
     Map reCreateToken(MgOrderGoods mgOrderGoods);
 
-    Pagination findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber, Integer pageSize,
-                         List<Condition> filters) throws Exception;
+    ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber, Integer pageSize,
+                                List<Condition> filters) throws Exception;
 }
