@@ -114,7 +114,7 @@ function renderPage(data) {
 
 }
 
-$(document).on('click', '.j_commentBtn', function () { // 评价
+$(document).on('click', '.j_commentBtn', function () { // 我要报名
   $.confirm('\
   <div class="checkMissionBox applyBox">\
     <h5>我要报名</h5>\
@@ -133,42 +133,69 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
   </div>', null, function (type) {
 
     if (type == 'yes') {
-      let confirmThis=this;
-      applyData.requirementId=$('.j_title').attr('requirementid');
-      applyData.applyContent=$("#commentContent").val();
+      var confirmThis=this;
 
-      console.log(applyData);
 
-      if(applyData.applyContent && applyData.requirementId){
         $.ajax({
+          url: '/api/isAuthProvider',
           type: 'post',
-          url: " /api/apply/add",
-          cache: false,
-          data:applyData,
           success: function (data) {
-            console.log(data);
+            if(data){ //已经认证
+              applyData.requirementId=$('.j_title').attr('requirementid');
+              applyData.applyContent=$("#commentContent").val();
+              console.log(applyData);
 
-            console.log(data);
-            if(data.code==1){
+              if(applyData.applyContent && applyData.requirementId){
+                $.ajax({
+                  type: 'post',
+                  url: " /api/apply/add",
+                  cache: false,
+                  data:applyData,
+                  success: function (data) {
+                    console.log(data);
 
-              $('.addTime').html(data.data.addTime);
-              $('.applyContent').html(data.data.applyContent);
-              $('.j_applyPhone').html(data.data.mobile);
-              $('.j_hasApply').html(data.data.applyNumber);
-              $('.otherDetailBox').show();
+                    console.log(data);
+                    if(data.code==1){
 
-              confirmThis.hide();// 隐藏弹出框
-              $('.j_commentBtn').html('报名成功，待评选').removeClass('j_commentBtn')
-            }else{
-              $.alert(data.message)
+                      $('.addTime').html(data.data.addTime);
+                      $('.applyContent').html(data.data.applyContent);
+                      $('.j_applyPhone').html(data.data.mobile);
+                      $('.j_hasApply').html(data.data.applyNumber);
+                      $('.otherDetailBox').show();
+
+                      confirmThis.hide();// 隐藏弹出框
+                      $('.j_commentBtn').html('报名成功，待评选').removeClass('j_commentBtn')
+                    }else{
+                      $.alert(data.message)
+                    }
+                  }
+                });
+
+
+              }else{
+                $.alert('请对服务商评价!')
+              }
+
+            }else{ //未认证
+              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/missionApply?id='+crowdSourcingId);
+              $.confirm('<div style="padding: 15px; text-align:left;">您好！<span style="color:red">您还不是服务商</span>，不能参加需求任务报名，<br>如想报名请点击 【确定】 申请成为服务商，<br>按要求提交信息即可通过服务商认证。 </div>',null,function(type){
+                 if(type == 'yes'){
+                   if(userType==2){
+                    window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
+                   }else{
+                    window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
+                   }
+                   this.hide();
+                 }else{
+                  this.hide();
+
+                 }
+               })
+
             }
           }
         });
 
-
-      }else{
-        $.alert('请对服务商评价!')
-      }
 
     } else {
       this.hide();

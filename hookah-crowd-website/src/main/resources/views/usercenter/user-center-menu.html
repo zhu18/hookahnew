@@ -80,7 +80,9 @@
 <%}%>
 
 <script>
-    $(function(){
+  var userType =${user.userType};
+
+  $(function(){
         var url=window.location.pathname;
         $('.status ul li').each(function () {
             var href = $(this).children('a').attr('href');
