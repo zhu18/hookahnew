@@ -245,12 +245,12 @@ public class OrderApi extends BaseController{
      */
     @RequestMapping(value = "/findInvokeStatus", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNum, Integer pageSize){
+    public ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber, Integer pageSize){
         try {
-            if (pageNum==null) pageNum = Integer.parseInt(PAGE_NUM);
+            if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
             List<Condition> filters = new ArrayList<>();
-            return orderInfoService.findInvokeStatus(orderSn,goodsSn,pageNum,pageSize,filters);
+            return orderInfoService.findInvokeStatus(orderSn,goodsSn,pageNumber,pageSize,filters);
         }catch (Exception e){
             e.printStackTrace();
             logger.error("获取API调用日志失败！{} {}", orderSn, goodsSn);
