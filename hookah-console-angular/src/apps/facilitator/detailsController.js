@@ -89,6 +89,10 @@ class detailsController {
                 });
             });
         };
+
+        $scope.back=function () {
+            $state.go('facilitator.list');
+        }
     }
 }
 
