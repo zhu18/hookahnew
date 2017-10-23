@@ -33,6 +33,15 @@ class auditingController {
                     $scope.checkRemark=item.checkRemark;
                     $scope.status=item.status;
                     $scope.id=item.id;
+                    //进度时间
+                    var mgZbRequireStatus = res.data.data.mgZbRequireStatus;//进度时间
+                    $scope.addTime=mgZbRequireStatus.addTime;//发布需求
+                    $scope.checkTime=mgZbRequireStatus.checkTime;//平台审核
+                    $scope.trusteeTime=mgZbRequireStatus.trusteeTime;//资金托管
+                    $scope.pressTime=mgZbRequireStatus.pressTime;//平台发布
+                    $scope.workingTime=mgZbRequireStatus.workingTime;//服务商工作
+                    $scope.payTime=mgZbRequireStatus.payTime;//验收付款
+                    $scope.commentTime=mgZbRequireStatus.commentTime;//评价
                 } else {
                 }
                 $rootScope.loadingState = false;
