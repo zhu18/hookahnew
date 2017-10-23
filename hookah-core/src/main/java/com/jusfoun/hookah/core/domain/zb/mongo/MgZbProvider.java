@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.core.domain.zb.mongo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -42,14 +43,17 @@ public class MgZbProvider extends GenericModel {
 
     private List<String> specialSkills;                 //擅长领域
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private String checkContent;                        //审核意见
 
     private String checkUser;                           //审核人
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private String checkTime;                           //审核时间
 
     public static class CertPaths implements Serializable {

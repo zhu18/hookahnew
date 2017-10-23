@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -44,6 +45,9 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
     ZbRequireApplyService zbRequireApplyService;
 
     @Resource
+    MgZbRequireStatusService mgZbRequireStatusService;
+
+    @Resource
     ZbCommentService zbCommentService;
     @Resource
     public void setDao(ZbRequirementApplyMapper zbRequirementApplyMapper) {
@@ -63,6 +67,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("requirementId",requirementId));
         ZbRequirement zbRequirement = zbRequirementMapper.selectForDetail(requirementId);
+        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
         List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
         List<ZbComment> zbComments = zbCommentService.selectList(filters);
         List<ZbProgram> zbPrograms = new ArrayList<>();
@@ -85,6 +90,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         map.put("zbPrograms",zbPrograms);
         map.put("zbAnnexes", zbAnnexes);
         map.put("zbComments", zbComments);
+        map.put("mgZbRequireStatus",mgZbRequireStatus);
         return ReturnData.success(map);
     }
 
