@@ -1321,7 +1321,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public Pagination findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber,
+    public ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber,
                                 Integer pageSize, List<Condition> filters) throws Exception{
         Map resultMap = new HashMap();
         String apiRestUrl = myProps.getApi().get("apiRestUrl");
@@ -1331,21 +1331,26 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         apiRestUrl = apiRestUri.toString();
 
         Pagination pagination = new Pagination();
+        pagination.setTotalItems(0);
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNumber);
         resultMap = HttpClientUtil.GetMethod(apiRestUrl);
         if (resultMap.get("resultCode").equals("200")){
             resultMap = JsonUtils.toObject((String) resultMap.get("result"),Map.class);
             Map<String, Object> map = (Map) resultMap.get("data");
-            if (resultMap.get("code").equals(1) && map!=null){
-                Map<String , Object> pagenation = (Map<String, Object>) map.get("pagenation");
-                pagination.setTotalItems((long)pagenation.get("count"));
-                pagination.setTotalPage((int)pagenation.get("totalPage"));
-                pagination.setPageSize(pageSize);
-                pagination.setCurrentPage(pageNumber);
-                pagination.setList((List) pagenation.get("invokedLogList"));
+            if (resultMap.get("code").equals(1)){
+                if (map!=null){
+                    Map<String , Object> pagenation = (Map<String, Object>) map.get("pagenation");
+                    pagination.setTotalItems((long)pagenation.get("count"));
+                    pagination.setTotalPage((int)pagenation.get("totalPage"));
+                    pagination.setList((List) pagenation.get("invokedLogList"));
+                }
+            }else{
+                return ReturnData.error((String) resultMap.get("message"));
             }
         }
         logger.info("获取API调用日志！{} {}", orderSn, goodsSn, JsonUtils.toJson(resultMap));
-        return pagination;
+        return ReturnData.success(pagination);
     }
 
     @Scheduled(cron = "0 0/10 * * * ?")
