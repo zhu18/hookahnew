@@ -245,14 +245,14 @@ public class OrderApi extends BaseController{
      */
     @RequestMapping(value = "/findInvokeStatus", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber, Integer pageSize){
+    public ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNum, Integer pageSize){
         try {
             Pagination pagination = new Pagination();
             if (StringUtils.isNotBlank(orderSn) && StringUtils.isNotBlank(goodsSn)){
-                if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
+                if (pageNum==null) pageNum = Integer.parseInt(PAGE_NUM);
                 if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
                 List<Condition> filters = new ArrayList<>();
-                pagination = orderInfoService.findInvokeStatus(orderSn,goodsSn,pageNumber,pageSize,filters);
+                pagination = orderInfoService.findInvokeStatus(orderSn,goodsSn,pageNum,pageSize,filters);
             }
             return ReturnData.success(pagination);
         }catch (Exception e){

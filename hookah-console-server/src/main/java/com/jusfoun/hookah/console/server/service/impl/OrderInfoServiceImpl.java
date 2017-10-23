@@ -1332,14 +1332,17 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 
         Pagination pagination = new Pagination();
         resultMap = HttpClientUtil.GetMethod(apiRestUrl);
-        if (resultMap.get("code")!=null && resultMap.get("code").equals(1)){
+        if (resultMap.get("resultCode").equals("200")){
+            resultMap = JsonUtils.toObject((String) resultMap.get("result"),Map.class);
             Map<String, Object> map = (Map) resultMap.get("data");
-            Map<String , Object> pagenation = (Map<String, Object>) map.get("pagenation");
-            pagination.setTotalItems((long)pagenation.get("count"));
-            pagination.setTotalPage((int)pagenation.get("totalPage"));
-            pagination.setPageSize(pageSize);
-            pagination.setCurrentPage(pageNumber);
-            pagination.setList((List) pagenation.get("invokedLogList"));
+            if (resultMap.get("code").equals(1) && map!=null){
+                Map<String , Object> pagenation = (Map<String, Object>) map.get("pagenation");
+                pagination.setTotalItems((long)pagenation.get("count"));
+                pagination.setTotalPage((int)pagenation.get("totalPage"));
+                pagination.setPageSize(pageSize);
+                pagination.setCurrentPage(pageNumber);
+                pagination.setList((List) pagenation.get("invokedLogList"));
+            }
         }
         logger.info("获取API调用日志！{} {}", orderSn, goodsSn, JsonUtils.toJson(resultMap));
         return pagination;
