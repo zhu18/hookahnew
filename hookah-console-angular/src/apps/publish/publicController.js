@@ -21,7 +21,7 @@ class publicController {
                   $scope.tag=item.tag;
                   $scope.description=item.description;
                   $scope.deliveryDeadline=item.deliveryDeadline;
-                  var tomorrow = new Date(item.deliveryDeadline);
+                  var tomorrow = new Date();
                   $scope.applyDeadline=new Date(tomorrow.setDate(tomorrow.getDate() + 7));
                   $scope.rewardMoney=item.rewardMoney;
                   $scope.trusteePercent=item.trusteePercent;
