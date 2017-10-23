@@ -349,7 +349,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 for(ZbRequirementApply app : applies){
                     List<Condition> filters3 = new ArrayList<>();
                     filters3.add(Condition.eq("id", app.getRequirementId()));
-                    List<ZbRequirement> zbRequirements = this.selectList(filters1);
+                    List<ZbRequirement> zbRequirements = this.selectList(filters3);
                     for(ZbRequirement ment : zbRequirements){
                         list.add(ment.getId());
                     }
