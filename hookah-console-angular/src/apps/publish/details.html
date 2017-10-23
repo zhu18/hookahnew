@@ -23,31 +23,31 @@
                         <ul class="clearfix">
                             <li data-index="1" class="visited">
                                 <p>发布需求</p>
-                                <p>2017/02/56 12:24:00</p>
+                                <p data-ng-show="addTime"></p>
                             </li>
                             <li data-index="2" class="active">
                                 <p>平台审核</p>
-                                <p>2017/02/56 12:24:00</p>
+                                <p data-ng-show="checkTime"></p>
                             </li>
                             <li data-index="3">
                                 <p>悬赏费用托管</p>
-                                <p>2017/02/56 12:24:00</p>
+                                <p data-ng-show="trusteeTime"></p>
                             </li>
                             <li data-index="4">
                                 <p>待发布</p>
-                                <p>2017/02/56 12:24:00</p>
+                                <p data-ng-show="pressTime"></p>
                             </li>
                             <li data-index="5">
                                 <p>供应商工作</p>
-                                <p>2017/02/56 12:24:00</p>
+                                <p data-ng-show="workingTime"></p>
                             </li>
                             <li data-index="6">
                                 <p>验收付款</p>
-                                <p>2017/02/56 12:24:00</p>
+                                <p data-ng-show="payTime"></p>
                             </li>
                             <li data-index="7">
                                 <p>评价</p>
-                                <p>2017/02/56 12:24:00</p>
+                                <p data-ng-show="commentTime"></p>
                             </li>
                         </ul>
                     </div>
@@ -181,19 +181,20 @@
                                        <span data-ng-bind="item.applyContent"></span>
                                    </td>
                                    <td>
-                                       <div class="roundedTwo" data-ng-if="(applyDeadline > currDate) && item.status==0">
+                                       <div class="roundedTwo" data-ng-if="(applyDeadline < currDate) && item.status==0">
                                            <input type="radio" value="{{item.id}}" id="{{item.id}}" name="applyId" ng-model="apply.id">
                                            <label for="{{item.id}}"></label>
                                        </div>
-                                       <div data-ng-if="applyDeadline < currDate">
+                                       <div data-ng-if="applyDeadline > currDate || item.status !=0">
                                            <span class="label label-primary" disabled data-ng-show="item.status!=0 && item.status!=2">已被选中</span>
+                                           <button class="btn btn-primary"  disabled  data-ng-show="item.status==0 ">选中</button>
                                        </div>
                                    </td>
                                </tr>
                                </tbody>
                            </table>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
-                            <div style="margin: auto;width: 58px;" data-ng-show="(applyDeadline < currDate) && item.status==0">
+                            <div style="margin: auto;width: 58px;" data-ng-show="(applyDeadline < currDate) && status==6">
                                 <button class="btn btn-primary" data-ng-click="submit()">提交</button>
                             </div>
                         </div>

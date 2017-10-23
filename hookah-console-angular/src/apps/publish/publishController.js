@@ -33,7 +33,6 @@ class publishController {
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
     };
-
     $scope.search();
 
     // 去发布

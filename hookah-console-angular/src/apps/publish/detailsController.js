@@ -21,9 +21,10 @@ class detailsController {
                 if (res.data.code == '1') {
                     var zbRequirement= res.data.data.zbRequirement; //基本信息
                     var zbRequirementApplies= res.data.data.zbRequirementApplies; //报名的人
-                    var zbPrograms= res.data.data.zbPrograms;
-                    var zbComments= res.data.data.zbComments;
-                    $scope.zbAnnexes= res.data.data.zbAnnexes;
+                    var zbPrograms= res.data.data.zbPrograms;//成果
+                    var zbComments= res.data.data.zbComments;//评价
+                    $scope.zbAnnexes= res.data.data.zbAnnexes;//上传材料
+                    var mgZbRequireStatus = res.data.data.mgZbRequireStatus;//进度时间
                     //基本信息
                     $scope.requiremetName=zbRequirement.requiremetName;
                     $scope.contactName=zbRequirement.contactName;
@@ -40,6 +41,14 @@ class detailsController {
                     $scope.checkRemark=zbRequirement.checkRemark;
                     $scope.status=zbRequirement.status;
                     $scope.id=zbRequirement.id;
+                    //进度时间
+                    $scope.addTime=mgZbRequireStatus.addTime;//发布需求
+                    $scope.checkTime=mgZbRequireStatus.checkTime;//平台审核
+                    $scope.trusteeTime=mgZbRequireStatus.trusteeTime;//资金托管
+                    $scope.pressTime=mgZbRequireStatus.pressTime;//平台发布
+                    $scope.workingTime=mgZbRequireStatus.workingTime;//服务商工作
+                    $scope.payTime=mgZbRequireStatus.payTime;//验收付款
+                    $scope.commentTime=mgZbRequireStatus.commentTime;//评价
                     //报名tab
                     if(zbRequirementApplies.length>0){
                         $scope.zbRequirementApplies=zbRequirementApplies;
