@@ -1331,7 +1331,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         apiRestUrl = apiRestUri.toString();
 
         Pagination pagination = new Pagination();
-        pagination.setTotalItems(0);
+        pagination.setTotalItems(0L);
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNumber);
         resultMap = HttpClientUtil.GetMethod(apiRestUrl);
@@ -1341,9 +1341,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             if (resultMap.get("code").equals(1)){
                 if (map!=null){
                     Map<String , Object> pagenation = (Map<String, Object>) map.get("pagenation");
-                    pagination.setTotalItems((long)pagenation.get("count"));
-                    pagination.setTotalPage((int)pagenation.get("totalPage"));
-                    pagination.setList((List) pagenation.get("invokedLogList"));
+                    pagination.setTotalItems((int)pagenation.get("count"));
+                    pagination.setTotalPage(new Double((double)pagenation.get("totalPage")).intValue());
+                    pagination.setList((List) pagenation.get("list"));
                 }
             }else{
                 return ReturnData.error((String) resultMap.get("message"));
