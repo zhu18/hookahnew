@@ -126,7 +126,7 @@
                 #{item}
             </foreach>
         </if>
-        ORDER BY zr.update_time
+        ORDER BY zr.add_time DESC 
     </select>
 
     <select id="selectForDetail" resultType="com.jusfoun.hookah.core.domain.zb.ZbRequirement">
