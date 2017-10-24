@@ -43,6 +43,7 @@ public class GoodsVo extends Goods implements Serializable {
     private String checkUser;//审核人
     private Long settlementPrice;//结算价
     private Long agencyPrice;//代理价
+    private String keywordsNames;//商品标签名称
 
     public Long getSettlementPrice() {
         return settlementPrice;
@@ -282,5 +283,13 @@ public class GoodsVo extends Goods implements Serializable {
 
     public void setSales(long sales) {
         this.sales = sales;
+    }
+
+    public String getKeywordsNames() {
+        return keywordsNames;
+    }
+
+    public void setKeywordsNames(String keywordsNames) {
+        this.keywordsNames = keywordsNames;
     }
 }
