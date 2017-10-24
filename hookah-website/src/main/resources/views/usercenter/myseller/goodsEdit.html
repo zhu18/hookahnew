@@ -63,14 +63,49 @@ var htmlPart = {
 										</div>
 									</td>
 								</tr><!--商品简介-->
+								<!--<tr>-->
+									<!--<td class="bar">商品标签：</td>-->
+									<!--<td>-->
+										<!--<div class="block info" style="margin: 0px 0px 3px;">-->
+											<!--分类信息为该商品定义关键词，可由多个词组组装成，使用英文“,”号隔开。-->
+										<!--</div>-->
+										<!--<div class="text-box">-->
+											<!--<input name="keywords" id="keywords" type="text">-->
+										<!--</div>-->
+									<!--</td>-->
+								<!--</tr>&lt;!&ndash;商品标签&ndash;&gt;-->
 								<tr>
-									<td class="bar">商品标签：</td>
-									<td>
-										<div class="block info" style="margin: 0px 0px 3px;">
-											分类信息为该商品定义关键词，可由多个词组组装成，使用英文“,”号隔开。
-										</div>
-										<div class="text-box">
-											<input name="keywords" id="keywords" type="text">
+									<td class="bar">标签信息：</td>
+									<td style="position: relative;">
+										<span class="tags-val"></span>
+										<span class="add-tags fa fa-plus"></span>
+										<div class="tags-box">
+											<h3 class="box-title">选择标签信息<span class="close-tag-btn fa fa-times"></span></h3>
+											<table>
+												<tr>
+													<td style="text-align:center;width:60px;">A~E</td>
+													<td>
+														<label><input type="checkbox" name="tagsCheck" value="1" tagname="北京">北京</label>
+														<label><input type="checkbox" name="tagsCheck" value="2" tagname="上海">上海</label>
+														<label><input type="checkbox" name="tagsCheck" value="3" tagname="深圳">深圳</label>
+														<label><input type="checkbox" name="tagsCheck" value="4" tagname="天津">天津</label>
+													</td>
+												</tr>
+												<tr>
+													<td style="text-align:center;width:60px;">F~J</td>
+													<td>
+														<label><input type="checkbox" name="tagsCheck" value="5" tagname="河北">河北</label>
+														<label><input type="checkbox" name="tagsCheck" value="6" tagname="河南">河南</label>
+														<label><input type="checkbox" name="tagsCheck" value="7" tagname="山东">山东</label>
+														<label><input type="checkbox" name="tagsCheck" value="8" tagname="山西">山西</label>
+													</td>
+												</tr>
+											</table>
+											<p class="tags-tip" style="padding-left: 20px;">ps:最多选择3个标签</p>
+											<div class="checkTags">
+												<span class="checkTags—btn checkTags-confirmBtn">确定</span>
+												<span class="checkTags—btn checkTags-cancelBtn">取消</span>
+											</div>
 										</div>
 									</td>
 								</tr><!--商品标签-->

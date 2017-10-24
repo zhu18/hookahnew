@@ -402,3 +402,66 @@ h1{
     padding-top: 35px;
 }
 .file-info-box .date-box .help-block{margin-top:30px;}
+.tags-list{
+    float: left;
+    border:1px solid #ccc;
+    padding:3px 10px;
+    margin-right:5px;
+}
+.tags-list i{
+    margin-left:10px;
+    font-size: 16px;
+    cursor: pointer;
+    color:#ccc;
+}
+.tags-list i:hover{
+    color:#6b6b6b;
+}
+.add-tags{
+    float: left;
+    padding:7px 10px;
+    border:1px solid #ccc;
+    font-size: 16px;
+    cursor: pointer;
+}
+.tags-box{
+    width:800px;
+    position: absolute;
+    display: none;
+    z-index: 99;
+    border:2px solid #ccc;
+    background: #fff;
+    box-shadow: 0px 1px 5px #ccc;
+}
+.tags-box .box-title{
+    font-size: 18px;
+    padding:5px 10px;
+    border-bottom:1px solid #ccc;
+}
+.tags-box .close-tag-btn{
+    float: right;
+    font-size: 16px;
+    margin-top: 4px;
+    cursor: pointer;
+}
+.tags-box table tr{
+    border-bottom:1px solid #ccc;
+}
+.tags-box table tr label{margin-right:15px;}
+.tags-box table tr label input{margin-right:5px;}
+.checkTags{
+    padding:20px 0;
+    text-align: center;
+}
+.checkTags .checkTags—btn{
+    margin:0 20px;
+    padding:10px 30px;
+    background: #0b7cc3;
+    color:#fff;
+    border-radius:3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.checkTags .checkTags—btn:hover{
+    background: #1A61A8;
+}
