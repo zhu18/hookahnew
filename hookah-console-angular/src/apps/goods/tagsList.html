@@ -6,6 +6,7 @@
 		padding: 7px 10px;
 		border: 1px solid #ccc;
 		font-size: 14px;
+		margin-right: 10px;
 	}
 	.item-tags i{
 		margin-left: 10px;
@@ -43,15 +44,15 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
+						<tr ng-repeat="item in goodsLabel">
 							<td style="width: 80px; text-align: center">
-								<span>A~E</span>
+								<span ng-bind="item.type"></span>
 							</td>
 							<td style="border-left:1px solid #e1e6eb;border-right:1px solid #e1e6eb;">
-								<span class="item-tags">傲娇<i data-ng-click="delTags()">×</i></span>
+								<span class="item-tags" ng-repeat="list in item.goodsLabels">{{list.labName}}<i data-ng-click="delTags(list.labId)">×</i></span>
 							</td>
 							<td style="width: 80px;text-align: center;">
-								<button type="submit" class="btn btn-primary" data-ng-click="addTags()">新增</button>
+								<button type="submit" class="btn btn-primary" data-ng-click="addTags(item.type)">新增</button>
 							</td>
 						</tr>
 						</tbody>
