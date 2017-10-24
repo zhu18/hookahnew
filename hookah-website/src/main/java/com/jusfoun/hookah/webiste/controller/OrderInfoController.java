@@ -411,7 +411,7 @@ public class OrderInfoController extends BaseController {
     }
 
     /**
-     * 订单结算
+     * 生成订单包括购物车生成和直接生成
      * @param orderinfo
      * @param cartIdArray
      * @param goodsId
@@ -421,7 +421,8 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
-    public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,HttpServletRequest request) {
+    public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,
+                              HttpServletRequest request, Model model) {
         try {
             init(orderinfo);
             if(cartIdArray[0].equals("-1")){
@@ -441,7 +442,11 @@ public class OrderInfoController extends BaseController {
             //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
             //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             return   "redirect:/pay/cash";
-        } catch (Exception e) {
+        }catch (HookahException e){
+            logger.error("生成订单失败", e);
+            model.addAttribute("message",e.getMessage());
+            return "/error/limitedGoodsError";
+        }catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";
         }
