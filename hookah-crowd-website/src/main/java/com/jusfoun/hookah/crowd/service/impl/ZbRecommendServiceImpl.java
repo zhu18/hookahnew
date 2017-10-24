@@ -79,7 +79,7 @@ public class ZbRecommendServiceImpl extends GenericServiceImpl<ZbRecommend, Long
                     }
                 }
             }
-            map.put("zbRecommendVos",zbRecommendVos);
+            map.put("zbRecommendVos",zbRecommendVos != null ? zbRecommendVos : "");
             return ReturnData.success(map);
         } catch (Exception e) {
             logger.error("系统错误",e);
