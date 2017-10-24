@@ -17,6 +17,16 @@ public class ZbRequirementSPVo extends ZbRequirement{
 
     private Integer annexIsOperate = 1;//附件是否可下载 0不可下载 1可下载
 
+    private Integer isApplyDeadline = 1;//0 已截止  1 未截止
+
+    public Integer getIsApplyDeadline() {
+        return isApplyDeadline;
+    }
+
+    public void setIsApplyDeadline(Integer isApplyDeadline) {
+        this.isApplyDeadline = isApplyDeadline;
+    }
+
     public Integer getAnnexIsOperate() {
         return annexIsOperate;
     }

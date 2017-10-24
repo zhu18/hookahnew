@@ -154,12 +154,18 @@ public class DateUtil {
         StringBuffer sb = new StringBuffer();
         if(day >=0) {
             sb.append(day+"天");
+        } else {
+            sb.append(0 + "天");
         }
         if(hour >= 0) {
             sb.append(hour+"小时");
+        } else {
+            sb.append(0 + "小时");
         }
         if(minute >= 0) {
             sb.append(minute+"分");
+        } else {
+            sb.append(0 +"分");
         }
         /*if(second >= 0) {
             sb.append(second+"秒");
