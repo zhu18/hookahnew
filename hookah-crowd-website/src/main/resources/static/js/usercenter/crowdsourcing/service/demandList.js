@@ -50,7 +50,7 @@ function loadPageData(data) { //渲染页面数据
           <td>' + data[i].typeName + '</td>\
           <td>' + data[i].rewardMoney / 100 + '</td>\
           <td>' + tempState + '</td>\
-          <td>' + data[i].addTime + '</td>\
+          <td>' + data[i].pressTime + '</td>\
           <td>' + data[i].remainTime + '</td>\
           <td>' + tempEdit + '</td>\
           </tr>'
