@@ -504,6 +504,15 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
                 goodsVo.setCatFullName(stringBuffer.substring(0, stringBuffer.length() - 2));
             }
         }
+        StringBuilder stringBuilder = new StringBuilder();
+        //商品标签赋值
+        if(StringUtils.isNotBlank(goodsVo.getKeywords())) {
+            for(String label : goodsVo.getKeywords().split(",")) {
+                stringBuilder.append(DictionaryUtil.getGoodsLabelById(label) == null
+                        ? "" : DictionaryUtil.getGoodsLabelById(label).getLabName()).append(",");
+            }
+            goodsVo.setKeywordsNames(stringBuilder.substring(0, stringBuilder.length() - 1));
+        }
 
         MgGoods mgGoods = mgGoodsService.selectById(goodsId);
         if (mgGoods != null) {

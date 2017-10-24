@@ -1,6 +1,7 @@
 import ShelfController from "../shelf/ShelfController";
 import ManageGoodsController from "../shelf/ManageGoodsController";
 import CategoryController from "../category/CategoryController";
+import TagsListController from "./TagsListController";
 import MoveController from "../category/MoveController";
 import ManageAttrTypeController from "../category/ManageAttrTypeController";
 import AttrTypeController from "../attrtype/AttrTypeController";
@@ -53,6 +54,12 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			template: require('./goodsDetail.html'),
 			controller: GoodsDetailController,
 			permission: 'items_goodsDetail'
+		})
+		.state('items.tags', {
+			url: '/items/tags',
+			template: require('./tagsList.html'),
+			controller: TagsListController,
+			permission: 'items_tags'
 		})
 		.state('shelf.search', {
 			url: '/shelf/search',

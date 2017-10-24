@@ -44,7 +44,7 @@ function demandDetail() { //需求详情
       console.log(data);
       if(data.data.zbRequirementSPVo.status==6){
         console.log($('.demandStatus').addClass('bgc-a7a7a7').children('span').eq(0).html('报名结束'));
-        $('.signUp').addClass('bgc-a7a7a7').attr('href','javascript:void(0)');
+        $('.signUp').removeClass('j_signUp').addClass('bgc-a7a7a7');
       }
       userType=data.data.userType;
       console.log(data.data.zbRequirementSPVo.status);
@@ -84,7 +84,7 @@ $('.des').on('mouseenter',function () {
   $(this).html($(this).attr('shotStr'));
 });
 
-$(document).on('click','.signUp',function () {
+$(document).on('click','.j_signUp',function () {
 
   if(userType !== -1){ //已经登录
     isAuthProvider()
@@ -105,7 +105,6 @@ function isAuthProvider() {  //已经登录
         window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/missionApply?id='+crowdSourcingId);
 
       }else{ //未认证
-        window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/missionApply?id='+crowdSourcingId);
           $.confirm('<div style="padding: 15px; text-align:left;">您好！<span style="color:red">您还不是服务商</span>，不能参加需求任务报名，<br>如想报名请点击 【确定】 申请成为服务商，<br>按要求提交信息即可通过服务商认证。 </div>',null,function(type){
           if(type == 'yes'){
             if(userType==2){

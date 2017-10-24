@@ -73,7 +73,7 @@
                             <th>需求标签</th>
                             <td>
                                 <div data-ng-if="tag">
-                                    <span class="label label-primary" data-ng-bind="tag"></span>
+                                    <span class="label label-primary" style="margin-right: 5px" data-ng-repeat="item in tag" data-ng-bind="item"></span>
                                 </div>
                             </td>
                         </tr>
@@ -96,7 +96,8 @@
                         <tr>
                             <th>附件</th>
                             <td colspan="3">
-                                <a data-ng-repeat="item in zbAnnexes" data-ng-show="item.type==0" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"></a>
+                                <a data-ng-repeat="item in zbAnnexes" data-ng-show="item.type==0" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                                </a>
                             </td>
                         </tr>
                         <tr>
@@ -124,11 +125,11 @@
                                     <span>托管赏金：</span>
                                     <span>{{(rewardMoney/100)*(trusteePercent/100) | currency: '￥'}}</span>元
                                 </div>
-                                <div style="margin-right: 10px" data-ng-show="status==16 && isZbRequirementAppliesShow">
+                                <div style="margin-right: 10px" data-ng-show="status==14 && isZbRequirementAppliesShow">
                                     <span class="glyphicon glyphicon-remove-circle"></span>流标,交易取消已退款
                                 </div>
                                 <div style="margin-right: 10px" data-ng-show="status==16 && isZbRequirementAppliesShow">
-                                    <span class="glyphicon glyphicon-remove-circle"></span>流标,交易取消已退款
+                                    <span class="glyphicon glyphicon-remove-circle"></span>流标,交易取消待退款
                                 </div>
                             </td>
                         </tr>
@@ -228,7 +229,7 @@
                                 <button class="btn btn-primary" data-ng-click="giveUp(id)">确认流标</button>
                             </div>
                             <div style="margin: auto;width: 200px;"  data-ng-show="status==16">
-                                <button class="btn btn-primary" data-ng-click="public(id)">去退款</button>
+                                <button class="btn btn-primary" data-ng-click="refund(id)">去退款</button>
                                 <button class="btn btn-primary" data-ng-click="back()">返回</button>
                             </div>
                             <div style="margin: auto;width: 200px;"  data-ng-show="status==14">
@@ -277,7 +278,7 @@
                                 <button class="btn btn-default">返回</button>
                             </div>
                             <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==3 && (status==16 && isZbRequirementAppliesShow)">
-                                <button class="btn btn-primary" data-ng-click="check()">去退款</button>
+                                <button class="btn btn-primary" data-ng-click="refund(id)">去退款</button>
                                 <button class="btn btn-default">返回</button>
                             </div>
                             <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==3 && (status==14 && isZbRequirementAppliesShow)">
@@ -342,3 +343,12 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+

@@ -3,6 +3,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.jusfoun.hookah.console.server.config.MyProps;
+import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
@@ -281,7 +282,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     /**
-     * 逻辑取消
+     * 逻辑取消订单
      * @param id
      */
     @Override
@@ -474,6 +475,21 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             }
         }
     }
+    //验证是否是限购商品
+    private boolean checkIsLimitedGoods(String goodsSn, String userId){
+        String limitedGoodsSn = PropertiesManager.getInstance().getProperty("limitedGoodsSn");
+        if (limitedGoodsSn.contains(goodsSn)){
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("userId",userId));
+            filter.add(Condition.eq("mgOrderGoods.goodsSn",goodsSn));
+            filter.add(Condition.eq("isDeleted",(byte)0));
+            List<MgGoodsOrder> list = mgGoodsOrderService.selectList(filter);
+            if (list!=null&&list.size()>0){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * 购物车生成订单
@@ -502,7 +518,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 if(g.getIsOnsale()==null||g.getIsOnsale()!=1){
                     throw new HookahException("商品["+g.getGoodsName()+"]未上架");
                 }
-
+                //验证是否是限购商品，且是否已经购买
+                if (checkIsLimitedGoods(g.getGoodsSn(),orderInfo.getUserId())){
+                    throw new HookahException("限购商品["+g.getGoodsName()+"]只能购买一次");
+                }
                 goodsAmount += cart.getFormat().getPrice()  * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
 
                 MgOrderGoods og = getMgOrderGoodsByCart(cart,orderInfo);
@@ -546,6 +565,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if(g.getIsOnsale()==null||g.getIsOnsale()!=1){
             throw new HookahException("商品["+g.getGoodsName()+"]未上架");
         }
+        //验证是否是限购商品，且是否已经购买
+        if (checkIsLimitedGoods(g.getGoodsSn(),orderInfo.getUserId())){
+            throw new HookahException("限购商品["+g.getGoodsName()+"]只能购买一次");
+        }
+
         MgGoods.FormatBean format= goodsService.getFormat(goodsId,formatId);
         if(goodsNumber!=null){
             goodsAmount += format.getPrice()  * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量

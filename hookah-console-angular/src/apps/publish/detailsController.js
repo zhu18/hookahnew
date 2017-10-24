@@ -30,7 +30,7 @@ class detailsController {
                     $scope.contactName=zbRequirement.contactName;
                     $scope.contactPhone=zbRequirement.contactPhone;
                     $scope.title=zbRequirement.title;
-                    $scope.tag=zbRequirement.tag;
+                    $scope.tag=zbRequirement.tag.split(',');
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
                     $scope.deliveryDeadline=zbRequirement.deliveryDeadline;
@@ -177,6 +177,9 @@ class detailsController {
         };
         $scope.back=function (id) {
             $state.go('publish.list', {id: id});
+        };
+        $scope.refund=function (id) {
+            $state.go('publish.refund', {id: id});
         };
         $scope.giveUp=function (id) {
             var promise = $http({

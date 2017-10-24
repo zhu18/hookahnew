@@ -110,7 +110,8 @@ function renderPage(data) {
 var end = {
   format: "YYYY-MM-DD hh:mm:ss",
   isTime: true,
-  maxDate: $.nowDate(30),
+  minDate: $.nowDate(),
+  maxDate: $.nowDate(90),
   choosefun: function (elem, datas) {
   }
 
@@ -365,7 +366,11 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
     })
   }
   else {
-    $.alert('带 * 为必填项，请按要求输入！')
+    if(insertRequirementsData.rewardMoney<=0){
+      $.alert('悬赏金额要大于0')
+    }else {
+      $.alert('带 * 为必填项，请按要求输入！')
+    }
   }
 
 });

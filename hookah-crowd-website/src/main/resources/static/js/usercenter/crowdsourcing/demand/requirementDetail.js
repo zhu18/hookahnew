@@ -120,6 +120,7 @@ function renderPage(data) {
 
       break;
     case 8: //工作中
+    case 12: //二次工作中
       domModel.html('工作中');
       missionApplyInfo(data); //任务报名信息显示
       break;
@@ -181,8 +182,17 @@ function renderPage(data) {
 
 
       break;
-    case 16:
-      domModel.html('待退款');
+    case 16://待退款
+      domModel.html('失败待退款');
+      $('.missionStatus').html('方案不符合需求方要求验收驳回，交易失败').show();
+      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
+      $('.canNotSelect').show();//禁止选择
+      $('.crowdsourcing-table-edit').remove();//删除下载模块
+      // $('.cancleStatusNotice').show();// 悬赏金额 最右侧提示
+      // $('.cancleStatusNoticeContent').html('需方驳回，交易取消已退款');//悬赏金额 最右侧提示内容
+
+      missionApplyInfo(data); //任务报名信息显示
+
       break;
     case 19: //流标
       domModel.html('交易取消');

@@ -2,9 +2,9 @@
  * Created by Dajun on 2017-9-19.
  */
 
-let crowdSourcingId = GetUrlValue('id');
-let rewardMoney = null;
-let applyData={};
+var crowdSourcingId = GetUrlValue('id');
+var rewardMoney = null;
+var applyData={};
 
 // 获取需求类型
 function getRequirementType() {
@@ -14,10 +14,10 @@ function getRequirementType() {
     dataType: 'json',
     contentType: 'application/json',
     success: function (data) {
-      let list = data.data;
+      var list = data.data;
       console.log(data);
-      let tempHtml = '';
-      for (let i = 0; i < list.length; i++) {
+      var tempHtml = '';
+      for (var i = 0; i < list.length; i++) {
         tempHtml += '<span class="type-span" value="' + list[i].id + '">' + list[i].typeName + '</span>'
       }
       $('.requirement-type').html(tempHtml);
@@ -40,7 +40,7 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
 }
 
 function renderPage(data) {
-  let insertRequirementsData = data;
+  var insertRequirementsData = data;
   $('.j_title').html(insertRequirementsData.zbRequirementSPVo.title).attr('requirementid',insertRequirementsData.zbRequirementSPVo.id);
   $('.j_username').html(insertRequirementsData.zbRequirementSPVo.contactName);
   $('.j_phone').html(insertRequirementsData.zbRequirementSPVo.contactPhone);
@@ -49,7 +49,7 @@ function renderPage(data) {
   $('.j_money').html('￥ <i>' + insertRequirementsData.zbRequirementSPVo.rewardMoney / 100 + '</i> 元');
 
   $('.j_checkRemark').html(insertRequirementsData.zbRequirementSPVo.checkRemark);
-  let tempTypeHtml = '';
+  var tempTypeHtml = '';
   switch (Number(insertRequirementsData.zbRequirementSPVo.type)) { //需求标签
     case 1 : {
       $('.requirement-type-active span').html('数据采集');
@@ -76,10 +76,10 @@ function renderPage(data) {
       break;
     }
   }
-  let loadfileHtml=null;
+  var loadfileHtml=null;
 
 
-  let domModel = $('.crowdsourcing-status span');
+  var domModel = $('.crowdsourcing-status span');
   switch (insertRequirementsData.reqStatus) {
     case -1://报名中
       domModel.html('报名中');
@@ -251,18 +251,19 @@ $('.tagNotice').on('mouseover', function () { //鼠标离开描述显示工具�
   $(this).next().hide();
 });
 
-
-function renderLoadFile(loadFileList,noDownloadIco='false') { //渲染附件列表
-  let tempHtml = '';
-  for (let c = 0; c < loadFileList.length; c++) { //渲染附件
-    let NoDownLoadIcoDom='';
+var noDownloadIco='false';
+function renderLoadFile(loadFileList,noDownload) { //渲染附件列表
+  noDownloadIco=noDownload;
+  var tempHtml = '';
+  for (var c = 0; c < loadFileList.length; c++) { //渲染附件
+    var NoDownLoadIcoDom='';
     if(noDownloadIco !== 'true'){
       NoDownLoadIcoDom='<div class="crowdsourcing-table-edit">\
             <a href="' + loadFileList[c].filePath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
           </div>';
     }
 
-    let className = fileTypeClassName(loadFileList[c].filePath);
+    var className = fileTypeClassName(loadFileList[c].filePath);
     tempHtml += '\
         <dl fileName="' + loadFileList[c].fileName + '" filePath="' + loadFileList[c].filePath + '" class="load-file ' + className + '">\
           <dt><a href="javascript:void(0)" title=""><img src="' + loadFileList[c].filePath + '"></a></dt>\
@@ -276,10 +277,10 @@ function renderLoadFile(loadFileList,noDownloadIco='false') { //渲染附件列�
 }
 
 function fileTypeClassName(fileName) { //返回class
-  let fileTypeReg = /[^.]*$/;
-  let fileType = fileTypeReg.exec(fileName)[0];
+  var fileTypeReg = /[^.]*$/;
+  var fileType = fileTypeReg.exec(fileName)[0];
 
-  let fileTypeObj = {
+  var fileTypeObj = {
     image: {
       'gif': 'gif',
       'jpg': 'jpg',
@@ -303,7 +304,7 @@ function fileTypeClassName(fileName) { //返回class
 
     }
   };
-  let attachmentListClassName = '';
+  var attachmentListClassName = '';
   switch (fileType) {
     case fileTypeObj.file.doc:
     case fileTypeObj.file.docx:
