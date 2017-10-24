@@ -44,7 +44,7 @@ function demandDetail() { //需求详情
       console.log(data);
       if(data.data.zbRequirementSPVo.status==6){
         console.log($('.demandStatus').addClass('bgc-a7a7a7').children('span').eq(0).html('报名结束'));
-        $('.signUp').addClass('bgc-a7a7a7').attr('href','javascript:void(0)');
+        $('.signUp').removeClass('j_signUp').addClass('bgc-a7a7a7');
       }
       userType=data.data.userType;
       console.log(data.data.zbRequirementSPVo.status);
@@ -84,7 +84,7 @@ $('.des').on('mouseenter',function () {
   $(this).html($(this).attr('shotStr'));
 });
 
-$(document).on('click','.signUp',function () {
+$(document).on('click','.j_signUp',function () {
 
   if(userType !== -1){ //已经登录
     isAuthProvider()

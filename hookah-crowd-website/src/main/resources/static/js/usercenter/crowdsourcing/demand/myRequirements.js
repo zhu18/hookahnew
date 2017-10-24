@@ -60,7 +60,7 @@ function loadPageData(data) { //渲染页面数据
         break;
       case 16:
         tempState = '待退款';
-        tempEdit = '<span class="signUp">查看</span>';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;
       case 19:
         tempState = '交易取消';

@@ -3,6 +3,7 @@
  */
 function loadPageData(data) { //渲染页面数据
   data = data.data.list;
+  console.log(data)
   var tempHtml = '\
         <thead>\
           <tr style="background-color:#fff;">\
@@ -20,7 +21,7 @@ function loadPageData(data) { //渲染页面数据
   for (let i = 0; i < data.length; i++) {
     let tempState = '';
     let tempEdit = '';
-    if(data[i].remainTime){ //报名未结束
+    if(data[i].isApplyDeadline == 1){ //报名未结束
       tempState = '报名中';
       switch (data[i].operStatus) {
         case 0:
@@ -30,7 +31,7 @@ function loadPageData(data) { //渲染页面数据
           tempEdit = '<a href="/usercenter/missionApply?id=' + data[i].id + '" class="signUp">已报名</a>';
           break;
       }
-    }else{//报名结束
+    }else{ //报名结束
       tempState = '报名结束';
       switch (data[i].operStatus) {
         case 0:

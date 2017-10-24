@@ -72,7 +72,7 @@
                         <th>需求标签</th>
                         <td>
                             <div data-ng-if="tag !=null ">
-                                <span class="label label-primary" data-ng-bind="tag"></span>
+                                <span class="label label-primary" style="margin-right: 5px" data-ng-repeat="item in tag" data-ng-bind="item"></span>
                             </div>
                         </td>
                     </tr>

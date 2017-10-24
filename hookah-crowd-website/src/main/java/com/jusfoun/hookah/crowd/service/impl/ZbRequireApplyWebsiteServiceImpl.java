@@ -69,14 +69,16 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
             if(Objects.nonNull(zbRequirement)){
 
                 Date date = zbRequirement.getApplyDeadline();//报名截止时间
-                //判断是否截止报名
-                Long deadLineTimeLong = date.getTime();
-                Long currTimeLong = System.currentTimeMillis();
+                if(Objects.nonNull(date)){
+                    //判断是否截止报名
+                    Long deadLineTimeLong = date.getTime();
+                    Long currTimeLong = System.currentTimeMillis();
 
-                if(deadLineTimeLong < currTimeLong){
-                    returnData.setCode(ExceptionConst.Error);
-                    returnData.setMessage("该需求报名已截止");
-                    return returnData;
+                    if(deadLineTimeLong < currTimeLong){
+                        returnData.setCode(ExceptionConst.Error);
+                        returnData.setMessage("该需求报名已截止");
+                        return returnData;
+                    }
                 }
 
                 //判断需求的userId和当前用户Id是否相等

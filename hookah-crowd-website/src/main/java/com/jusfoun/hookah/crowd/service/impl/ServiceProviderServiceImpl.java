@@ -329,14 +329,23 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
     private List<ZbRequirementSPVo> copyZbRequirementData(List<ZbRequirement> zbRequirements, String userId) throws Exception{
         List<ZbRequirementSPVo> zbRequirementSPVos = new ArrayList<>();
         for(ZbRequirement zbRequirement : zbRequirements){
+            ZbRequirementSPVo zbRequirementVo = new ZbRequirementSPVo();
             //计算报名截止剩余时间
             Date deadline = zbRequirement.getApplyDeadline();
-            if (deadline != null) zbRequirement.setRemainTime(DateUtil.timeCountDown(deadline));
+            if (deadline != null) {
+                zbRequirement.setRemainTime(DateUtil.timeCountDown(deadline));
+                //计算报名时间是否已截止
+                Long deadLineTimeLong = deadline.getTime();
+                Long currTimeLong = System.currentTimeMillis();
+                if(deadLineTimeLong < currTimeLong){
+                    zbRequirementVo.setIsApplyDeadline(0);
+                }
+            }
+
             Short typeId = zbRequirement.getType();
             ZbType zbType = zbTypeMapper.selectByPrimaryKey(typeId.intValue());
             zbRequirement.setTypeName(zbType == null? "未知类型" : zbType.getTypeName());
             //查看当前用户是否已报名
-            ZbRequirementSPVo zbRequirementVo = new ZbRequirementSPVo();
             BeanUtils.copyProperties(zbRequirement,zbRequirementVo);
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("requirementId",zbRequirement.getId()));
