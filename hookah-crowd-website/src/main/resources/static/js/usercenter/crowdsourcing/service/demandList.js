@@ -18,9 +18,9 @@ function loadPageData(data) { //渲染页面数据
           </tr>\
           </thead>\
           <tbody>';
-  for (let i = 0; i < data.length; i++) {
-    let tempState = '';
-    let tempEdit = '';
+  for (var i = 0; i < data.length; i++) {
+    var tempState = '';
+    var tempEdit = '';
     if(data[i].isApplyDeadline == 1){ //报名未结束
       tempState = '报名中';
       switch (data[i].operStatus) {
@@ -50,7 +50,7 @@ function loadPageData(data) { //渲染页面数据
           <td>' + data[i].typeName + '</td>\
           <td>' + data[i].rewardMoney / 100 + '</td>\
           <td>' + tempState + '</td>\
-          <td>' + data[i].addTime + '</td>\
+          <td>' + data[i].pressTime + '</td>\
           <td>' + data[i].remainTime + '</td>\
           <td>' + tempEdit + '</td>\
           </tr>'

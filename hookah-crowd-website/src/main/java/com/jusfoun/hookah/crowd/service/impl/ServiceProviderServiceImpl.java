@@ -115,9 +115,9 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             if(Objects.nonNull(timeType) && !"".equals(timeType) &&
                     Objects.nonNull(pressTime) && !"".equals(pressTime)){
                 if("gtmonth".equals(timeType)){
-                    filters.add(Condition.lt("pressTime",pressTime));
-                } else {
                     filters.add(Condition.le("pressTime",pressTime));
+                } else {
+                    filters.add(Condition.ge("pressTime",pressTime));
                 }
             }
             filters.add(Condition.in("status",new Short[]{5,6}));
@@ -253,7 +253,7 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
         ZbRequirementApplyVo zbRequirementApplyVo = zbRequireApplyWebsiteService.selectByReqId(reqId) == null ? new ZbRequirementApplyVo() : (ZbRequirementApplyVo) zbRequireApplyWebsiteService.selectByReqId(reqId).getData();
 
         //时间条信息
-        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
+        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn()) == null ? new MgZbRequireStatus() : mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
 
         //类似任务
         filters.clear();

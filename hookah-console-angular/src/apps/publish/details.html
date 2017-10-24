@@ -107,7 +107,19 @@
                             </td>
                             <th>报名截止日期</th>
                             <td>
-                                <span data-ng-bind="applyDeadline"></span>
+                                <p data-ng-if="status==6 && isZbRequirementAppliesShow" class="input-group">
+                                    <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                                           ng-paste="$event.preventDefault()" type="text" class="form-control"
+                                           uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="applyDeadline"
+                                           is-open="popup1.opened" datepicker-options="inlineOptions" close-text="关闭" clear-text="清除"
+                                           current-text="今天" readonly="true"/>
+                                    <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default" ng-click="open1()">
+                                          重新设置日期
+                                      </button>
+                                 </span>
+                                </p>
+                                <span data-ng-if="status!=6 && !isZbRequirementAppliesShow">{{applyDeadline}}</span>
                             </td>
                         </tr>
                         <tr>
@@ -224,8 +236,8 @@
                                 </table>
                             </div>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
-                            <div style="margin: auto;width: 200px;"  data-ng-show="applyDeadline < currDate && status==5">
-                                <button class="btn btn-primary" data-ng-click="public(id)">重新发布</button>
+                            <div style="margin: auto;width: 200px;"  data-ng-show="isZbRequirementAppliesShow && status==6">
+                                <button class="btn btn-primary" data-ng-click="public()">重新发布</button>
                                 <button class="btn btn-primary" data-ng-click="giveUp(id)">确认流标</button>
                             </div>
                             <div style="margin: auto;width: 200px;"  data-ng-show="status==16">
@@ -245,9 +257,9 @@
                                         <span data-ng-show="zbProgramsStatus==0">待验收</span>
                                         <span data-ng-show="zbProgramsStatus==1">平台验收通过，待需方验收</span>
                                         <span data-ng-show="zbProgramsStatus==2">平台验收不通过，待修改</span>
-                                        <span data-ng-show="zbProgramsStatus==3">方案不符合需求方要求验收驳回，交易失败</span>
-                                        <span data-ng-show="zbProgramsStatus==4">需求方验收通过</span>
-                                        <span data-ng-show="zbProgramsStatus==5">需求方验收不通过，退回修改</span>
+                                        <span data-ng-show="zbProgramsStatus==3">需求方验收通过</span>
+                                        <span data-ng-show="zbProgramsStatus==4">需求方验收不通过，退回修改</span>
+                                        <span data-ng-show="zbProgramsStatus==5">方案不符合需求方要求验收驳回，交易失败</span>
                                     </td>
                                 </tr>
                                 <tr>

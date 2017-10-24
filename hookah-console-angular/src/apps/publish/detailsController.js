@@ -34,10 +34,10 @@ class detailsController {
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
                     $scope.deliveryDeadline=zbRequirement.deliveryDeadline;
-                    $scope.applyDeadline=zbRequirement.applyDeadline;
+                    var data=new Date(zbRequirement.applyDeadline);
+                    $scope.applyDeadline= data;
                     $scope.rewardMoney=zbRequirement.rewardMoney;
                     $scope.trusteePercent=zbRequirement.trusteePercent;
-                    $scope.applyDeadline=zbRequirement.applyDeadline;
                     $scope.checkRemark=zbRequirement.checkRemark;
                     $scope.status=zbRequirement.status;
                     $scope.id=zbRequirement.id;
@@ -172,9 +172,103 @@ class detailsController {
             });
         }
 
-        $scope.public=function (id) {
-            $state.go('publish.public', {id: id});
+        $scope.public=function () {
+            console.log($scope.applyDeadline.setDate(tomorrow.getDate() + 5));
+            console.log($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss'));
+            console.log($scope.deliveryDeadline);
+            if($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')>$scope.deliveryDeadline){
+                var modalInstance =$rootScope.openConfirmDialogModal("报名截止日期不得超过交付日期前五天，请重新选择日期！");
+                modalInstance.result.then(function () {
+
+                }, function () {
+
+                });
+
+            } else {
+                alert("shidehdheidheidh");
+                // var promise = $http({
+                //     method: 'GET',
+                //     url: $rootScope.site.crowdServer + "/api/require/updateStatus",
+                //     params: {
+                //         id:$scope.id,
+                //         status:5,
+                //         applyDeadline:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
+                //     }
+                // });
+                // promise.then(function (res, status, config, headers) {
+                //     console.log('数据在这里');
+                //     console.log(res);
+                //     if (res.data.code == '1') {
+                //         var modalInstance =$rootScope.openConfirmDialogModal("发布成功！");
+                //         modalInstance.result.then(function () {
+                //             $state.go('publish.list');
+                //         }, function () {
+                //             $state.go('publish.list');
+                //         });
+                //     } else {
+                //
+                //         var modalInstance =$rootScope.openConfirmDialogModal("发布失败！");
+                //         modalInstance.result.then(function () {
+                //             $state.go('publish.list');
+                //         }, function () {
+                //             $state.go('publish.list');
+                //         });
+                //     }
+                //     $rootScope.loadingState = false;
+                //     growl.addSuccessMessage("订单数据加载完毕。。。");
+                // });
+            }
+
         };
+
+
+        // 日历插件开始
+
+        $scope.inlineOptions = {
+            customClass: getDayClass,
+            minDate: new Date(),
+            // maxDate: new Date(data),
+            showWeeks: true
+        };
+        $scope.open1 = function () {
+            $scope.popup1.opened = true;
+        };
+        $scope.popup1 = {
+            opened: false
+        };
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var afterTomorrow = new Date();
+        afterTomorrow.setDate(tomorrow.getDate() + 1);
+        $scope.events = [
+            {
+                date: tomorrow,
+                status: 'full'
+            },
+            {
+                date: afterTomorrow,
+                status: 'partially'
+            }
+        ];
+        function getDayClass(data) {
+            var date = data.date,
+                mode = data.mode;
+            if (mode === 'day') {
+                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+                for (var i = 0; i < $scope.events.length; i++) {
+                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                    if (dayToCheck === currentDay) {
+                        return $scope.events[i].status;
+                    }
+                }
+            }
+            return '';
+        }
+
+        // 日历插件结束
+
         $scope.back=function (id) {
             $state.go('publish.list', {id: id});
         };
