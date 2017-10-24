@@ -438,13 +438,13 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     }else if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_FAIL.getCode())){//验收不通过
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.TWO_WORKING.getCode().shortValue());
 
-                        //修改报名状态为工作中
-                        zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.WORKING.getCode());
+//                        //修改报名状态为工作中
+//                        zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.WORKING.getCode());
 
                     }else if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_REJECT.getCode())){//验收驳回
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TK.getCode().shortValue());
 
-                        //修改报名状态为交易取消
+                        //修改报名状态为驳回失败(交易取消)
                         zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode());
 
                     }
