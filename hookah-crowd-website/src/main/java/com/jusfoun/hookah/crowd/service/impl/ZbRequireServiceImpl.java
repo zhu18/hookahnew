@@ -271,6 +271,12 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             for (ZbRequirement requirement : list) {
                 Date deadline = requirement.getApplyDeadline();
                 if (deadline != null) requirement.setRemainTime(DateUtil.timeCountDown(deadline));
+                List<Condition> filters2 = new ArrayList<>();
+                if(requirement.getId() != null){
+                    filters2.add(Condition.eq("requirementId", requirement.getId()));
+                }
+                List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
+                requirement.setCount(zbRequirementApplies.size());
             }
             pagination.setTotalItems(count);
             pagination.setPageSize(helper.getPageSize());
