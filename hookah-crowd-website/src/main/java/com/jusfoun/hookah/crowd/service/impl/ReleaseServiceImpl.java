@@ -325,8 +325,10 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                     }
                                     ZbComment zbComment = zbCommentService.selectOne(filters4);
                                     map.put("zbComment",zbComment != null ? zbComment : " ");
-
                                 }
+                            }else {
+                                map.put("zbProgram","");
+                                map.put("programFiles","");
                             }
                         }
                         break;
