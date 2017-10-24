@@ -210,6 +210,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     zbRequirement.getStatus() == 13 ||
                     zbRequirement.getStatus() == 14 ||
                     zbRequirement.getStatus() == 15 ||
+                    zbRequirement.getStatus() == 16 ||
                     zbRequirement.getStatus() == 19) {
                 if (zbRequirement.getTrusteePercent() != null) {
                     managedMoney = String.valueOf(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
@@ -287,7 +288,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     case 9:  //待平台验收
                     case 10: //待需方验收
                     case 13: //待评价
-                    case 14: //需方驳回
+                    case 14: //交易取消
+                    case 16: //待退款
                         map.put("tag", strArray);
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);

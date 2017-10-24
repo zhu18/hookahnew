@@ -316,18 +316,24 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     @Override
     public ReturnData selectRequirementTypeInfo(){
         Map<String, Object> map = new HashMap<>(6);
-        //数据采集
-        map.put("dataCollection",applyLastTime(Short.valueOf("1")));
-        //数据加工
-        map.put("dataProcess",applyLastTime(Short.valueOf("2")));
-        //数据模型
-        map.put("dataModel",applyLastTime(Short.valueOf("3")));
-        //数据应用
-        map.put("datApplication",applyLastTime(Short.valueOf("4")));
-        //数据清洗
-        map.put("dataCleansing",applyLastTime(Short.valueOf("5")));
-        //其他
-        map.put("otherData",applyLastTime(Short.valueOf("6")));
+        try {
+            Integer userType = this.getCurrentUser().getUserType();
+            map.put("userType",userType);
+            //数据采集
+            map.put("dataCollection",applyLastTime(Short.valueOf("1")));
+            //数据加工
+            map.put("dataProcess",applyLastTime(Short.valueOf("2")));
+            //数据模型
+            map.put("dataModel",applyLastTime(Short.valueOf("3")));
+            //数据应用
+            map.put("datApplication",applyLastTime(Short.valueOf("4")));
+            //数据清洗
+            map.put("dataCleansing",applyLastTime(Short.valueOf("5")));
+            //其他
+            map.put("otherData",applyLastTime(Short.valueOf("6")));
+        } catch (HookahException e) {
+            e.printStackTrace();
+        }
         return ReturnData.success(map);
     }
 
@@ -355,7 +361,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                         list.add(ment.getId());
                     }
                 }
-                filters.add(Condition.notIn("id",list.toArray()));
+                if(list != null && list.size() > 0){
+                    filters.add(Condition.notIn("id",list.toArray()));
+                }
                 zbRequirement = this.selectList(filters);
             }else {
                 //未登录
@@ -375,7 +383,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                     }
                 }
             }
-            return zbRequirement;
+            return zbRequirement != null ? zbRequirement : "";
         } catch (Exception e) {
             logger.error("系统错误",e);
             return "系统错误";

@@ -19,18 +19,18 @@ class detailsController {
             });
             promise.then(function (res, status, config, headers) {
                 if (res.data.code == '1') {
-                    var zbRequirement= res.data.data.zbRequirement; //基本信息
-                    var zbRequirementApplies= res.data.data.zbRequirementApplies; //报名的人
-                    var zbPrograms= res.data.data.zbPrograms;//成果
-                    var zbComments= res.data.data.zbComments;//评价
-                    $scope.zbAnnexes= res.data.data.zbAnnexes;//上传材料
-                    var mgZbRequireStatus = res.data.data.mgZbRequireStatus;//进度时间
+                    var zbRequirement= res.data.data.zbRequirement || null; //基本信息
+                    var zbRequirementApplies= res.data.data.zbRequirementApplies || null; //报名的人
+                    var zbPrograms= res.data.data.zbPrograms || null;//成果
+                    var zbComments= res.data.data.zbComments || null;//评价
+                    $scope.zbAnnexes= res.data.data.zbAnnexes || null;//上传材料
+                    var mgZbRequireStatus = res.data.data.mgZbRequireStatus || null;//进度时间
                     //基本信息
                     $scope.requiremetName=zbRequirement.requiremetName;
                     $scope.contactName=zbRequirement.contactName;
                     $scope.contactPhone=zbRequirement.contactPhone;
                     $scope.title=zbRequirement.title;
-                    $scope.tag=zbRequirement.tag;
+                    $scope.tag=zbRequirement.tag.split(',');
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
                     $scope.deliveryDeadline=zbRequirement.deliveryDeadline;
@@ -42,19 +42,23 @@ class detailsController {
                     $scope.status=zbRequirement.status;
                     $scope.id=zbRequirement.id;
                     //进度时间
-                    $scope.addTime=mgZbRequireStatus.addTime;//发布需求
-                    $scope.checkTime=mgZbRequireStatus.checkTime;//平台审核
-                    $scope.trusteeTime=mgZbRequireStatus.trusteeTime;//资金托管
-                    $scope.pressTime=mgZbRequireStatus.pressTime;//平台发布
-                    $scope.workingTime=mgZbRequireStatus.workingTime;//服务商工作
-                    $scope.payTime=mgZbRequireStatus.payTime;//验收付款
-                    $scope.commentTime=mgZbRequireStatus.commentTime;//评价
+                    if(mgZbRequireStatus){
+                        $scope.addTime=mgZbRequireStatus.addTime;//发布需求
+                        $scope.checkTime=mgZbRequireStatus.checkTime;//平台审核
+                        $scope.trusteeTime=mgZbRequireStatus.trusteeTime;//资金托管
+                        $scope.pressTime=mgZbRequireStatus.pressTime;//平台发布
+                        $scope.workingTime=mgZbRequireStatus.workingTime;//服务商工作
+                        $scope.payTime=mgZbRequireStatus.payTime;//验收付款
+                        $scope.commentTime=mgZbRequireStatus.commentTime;//评价
+                    }
                     //报名tab
-                    if(zbRequirementApplies.length>0){
+                    if(zbRequirementApplies && zbRequirementApplies.length>0){
                         $scope.zbRequirementApplies=zbRequirementApplies;
                         $scope.isZbRequirementAppliesShow=false;
+                        console.log(1);
                     }else {
                         $scope.isZbRequirementAppliesShow=true;
+                        console.log(2);
                     }
                     //成果tab
                     if(zbPrograms.length>0){
@@ -173,6 +177,9 @@ class detailsController {
         };
         $scope.back=function (id) {
             $state.go('publish.list', {id: id});
+        };
+        $scope.refund=function (id) {
+            $state.go('publish.refund', {id: id});
         };
         $scope.giveUp=function (id) {
             var promise = $http({

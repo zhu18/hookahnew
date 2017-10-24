@@ -35,6 +35,9 @@
                     <button class="btn btn-default" data-ng-model="status" uib-btn-radio="5"
                             data-ng-click="search()"> 报名中
                     </button>
+                    <button class="btn btn-default" data-ng-model="status" uib-btn-radio="6"
+                            data-ng-click="search()"> 报名结束
+                    </button>
                     <button class="btn btn-default" data-ng-model="status" uib-btn-radio="9"
                             data-ng-click="search()"> 待验收
                     </button>
@@ -87,7 +90,7 @@
                                     <span data-ng-show="item.status==1" >待审核</span>
                                     <span data-ng-show="item.status==4" >待发布</span>
                                     <span data-ng-show="item.status==5" >报名中</span>
-                                    <span data-ng-show="item.status==6" >报名中</span>
+                                    <span data-ng-show="item.status==6" >报名结束</span>
                                     <span data-ng-show="item.status==9" >待验收</span>
                                     <span data-ng-show="item.status==11">已验收待付款</span>
                                     <span data-ng-show="item.status==16">待退款</span>

@@ -169,7 +169,7 @@ function loadPageData(data) {
 //                  html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
 //
 //              }else{
-                  html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
+                  html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\',\'' + goods[ii].orderSn+ '\',\'' + goods[ii].goodsSn +'\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
 
              // }
 
@@ -392,7 +392,7 @@ var keyDialogHtml = '<div id="myDialog" title="My Dialog">\
     <p>&nbsp;&nbsp;有效期：<em class="j_time">2342342</em></p>\
   </div>\
 ';
-function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
+function getKey(goodsId, sourceId, orderId, goodsType, isOffline,orderSn,goodsSn) {
 
   console.log('goodsId：' + goodsId, "sourceId：" + sourceId, "orderId：" + orderId, "goodsType：" + goodsType, "isOffline：" + isOffline);
 //  if (goodsType == 1){
@@ -451,7 +451,7 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
                     "<h5>您购买的API商品token为：</h5>" +
                     "<h5><input id='token' readonly='readonly' style='width: 270px;margin-left: 15px;border: 0;' value='"+apiObj.data.token+"'/><a style='color: blue;margin-left: 10px;' href=\"javascript:copyText();\">复制token</a><a style='color: blue;margin-left: 10px;' href=\"javascript:resetToken('"+goodsId+"','"+orderId+"');\">重置token</a></h5>" +
                     "<h5>当前API状态：</h5>" +
-                    "<h5><span style='margin-left: 15px;'> 已调用次数："+(apiObj.data.totalCount-apiObj.data.hasCount)+"</span><span style='margin-left: 15px;'> 剩余次数："+apiObj.data.hasCount+"</span><a style='color:blue;margin-left: 20px;' href='"+apiWordUrl+"'>详情下载</a></h5></div>";
+                    "<h5><span style='margin-left: 15px;'> 已调用次数："+(apiObj.data.totalCount-apiObj.data.hasCount)+"</span><span style='margin-left: 15px;'> 剩余次数："+apiObj.data.hasCount+"</span><a style='color:blue;margin-left: 20px;' href='"+apiWordUrl+"'>详情下载</a><a style='color:blue;margin-left: 20px;' href='/usercenter/apiLogs?orderSn="+orderSn+"&goodsSn="+goodsSn+"'>查看详情</a></h5></div>";
           Loading.stop();
           } else if (goodsType == 2) { //模型
             tempHtml = "<div class='confirmKey'><h4>模型压缩包下载地址：</h4>" +
