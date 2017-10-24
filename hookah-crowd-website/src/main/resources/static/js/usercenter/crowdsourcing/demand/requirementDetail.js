@@ -120,6 +120,7 @@ function renderPage(data) {
 
       break;
     case 8: //工作中
+    case 12: //二次工作中
       domModel.html('工作中');
       missionApplyInfo(data); //任务报名信息显示
       break;

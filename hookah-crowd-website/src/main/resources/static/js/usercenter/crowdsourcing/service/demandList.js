@@ -18,9 +18,9 @@ function loadPageData(data) { //渲染页面数据
           </tr>\
           </thead>\
           <tbody>';
-  for (let i = 0; i < data.length; i++) {
-    let tempState = '';
-    let tempEdit = '';
+  for (var i = 0; i < data.length; i++) {
+    var tempState = '';
+    var tempEdit = '';
     if(data[i].isApplyDeadline == 1){ //报名未结束
       tempState = '报名中';
       switch (data[i].operStatus) {
