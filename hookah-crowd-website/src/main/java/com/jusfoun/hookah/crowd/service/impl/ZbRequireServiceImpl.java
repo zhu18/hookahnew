@@ -271,6 +271,12 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             for (ZbRequirement requirement : list) {
                 Date deadline = requirement.getApplyDeadline();
                 if (deadline != null) requirement.setRemainTime(DateUtil.timeCountDown(deadline));
+                List<Condition> filters2 = new ArrayList<>();
+                if(requirement.getId() != null){
+                    filters2.add(Condition.eq("requirementId", requirement.getId()));
+                }
+                List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
+                requirement.setCount(zbRequirementApplies.size());
             }
             pagination.setTotalItems(count);
             pagination.setPageSize(helper.getPageSize());
@@ -316,24 +322,18 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     @Override
     public ReturnData selectRequirementTypeInfo(){
         Map<String, Object> map = new HashMap<>(6);
-        try {
-            Integer userType = this.getCurrentUser().getUserType();
-            map.put("userType",userType);
-            //数据采集
-            map.put("dataCollection",applyLastTime(Short.valueOf("1")));
-            //数据加工
-            map.put("dataProcess",applyLastTime(Short.valueOf("2")));
-            //数据模型
-            map.put("dataModel",applyLastTime(Short.valueOf("3")));
-            //数据应用
-            map.put("datApplication",applyLastTime(Short.valueOf("4")));
-            //数据清洗
-            map.put("dataCleansing",applyLastTime(Short.valueOf("5")));
-            //其他
-            map.put("otherData",applyLastTime(Short.valueOf("6")));
-        } catch (HookahException e) {
-            e.printStackTrace();
-        }
+        //数据采集
+        map.put("dataCollection",applyLastTime(Short.valueOf("1")));
+        //数据加工
+        map.put("dataProcess",applyLastTime(Short.valueOf("2")));
+        //数据模型
+        map.put("dataModel",applyLastTime(Short.valueOf("3")));
+        //数据应用
+        map.put("datApplication",applyLastTime(Short.valueOf("4")));
+        //数据清洗
+        map.put("dataCleansing",applyLastTime(Short.valueOf("5")));
+        //其他
+        map.put("otherData",applyLastTime(Short.valueOf("6")));
         return ReturnData.success(map);
     }
 

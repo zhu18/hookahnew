@@ -182,6 +182,65 @@ function renderFormatFn(goodsTypeId){
 		})
 	}
 }
+$('.add-tags').click(function(){
+	addTagsFn();
+});
+function addTagsFn(){
+	$('.tags-box').show();
+}
+$('.close-tag-btn').click(function(){
+	closeTagsFn();
+});
+$('.checkTags-cancelBtn').click(function(){
+	closeTagsFn();
+});
+function closeTagsFn(){
+	$('.tags-box').hide();
+}
+$('.checkTags-confirmBtn').click(function(){
+	var tags = [];
+
+	$("[name=tagsCheck]:checkbox").each(function () {
+		if (this.checked) {
+			tags.push(
+				{
+					id:$(this).val(),
+					name:$(this).attr('tagname')
+				}
+				);
+		}
+	});
+	if(tags.length > 3){
+		$.alert('最多选择3个标签');
+	}else{
+		var html = '';
+		for(list in tags){
+			html +='<span class="tags-list">'+tags[list].name+'<i class="fa fa-times-circle"></i></span>';
+		}
+		$('.tags-val').html(html);
+		$('.tags-box').hide();
+		removeTags()
+	}
+});
+removeTags()
+function removeTags(){
+	$('.tags-list i').click(function(){
+		$(this).parent('.tags-list').remove();
+	});
+}
+$("[name=tagsCheck]:checkbox").click(function () {
+	var nums = 0;
+	$("[name=tagsCheck]:checkbox").each(function () {
+		if (this.checked) {
+			nums += 1;
+		}
+	});
+	if(nums > 3){
+		$('.tags-tip').css('color','red');
+	}else{
+		$('.tags-tip').css('color','#767676');
+	}
+});
 function goodsEditFn(){
 	$('.select-box.display-inline-block').text(category);//渲染分类
 	loadRegion('province', regionParam); //加载地区
