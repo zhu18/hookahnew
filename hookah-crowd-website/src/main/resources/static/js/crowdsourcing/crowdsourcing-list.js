@@ -1,9 +1,11 @@
 /**
  * Created by Dajun on 2017-9-19.
  */
-let reqTypeId = GetUrlValue('typeId');
+var reqTypeId = GetUrlValue('typeId');
 $('#type li').removeClass('active').eq(reqTypeId).addClass('active');
+
 function loadPageData(data) { //渲染页面数据
+  userType=data.data.userType;
   data = data.data.list;
   console.log(data);
   let demandList = '';
@@ -43,7 +45,7 @@ function loadPageData(data) { //渲染页面数据
   if (!data.length) {
     demandList += '<li style="padding: 70px; width:89%;height: 20px;text-align:center;">----无数据----</li>'
   }
-  $('.demandList').html(demandList)
+  $('.demandList').html(demandList);
 
 }
 

@@ -130,7 +130,7 @@ function renderPage(data) {
       }
 
       break;
-    case 4://验收中
+    case 4: //验收中
       domModel.html('验收中');
       missionApplyInfo(data);
       $('.j_myMissionStatus').html('已选中').show();
