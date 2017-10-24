@@ -251,8 +251,9 @@ $('.tagNotice').on('mouseover', function () { //鼠标离开描述显示工具�
   $(this).next().hide();
 });
 
-
-function renderLoadFile(loadFileList,noDownloadIco='false') { //渲染附件列表
+var noDownloadIco='false';
+function renderLoadFile(loadFileList,noDownload) { //渲染附件列表
+  noDownloadIco=noDownload;
   let tempHtml = '';
   for (let c = 0; c < loadFileList.length; c++) { //渲染附件
     let NoDownLoadIcoDom='';

@@ -110,7 +110,8 @@ function renderPage(data) {
 var end = {
   format: "YYYY-MM-DD hh:mm:ss",
   isTime: true,
-  maxDate: $.nowDate(30),
+  minDate: $.nowDate(),
+  maxDate: $.nowDate(90),
   choosefun: function (elem, datas) {
   }
 
