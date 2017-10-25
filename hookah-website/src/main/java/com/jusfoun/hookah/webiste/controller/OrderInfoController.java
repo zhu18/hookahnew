@@ -118,6 +118,9 @@ public class OrderInfoController extends BaseController {
             list.add(vo);
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",list);
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            model.addAttribute("perOrderInfoNum",uuid);
+            redisOperate.set("orderConfirm:"+uuid,"1",0);
             return "/order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
@@ -424,6 +427,10 @@ public class OrderInfoController extends BaseController {
     public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,
                               HttpServletRequest request, Model model) {
         try {
+            String perOrderInfoNum = request.getParameter("perOrderInfoNum");
+            if (perOrderInfoNum.isEmpty() || redisOperate.get("orderConfirm:"+perOrderInfoNum) == null){
+                return "/error/confirmOrderError";
+            }
             init(orderinfo);
             if(cartIdArray[0].equals("-1")){
                 orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber);
@@ -441,6 +448,7 @@ public class OrderInfoController extends BaseController {
             session.setAttribute("orderInfo",orderinfo);
             //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
             //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
+            redisOperate.del("orderConfirm:"+perOrderInfoNum);
             return   "redirect:/pay/cash";
         }catch (HookahException e){
             logger.error("生成订单失败", e);
