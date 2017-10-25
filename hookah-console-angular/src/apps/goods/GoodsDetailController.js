@@ -27,6 +27,7 @@ class GoodsDetailController {
 					// 	arr3.push(rst)
 					// }
 					$scope.keywordsNew = res.data.data.keywordsNames.split(",");
+					console.log($scope.keywordsNew)
 					$scope.packageApiInfo = res.data.data.packageApiInfo;
 					growl.addSuccessMessage("数据加载完毕。。。");
 				}
