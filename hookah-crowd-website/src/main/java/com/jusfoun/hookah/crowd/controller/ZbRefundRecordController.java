@@ -29,7 +29,8 @@ public class ZbRefundRecordController {
             String refundAmount,
             String bankCardNum,
             String desc,
-            String payTime
+            String payTime,
+            String bankName
     ) {
 
         ReturnData returnData = new ReturnData();
@@ -43,6 +44,7 @@ public class ZbRefundRecordController {
             zbRefundRecord.setBankCardNum(bankCardNum);
             zbRefundRecord.setDescs(desc);
             zbRefundRecord.setPayTime(payTime);
+            zbRefundRecord.setBankName(bankName);
 
             returnData = zbRefundRecordService.insertData(zbRefundRecord);
         }catch (Exception e){
