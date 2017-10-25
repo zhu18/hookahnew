@@ -762,7 +762,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         // 版本号
         apiInfoBean.setVersion(api.getVersion());
         // 请求示例
-        apiInfoBean.setRespSample(api.getRequestSample());
+        apiInfoBean.setReqSample(api.getRequestSample());
 
         // 请求参数
         List<MgGoods.FiledBean> reqFiledBeanList = returnList(api.getRequestParameter());

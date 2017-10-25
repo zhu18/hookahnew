@@ -14,6 +14,7 @@ var regex = {  //手机号验证正则
 	mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
 	keyWords: /^[\u4E00-\u9FA5A-Za-z0-9\,]+$/
 };
+var testNewApiUrl = false;
 E.config.uploadImgUrl = host.static + '/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
 E.config.menuFixed = false;//关闭菜单栏fixed
@@ -933,50 +934,58 @@ function submitGoodsPublish() {
 		data.goodsAdvantage = $('#textarea2').val(); //商品优势
 		data.afterSaleService = $('#textarea3').val(); //售后服务
 		data.appCase = $('#textarea4').val(); //应用案例
-		data.apiInfo = {};
-		data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
-		data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
-		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
-		data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
-		data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
-		data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
-		data.apiInfo.reqParamList = [];
-		$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
-			var listData = {};
-			listData.fieldName = $(item).find('input[name="fieldName"]').val();
-			listData.fieldType = $(item).find('select[name="fieldType"]').val();
-			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
-			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
-			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
-			listData.describle = $(item).find('textarea[name="describle"]').val();
-			data.apiInfo.reqParamList.push(listData);
-		});
-		data.apiInfo.respParamList = [];
-		$('table[d-type="returnHtml"] tbody tr').each(function () {
-			var listData = {};
-			listData.fieldName = $(this).find('input[name="fieldName"]').val();
-			listData.fieldType = $(this).find('select[name="fieldType"]').val();
-			listData.describle = $(this).find('textarea[name="describle"]').val();
-			data.apiInfo.respParamList.push(listData);
-		});
-		console.log(data.apiInfo.respParamList);//----------------------
-		data.apiInfo.respSample = $('#respSample').val();
-		data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
-		data.apiInfo.respDataMapping = {};
-		data.apiInfo.respDataMapping.codeAttrBean = {};
-		data.apiInfo.respDataMapping.codeAttrBean.codeAttr = $('input[name="codeAttr"]').val();
-		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean = {};
-		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode = $('input[name="successCode"]').val();
-		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode = $('input[name="failedCode"]').val();
-		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData = $('input[name="successNoData"]').val();
-		data.apiInfo.respDataMapping.infoAttr = $('input[name="infoAttr"]').val();
-		data.apiInfo.respDataMapping.dataAttr = $('input[name="dataAttr"]').val();
-		data.apiInfo.respDataMapping.totalNumAttr = $('input[name="totalNumAttr"]').val();
-		data.apiInfo.updateFreq = $('input[name="updateFreq"]').val();
-		data.apiInfo.dataNumDivRowNum = $('input[name="dataNumDivRowNum"]').val();
-		data.apiInfo.encryptInfo = {};
-		data.apiInfo.encryptInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
-		data.apiInfo.encryptInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
+		if($('.apiNewUrl').val()){
+			if(testNewApiUrl){
+				data.apiUrl=$('.apiNewUrl').val();
+			}else{
+				$.alert('接口链接未验证')
+			}
+		}else{
+			data.apiInfo = {};
+			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
+			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
+			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+			data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+			data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
+			data.apiInfo.reqParamList = [];
+			$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
+				var listData = {};
+				listData.fieldName = $(item).find('input[name="fieldName"]').val();
+				listData.fieldType = $(item).find('select[name="fieldType"]').val();
+				listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
+				listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+				listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+				listData.describle = $(item).find('textarea[name="describle"]').val();
+				data.apiInfo.reqParamList.push(listData);
+			});
+			data.apiInfo.respParamList = [];
+			$('table[d-type="returnHtml"] tbody tr').each(function () {
+				var listData = {};
+				listData.fieldName = $(this).find('input[name="fieldName"]').val();
+				listData.fieldType = $(this).find('select[name="fieldType"]').val();
+				listData.describle = $(this).find('textarea[name="describle"]').val();
+				data.apiInfo.respParamList.push(listData);
+			});
+			console.log(data.apiInfo.respParamList);//----------------------
+			data.apiInfo.respSample = $('#respSample').val();
+			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
+			data.apiInfo.respDataMapping = {};
+			data.apiInfo.respDataMapping.codeAttrBean = {};
+			data.apiInfo.respDataMapping.codeAttrBean.codeAttr = $('input[name="codeAttr"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean = {};
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode = $('input[name="successCode"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode = $('input[name="failedCode"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData = $('input[name="successNoData"]').val();
+			data.apiInfo.respDataMapping.infoAttr = $('input[name="infoAttr"]').val();
+			data.apiInfo.respDataMapping.dataAttr = $('input[name="dataAttr"]').val();
+			data.apiInfo.respDataMapping.totalNumAttr = $('input[name="totalNumAttr"]').val();
+			data.apiInfo.updateFreq = $('input[name="updateFreq"]').val();
+			data.apiInfo.dataNumDivRowNum = $('input[name="dataNumDivRowNum"]').val();
+			data.apiInfo.encryptInfo = {};
+			data.apiInfo.encryptInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
+			data.apiInfo.encryptInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
+		}
 	} else if (data.goodsType == 2) {
 		data.goodsDesc = $('#textarea1').val(); //商品详情
 		data.goodsAdvantage = $('#textarea2').val(); //商品优势
@@ -1504,11 +1513,9 @@ function loadLastChild(that) {
 	} else {
 		catId = $(that).val();
 	}
-	console.log('22222222++++===' + catId)
 }
 function selectCatId(that) {
 	catId = $(that).val();
-	console.log('33333333++++===' + catId)
 }
 function loadCategoryData(that, pid, currentPid) {
 
@@ -2001,3 +2008,81 @@ $('#J_submitBtn').click(function () {
 function checkOut() { //取消form表单默认事件
 	return false;
 }
+
+//修改API信息
+$('.apiNewUrl-btn').click(function(){
+	var apiUrl = $('#J-apiNewUrl').val();
+
+	if(apiUrl){
+		$.ajax({
+			type: "get",
+			url: host.website + '/api/goodsApi/fetchGoodsApiInfo',
+			data: {
+				url: apiUrl
+			},
+			success: function (data) {
+				if (data.code == 1) {
+					$('.apiMethod').html(data.data.apiMethod == '1' ? 'GET' : 'POST');
+					$('.respDataFormat').html(data.data.respDataFormat == '1' ? 'JSON' : 'XML');
+					$('.isPaging').html(data.data.isPaging == '1' ?'是':'否');
+					var status = '';
+					switch (data.data.status)
+					{
+						case '0':
+							status = "删除";
+							break;
+						case '1':
+							status = "草稿";
+							break;
+						case '2':
+							status = "待测试";
+							break;
+						case '3':
+							status = "测试通过";
+							break;
+						case '4':
+							status = "测试未通过";
+							break;
+					}
+					$('.status').html(status);
+					$('.apiType').html( data.data.apiType== '1' ? 'rest' : 'wsdl');
+					$('.version').html(data.data.version);
+					$('.reqSample').html(data.data.reqSample?data.data.reqSample:'无');
+					var html = '';
+
+					for(var i=0;i<data.data.reqParamList.length;i++){
+						html += '<tr class="parent-tr"><td>'+data.data.reqParamList[i].fieldName+'</td><td>'+data.data.reqParamList[i].describle+'</td></tr>';
+					}
+					$('.reqParamList tbody').html(html);
+					var html2 = '';
+					data.data.respParamList.forEach(function(item){
+						html2 += '<tr class="parent-tr"><td>'+item.fieldName+'</td><td>'+item.describle+'</td></tr>';
+					});
+					$('.respParamList tbody').html(html2);
+					$('.apiNew').show();
+					testNewApiUrl = true;
+					$('#J-apiNewUrl').on('input onporpertychange', function () {
+						if($('#J-apiNewUrl').val() != apiUrl){
+							$('.apiNew').hide();
+							testNewApiUrl = false;
+						}else{
+							$('.apiNew').show();
+							testNewApiUrl = true;
+						}
+					});
+
+				} else {
+					$.alert(data.message);
+					testNewApiUrl = false;
+				}
+			}
+		});
+	}else{
+		$.alert('请输入接口链接');
+	}
+});
+function changeNewApiUrl(){
+
+}
+
+

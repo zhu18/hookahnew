@@ -57,6 +57,7 @@
         <result column="source_id" jdbcType="VARCHAR" property="sourceId" />
         <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
         <result column="is_discuss_price" jdbcType="TINYINT" property="isDiscussPrice" />
+        <result column="api_url" jdbcType="VARCHAR" property="apiUrl" />
     </resultMap>
 
     <resultMap id="GCResult" type="com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo" >
