@@ -93,9 +93,10 @@ myconf:
     userInfoUrl: http://auth.galaxybigdata.com/userInfo
     redirectUrl: http://auth.galaxybigdata.com/login
   api:
-    url: http://192.168.200.116:5555/gateway/insert
-    tokenUrl: http://192.168.200.116:5555/gateway/getToken
-    changeUrl: http://192.168.200.116:5555/gateway/changeToken
+    url: http://192.168.15.176:7777/gateway/insert
+    tokenUrl: http://192.168.15.176:7777/gateway/getToken
+    changeUrl: http://192.168.15.176:7777/gateway/changeToken
+    apiRestUrl: http://192.168.15.174:8070/apirest/findInvokeStatus
   redis:
     ipPort: 192.168.15.203:7000,192.168.15.203:7001,192.168.15.203:7002
   consul:
