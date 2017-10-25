@@ -547,25 +547,25 @@ function missionApplyInfo(data) { //任务报名信息显示
   // $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
 
   //任务报名内容
-  $('.addTime').html(data.zbRequirementApplyVo.addTime);
-  $('.applyContent').html(data.zbRequirementApplyVo.applyContent);
-  $('.j_applyPhone').html(data.zbRequirementApplyVo.mobile);
-  $('.j_hasApply').html(data.zbRequirementApplyVo.applyNumber);
+  if(data.zbRequirementApplyVo !==null) {
+    $('.addTime').html(data.zbRequirementApplyVo.addTime);
+    $('.applyContent').html(data.zbRequirementApplyVo.applyContent);
+    $('.j_applyPhone').html(data.zbRequirementApplyVo.mobile);
+    $('.j_hasApply').html(data.zbRequirementApplyVo.applyNumber);
+  }
 
   //任务成果内容
-  if(data.zbProgramVo!==null){
+  if(data.zbProgramVo !==null){
     $('.j_applyDeadline').html(data.zbRequirementSPVo.deliveryDeadline);
     $('.missionTitle').html(data.zbProgramVo.title).attr('acceptanceAdviceId',data.zbProgramVo.id);
     $('.missionResultDes').html(data.zbProgramVo.content);
   }
 
   //方案附件列表
-
-
   if(data.zbProgramV !== null){
     var missionResultLoadfileHtml=renderLoadFile(data.zbProgramVo.zbAnnexes);
     $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
-}
+  }
 
 
 }
