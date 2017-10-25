@@ -61,7 +61,7 @@ class detailsController {
                         console.log(2);
                     }
                     //成果tab
-                    if(zbPrograms ){
+                    if(zbProgram ){
                         $scope.title=zbProgram.title;
                         $scope.content=zbProgram.content;
                         $scope.zbProgramsStatus=zbProgram.status;
