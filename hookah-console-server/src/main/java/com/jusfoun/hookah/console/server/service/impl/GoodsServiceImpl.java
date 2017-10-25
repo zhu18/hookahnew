@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.common.Pagination;
@@ -7,9 +8,7 @@ import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.GoodsMapper;
-import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.GoodsCheck;
-import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoodsHistory;
@@ -21,6 +20,7 @@ import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
@@ -716,5 +716,75 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
 
         return returnData;
+    }
+    @Override
+    public GoodsVo fetchGoodsApiInfo(String url) throws Exception {
+
+        if (url == null || "".equals(url)) {
+            throw new HookahException("未查询到商品API信息！");
+        }
+
+        GoodsVo goodsVo = new GoodsVo();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(PropertiesManager.getInstance().getProperty("api.system.url")).append(url);
+        Map<String,String> resultMap = HttpClientUtil.GetMethod(stringBuilder.toString());
+        if(resultMap!=null){
+            String result = resultMap.get("result");
+            String resultCode = resultMap.get("resultCode");
+            logger.info("请求API信息：",resultMap);
+            if(com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(resultCode) && "200".equals(resultCode)){
+
+                ApiWithBLOBs apiInfo = JSON.parseObject(JSON.parseObject(result).getString("data"), ApiWithBLOBs.class);
+
+                MgGoods.ApiInfoBean apiInfoBean = new MgGoods.ApiInfoBean();
+                this.warpperApiInfo(apiInfo, apiInfoBean);
+                goodsVo.setApiInfo(apiInfoBean);
+
+            } else {
+                logger.error("URL[" + url + "]获取API信息失败。原因：" + result);
+            }
+        }
+        return goodsVo;
+    }
+
+    private void warpperApiInfo(ApiWithBLOBs api, MgGoods.ApiInfoBean apiInfoBean){
+
+        // 请求方式
+        apiInfoBean.setApiMethod(api.getMethod() == null ? null : api.getMethod().toString());
+        // 返回格式
+        apiInfoBean.setRespDataFormat(api.getReturnFormat() == null ? null : api.getReturnFormat().toString());
+        // 是否包含分页
+        apiInfoBean.setIsPaging(api.getIsPaging() == null ? null : api.getIsPaging().toString());
+        // API类型
+        apiInfoBean.setApiType(api.getApiType() == null ? null : api.getApiType().toString());
+        // 状态
+        apiInfoBean.setStatus(api.getStatus() == null ? null : api.getStatus().toString());
+        // 版本号
+        apiInfoBean.setVersion(api.getVersion());
+        // 请求示例
+        apiInfoBean.setRespSample(api.getRequestSample());
+
+        // 请求参数
+        List<MgGoods.FiledBean> reqFiledBeanList = returnList(api.getRequestParameter());
+        apiInfoBean.setReqParamList(reqFiledBeanList);
+
+        // 返回参数
+        List<MgGoods.FiledBean> respFiledBeanList = returnList(api.getReturnParameter());
+        apiInfoBean.setRespParamList(respFiledBeanList);
+    }
+
+    private List<MgGoods.FiledBean> returnList(List<ApiParameter> apiParameterList){
+
+        List<MgGoods.FiledBean> filedBeanList = new ArrayList<>();
+        MgGoods.FiledBean filedBean ;
+        for(ApiParameter apiParameter: apiParameterList){
+            filedBean = new MgGoods.FiledBean();
+            // 请求参数名称
+            filedBean.setFieldName(apiParameter.getApiParaName());
+            // 参数描述
+            filedBean.setDescrible(apiParameter.getDesc());
+            filedBeanList.add(filedBean);
+        }
+        return filedBeanList;
     }
 }

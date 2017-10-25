@@ -55,4 +55,6 @@ public interface GoodsService extends GenericService<Goods,String> {
     public List<Goods> getListByCatId(String catId);
 
     public ReturnData confirmTransCategorInfo(String catId, String GoodsIds);
+
+    GoodsVo fetchGoodsApiInfo(String url) throws Exception;
 }
