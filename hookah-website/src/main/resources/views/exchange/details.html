@@ -91,6 +91,15 @@ var htmlPart = {
 					<div class="detail-title margin-bottom-10">
 						<span class="font-weight-bold vertical-align-middle" id="J_goodsTitle">${goodsDetails.goodsName}</span>
 					</div>
+					<div class="margin-bottom-10">
+						<%if(isNotEmpty(goodsDetails.keywordsNames)){%>
+							<%for(list in strutil.split (goodsDetails.keywordsNames,",")){%>
+							<span style="padding:5px 7px;border:1px solid #ccc;margin-right:10px;">${list}</span>
+							<%}%>
+						<%}%>
+
+
+					</div>
 					<div class="detail-info margin-bottom-10" style="border-bottom:1px solid #efefef;">
 						<span class="font-size-14" id="J_goodsBrief">${goodsDetails.goodsBrief}</span>
 					</div>

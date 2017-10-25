@@ -253,7 +253,8 @@ $('.checkTags-confirmBtn').click(function () {
 		}
 		$('.tags-val').html(html);
 		$('.tags-box').hide();
-		removeTags()
+		removeTags();
+		$('#keywords').val(getTags().toString());
 	}
 });
 removeTags()
@@ -261,6 +262,7 @@ function removeTags() {
 	$('.tags-list i').click(function () {
 		$(this).parent('.tags-list').remove();
 	});
+	$('#keywords').val(getTags().toString());
 }
 $("[name=tagsCheck]:checkbox").click(function () {
 	var nums = 0;
@@ -1147,6 +1149,23 @@ function renderData(data) {//渲染页面
 	}
 
 	$('#keywords').val(data.keywords);//标签
+	var arr1 = data.keywords.split(","),
+		arr2 = data.keywordsNames.split(","),
+		arr3 = [];
+	for (var i = 0; i < arr1.length; i++) {
+		var rst={
+			id:arr1[i],
+			name : arr2[i]
+		};
+		arr3.push(rst)
+	}
+	console.log(arr3);
+	var html = '';
+	for (list in arr3) {
+		html += '<span class="tags-list" labid="' + arr3[list].id + '">' + arr3[list].name + '<i class="fa fa-times-circle"></i></span>';
+	}
+	$('.tags-val').html(html);
+	removeTags()
 	$('#showcontent').html(getLength(data.goodsName));//商品名称长度
 	$('.showcontentes').html(getLength(data.goodsBrief));//商品名称长度
 	$('#trialRange').val(data.trialRange);//使用范围

@@ -63,22 +63,14 @@ var htmlPart = {
 										</div>
 									</td>
 								</tr><!--商品简介-->
-								<!--<tr>-->
-									<!--<td class="bar">商品标签：</td>-->
-									<!--<td>-->
-										<!--<div class="block info" style="margin: 0px 0px 3px;">-->
-											<!--分类信息为该商品定义关键词，可由多个词组组装成，使用英文“,”号隔开。-->
-										<!--</div>-->
-										<!--<div class="text-box">-->
-											<!--<input name="keywords" id="keywords" type="text">-->
-										<!--</div>-->
-									<!--</td>-->
-								<!--</tr>&lt;!&ndash;商品标签&ndash;&gt;-->
+
 								<tr>
-									<td class="bar">标签信息：</td>
+									<td class="bar">标签信息：<span class="requireds">*</span></td>
 									<td style="position: relative;">
-										<span class="tags-val"></span>
-										<span class="add-tags fa fa-plus"></span>
+										<div style="width: 100%;overflow: hidden">
+											<span class="tags-val"></span>
+											<span class="add-tags fa fa-plus"></span>
+										</div>
 										<div class="tags-box">
 											<h3 class="box-title">选择标签信息<span class="close-tag-btn fa fa-times"></span></h3>
 											<table>
@@ -89,6 +81,9 @@ var htmlPart = {
 												<span class="checkTags—btn checkTags-confirmBtn">确定</span>
 												<span class="checkTags—btn checkTags-cancelBtn">取消</span>
 											</div>
+										</div>
+										<div class="text-box" style="overflow: hidden">
+											<input name="keywords" class="keywords" id="keywords" type="text" style="opacity: 0; height:1px;position: absolute" required="required">
 										</div>
 									</td>
 								</tr><!--商品标签-->
