@@ -21,7 +21,7 @@ public class ZbRefundRecordController {
     @Resource
     ZbRefundRecordService zbRefundRecordService;
 
-    @RequestMapping(value = "/refund/goRefund")
+    @RequestMapping(value = "/api/refund/goRefund")
     @ResponseBody
     public ReturnData goRefund(
             String userId,
