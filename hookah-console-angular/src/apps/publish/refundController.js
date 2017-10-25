@@ -9,7 +9,7 @@ class refundController {
                 method: 'GET',
                 url: $rootScope.site.crowdServer + "/api/refund/selectBankInfo",
                 params: {
-                    id: $stateParams.id
+                    userId: $stateParams.id
                 }
             });
             promise.then(function (res, status, config, headers) {
