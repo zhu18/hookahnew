@@ -562,7 +562,7 @@ function missionApplyInfo(data) { //任务报名信息显示
   }
 
   //方案附件列表
-  if(data.zbProgramV !== null){
+  if(data.zbProgramVo !== null){
     var missionResultLoadfileHtml=renderLoadFile(data.zbProgramVo.zbAnnexes);
     $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
   }
