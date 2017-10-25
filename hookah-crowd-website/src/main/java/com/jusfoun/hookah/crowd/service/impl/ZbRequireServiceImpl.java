@@ -454,7 +454,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             int i = 0;
             if(zbRequirement != null){
                 if (zbRequirement.getTrusteePercent() == 100){
-                    zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
+                    zbRequirement.setStatus(ZbContants.Zb_Require_Status.WORKINGING.code.shortValue());
                 }else {
                     zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
                 }
