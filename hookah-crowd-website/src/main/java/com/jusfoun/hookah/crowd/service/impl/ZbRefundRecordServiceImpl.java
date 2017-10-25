@@ -118,7 +118,7 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
 
         try {
 
-            if(zbRefundRecord.getId() == null || zbRefundRecord.getRequirementId() == null){
+            if(zbRefundRecord.getUserId() == null || zbRefundRecord.getRequirementId() == null){
 
                 returnData.setCode(ExceptionConst.Error);
                 returnData.setMessage("查询参数有误^_^");

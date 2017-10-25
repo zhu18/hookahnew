@@ -236,10 +236,10 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 }
                 zbProgramService.updateByIdSelective(zbProgram);
                 //平台审核不通过 修改报名表状态为工作中
-                ZbRequirementApply apply = new ZbRequirementApply();
-                apply.setId(zbProgram.getApplyId());
-                apply.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.getCode().shortValue());
-                zbRequireApplyService.updateByIdSelective(apply);
+//                ZbRequirementApply apply = new ZbRequirementApply();
+//                apply.setId(zbProgram.getApplyId());
+//                apply.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.getCode().shortValue());
+//                zbRequireApplyService.updateByIdSelective(apply);
             }
             zbRequirement.setUpdateTime(new Date());
             super.updateByIdSelective(zbRequirement);

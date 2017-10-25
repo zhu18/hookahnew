@@ -203,12 +203,16 @@ function addTagsFn() {
 					html += '<tr>';
 					html += '<td style="text-align:center;width:60px;">' + item.type + '</td>';
 					html += '<td>';
-					for(var i=0;i<item.goodsLabels.length;i++){
-						if(getTags().toString().indexOf(item.goodsLabels[i].labId) >= 0){
-							html += '<label><input type="checkbox" name="tagsCheck" checked value="' + item.goodsLabels[i].labId + '" tagname="' + item.goodsLabels[i].labName + '">' + item.goodsLabels[i].labName + '</label>';
-						} else {
-							html += '<label><input type="checkbox" name="tagsCheck" value="' + item.goodsLabels[i].labId + '" tagname="' + item.goodsLabels[i].labName + '">' + item.goodsLabels[i].labName + '</label>';
+					if(item.goodsLabels && item.goodsLabels.length > 0){
+						for(var i=0;i<item.goodsLabels.length;i++){
+							if(getTags().toString().indexOf(item.goodsLabels[i].labId) >= 0){
+								html += '<label><input type="checkbox" name="tagsCheck" checked value="' + item.goodsLabels[i].labId + '" tagname="' + item.goodsLabels[i].labName + '">' + item.goodsLabels[i].labName + '</label>';
+							} else {
+								html += '<label><input type="checkbox" name="tagsCheck" value="' + item.goodsLabels[i].labId + '" tagname="' + item.goodsLabels[i].labName + '">' + item.goodsLabels[i].labName + '</label>';
+							}
 						}
+					}else{
+						html += '<span>暂无</span>';
 					}
 					html += '</td>';
 					html += '</tr>';
@@ -934,9 +938,9 @@ function submitGoodsPublish() {
 		data.goodsAdvantage = $('#textarea2').val(); //商品优势
 		data.afterSaleService = $('#textarea3').val(); //售后服务
 		data.appCase = $('#textarea4').val(); //应用案例
-		if($('.apiNewUrl').val()){
+		if($('#J-apiNewUrl').val()){
 			if(testNewApiUrl){
-				data.apiUrl=$('.apiNewUrl').val();
+				data.apiUrl=$('#J-apiNewUrl').val();
 			}else{
 				$.alert('接口链接未验证')
 			}
@@ -1246,7 +1250,13 @@ function renderData(data) {//渲染页面
 			});
 			rederDateDL()
 		} else if (data.goodsType == 1) {
-			renderApiInfo(data.apiInfo);
+			if(data.apiUrl){
+				renderNewApiInfo(data.apiInfo);
+				console.log('11111111111111')
+			}else{
+				renderApiInfo(data.apiInfo);
+				console.log('22222222222222')
+			}
 		} else if (data.goodsType == 2) {
 			renderDataModel(data.dataModel);
 		} else if (data.goodsType == 4) {
@@ -1305,7 +1315,13 @@ function renderData(data) {//渲染页面
 			});
 			rederDateDL()
 		} else if (data.goodsType == 1) {
-			renderApiInfo(data.apiInfo);
+			if(data.apiUrl){
+				renderNewApiInfo(data.apiInfo);
+				console.log('aaaaa')
+			}else{
+				renderApiInfo(data.apiInfo);
+				console.log('bbbbb')
+			}
 		} else if (data.goodsType == 2) {
 			renderDataModel(data.dataModel);
 		} else if (data.goodsType == 4) {
@@ -1658,6 +1674,9 @@ function renderApiInfo(apiInfo) { //渲染API ----- 1
 	$('.api-info-box input[name="totalNumAttr"]').val(apiInfo.respDataMapping.totalNumAttr);
 	$('.api-info-box input[name="updateFreq"]').val(apiInfo.updateFreq);
 	$('.api-info-box input[name="dataNumDivRowNum"]').val(apiInfo.dataNumDivRowNum);
+}
+function renderNewApiInfo(apiInfo){
+	console.log('1231313123131:'+apiInfo)
 }
 function renderDataModel(dataModel) { //渲染数据模型---2
 	console.log(JSON.stringify(dataModel));
