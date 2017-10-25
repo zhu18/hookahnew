@@ -7,7 +7,6 @@ class detailsController {
         console.log($stateParams.id);
         $scope.apply={
         };
-
         $scope.currDate=$filter('format')(new Date(), 'yyyy-MM-dd HH:mm:ss');
         $scope.screen = function () {
             let promise = $http({
@@ -41,6 +40,7 @@ class detailsController {
                     $scope.checkRemark=zbRequirement.checkRemark;
                     $scope.status=zbRequirement.status;
                     $scope.id=zbRequirement.id;
+                    $scope.userId=zbRequirement.userId;
                     //进度时间
                     if(mgZbRequireStatus){
                         $scope.addTime=mgZbRequireStatus.addTime;//发布需求
