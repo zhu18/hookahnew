@@ -318,9 +318,11 @@ function GetUrlValue(name) {
   if (r!=null) return (r[2]); return null;
 }
 
-function noRealName() {
+function noRealName(fn) {
   if( userType == 2 || userType == 4 ){
-
+		if(fn!==undefined){
+      fn()
+		}
 
   }else{
     $.confirm('您还没有实名认证，请去进行实名认证？ ', null, function (type) {

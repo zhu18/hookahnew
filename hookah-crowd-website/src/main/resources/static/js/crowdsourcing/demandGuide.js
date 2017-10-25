@@ -87,7 +87,8 @@ $('.des').on('mouseenter',function () {
 $(document).on('click','.j_signUp',function () {
 
   if(userType !== -1){ //已经登录
-    isAuthProvider()
+    noRealName(isAuthProvider);//是否实名认证，未实名认证跳转
+
   }else{ //未登录
     window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/crowdsourcing/demandGuide?id='+crowdSourcingId);
   }
@@ -95,7 +96,7 @@ $(document).on('click','.j_signUp',function () {
 
 });
 
-function isAuthProvider() {  //已经登录
+function isAuthProvider() {  //是否已认证
   $.ajax({
     url: '/api/isAuthProvider',
     type: 'post',
