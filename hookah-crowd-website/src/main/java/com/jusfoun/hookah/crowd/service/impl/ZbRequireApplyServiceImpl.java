@@ -65,7 +65,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("requirementId", requirementId));
         ZbRequirement zbRequirement = zbRequirementMapper.selectForDetail(requirementId);
-        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
+        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn()) == null ? new MgZbRequireStatus() : mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
         List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
         ZbProgram zbProgram = null;
         List<ZbAnnex> reqProgram = new ArrayList<>();
