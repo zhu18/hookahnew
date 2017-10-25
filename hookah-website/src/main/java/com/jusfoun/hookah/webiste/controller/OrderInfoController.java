@@ -58,6 +58,12 @@ public class OrderInfoController extends BaseController {
     private RedisOperate redisOperate;
 
 
+    /**
+     * 购物车确定订单信息
+     * @param cartIds
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/order/orderInfo", method = RequestMethod.POST)
     public String orderInfo(String[] cartIds,Model model) {
         try {
@@ -82,6 +88,9 @@ public class OrderInfoController extends BaseController {
             }
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",carts);
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            model.addAttribute("perOrderInfoNum",uuid);
+            redisOperate.set("orderConfirm:"+uuid,"1",0);
             return "/order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
