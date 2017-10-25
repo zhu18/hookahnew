@@ -44,7 +44,7 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
 
 
 function renderPage(data) {
-  let insertRequirementsData = data;
+  var insertRequirementsData = data;
   $('.j_title').html(insertRequirementsData.zbRequirementSPVo.title);
   $('.j_username').html(insertRequirementsData.zbRequirementSPVo.contactName);
   $('.j_phone').html(insertRequirementsData.zbRequirementSPVo.contactPhone);
@@ -553,11 +553,16 @@ function missionApplyInfo(data) { //任务报名信息显示
   $('.j_hasApply').html(data.zbRequirementApplyVo.applyNumber);
 
   //任务成果内容
-  $('.j_applyDeadline').html(data.zbRequirementSPVo.deliveryDeadline);
-  $('.missionTitle').html(data.zbProgramVo.title).attr('acceptanceAdviceId',data.zbProgramVo.id);
+  if(data.zbProgramVo!==null){
+    $('.j_applyDeadline').html(data.zbRequirementSPVo.deliveryDeadline);
+    $('.missionTitle').html(data.zbProgramVo.title).attr('acceptanceAdviceId',data.zbProgramVo.id);
+    $('.missionResultDes').html(data.zbProgramVo.content);
+  }
 
-  $('.missionResultDes').html(data.zbProgramVo.content);
   //方案附件列表
+
+
+
   let missionResultLoadfileHtml=renderLoadFile(data.zbProgramVo.zbAnnexes);
 
 
