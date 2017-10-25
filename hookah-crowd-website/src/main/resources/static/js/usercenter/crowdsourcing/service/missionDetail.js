@@ -562,11 +562,12 @@ function missionApplyInfo(data) { //任务报名信息显示
   //方案附件列表
 
 
+  if(data.zbProgramV !== null){
+    var missionResultLoadfileHtml=renderLoadFile(data.zbProgramVo.zbAnnexes);
+    $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
+}
 
-  let missionResultLoadfileHtml=renderLoadFile(data.zbProgramVo.zbAnnexes);
 
-
-  $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
 }
 $('.j_checkAdviceDetail').on('mouseover', function () { //鼠标离开描述显示工具栏
   $('.checkAdviceDetailBox').show();
