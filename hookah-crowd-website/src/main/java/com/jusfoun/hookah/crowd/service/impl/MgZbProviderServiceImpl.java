@@ -230,27 +230,28 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             if (mgZbProvider == null) {
                 MgZbProvider mzp = new MgZbProvider();
                 BeanUtils.copyProperties(vo, mzp);
-
+                String userId = this.getCurrentUser().getUserId();
+                User user = userService.selectById(userId);
                 if (this.getCurrentUser().getUserType().equals(4)) {
                     Organization organization = organizationService.findOrgByUserId(this.getCurrentUser().getUserId());
                     mzp.setAuthType(ZbContants.ProviderAuthType.COMPANY.code);
                     mzp.setUpname(organization.getOrgName());
                     mzp.setUcity((organization.getRegion() == null || "".equals(organization.getRegion())) ? "" : DictionaryUtil.getRegionById(organization.getRegion()).getMergerName());
                     mzp.setLawPersonName(organization.getLawPersonName());
-                    mzp.setPhoneNum(organization.getOrgPhone());
+                    mzp.setPhoneNum((organization.getOrgPhone() == null ||
+                            organization.getOrgPhone().equals("")) ? user.getMobile() : organization.getOrgPhone());
                     mzp.setRegisterTime(DateUtil.getSimpleDate(new Date()));
                     mzp.setRegisterAddr((organization.getRegion() == null || "".equals(organization.getRegion())) ? "" : DictionaryUtil.getRegionById(organization.getRegion()).getMergerName());
                     mzp.setCreditCode(organization.getCreditCode());
                     mzp.setScopeOfBuss(organization.getIndustry());
                     mzp.setAuthType(4);//企业
                 } else if (this.getCurrentUser().getUserType().equals(2)) {
-                    String userId = this.getCurrentUser().getUserId();
-                    User user = userService.selectById(userId);
                     UserDetail userDetail = userDetailService.selectById(user.getUserId());
                     mzp.setAuthType(ZbContants.ProviderAuthType.PERSON.code);
                     mzp.setRegisterTime(DateUtil.getSimpleDate(new Date()));
-                    mzp.setPhoneNum(user.getContactPhone());
-                    mzp.setUpname(user.getUserName());
+                    mzp.setPhoneNum(user.getMobile());
+                    mzp.setUpname((userDetail.getRealName() == null ||
+                            userDetail.getRealName().equals("")) ? user.getUserName() : userDetail.getRealName());
                     mzp.setRegisterAddr(user.getContactAddress());
                     mzp.setAuthType(2);//个人
                 } else {
