@@ -10,5 +10,5 @@ public interface ZbRefundRecordService extends GenericService<ZbRefundRecord, Lo
 
     ReturnData selectRefundInfo(String userId, String requirementId);
 
-    int insertData(ZbRefundRecord zbRefundRecord);
+    ReturnData insertData(ZbRefundRecord zbRefundRecord);
 }

@@ -200,8 +200,8 @@ public class ZbContants {
     public enum ZbRequireMentApplyStatus {
 
         /**
-         * 状态；0 ：已报名；1：已被选中(工作中) 2:未中标  3：评审中 4：验收中 5：待付款 6：待评价 7：驳回失败(交易取消) 8：交易完成
-         *      9:违约失败(交易取消)
+         * 状态；0 ：已报名；1：已被选中(工作中) 2:未中标  3：评审中 4：验收中 5：待付款 6：待评价
+         * 7：驳回失败(交易取消) 8：交易完成 9:违约失败(交易取消)
          **/
 
         APPLY_SUCCESS(0),
@@ -218,6 +218,32 @@ public class ZbContants {
         public Integer code;
 
         ZbRequireMentApplyStatus(Integer code) {
+            this.code = code;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+    }
+
+    /**
+     * 平台付款类型
+        1流标退款
+        2违规到期未提交成果退款
+        3需求驳回退款
+        4付款给服务商
+     */
+    public enum PlatPayType {
+
+        FAIL_TO_SOLD(1),
+        DATE_EXPIRE(2),
+        BREA_FAILE(3),
+        PAY_TO_PROVIDER(4)
+        ;
+
+        public Integer code;
+
+        PlatPayType(Integer code) {
             this.code = code;
         }
 

@@ -361,13 +361,13 @@ public class ZbRefundRecord extends GenericModel {
     }
 
 
-    private String refundTime;
+    private String payTime;
 
-    public String getRefundTime() {
-        return refundTime;
+    public String getPayTime() {
+        return payTime;
     }
 
-    public void setRefundTime(String refundTime) {
-        this.refundTime = refundTime;
+    public void setPayTime(String payTime) {
+        this.payTime = payTime;
     }
 }

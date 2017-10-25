@@ -12,13 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 @Controller
-public class RefundRecordController {
+public class ZbRefundRecordController {
 
-    private static Logger logger = LoggerFactory.getLogger(RefundRecordController.class);
-
+    private static Logger logger = LoggerFactory.getLogger(ZbRefundRecordController.class);
 
     @Resource
     ZbRefundRecordService zbRefundRecordService;
@@ -31,19 +29,12 @@ public class RefundRecordController {
         returnData.setCode(ExceptionConst.Success);
         try {
 
-            zbRefundRecord.setAddTime(new Date());
-            zbRefundRecord.setStatus(1);
-            int n = zbRefundRecordService.insertData(zbRefundRecord);
-            if(n != 1){
-                returnData.setCode(ExceptionConst.Error);
-                returnData.setMessage("确认付款操作失败^_^");
-                return returnData;
-            }
-
-            returnData.setMessage("确认付款操作成功^_^");
-
+            returnData = zbRefundRecordService.insertData(zbRefundRecord);
         }catch (Exception e){
-            logger.error("确认付款操作异常{}", e);
+            logger.error("确认付款/确认退款操作异常{}", e);
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("确认付款/确认退款操作异常");
+            return returnData;
         }
 
         return returnData;
@@ -56,9 +47,5 @@ public class RefundRecordController {
         //根据待退款的用户ID，获取绑定的银行卡信息
         return zbRefundRecordService.selectRefundInfo(userId, requiredmentId);
     }
-
-
-
-
 
 }
