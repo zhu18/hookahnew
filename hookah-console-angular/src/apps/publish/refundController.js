@@ -21,6 +21,7 @@ class refundController {
                     $scope.cardOwner=res.data.data.cardOwner;
                     $scope.cardCode=res.data.data.cardCode;
                     $scope.addTime=res.data.data.addTime;
+                    $scope.money=res.data.data2;
                     $scope.addTime=res.data.data.addTime;
 
                 } else {

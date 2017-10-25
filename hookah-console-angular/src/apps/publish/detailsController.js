@@ -20,7 +20,7 @@ class detailsController {
                 if (res.data.code == '1') {
                     var zbRequirement= res.data.data.zbRequirement || null; //基本信息
                     var zbRequirementApplies= res.data.data.zbRequirementApplies || null; //报名的人
-                    var zbPrograms= res.data.data.zbPrograms || null;//成果
+                    var zbProgram= res.data.data.zbProgram || null;//成果
                     var zbComments= res.data.data.zbComments || null;//评价
                     $scope.zbAnnexes= res.data.data.zbAnnexes || null;//需求材料
                     $scope.reqProgram= res.data.data.reqProgram || null;//需求材料
@@ -61,12 +61,11 @@ class detailsController {
                         console.log(2);
                     }
                     //成果tab
-                    if(zbPrograms && zbPrograms.length>0){
-                        var item=zbPrograms[0];
-                        $scope.title=item.title;
-                        $scope.content=item.content;
-                        $scope.zbProgramsStatus=item.status;
-                        $scope.programId=item.id;
+                    if(zbPrograms ){
+                        $scope.title=zbProgram.title;
+                        $scope.content=zbProgram.content;
+                        $scope.zbProgramsStatus=zbProgram.status;
+                        $scope.programId=zbProgram.id;
                         $scope.isZbProgramsShow=false;
                     }else {
                         $scope.isZbProgramsShow=true;
