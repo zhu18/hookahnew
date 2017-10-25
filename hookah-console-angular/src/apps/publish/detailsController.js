@@ -187,37 +187,37 @@ class detailsController {
 
             } else {
                 alert("shidehdheidheidh");
-                // var promise = $http({
-                //     method: 'GET',
-                //     url: $rootScope.site.crowdServer + "/api/require/updateStatus",
-                //     params: {
-                //         id:$scope.id,
-                //         status:5,
-                //         applyDeadline:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
-                //     }
-                // });
-                // promise.then(function (res, status, config, headers) {
-                //     console.log('数据在这里');
-                //     console.log(res);
-                //     if (res.data.code == '1') {
-                //         var modalInstance =$rootScope.openConfirmDialogModal("发布成功！");
-                //         modalInstance.result.then(function () {
-                //             $state.go('publish.list');
-                //         }, function () {
-                //             $state.go('publish.list');
-                //         });
-                //     } else {
-                //
-                //         var modalInstance =$rootScope.openConfirmDialogModal("发布失败！");
-                //         modalInstance.result.then(function () {
-                //             $state.go('publish.list');
-                //         }, function () {
-                //             $state.go('publish.list');
-                //         });
-                //     }
-                //     $rootScope.loadingState = false;
-                //     growl.addSuccessMessage("订单数据加载完毕。。。");
-                // });
+                var promise = $http({
+                    method: 'GET',
+                    url: $rootScope.site.crowdServer + "/api/require/updateStatus",
+                    params: {
+                        id:$scope.id,
+                        status:5,
+                        applyDeadline:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
+                    }
+                });
+                promise.then(function (res, status, config, headers) {
+                    console.log('数据在这里');
+                    console.log(res);
+                    if (res.data.code == '1') {
+                        var modalInstance =$rootScope.openConfirmDialogModal("发布成功！");
+                        modalInstance.result.then(function () {
+                            $state.go('publish.list');
+                        }, function () {
+                            $state.go('publish.list');
+                        });
+                    } else {
+
+                        var modalInstance =$rootScope.openConfirmDialogModal("发布失败！");
+                        modalInstance.result.then(function () {
+                            $state.go('publish.list');
+                        }, function () {
+                            $state.go('publish.list');
+                        });
+                    }
+                    $rootScope.loadingState = false;
+                    growl.addSuccessMessage("订单数据加载完毕。。。");
+                });
             }
 
         };
