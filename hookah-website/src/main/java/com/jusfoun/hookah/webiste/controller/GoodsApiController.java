@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -29,15 +30,17 @@ public class GoodsApiController extends BaseController {
     public ReturnData getGoodsTypeTree(String url) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
-        GoodsVo goodsVo = new GoodsVo();
+//        GoodsVo goodsVo = new GoodsVo();
+        MgGoods.ApiInfoBean apiInfoBean = new MgGoods.ApiInfoBean();
         try {
-            goodsVo = goodsService.fetchGoodsApiInfo(url);
+            GoodsVo goodsVo = goodsService.fetchGoodsApiInfo(url);
+            apiInfoBean = goodsVo.getApiInfo();
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.getMessage());
             e.printStackTrace();
         }
-        return ReturnData.success(goodsVo);
+        return ReturnData.success(apiInfoBean);
     }
 
 }

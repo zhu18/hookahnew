@@ -393,7 +393,99 @@ var htmlPart = {
 						</div><!--离线数据-->
 						<div class="struct selects goodsTypeLine api-info-box">
 							<!--<h1 class="">API信息：</h1>-->
-							<table>
+							<table class="apiNewUrl">
+								<tbody>
+								<tr>
+									<td class="bar">接口链接：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input name="apiNewUrl" id="J-apiNewUrl" type="text" required="required"> <span class="btn btn-full-blue apiNewUrl-btn">获取</span>
+										</div>
+									</td>
+								</tr> <!--接口链接-->
+								</tbody>
+							</table>
+							<table class="apiNew" style="display: none;">
+								<tbody>
+								<tr>
+									<td class="bar">请求方式：</td>
+									<td>
+										<div class="apiMethod"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">返回格式：</td>
+									<td>
+										<div class="respDataFormat"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">是否包含分页：</td>
+									<td>
+										<div class=" isPaging"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">API类型：</td>
+									<td>
+										<div class="apiType"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">状态：</td>
+									<td>
+										<div class="status"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">版本号：</td>
+									<td>
+										<div class="version"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">请求示例：</td>
+									<td>
+										<div class="reqSample"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">请求参数：</td>
+									<td>
+										<div class="table-box">
+											<table class="reqParamList">
+												<thead>
+												<tr>
+													<th>名称</th>
+													<th>描述</th>
+												</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">返回说明：</td>
+									<td>
+										<div class="table-box">
+											<table class="respParamList">
+												<thead>
+												<tr>
+													<th>名称</th>
+													<th>描述</th>
+												</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+							<table class="apiOld" style="display: none;">
 								<tbody>
 								<tr>
 									<td class="bar">接口类型：</td>
@@ -724,24 +816,6 @@ var htmlPart = {
 									<td>
 										<table>
 											<tbody>
-											<!--<tr>-->
-												<!--<td class="bar">模型类型：<span class="requireds">*</span></td>-->
-												<!--<td>-->
-													<!--<div class="select-box">-->
-														<!--<select name="modelType">-->
-															<!--<option value="0">分类</option>-->
-															<!--<option value="1">回归</option>-->
-															<!--<option value="2">识别</option>-->
-															<!--<option value="3">预测</option>-->
-															<!--<option value="4">聚类</option>-->
-															<!--<option value="5">时间序列</option>-->
-															<!--<option value="6">关联降维</option>-->
-															<!--<option value="7">优化</option>-->
-															<!--<option value="8">评估</option>-->
-														<!--</select>-->
-													<!--</div>-->
-												<!--</td>-->
-											<!--</tr>-->
 											<tr>
 												<td class="bar">复杂度：<span class="requireds">*</span></td>
 												<td>
