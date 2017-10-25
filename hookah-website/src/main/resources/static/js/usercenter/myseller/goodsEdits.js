@@ -942,7 +942,8 @@ function submitGoodsPublish() {
 			if(testNewApiUrl){
 				data.apiUrl=$('#J-apiNewUrl').val();
 			}else{
-				$.alert('接口链接未验证')
+				$.alert('接口链接未验证');
+				return;
 			}
 		}else{
 			data.apiInfo = {};
@@ -1161,16 +1162,19 @@ function renderData(data) {//渲染页面
 		$('#isLocal').val('0');
 	}
 
-	$('#keywords').val(data.keywords);//标签
-	var arr1 = data.keywords.split(","),
-		arr2 = data.keywordsNames.split(","),
-		arr3 = [];
-	for (var i = 0; i < arr1.length; i++) {
-		var rst={
-			id:arr1[i],
-			name : arr2[i]
-		};
-		arr3.push(rst)
+
+	if(data.keywordsNames){
+		$('#keywords').val(data.keywords);//标签
+		var arr1 = data.keywords.split(","),
+			arr2 = data.keywordsNames.split(","),
+			arr3 = [];
+		for (var i = 0; i < arr1.length; i++) {
+			var rst={
+				id:arr1[i],
+				name : arr2[i]
+			};
+			arr3.push(rst)
+		}
 	}
 	console.log(arr3);
 	var html = '';
@@ -1251,9 +1255,12 @@ function renderData(data) {//渲染页面
 			rederDateDL()
 		} else if (data.goodsType == 1) {
 			if(data.apiUrl){
+				$('#J-apiNewUrl').val(data.apiUrl)
 				renderNewApiInfo(data.apiInfo);
 				console.log('11111111111111')
 			}else{
+				$('.apiNewUrl').hide();
+				$('.apiOld').show();
 				renderApiInfo(data.apiInfo);
 				console.log('22222222222222')
 			}
@@ -1676,7 +1683,8 @@ function renderApiInfo(apiInfo) { //渲染API ----- 1
 	$('.api-info-box input[name="dataNumDivRowNum"]').val(apiInfo.dataNumDivRowNum);
 }
 function renderNewApiInfo(apiInfo){
-	console.log('1231313123131:'+apiInfo)
+
+	ApiUrlInfo(apiInfo)
 }
 function renderDataModel(dataModel) { //渲染数据模型---2
 	console.log(JSON.stringify(dataModel));
@@ -2041,54 +2049,7 @@ $('.apiNewUrl-btn').click(function(){
 			},
 			success: function (data) {
 				if (data.code == 1) {
-					$('.apiMethod').html(data.data.apiMethod == '1' ? 'GET' : 'POST');
-					$('.respDataFormat').html(data.data.respDataFormat == '1' ? 'JSON' : 'XML');
-					$('.isPaging').html(data.data.isPaging == '1' ?'是':'否');
-					var status = '';
-					switch (data.data.status)
-					{
-						case '0':
-							status = "删除";
-							break;
-						case '1':
-							status = "草稿";
-							break;
-						case '2':
-							status = "待测试";
-							break;
-						case '3':
-							status = "测试通过";
-							break;
-						case '4':
-							status = "测试未通过";
-							break;
-					}
-					$('.status').html(status);
-					$('.apiType').html( data.data.apiType== '1' ? 'rest' : 'wsdl');
-					$('.version').html(data.data.version);
-					$('.reqSample').html(data.data.reqSample?data.data.reqSample:'无');
-					var html = '';
-
-					for(var i=0;i<data.data.reqParamList.length;i++){
-						html += '<tr class="parent-tr"><td>'+data.data.reqParamList[i].fieldName+'</td><td>'+data.data.reqParamList[i].describle+'</td></tr>';
-					}
-					$('.reqParamList tbody').html(html);
-					var html2 = '';
-					data.data.respParamList.forEach(function(item){
-						html2 += '<tr class="parent-tr"><td>'+item.fieldName+'</td><td>'+item.describle+'</td></tr>';
-					});
-					$('.respParamList tbody').html(html2);
-					$('.apiNew').show();
-					testNewApiUrl = true;
-					$('#J-apiNewUrl').on('input onporpertychange', function () {
-						if($('#J-apiNewUrl').val() != apiUrl){
-							$('.apiNew').hide();
-							testNewApiUrl = false;
-						}else{
-							$('.apiNew').show();
-							testNewApiUrl = true;
-						}
-					});
+					ApiUrlInfo(data.data)
 
 				} else {
 					$.alert(data.message);
@@ -2100,8 +2061,55 @@ $('.apiNewUrl-btn').click(function(){
 		$.alert('请输入接口链接');
 	}
 });
-function changeNewApiUrl(){
+function ApiUrlInfo(data){
+	$('.apiMethod').html(data.apiMethod == '1' ? 'GET' : 'POST');
+	$('.respDataFormat').html(data.respDataFormat == '1' ? 'JSON' : 'XML');
+	$('.isPaging').html(data.isPaging == '1' ?'是':'否');
+	var status = '';
+	switch (data.status)
+	{
+		case '0':
+			status = "删除";
+			break;
+		case '1':
+			status = "草稿";
+			break;
+		case '2':
+			status = "待测试";
+			break;
+		case '3':
+			status = "测试通过";
+			break;
+		case '4':
+			status = "测试未通过";
+			break;
+	}
+	$('.status').html(status);
+	$('.apiType').html( data.apiType== '1' ? 'rest' : 'wsdl');
+	$('.version').html(data.version);
+	$('.reqSample').html(data.reqSample?data.reqSample:'无');
+	var html = '';
 
+	for(var i=0;i<data.reqParamList.length;i++){
+		html += '<tr class="parent-tr"><td>'+data.reqParamList[i].fieldName+'</td><td>'+data.reqParamList[i].describle+'</td></tr>';
+	}
+	$('.reqParamList tbody').html(html);
+	var html2 = '';
+	data.respParamList.forEach(function(item){
+		html2 += '<tr class="parent-tr"><td>'+item.fieldName+'</td><td>'+item.describle+'</td></tr>';
+	});
+	$('.respParamList tbody').html(html2);
+	$('.apiNew').show();
+	testNewApiUrl = true;
+	$('#J-apiNewUrl').on('input onporpertychange', function () {
+		if($('#J-apiNewUrl').val() != apiUrl){
+			$('.apiNew').hide();
+			testNewApiUrl = false;
+		}else{
+			$('.apiNew').show();
+			testNewApiUrl = true;
+		}
+	});
 }
 
 

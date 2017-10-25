@@ -117,6 +117,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
         if(HookahConstants.GOODS_TYPE_1.equals(obj.getGoodsType())){
             MgGoods.PackageApiInfoBean packageApiInfoBean = new MgGoods.PackageApiInfoBean();
+            if(!Objects.isNull(obj.getApiInfo()))
             BeanUtils.copyProperties(obj.getApiInfo(),packageApiInfoBean);
             packageApiInfoBean.setApiUrl(PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
                     obj.getGoodsId() + "/" + (obj.getVer()==null?"V0":obj.getVer()) + "/" + obj.getCatId());
@@ -267,7 +268,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
                     apiUrl = PropertiesManager.getInstance().getProperty("package.apiInfo.apiUrl") +
                             obj.getGoodsId() + "/" + obj.getVer() + "/" + obj.getCatId();
                 }
-
+                if(!Objects.isNull(obj.getApiInfo()))
                 BeanUtils.copyProperties(obj.getApiInfo(),packageApiInfoBean);
                 packageApiInfoBean.setApiUrl(apiUrl);
                 mgGoods.setPackageApiInfo(packageApiInfoBean);
