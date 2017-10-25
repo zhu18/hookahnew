@@ -20,7 +20,7 @@ class detailsController {
                 if (res.data.code == '1') {
                     var zbRequirement= res.data.data.zbRequirement || null; //基本信息
                     var zbRequirementApplies= res.data.data.zbRequirementApplies || null; //报名的人
-                    var zbPrograms= res.data.data.zbPrograms || null;//成果
+                    var zbProgram= res.data.data.zbProgram || null;//成果
                     var zbComments= res.data.data.zbComments || null;//评价
                     $scope.zbAnnexes= res.data.data.zbAnnexes || null;//需求材料
                     $scope.reqProgram= res.data.data.reqProgram || null;//需求材料
@@ -61,12 +61,11 @@ class detailsController {
                         console.log(2);
                     }
                     //成果tab
-                    if(zbPrograms && zbPrograms.length>0){
-                        var item=zbPrograms[0];
-                        $scope.title=item.title;
-                        $scope.content=item.content;
-                        $scope.zbProgramsStatus=item.status;
-                        $scope.programId=item.id;
+                    if(zbProgram ){
+                        $scope.title=zbProgram.title;
+                        $scope.content=zbProgram.content;
+                        $scope.zbProgramsStatus=zbProgram.status;
+                        $scope.programId=zbProgram.id;
                         $scope.isZbProgramsShow=false;
                     }else {
                         $scope.isZbProgramsShow=true;
@@ -188,37 +187,37 @@ class detailsController {
 
             } else {
                 alert("shidehdheidheidh");
-                // var promise = $http({
-                //     method: 'GET',
-                //     url: $rootScope.site.crowdServer + "/api/require/updateStatus",
-                //     params: {
-                //         id:$scope.id,
-                //         status:5,
-                //         applyDeadline:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
-                //     }
-                // });
-                // promise.then(function (res, status, config, headers) {
-                //     console.log('数据在这里');
-                //     console.log(res);
-                //     if (res.data.code == '1') {
-                //         var modalInstance =$rootScope.openConfirmDialogModal("发布成功！");
-                //         modalInstance.result.then(function () {
-                //             $state.go('publish.list');
-                //         }, function () {
-                //             $state.go('publish.list');
-                //         });
-                //     } else {
-                //
-                //         var modalInstance =$rootScope.openConfirmDialogModal("发布失败！");
-                //         modalInstance.result.then(function () {
-                //             $state.go('publish.list');
-                //         }, function () {
-                //             $state.go('publish.list');
-                //         });
-                //     }
-                //     $rootScope.loadingState = false;
-                //     growl.addSuccessMessage("订单数据加载完毕。。。");
-                // });
+                var promise = $http({
+                    method: 'GET',
+                    url: $rootScope.site.crowdServer + "/api/require/updateStatus",
+                    params: {
+                        id:$scope.id,
+                        status:5,
+                        applyDeadline:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
+                    }
+                });
+                promise.then(function (res, status, config, headers) {
+                    console.log('数据在这里');
+                    console.log(res);
+                    if (res.data.code == '1') {
+                        var modalInstance =$rootScope.openConfirmDialogModal("发布成功！");
+                        modalInstance.result.then(function () {
+                            $state.go('publish.list');
+                        }, function () {
+                            $state.go('publish.list');
+                        });
+                    } else {
+
+                        var modalInstance =$rootScope.openConfirmDialogModal("发布失败！");
+                        modalInstance.result.then(function () {
+                            $state.go('publish.list');
+                        }, function () {
+                            $state.go('publish.list');
+                        });
+                    }
+                    $rootScope.loadingState = false;
+                    growl.addSuccessMessage("订单数据加载完毕。。。");
+                });
             }
 
         };

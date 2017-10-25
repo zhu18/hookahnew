@@ -264,6 +264,9 @@ public class GoodsApi extends BaseController{
             }
             MgGoods mgGoods = mgGoodsService.selectById(goodsId);
             if(mgGoods != null){
+                if(StringUtils.isNotBlank(goods.getApiUrl())){
+                    mgGoods.setApiInfo(goodsService.fetchGoodsApiInfo(goods.getApiUrl()).getApiInfo());
+                }
                 BeanUtils.copyProperties(mgGoods, goodsVo);
             }
 

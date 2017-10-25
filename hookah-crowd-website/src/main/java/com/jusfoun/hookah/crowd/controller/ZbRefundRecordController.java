@@ -23,11 +23,28 @@ public class ZbRefundRecordController {
 
     @RequestMapping(value = "/api/refund/goRefund")
     @ResponseBody
-    public ReturnData goRefund(ZbRefundRecord zbRefundRecord) {
+    public ReturnData goRefund(
+            String userId,
+            String requirementId,
+            String refundAmount,
+            String bankCardNum,
+            String desc,
+            String payTime,
+            String bankName
+    ) {
 
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
         try {
+
+            ZbRefundRecord zbRefundRecord = new ZbRefundRecord();
+            zbRefundRecord.setUserId(userId);
+            zbRefundRecord.setRequirementId(Long.parseLong(requirementId));
+            zbRefundRecord.setRefundAmount(Long.parseLong(refundAmount));
+            zbRefundRecord.setBankCardNum(bankCardNum);
+            zbRefundRecord.setDescs(desc);
+            zbRefundRecord.setPayTime(payTime);
+            zbRefundRecord.setBankName(bankName);
 
             returnData = zbRefundRecordService.insertData(zbRefundRecord);
         }catch (Exception e){

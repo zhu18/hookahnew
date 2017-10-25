@@ -98,7 +98,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         Map<String, Object> map = new HashMap<>();
         map.put("zbRequirement", zbRequirement);
         map.put("zbRequirementApplies", zbRequirementApplies);
-        map.put("zbProgram", zbProgram != null ? zbProgram : "");
+        map.put("zbProgram", zbProgram);
         map.put("zbAnnexes", zbAnnexes != null ? zbAnnexes : "");
         map.put("zbComments", zbComments);
         map.put("mgZbRequireStatus", mgZbRequireStatus);

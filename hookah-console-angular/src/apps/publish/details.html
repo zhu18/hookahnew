@@ -198,7 +198,7 @@
                                            <input type="radio" value="{{item.id}}" id="{{item.id}}" name="applyId" ng-model="apply.id">
                                            <label for="{{item.id}}"></label>
                                        </div>
-                                       <div data-ng-if="status ! = 6">
+                                       <div data-ng-if="status != 6">
                                            <span class="label label-primary" disabled data-ng-show="item.status!=0 && item.status!=2">已被选中</span>
                                            <button class="btn btn-primary"  disabled  data-ng-show="item.status==0 ">选中</button>
                                        </div>
@@ -286,7 +286,7 @@
                                 <button class="btn btn-default">返回</button>
                             </div>
                             <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==3">
-                                <button class="btn btn-primary" data-ng-click="check()">去付款</button>
+                                <button class="btn btn-primary" data-ng-click="refund(id,userId)">去付款</button>
                                 <button class="btn btn-default">返回</button>
                             </div>
                             <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==5 && status==16">

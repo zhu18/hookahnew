@@ -21,7 +21,7 @@ class refundController {
                     $scope.cardOwner=res.data.data.cardOwner;
                     $scope.cardCode=res.data.data.cardCode;
                     $scope.addTime=res.data.data.addTime;
-                    $scope.addTime=res.data.data.addTime;
+                    $scope.money=res.data.data2;
 
                 } else {
                 }
@@ -30,14 +30,17 @@ class refundController {
             });
         };
         $scope.reader();
-        $scope.auditing=function (checkStatus) {
+        $scope.auditing=function () {
             var promise = $http({
-                method: 'GET',
-                url: $rootScope.site.crowdServer + "/api/require/requirementCheck",
+                method: 'POST',
+                url: $rootScope.site.crowdServer + "/api/refund/goRefun",
                 params: {
-                    requirementId:$scope.id,
-                    checkContent:$scope.checkContent,
-                    checkStatus:checkStatus
+                    userId: $stateParams.userId,
+                    requirementId:$stateParams.id,
+                    refundAmount:$scope.money,
+                    bankCardNum:$scope.cardCode,
+                    desc:$scope.desc,
+                    payTime:$scope.addTime
                 }
             });
             promise.then(function (res, status, config, headers) {
@@ -63,6 +66,53 @@ class refundController {
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
         };
+
+        // 日历插件开始
+
+        $scope.inlineOptions = {
+            customClass: getDayClass,
+            minDate: new Date(),
+            // maxDate: new Date(data),
+            showWeeks: true
+        };
+        $scope.open1 = function () {
+            $scope.popup1.opened = true;
+        };
+        $scope.popup1 = {
+            opened: false
+        };
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var afterTomorrow = new Date();
+        afterTomorrow.setDate(tomorrow.getDate() + 1);
+        $scope.events = [
+            {
+                date: tomorrow,
+                status: 'full'
+            },
+            {
+                date: afterTomorrow,
+                status: 'partially'
+            }
+        ];
+        function getDayClass(data) {
+            var date = data.date,
+                mode = data.mode;
+            if (mode === 'day') {
+                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+                for (var i = 0; i < $scope.events.length; i++) {
+                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                    if (dayToCheck === currentDay) {
+                        return $scope.events[i].status;
+                    }
+                }
+            }
+            return '';
+        }
+
+        // 日历插件结束
     }
 }
 
