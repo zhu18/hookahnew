@@ -191,8 +191,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     @Override
     public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline , Long applyId ,Long programId ,String checkAdvice) {
         try {
-            ZbRequirement zbRequirement = new ZbRequirement();
-            zbRequirement.setId(Long.parseLong(id));
+            ZbRequirement zbRequirement = this.selectById(Long.parseLong(id));
             zbRequirement.setStatus(Short.parseShort(status));
             zbRequirement.setPressTime(new Date());
             if (applyDeadline!=null){
@@ -454,7 +453,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             ZbRequirement zbRequirement = this.selectById(requirementId);
             int i = 0;
             if(zbRequirement != null){
-                zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
+                if (zbRequirement.getTrusteePercent() == 100){
+                    zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
+                }else {
+                    zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
+                }
                 i = this.updateById(zbRequirement);
             }
             return ReturnData.success(i);
