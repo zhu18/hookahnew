@@ -317,4 +317,22 @@ function GetUrlValue(name) {
   var r = window.location.search.substr(1).match(reg);
   if (r!=null) return (r[2]); return null;
 }
-//用法
+
+function noRealName() {
+  if( userType == 2 || userType == 4 ){
+
+
+  }else{
+    $.confirm('您还没有实名认证，请去进行实名认证？ ', null, function (type) {
+      if (type == 'yes') {
+        window.location.href = host.loginUrl + encodeURIComponent(host.website+'/usercenter/nameAuthentication');
+        this.hide();
+      } else {
+        window.location.href = host.loginUrl + encodeURIComponent(host.website+'/usercenter/nameAuthentication');
+        this.hide();
+
+      }
+    })
+	}
+}
+

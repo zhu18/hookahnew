@@ -4,6 +4,7 @@
 
 
 let crowdSourcingId = GetUrlValue('id');
+noRealName();//是否实名认证，未实名认证跳转
 
 // 获取需求类型
 function getRequirementType() {

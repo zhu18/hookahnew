@@ -1,8 +1,12 @@
 /**
  * Created by Dajun on 2017-9-19.
  */
+
+
+
 function loadPageData(data) { //渲染页面数据
-  console.log(data)
+  noRealName();//是否实名认证，未实名认证跳转
+  console.log(data);
   data = data.data.list;
   var tempHtml = '\
         <thead>\
