@@ -75,7 +75,7 @@
 .demandDetail li:nth-child(n+4){ border-bottom:none;}
 
 .demandDetailShow{ padding: 16px 0 0 23px; }
-.demandDetailTitle{     margin-bottom: 5px;font-size: 18px; color:#535353;}
+.demandDetailTitle{ margin-bottom: 5px;font-size: 18px; color:#535353; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
 .demandTimeIco{ float: left;margin: 9px 10px 0 0;}
 .demandDeadData{ float: left; font-size: 14px; color:#959494}
 .demandLastTime{ float: left; font-size: 14px; color:#959494}

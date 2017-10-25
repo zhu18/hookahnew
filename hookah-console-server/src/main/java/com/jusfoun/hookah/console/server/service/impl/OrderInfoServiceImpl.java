@@ -477,16 +477,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
     //验证是否是限购商品
     private boolean checkIsLimitedGoods(String goodsSn, String userId){
-        String limitedGoodsSn = PropertiesManager.getInstance().getProperty("limitedGoodsSn");
-        if (limitedGoodsSn.contains(goodsSn)){
-            List<Condition> filter = new ArrayList<>();
-            filter.add(Condition.eq("userId",userId));
-            filter.add(Condition.eq("mgOrderGoods.goodsSn",goodsSn));
-            filter.add(Condition.eq("isDeleted",(byte)0));
-            List<MgGoodsOrder> list = mgGoodsOrderService.selectList(filter);
-            if (list!=null&&list.size()>0){
-                return true;
-            }
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("userId",userId));
+        filter.add(Condition.eq("mgOrderGoods.goodsSn",goodsSn));
+        filter.add(Condition.eq("isDeleted",(byte)0));
+        List<MgGoodsOrder> list = mgGoodsOrderService.selectList(filter);
+        if (list!=null&&list.size()>0){
+            return true;
         }
         return false;
     }
@@ -519,9 +516,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                     throw new HookahException("商品["+g.getGoodsName()+"]未上架");
                 }
                 //验证是否是限购商品，且是否已经购买
-                if (checkIsLimitedGoods(g.getGoodsSn(),orderInfo.getUserId())){
-                    throw new HookahException("限购商品["+g.getGoodsName()+"]只能购买一次");
+                if (PropertiesManager.getInstance().getProperty("limitedGoodsSn").contains(g.getGoodsSn())){
+                    if (cart.getGoodsNumber()>1 || checkIsLimitedGoods(g.getGoodsSn(),orderInfo.getUserId())){
+                        throw new HookahException("限购商品["+g.getGoodsName()+"]只能购买一次");
+                    }
                 }
+
                 goodsAmount += cart.getFormat().getPrice()  * cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
 
                 MgOrderGoods og = getMgOrderGoodsByCart(cart,orderInfo);
@@ -566,8 +566,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             throw new HookahException("商品["+g.getGoodsName()+"]未上架");
         }
         //验证是否是限购商品，且是否已经购买
-        if (checkIsLimitedGoods(g.getGoodsSn(),orderInfo.getUserId())){
-            throw new HookahException("限购商品["+g.getGoodsName()+"]只能购买一次");
+        String limitedGoodsSn = PropertiesManager.getInstance().getProperty("limitedGoodsSn");
+        if (limitedGoodsSn.contains(g.getGoodsSn())){
+            if (goodsNumber>1 || checkIsLimitedGoods(g.getGoodsSn(),orderInfo.getUserId())){
+                throw new HookahException("限购商品["+g.getGoodsName()+"]只能购买一次");
+            }
         }
 
         MgGoods.FormatBean format= goodsService.getFormat(goodsId,formatId);

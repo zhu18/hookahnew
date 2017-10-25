@@ -26,6 +26,7 @@ var htmlPart = {
 				<div><h1><i class="fa fa-pencil-square-o padding-right-10" aria-hidden="true"></i>核对订单信息</h1></div>
 				<div>
 					<form action="/order/createOrder" name="orderInfo" id="J_orderInfo" method="post">
+						<input type="hidden" name="perOrderInfoNum" value="${perOrderInfoNum}">
 						<table>
 							<tr class="tab-title">
 								<th colspan="9"><h5>新订购服务</h5></th>

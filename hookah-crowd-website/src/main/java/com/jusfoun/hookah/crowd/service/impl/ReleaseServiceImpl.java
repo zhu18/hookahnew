@@ -280,7 +280,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 //报名时间
                                 map.put("applyTime",df.format(apply.getAddTime()));
                                 //已选中信息
-                                map.put("user",user);
+                                map.put("user",user != null ? user : "");
                             }
                         }
                         break;
@@ -301,20 +301,20 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 //报名时间
                                 map.put("applyTime",df.format(apply.getAddTime()));
                                 //已选中信息
-                                map.put("user",user);
+                                map.put("user",user != null ? user : "");
                             }
                         }
                         if(zbRequirement.getId() != null){
                             ZbProgram zbProgram = zbProgramService.selectOne(filters2);
                             if(zbProgram != null){
-                                map.put("zbProgram",zbProgram);
+                                map.put("zbProgram",zbProgram != null ? zbProgram : "");
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters3.add(Condition.eq("correlationId", zbProgram.getId()));
                                 }
                                 filters3.add(Condition.eq("type", 1));
                                 List<ZbAnnex> programFiles = zbAnnexService.selectList(filters3);
                                 if(zbAnnexes != null){
-                                    map.put("programFiles",programFiles);
+                                    map.put("programFiles",programFiles != null ? programFiles : "");
                                 }
                                 //服务商的评价
                                 if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_PJ.getCode().shortValue())){
@@ -326,9 +326,6 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                     ZbComment zbComment = zbCommentService.selectOne(filters4);
                                     map.put("zbComment",zbComment != null ? zbComment : " ");
                                 }
-                            }else {
-                                map.put("zbProgram","");
-                                map.put("programFiles","");
                             }
                         }
                         break;
@@ -342,20 +339,20 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                             map.put("count",zbRequirementApplies.size());
                             if(apply != null){
                                 map.put("applyTime",df.format(apply.getAddTime()));
-                                map.put("user",user);
+                                map.put("user",user != null ? user : "");
                             }
                         }
                         if(zbRequirement.getId() != null){
                             ZbProgram zbProgram = zbProgramService.selectOne(filters2);
                             if(zbProgram != null){
-                                map.put("zbProgram",zbProgram);
+                                map.put("zbProgram",zbProgram != null ? zbProgram : "");
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters3.add(Condition.eq("correlationId", zbProgram.getId()));
                                 }
                                 filters2.add(Condition.eq("type", 1));
                                 List<ZbAnnex> programFiles = zbAnnexService.selectList(filters3);
                                 if(zbAnnexes != null){
-                                    map.put("programFiles",programFiles);
+                                    map.put("programFiles",programFiles != null ? programFiles : "");
                                 }
                                 //服务商的平价
                                 List<Condition> filters4 = new ArrayList<>();
