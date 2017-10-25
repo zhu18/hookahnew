@@ -568,7 +568,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //验证是否是限购商品，且是否已经购买
         String limitedGoodsSn = PropertiesManager.getInstance().getProperty("limitedGoodsSn");
         if (limitedGoodsSn.contains(g.getGoodsSn())){
-            if (checkIsLimitedGoods(g.getGoodsSn(),orderInfo.getUserId())){
+            if (goodsNumber>1 || checkIsLimitedGoods(g.getGoodsSn(),orderInfo.getUserId())){
                 throw new HookahException("限购商品["+g.getGoodsName()+"]只能购买一次");
             }
         }
