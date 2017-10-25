@@ -96,7 +96,7 @@
                         <tr>
                             <th>附件</th>
                             <td colspan="3">
-                                <a data-ng-repeat="item in zbAnnexes" data-ng-show="item.type==0" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                                <a data-ng-repeat="item in zbAnnexes"  data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
                                 </a>
                             </td>
                         </tr>
@@ -119,7 +119,7 @@
                                       </button>
                                  </span>
                                 </p>
-                                <span data-ng-if="status!=6 && !isZbRequirementAppliesShow">{{applyDeadline}}</span>
+                                <span data-ng-if="!(status==6 && isZbRequirementAppliesShow)" data-ng-bind="applyDeadline"></span>
                             </td>
                         </tr>
                         <tr>
@@ -194,11 +194,11 @@
                                        <span data-ng-bind="item.applyContent"></span>
                                    </td>
                                    <td>
-                                       <div class="roundedTwo" data-ng-if="(applyDeadline < currDate) && item.status==0">
+                                       <div class="roundedTwo" data-ng-if="status == 6">
                                            <input type="radio" value="{{item.id}}" id="{{item.id}}" name="applyId" ng-model="apply.id">
                                            <label for="{{item.id}}"></label>
                                        </div>
-                                       <div data-ng-if="applyDeadline > currDate || item.status !=0">
+                                       <div data-ng-if="status ! = 6">
                                            <span class="label label-primary" disabled data-ng-show="item.status!=0 && item.status!=2">已被选中</span>
                                            <button class="btn btn-primary"  disabled  data-ng-show="item.status==0 ">选中</button>
                                        </div>
@@ -207,7 +207,7 @@
                                </tbody>
                            </table>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
-                            <div style="margin: auto;width: 58px;" data-ng-show="(applyDeadline < currDate) && status==6">
+                            <div style="margin: auto;width: 58px;" data-ng-show="status == 6">
                                 <button class="btn btn-primary" data-ng-click="submit()">提交</button>
                             </div>
                         </div>
@@ -277,7 +277,7 @@
                                 <tr>
                                     <th>方案附件</th>
                                     <td>
-                                        <a data-ng-repeat="item in zbAnnexes" data-ng-show="item.type==1" data-ng-href="{{item.filePath}}"  class="margin-right-5"><span class="glyphicon glyphicon-save"></span> <span data-ng-bind="item.fileName"></span></a>
+                                        <a data-ng-repeat="item in reqProgram"  data-ng-href="{{item.filePath}}"  class="margin-right-5"><span class="glyphicon glyphicon-save"></span> <span data-ng-bind="item.fileName"></span></a>
                                     </td>
                                 </tr>
                             </table>
@@ -285,18 +285,15 @@
                                 <button class="btn btn-primary" data-ng-click="check()">成果验收</button>
                                 <button class="btn btn-default">返回</button>
                             </div>
-                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==4">
+                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==3">
                                 <button class="btn btn-primary" data-ng-click="check()">去付款</button>
                                 <button class="btn btn-default">返回</button>
                             </div>
-                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==3 && (status==16 && isZbRequirementAppliesShow)">
-                                <button class="btn btn-primary" data-ng-click="refund(userId)">去退款</button>
+                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==5 && status==16">
+                                <button class="btn btn-primary" data-ng-click="refund(id,userId)">去退款</button>
                                 <button class="btn btn-default">返回</button>
                             </div>
-                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==3 && (status==14 && isZbRequirementAppliesShow)">
-                                <button class="btn btn-default">返回</button>
-                            </div>
-                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==1 || zbProgramsStatus==2 || zbProgramsStatus==5 ">
+                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==1 || zbProgramsStatus==2 || zbProgramsStatus==4 ">
                                 <button class="btn btn-primary" data-ng-click="check()" disabled>成果验收</button>
                                 <button class="btn btn-default">返回</button>
                             </div>

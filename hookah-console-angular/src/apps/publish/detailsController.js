@@ -22,7 +22,8 @@ class detailsController {
                     var zbRequirementApplies= res.data.data.zbRequirementApplies || null; //报名的人
                     var zbPrograms= res.data.data.zbPrograms || null;//成果
                     var zbComments= res.data.data.zbComments || null;//评价
-                    $scope.zbAnnexes= res.data.data.zbAnnexes || null;//上传材料
+                    $scope.zbAnnexes= res.data.data.zbAnnexes || null;//需求材料
+                    $scope.reqProgram= res.data.data.reqProgram || null;//需求材料
                     var mgZbRequireStatus = res.data.data.mgZbRequireStatus || null;//进度时间
                     //基本信息
                     $scope.requiremetName=zbRequirement.requiremetName;
@@ -33,8 +34,7 @@ class detailsController {
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
                     $scope.deliveryDeadline=zbRequirement.deliveryDeadline;
-                    var data=new Date(zbRequirement.applyDeadline);
-                    $scope.applyDeadline= data;
+                    $scope.applyDeadline= zbRequirement.applyDeadline;
                     $scope.rewardMoney=zbRequirement.rewardMoney;
                     $scope.trusteePercent=zbRequirement.trusteePercent;
                     $scope.checkRemark=zbRequirement.checkRemark;
@@ -61,7 +61,7 @@ class detailsController {
                         console.log(2);
                     }
                     //成果tab
-                    if(zbPrograms.length>0){
+                    if(zbPrograms && zbPrograms.length>0){
                         var item=zbPrograms[0];
                         $scope.title=item.title;
                         $scope.content=item.content;
@@ -173,10 +173,12 @@ class detailsController {
         }
 
         $scope.public=function () {
-            console.log($scope.applyDeadline.setDate(tomorrow.getDate() + 5));
-            console.log($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss'));
+            var data=new Date($scope.applyDeadline);
+            $scope.applyDeadline= data;
+            console.log(data.setDate(tomorrow.getDate() + 5));
+            console.log($filter('format')(data, 'yyyy-MM-dd HH:mm:ss'));
             console.log($scope.deliveryDeadline);
-            if($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')>$scope.deliveryDeadline){
+            if($filter('format')(data, 'yyyy-MM-dd HH:mm:ss')>$scope.deliveryDeadline){
                 var modalInstance =$rootScope.openConfirmDialogModal("报名截止日期不得超过交付日期前五天，请重新选择日期！");
                 modalInstance.result.then(function () {
 
@@ -272,8 +274,8 @@ class detailsController {
         $scope.back=function (id) {
             $state.go('publish.list', {id: id});
         };
-        $scope.refund=function (id) {
-            $state.go('publish.refund', {id: id});
+        $scope.refund=function (id,userId) {
+            $state.go('publish.refund', {id: id,userId:userId});
         };
         $scope.giveUp=function (id) {
             var promise = $http({

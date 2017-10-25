@@ -4,23 +4,24 @@
 class refundController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
+        console.log($stateParams.userId);
         $scope.reader = function () {
             var promise = $http({
                 method: 'GET',
-                url: $rootScope.site.crowdServer + "/api/refund/selectBankInfo",
+                url: $rootScope.site.crowdServer + "/api/refund/selectRefundInfo",
                 params: {
-                    userId: $stateParams.id
+                    userId: $stateParams.userId,
+                    requiredmentId: $stateParams.id
                 }
             });
             promise.then(function (res, status, config, headers) {
                 console.log('数据在这里');
                 console.log(res);
                 if (res.data.code == '1') {
-                    var item= res.data.data.zbRequirement;
-                    $scope.zbAnnexes= res.data.data.zbAnnexes;
-                    $scope.requiremetName=item.requiremetName;
-                    $scope.contactName=item.contactName;
-                    $scope.contactPhone=item.contactPhone;
+                    $scope.cardOwner=res.data.data.cardOwner;
+                    $scope.cardCode=res.data.data.cardCode;
+                    $scope.addTime=res.data.data.addTime;
+                    $scope.addTime=res.data.data.addTime;
 
                 } else {
                 }

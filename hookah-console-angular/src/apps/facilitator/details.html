@@ -142,7 +142,7 @@
                             </tr>
                             <tr>
                                 <th>证明材料：</th>
-                                <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                                <td><a  data-ng-repeat="item in item.certPathsList" data-ng-href="{{item.certPath}}" data-ng-bind="item.certName"></a></td>
                             </tr>
                         </table>
                     </div>
@@ -165,7 +165,7 @@
                             </tr>
                             <tr>
                                 <th>证明材料：</th>
-                                <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                                <td><a  data-ng-repeat="item in item.certPathsList" href="{{item.certPath}}" data-ng-bind="item.certName"></a></td>
                             </tr>
                         </table>
                     </div>
@@ -189,7 +189,7 @@
                             </tr>
                             <tr>
                                 <th>证明材料：</th>
-                                <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                                <td><a  data-ng-repeat="item in item.certPathsList" href="{{item.certPath}}" data-ng-bind="item.certName"></a></td>
                             </tr>
                         </table>
                     </div>
