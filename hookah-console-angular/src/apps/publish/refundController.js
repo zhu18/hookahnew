@@ -32,11 +32,12 @@ class refundController {
         $scope.reader();
         $scope.auditing=function () {
             var promise = $http({
-                method: 'POST',
-                url: $rootScope.site.crowdServer + "/api/refund/goRefun",
+                method: 'get',
+                url: $rootScope.site.crowdServer + "/api/refund/goRefund",
                 params: {
                     userId: $stateParams.userId,
                     requirementId:$stateParams.id,
+                    bankName:$scope.cardOwner,
                     refundAmount:$scope.money,
                     bankCardNum:$scope.cardCode,
                     desc:$scope.desc,
@@ -57,9 +58,9 @@ class refundController {
                 } else {
                     var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交失败！");
                     modalInstance.result.then(function () {
-                        $state.go('publish.list');
+
                     }, function () {
-                        $state.go('publish.list');
+
                     });
                 }
                 $rootScope.loadingState = false;
