@@ -266,8 +266,10 @@ removeTags()
 function removeTags() {
 	$('.tags-list i').click(function () {
 		$(this).parent('.tags-list').remove();
+		$('#keywords').val(getTags().toString());
 	});
-	$('#keywords').val(getTags().toString());
+
+
 }
 $("[name=tagsCheck]:checkbox").click(function () {
 	var nums = 0;
