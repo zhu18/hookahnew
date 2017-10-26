@@ -10,7 +10,7 @@ function loadPageData(data) {
                 html +='<div class="order-list-item grid-left">';
                 html +='<div class="order-list-top clearfix">';
                 html +='<a href="/exchange/details?id=' + list[i].goodsId + '" target="_blank">';
-                html +='<img class="grid-left" src="'+host.static+'/'+list[i].goodsImg+'" alt="">';
+                html +='<img class="grid-left" src="'+list[i].goodsImg+'" alt="">';
                 html +='<div class="order-list-top-info grid-left">';
                 html +='<h4>'+list[i].goodsName+'</h4>';
                 if(list[i].isDiscussPrice==1){
@@ -31,7 +31,7 @@ function loadPageData(data) {
                 html +='<div class="order-list-item grid-left">';
                 html +='<div class="order-list-top clearfix">';
                 html +='<a href="/exchange/details?id=' + list[i].goodsId + '" target="_blank">';
-                html +='<img class="grid-left" src="'+host.static+'/'+list[i].goodsImg+'" alt="">';
+                html +='<img class="grid-left" src="'+list[i].goodsImg+'" alt="">';
                 html +='<div class="order-list-top-info grid-left">';
                 html +='<h4>'+list[i].goodsName+'</h4>';
                 if(list[i].isDiscussPrice==1){
