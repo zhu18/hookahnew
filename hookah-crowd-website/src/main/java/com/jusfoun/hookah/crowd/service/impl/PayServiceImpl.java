@@ -3,15 +3,14 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbTrusteeRecord;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
+import com.jusfoun.hookah.crowd.service.MgZbRequireStatusService;
 import com.jusfoun.hookah.crowd.service.PayService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
 import com.jusfoun.hookah.crowd.service.ZbTrusteeRecordService;
-import com.jusfoun.hookah.crowd.util.AlipayConfig;
-import com.jusfoun.hookah.crowd.util.AlipayNotify;
-import com.jusfoun.hookah.crowd.util.FormFactory;
-import com.jusfoun.hookah.crowd.util.MD5;
+import com.jusfoun.hookah.crowd.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,6 +26,9 @@ public class PayServiceImpl implements PayService {
 
     @Resource
     private ZbTrusteeRecordService zbTrusteeRecordService;
+
+    @Resource
+    MgZbRequireStatusService mgZbRequireStatusService;
 
     @Resource
     private ZbRequireService zbRequireService;
@@ -123,6 +125,10 @@ public class PayServiceImpl implements PayService {
                         zbRequirement.setTrusteePercent(100);
                     }
                     zbRequireService.updateByIdSelective(zbRequirement);
+                    if(zbTrusteeRecord.getTrusteeNum() == 2){
+                        //供应商工作时间
+                        mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.WORKINGTIME, DateUtils.toDefaultNowTime());
+                    }
                 }
                 zbTrusteeRecord.setStatus(Short.parseShort("1"));
                 int n = zbTrusteeRecordService.updateByIdSelective(zbTrusteeRecord);
