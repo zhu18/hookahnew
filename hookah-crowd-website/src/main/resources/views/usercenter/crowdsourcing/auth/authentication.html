@@ -6,6 +6,7 @@ var head = {
 <script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
 <script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
 
+<link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <link rel="stylesheet" href="/static/css/usercenter/auth/authentication.css">
 
 <%};%>
@@ -17,26 +18,108 @@ var htmlPart = {
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="grid-right info-center-box  margin-bottom-20">
+            <div class="authentication">
+                <div class="authentication-facilitator">
+                    <div class="facilitator-info">
+                        <h2>什么是服务商</h2>
+                        <p>服务商是凭借自身技能与专业知识，<br>
+                            在平台上为需求方提供数据源、数据清洗、数据分析、数据模型、数据应用等服务，从而获得报酬的专业</p>
+                        <%if(user.userType == 2){%>
 
+                        <a href="/usercenter/pspAuthentication" class="btn btn-full-blue">马上成为服务商</a>
+                        <script>
+                            window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
+                        </script>
 
+                        <%}else{%>
+                        <script>
+                            window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
+                        </script>
 
-            <%if(user.userType == 2){%>
+                        <a href="/usercenter/epAuthentication" class="btn btn-full-blue">马上成为服务商</a>
 
-            <a href="/usercenter/pspAuthentication">成为服务商</a>
-            <script>
-              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
+                        <%}%>
+                    </div>
+                    <div class="facilitator-card clearfix">
+                        <div class="grid-left personal card">
+                            <div class="card-header">
+                                成为个人供应商
+                            </div>
+                            <div class="card-info">
+                                <div>
+                                    <span>1</span>
+                                    <p>输入手机号码，注册平台账号。</p>
+                                </div>
+                                <div>
+                                    <span>2</span>
+                                    <p>提交个人信息，通过实名认证。</p>
+                                </div>
+                                <div>
+                                    <span>3</span>
+                                    <p>提交教育经历、工作经历和项目经验，通过平台资格认证即可成为个人服务商。</p>
+                                </div>
+                            </div>
 
-            </script>
+                        </div>
+                        <div class="grid-right enterprise card">
+                            <div class="card-header">
+                                成为企业服务商
+                            </div>
+                            <div class="card-info">
+                                <div>
+                                    <span>1</span>
+                                    <p>输入手机号码，注册平台账号。</p>
+                                </div>
+                                <div>
+                                    <span>2</span>
+                                    <p>提交企业信息，通过企业实名认证。</p>
+                                </div>
+                                <div>
+                                    <span>3</span>
+                                    <p>提交应用案例、软件著作权证书和发明专利，通过平台资格认证即可成为企业服务商。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="authentication-demand">
+                    <h2>如何定制数据服务</h2>
+                    <div class="advantagesBox">
+                        <ul class="advantagesUl">
+                            <li>
+                                <div class="advantagesBgBox">
+                                    <div class="advantageTitle">发布需求</div>
+                                    <div class="advantageContent">您只需要注册登录平台，认证成为实名用户，发布您的需求。</div>
+                                </div>
+                                <span class="advantageImg"><img src="/static/images/crowdsourcing/index/advantages01.png" alt=""></span>
+                            </li>
+                            <li>
+                                <div class="advantagesBgBox">
+                                    <div class="advantageTitle">定制化众包方案</div>
+                                    <div class="advantageContent">我们将根据您的需求，定制化数据众包解决方案，并从众多的服务商中层层筛选。</div>
+                                </div>
+                                <span class="advantageImg"><img src="/static/images/crowdsourcing/index/advantages02.png" alt=""></span>
+                            </li>
+                            <li>
+                                <div class="advantagesBgBox">
+                                    <div class="advantageTitle">全程的审核监控</div>
+                                    <div class="advantageContent">平台为您提供专业的数据服务和全程的审核监控。</div>
+                                </div>
+                                <span class="advantageImg"><img src="/static/images/crowdsourcing/index/advantages03.png" alt=""></span>
+                            </li>
+                            <li>
+                                <div class="advantagesBgBox">
+                                    <div class="advantageTitle">验收交付</div>
+                                    <div class="advantageContent">按照您的需求，交付高质量的任务成果，您可验收通过或退回修改。</div>
+                                </div>
+                                <span class="advantageImg"><img src="/static/images/crowdsourcing/index/advantages04.png" alt=""></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="/usercenter/crowdsourcingRelease" class="btn btn-full-blue">立即发布需求</a>
+                </div>
+            </div>
 
-            <%}else{%>
-            <script>
-              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
-
-            </script>
-
-            <a href="/usercenter/epAuthentication">成为服务商</a>
-
-            <%}%>
         </div>
     </div>
 </div>
@@ -45,4 +128,8 @@ var htmlPart = {
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script src="/static/js/usercenter/auth/pspAuthentication.js"></script>
+
+
+
+
 
