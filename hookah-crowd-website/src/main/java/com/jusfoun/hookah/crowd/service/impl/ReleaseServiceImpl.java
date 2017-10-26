@@ -493,7 +493,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.COMMENTTIME,DateUtil.getSimpleDate(zbComment.getAddTime()));
                 if(zbComment != null){
                     if(zbComment.getUserType() == 2){
-                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_FAIL.getCode().shortValue());
+                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_SUCCESS.getCode().shortValue());
                         zbRequireService.updateByCondition(zbRequirement,filters);
                     }
                 }
