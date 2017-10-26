@@ -429,23 +429,23 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline,orderSn,goodsSn
                Loading.start();
                var apiWordUrl;
                 //获取api文档下载地址
-               $.ajax({
-                  url: host.website + '/help/exportWords',
-                  type: 'get',
-                  async: false ,
-                  data: {
-                    goodsId: goodsId,
-                    sourceId: sourceId,
-                    orderNo: ""
-                  },
-                  success: function (data) {
-                    if (data.code == 1) {
-                        apiWordUrl=data.data;
-                    } else {
-                      $.alert(data.message)
-                    }
-                  }
-                });
+               // $.ajax({
+               //    url: host.website + '/help/exportWords',
+               //    type: 'get',
+               //    async: false ,
+               //    data: {
+               //      goodsId: goodsId,
+               //      sourceId: sourceId,
+               //      orderNo: ""
+               //    },
+               //    success: function (data) {
+               //      if (data.code == 1) {
+               //          apiWordUrl=data.data;
+               //      } else {
+               //        $.alert(data.message)
+               //      }
+               //    }
+               //  });
          var apiObj=JSON.parse(data.data.result);
          tempHtml = "<div class='confirmKey'><h4>提取密钥：</h4>" +
                     "<h5>您购买的API商品token为：</h5>" +
