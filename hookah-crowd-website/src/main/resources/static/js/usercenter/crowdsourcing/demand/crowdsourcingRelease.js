@@ -58,7 +58,10 @@ function crowdsourcingRelease() { //请求草稿
     cache:false,
     success: function (data) {
       console.log(data);
-      if (data.data.hasOwnProperty('zbRequirement')) {
+        console.log(data.data.user);
+        $('#J_phone').val(data.data.user.mobile);
+        $('#J_username').val(data.data.user.userName);
+        if (data.data.hasOwnProperty('zbRequirement')) {
         if (data.data.zbRequirement.id) {
           crowdSourcingId = data.data.zbRequirement.id;
         } else {
