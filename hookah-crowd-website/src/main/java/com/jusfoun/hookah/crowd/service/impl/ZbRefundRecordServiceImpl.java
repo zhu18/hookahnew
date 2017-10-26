@@ -185,6 +185,7 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                     }else if(apply.getStatus().equals(ZbContants.ZbRequireMentApplyStatus.DEAL_RENEGE_FAIL.getCode().shortValue())){
                         // 违约到期
                         zbRefundRecord.setType(ZbContants.PlatPayType.DATE_EXPIRE.getCode());
+                        flag = 1;
                     }else{
                         returnData.setCode(ExceptionConst.Error);
                         returnData.setMessage("业务数据有误，请检查^_^");
