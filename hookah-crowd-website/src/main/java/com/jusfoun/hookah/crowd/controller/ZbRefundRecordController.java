@@ -40,7 +40,7 @@ public class ZbRefundRecordController {
             ZbRefundRecord zbRefundRecord = new ZbRefundRecord();
             zbRefundRecord.setUserId(userId);
             zbRefundRecord.setRequirementId(Long.parseLong(requirementId));
-            zbRefundRecord.setRefundAmount(Long.parseLong(refundAmount));
+            zbRefundRecord.setRefundAmount(Long.parseLong(refundAmount) * 100);
             zbRefundRecord.setBankCardNum(bankCardNum);
             zbRefundRecord.setDescs(desc);
             zbRefundRecord.setPayTime(payTime);
