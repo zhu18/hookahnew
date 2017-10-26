@@ -35,4 +35,10 @@ public interface GoodsMapper extends GenericDao<Goods> {
     int transferCategoryInfoByGoodsIds(Map<String,Object> params);
 
     List<EsGoods> getNeedGoodsByCatId(String id);
+
+    int insertRecord(Goods goods);
+
+    List<Goods> getGoodsInfoByCatIds(String[] ids);
+
+    int updateGoodsInfoByCatIds(String[] ids);
 }
