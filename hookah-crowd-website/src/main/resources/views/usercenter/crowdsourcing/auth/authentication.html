@@ -31,7 +31,7 @@ var htmlPart = {
                             window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
                         </script>
 
-                        <%}else{%>
+                        <%}else if(user.userType == 4){%>
                         <script>
                             window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
                         </script>

@@ -3,6 +3,7 @@ package com.jusfoun.hookah.crowd.controller;
 
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
+import com.jusfoun.hookah.crowd.service.MgZbProviderService;
 import com.jusfoun.hookah.crowd.service.MgZbRequireStatusService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,9 @@ public class TestController {
 
     @Resource
     MgZbRequireStatusService mgZbRequireStatusService;
+
+    @Resource
+    MgZbProviderService mgZbProviderService;
 
     @Resource
     RedisOperate redisOperate;
@@ -58,6 +62,14 @@ public class TestController {
         MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn("zb_01_001");
 
         System.out.println(mgZbRequireStatus.toString());
+    }
+
+    /**
+     * 测试评价信誉分值设置
+     */
+    @RequestMapping("/testCreditV")
+    public void testCreditV(String userId, Integer level){
+        mgZbProviderService.setUCreditValueByPJ(userId, level);
     }
 
 }
