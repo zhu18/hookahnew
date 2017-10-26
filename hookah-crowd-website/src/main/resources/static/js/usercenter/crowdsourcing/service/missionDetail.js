@@ -137,13 +137,13 @@ function renderPage(data) {
       loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo,'false');//有下载按钮的附件列表
 
       switch (data.zbProgramVo.status){
-        case 1:
+        case 3:
           $('.missionStatusResult').html('预评通过，待验收');
           $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
           $('.j_resultStatus').show();
 
           break;
-        case 3:
+        case 4:
           $('.missionStatusResult').html('验收不通过，待修改');
           $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
           $('.j_resultStatus').show();
@@ -225,6 +225,17 @@ function renderPage(data) {
 
   rewardMoney = insertRequirementsData.zbRequirementSPVo.rewardMoney;
   $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
+
+
+  //时间显示
+  if(insertRequirementsData.mgZbRequireStatus!==null){
+    $('.j_applyTime').html(data.mgZbRequireStatus.applyTime);
+    $('.j_selectTime').html(data.mgZbRequireStatus.selectTime);
+    $('.j_submitTime').html(data.mgZbRequireStatus.submitTime);
+    $('.j_platevalTime').html(data.mgZbRequireStatus.platevalTime);
+    $('.j_requiredAcceptTime').html(data.mgZbRequireStatus.requiredAcceptTime);
+    $('.j_payTime').html(data.mgZbRequireStatus.payTime);
+    $('.j_requireCommentTime').html(data.mgZbRequireStatus.requireCommentTime);  }
 
 }
 
@@ -550,7 +561,7 @@ function missionApplyInfo(data) { //任务报名信息显示
 
   //任务成果内容
   if(data.zbProgramVo !==null){
-    $('.j_applyDeadline').html(data.zbRequirementSPVo.deliveryDeadline);
+    $('.j_applyDeadline').html(data.zbRequirementSPVo.applyDeadline);
     $('.missionTitle').html(data.zbProgramVo.title).attr('acceptanceAdviceId',data.zbProgramVo.id);
     $('.missionResultDes').html(data.zbProgramVo.content);
   }

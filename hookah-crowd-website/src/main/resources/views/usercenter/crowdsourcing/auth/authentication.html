@@ -17,11 +17,22 @@ var htmlPart = {
     <div class="grid-row clearfix">
         <%include("/usercenter/user-center-menu.html"){} %>
         <div class="grid-right info-center-box  margin-bottom-20">
+
+
+
             <%if(user.userType == 2){%>
 
             <a href="/usercenter/pspAuthentication">成为服务商</a>
+            <script>
+              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
+
+            </script>
 
             <%}else{%>
+            <script>
+              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
+
+            </script>
 
             <a href="/usercenter/epAuthentication">成为服务商</a>
 
