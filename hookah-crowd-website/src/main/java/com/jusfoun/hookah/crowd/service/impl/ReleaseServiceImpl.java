@@ -7,6 +7,7 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -251,6 +252,12 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 }
             }
 
+            //获取时间
+            MgZbRequireStatus byRequirementSn = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
+            if(byRequirementSn != null){
+                map.put("byRequirementSn",byRequirementSn);
+            }
+
             Short status = zbRequirement.getStatus();
             if(StringUtils.isNotBlank(status.toString())){
                 switch (status){
@@ -483,7 +490,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             }
             if(zbRequirement != null){
                 //需求方评价时间
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.NEEDEVALUATETIME,DateUtil.getSimpleDate(zbComment.getAddTime()));
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.COMMENTTIME,DateUtil.getSimpleDate(zbComment.getAddTime()));
                 if(zbComment != null){
                     if(zbComment.getUserType() == 2){
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_FAIL.getCode().shortValue());
