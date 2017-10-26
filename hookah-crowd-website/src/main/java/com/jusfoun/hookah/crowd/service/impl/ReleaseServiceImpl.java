@@ -252,11 +252,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 }
             }
 
-            //获取时间
+            //获取状态时间
             MgZbRequireStatus byRequirementSn = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
-            if(byRequirementSn != null){
-                map.put("byRequirementSn",byRequirementSn);
-            }
+            map.put("byRequirementSn",byRequirementSn);
 
             Short status = zbRequirement.getStatus();
             if(StringUtils.isNotBlank(status.toString())){
