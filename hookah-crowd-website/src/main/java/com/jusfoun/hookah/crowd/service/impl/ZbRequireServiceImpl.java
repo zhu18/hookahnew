@@ -192,7 +192,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline , Long applyId ,Long programId ,String checkAdvice) {
         try {
             ZbRequirement zbRequirement = this.selectById(Long.parseLong(id));
-            zbRequirement.setStatus(Short.parseShort(status));
+            if (status!=null){
+                zbRequirement.setStatus(Short.parseShort(status));
+            }
             zbRequirement.setPressTime(new Date());
             if (applyDeadline!=null){
                 zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
