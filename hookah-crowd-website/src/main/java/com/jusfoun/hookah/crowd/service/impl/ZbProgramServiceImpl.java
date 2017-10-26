@@ -200,7 +200,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
                     !zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_PLAT_YS.getCode().shortValue()) &&
                     !zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue()))){
                 returnData.setCode(ExceptionConst.AssertFailed);
-                returnData.setMessage("该需求当前状态不可提交方案");
+                returnData.setMessage("该需求当前状态不可提交方案,等待需求方二次托管中......");
                 return returnData;
             }
 

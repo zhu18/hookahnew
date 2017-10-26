@@ -152,3 +152,115 @@
 }
 
 textarea{ resize:none;}
+
+/*服务商引导页*/
+
+.authentication{}
+.authentication .authentication-facilitator{
+      margin-top: 27px;
+}
+.authentication-facilitator .facilitator-info{
+    display: inline-block;
+    height: 210px;
+    width: 100%;
+}
+.authentication-facilitator .facilitator-info h2{
+    font-size: 24px;
+    text-align: center;
+}
+.authentication-facilitator .facilitator-info p{
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 150px;
+    line-height: 30px;
+}
+.authentication-facilitator .facilitator-info a{
+    font-size: 18px;
+    width: 192px;
+    height: 48px;
+    border-radius: 40px;
+    text-align: center;
+    margin: auto;
+    display: block;
+    line-height: 48px;
+}
+
+.authentication-facilitator .facilitator-card{
+
+}
+.authentication-facilitator .facilitator-card .card{
+    position: relative;
+    width: 445px;
+    height: 293px;
+    border: 1px solid #F0F0F0;
+}
+.authentication-facilitator .facilitator-card .card:hover{
+    box-shadow: 0px 0px 10px #D7D7D7;
+}
+.authentication-facilitator .facilitator-card .card .card-header{
+    position: absolute;
+    height: 46px;
+    top: 5px;
+    background-color: #237EE8;
+    width: 447px;
+    left: -1px;
+    line-height: 46px;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+}
+.authentication-facilitator .facilitator-card .card .card-info{
+    margin-top: 85px;
+    padding: 0 25px;
+}
+.authentication-facilitator .facilitator-card .card .card-info div{
+    margin-bottom: 30px;
+}
+.authentication-facilitator .facilitator-card .card .card-info p{
+    display: inline-block;
+    font-size: 18px;
+    vertical-align: text-top;
+    width: 350px;
+}
+.authentication-facilitator .facilitator-card .card .card-info span{
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    color: #ffffff;
+    line-height: 26px;
+    text-align: center;
+    margin-right: 13px;
+    vertical-align: text-top;
+    background-color: #237EE8;
+}
+.authentication .authentication-demand{
+    margin-top: 60px;
+}
+.authentication-demand h2{
+   text-align: center;
+   font-size: 24px;
+}
+.authentication-demand  a{
+    font-size: 18px;
+    width: 192px;
+    height: 48px;
+    border-radius: 40px;
+    text-align: center;
+    margin: 30px auto;
+    display: block;
+    line-height: 48px;
+}
+.authentication-demand .advantagesBox{ height:284px; overflow: hidden;}
+.advantagesUl { overflow: hidden;}
+.advantagesUl li{ float: left; width: 260px; height:284px; position: relative;}
+.advantagesUl li:after{ content: ''; position: absolute; right:0; top: 153px; display: block; height:6px; width:72px; background-color: #f9d657; border-radius:6px;  }
+.advantagesUl li:last-child{ float: left; width: 200px;}
+.advantagesUl li:last-child:after{ display: none}
+
+.advantagesBgBox{ width: 193px; height:247px;color:#48c8e3; background:url("../../../images/crowdsourcing/index/advantages-bg.gif") -193px 0 no-repeat ; overflow: hidden;}
+.advantagesBgBox:hover{color:#fff; background-position: 0 0; }
+
+.advantageTitle{ text-align: center; font-size: 18px; margin:85px 0 5px 0; font-weight:bold;}
+.advantageContent{width: 140px; padding:0 0 0 32px;font-size: 14px; line-height:25px;}
+.advantageImg{ position: absolute; left:57px;top:215px;}

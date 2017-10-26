@@ -97,13 +97,13 @@ module.exports = function makeWebpackConfig() {
    * Reference: http://webpack.github.io/docs/configuration.html#devtool
    * Type of sourcemap to use per build type
    */
-  if (isTest) {
-    config.devtool = 'inline-source-map';
-  } else if (isProd) {
-    config.devtool = 'eval-source-map';
-  } else {
-    config.devtool = 'source-map';
-  }
+  // if (isTest) {
+  //   config.devtool = 'inline-source-map';
+  // } else if (isProd) {
+  //   config.devtool = 'eval-source-map';
+  // } else {
+  //   config.devtool = 'source-map';
+  // }
 
   /**
    * Loaders

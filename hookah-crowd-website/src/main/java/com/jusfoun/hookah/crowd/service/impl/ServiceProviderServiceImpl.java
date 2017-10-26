@@ -162,7 +162,11 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             //获取当前用户已报名的需求id集合
             List<Condition> filters = new ArrayList<Condition>();
             if(Objects.nonNull(helper.getApplyStatus()) && !Short.valueOf("-1").equals(helper.getApplyStatus())){
-                filters.add(Condition.eq("status", helper.getApplyStatus()));
+                if(Short.valueOf(ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode().shortValue()).equals(helper.getApplyStatus())){
+                    filters.add(Condition.in("status", new Short[]{7,9}));
+                } else {
+                    filters.add(Condition.eq("status", helper.getApplyStatus()));
+                }
             }
             filters.add(Condition.eq("userId",userId));
             List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyWebsiteService.selectList(filters);
@@ -251,6 +255,9 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
 
         //报名信息
         ZbRequirementApplyVo zbRequirementApplyVo = zbRequireApplyWebsiteService.selectByReqId(reqId) == null ? new ZbRequirementApplyVo() : (ZbRequirementApplyVo) zbRequireApplyWebsiteService.selectByReqId(reqId).getData();
+
+        if(null != zbRequirementApplyVo)//状态为违约失败视为交易取消
+        zbRequirementApplyVo.setStatus(zbRequirementApplyVo.getStatus().intValue() == ZbContants.ZbRequireMentApplyStatus.DEAL_RENEGE_FAIL.getCode() ? ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode().shortValue() : zbRequirementApplyVo.getStatus());
 
         //时间条信息
         MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn()) == null ? new MgZbRequireStatus() : mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
@@ -373,7 +380,7 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
                 for(ZbRequirementApply zbRequirementApply : zbRequirementApplies){
                     Long requirementId = zbRequirementApply.getRequirementId();
                     if(requirementId.equals(zId)){
-                        zbRequirementVo.setOperStatus(zbRequirementApply.getStatus().intValue());
+                        zbRequirementVo.setOperStatus(zbRequirementApply.getStatus().intValue() == ZbContants.ZbRequireMentApplyStatus.DEAL_RENEGE_FAIL.getCode() ? ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode() : zbRequirementApply.getStatus().intValue());
                         break;
                     }
                 }
