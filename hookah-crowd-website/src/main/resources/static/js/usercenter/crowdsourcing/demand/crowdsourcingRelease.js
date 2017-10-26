@@ -42,7 +42,7 @@ function modifyCrowdsourcing() { //修改，从我的发布点击'修改'调转�
     cache:false,
     success: function (data) {
       console.log(data);
-      if (data.data[0].hasOwnProperty('zbRequirement')) {
+      if (data.data.hasOwnProperty('zbRequirement')) {
 
         renderPage(data.data);
 
