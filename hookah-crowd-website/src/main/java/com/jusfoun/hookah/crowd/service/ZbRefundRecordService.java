@@ -6,8 +6,6 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 
 public interface ZbRefundRecordService extends GenericService<ZbRefundRecord, Long> {
 
-    ZbRefundRecord insertRecord(Long requirementId, Integer refundType, String refundDesc);
-
     ReturnData selectRefundInfo(String userId, String requirementId);
 
     ReturnData insertData(ZbRefundRecord zbRefundRecord);

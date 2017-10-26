@@ -15,6 +15,7 @@ import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.DateUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -46,15 +47,6 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
 
     @Resource
     MgZbRequireStatusService mgZbRequireStatusService;
-
-    @Override
-    public ZbRefundRecord insertRecord(Long requirementId, Integer refundType, String refundDesc) {
-
-//        ZbRefundRecord zbRefundRecord = new ZbRefundRecord();
-//        zbRefundRecord.setType(re);
-
-        return null;
-    }
 
     @Override
     public ReturnData selectRefundInfo(String userId, String requirementId) {
@@ -151,7 +143,7 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
     }
 
 
-    @Override
+    @Transactional
     public ReturnData insertData(ZbRefundRecord zbRefundRecord) {
 
         ReturnData returnData = new ReturnData();
@@ -187,10 +179,10 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                     zbRefundRecord.setType(ZbContants.PlatPayType.FAIL_TO_SOLD.getCode());
                     flag = 1;
                 }else {
-                    if(apply.getStatus().equals(ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode())){
+                    if(apply.getStatus().equals(ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode().shortValue())){
                         //驳回失败
                         zbRefundRecord.setType(ZbContants.PlatPayType.BREA_FAILE.getCode());
-                    }else if(apply.getStatus().equals(ZbContants.ZbRequireMentApplyStatus.DEAL_RENEGE_FAIL.getCode())){
+                    }else if(apply.getStatus().equals(ZbContants.ZbRequireMentApplyStatus.DEAL_RENEGE_FAIL.getCode().shortValue())){
                         // 违约到期
                         zbRefundRecord.setType(ZbContants.PlatPayType.DATE_EXPIRE.getCode());
                     }else{
@@ -216,6 +208,8 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                     changeStatus.setStatus(ZbContants.Zb_Require_Status.WAIT_PJ.getCode().shortValue());
                 }
                 int m = zbRequireService.updateByIdSelective(changeStatus);
+            }else{
+                throw new RuntimeException();
             }
 
             returnData.setMessage("线下转账确认操作完成^_^");
