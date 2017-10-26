@@ -17,8 +17,6 @@ public class ZbContants {
     public static final String SUBMITTIME = "submitTime";
     public static final String PLATEVALTIME = "platevalTime";
     public static final String REQUIREDACCEPTTIME = "requiredAcceptTime";
-    //需求方评价
-    public static final String NEEDEVALUATETIME = "needEvaluateTime";
     //资格评选时间
     public static final String SELECTTIME = "selectTime";
     //服务商对需求方评价时间
@@ -65,8 +63,8 @@ public class ZbContants {
         WAIT_FK(11),
         TWO_WORKING(12),
         WAIT_PJ(13),
-        ZB_SUCCESS(14),
-        ZB_FAIL(15),
+        ZB_CANCEL(14),
+        ZB_SUCCESS(15),
         WAIT_TK(16),
         DELETE(17),
         CANCEL(18),

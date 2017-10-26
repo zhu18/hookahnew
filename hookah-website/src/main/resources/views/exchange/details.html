@@ -261,23 +261,19 @@ var htmlPart = {
 							</tr>
 							<tr>
 								<td>请求方式：</td>
-								<td>${decode(goodsDetails.apiInfo.apiMethod,1,'GET',2,'POST','未知')}</td>
+								<td>${decode(goodsDetails.apiInfo.apiMethod,'1','GET','2','POST','未知')}</td>
 							</tr>
 							<tr>
 								<td>返回格式：</td>
-								<td>${decode(goodsDetails.apiInfo.respDataFormat,1,'JSON',2,'XML','未知')}</td>
-							</tr>
-							<tr>
-								<td>是否包含分页：</td>
-								<td>${decode(goodsDetails.apiInfo.isPaging,0,'否',1,'是','未知')}</td>
+								<td>${decode(goodsDetails.apiInfo.respDataFormat,'1','JSON','2','XML','未知')}</td>
 							</tr>
 							<tr>
 								<td>API类型：</td>
-								<td>${decode(goodsDetails.apiInfo.apiType,1,'rest',2,'wsdl','未知')}</td>
+								<td>${decode(goodsDetails.apiInfo.apiType,'1','rest','2','wsdl','未知')}</td>
 							</tr>
 							<tr>
 								<td>状态：</td>
-								<td>${decode(goodsDetails.apiInfo.status,0,'删除',1,'草稿',2,'待测试',3,'测试通过',4,'测试未通过','未知')}</td>
+								<td>${decode(goodsDetails.apiInfo.status,'0','删除','1','草稿','2','待测试','3','测试通过','4','测试未通过','未知')}</td>
 							</tr>
 							<tr>
 								<td>版本号：</td>
