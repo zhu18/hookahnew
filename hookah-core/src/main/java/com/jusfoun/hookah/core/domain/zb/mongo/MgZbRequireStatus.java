@@ -29,7 +29,7 @@ public class MgZbRequireStatus extends GenericModel {
     // 验收付款
     private String payTime;
 
-    // 评价
+    // 对服务商评价
     private String commentTime;
 
     // 报名

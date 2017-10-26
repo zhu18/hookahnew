@@ -727,6 +727,17 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
         return returnData;
     }
+
+    @Override
+    public List<Goods> goodsInfoByCatIds(String[] ids){
+        return goodsMapper.getGoodsInfoByCatIds(ids);
+    }
+
+    @Override
+    public int updateGoodsInfoByCatIds(String[] ids){
+        return goodsMapper.updateGoodsInfoByCatIds(ids);
+    }
+
     @Override
     public GoodsVo fetchGoodsApiInfo(String url) throws Exception {
 

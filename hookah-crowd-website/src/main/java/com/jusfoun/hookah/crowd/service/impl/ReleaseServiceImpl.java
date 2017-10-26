@@ -7,6 +7,7 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -89,7 +90,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     ment.setRequireSn(CommonUtils.getRequireSn("ZB",vo.getZbRequirement().getType().toString()));
                 zbRequirementMapper.insertAndGetId(ment);
                 //mongo中添加需求发布时间
-                mgZbRequireStatusService.setRequireStatusInfo(ment.getRequireSn(), ZbContants.ADDTIME, ment.getAddTime().toString());
+                mgZbRequireStatusService.setRequireStatusInfo(ment.getRequireSn(), ZbContants.ADDTIME,DateUtil.getSimpleDate(ment.getAddTime()));
 
                 if(vo.getAnnex().size() > 0){
                     for(ZbAnnex zbAnnex : vo.getAnnex()){
@@ -249,6 +250,12 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 if(apply != null){
                     user = zbRequirementMapper.selectReleaseInfo(apply.getUserId());
                 }
+            }
+
+            //获取时间
+            MgZbRequireStatus byRequirementSn = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
+            if(byRequirementSn != null){
+                map.put("byRequirementSn",byRequirementSn);
             }
 
             Short status = zbRequirement.getStatus();
@@ -483,10 +490,10 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             }
             if(zbRequirement != null){
                 //需求方评价时间
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.NEEDEVALUATETIME, zbComment.getAddTime().toString());
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.COMMENTTIME,DateUtil.getSimpleDate(zbComment.getAddTime()));
                 if(zbComment != null){
                     if(zbComment.getUserType() == 2){
-                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_FAIL.getCode().shortValue());
+                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_SUCCESS.getCode().shortValue());
                         zbRequireService.updateByCondition(zbRequirement,filters);
                     }
                 }
