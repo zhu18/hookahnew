@@ -2066,7 +2066,6 @@ $('.apiNewUrl-btn').click(function(){
 function ApiUrlInfo(data){
 	$('.apiMethod').html(data.apiMethod == '1' ? 'GET' : 'POST');
 	$('.respDataFormat').html(data.respDataFormat == '1' ? 'JSON' : 'XML');
-	$('.isPaging').html(data.isPaging == '1' ?'是':'否');
 	var status = '';
 	switch (data.status)
 	{
