@@ -1,7 +1,9 @@
 /**
  * Created by Dajun on 2017-9-19.
  */
+
 function loadPageData(data) { //渲染页面数据
+  noRealName();//是否实名认证，未实名认证跳转
   data = data.data.list;
   var tempHtml = '\
         <thead>\
@@ -39,6 +41,7 @@ function loadPageData(data) { //渲染页面数据
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">托管资金</a>';
         break;
       case 8:
+      case 12:
         tempState = '工作中';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
         break;

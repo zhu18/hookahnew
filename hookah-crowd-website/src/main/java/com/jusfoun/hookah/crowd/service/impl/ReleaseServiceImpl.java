@@ -7,6 +7,7 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -89,7 +90,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     ment.setRequireSn(CommonUtils.getRequireSn("ZB",vo.getZbRequirement().getType().toString()));
                 zbRequirementMapper.insertAndGetId(ment);
                 //mongo中添加需求发布时间
-                mgZbRequireStatusService.setRequireStatusInfo(ment.getRequireSn(), ZbContants.ADDTIME, ment.getAddTime().toString());
+                mgZbRequireStatusService.setRequireStatusInfo(ment.getRequireSn(), ZbContants.ADDTIME,DateUtil.getSimpleDate(ment.getAddTime()));
 
                 if(vo.getAnnex().size() > 0){
                     for(ZbAnnex zbAnnex : vo.getAnnex()){
@@ -251,6 +252,10 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 }
             }
 
+            //获取状态时间
+            MgZbRequireStatus byRequirementSn = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
+            map.put("byRequirementSn",byRequirementSn);
+
             Short status = zbRequirement.getStatus();
             if(StringUtils.isNotBlank(status.toString())){
                 switch (status){
@@ -280,7 +285,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 //报名时间
                                 map.put("applyTime",df.format(apply.getAddTime()));
                                 //已选中信息
-                                map.put("user",user);
+                                map.put("user",user != null ? user : "");
                             }
                         }
                         break;
@@ -301,20 +306,20 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                 //报名时间
                                 map.put("applyTime",df.format(apply.getAddTime()));
                                 //已选中信息
-                                map.put("user",user);
+                                map.put("user",user != null ? user : "");
                             }
                         }
                         if(zbRequirement.getId() != null){
                             ZbProgram zbProgram = zbProgramService.selectOne(filters2);
                             if(zbProgram != null){
-                                map.put("zbProgram",zbProgram);
+                                map.put("zbProgram",zbProgram != null ? zbProgram : "");
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters3.add(Condition.eq("correlationId", zbProgram.getId()));
                                 }
                                 filters3.add(Condition.eq("type", 1));
                                 List<ZbAnnex> programFiles = zbAnnexService.selectList(filters3);
                                 if(zbAnnexes != null){
-                                    map.put("programFiles",programFiles);
+                                    map.put("programFiles",programFiles != null ? programFiles : "");
                                 }
                                 //服务商的评价
                                 if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_PJ.getCode().shortValue())){
@@ -325,7 +330,6 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                                     }
                                     ZbComment zbComment = zbCommentService.selectOne(filters4);
                                     map.put("zbComment",zbComment != null ? zbComment : " ");
-
                                 }
                             }
                         }
@@ -340,20 +344,20 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                             map.put("count",zbRequirementApplies.size());
                             if(apply != null){
                                 map.put("applyTime",df.format(apply.getAddTime()));
-                                map.put("user",user);
+                                map.put("user",user != null ? user : "");
                             }
                         }
                         if(zbRequirement.getId() != null){
                             ZbProgram zbProgram = zbProgramService.selectOne(filters2);
                             if(zbProgram != null){
-                                map.put("zbProgram",zbProgram);
+                                map.put("zbProgram",zbProgram != null ? zbProgram : "");
                                 if(StringUtils.isNotBlank(zbProgram.getId().toString())){
                                     filters3.add(Condition.eq("correlationId", zbProgram.getId()));
                                 }
                                 filters2.add(Condition.eq("type", 1));
                                 List<ZbAnnex> programFiles = zbAnnexService.selectList(filters3);
                                 if(zbAnnexes != null){
-                                    map.put("programFiles",programFiles);
+                                    map.put("programFiles",programFiles != null ? programFiles : "");
                                 }
                                 //服务商的平价
                                 List<Condition> filters4 = new ArrayList<>();
@@ -438,13 +442,13 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     }else if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_FAIL.getCode())){//验收不通过
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.TWO_WORKING.getCode().shortValue());
 
-                        //修改报名状态为工作中
-                        zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.WORKING.getCode());
+//                        //修改报名状态为工作中
+//                        zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.WORKING.getCode());
 
                     }else if(program.getStatus().equals(ZbContants.Program_Status.PROGRAM_REJECT.getCode())){//验收驳回
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TK.getCode().shortValue());
 
-                        //修改报名状态为交易取消
+                        //修改报名状态为驳回失败(交易取消)
                         zbRequireApplyWebsiteService.updateStatus(program.getApplyId(),ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode());
 
                     }
@@ -484,10 +488,10 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             }
             if(zbRequirement != null){
                 //需求方评价时间
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.NEEDEVALUATETIME, zbComment.getAddTime().toString());
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.COMMENTTIME,DateUtil.getSimpleDate(zbComment.getAddTime()));
                 if(zbComment != null){
                     if(zbComment.getUserType() == 2){
-                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_FAIL.getCode().shortValue());
+                        zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_SUCCESS.getCode().shortValue());
                         zbRequireService.updateByCondition(zbRequirement,filters);
                     }
                 }

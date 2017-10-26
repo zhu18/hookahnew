@@ -20,33 +20,33 @@
                </div>
                <div class="col-md-11 col-sm-11  publish-Progress">
                    <ul class="clearfix">
-                       <li data-index="1" class="visited">
+                       <li data-index="1" ng-class="{'visited':checkTime,'active':addTime}">
                            <p>发布需求</p>
-                           <p data-ng-show="addTime"></p>
+                           <p data-ng-bind="addTime"></p>
                        </li>
-                       <li data-index="2" class="active">
+                       <li data-index="2" ng-class="{'visited':trusteeTime,'active':checkTime}">
                            <p>平台审核</p>
-                           <p data-ng-show="checkTime"></p>
+                           <p data-ng-bind="checkTime"></p>
                        </li>
-                       <li data-index="3">
+                       <li data-index="3" ng-class="{'visited':pressTime,'active':trusteeTime}">
                            <p>悬赏费用托管</p>
-                           <p data-ng-show="trusteeTime"></p>
+                           <p data-ng-bind="trusteeTime"></p>
                        </li>
-                       <li data-index="4">
+                       <li data-index="4" ng-class="{'visited':workingTime,'active':pressTime}">
                            <p>待发布</p>
-                           <p data-ng-show="pressTime"></p>
+                           <p data-ng-bind="pressTime"></p>
                        </li>
-                       <li data-index="5">
+                       <li data-index="5" ng-class="{'visited':payTime,'active':workingTime}">
                            <p>供应商工作</p>
-                           <p data-ng-show="workingTime"></p>
+                           <p data-ng-bind="workingTime"></p>
                        </li>
-                       <li data-index="6">
+                       <li data-index="6" ng-class="{'visited':commentTime,'active':payTime}">
                            <p>验收付款</p>
-                           <p data-ng-show="payTime"></p>
+                           <p data-ng-bind="payTime"></p>
                        </li>
-                       <li data-index="7">
+                       <li data-index="7" ng-class="{'active':commentTime}">
                            <p>评价</p>
-                           <p data-ng-show="commentTime"></p>
+                           <p data-ng-bind="commentTime"></p>
                        </li>
                    </ul>
                </div>

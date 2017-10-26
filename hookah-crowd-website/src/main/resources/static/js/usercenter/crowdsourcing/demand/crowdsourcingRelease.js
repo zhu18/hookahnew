@@ -4,6 +4,7 @@
 
 
 let crowdSourcingId = GetUrlValue('id');
+noRealName();//是否实名认证，未实名认证跳转
 
 // 获取需求类型
 function getRequirementType() {
@@ -41,7 +42,7 @@ function modifyCrowdsourcing() { //修改，从我的发布点击'修改'调转�
     cache:false,
     success: function (data) {
       console.log(data);
-      if (data.data[0].hasOwnProperty('zbRequirement')) {
+      if (data.data.hasOwnProperty('zbRequirement')) {
 
         renderPage(data.data);
 
@@ -366,7 +367,11 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
     })
   }
   else {
-    $.alert('带 * 为必填项，请按要求输入！')
+    if(insertRequirementsData.rewardMoney<=0){
+      $.alert('悬赏金额要大于0')
+    }else {
+      $.alert('带 * 为必填项，请按要求输入！')
+    }
   }
 
 });

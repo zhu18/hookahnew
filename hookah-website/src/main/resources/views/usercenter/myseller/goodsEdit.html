@@ -63,49 +63,27 @@ var htmlPart = {
 										</div>
 									</td>
 								</tr><!--商品简介-->
-								<!--<tr>-->
-									<!--<td class="bar">商品标签：</td>-->
-									<!--<td>-->
-										<!--<div class="block info" style="margin: 0px 0px 3px;">-->
-											<!--分类信息为该商品定义关键词，可由多个词组组装成，使用英文“,”号隔开。-->
-										<!--</div>-->
-										<!--<div class="text-box">-->
-											<!--<input name="keywords" id="keywords" type="text">-->
-										<!--</div>-->
-									<!--</td>-->
-								<!--</tr>&lt;!&ndash;商品标签&ndash;&gt;-->
+
 								<tr>
-									<td class="bar">标签信息：</td>
+									<td class="bar">标签信息：<span class="requireds">*</span></td>
 									<td style="position: relative;">
-										<span class="tags-val"></span>
-										<span class="add-tags fa fa-plus"></span>
+										<div style="width: 100%;overflow: hidden">
+											<span class="tags-val"></span>
+											<span class="add-tags fa fa-plus"></span>
+										</div>
 										<div class="tags-box">
 											<h3 class="box-title">选择标签信息<span class="close-tag-btn fa fa-times"></span></h3>
 											<table>
-												<tr>
-													<td style="text-align:center;width:60px;">A~E</td>
-													<td>
-														<label><input type="checkbox" name="tagsCheck" value="1" tagname="北京">北京</label>
-														<label><input type="checkbox" name="tagsCheck" value="2" tagname="上海">上海</label>
-														<label><input type="checkbox" name="tagsCheck" value="3" tagname="深圳">深圳</label>
-														<label><input type="checkbox" name="tagsCheck" value="4" tagname="天津">天津</label>
-													</td>
-												</tr>
-												<tr>
-													<td style="text-align:center;width:60px;">F~J</td>
-													<td>
-														<label><input type="checkbox" name="tagsCheck" value="5" tagname="河北">河北</label>
-														<label><input type="checkbox" name="tagsCheck" value="6" tagname="河南">河南</label>
-														<label><input type="checkbox" name="tagsCheck" value="7" tagname="山东">山东</label>
-														<label><input type="checkbox" name="tagsCheck" value="8" tagname="山西">山西</label>
-													</td>
-												</tr>
+
 											</table>
 											<p class="tags-tip" style="padding-left: 20px;">ps:最多选择3个标签</p>
 											<div class="checkTags">
 												<span class="checkTags—btn checkTags-confirmBtn">确定</span>
 												<span class="checkTags—btn checkTags-cancelBtn">取消</span>
 											</div>
+										</div>
+										<div class="text-box" style="overflow: hidden">
+											<input name="keywords" class="keywords" id="keywords" type="text" style="opacity: 0; height:1px;position: absolute" required="required">
 										</div>
 									</td>
 								</tr><!--商品标签-->
@@ -415,7 +393,93 @@ var htmlPart = {
 						</div><!--离线数据-->
 						<div class="struct selects goodsTypeLine api-info-box">
 							<!--<h1 class="">API信息：</h1>-->
-							<table>
+							<table class="apiNewUrl">
+								<tbody>
+								<tr>
+									<td class="bar">接口链接：<span class="requireds">*</span></td>
+									<td>
+										<div class="text-box">
+											<input name="apiNewUrl" id="J-apiNewUrl" type="text" required="required"> <span class="btn btn-full-blue apiNewUrl-btn">获取</span>
+										</div>
+									</td>
+								</tr> <!--接口链接-->
+								</tbody>
+							</table>
+							<table class="apiNew" style="display: none;">
+								<tbody>
+								<tr>
+									<td class="bar">请求方式：</td>
+									<td>
+										<div class="apiMethod"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">返回格式：</td>
+									<td>
+										<div class="respDataFormat"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">API类型：</td>
+									<td>
+										<div class="apiType"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">状态：</td>
+									<td>
+										<div class="status"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">版本号：</td>
+									<td>
+										<div class="version"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">请求示例：</td>
+									<td>
+										<div class="reqSample"></div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">请求参数：</td>
+									<td>
+										<div class="table-box">
+											<table class="reqParamList">
+												<thead>
+												<tr>
+													<th>名称</th>
+													<th>描述</th>
+												</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="bar">返回说明：</td>
+									<td>
+										<div class="table-box">
+											<table class="respParamList">
+												<thead>
+												<tr>
+													<th>名称</th>
+													<th>描述</th>
+												</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+							<table class="apiOld" style="display: none;">
 								<tbody>
 								<tr>
 									<td class="bar">接口类型：</td>
@@ -746,24 +810,6 @@ var htmlPart = {
 									<td>
 										<table>
 											<tbody>
-											<!--<tr>-->
-												<!--<td class="bar">模型类型：<span class="requireds">*</span></td>-->
-												<!--<td>-->
-													<!--<div class="select-box">-->
-														<!--<select name="modelType">-->
-															<!--<option value="0">分类</option>-->
-															<!--<option value="1">回归</option>-->
-															<!--<option value="2">识别</option>-->
-															<!--<option value="3">预测</option>-->
-															<!--<option value="4">聚类</option>-->
-															<!--<option value="5">时间序列</option>-->
-															<!--<option value="6">关联降维</option>-->
-															<!--<option value="7">优化</option>-->
-															<!--<option value="8">评估</option>-->
-														<!--</select>-->
-													<!--</div>-->
-												<!--</td>-->
-											<!--</tr>-->
 											<tr>
 												<td class="bar">复杂度：<span class="requireds">*</span></td>
 												<td>

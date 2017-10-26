@@ -55,4 +55,10 @@ public interface GoodsService extends GenericService<Goods,String> {
     public List<Goods> getListByCatId(String catId);
 
     public ReturnData confirmTransCategorInfo(String catId, String GoodsIds);
+
+    List<Goods> goodsInfoByCatIds(String[] ids);
+
+    int updateGoodsInfoByCatIds(String[] ids);
+
+    GoodsVo fetchGoodsApiInfo(String url) throws Exception;
 }

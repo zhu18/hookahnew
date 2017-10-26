@@ -288,6 +288,10 @@ public class MgGoods extends GenericModel {
         private String updateFreq; //更新频率
         private String dataNumDivRowNum; //数据条数/行数
 
+        private String isPaging; //是否包含分页
+        private String status; //状态
+        private String version; //版本号
+
 
         public String getApiUrl() {
             return apiUrl;
@@ -395,6 +399,30 @@ public class MgGoods extends GenericModel {
 
         public void setDataNumDivRowNum(String dataNumDivRowNum) {
             this.dataNumDivRowNum = dataNumDivRowNum;
+        }
+
+        public String getIsPaging() {
+            return isPaging;
+        }
+
+        public void setIsPaging(String isPaging) {
+            this.isPaging = isPaging;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
         }
     }
 

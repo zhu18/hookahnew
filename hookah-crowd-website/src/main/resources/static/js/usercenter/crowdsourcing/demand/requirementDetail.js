@@ -120,6 +120,7 @@ function renderPage(data) {
 
       break;
     case 8: //工作中
+    case 12: //二次工作中
       domModel.html('工作中');
       missionApplyInfo(data); //任务报名信息显示
       break;
@@ -146,9 +147,6 @@ function renderPage(data) {
       $('.missionStatusResult').html('验收通过且已付款，待评价！');
       $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
       $('.release-first-btnbox div').append('<a class="j_commentBtn" href="javascript:void(0)">评价</a>');
-
-
-
       break;
     case 14:
       domModel.html('交易取消');
@@ -198,13 +196,21 @@ function renderPage(data) {
       $('.cancleStatusNotice').show().prev().hide();// 悬赏金额 最右侧提示
       $('.cancleStatusNoticeContent').html('无报名流标，交易取消已退款 。');//悬赏金额 最右侧提示内容
       $('.detailMoneyBox').show();
-
-
-
       break;
   }
   rewardMoney = insertRequirementsData.zbRequirement.rewardMoney;
   $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
+
+
+  //时间显示
+  if(data.byRequirementSn!==null){
+    $('.j_addTime').html(data.byRequirementSn.addTime);
+    $('.j_checkTime').html(data.byRequirementSn.checkTime);
+    $('.j_trusteeTime').html(data.byRequirementSn.trusteeTime);
+    $('.j_pressTime').html(data.byRequirementSn.pressTime);
+    $('.j_workingTime').html(data.byRequirementSn.workingTime);
+    $('.j_payTime').html(data.byRequirementSn.payTime);
+    $('.j_commentTime').html(data.byRequirementSn.commentTime);  }
 
 }
 
@@ -365,21 +371,23 @@ function missionApplyInfo(data) { //任务报名信息显示
 
   //任务报名内容
   $('.j_peopleCount').html(data.count);
-  $('.j_companyName').html(data.user.orgName);
+  if(data.user!==undefined){
+    $('.j_companyName').html(data.user.orgName);
+    $('.j_contentName').html(data.user.contactName);
+    $('.j_contentPhone').html(data.user.contactPhone);
+  }
   $('.j_SignUpTime').html(data.applyTime);
-  $('.j_contentName').html(data.user.contactName);
-
-  $('.j_contentPhone').html(data.user.contactPhone);
   //任务成果内容
   $('.j_applyDeadline').html(data.zbRequirement.applyDeadline);
-  $('.missionTitle').html(data.zbProgram.title).attr('acceptanceAdviceId',data.zbProgram.id);
-
-  $('.missionResultDes').html(data.zbProgram.content);
+  if(data.zbProgram!==undefined) {
+    $('.missionTitle').html(data.zbProgram.title).attr('acceptanceAdviceId',data.zbProgram.id);
+    $('.missionResultDes').html(data.zbProgram.content);
+  }
   //方案附件列表
-  let missionResultLoadfileHtml=renderLoadFile(data.programFiles);
-
-
-  $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
+  if(data.programFiles!==undefined){
+    let missionResultLoadfileHtml=renderLoadFile(data.programFiles);
+    $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
+  }
 }
 $('.j_checkAdviceDetail').on('mouseover', function () { //鼠标离开描述显示工具栏
   $('.checkAdviceDetailBox').show();

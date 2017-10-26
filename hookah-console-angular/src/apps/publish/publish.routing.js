@@ -40,7 +40,7 @@ export default function publishRouting($stateProvider, $urlRouterProvider) {
 
     })
     .state('publish.refund', {  //待退款页面
-      url: '/publish/refund/:id',
+      url: '/publish/refund/:id/:userId',
       template: require('./refund.html'),
       controller: refundController,
       permission: 'refund'

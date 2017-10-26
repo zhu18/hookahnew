@@ -3,7 +3,7 @@
  */
 var reqTypeId = GetUrlValue('typeId');
 $('#type li').removeClass('active').eq(reqTypeId).addClass('active');
-
+var userType=null;
 function loadPageData(data) { //渲染页面数据
   userType=data.data.userType;
   data = data.data.list;
@@ -46,6 +46,15 @@ function loadPageData(data) { //渲染页面数据
     demandList += '<li style="padding: 70px; width:89%;height: 20px;text-align:center;">----无数据----</li>'
   }
   $('.demandList').html(demandList);
+
+  if(userType == 2){
+    $('.bannerServerApply').attr('href',"/usercenter/pspAuthentication")
+  }else if(userType == 4){
+    $('.bannerServerApply').attr('href',"/usercenter/epAuthentication")
+  }else{
+    $('.bannerServerApply').attr('href',"/usercenter/authentication")
+
+  }
 
 }
 

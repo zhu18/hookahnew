@@ -465,3 +465,7 @@ h1{
 .checkTags .checkTags—btn:hover{
     background: #1A61A8;
 }
+.apiNewUrl-btn {
+    display: inline-block;
+    padding: 2px 20px;
+}

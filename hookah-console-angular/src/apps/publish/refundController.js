@@ -4,86 +4,118 @@
 class refundController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
-        // $scope.reader = function () {
-        //     var promise = $http({
-        //         method: 'GET',
-        //         url: $rootScope.site.crowdServer + "/api/require/ReqCheck",
-        //         params: {
-        //             id: $stateParams.id
-        //         }
-        //     });
-        //     promise.then(function (res, status, config, headers) {
-        //         console.log('数据在这里');
-        //         console.log(res);
-        //         if (res.data.code == '1') {
-        //             var item= res.data.data.zbRequirement;
-        //             $scope.zbAnnexes= res.data.data.zbAnnexes;
-        //             $scope.requiremetName=item.requiremetName;
-        //             $scope.contactName=item.contactName;
-        //             $scope.contactPhone=item.contactPhone;
-        //             $scope.title=item.title;
-        //             $scope.tag=item.tag.split(',');
-        //             $scope.type=item.type;
-        //             $scope.description=item.description;
-        //             $scope.deliveryDeadline=item.deliveryDeadline;
-        //             $scope.applyDeadline=item.applyDeadline;
-        //             $scope.rewardMoney=item.rewardMoney;
-        //             $scope.trusteePercent=item.trusteePercent;
-        //             $scope.applyDeadline=item.applyDeadline;
-        //             $scope.checkRemark=item.checkRemark;
-        //             $scope.status=item.status;
-        //             $scope.id=item.id;
-        //             //进度时间
-        //             var mgZbRequireStatus = res.data.data.mgZbRequireStatus || null;//进度时间
-        //             if(mgZbRequireStatus){
-        //                 $scope.addTime=mgZbRequireStatus.addTime;//发布需求
-        //                 $scope.checkTime=mgZbRequireStatus.checkTime;//平台审核
-        //                 $scope.trusteeTime=mgZbRequireStatus.trusteeTime;//资金托管
-        //                 $scope.pressTime=mgZbRequireStatus.pressTime;//平台发布
-        //                 $scope.workingTime=mgZbRequireStatus.workingTime;//服务商工作
-        //                 $scope.payTime=mgZbRequireStatus.payTime;//验收付款
-        //                 $scope.commentTime=mgZbRequireStatus.commentTime;//评价
-        //             }
-        //         } else {
-        //         }
-        //         $rootScope.loadingState = false;
-        //         growl.addSuccessMessage("订单数据加载完毕。。。");
-        //     });
-        // };
-        // $scope.reader();
-        // $scope.auditing=function (checkStatus) {
-        //     var promise = $http({
-        //         method: 'GET',
-        //         url: $rootScope.site.crowdServer + "/api/require/requirementCheck",
-        //         params: {
-        //             requirementId:$scope.id,
-        //             checkContent:$scope.checkContent,
-        //             checkStatus:checkStatus
-        //         }
-        //     });
-        //     promise.then(function (res, status, config, headers) {
-        //         console.log('数据在这里');
-        //         console.log(res);
-        //         if (res.data.code == '1') {
-        //             var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交成功！");
-        //             modalInstance.result.then(function () {
-        //                 $state.go('publish.list');
-        //             }, function () {
-        //                 $state.go('publish.list');
-        //             });
-        //
-        //         } else {
-        //             var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交失败！");
-        //             modalInstance.result.then(function () {
-        //                 $state.go('publish.list');
-        //             }, function () {
-        //                 $state.go('publish.list');
-        //             });
-        //         }
-        //         $rootScope.loadingState = false;
-        //         growl.addSuccessMessage("订单数据加载完毕。。。");
-        //     });
-        // };
+        console.log($stateParams.userId);
+        $scope.reader = function () {
+            var promise = $http({
+                method: 'GET',
+                url: $rootScope.site.crowdServer + "/api/refund/selectRefundInfo",
+                params: {
+                    userId: $stateParams.userId,
+                    requiredmentId: $stateParams.id
+                }
+            });
+            promise.then(function (res, status, config, headers) {
+                console.log('数据在这里');
+                console.log(res);
+                if (res.data.code == '1') {
+                    $scope.cardOwner=res.data.data.cardOwner;
+                    $scope.cardCode=res.data.data.cardCode;
+                    $scope.addTime=res.data.data.addTime;
+                    $scope.money=res.data.data2;
+
+                } else {
+                }
+                $rootScope.loadingState = false;
+                growl.addSuccessMessage("订单数据加载完毕。。。");
+            });
+        };
+        $scope.reader();
+        $scope.auditing=function () {
+            var promise = $http({
+                method: 'get',
+                url: $rootScope.site.crowdServer + "/api/refund/goRefund",
+                params: {
+                    userId: $stateParams.userId,
+                    requirementId:$stateParams.id,
+                    bankName:$scope.cardOwner,
+                    refundAmount:$scope.money,
+                    bankCardNum:$scope.cardCode,
+                    desc:$scope.desc,
+                    payTime:$scope.addTime
+                }
+            });
+            promise.then(function (res, status, config, headers) {
+                console.log('数据在这里');
+                console.log(res);
+                if (res.data.code == '1') {
+                    var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交成功！");
+                    modalInstance.result.then(function () {
+                        $state.go('publish.list');
+                    }, function () {
+                        $state.go('publish.list');
+                    });
+
+                } else {
+                    var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交失败！");
+                    modalInstance.result.then(function () {
+
+                    }, function () {
+
+                    });
+                }
+                $rootScope.loadingState = false;
+                growl.addSuccessMessage("订单数据加载完毕。。。");
+            });
+        };
+        $scope.back=function () {
+            $state.go('publish.list');
+        }
+        // 日历插件开始
+
+        $scope.inlineOptions = {
+            customClass: getDayClass,
+            minDate: new Date(),
+            // maxDate: new Date(data),
+            showWeeks: true
+        };
+        $scope.open1 = function () {
+            $scope.popup1.opened = true;
+        };
+        $scope.popup1 = {
+            opened: false
+        };
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var afterTomorrow = new Date();
+        afterTomorrow.setDate(tomorrow.getDate() + 1);
+        $scope.events = [
+            {
+                date: tomorrow,
+                status: 'full'
+            },
+            {
+                date: afterTomorrow,
+                status: 'partially'
+            }
+        ];
+        function getDayClass(data) {
+            var date = data.date,
+                mode = data.mode;
+            if (mode === 'day') {
+                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+                for (var i = 0; i < $scope.events.length; i++) {
+                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                    if (dayToCheck === currentDay) {
+                        return $scope.events[i].status;
+                    }
+                }
+            }
+            return '';
+        }
+
+        // 日历插件结束
     }
 }
 

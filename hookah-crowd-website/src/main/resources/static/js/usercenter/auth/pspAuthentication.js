@@ -442,7 +442,7 @@ function educationEdit(r) {
                     '<td> ' +
                     '<div> <label for=""><span class="color-red">*</span>就学时间</label> ' +
                     '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
-                    '<td> <div> <label for="edu"><span class="color-red">*</span>学历</label> <select name="edu" id="edu" required > <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> ' +
+                    '<td> <div> <label for="edu"><span class="color-red">*</span>学历</label> <select name="edu" id="edu" required > <option value="1">大专</option> <option value="2">本科</option> <option value="3">硕士</option> <option value="4">博士</option> </select> </div> ' +
                     '</td> </tr>' +
                     ' <tr> <td> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
                     ' <tr> <td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'">保存</button> </td>' +
@@ -457,6 +457,8 @@ function educationEdit(r) {
                 $('#endDate').val(data.data.endTime);
                 $('#orExam').attr("checked",data.data.orExam==0?false:true);
                 $('#edu').val(data.data.edu);
+                $('.fileTip').html(data.data.certPathsList[0].certName);
+                $('#file').val(data.data.certPathsList[0].certPath);
                 console.log($('#educationAddSave').attr('data-sn'));
 
                 $("#educationAddSave").on('click',function () {
@@ -538,6 +540,8 @@ function workEdit(r) {
                 $('#startDate').val(data.data.startTime);
                 $('#endDate').val(data.data.endTime);
                 $('#position').val(data.data.position);
+                $('.fileTip').html(data.data.certPathsList[0].certName);
+                $('#file').val(data.data.certPathsList[0].certPath);
 
                 $("#workAddSave").on('click',function () {
                     var data=JSON.stringify({
@@ -687,6 +691,8 @@ function appCaseEdit(r) {
                 $('#startDate').val(data.data.startTime);
                 $('#endDate').val(data.data.endTime);
                 $('#caseDesc').val(data.data.caseDesc);
+                $('.fileTip').html(data.data.certPathsList[0].certName);
+                $('#file').val(data.data.certPathsList[0].certPath);
 
                 $("#appCaseAddSave").on('click',function () {
                     var data=JSON.stringify({
@@ -767,6 +773,8 @@ function swpEdit(r) {
                 $('#registerNum').val(data.data.registerNum);
                 $('#startDate').val(data.data.publicTime);
                 $('#purpose').val(data.data.purpose);
+                $('.fileTip').html(data.data.certPathsList[0].certName);
+                $('#file').val(data.data.certPathsList[0].certPath);
 
                 $("#swpAddSave").on('click',function () {
                     var data=JSON.stringify({
@@ -845,6 +853,8 @@ function inPatentsEdit(r) {
                 $('#patentNum').val(data.data.patentNum);
                 $('#startDate').val(data.data.applyTime);
                 $('#patentDesc').val(data.data.patentDesc);
+                $('.fileTip').html(data.data.certPathsList[0].certName);
+                $('#file').val(data.data.certPathsList[0].certPath);
 
                 $("#inPatentsAddSave").on('click',function () {
                     var data=JSON.stringify({
@@ -897,7 +907,7 @@ function reader() {
                 var specialSkills=data.data.specialSkills;
                 $('.providerDesc').val(data.data.providerDesc);
                 $('.providerDesc').html(data.data.providerDesc);
-                if(specialSkills){
+                if(specialSkills){  //擅长领域
                     var html='';
                     for (var i=0,len=specialSkills.length;i<len;i++){
                         html +='<span class="active">'+specialSkills[i]+'</span>'
@@ -937,7 +947,7 @@ function reader() {
                 }else {
                     $('.content-education-noData').show();
                 }
-                if(worksExpList && worksExpList.length>0){
+                if(worksExpList && worksExpList.length>0){ //工作经历
                     $('.content-work-noData').hide();
                     var html=''
                     for (var i=0,len=worksExpList.length;i<len;i++){
@@ -969,7 +979,7 @@ function reader() {
                 }else {
                     $('.content-work-noData').show()
                 }
-                if(projectsExpList && projectsExpList.length>0){
+                if(projectsExpList && projectsExpList.length>0){ //项目经历
                     $('.content-project-noData').hide()
                     var html=''
                     for (var i=0,len=projectsExpList.length;i<len;i++){
@@ -999,7 +1009,7 @@ function reader() {
                     $('.content-project-noData').show()
                 }
 
-                if(appCaseList && appCaseList.length>0){
+                if(appCaseList && appCaseList.length>0){ //应用案例
                     $('.content-appCase-noData').hide();
                     var html=''
                     for (var i=0,len=appCaseList.length;i<len;i++){
@@ -1014,7 +1024,7 @@ function reader() {
                         html +='<a href="javascript:void (0)" class="appCaseDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
                         html +='<dd> '
                         html +='<label>案例概述:</label> '
-                        html +='<div >'+item.caseDesc+'</div> </dd> '
+                        html +='<div >'+item.caseView+'</div> </dd> '
                         html +='<dd>'
                         html +=' <label>解决方案:</label> '
                         html +='<div>'+item.caseDesc+'</div> </dd> <dd> '
@@ -1121,7 +1131,7 @@ function time() {
 }
 
 function formatDate(d){
-    var   data=new Date();
+    var   data=new Date(d);
     var   now=new Date(data.getTime(d));
     var   year=now.getFullYear();
     var   month=now.getMonth()+1;

@@ -46,7 +46,8 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">商品标签</label>
 						<div class="col-sm-5">
-							<input type="text" class="form-control" name="goodsName" value="{{editData.keywords}}" readonly="true"/>
+							<input type="text" ng-if="!editData.keywordsNames" class="form-control" name="goodsName" value="{{editData.keywords}}" readonly="true"/>
+							<span style="border:1px solid #ccc;padding:5px 10px; margin-left: 10px;" ng-repeat="item in keywordsNew">{{item}}</span>
 						</div>
 					</div>
 					<div class="form-group">

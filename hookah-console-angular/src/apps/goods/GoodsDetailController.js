@@ -16,6 +16,18 @@ class GoodsDetailController {
 			promise.then(function (res, status, config, headers) {
 				if(res.data.code == "1"){
 					$scope.editData = res.data.data;
+					// var arr1 = res.data.data.keywords.split(","),
+					// 	arr2 = res.data.data.keywordsNames.split(","),
+					// 	arr3 = [];
+					// for (var i = 0; i < arr1.length; i++) {
+					// 	var rst={
+					// 		id:arr1[i],
+					// 		name : arr2[i]
+					// 	};
+					// 	arr3.push(rst)
+					// }
+					$scope.keywordsNew = res.data.data.keywordsNames.split(",");
+					console.log($scope.keywordsNew)
 					$scope.packageApiInfo = res.data.data.packageApiInfo;
 					growl.addSuccessMessage("数据加载完毕。。。");
 				}

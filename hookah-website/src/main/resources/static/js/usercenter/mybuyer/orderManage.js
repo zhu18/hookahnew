@@ -78,7 +78,7 @@ function loadPageData(data) {
         html += '<td class="text-align-center" style="width: 280px;">';
         html += '<div class="p-img">';
         html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">';
-        html += '<img src="'+host.static+'/' + goods[ii].goodsImg + '" alt="">';
+        html += '<img src="'+goods[ii].goodsImg+'" alt="">';
         html += '</a>';
         html += '</div>';
         html += '<div class="desc margin-top-10 marign-bottom-10" >';
@@ -297,29 +297,30 @@ function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
                Loading.start();
                var apiWordUrl;
                 //获取api文档下载地址
-               $.ajax({
-                  url: host.website + '/help/exportWords',
-                  type: 'get',
-                  async: false ,
-                  data: {
-                    goodsId: goodsId,
-                    sourceId: sourceId,
-                    orderNo: ""
-                  },
-                  success: function (data) {
-                    if (data.code == 1) {
-                        apiWordUrl=data.data;
-                    } else {
-                      $.alert(data.message)
-                    }
-                  }
-                });
+               // $.ajax({
+               //    url: host.website + '/help/exportWords',
+               //    type: 'get',
+               //    async: false ,
+               //    data: {
+               //      goodsId: goodsId,
+               //      sourceId: sourceId,
+               //      orderNo: ""
+               //    },
+               //    success: function (data) {
+               //      if (data.code == 1) {
+               //          apiWordUrl=data.data;
+               //      } else {
+               //        $.alert(data.message)
+               //      }
+               //    }
+               //  });
              var apiObj=JSON.parse(data.data.result);
              tempHtml = "<div class='confirmKey'><h4>提取密钥：</h4>" +
                         "<h5>您购买的API商品token为：</h5>" +
                         "<h5><input id='token' readonly='readonly' style='width: 270px;margin-left: 15px;border: 0;' value='"+apiObj.data.token+"'/><a style='color: blue;margin-left: 10px;' href=\"javascript:copyText();\">复制token</a><a style='color: blue;margin-left: 10px;' href=\"javascript:resetToken('"+goodsId+"','"+orderId+"');\">重置token</a></h5>" +
                         "<h5>当前API状态：</h5>" +
-                        "<h5><span style='margin-left: 15px;'> 已调用次数："+(apiObj.data.totalCount-apiObj.data.hasCount)+"</span><span style='margin-left: 15px;'> 剩余次数："+apiObj.data.hasCount+"</span><a style='color:blue;margin-left: 20px;' href='"+apiWordUrl+"'>详情下载</a><a style='color:blue;margin-left: 20px;' href='/usercenter/apiLogs?orderSn="+orderId+"&goodsSn="+goodsId+"'>查看详情</a></h5></div>";
+                        // "<h5><span style='margin-left: 15px;'> 已调用次数："+(apiObj.data.totalCount-apiObj.data.hasCount)+"</span><span style='margin-left: 15px;'> 剩余次数："+apiObj.data.hasCount+"</span><a style='color:blue;margin-left: 20px;' href='"+apiWordUrl+"'>详情下载</a><a style='color:blue;margin-left: 20px;' href='/usercenter/apiLogs?orderSn="+orderId+"&goodsSn="+goodsId+"'>查看详情</a></h5></div>";
+                        "<h5><span style='margin-left: 15px;'> 已调用次数："+(apiObj.data.totalCount-apiObj.data.hasCount)+"</span><span style='margin-left: 15px;'> 剩余次数："+apiObj.data.hasCount+"</span><a style='color:blue;margin-left: 20px;' href='/usercenter/apiLogs?orderSn="+orderId+"&goodsSn="+goodsId+"'>查看详情</a></h5></div>";
               Loading.stop();
           } else if (goodsType == 2) { //模型
             tempHtml = "<div class='confirmKey'><h4>模型压缩包下载地址：</h4>" +

@@ -50,13 +50,13 @@ var htmlPart = {
                                 </div>
                                 <div class="recommend-operate-content">
                                     <h2>通过社交应用推荐</h2>
-                                    <ul class="recommend-ways">
-                                        <li><a href="javascript:;"><i class="social-logo social-wechat"></i>微信</a></li>
+                                    <div class="recommend-ways">
+                        <!--                <li><a href="javascript:;"><i class="social-logo social-wechat"></i>微信</a></li>
                                         <li><a href="javascript:;"><i class="social-logo social-weibo"></i>新浪微博</a></li>
                                         <li><a href="javascript:;"><i class="social-logo social-qqzone"></i>QQ空间</a>
                                         </li>
-                                        <li><a href="javascript:;"><i class="social-logo social-qq"></i>QQ好友</a></li>
-                                    </ul>
+                                        <li><a href="javascript:;"><i class="social-logo social-qq"></i>QQ好友</a></li>-->
+                                    </div>
                                 </div>
                                 <div class="recommend-operate-content">
                                     <p class="recommend-tips">
@@ -81,6 +81,20 @@ var htmlPart = {
     <%};
     include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
     %>
+    <script src="/static/js/usercenter/recommend/sosh.min.js"></script>
     <script type="text/javascript">
-
+        sosh('.recommend-ways', {
+            // 分享的链接，默认使用location.href
+            url: "${recommendUrl!''}",
+            // 分享的标题，默认使用document.title
+            title: '我的专属推广链接',
+            // 分享的摘要，默认使用<meta name="description" content="">content的值
+            digest: '我的专属推广链接',
+            // 分享的图片，默认获取本页面第一个img元素的src
+            pic: 'http://www.galaxybigdata.com/static/images/brand_logo.png',
+            // 选择要显示的分享站点，顺序同sites数组顺序，
+            // 支持设置的站点有weixin,yixin,weibo,qzone,tqq,douban,renren,tieba
+            sites: ['weixin', 'weibo', 'qzone', 'tqq', 'douban'] //
+        })
     </script>
+</div>

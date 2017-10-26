@@ -46,6 +46,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
 
     @Resource
     ZbCommentService zbCommentService;
+
     @Resource
     public void setDao(ZbRequirementApplyMapper zbRequirementApplyMapper) {
         super.setDao(zbRequirementApplyMapper);
@@ -58,53 +59,61 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
 
     @Override
     public ReturnData viewApplyByRequire(Long requirementId) throws Exception {
-        if (requirementId==null){
+        if (requirementId == null) {
             return ReturnData.error();
         }
         List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.eq("requirementId",requirementId));
+        filters.add(Condition.eq("requirementId", requirementId));
         ZbRequirement zbRequirement = zbRequirementMapper.selectForDetail(requirementId);
-//        if (zbRequirement.getStatus() == 5) {
-//            if (zbRequirement.getApplyDeadline().getTime() <= new Date().getTime()) {
-//                zbRequirement.setStatus(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue());
-//                zbRequirementMapper.updateByPrimaryKeySelective(zbRequirement);
-//            }
-//        }
-        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
+        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn()) == null ? new MgZbRequireStatus() : mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
         List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
+        ZbProgram zbProgram = null;
+        List<ZbAnnex> reqProgram = new ArrayList<>();
         List<ZbComment> zbComments = zbCommentService.selectList(filters);
-        List<ZbProgram> zbPrograms = new ArrayList<>();
         List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("correlationId", zbRequirement.getId()));
-        List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
-        for (ZbRequirementApply zbRequirementApply:zbRequirementApplies){
+        for (ZbRequirementApply zbRequirementApply : zbRequirementApplies) {
             User user = userService.selectById(zbRequirementApply.getUserId());
             zbRequirementApply.setUserName(user.getUserName());
-           zbRequirementApply.setMobile(user.getMobile());
-            if (!Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.APPLY_SUCCESS.getCode().shortValue())&&!Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.getCode().shortValue())){
+            zbRequirementApply.setMobile(user.getMobile());
+            if (!Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.APPLY_SUCCESS.getCode().shortValue()) && !Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.getCode().shortValue())) {
                 filters.clear();
-                filters.add(Condition.eq("applyId",zbRequirementApply.getId()));
-                zbPrograms = zbProgramService.selectList(filters);
+                filters.add(Condition.eq("applyId", zbRequirementApply.getId()));
+                zbProgram = zbProgramService.selectOne(filters);
+                //1为方案附件
+                if (zbProgram != null) {
+                    filter.clear();
+                    filter.add(Condition.eq("correlationId", zbProgram.getId()));
+                    filter.add(Condition.eq("type", 1));
+                    reqProgram = zbAnnexService.selectList(filter);
+                }
             }
         }
-        Map<String,Object> map = new HashMap<>();
-        map.put("zbRequirement",zbRequirement);
-        map.put("zbRequirementApplies",zbRequirementApplies);
-        map.put("zbPrograms",zbPrograms);
-        map.put("zbAnnexes", zbAnnexes);
+        //0为需求附件
+        filter.add(Condition.eq("correlationId", zbRequirement.getId()));
+        filter.add(Condition.eq("type", 0));
+        List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
+
+
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("zbRequirement", zbRequirement);
+        map.put("zbRequirementApplies", zbRequirementApplies);
+        map.put("zbProgram", zbProgram);
+        map.put("zbAnnexes", zbAnnexes != null ? zbAnnexes : "");
         map.put("zbComments", zbComments);
-        map.put("mgZbRequireStatus",mgZbRequireStatus);
+        map.put("mgZbRequireStatus", mgZbRequireStatus);
+        map.put("reqProgram", reqProgram);
         return ReturnData.success(map);
     }
 
     @Override
     public ReturnData choseApply(Long id) {
-        if (id==null){
+        if (id == null) {
             return ReturnData.error("操作失败，请重新操作");
         }
         ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
         zbRequirementApply.setId(id);
-        zbRequirementApply.setStatus((short)1);
+        zbRequirementApply.setStatus((short) 1);
         updateByIdSelective(zbRequirementApply);
         return ReturnData.success();
     }

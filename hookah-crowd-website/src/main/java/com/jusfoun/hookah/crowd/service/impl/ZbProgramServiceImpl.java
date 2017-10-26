@@ -191,11 +191,24 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
 
         String username = null;
         try {
+
+           Long reqId = zbProgramVo.getRequirementId();
+
+            ZbRequirement zbRequirement = zbRequireService.selectById(reqId);
+            if(Objects.isNull(zbRequirement) ||
+                    (!zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WORKINGING.getCode().shortValue()) &&
+                    !zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_PLAT_YS.getCode().shortValue()) &&
+                    !zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue()))){
+                returnData.setCode(ExceptionConst.AssertFailed);
+                returnData.setMessage("该需求当前状态不可提交方案");
+                return returnData;
+            }
+
             User user = this.getCurrentUser();
 
             List<Condition> filters = new ArrayList<Condition>();
             filters.add(Condition.eq("applyId",zbProgramVo.getApplyId()));
-            filters.add(Condition.eq("requirementId",zbProgramVo.getRequirementId()));
+            filters.add(Condition.eq("requirementId",reqId));
             filters.add(Condition.eq("userId",user.getUserId()));
             List<ZbProgram> zbPrograms = this.selectList(filters);
 
@@ -248,7 +261,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             zbRequirementApplyMapper.updateByPrimaryKeySelective(zbRequirementApply);
 
             //保存方案提交时间
-            ZbRequirement zbRequirement = zbRequireService.selectById(zbProgramVo.getRequirementId());
+//            ZbRequirement zbRequirement = zbRequireService.selectById(zbProgramVo.getRequirementId());
             if(Objects.nonNull(zbRequirement)){
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.REQUIRECOMMENTTIME, DateUtils.toDefaultNowTime());
             }

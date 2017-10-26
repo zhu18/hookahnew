@@ -258,12 +258,24 @@ public class GoodsApi extends BaseController{
         try {
 
             Goods goods = goodsService.selectById(goodsId);
+            //商品标签赋值
+            if(StringUtils.isNotBlank(goods.getKeywords())) {
+                StringBuilder stringBuilder = new StringBuilder();
+                for(String label : goods.getKeywords().split(",")) {
+                    stringBuilder.append(DictionaryUtil.getGoodsLabelById(label) == null
+                            ? "" : DictionaryUtil.getGoodsLabelById(label).getLabName()).append(",");
+                }
+                goodsVo.setKeywordsNames(stringBuilder.substring(0, stringBuilder.length() - 1));
+            }
             if(goods != null){
                 goods.setGoodsArea((goods.getGoodsArea() == null || "全部".equals(goods.getGoodsArea()) || "".equals(goods.getGoodsArea())? "全部" : DictionaryUtil.getRegionById(goods.getGoodsArea()).getMergerName()));
                 BeanUtils.copyProperties(goods, goodsVo);
             }
             MgGoods mgGoods = mgGoodsService.selectById(goodsId);
             if(mgGoods != null){
+                if(StringUtils.isNotBlank(goods.getApiUrl())){
+                    mgGoods.setApiInfo(goodsService.fetchGoodsApiInfo(goods.getApiUrl()).getApiInfo());
+                }
                 BeanUtils.copyProperties(mgGoods, goodsVo);
             }
 
