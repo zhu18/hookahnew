@@ -198,7 +198,8 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             if(Objects.isNull(zbRequirement) ||
                     (!zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WORKINGING.getCode().shortValue()) &&
                     !zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_PLAT_YS.getCode().shortValue()) &&
-                    !zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue()))){
+                    !zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue()) &&
+                    !zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.TWO_WORKING.getCode().shortValue()))){
                 returnData.setCode(ExceptionConst.AssertFailed);
                 returnData.setMessage("该需求当前状态不可提交方案,等待需求方二次托管中......");
                 return returnData;
@@ -217,7 +218,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
                 ZbProgram zbProgram = zbPrograms.get(0);
                 //修改方案
                 zbProgramVo.setId(zbProgram.getId());
-                zbProgramVo.setStatus(program_status_defaule);//修改为默认状态
+                zbProgramVo.setStatus(ZbContants.Program_Status.DEFAULT.getCode());//修改为默认状态
                 zbProgramVo.setUserId(user.getUserId());
                 zbProgramVo.setAddTime(new Date());//添加时间
                 this.updateByIdSelective(zbProgramVo);
@@ -251,19 +252,29 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             //修改需求状态
             ZbRequirement zbRequirementStatus = new ZbRequirement();
             zbRequirementStatus.setId(zbProgramVo.getRequirementId());
-            zbRequirementStatus.setStatus(ZbContants.Zb_Require_Status.WAIT_PLAT_YS.getCode().shortValue());
+            //二次工作中改为 待需方验收
+            if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.TWO_WORKING.getCode().shortValue())){
+                zbRequirementStatus.setStatus(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue());
+            } else {
+                zbRequirementStatus.setStatus(ZbContants.Zb_Require_Status.WAIT_PLAT_YS.getCode().shortValue());
+            }
             zbRequireService.updateByIdSelective(zbRequirementStatus);
 
             //修改apply状态
             ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
             zbRequirementApply.setId(zbProgramVo.getApplyId());
-            zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.REVIEW.getCode()).shortValue());//记得改成常量
+            if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.TWO_WORKING.getCode().shortValue())){
+                zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.ACCEPTANCE.getCode()).shortValue());//验收中
+            } else {
+                zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.REVIEW.getCode()).shortValue());//评审中
+            }
+
             zbRequirementApplyMapper.updateByPrimaryKeySelective(zbRequirementApply);
 
             //保存方案提交时间
 //            ZbRequirement zbRequirement = zbRequireService.selectById(zbProgramVo.getRequirementId());
             if(Objects.nonNull(zbRequirement)){
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.REQUIRECOMMENTTIME, DateUtils.toDefaultNowTime());
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.SUBMITTIME, DateUtils.toDefaultNowTime());
             }
 
             returnData.setData(zbProgramVo);

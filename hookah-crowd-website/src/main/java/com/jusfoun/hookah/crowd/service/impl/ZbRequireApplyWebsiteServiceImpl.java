@@ -9,8 +9,11 @@ import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementApplyVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.constants.ZbContants;
+import com.jusfoun.hookah.crowd.service.MgZbRequireStatusService;
 import com.jusfoun.hookah.crowd.service.UserService;
 import com.jusfoun.hookah.crowd.service.ZbRequireApplyWebsiteService;
 import com.jusfoun.hookah.crowd.service.ZbRequireService;
@@ -20,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -45,11 +49,15 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
     UserService userService;
 
     @Resource
+    private MgZbRequireStatusService mgZbRequireStatusService;
+
+    @Resource
     public void setDao(ZbRequirementApplyMapper zbRequirementApplyMapper) {
         super.setDao(zbRequirementApplyMapper);
     }
 
     @Override
+    @Transactional
     public ReturnData addApplay(ZbRequirementApply zbRequirementApply) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
@@ -92,6 +100,9 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
                     zbRequirementApplyMapper.insertAndGetId(zbRequirementApply);
                     returnData.setData(buildZbRequirementApplyVo(zbRequirementApply,user.getUserId()));
                     logger.info("@用户" +user==null?"":user.getUserName()+ "报名需求ID为" + zbRequirementApply.getRequirementId() + "的需求成功@");
+
+                    //插入报名时间
+                    mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.APPLYTIME, DateUtils.toDefaultNowTime());
                 }
             } else {
                 returnData.setCode(ExceptionConst.Error);
