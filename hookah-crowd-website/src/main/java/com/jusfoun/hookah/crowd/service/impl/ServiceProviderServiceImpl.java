@@ -255,6 +255,8 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
 
         //报名信息
         ZbRequirementApplyVo zbRequirementApplyVo = zbRequireApplyWebsiteService.selectByReqId(reqId) == null ? new ZbRequirementApplyVo() : (ZbRequirementApplyVo) zbRequireApplyWebsiteService.selectByReqId(reqId).getData();
+
+        if(null != zbRequirementApplyVo)//状态为违约失败视为交易取消
         zbRequirementApplyVo.setStatus(zbRequirementApplyVo.getStatus().intValue() == ZbContants.ZbRequireMentApplyStatus.DEAL_RENEGE_FAIL.getCode() ? ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode().shortValue() : zbRequirementApplyVo.getStatus());
 
         //时间条信息

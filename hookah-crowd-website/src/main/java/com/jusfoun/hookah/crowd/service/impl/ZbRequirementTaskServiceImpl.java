@@ -39,7 +39,7 @@ public class ZbRequirementTaskServiceImpl implements ZbRequirementTaskService {
     private ZbRequireService zbRequireService;
 
     @Override
-    @Scheduled(cron="0 0/5 * * * ?")
+    @Scheduled(cron="0 0 0 * * ?")
     public void flushRequireRenegeStatusTask() {
         flushStatus();
     }
