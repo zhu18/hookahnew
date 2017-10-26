@@ -372,9 +372,9 @@ function missionApplyInfo(data) { //任务报名信息显示
   //任务报名内容
   $('.j_peopleCount').html(data.count);
   if(data.user!==undefined){
-    $('.j_companyName').html(data.user.orgName);
-    $('.j_contentName').html(data.user.contactName);
-    $('.j_contentPhone').html(data.user.contactPhone);
+    $('.j_companyName').html(data.user.upname);
+    $('.j_contentName').html(data.user.upname);
+    $('.j_contentPhone').html(data.user.phoneNum);
   }
   $('.j_SignUpTime').html(data.applyTime);
   //任务成果内容
