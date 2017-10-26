@@ -4,7 +4,7 @@
 class auditingController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
-        $scope.reader = function () {
+        $scope.reader = function () { //渲染页面数据
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.crowdServer + "/api/require/ReqCheck",
@@ -51,38 +51,51 @@ class auditingController {
             });
         };
         $scope.reader();
-        $scope.auditing=function (checkStatus) {
-            var promise = $http({
-                method: 'GET',
-                url: $rootScope.site.crowdServer + "/api/require/requirementCheck",
-                params: {
-                    requirementId:$scope.id,
-                    checkContent:$scope.checkContent,
-                    checkStatus:checkStatus
-                }
-            });
-            promise.then(function (res, status, config, headers) {
-                console.log('数据在这里');
-                console.log(res);
-                if (res.data.code == '1') {
-                    var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交成功！");
-                    modalInstance.result.then(function () {
-                        $state.go('publish.list');
-                    }, function () {
-                        $state.go('publish.list');
-                    });
+        $scope.auditing=function (checkStatus) { //审核
+            $scope.checkContent=$scope.checkContent?$scope.checkContent:"";
+            if($scope.checkContent.trim()=="" && checkStatus ==2){
+                console.log("buxing");
+                var modalInstance =$rootScope.openConfirmDialogModal("审核不通过，审核意见不能为空！");
+                modalInstance.result.then(function () {
 
-                } else {
-                    var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交失败！");
-                    modalInstance.result.then(function () {
-                        $state.go('publish.list');
-                    }, function () {
-                        $state.go('publish.list');
-                    });
-                }
-                $rootScope.loadingState = false;
-                growl.addSuccessMessage("订单数据加载完毕。。。");
-            });
+                }, function () {
+
+                });
+
+            }else {
+                var promise = $http({
+                    method: 'GET',
+                    url: $rootScope.site.crowdServer + "/api/require/requirementCheck",
+                    params: {
+                        requirementId:$scope.id,
+                        checkContent:$scope.checkContent,
+                        checkStatus:checkStatus
+                    }
+                });
+                promise.then(function (res, status, config, headers) {
+                    console.log('数据在这里');
+                    console.log(res);
+                    if (res.data.code == '1') {
+                        var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交成功！");
+                        modalInstance.result.then(function () {
+                            $state.go('publish.list');
+                        }, function () {
+                            $state.go('publish.list');
+                        });
+
+                    } else {
+                        var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交失败！");
+                        modalInstance.result.then(function () {
+                            $state.go('publish.list');
+                        }, function () {
+                            $state.go('publish.list');
+                        });
+                    }
+                    $rootScope.loadingState = false;
+                    growl.addSuccessMessage("订单数据加载完毕。。。");
+                });
+            }
+
         };
     }
 }

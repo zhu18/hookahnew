@@ -67,7 +67,9 @@ class refundController {
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
         };
-
+        $scope.back=function () {
+            $state.go('publish.list');
+        }
         // 日历插件开始
 
         $scope.inlineOptions = {
