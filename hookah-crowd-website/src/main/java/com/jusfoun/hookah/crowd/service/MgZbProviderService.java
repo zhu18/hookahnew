@@ -31,4 +31,11 @@ public interface MgZbProviderService extends GenericService<MgZbProvider, String
     ReturnData getProviderCard();
 
     List<MgZbProvider> selectListByCondition(ProviderQueryVo vo);
+
+    /**
+     * 根据用户评价 修改信誉值
+     * @param userId
+     * @param level
+     */
+    void setUCreditValueByPJ(String userId, Integer level);
 }
