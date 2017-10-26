@@ -7,6 +7,7 @@ package com.jusfoun.hookah.crowd.service.impl;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbRequirementVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -61,6 +62,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
     @Resource
     MgZbRequireStatusService mgZbRequireStatusService;
+
+    @Resource
+    MgZbProviderService  mgZbProviderService;
 
     @Resource
     private ZbRequirementMapper zbRequirementMapper;
@@ -161,9 +165,13 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 filters1.add(Condition.eq("correlationId", zbRequirement.getId()));
             }
             List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters1);
+
             map.put("zbRequirement",zbRequirement);
             map.put("zbRequirementFiles",zbAnnexes);
         }
+        //查询联系人信息
+        User user = zbRequirementMapper.selectReleaseInfo(userId);
+        map.put("user",user != null ? user : new User());
         return ReturnData.success(map);
     }
 
@@ -236,7 +244,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters2);
             List<ZbRequirementApply> zbRequirementApplies = null;
             ZbRequirementApply apply = null;
-            User user = null;
+            MgZbProvider user = null;
             if(zbRequirementApply != null){
                 //计算报名人数
                 List<Condition> filters5 = new ArrayList<>();
@@ -248,7 +256,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 filters6.add(Condition.notIn("status", new Short[]{0, 2}));
                 apply = zbRequireApplyService.selectOne(filters6);
                 if(apply != null){
-                    user = zbRequirementMapper.selectReleaseInfo(apply.getUserId());
+                    //user = zbRequirementMapper.selectReleaseInfo(apply.getUserId());
+                    user = mgZbProviderService.selectById(apply.getUserId());
                 }
             }
 
