@@ -89,7 +89,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                     ment.setRequireSn(CommonUtils.getRequireSn("ZB",vo.getZbRequirement().getType().toString()));
                 zbRequirementMapper.insertAndGetId(ment);
                 //mongo中添加需求发布时间
-                mgZbRequireStatusService.setRequireStatusInfo(ment.getRequireSn(), ZbContants.ADDTIME, ment.getAddTime().toString());
+                mgZbRequireStatusService.setRequireStatusInfo(ment.getRequireSn(), ZbContants.ADDTIME,DateUtil.getSimpleDate(ment.getAddTime()));
 
                 if(vo.getAnnex().size() > 0){
                     for(ZbAnnex zbAnnex : vo.getAnnex()){
@@ -483,7 +483,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             }
             if(zbRequirement != null){
                 //需求方评价时间
-                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.NEEDEVALUATETIME, zbComment.getAddTime().toString());
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.NEEDEVALUATETIME,DateUtil.getSimpleDate(zbComment.getAddTime()));
                 if(zbComment != null){
                     if(zbComment.getUserType() == 2){
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.ZB_FAIL.getCode().shortValue());
