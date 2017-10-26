@@ -770,6 +770,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
     private void warpperApiInfo(ApiWithBLOBs api, MgGoods.ApiInfoBean apiInfoBean){
 
+        //接口链接
+        apiInfoBean.setApiUrl(api.getWrapperUrl() == null ? null : PropertiesManager.getInstance().getProperty("api.wrapper.url")+api.getWrapperUrl());
         // 请求方式
         apiInfoBean.setApiMethod(api.getMethod() == null ? null : api.getMethod().toString());
         // 返回格式
