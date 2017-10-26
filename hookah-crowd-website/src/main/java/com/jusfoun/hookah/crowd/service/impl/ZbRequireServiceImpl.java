@@ -230,7 +230,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 apply.setStatus(ZbContants.ZbRequireMentApplyStatus.ACCEPTANCE.getCode().shortValue());
                 zbRequireApplyService.updateByIdSelective(apply);
             }
-            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_FK.getCode().shortValue())&& zbProgram.getStatus()!=null){
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_PLAT_YS.getCode().shortValue())&& zbProgram.getStatus()!=null){
                 zbProgram.setId(programId);
                 zbProgram.setStatus(ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue());
                 if (checkAdvice!=null){

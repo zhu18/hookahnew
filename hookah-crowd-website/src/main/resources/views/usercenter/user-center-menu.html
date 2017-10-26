@@ -60,11 +60,17 @@
 
             <%if(user.userType == 2){%>
                 <li><a href="/usercenter/pspAuthentication"><span class="fa fa-id-card-o margin-right-22"></span>服务商认证</a></li>
+                <li><a href="/usercenter/pBusinessCard"><span class="fa fa-id-card-o margin-right-22"></span>服务商名片</a></li>
+
             <%}else if(user.userType == 4){%>
                 <li><a href="/usercenter/epAuthentication"><span class="fa fa-id-card-o margin-right-22"></span>服务商认证</a></li>
+                <li><a href="/usercenter/eBusinessCard"><span class="fa fa-id-card-o margin-right-22"></span>服务商名片</a></li>
+
             <%}else{%>
                 <li><a href="/usercenter/authentication"><span class="fa fa-id-card-o margin-right-22"></span>服务商认证</a></li>
             <%}%>
+
+
 
 
         </ul>
