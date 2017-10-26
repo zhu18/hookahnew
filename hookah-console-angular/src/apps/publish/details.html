@@ -21,33 +21,33 @@
                     </div>
                     <div class="col-md-11 col-sm-11  publish-Progress">
                         <ul class="clearfix">
-                            <li data-index="1" class="visited">
+                            <li data-index="1" ng-class="{'visited':checkTime,'active':addTime}">
                                 <p>发布需求</p>
-                                <p data-ng-show="addTime"></p>
+                                <p data-ng-bind="addTime"></p>
                             </li>
-                            <li data-index="2" class="active">
+                            <li data-index="2" ng-class="{'visited':trusteeTime,'active':checkTime}">
                                 <p>平台审核</p>
-                                <p data-ng-show="checkTime"></p>
+                                <p data-ng-bind="checkTime"></p>
                             </li>
-                            <li data-index="3">
+                            <li data-index="3" ng-class="{'visited':pressTime,'active':trusteeTime}">
                                 <p>悬赏费用托管</p>
-                                <p data-ng-show="trusteeTime"></p>
+                                <p data-ng-bind="trusteeTime"></p>
                             </li>
-                            <li data-index="4">
+                            <li data-index="4" ng-class="{'visited':workingTime,'active':pressTime}">
                                 <p>待发布</p>
-                                <p data-ng-show="pressTime"></p>
+                                <p data-ng-bind="pressTime"></p>
                             </li>
-                            <li data-index="5">
+                            <li data-index="5" ng-class="{'visited':payTime,'active':workingTime}">
                                 <p>供应商工作</p>
-                                <p data-ng-show="workingTime"></p>
+                                <p data-ng-bind="workingTime"></p>
                             </li>
-                            <li data-index="6">
+                            <li data-index="6" ng-class="{'visited':commentTime,'active':payTime}">
                                 <p>验收付款</p>
-                                <p data-ng-show="payTime"></p>
+                                <p data-ng-bind="payTime"></p>
                             </li>
-                            <li data-index="7">
+                            <li data-index="7" ng-class="{'active':commentTime}">
                                 <p>评价</p>
-                                <p data-ng-show="commentTime"></p>
+                                <p data-ng-bind="commentTime"></p>
                             </li>
                         </ul>
                     </div>
@@ -73,7 +73,7 @@
                             <th>需求标签</th>
                             <td>
                                 <div data-ng-if="tag">
-                                    <span class="label label-primary" data-ng-bind="tag"></span>
+                                    <span class="label label-primary" style="margin-right: 5px" data-ng-repeat="item in tag" data-ng-bind="item"></span>
                                 </div>
                             </td>
                         </tr>
@@ -96,7 +96,8 @@
                         <tr>
                             <th>附件</th>
                             <td colspan="3">
-                                <a data-ng-repeat="item in zbAnnexes" data-ng-show="item.type==0" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"></a>
+                                <a data-ng-repeat="item in zbAnnexes"  data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                                </a>
                             </td>
                         </tr>
                         <tr>
@@ -106,7 +107,19 @@
                             </td>
                             <th>报名截止日期</th>
                             <td>
-                                <span data-ng-bind="applyDeadline"></span>
+                                <p data-ng-if="status==6 && isZbRequirementAppliesShow" class="input-group">
+                                    <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                                           ng-paste="$event.preventDefault()" type="text" class="form-control"
+                                           uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="applyDeadline"
+                                           is-open="popup1.opened" datepicker-options="inlineOptions" close-text="关闭" clear-text="清除"
+                                           current-text="今天" readonly="true"/>
+                                    <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default" ng-click="open1()">
+                                          重新设置日期
+                                      </button>
+                                 </span>
+                                </p>
+                                <span data-ng-if="!(status==6 && isZbRequirementAppliesShow)" data-ng-bind="applyDeadline"></span>
                             </td>
                         </tr>
                         <tr>
@@ -124,11 +137,11 @@
                                     <span>托管赏金：</span>
                                     <span>{{(rewardMoney/100)*(trusteePercent/100) | currency: '￥'}}</span>元
                                 </div>
-                                <div style="margin-right: 10px" data-ng-show="status==16 && isZbRequirementAppliesShow">
+                                <div style="margin-right: 10px" data-ng-show="status==14 && isZbRequirementAppliesShow">
                                     <span class="glyphicon glyphicon-remove-circle"></span>流标,交易取消已退款
                                 </div>
                                 <div style="margin-right: 10px" data-ng-show="status==16 && isZbRequirementAppliesShow">
-                                    <span class="glyphicon glyphicon-remove-circle"></span>流标,交易取消已退款
+                                    <span class="glyphicon glyphicon-remove-circle"></span>流标,交易取消待退款
                                 </div>
                             </td>
                         </tr>
@@ -181,11 +194,11 @@
                                        <span data-ng-bind="item.applyContent"></span>
                                    </td>
                                    <td>
-                                       <div class="roundedTwo" data-ng-if="(applyDeadline < currDate) && item.status==0">
+                                       <div class="roundedTwo" data-ng-if="status == 6">
                                            <input type="radio" value="{{item.id}}" id="{{item.id}}" name="applyId" ng-model="apply.id">
                                            <label for="{{item.id}}"></label>
                                        </div>
-                                       <div data-ng-if="applyDeadline > currDate || item.status !=0">
+                                       <div data-ng-if="status != 6">
                                            <span class="label label-primary" disabled data-ng-show="item.status!=0 && item.status!=2">已被选中</span>
                                            <button class="btn btn-primary"  disabled  data-ng-show="item.status==0 ">选中</button>
                                        </div>
@@ -194,7 +207,7 @@
                                </tbody>
                            </table>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
-                            <div style="margin: auto;width: 58px;" data-ng-show="(applyDeadline < currDate) && status==6">
+                            <div style="margin: auto;width: 58px;" data-ng-show="status == 6">
                                 <button class="btn btn-primary" data-ng-click="submit()">提交</button>
                             </div>
                         </div>
@@ -223,9 +236,16 @@
                                 </table>
                             </div>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
-                            <div style="margin: auto;width: 200px;"  data-ng-show="applyDeadline < currDate">
-                                <button class="btn btn-primary" data-ng-click="public(id)">重新发布</button>
+                            <div style="margin: auto;width: 200px;"  data-ng-show="isZbRequirementAppliesShow && status==6">
+                                <button class="btn btn-primary" data-ng-click="public()">重新发布</button>
                                 <button class="btn btn-primary" data-ng-click="giveUp(id)">确认流标</button>
+                            </div>
+                            <div style="margin: auto;width: 200px;"  data-ng-show="status==16">
+                                <button class="btn btn-primary" data-ng-click="refund(id,userId)">去退款</button>
+                                <button class="btn btn-primary" data-ng-click="back()">返回</button>
+                            </div>
+                            <div style="margin: auto;width: 200px;"  data-ng-show="status==14">
+                                <button class="btn btn-primary" data-ng-click="back()">返回</button>
                             </div>
                         </div>
                     </uib-tab>
@@ -237,9 +257,9 @@
                                         <span data-ng-show="zbProgramsStatus==0">待验收</span>
                                         <span data-ng-show="zbProgramsStatus==1">平台验收通过，待需方验收</span>
                                         <span data-ng-show="zbProgramsStatus==2">平台验收不通过，待修改</span>
-                                        <span data-ng-show="zbProgramsStatus==3">方案不符合需求方要求验收驳回，交易失败</span>
-                                        <span data-ng-show="zbProgramsStatus==4">需求方验收通过</span>
-                                        <span data-ng-show="zbProgramsStatus==5">需求方验收不通过，退回修改</span>
+                                        <span data-ng-show="zbProgramsStatus==3">需求方验收通过</span>
+                                        <span data-ng-show="zbProgramsStatus==4">需求方验收不通过，退回修改</span>
+                                        <span data-ng-show="zbProgramsStatus==5">方案不符合需求方要求验收驳回，交易失败</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -257,7 +277,7 @@
                                 <tr>
                                     <th>方案附件</th>
                                     <td>
-                                        <a data-ng-repeat="item in zbAnnexes" data-ng-show="item.type==1" data-ng-href="{{item.filePath}}"  class="margin-right-5"><span class="glyphicon glyphicon-save"></span> <span data-ng-bind="item.fileName"></span></a>
+                                        <a data-ng-repeat="item in reqProgram"  data-ng-href="{{item.filePath}}"  class="margin-right-5"><span class="glyphicon glyphicon-save"></span> <span data-ng-bind="item.fileName"></span></a>
                                     </td>
                                 </tr>
                             </table>
@@ -265,8 +285,16 @@
                                 <button class="btn btn-primary" data-ng-click="check()">成果验收</button>
                                 <button class="btn btn-default">返回</button>
                             </div>
-                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==3 || (status==16 && isZbRequirementAppliesShow)">
-                                <button class="btn btn-primary" data-ng-click="check()">去付款</button>
+                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==3 && status==11">
+                                <button class="btn btn-primary" data-ng-click="refund(id,userId)">去付款</button>
+                                <button class="btn btn-default">返回</button>
+                            </div>
+                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==5 && status==16">
+                                <button class="btn btn-primary" data-ng-click="refund(id,userId)">去退款</button>
+                                <button class="btn btn-default">返回</button>
+                            </div>
+                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="zbProgramsStatus==1 || zbProgramsStatus==2 || zbProgramsStatus==4 ">
+                                <button class="btn btn-primary" data-ng-click="check()" disabled>成果验收</button>
                                 <button class="btn btn-default">返回</button>
                             </div>
                         </div>
@@ -324,3 +352,12 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+

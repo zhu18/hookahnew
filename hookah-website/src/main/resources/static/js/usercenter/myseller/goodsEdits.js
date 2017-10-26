@@ -12,9 +12,10 @@ var ajaxUrl = null;
 var goodsTypeId = null;
 var regex = {  //手机号验证正则
 	mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
-	keyWords:/^[\u4E00-\u9FA5A-Za-z0-9\,]+$/
+	keyWords: /^[\u4E00-\u9FA5A-Za-z0-9\,]+$/
 };
-E.config.uploadImgUrl = host.static+'/upload/wangeditor';//上传图片
+var testNewApiUrl = false;
+E.config.uploadImgUrl = host.static + '/upload/wangeditor';//上传图片
 E.config.uploadImgFileName = 'filename';
 E.config.menuFixed = false;//关闭菜单栏fixed
 E.config.menus = $.map(wangEditor.config.menus, function (item, key) {
@@ -26,52 +27,52 @@ E.config.menus = $.map(wangEditor.config.menus, function (item, key) {
 	}
 	return item;
 });
-$(document).ready(function(){
+$(document).ready(function () {
 
-	if(urlPath == '/usercenter/goodsEdit'){ //上传商品
-		if(!catId){
+	if (urlPath == '/usercenter/goodsEdit') { //上传商品
+		if (!catId) {
 			window.location.href = '/usercenter/goodsManage';
-		}else{
+		} else {
 			goodsEditFn();
 		}
-		ajaxUrl = host.website+'/goods/back/add';
-	}else if(urlPath == '/usercenter/goodsModify'){ //修改商品
-		if(!goodsId){
-			window.location.href='/usercenter/goodsOffSale';
-		}else{
+		ajaxUrl = host.website + '/goods/back/add';
+	} else if (urlPath == '/usercenter/goodsModify') { //修改商品
+		if (!goodsId) {
+			window.location.href = '/usercenter/goodsOffSale';
+		} else {
 			goodsModifyFn();
 		}
-		ajaxUrl = host.website+'/goods/back/update';
+		ajaxUrl = host.website + '/goods/back/update';
 	}
 });
 //商品添加-------------------------------↓↓↓↓↓↓↓↓↓↓↓↓↓
 //初始化商品类型
-function initializeGoodsType(){
+function initializeGoodsType() {
 	var startGoodsVal = null;
-	if(catId.substring(0,3) == 101){
-		$('#parentSelect').val(100).attr('disabled','disabled');
+	if (catId.substring(0, 3) == 101) {
+		$('#parentSelect').val(100).attr('disabled', 'disabled');
 		startGoodsVal = 100;
-	}else if(catId.substring(0,3) == 102){
-		$('#parentSelect').val(2).attr('disabled','disabled');
+	} else if (catId.substring(0, 3) == 102) {
+		$('#parentSelect').val(2).attr('disabled', 'disabled');
 		startGoodsVal = 2;
-	}else if(catId.substring(0,3) == 104){
-		$('#parentSelect').val(300).attr('disabled','disabled');
+	} else if (catId.substring(0, 3) == 104) {
+		$('#parentSelect').val(300).attr('disabled', 'disabled');
 		startGoodsVal = 300;
-	}else{
-		$('#parentSelect').val(400).attr('disabled','disabled');
+	} else {
+		$('#parentSelect').val(400).attr('disabled', 'disabled');
 		startGoodsVal = 400;
 	}
-	initializeGoodsTypeEnd(startGoodsVal,null);
+	initializeGoodsTypeEnd(startGoodsVal, null);
 }
-function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
+function initializeGoodsTypeEnd(goodsTypeVal, endTypeVal) {
 	$('.edit-all').hide();
 	$('.struct.selects').hide();
 	$('.offline-isShow').hide();
 	$('.isOnLine-info-box').show();
-	if(goodsTypeVal == 100){
+	if (goodsTypeVal == 100) {
 		$('#childrenSelect1').show();
 		endTypeVal = $('#childrenSelect1');
-		if($(endTypeVal).val() == 0){
+		if ($(endTypeVal).val() == 0) {
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
 			$('.afterSaleService-box').show();//售后服务
@@ -80,7 +81,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.file-info-box').show(); //
 			$('.offline-isOnLine-box').show(); //数据来源
 			goodsTypeId = 0;
-		}else if($(endTypeVal).val() == 1){
+		} else if ($(endTypeVal).val() == 1) {
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
 			$('.afterSaleService-box').show();//售后服务
@@ -89,17 +90,17 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.api-info-box').show();
 			goodsTypeId = 1;
 		}
-	}else if(goodsTypeVal == 300){
+	} else if (goodsTypeVal == 300) {
 		$('#childrenSelect2').show();
 		endTypeVal = $('#childrenSelect2');
-		if($(endTypeVal).val() == 6){
+		if ($(endTypeVal).val() == 6) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
 			$('.app-info-box').show(); //
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
 			goodsTypeId = 6;
-		}else if($(endTypeVal).val() == 7){
+		} else if ($(endTypeVal).val() == 7) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
@@ -108,17 +109,17 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
 			goodsTypeId = 7;
 		}
-	}else if(goodsTypeVal == 400){
+	} else if (goodsTypeVal == 400) {
 		$('#childrenSelect3').show();
 		endTypeVal = $('#childrenSelect3');
-		if($(endTypeVal).val() == 4){
+		if ($(endTypeVal).val() == 4) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
 			$('.tool-info-box').show(); //
 			$('.visitOnline-isOnLine-box').show(); //下载地址
 			goodsTypeId = 4;
-		}else if($(endTypeVal).val() == 5){
+		} else if ($(endTypeVal).val() == 5) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
@@ -127,7 +128,7 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 			$('.visitOnline-isOnLine-box').show(); //下载地址
 			goodsTypeId = 5;
 		}
-	}else{
+	} else {
 		$('.goodsDesc-box').show(); //商品描述
 		$('.goodsAdvantage-box').show();//商品优势
 		$('.dataModel-info-box').show();//
@@ -138,107 +139,208 @@ function initializeGoodsTypeEnd(goodsTypeVal,endTypeVal){
 	}
 	renderFormatFn(goodsTypeId)
 }//初始化商品类型
-function renderFormatFn(goodsTypeId){
-	if(goodsTypeId == 0 || goodsTypeId == 2 || goodsTypeId == 4 || goodsTypeId == 6){
-		$('select[name="format"] option').each(function(){
-			if($(this).val() == 3){
-				$(this).attr('selected','selected')
-			}else{
+function renderFormatFn(goodsTypeId) {
+	if (goodsTypeId == 0 || goodsTypeId == 2 || goodsTypeId == 4 || goodsTypeId == 6) {
+		$('select[name="format"] option').each(function () {
+			if ($(this).val() == 3) {
+				$(this).attr('selected', 'selected')
+			} else {
 				$(this).removeAttrs('selected')
 			}
-			if($(this).val() != 3){
-				$(this).attr('disabled','disabled')
-			}else{
+			if ($(this).val() != 3) {
+				$(this).attr('disabled', 'disabled')
+			} else {
 				$(this).removeAttrs('disabled');
 			}
 
-
 		})
-	}else if(goodsTypeId == 1){
-		$('select[name="format"] option').each(function() {
+	} else if (goodsTypeId == 1) {
+		$('select[name="format"] option').each(function () {
 			if ($(this).val() == 3) {
 				$(this).attr('disabled', 'disabled')
-			}else{
+			} else {
 				$(this).removeAttrs('disabled');
 			}
-			if($(this).val() == 0){
-				$(this).attr('selected','selected')
-			}else{
+			if ($(this).val() == 0) {
+				$(this).attr('selected', 'selected')
+			} else {
 				$(this).removeAttrs('selected')
 			}
 		})
-	}else if(goodsTypeId == 5 || goodsTypeId == 7){
-		$('select[name="format"] option').each(function() {
+	} else if (goodsTypeId == 5 || goodsTypeId == 7) {
+		$('select[name="format"] option').each(function () {
 			if ($(this).val() == 0 || $(this).val() == 3) {
 				$(this).attr('disabled', 'disabled');
-			}else{
+			} else {
 				$(this).removeAttrs('disabled');
 			}
 			if ($(this).val() == 1) {
 				$(this).attr('selected', 'selected')
-			}else{
+			} else {
 				$(this).removeAttrs('selected')
 			}
 		})
 	}
 }
-function goodsEditFn(){
+function getTags() {
+	var tags = [];
+	$(".tags-list").each(function () {
+		tags.push($(this).attr('labid'));
+	});
+	return tags;
+}
+$('.add-tags').click(function () {
+	addTagsFn();
+});
+function addTagsFn() {
+	$.ajax({
+		type: "get",
+		url: host.website + '/goodsLabel/findAll',
+		success: function (data) {
+			if (data.code == 1) {
+				var html = '';
+				data.data.forEach(function (item) {
+					html += '<tr>';
+					html += '<td style="text-align:center;width:60px;">' + item.type + '</td>';
+					html += '<td>';
+					if(item.goodsLabels && item.goodsLabels.length > 0){
+						for(var i=0;i<item.goodsLabels.length;i++){
+							if(getTags().toString().indexOf(item.goodsLabels[i].labId) >= 0){
+								html += '<label><input type="checkbox" name="tagsCheck" checked value="' + item.goodsLabels[i].labId + '" tagname="' + item.goodsLabels[i].labName + '">' + item.goodsLabels[i].labName + '</label>';
+							} else {
+								html += '<label><input type="checkbox" name="tagsCheck" value="' + item.goodsLabels[i].labId + '" tagname="' + item.goodsLabels[i].labName + '">' + item.goodsLabels[i].labName + '</label>';
+							}
+						}
+					}else{
+						html += '<span>暂无</span>';
+					}
+					html += '</td>';
+					html += '</tr>';
+				});
+				$('.tags-box table').html(html);
+				$('.tags-box').show();
+
+			} else {
+				$.alert(data.message)
+			}
+		}
+	});
+
+}
+$('.close-tag-btn').click(function () {
+	closeTagsFn();
+});
+$('.checkTags-cancelBtn').click(function () {
+	closeTagsFn();
+});
+function closeTagsFn() {
+	$('.tags-box').hide();
+}
+$('.checkTags-confirmBtn').click(function () {
+	var tags = [];
+
+	$("[name=tagsCheck]:checkbox").each(function () {
+		if (this.checked) {
+			tags.push(
+				{
+					id: $(this).val(),
+					name: $(this).attr('tagname')
+				}
+			);
+		}
+	});
+	if (tags.length > 3) {
+		$.alert('最多选择3个标签');
+	} else {
+		var html = '';
+		for (list in tags) {
+			html += '<span class="tags-list" labid="' + tags[list].id + '">' + tags[list].name + '<i class="fa fa-times-circle"></i></span>';
+		}
+		$('.tags-val').html(html);
+		$('.tags-box').hide();
+		removeTags();
+		$('#keywords').val(getTags().toString());
+	}
+});
+removeTags()
+function removeTags() {
+	$('.tags-list i').click(function () {
+		$(this).parent('.tags-list').remove();
+		$('#keywords').val(getTags().toString());
+	});
+
+
+}
+$("[name=tagsCheck]:checkbox").click(function () {
+	var nums = 0;
+	$("[name=tagsCheck]:checkbox").each(function () {
+		if (this.checked) {
+			nums += 1;
+		}
+	});
+	if (nums > 3) {
+		$('.tags-tip').css('color', 'red');
+	} else {
+		$('.tags-tip').css('color', '#767676');
+	}
+});
+function goodsEditFn() {
 	$('.select-box.display-inline-block').text(category);//渲染分类
 	loadRegion('province', regionParam); //加载地区
 	renderWangEdit(); // 渲染富文本
 	uploadGoodsImg(); //上传商品图片
 	floorPrice();//监控价格输入为“.”时转换为“0.”
 	validataFn();//表单验证
-	$('#preview-div').mouseover(function(){
-		if($('#preview-img').attr('src')){
+	$('#preview-div').mouseover(function () {
+		if ($('#preview-img').attr('src')) {
 			$('#replace-btn').show()
 		}
 	});
-	$('#preview-div').mouseout(function(){
+	$('#preview-div').mouseout(function () {
 		$('#replace-btn').hide()
 	});
 	initializeGoodsType(null);
-	$("input[name='typeId']").val(catId.substring(0,3));
+	$("input[name='typeId']").val(catId.substring(0, 3));
 	rederDateDL()
 	getPriceBox()
 	$('#isDiscuss').click(function () {
-		if($(this).prop('checked')){
+		if ($(this).prop('checked')) {
 			$('.isNotDiscuss').hide();
 			$('.isDiscuss').show();
-		}else{
+		} else {
 			$('.isNotDiscuss').show();
 			$('.isDiscuss').hide();
 		}
 	})
 }
-function rederDateDL(){
+function rederDateDL() {
 	var start = {
 		format: "YYYY-MM-DD hh:mm:ss",
 		isTime: true,
-		choosefun: function (elem,val, datas) {
+		choosefun: function (elem, val, datas) {
 			end.minDate = datas; //开始日选好后，重置结束日的最小日期
 			$("#offLine_startDate_s").val(val);
 		},
-		okfun:function(elem,val, datas){
+		okfun: function (elem, val, datas) {
 			end.minDate = datas; //开始日选好后，重置结束日的最小日期
 			$("#offLine_startDate_s").val(val);
 		},
-		clearfun:function(elem, val) {
+		clearfun: function (elem, val) {
 			$("#offLine_startDate_s").val();
 		}
 	};
 	var end = {
 		format: "YYYY-MM-DD hh:mm:ss",
 		isTime: true,
-		choosefun: function (elem,val, datas) {
+		choosefun: function (elem, val, datas) {
 			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
 			$("#offLine_endDate_s").val(val);
 		},
-		okfun:function(elem,val, datas){
+		okfun: function (elem, val, datas) {
 			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
 			$("#offLine_endDate_s").val(val);
 		},
-		clearfun:function(elem, val) {
+		clearfun: function (elem, val) {
 			$("#offLine_endDate_s").val();
 		}
 	};
@@ -246,151 +348,151 @@ function rederDateDL(){
 	$.jeDate("#offLine_startDate", start);
 	$.jeDate("#offLine_endDate", end);
 }
-function childrenSelects(that){
-	initializeGoodsType($('#parentSelect').val(),that);
+function childrenSelects(that) {
+	initializeGoodsType($('#parentSelect').val(), that);
 }
-function selectLineInfo(that){
+function selectLineInfo(that) {
 	var isOffLineVal = $(that).val();
 	var p_val = $('.parentSelect').val();
 	var c_val = null;
-	if(isOffLineVal == 1){
+	if (isOffLineVal == 1) {
 		$('.offline-isShow').hide();
 		$('.isOffLine-info-box').show();
 		$('.isOnLine-info-box').hide();
-	}else{
+	} else {
 		$('.isOnLine-info-box').show();
 		$('.isOffLine-info-box').hide();
 		$('.offline-isShow').hide();
-		if(p_val == 100){
+		if (p_val == 100) {
 			c_val = $('#childrenSelect1').val();
-			if(c_val == 0){
+			if (c_val == 0) {
 				$('.offline-isOnLine-box').show()
 			}
-		}else if(p_val == 300){
+		} else if (p_val == 300) {
 			c_val = $('#childrenSelect2').val();
-			if(c_val == 6){
+			if (c_val == 6) {
 				$('.downloadAddress-isOnLine-box').show(); //下载地址
-			}else if(c_val == 7){
+			} else if (c_val == 7) {
 				$('.downloadAddress-isOnLine-box').show(); //下载地址
 			}
-		}else if(p_val == 400){
+		} else if (p_val == 400) {
 			c_val = $('#childrenSelect3').val();
-			if(c_val == 4){
+			if (c_val == 4) {
 				$('.visitOnline-isOnLine-box').show(); //在线访问地址
-			}else if(c_val == 5){
+			} else if (c_val == 5) {
 				$('.visitOnline-isOnLine-box').show(); //在线访问地址
 			}
-		}else if(p_val == 2){
+		} else if (p_val == 2) {
 			$('.dataModel-isOnLine-box').show()
 		}
-		console.log('p_val==:'+p_val+'----c_val==:'+c_val)
+		console.log('p_val==:' + p_val + '----c_val==:' + c_val)
 	}
 
 } //选择交付方式
-function selector_offLine_fn(that){
+function selector_offLine_fn(that) {
 	$('.selector_offLine').hide();
 	var vals = $(that).val();
-	if(vals == 0){
+	if (vals == 0) {
 		$('.selector_offLine_upLoad').show();
-	}else{
+	} else {
 		$('.selector_offLine_input').show();
 	}
 }//选择数据来源
-function validataFn(){
+function validataFn() {
 	$("#goodsModifyForm").validate({
 		rules: {
-			goodsName:  {
+			goodsName: {
 				required: true,
-				isGoodsName:true
+				isGoodsName: true
 			},
-			goodsBrief:{
+			goodsBrief: {
 				required: true,
-				isGoodsBrief:true
+				isGoodsBrief: true
 			},
-			trialRange:{
-				isGoodsBrief:true
+			trialRange: {
+				isGoodsBrief: true
 			},
-			goodsImg:'required',
-			priceBoxName:'required',
-			priceBoxNumber:'required',
-			enddDate:'required',
-			priceBoxPrice:{
-				required:true,
+			goodsImg: 'required',
+			priceBoxName: 'required',
+			priceBoxNumber: 'required',
+			enddDate: 'required',
+			priceBoxPrice: {
+				required: true,
 				// isPricceData:true,
-				isPricceB:true,
-				lt:["#maxExp","最大经验值"],
-				gt:["#minExp","最小经验值"]
+				isPricceB: true,
+				lt: ["#maxExp", "最大经验值"],
+				gt: ["#minExp", "最小经验值"]
 			},
-			keywords:{
-				isKeyWords:true
+			keywords: {
+				isKeyWords: true
 			},
-			priceBoxSettlementPrice:{
-				required:true,
+			priceBoxSettlementPrice: {
+				required: true,
 				// isPricceData:true,
-				isPricceB:true,
-				lt:["#maxExp","最大经验值"],
-				gt:["#minExp","最小经验值"]
+				isPricceB: true,
+				lt: ["#maxExp", "最大经验值"],
+				gt: ["#minExp", "最小经验值"]
 			},
-			priceBoxAgencyPrice:{
-				required:true,
+			priceBoxAgencyPrice: {
+				required: true,
 				// isPricceData:true,
 				// isPricceB:true,
-				lt:["#maxExp","最大经验值"],
-				gts:["#minExp","最小经验值"]
+				lt: ["#maxExp", "最大经验值"],
+				gts: ["#minExp", "最小经验值"]
 			},
-			goodsImges:'required',
-			goodsImges2:'required',
-			goodsDescBox:'required',
-			aexp:{
-				isModelTool:true,
+			goodsImges: 'required',
+			goodsImges2: 'required',
+			goodsDescBox: 'required',
+			aexp: {
+				isModelTool: true,
 			},
-			relationServ:{
-				isModelTool:true,
+			relationServ: {
+				isModelTool: true,
 			}
 		},
 		messages: {
-			goodsName:  {
+			goodsName: {
 				required: '商品名称不能为空',
-				isGoodsName:'长度为1-60个字符（每个汉字为2个字符）'
+				isGoodsName: '长度为1-60个字符（每个汉字为2个字符）'
 			},
-			goodsBrief:  {
+			goodsBrief: {
 				required: '商品简介不能为空',
-				isGoodsBrief:'长度为1-400个字符（每个汉字为2个字符）'
+				isGoodsBrief: '长度为1-400个字符（每个汉字为2个字符）'
 			},
-			goodsImges:'图片必须上传',
-			goodsImges2:'文件必须上传',
-			goodsDescBox:'商品描述不能为空'
+			goodsImges: '图片必须上传',
+			goodsImges2: '文件必须上传',
+			goodsDescBox: '商品描述不能为空'
 
 		},
-		showErrors:function(errorMap,errorList) {
-			if(errorList.length){
+		showErrors: function (errorMap, errorList) {
+			if (errorList.length) {
 				errorList[0].element.focus();
 			}
 			this.defaultShowErrors();
 		}
 	});
 }
-function loadRegion(id,regionParam) {//加载地区
+function loadRegion(id, regionParam) {//加载地区
 	var parentId = '';
-	if(regionParam == 100000){
+	if (regionParam == 100000) {
 		parentId = 100000;
-	}else{
+	} else {
 		parentId = $(regionParam).val();
 	}
-	if(parentId == '-1'){
+	if (parentId == '-1') {
 		$('#city').html('<option value="-1">全部</option>')
 	}
 	$(regionParam).nextAll().html('<option value="-1">全部</option>')
 	$.ajax({
 		type: "get",
-		url: host.website+'/region/getRegionCodeByPid',
+		url: host.website + '/region/getRegionCodeByPid',
 		data: {
 			parentId: parentId
 		},
 		success: function (data) {
 			if (data.code == 1) {
-				if(data.data.length > 0){
-					renderRegion(id,data.data)
+				if (data.data.length > 0) {
+					renderRegion(id, data.data)
 				}
 			} else {
 				$.alert(data.message)
@@ -398,14 +500,14 @@ function loadRegion(id,regionParam) {//加载地区
 		}
 	});
 }
-function renderRegion(id,data){
+function renderRegion(id, data) {
 	var html = '<option value="-1">全部</option>';
-	data.forEach(function(e){
-		html += '<option value="'+e.id+'">'+e.name+'</option>';
+	data.forEach(function (e) {
+		html += '<option value="' + e.id + '">' + e.name + '</option>';
 	});
-	$('#'+id).html(html);
+	$('#' + id).html(html);
 }
-function renderWangEdit(){ // 渲染富文本
+function renderWangEdit() { // 渲染富文本
 	editor1 = new E('textarea1');
 	editor2 = new E('textarea2');
 	editor3 = new E('textarea3');
@@ -435,42 +537,42 @@ function renderWangEdit(){ // 渲染富文本
 	editorDs.create();
 	editorEs.create();
 }
-function uploadGoodsImg(){ //上传商品图片
+function uploadGoodsImg() { //上传商品图片
 	$('#fileupload').fileupload({   //图片上传
-		url: host.static+'/upload/img',
+		url: host.static + '/upload/img',
 		dataType: 'json',
 		add: function (e, data) {
 			var filesize = data.files[0].size;
-			if(Math.ceil(filesize / 1024) > 1024*5){
-				console.log('文件过大'+filesize);
+			if (Math.ceil(filesize / 1024) > 1024 * 5) {
+				console.log('文件过大' + filesize);
 				$.alert('文件过大');
 				return;
 			}
 			data.submit();
 		},
 		done: function (e, data) {
-			if(data.result.code == 1){
+			if (data.result.code == 1) {
 				var obj = data.result.data[0];
 				$("#preview-img").attr("src", obj.absPath);
 				$('input[name="goodsImges"]').val(obj.absPath);
-			}else{
+			} else {
 				$.alert(data.result.message)
 			}
 		},
 		progressall: function (e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
-			if(progress > 0 && progress < 100){
+			if (progress > 0 && progress < 100) {
 				$('#bars').show()
-			}else{
+			} else {
 				$('#bars').hide()
 			}
-			$('#barSmail').css('width',progress + '%');
+			$('#barSmail').css('width', progress + '%');
 			$('#barText').html(progress + '%');
 		}
 	});
 }
 function tablePlus(that) {
-	if($(that).parents('.price-table').attr('d-type') == 'requestHtml'){
+	if ($(that).parents('.price-table').attr('d-type') == 'requestHtml') {
 		itemNum = $(that).parents('tbody').children('.parent-tr').length;
 	}
 	var priceHtml = '';//规格与价格
@@ -505,186 +607,190 @@ function tablePlus(that) {
 			$(that).parents('.table-plus tbody').append(priceHtml);
 			addItem(that)
 		} else {
-			$.alert('请完善本条信息',true,function(){});
+			$.alert('请完善本条信息', true, function () {
+			});
 		}
 	} else if ($(that).parents('.table-plus').attr('d-type') == 'requestHtml') {
 		if ($(that).parent().siblings('.name-input').find('input').val() && $(that).parent().siblings('.type-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(requestHtml);
 			addItem(that)
 		} else {
-			$.alert('请完善本条信息',true,function(){});
+			$.alert('请完善本条信息', true, function () {
+			});
 		}
 	} else if ($(that).parents('.table-plus').attr('d-type') == 'returnHtml') {
 		if ($(that).parent().siblings('.errorNum-input').find('input').val()) {
 			$(that).parents('.table-plus tbody').append(returnHtml);
 			addItem(that)
 		} else {
-			$.alert('请完善本条信息',true,function(){});
+			$.alert('请完善本条信息', true, function () {
+			});
 		}
 	}
 	function addItem(that) {
-		if($(that).parents('.table-plus').attr('d-type') == 'priceHtml'){
-			if($(that).parent().parent().index() == 0){
+		if ($(that).parents('.table-plus').attr('d-type') == 'priceHtml') {
+			if ($(that).parent().parent().index() == 0) {
 				$(that).text('-').attr('onclick', 'tableDelete(this)');
-			}else{
+			} else {
 				$(that).remove()
 			}
-		}else{
+		} else {
 			$(that).text('-').attr('onclick', 'tableDelete(this)');
 		}
 
 	}
+
 	floorPrice();
 	renderLastFormatFn(goodsTypeId)
 }
-function renderLastFormatFn(goodsTypeId){
-	if(goodsTypeId == 0 || goodsTypeId == 2 || goodsTypeId == 4 || goodsTypeId == 6){
-		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function(){
-			if($(this).val() == 3){
-				$(this).attr('selected','selected')
-			}else{
+function renderLastFormatFn(goodsTypeId) {
+	if (goodsTypeId == 0 || goodsTypeId == 2 || goodsTypeId == 4 || goodsTypeId == 6) {
+		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function () {
+			if ($(this).val() == 3) {
+				$(this).attr('selected', 'selected')
+			} else {
 				$(this).removeAttrs('selected')
 			}
-			if($(this).val() != 3){
-				$(this).attr('disabled','disabled')
-			}else{
+			if ($(this).val() != 3) {
+				$(this).attr('disabled', 'disabled')
+			} else {
 				$(this).removeAttrs('disabled');
 			}
 		})
-	}else if(goodsTypeId == 1){
-		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function() {
+	} else if (goodsTypeId == 1) {
+		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function () {
 			if ($(this).val() == 3) {
 				$(this).attr('disabled', 'disabled')
-			}else{
+			} else {
 				$(this).removeAttrs('disabled');
 			}
-			if($(this).val() == 0){
-				$(this).attr('selected','selected')
-			}else{
+			if ($(this).val() == 0) {
+				$(this).attr('selected', 'selected')
+			} else {
 				$(this).removeAttrs('selected')
 			}
 		})
-	}else if(goodsTypeId == 5 || goodsTypeId == 7){
-		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function() {
+	} else if (goodsTypeId == 5 || goodsTypeId == 7) {
+		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr:last select[name="format"] option').each(function () {
 			if ($(this).val() == 0 || $(this).val() == 3) {
 				$(this).attr('disabled', 'disabled');
-			}else{
+			} else {
 				$(this).removeAttrs('disabled');
 			}
 			if ($(this).val() == 1) {
 				$(this).attr('selected', 'selected')
-			}else{
+			} else {
 				$(this).removeAttrs('selected')
 			}
 		})
 	}
 }
-function floorPrice(){ //监控价格输入为“.”时转换为“0.”
-	$('.price-inputs').on('input onporpertychange',function () {
+function floorPrice() { //监控价格输入为“.”时转换为“0.”
+	$('.price-inputs').on('input onporpertychange', function () {
 		var that = $(this);
 		var num = that.val();
-		if(num == '.'){
+		if (num == '.') {
 			that.val('0.');
 		}
 	});
 }
 function tableDelete(that) { //删除规格及价格
 	var len = null;
-	if($(that).parents('.table-plus').attr('d-type') == 'priceHtml'){
-		if($(that).parent().parent().parent('tbody').children('.parent-tr').length == 2){
+	if ($(that).parents('.table-plus').attr('d-type') == 'priceHtml') {
+		if ($(that).parent().parent().parent('tbody').children('.parent-tr').length == 2) {
 			$('.isNotDiscuss table[d-type="priceHtml"] tbody >:first').find('.table-plus-btn').text('+').attr('onclick', 'tablePlus(this)');
 		}
 		len = $(that).parent().parent().parent('tbody').children('.parent-tr').length;
-		if(len >= 3){
-			$(that).parent().parent().parent('tbody').children('.parent-tr').eq(len-2).find('.table-plus-btn').before('<span class="table-plus-btn" onclick="tablePlus(this)">+</span>');
+		if (len >= 3) {
+			$(that).parent().parent().parent('tbody').children('.parent-tr').eq(len - 2).find('.table-plus-btn').before('<span class="table-plus-btn" onclick="tablePlus(this)">+</span>');
 		}
 	}
 	$(that).parents('.parent-tr').remove();
 	getPriceBox()
 }
-function getPriceBox(){
+function getPriceBox() {
 	var priceBox = $('.isNotDiscuss table[d-type="priceHtml"] tbody >:first');
-	priceBox.find('input[datatype="name"]').attr('name','priceBoxName');
-	priceBox.find('input[datatype="number"]').attr('name','priceBoxNumber');
-	priceBox.find('input[datatype="price"]').attr('name','priceBoxPrice');
-	priceBox.find('input[datatype="settlementPrice"]').attr('name','priceBoxSettlementPrice');
-	priceBox.find('input[datatype="agencyPrice"]').attr('name','priceBoxAgencyPrice');
+	priceBox.find('input[datatype="name"]').attr('name', 'priceBoxName');
+	priceBox.find('input[datatype="number"]').attr('name', 'priceBoxNumber');
+	priceBox.find('input[datatype="price"]').attr('name', 'priceBoxPrice');
+	priceBox.find('input[datatype="settlementPrice"]').attr('name', 'priceBoxSettlementPrice');
+	priceBox.find('input[datatype="agencyPrice"]').attr('name', 'priceBoxAgencyPrice');
 }
-function getLength(str){
-	return str.replace(/[\u0391-\uFFE5]/g,"aa").length;
+function getLength(str) {
+	return str.replace(/[\u0391-\uFFE5]/g, "aa").length;
 }
-$('#J-goodsName').on('input onporpertychange',function () {
+$('#J-goodsName').on('input onporpertychange', function () {
 	$('#showcontent').html(getLength($(this).val()));
 });
-$('#goodsBriefes').on('input onporpertychange',function () {
+$('#goodsBriefes').on('input onporpertychange', function () {
 	$('.showcontentes').html(getLength($(this).val()));
 });
-$('#trialRange').on('input onporpertychange',function () {
+$('#trialRange').on('input onporpertychange', function () {
 	$('#trialRange_s').html(getLength($(this).val()));
 });
-$('#aexp').on('input onporpertychange',function () {
+$('#aexp').on('input onporpertychange', function () {
 	$('#aexp_s').html(getLength($(this).val()));
 });
-$('#relationServ').on('input onporpertychange',function () {
+$('#relationServ').on('input onporpertychange', function () {
 	$('#relationServ_s').html(getLength($(this).val()));
 });
-$.validator.addMethod("isGoodsName", function(value, element) {
-	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+$.validator.addMethod("isGoodsName", function (value, element) {
+	var len = value.replace(/[\u0391-\uFFE5]/g, "aa").length;
 	return this.optional(element) || (1 <= len && len <= 60);
 }, "长度为1-60个字符（每个汉字为2个字符）");
-$.validator.addMethod("isGoodsBrief", function(value, element) {
-	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+$.validator.addMethod("isGoodsBrief", function (value, element) {
+	var len = value.replace(/[\u0391-\uFFE5]/g, "aa").length;
 	return this.optional(element) || (1 <= len && len <= 400);
 }, "长度为1-400个字符（每个汉字为2个字符）");
-$.validator.addMethod("isModelTool", function(value, element) {
-	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+$.validator.addMethod("isModelTool", function (value, element) {
+	var len = value.replace(/[\u0391-\uFFE5]/g, "aa").length;
 	return this.optional(element) || (1 <= len && len <= 100);
 }, "长度为1-100个字符（每个汉字为2个字符）");
-$.validator.addMethod("isMobile", function(value, element) {
+$.validator.addMethod("isMobile", function (value, element) {
 	var mobile = regex.mobile.test(value);
 	return this.optional(element) || (mobile);
 }, "请填写有效的手机号");
-$.validator.addMethod("isKeyWords", function(value, element) {
+$.validator.addMethod("isKeyWords", function (value, element) {
 	var keyWords = regex.keyWords.test(value);
 	return this.optional(element) || (keyWords);
 }, "只能填写中文、英文、数字，使用英文‘,’分割");
-$.validator.addMethod("isPricceB", function(value, element) {
+$.validator.addMethod("isPricceB", function (value, element) {
 	var isPricce = false;
-	if(value > 0){
+	if (value > 0) {
 		isPricce = true;
-	}else{
+	} else {
 		isPricce = false;
 	}
 	return this.optional(element) || isPricce;
 }, "价格必须为正数");
-$.validator.addMethod("isPricceData", function(value, element) {
+$.validator.addMethod("isPricceData", function (value, element) {
 	var isPricce = false;
 	var dot = value.indexOf(".");
-	if(dot != -1){
-		var dotCnt = value.substring(dot+1,value.length);
-		if(dotCnt.length > 2){
+	if (dot != -1) {
+		var dotCnt = value.substring(dot + 1, value.length);
+		if (dotCnt.length > 2) {
 			isPricce = false;
-		}else{
+		} else {
 			isPricce = true;
 		}
-	}else{
+	} else {
 		isPricce = true;
 	}
-	var len = value.replace(/[\u0391-\uFFE5]/g,"aa").length;
+	var len = value.replace(/[\u0391-\uFFE5]/g, "aa").length;
 	return this.optional(element) || isPricce;
 }, "小数点不能超过2位");
 //大于
-$.validator.addMethod("gt", function(value, element,param) {
-	return this.optional(element) || value >=0.01;
+$.validator.addMethod("gt", function (value, element, param) {
+	return this.optional(element) || value >= 0.01;
 }, $.validator.format("输入值必须大于{0.01}!"));
-$.validator.addMethod("gts", function(value, element,param) {
-	return this.optional(element) || value >=0;
+$.validator.addMethod("gts", function (value, element, param) {
+	return this.optional(element) || value >= 0;
 }, $.validator.format("输入值必须大于等于0!"));
 //小于
-$.validator.addMethod("lt", function(value, element,param) {
+$.validator.addMethod("lt", function (value, element, param) {
 	return this.optional(element) || value <= 100000000.00;
 }, $.validator.format("输入值必须小于{100000000.00}!"));
-function backAddFn(data){
+function backAddFn(data) {
 	Loading.start();
 	$.ajax({
 		type: 'POST',
@@ -711,10 +817,9 @@ function backAddFn(data){
 	});
 }
 
-
-function submitGoodsPublish(){
+function submitGoodsPublish() {
 	var data = {};
-	if(urlPath == '/usercenter/goodsModify'){ //修改商品
+	if (urlPath == '/usercenter/goodsModify') { //修改商品
 		data.goodsId = goodsId;
 		data.ver = $('input[name="ver"]').val();
 	}
@@ -729,27 +834,27 @@ function submitGoodsPublish(){
 		attrTypeList.typeName = $(this).attr('name');
 		var attrAs = $(this).val();
 		var attrBs = [];
-		for(var i=0;i<attrAs.length;i++){
+		for (var i = 0; i < attrAs.length; i++) {
 			var json = {};
-			json['attrId']=attrAs[i];
+			json['attrId'] = attrAs[i];
 			attrBs.push(json)
 		}
-		attrTypeList.attrList =attrBs;
+		attrTypeList.attrList = attrBs;
 		data.attrTypeList.push(attrTypeList);
 	});
 	data.goodsImg = $('#preview-img').attr('src');
 	data.dataSample = $("input[name='dataSample_s']").val();
 	data.trialRange = $('textarea[name="trialRange"]').val();
-	if($("#isPush").prop('checked')){
-	        $('#isLocal').val('1');
-            $('#isPush').val('1');
-	}else{
-	        $('#isLocal').val('0');
-            $('#isPush').val('0');
+	if ($("#isPush").prop('checked')) {
+		$('#isLocal').val('1');
+		$('#isPush').val('1');
+	} else {
+		$('#isLocal').val('0');
+		$('#isPush').val('0');
 	}
 	data.isPush = $('input[name="isPush"]').val();
-    data.isLocal = $('input[name="isLocal"]').val();
-	if($('#isDiscuss').prop('checked')){
+	data.isLocal = $('input[name="isLocal"]').val();
+	if ($('#isDiscuss').prop('checked')) {
 		data.isDiscussPrice = 1;
 		data.formatList = [];
 		var listData = {};
@@ -762,7 +867,7 @@ function submitGoodsPublish(){
 		data.shopNumber = data.formatList[0].number;
 		data.shopFormat = data.formatList[0].format;
 		data.shopPrice = data.formatList[0].price;
-	}else{
+	} else {
 		data.isDiscussPrice = 0;
 		data.formatList = [];
 		$('.isNotDiscuss table[d-type="priceHtml"] tbody tr').each(function () {
@@ -780,23 +885,23 @@ function submitGoodsPublish(){
 		data.shopFormat = data.formatList[0].format;
 		data.shopPrice = data.formatList[0].price;
 	}
-	if($('select[name="parentSelect"]').val() == '100'){//------------------------
+	if ($('select[name="parentSelect"]').val() == '100') {//------------------------
 		data.goodsType = $('select[name="childrenSelect1"]').val();
-	}else if($('select[name="parentSelect"]').val() == '2'){
+	} else if ($('select[name="parentSelect"]').val() == '2') {
 		data.goodsType = $('select[name="parentSelect"]').val()
-	}else if($('select[name="parentSelect"]').val() == '300'){
+	} else if ($('select[name="parentSelect"]').val() == '300') {
 		data.goodsType = $('select[name="childrenSelect2"]').val();
-	}else if($('select[name="parentSelect"]').val() == '400'){
+	} else if ($('select[name="parentSelect"]').val() == '400') {
 		data.goodsType = $('select[name="childrenSelect3"]').val();
 	}
 
-	if(urlPath == '/usercenter/goodsModify'){ //修改商品
-		if($('#lastCategory').val()){
+	if (urlPath == '/usercenter/goodsModify') { //修改商品
+		if ($('#lastCategory').val()) {
 			data.catId = $('#lastCategory').val();
-		}else{
+		} else {
 			data.catId = $('#twoCategory').val();
 		}
-	}else{
+	} else {
 		data.catId = catId; //此ID为url上的id
 	}
 	data.isBook = $('input[name="isBook"]:checked').val(); //上架方式
@@ -804,11 +909,11 @@ function submitGoodsPublish(){
 	if (data.isBook == 1) {
 		data.onsaleStartDate = $('#indate').val();
 	}
-	if($('select[name="city"]').val() > 0){
+	if ($('select[name="city"]').val() > 0) {
 		data.goodsArea = $('select[name="city"]').val();
-	}else if($('select[name="province"]').val() > 0){
+	} else if ($('select[name="province"]').val() > 0) {
 		data.goodsArea = $('select[name="province"]').val();
-	}else if($('select[name="country"]').val() > 0){
+	} else if ($('select[name="country"]').val() > 0) {
 		data.goodsArea = $('select[name="country"]').val();
 	}
 	if (data.goodsType == 0) {
@@ -825,9 +930,9 @@ function submitGoodsPublish(){
 		data.offLineData.dataFormat = $('input[name="dataFormat"]:checked').val();
 		data.offLineData.isOnline = $('select[name="isOnline"]').val();
 		data.offLineData.dataPwd = $('input[name="dataPwd"]').val();
-		if(data.offLineData.isOnline == 0){
+		if (data.offLineData.isOnline == 0) {
 			data.offLineData.localUrl = $('#J_fileUploadSS').val();
-		}else{
+		} else {
 			data.offLineData.onlineUrl = $('input[name="onlineUrl"]').val();
 		}
 	} else if (data.goodsType == 1) {//API------------------------------
@@ -835,50 +940,59 @@ function submitGoodsPublish(){
 		data.goodsAdvantage = $('#textarea2').val(); //商品优势
 		data.afterSaleService = $('#textarea3').val(); //售后服务
 		data.appCase = $('#textarea4').val(); //应用案例
-		data.apiInfo = {};
-		data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
-		data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
-		data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
-		data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
-		data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
-		data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
-		data.apiInfo.reqParamList = [];
-		$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
-			var listData = {};
-			listData.fieldName = $(item).find('input[name="fieldName"]').val();
-			listData.fieldType = $(item).find('select[name="fieldType"]').val();
-			listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
-			listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
-			listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
-			listData.describle = $(item).find('textarea[name="describle"]').val();
-			data.apiInfo.reqParamList.push(listData);
-		});
-		data.apiInfo.respParamList = [];
-		$('table[d-type="returnHtml"] tbody tr').each(function () {
-			var listData = {};
-			listData.fieldName = $(this).find('input[name="fieldName"]').val();
-			listData.fieldType = $(this).find('select[name="fieldType"]').val();
-			listData.describle = $(this).find('textarea[name="describle"]').val();
-			data.apiInfo.respParamList.push(listData);
-		});
-		console.log(data.apiInfo.respParamList);//----------------------
-		data.apiInfo.respSample = $('#respSample').val();
-		data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
-		data.apiInfo.respDataMapping = {};
-		data.apiInfo.respDataMapping.codeAttrBean = {};
-		data.apiInfo.respDataMapping.codeAttrBean.codeAttr = $('input[name="codeAttr"]').val();
-		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean = {};
-		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode = $('input[name="successCode"]').val();
-		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode = $('input[name="failedCode"]').val();
-		data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData = $('input[name="successNoData"]').val();
-		data.apiInfo.respDataMapping.infoAttr = $('input[name="infoAttr"]').val();
-		data.apiInfo.respDataMapping.dataAttr = $('input[name="dataAttr"]').val();
-		data.apiInfo.respDataMapping.totalNumAttr = $('input[name="totalNumAttr"]').val();
-		data.apiInfo.updateFreq = $('input[name="updateFreq"]').val();
-		data.apiInfo.dataNumDivRowNum = $('input[name="dataNumDivRowNum"]').val();
-		data.apiInfo.encryptInfo = {};
-		data.apiInfo.encryptInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
-		data.apiInfo.encryptInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
+		if($('#J-apiNewUrl').val()){
+			if(testNewApiUrl){
+				data.apiUrl=$('#J-apiNewUrl').val();
+			}else{
+				$.alert('接口链接未验证');
+				return;
+			}
+		}else{
+			data.apiInfo = {};
+			data.apiInfo.apiType = $('.api-info-box').find('input[name="apiType"]:checked').val();
+			data.apiInfo.invokeMethod = $('.api-info-box').find('input[name="invokeMethod"]').val();
+			data.apiInfo.apiUrl = $('.api-info-box').find('input[name="apiUrl"]').val();
+			data.apiInfo.apiMethod = $('.api-info-box').find('input[name="apiMethod"]:checked').val();
+			data.apiInfo.reqSample = $('.api-info-box').find('input[name="reqSample"]').val();
+			data.apiInfo.apiDesc = $('.api-info-box').find('#apiDesc').val();
+			data.apiInfo.reqParamList = [];
+			$('table[d-type="requestHtml"] tbody tr').each(function (i, item) {
+				var listData = {};
+				listData.fieldName = $(item).find('input[name="fieldName"]').val();
+				listData.fieldType = $(item).find('select[name="fieldType"]').val();
+				listData.isMust = $(item).find('input[name="isMust' + i + '"]:checked').val();
+				listData.fieldSample = $(item).find('input[name="fieldSample"]').val();
+				listData.fieldDefault = $(item).find('input[name="fieldDefault"]').val();
+				listData.describle = $(item).find('textarea[name="describle"]').val();
+				data.apiInfo.reqParamList.push(listData);
+			});
+			data.apiInfo.respParamList = [];
+			$('table[d-type="returnHtml"] tbody tr').each(function () {
+				var listData = {};
+				listData.fieldName = $(this).find('input[name="fieldName"]').val();
+				listData.fieldType = $(this).find('select[name="fieldType"]').val();
+				listData.describle = $(this).find('textarea[name="describle"]').val();
+				data.apiInfo.respParamList.push(listData);
+			});
+			console.log(data.apiInfo.respParamList);//----------------------
+			data.apiInfo.respSample = $('#respSample').val();
+			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
+			data.apiInfo.respDataMapping = {};
+			data.apiInfo.respDataMapping.codeAttrBean = {};
+			data.apiInfo.respDataMapping.codeAttrBean.codeAttr = $('input[name="codeAttr"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean = {};
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successCode = $('input[name="successCode"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.failedCode = $('input[name="failedCode"]').val();
+			data.apiInfo.respDataMapping.codeAttrBean.codeInfoBean.successNoData = $('input[name="successNoData"]').val();
+			data.apiInfo.respDataMapping.infoAttr = $('input[name="infoAttr"]').val();
+			data.apiInfo.respDataMapping.dataAttr = $('input[name="dataAttr"]').val();
+			data.apiInfo.respDataMapping.totalNumAttr = $('input[name="totalNumAttr"]').val();
+			data.apiInfo.updateFreq = $('input[name="updateFreq"]').val();
+			data.apiInfo.dataNumDivRowNum = $('input[name="dataNumDivRowNum"]').val();
+			data.apiInfo.encryptInfo = {};
+			data.apiInfo.encryptInfo.secretKeyName = $('.api-info-box').find('input[name="secretKeyName"]').val();
+			data.apiInfo.encryptInfo.secretKeyValue = $('.api-info-box').find('input[name="secretKeyValue"]').val();
+		}
 	} else if (data.goodsType == 2) {
 		data.goodsDesc = $('#textarea1').val(); //商品详情
 		data.goodsAdvantage = $('#textarea2').val(); //商品优势
@@ -943,9 +1057,9 @@ function submitGoodsPublish(){
 
 	}
 	data.offLineInfo = {};
-	data.offLineInfo.concatName= $('.isOffLine-info-box input[name="concatName"]').val();
-	data.offLineInfo.concatPhone= $('.isOffLine-info-box input[name="concatPhone"]').val();
-	data.offLineInfo.concatEmail= $('.isOffLine-info-box input[name="concatEmail"]').val();
+	data.offLineInfo.concatName = $('.isOffLine-info-box input[name="concatName"]').val();
+	data.offLineInfo.concatPhone = $('.isOffLine-info-box input[name="concatPhone"]').val();
+	data.offLineInfo.concatEmail = $('.isOffLine-info-box input[name="concatEmail"]').val();
 
 	// alert(JSON.stringify(data));
 	return data;
@@ -959,15 +1073,15 @@ function isOnsaleFun(that) {
 	}
 }
 $('.fileUploadBtn').fileupload({
-	url: host.static+'/upload/other',
+	url: host.static + '/upload/other',
 	dataType: 'json',
 	done: function (e, data) {
-		if(data.result.code == 1){
+		if (data.result.code == 1) {
 			var obj = data.result.data[0];
 			$(this).parent('.uploadFiles').siblings('.fileEndInput').val(obj.filePath);
 			$(this).siblings('span').html('替换文件');
 			$(this).parent('.uploadFiles').siblings('.fileEndInputs').val(data.files[0].name);
-		}else{
+		} else {
 			$.alert(data.result.message)
 		}
 	},
@@ -976,15 +1090,15 @@ $('.fileUploadBtn').fileupload({
 	}
 });
 $('#fileupload11').fileupload({ //文件上传
-	url: host.static+'/upload/other',
+	url: host.static + '/upload/other',
 	dataType: 'json',
 	done: function (e, data) {
-		if(data.result.code == 1){
+		if (data.result.code == 1) {
 			var obj = data.result.data[0];
 			$("#dataSample").val(obj.filePath);
 			$('.fileUploads_j span').html(data.files[0].name);
 			$('input[name="dataSample_s"]').val(obj.filePath);
-		}else{
+		} else {
 			$.alert(data.result.message)
 		}
 
@@ -994,15 +1108,15 @@ $('#fileupload11').fileupload({ //文件上传
 	}
 });
 $('#fileupload2').fileupload({ //文件上传
-	url: host.static+'/upload/other',
+	url: host.static + '/upload/other',
 	dataType: 'json',
 	done: function (e, data) {
-		if(data.result.code == 1){
+		if (data.result.code == 1) {
 			var obj = data.result.data[0];
 			$("#J_fileUploadSS").val(obj.filePath);
 			$('.fileUploads span').html(data.files[0].name);
 			$('input[name="goodsImges2"]').val(obj.filePath);
-		}else{
+		} else {
 			$.alert(data.result.message)
 		}
 
@@ -1012,97 +1126,116 @@ $('#fileupload2').fileupload({ //文件上传
 	}
 });
 //商品修改-------------------------------↓↓↓↓↓↓↓↓↓↓↓↓↓
-function goodsModifyFn(){
+function goodsModifyFn() {
 	getGoodsDetails();
 }
-function getGoodsDetails(){ //获取商品信息
+function getGoodsDetails() { //获取商品信息
 	Loading.start();
 	$.ajax({
-		url:host.website+'/goods/back/findById',
-		type:'get',
-		data:{
-			id:goodsId
+		url: host.website + '/goods/back/findById',
+		type: 'get',
+		data: {
+			id: goodsId
 		},
-		success:function(data){
+		success: function (data) {
 			Loading.stop();
-			if(data.code == 1){
+			if (data.code == 1) {
 				var data = data.data;
 				renderData(data);
 				loadFirstCategory(data.catId); //获取第一个分类
-			}else{
+			} else {
 				$.alert(data.message);
 			}
 		}
 	})
 }
-function renderData(data){//渲染页面
+function renderData(data) {//渲染页面
 	catId = data.catId;
 	$('#J-ver').val(data.ver);//版本号
-	$("input[name='typeId']").val(catId.substring(0,3));
+	$("input[name='typeId']").val(catId.substring(0, 3));
 	$('#J-ver').val(data.ver);//版本号
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#goodsBriefes').val(data.goodsBrief);//简介
-	if(data.isPush == 1){
-		$('#isPush').attr('checked',true);
+	if (data.isPush == 1) {
+		$('#isPush').attr('checked', true);
 		$('#isLocal').val('1');
-	}else{
-		$('#isPush').attr('checked',false);
+	} else {
+		$('#isPush').attr('checked', false);
 		$('#isLocal').val('0');
 	}
 
-	$('#keywords').val(data.keywords);//标签
+
+	if(data.keywordsNames){
+		$('#keywords').val(data.keywords);//标签
+		var arr1 = data.keywords.split(","),
+			arr2 = data.keywordsNames.split(","),
+			arr3 = [];
+		for (var i = 0; i < arr1.length; i++) {
+			var rst={
+				id:arr1[i],
+				name : arr2[i]
+			};
+			arr3.push(rst)
+		}
+	}
+	console.log(arr3);
+	var html = '';
+	for (list in arr3) {
+		html += '<span class="tags-list" labid="' + arr3[list].id + '">' + arr3[list].name + '<i class="fa fa-times-circle"></i></span>';
+	}
+	$('.tags-val').html(html);
+	removeTags()
 	$('#showcontent').html(getLength(data.goodsName));//商品名称长度
 	$('.showcontentes').html(getLength(data.goodsBrief));//商品名称长度
 	$('#trialRange').val(data.trialRange);//使用范围
 	$('#trialRange_s').html(getLength(data.trialRange));//使用范围
 
-
-	$('select[name="parentSelect"] option').each(function(){
-		if(data.goodsType == 0 || data.goodsType == 1){
+	$('select[name="parentSelect"] option').each(function () {
+		if (data.goodsType == 0 || data.goodsType == 1) {
 			$('#childrenSelect1').show();
-			$('select[name="parentSelect"]').val(100).attr('selected','true');
-			$('select[name="childrenSelect1"]').val(data.goodsType).attr('selected','true');
-		}else if(data.goodsType == 2){
-			$('select[name="parentSelect"]').val(data.goodsType).attr('selected','true');
-		}else if(data.goodsType == 4 || data.goodsType == 5){
+			$('select[name="parentSelect"]').val(100).attr('selected', 'true');
+			$('select[name="childrenSelect1"]').val(data.goodsType).attr('selected', 'true');
+		} else if (data.goodsType == 2) {
+			$('select[name="parentSelect"]').val(data.goodsType).attr('selected', 'true');
+		} else if (data.goodsType == 4 || data.goodsType == 5) {
 			$('#childrenSelect3').show();
-			$('select[name="parentSelect"]').val(400).attr('selected','true');
-			$('select[name="childrenSelect3"]').val(data.goodsType).attr('selected','true');
-		}else if(data.goodsType == 6 || data.goodsType == 7){
+			$('select[name="parentSelect"]').val(400).attr('selected', 'true');
+			$('select[name="childrenSelect3"]').val(data.goodsType).attr('selected', 'true');
+		} else if (data.goodsType == 6 || data.goodsType == 7) {
 			$('#childrenSelect2').show();
-			$('select[name="parentSelect"]').val(300).attr('selected','true');
-			$('select[name="childrenSelect2"]').val(data.goodsType).attr('selected','true');
+			$('select[name="parentSelect"]').val(300).attr('selected', 'true');
+			$('select[name="childrenSelect2"]').val(data.goodsType).attr('selected', 'true');
 		}
 	});
 	var goodsTypeVal = $('#parentSelect').val();
 	$('#isOffline').val(data.isOffline);
-	if(data.isOffline == 0) {
+	if (data.isOffline == 0) {
 		if (data.goodsType == 0) {
 			var S_isOnline = null;
 			var S_dataPwd = null;
-			if(data.offLineData){
-				if(data.offLineData.isOnline){
+			if (data.offLineData) {
+				if (data.offLineData.isOnline) {
 					S_isOnline = data.offLineData.isOnline;
-				}else{
+				} else {
 					S_isOnline = 0;
 				}
-				if(data.offLineData.dataPwd){
-					S_dataPwd = data.offLineData.dataPwd ;
-				}else{
+				if (data.offLineData.dataPwd) {
+					S_dataPwd = data.offLineData.dataPwd;
+				} else {
 					S_dataPwd = '';
 				}
-			}else{
+			} else {
 				S_isOnline = 0;
 				S_dataPwd = '';
 			}
 			$('select[name="isOnline"]').val(S_isOnline);
 			$('input[name="dataPwd"]').val(S_dataPwd);
 			// console.log(data.offLineData.isOnline)
-			if(data.offLineData && data.offLineData.isOnline == 1 ){
+			if (data.offLineData && data.offLineData.isOnline == 1) {
 				$('.selector_offLine_input').show();
 				$('input[name="onlineUrl"]').val(data.offLineData && data.offLineData.onlineUrl ? data.offLineData.onlineUrl : '');
 				$('.selector_offLine_upLoad').hide();
-			}else{
+			} else {
 				$('#J_fileUploadSS').val(data.offLineData.localUrl);
 				$('.fileUploads span').text(data.offLineData.localUrl);
 				$('input[name="goodsImges2"]').val(data.offLineData.localUrl);
@@ -1114,16 +1247,25 @@ function renderData(data){//渲染页面
 			$('#offLine_endDate_s').val(data.offLineData.timeFrame.endDate);
 			$('input[name="dataRows"]').val(data.offLineData.dataRows);
 			$('input[name="dataCapacity"]').val(data.offLineData.dataCapacity);
-			$('.file-info-box input[name="dataFormat"]').each(function(){
-				if($(this).val() == data.offLineData.dataFormat){
-					$(this).attr('checked','checked');
-				}else{
+			$('.file-info-box input[name="dataFormat"]').each(function () {
+				if ($(this).val() == data.offLineData.dataFormat) {
+					$(this).attr('checked', 'checked');
+				} else {
 					$(this).removeAttr('checked');
 				}
 			});
 			rederDateDL()
 		} else if (data.goodsType == 1) {
-			renderApiInfo(data.apiInfo);
+			if(data.apiUrl){
+				$('#J-apiNewUrl').val(data.apiUrl)
+				renderNewApiInfo(data.apiInfo);
+				console.log('11111111111111')
+			}else{
+				$('.apiNewUrl').hide();
+				$('.apiOld').show();
+				renderApiInfo(data.apiInfo);
+				console.log('22222222222222')
+			}
 		} else if (data.goodsType == 2) {
 			renderDataModel(data.dataModel);
 		} else if (data.goodsType == 4) {
@@ -1135,33 +1277,33 @@ function renderData(data){//渲染页面
 		} else if (data.goodsType == 7) {
 			renderAppSaasInfo(data.asSaaS)
 		}
-	}else if(data.isOffline == 1){
+	} else if (data.isOffline == 1) {
 		if (data.goodsType == 0) {
 			var S_isOnline = null;
 			var S_dataPwd = null;
-			if(data.offLineData){
-				if(data.offLineData.isOnline){
+			if (data.offLineData) {
+				if (data.offLineData.isOnline) {
 					S_isOnline = data.offLineData.isOnline;
-				}else{
+				} else {
 					S_isOnline = 0;
 				}
-				if(data.offLineData.dataPwd){
-					S_dataPwd = data.offLineData.dataPwd ;
-				}else{
+				if (data.offLineData.dataPwd) {
+					S_dataPwd = data.offLineData.dataPwd;
+				} else {
 					S_dataPwd = '';
 				}
-			}else{
+			} else {
 				S_isOnline = 0;
 				S_dataPwd = '';
 			}
 			$('select[name="isOnline"]').val(S_isOnline);
 			$('input[name="dataPwd"]').val(S_dataPwd);
 			// console.log(data.offLineData.isOnline)
-			if(data.offLineData && data.offLineData.isOnline == 1 ){
+			if (data.offLineData && data.offLineData.isOnline == 1) {
 				$('.selector_offLine_input').show();
 				$('input[name="onlineUrl"]').val(data.offLineData && data.offLineData.onlineUrl ? data.offLineData.onlineUrl : '');
 				$('.selector_offLine_upLoad').hide();
-			}else{
+			} else {
 				$('#J_fileUploadSS').val(data.offLineData.localUrl);
 				$('.fileUploads span').text(data.offLineData.localUrl);
 				$('input[name="goodsImges2"]').val(data.offLineData.localUrl);
@@ -1173,16 +1315,22 @@ function renderData(data){//渲染页面
 			$('#offLine_endDate_s').val(data.offLineData.timeFrame.endDate);
 			$('input[name="dataRows"]').val(data.offLineData.dataRows);
 			$('input[name="dataCapacity"]').val(data.offLineData.dataCapacity);
-			$('.file-info-box input[name="dataFormat"]').each(function(){
-				if($(this).val() == data.offLineData.dataFormat){
-					$(this).attr('checked','checked');
-				}else{
+			$('.file-info-box input[name="dataFormat"]').each(function () {
+				if ($(this).val() == data.offLineData.dataFormat) {
+					$(this).attr('checked', 'checked');
+				} else {
 					$(this).removeAttr('checked');
 				}
 			});
 			rederDateDL()
 		} else if (data.goodsType == 1) {
-			renderApiInfo(data.apiInfo);
+			if(data.apiUrl){
+				renderNewApiInfo(data.apiInfo);
+				console.log('aaaaa')
+			}else{
+				renderApiInfo(data.apiInfo);
+				console.log('bbbbb')
+			}
 		} else if (data.goodsType == 2) {
 			renderDataModel(data.dataModel);
 		} else if (data.goodsType == 4) {
@@ -1201,80 +1349,80 @@ function renderData(data){//渲染页面
 		$('.isOffLine-info-box input[name="concatEmail"]').val(data.offLineInfo.concatEmail);
 	}
 	// goodsTypes(data.goodsType,data.apiInfo,data.uploadUrl);
-	$.each(data.attrTypeList,function(index,items){
-		$.each(items.attrList,function(index,item){
+	$.each(data.attrTypeList, function (index, items) {
+		$.each(items.attrList, function (index, item) {
 			attrIds.push(item.attrId);
 		});
 	});
-	console.log(host.static+data.goodsImg);
-	$('#preview-img').attr('src',data.goodsImg);//图片
+	console.log(host.static + data.goodsImg);
+	$('#preview-img').attr('src', data.goodsImg);//图片
 	$('input[name="goodsImg"]').val(data.goodsImg);
 	$('input[name="goodsImges"]').val(data.goodsImg);
-	$('#preview-div').mouseover(function(){
-		if($('#preview-img').attr('src')){
+	$('#preview-div').mouseover(function () {
+		if ($('#preview-img').attr('src')) {
 			$('#replace-btn').show()
 		}
 	});
-	$('#preview-div').mouseout(function(){
+	$('#preview-div').mouseout(function () {
 		$('#replace-btn').hide()
 	});
 	$('.fileUploads_j span').html(data.dataSample);//数据样例
 	$('input[name="dataSample_s"]').val(data.dataSample);
 	$('#dataSample').val(data.dataSample);
-	if(data.formatList && data.formatList.length > 0){
-		if(data.isDiscussPrice == 1){
-			$('#isDiscuss').prop('checked',true);
+	if (data.formatList && data.formatList.length > 0) {
+		if (data.isDiscussPrice == 1) {
+			$('#isDiscuss').prop('checked', true);
 			$('.isDiscuss').show();
 			$('.isNotDiscuss').hide();
 			renderFormatListDiscuss(data.formatList);//渲染价格
-		}else{
-			$('#isDiscuss').prop('checked',false);
+		} else {
+			$('#isDiscuss').prop('checked', false);
 			$('.isDiscuss').hide();
 			$('.isNotDiscuss').show();
 			renderFormatList(data.formatList);//渲染价格
 		}
 	}
-	initializeGoodsTypeEnd(goodsTypeVal,null);
+	initializeGoodsTypeEnd(goodsTypeVal, null);
 	renderGoodsDeac(data);
-	$('input[name="isBook"]').each(function(){
-		if($(this).val() == data.isBook){
-			$(this).attr('checked','true')
+	$('input[name="isBook"]').each(function () {
+		if ($(this).val() == data.isBook) {
+			$(this).attr('checked', 'true')
 		}
 	});
 	renderIsBook(data.isBook, data.onsaleStartDate);
-	if(data.areaCountry > 0){
-		loadCountry(data.areaCountry,data.areaProvince)
-	}else{
-		loadCountry(100000,data.areaProvince)
+	if (data.areaCountry > 0) {
+		loadCountry(data.areaCountry, data.areaProvince)
+	} else {
+		loadCountry(100000, data.areaProvince)
 	}
-	if(data.areaProvince > 0){
-		loadCity(data.areaProvince,data.areaCity)
+	if (data.areaProvince > 0) {
+		loadCity(data.areaProvince, data.areaCity)
 	}
 	initialize(); // 初始化数据
-	$('#parentSelect').attr('disabled','disabled');
-	$('.childrenSelect').attr('disabled','disabled');
+	$('#parentSelect').attr('disabled', 'disabled');
+	$('.childrenSelect').attr('disabled', 'disabled');
 	uploadGoodsImg();
 	validataFn();
 	ifGoodsTypeRender(data);
 	$('#isDiscuss').click(function () {
-		if($(this).prop('checked')){
+		if ($(this).prop('checked')) {
 			$('.isNotDiscuss').hide();
 			$('.isDiscuss').show();
-		}else{
+		} else {
 			$('.isNotDiscuss').show();
 			$('.isDiscuss').hide();
 		}
 	})
 }
-function ifGoodsTypeRender(data){ //根据类型渲染商品类型相关的html
+function ifGoodsTypeRender(data) { //根据类型渲染商品类型相关的html
 	$('.edit-all').hide();
 	$('.struct.selects').hide();
 	$('.offline-isShow').hide();
 	var goodsType = data.goodsType;
 	var isOffline = data.isOffline;
-	if(isOffline == 0){
+	if (isOffline == 0) {
 		$('.isOnLine-info-box').show();
-		if(goodsType == 0){
+		if (goodsType == 0) {
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
 			$('.afterSaleService-box').show();//售后服务
@@ -1282,40 +1430,40 @@ function ifGoodsTypeRender(data){ //根据类型渲染商品类型相关的html
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.file-info-box').show(); //
 			$('.offline-isOnLine-box').show(); //数据来源
-		}else if(goodsType == 1){
+		} else if (goodsType == 1) {
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
 			$('.afterSaleService-box').show();//售后服务
 			$('.dataSample-info-box').show(); //数据样例
 			$('.appCase-box').show(); //应用案例
 			$('.api-info-box').show();
-		}else if(goodsType == 2){
+		} else if (goodsType == 2) {
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
 			$('.dataModel-info-box').show();//
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.dataModel-isOnLine-box').show(); //交付方式
-		}else if(goodsType == 4){
+		} else if (goodsType == 4) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
 			$('.tool-info-box').show(); //
 			$('.visitOnline-isOnLine-box').show(); //下载地址
-		}else if(goodsType == 5){
+		} else if (goodsType == 5) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
 			$('.tool-info-box').show(); //
 			$('.tool-info-box .app-saas-info').hide(); //技术优势
 			$('.visitOnline-isOnLine-box').show(); //下载地址
-		}else if(goodsType == 6){
+		} else if (goodsType == 6) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
 			$('.app-info-box').show(); //
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
-		}else if(goodsType == 7){
+		} else if (goodsType == 7) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
@@ -1323,48 +1471,48 @@ function ifGoodsTypeRender(data){ //根据类型渲染商品类型相关的html
 			$('.app-info-box .app-saas-info').hide(); //技术优势
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
 		}
-	}else{
+	} else {
 		$('.struct.selects').hide();
 		$('.isOffLine-info-box').show();
-		if(goodsType == 0){
+		if (goodsType == 0) {
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.file-info-box').show(); //
-		}else if(goodsType == 1){
+		} else if (goodsType == 1) {
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
 			$('.afterSaleService-box').show();//售后服务
 			$('.dataSample-info-box').show(); //数据样例
 			$('.appCase-box').show(); //应用案例
-		}else if(goodsType == 2){
+		} else if (goodsType == 2) {
 			$('.goodsDesc-box').show(); //商品描述
 			$('.goodsAdvantage-box').show();//商品优势
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.dataModel-isOnLine-box').show(); //交付方式
 			$('.dataModel-info-box').show();//
-		}else if(goodsType == 4){
+		} else if (goodsType == 4) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
 			$('.tool-info-box').show(); //技术优势
 			$('.visitOnline-isOnLine-box').show(); //下载地址
-		}else if(goodsType == 5){
+		} else if (goodsType == 5) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
 			$('.tool-info-box').show(); //技术优势
 			$('.tool-info-box .app-saas-info').hide(); //技术优势
 			$('.visitOnline-isOnLine-box').show(); //下载地址
-		}else if(goodsType == 6){
+		} else if (goodsType == 6) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
 			$('.app-info-box').show(); //技术优势
 			$('.downloadAddress-isOnLine-box').show(); //下载地址
-		}else if(goodsType == 7){
+		} else if (goodsType == 7) {
 			$('.afterSaleService-box').show();//售后服务
 			$('.isOffLine-select-box').show(); //交付方式
 			$('.appCase-box').show(); //应用案例
@@ -1374,77 +1522,75 @@ function ifGoodsTypeRender(data){ //根据类型渲染商品类型相关的html
 		}
 	}
 }//根据类型渲染商品类型相关的html
-function loadFirstCategory(catId){ //获取首个分类
-	loadCategoryData($('#firstCategory'),0,catId.substring(0,3));
-	if(catId.substring(0,3)){
-		loadCategoryData($('#twoCategory'),catId.substring(0,3),catId.substring(0,6));
+function loadFirstCategory(catId) { //获取首个分类
+	loadCategoryData($('#firstCategory'), 0, catId.substring(0, 3));
+	if (catId.substring(0, 3)) {
+		loadCategoryData($('#twoCategory'), catId.substring(0, 3), catId.substring(0, 6));
 	}
-	if(catId.substring(0,6)){
-		loadCategoryData($('#lastCategory'),catId.substring(0,6),catId.substring(0,9));
+	if (catId.substring(0, 6)) {
+		loadCategoryData($('#lastCategory'), catId.substring(0, 6), catId.substring(0, 9));
 	}
 }
-function loadLastChild(that){
-	loadCategoryData($('#lastCategory'),$(that).val(),null);
-	if($('#lastCategory').html().length > 0){
-		catId =$('#lastCategory').val();
-	}else{
+function loadLastChild(that) {
+	loadCategoryData($('#lastCategory'), $(that).val(), null);
+	if ($('#lastCategory').html().length > 0) {
+		catId = $('#lastCategory').val();
+	} else {
 		catId = $(that).val();
 	}
-	console.log('22222222++++==='+catId)
 }
-function selectCatId(that){
+function selectCatId(that) {
 	catId = $(that).val();
-	console.log('33333333++++==='+catId)
 }
-function loadCategoryData(that,pid,currentPid){
+function loadCategoryData(that, pid, currentPid) {
 
 	$.ajax({
 		type: "get",
 		url: '/category/findByPId/1',
 		data: {
-			pid:pid
+			pid: pid
 		},
-		success: function(data){
-			if(data.code == 1){
+		success: function (data) {
+			if (data.code == 1) {
 				datas = data.data;
-				if(datas.length > 0){
-					for(var i = 0; i < datas.length; i++){
-						if(datas[i].catId == currentPid){
-							categoryHtml += '<option value="'+datas[i].catId+'" selected="selected">'+datas[i].catName+'</option>';
-						}else{
-							categoryHtml += '<option value="'+datas[i].catId+'">'+datas[i].catName+'</option>';
+				if (datas.length > 0) {
+					for (var i = 0; i < datas.length; i++) {
+						if (datas[i].catId == currentPid) {
+							categoryHtml += '<option value="' + datas[i].catId + '" selected="selected">' + datas[i].catName + '</option>';
+						} else {
+							categoryHtml += '<option value="' + datas[i].catId + '">' + datas[i].catName + '</option>';
 						}
 					}
 					$(that).show().html(categoryHtml);
 					categoryHtml = '';
 				}
-			}else{
+			} else {
 				$.alert(data.message)
 			}
 		}
 	});
 }
-function renderApiInfo(apiInfo){ //渲染API ----- 1
-	$('.api-info-box input[name="apiType"]').each(function(){
-		if($(this).val() == apiInfo.apiType){
-			$(this).attr('checked','checked');
-		}else{
+function renderApiInfo(apiInfo) { //渲染API ----- 1
+	$('.api-info-box input[name="apiType"]').each(function () {
+		if ($(this).val() == apiInfo.apiType) {
+			$(this).attr('checked', 'checked');
+		} else {
 			$(this).removeAttr('checked');
 		}
 	});
 	$('.api-info-box input[name="apiUrl"]').val(apiInfo.apiUrl);
 	$('.api-info-box input[name="invokeMethod"]').val(apiInfo.invokeMethod);
-	$('.api-info-box input[name="apiMethod"]').each(function(){
-		if($(this).val() == apiInfo.apiMethod){
-			$(this).attr('checked','checked');
-		}else{
+	$('.api-info-box input[name="apiMethod"]').each(function () {
+		if ($(this).val() == apiInfo.apiMethod) {
+			$(this).attr('checked', 'checked');
+		} else {
 			$(this).removeAttr('checked');
 		}
 	});
-	$('.api-info-box input[name="respDataFormat"]').each(function(){
-		if($(this).val() == apiInfo.respDataFormat){
-			$(this).attr('checked','checked');
-		}else{
+	$('.api-info-box input[name="respDataFormat"]').each(function () {
+		if ($(this).val() == apiInfo.respDataFormat) {
+			$(this).attr('checked', 'checked');
+		} else {
 			$(this).removeAttr('checked');
 		}
 	});
@@ -1455,74 +1601,74 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 	$('.api-info-box #respSample').val(apiInfo.respSample);
 	var html = '';
 	var reqLen = apiInfo.reqParamList.length;
-	$.each(apiInfo.reqParamList,function (index,data) {
-		html +='<tr class="parent-tr">';
-		html +='<td class="name-input"><div class="inputbox "><input type="text" name="fieldName" placeholder="请输入名称" value="'+data.fieldName+'" required="required"></div></td>';
-		html +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
-		if(data.fieldType == 'String'){
-			html +='<option value="String" selected="selected">String</option>';
-		}else{
-			html +='<option value="String">String</option>';
+	$.each(apiInfo.reqParamList, function (index, data) {
+		html += '<tr class="parent-tr">';
+		html += '<td class="name-input"><div class="inputbox "><input type="text" name="fieldName" placeholder="请输入名称" value="' + data.fieldName + '" required="required"></div></td>';
+		html += '<td class="type-input"><div class="selectbox"><select name="fieldType">';
+		if (data.fieldType == 'String') {
+			html += '<option value="String" selected="selected">String</option>';
+		} else {
+			html += '<option value="String">String</option>';
 		}
-		if(data.fieldType == 'int'){
-			html +='<option value="int" selected="selected">int</option>';
-		}else{
-			html +='<option value="int">int</option>';
+		if (data.fieldType == 'int') {
+			html += '<option value="int" selected="selected">int</option>';
+		} else {
+			html += '<option value="int">int</option>';
 		}
-		html +='</select></div></td>';
-		html +='<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" value="'+data.fieldDefault+'"></div></td>';
-		html +='<td>';
-		html +='<div class="radio-box">';
-		if(data.isMust == 0){
-			html +='<label><input type="radio" name="isMust'+index+'" checked="checked" value="0">否</label>';
-		}else{
-			html +='<label><input type="radio" name="isMust'+index+'" value="0">否</label>';
+		html += '</select></div></td>';
+		html += '<td class="type-input"><div class="inputbox"><input type="text" name="fieldDefault" placeholder="请输入默认值" value="' + data.fieldDefault + '"></div></td>';
+		html += '<td>';
+		html += '<div class="radio-box">';
+		if (data.isMust == 0) {
+			html += '<label><input type="radio" name="isMust' + index + '" checked="checked" value="0">否</label>';
+		} else {
+			html += '<label><input type="radio" name="isMust' + index + '" value="0">否</label>';
 		}
-		if(data.isMust == 1){
-			html +='<label><input type="radio" name="isMust'+index+'" checked="checked" value="1">是</label>';
-		}else{
-			html +='<label><input type="radio" name="isMust'+index+'" value="1">是</label>';
+		if (data.isMust == 1) {
+			html += '<label><input type="radio" name="isMust' + index + '" checked="checked" value="1">是</label>';
+		} else {
+			html += '<label><input type="radio" name="isMust' + index + '" value="1">是</label>';
 		}
-		html +='</div>';
-		html +='</td>';
-		html +='<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" value="'+data.fieldSample+'"></div></td>';
-		html +='<td><div class="inputbox"><textarea name="describle" placeholder="请输入描述">'+data.describle+'</textarea></div></td>';
-		if(index === reqLen-1){
-			html +='<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
-		}else{
-			html +='<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
+		html += '</div>';
+		html += '</td>';
+		html += '<td><div class="inputbox"><input type="text" name="fieldSample" placeholder="请输入示例" value="' + data.fieldSample + '"></div></td>';
+		html += '<td><div class="inputbox"><textarea name="describle" placeholder="请输入描述">' + data.describle + '</textarea></div></td>';
+		if (index === reqLen - 1) {
+			html += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
+		} else {
+			html += '<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
 		}
-		html +='</tr>';
+		html += '</tr>';
 	});
 	$('table[d-type="requestHtml"] tbody').html(html);
 	var html2 = '';
 	var resqLen = apiInfo.respParamList.length;
-	$.each(apiInfo.respParamList, function (index,data) {
+	$.each(apiInfo.respParamList, function (index, data) {
 		html2 += '<tr class="parent-tr">';
-		html2 += '<td class="errorNum-input"><div class="inputbox"><input type="text" name="fieldName" value="'+data.fieldName+'" placeholder="请输入字段"></div></td>';
-		html2 +='<td class="type-input"><div class="selectbox"><select name="fieldType">';
-		if(data.fieldType){
-			if(data.fieldType == 'String'){
-				html2 +='<option value="String" selected="selected">String</option>';
-			}else{
-				html2 +='<option value="String">String</option>';
+		html2 += '<td class="errorNum-input"><div class="inputbox"><input type="text" name="fieldName" value="' + data.fieldName + '" placeholder="请输入字段"></div></td>';
+		html2 += '<td class="type-input"><div class="selectbox"><select name="fieldType">';
+		if (data.fieldType) {
+			if (data.fieldType == 'String') {
+				html2 += '<option value="String" selected="selected">String</option>';
+			} else {
+				html2 += '<option value="String">String</option>';
 			}
-			if(data.fieldType == 'int'){
-				html2 +='<option value="int" selected="selected">int</option>';
-			}else{
-				html2 +='<option value="int">int</option>';
+			if (data.fieldType == 'int') {
+				html2 += '<option value="int" selected="selected">int</option>';
+			} else {
+				html2 += '<option value="int">int</option>';
 			}
 			console.log(111)
-		}else{
+		} else {
 			console.log(222)
-			html2 +='<option value="String">String</option>';
-			html2 +='<option value="int">int</option>';
+			html2 += '<option value="String">String</option>';
+			html2 += '<option value="int">int</option>';
 		}
-		html2 +='</select></div></td>';
-		html2 += '<td><div class="inputbox"><textarea name="describle" placeholder="请输入说明">'+data.describle+'</textarea></div></td>';
-		if(index === reqLen-1) {
+		html2 += '</select></div></td>';
+		html2 += '<td><div class="inputbox"><textarea name="describle" placeholder="请输入说明">' + data.describle + '</textarea></div></td>';
+		if (index === reqLen - 1) {
 			html2 += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
-		}else{
+		} else {
 			html2 += '<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
 		}
 		html2 += '</tr>';
@@ -1538,7 +1684,11 @@ function renderApiInfo(apiInfo){ //渲染API ----- 1
 	$('.api-info-box input[name="updateFreq"]').val(apiInfo.updateFreq);
 	$('.api-info-box input[name="dataNumDivRowNum"]').val(apiInfo.dataNumDivRowNum);
 }
-function renderDataModel(dataModel){ //渲染数据模型---2
+function renderNewApiInfo(apiInfo){
+
+	ApiUrlInfo(apiInfo)
+}
+function renderDataModel(dataModel) { //渲染数据模型---2
 	console.log(JSON.stringify(dataModel));
 	// $('.dataModel-info-box select[name="modelType"]').val(dataModel.modelType); //模型类型
 	$('.dataModel-info-box select[name="complexity"]').val(dataModel.complexity);//复杂度
@@ -1560,7 +1710,7 @@ function renderDataModel(dataModel){ //渲染数据模型---2
 	$('.dataModel-isOnLine-box input[name="concatPhone"]').val(dataModel.concatInfo.concatPhone);//联系电话
 	$('.dataModel-isOnLine-box input[name="concatEmail"]').val(dataModel.concatInfo.concatEmail);//联系邮箱
 }
-function renderToolInfo(atAloneSoftware){
+function renderToolInfo(atAloneSoftware) {
 	$('.tool-info-box #textareaAs').val(atAloneSoftware.coreFunction);
 	$('.tool-info-box #textareaBs').val(atAloneSoftware.technologicalSuperiority);
 	$('.tool-info-box #textareaCs').val(atAloneSoftware.teamAdvantage);
@@ -1568,7 +1718,7 @@ function renderToolInfo(atAloneSoftware){
 	$('.tool-info-box #textareaEs').val(atAloneSoftware.dataNeeded);
 	$('.visitOnline-isOnLine-box input[name="dataAddress"]').val(atAloneSoftware.dataAddress);
 }
-function renderToolSaasInfo(atSaaS){
+function renderToolSaasInfo(atSaaS) {
 	$('.tool-info-box #textareaAs').val(atSaaS.coreFunction);
 	$('.tool-info-box #textareaBs').val(atSaaS.technologicalSuperiority);
 	$('.tool-info-box #textareaCs').val(atSaaS.teamAdvantage);
@@ -1576,7 +1726,7 @@ function renderToolSaasInfo(atSaaS){
 	$('.tool-info-box #textareaEs').val(atSaaS.dataNeeded);
 	$('.visitOnline-isOnLine-box input[name="dataAddress"]').val(atSaaS.dataAddress);
 }
-function renderAppInfo(asAloneSoftware){
+function renderAppInfo(asAloneSoftware) {
 	console.log(asAloneSoftware.coreFunction);
 	$('.downloadAddress-isOnLine-box input[name="dataAddress"]').val(asAloneSoftware.dataAddress);
 	$('.app-info-box #textareaA').val(asAloneSoftware.coreFunction);
@@ -1585,7 +1735,7 @@ function renderAppInfo(asAloneSoftware){
 	$('.app-info-box #textareaD').val(asAloneSoftware.desiredEnvironment);
 	$('.app-info-box #textareaE').val(asAloneSoftware.dataNeeded);
 }
-function renderAppSaasInfo(asSaaS){
+function renderAppSaasInfo(asSaaS) {
 	$('.downloadAddress-isOnLine-box input[name="dataAddress"]').val(asSaaS.dataAddress);
 	$('.app-info-box #textareaA').val(asSaaS.coreFunction);
 	$('.app-info-box #textareaB').val(asSaaS.technologicalSuperiority);
@@ -1593,41 +1743,41 @@ function renderAppSaasInfo(asSaaS){
 	$('.app-info-box #textareaD').val(asSaaS.desiredEnvironment);
 	$('.app-info-box #textareaE').val(asSaaS.dataNeeded);
 }
-function renderFormatList(formatList){
+function renderFormatList(formatList) {
 	var html = '';
 	var len = formatList.length;
-	$.each(formatList,function(index,data){
+	$.each(formatList, function (index, data) {
 		html += '<tr class="parent-tr">';
-		html += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" value="'+data.formatName+'" placeholder="请输入名称"></div></td>';
-		html += '<td class="number-input"><div class="inputbox"><input type="text" datatype="number" value="'+data.number+'" digits="true" placeholder="请输入规格" min="0"></div></td>';
+		html += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" value="' + data.formatName + '" placeholder="请输入名称"></div></td>';
+		html += '<td class="number-input"><div class="inputbox"><input type="text" datatype="number" value="' + data.number + '" digits="true" placeholder="请输入规格" min="0"></div></td>';
 		html += '<td style="width: 40px;"><div class="selectbox"><select name="format">';
-		if(data.format == 0){
+		if (data.format == 0) {
 			html += '<option value="0" selected="selected">次</option>';
-		}else{
+		} else {
 			html += '<option value="0">次</option>';
 		}
-		if(data.format == 1){
+		if (data.format == 1) {
 			html += '<option value="1" selected="selected">月</option>';
-		}else{
+		} else {
 			html += '<option value="1">月</option>';
 		}
-		if(data.format == 2){
+		if (data.format == 2) {
 			html += '<option value="2" selected="selected">年</option>';
-		}else{
+		} else {
 			html += '<option value="2">年</option>';
 		}
-		if(data.format == 3){
+		if (data.format == 3) {
 			html += '<option value="3" selected="selected">套</option>';
-		}else{
+		} else {
 			html += '<option value="3">套</option>';
 		}
 		html += '</select></div></td>';
-		html += '<td class="price-input price-input1"><div class="inputbox"><input class="price-inputs number " min="0" datatype="settlementPrice" value="'+data.settlementPrice / 100+'" type="text" placeholder="请输入结算价"></div></td>';
-		html += '<td class="price-input price-input2"><div class="inputbox"><input class="price-inputs number " min="0" datatype="agencyPrice" value="'+data.agencyPrice / 100+'" type="text" placeholder="请输入代理价"></div></td>';
-		html += '<td class="price-input price-input3"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="'+data.price / 100+'" type="text" placeholder="请输入零售价"></div></td>';
-		if(index === len-1){
+		html += '<td class="price-input price-input1"><div class="inputbox"><input class="price-inputs number " min="0" datatype="settlementPrice" value="' + data.settlementPrice / 100 + '" type="text" placeholder="请输入结算价"></div></td>';
+		html += '<td class="price-input price-input2"><div class="inputbox"><input class="price-inputs number " min="0" datatype="agencyPrice" value="' + data.agencyPrice / 100 + '" type="text" placeholder="请输入代理价"></div></td>';
+		html += '<td class="price-input price-input3"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="' + data.price / 100 + '" type="text" placeholder="请输入零售价"></div></td>';
+		if (index === len - 1) {
 			html += '<td><span class="table-plus-btn" onclick="tablePlus(this)">+</span></td>';
-		}else{
+		} else {
 			html += '<td><span class="table-plus-btn" onclick="tableDelete(this)">-</span></td>';
 		}
 
@@ -1635,25 +1785,25 @@ function renderFormatList(formatList){
 	});
 	$('.isNotDiscuss table[d-type="priceHtml"] tbody').html(html);
 }
-function renderFormatListDiscuss(formatList){
+function renderFormatListDiscuss(formatList) {
 	var html = '';
-	$.each(formatList,function(index,data){
+	$.each(formatList, function (index, data) {
 		html += '<tr class="parent-tr">';
-		html += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" value="'+data.formatName+'" placeholder="请输入名称"></div></td>';
-		html += '<td class="price-input price-input3"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="'+data.price / 100+'" type="text" placeholder="请输入建议价"></div></td>';
+		html += '<td class="name-input"><div class="inputbox"><input type="text" datatype="name" value="' + data.formatName + '" placeholder="请输入名称"></div></td>';
+		html += '<td class="price-input price-input3"><div class="inputbox"><input class="price-inputs number " min="0" datatype="price" value="' + data.price / 100 + '" type="text" placeholder="请输入建议价"></div></td>';
 		html += '</tr>';
 	});
 	$('.isDiscuss table tbody').html(html);
 }
-function renderGoodsDeac(data){
+function renderGoodsDeac(data) {
 	$('#textarea1').val(data.goodsDesc);
 	$('#textarea2').val(data.goodsAdvantage);
 	$('#textarea3').val(data.afterSaleService);
 	$('#textarea4').val(data.appCase);
 	renderWangEdit();
 }
-function renderIsBook(isBook, onsaleStartDate){
-	if(isBook == 1){
+function renderIsBook(isBook, onsaleStartDate) {
+	if (isBook == 1) {
 		$('.isOnsale-box').show();
 		$('#indate').val(onsaleStartDate);
 		$('#indate_s').val(onsaleStartDate);
@@ -1663,27 +1813,27 @@ $.jeDate("#indate", {
 	format: "YYYY-MM-DD hh:mm:ss",
 	isTime: true,
 	minDate: $.nowDate(0),
-	choosefun: function(elem, val, date) {
+	choosefun: function (elem, val, date) {
 		$('#indate_s').val(val)
 	},
-	okfun:function(elem, val, date){
+	okfun: function (elem, val, date) {
 		$('#indate_s').val(val)
 	},
-	clearfun:function(elem, val) {
+	clearfun: function (elem, val) {
 		$('#indate_s').val('');
 	}
 });
-function loadCountry(idCountry,idProvince) {
+function loadCountry(idCountry, idProvince) {
 	$.ajax({
 		type: "get",
-		url: host.website+'/region/getRegionCodeByPid',
+		url: host.website + '/region/getRegionCodeByPid',
 		data: {
 			parentId: idCountry
 		},
 		success: function (data) {
 			if (data.code == 1) {
-				if(data.data.length > 0){
-					renderOneRegion(idProvince,data.data)
+				if (data.data.length > 0) {
+					renderOneRegion(idProvince, data.data)
 				}
 			} else {
 				$.alert(data.message)
@@ -1691,17 +1841,17 @@ function loadCountry(idCountry,idProvince) {
 		}
 	});
 }
-function loadCity(idProvince,idCity) {
+function loadCity(idProvince, idCity) {
 	$.ajax({
 		type: "get",
-		url: host.website+'/region/getRegionCodeByPid',
+		url: host.website + '/region/getRegionCodeByPid',
 		data: {
 			parentId: idProvince
 		},
 		success: function (data) {
 			if (data.code == 1) {
-				if(data.data.length > 0){
-					renderTwoRegion(idCity,data.data)
+				if (data.data.length > 0) {
+					renderTwoRegion(idCity, data.data)
 				}
 			} else {
 				$.alert(data.message)
@@ -1709,24 +1859,24 @@ function loadCity(idProvince,idCity) {
 		}
 	});
 }
-function renderOneRegion(idProvince,data){
+function renderOneRegion(idProvince, data) {
 	var html = '<option value="-1">全部</option>';
-	data.forEach(function(e){
-		if(e.id == idProvince){
-			html += '<option selected="selected" value="'+e.id+'">'+e.name+'</option>';
-		}else{
-			html += '<option value="'+e.id+'">'+e.name+'</option>';
+	data.forEach(function (e) {
+		if (e.id == idProvince) {
+			html += '<option selected="selected" value="' + e.id + '">' + e.name + '</option>';
+		} else {
+			html += '<option value="' + e.id + '">' + e.name + '</option>';
 		}
 	});
 	$('#province').html(html);
 }
-function renderTwoRegion(idCity,data){
+function renderTwoRegion(idCity, data) {
 	var html = '<option value="-1">全部</option>';
-	data.forEach(function(e){
-		if(e.id == idCity){
-			html += '<option selected="selected" value="'+e.id+'">'+e.name+'</option>';
-		}else{
-			html += '<option value="'+e.id+'">'+e.name+'</option>';
+	data.forEach(function (e) {
+		if (e.id == idCity) {
+			html += '<option selected="selected" value="' + e.id + '">' + e.name + '</option>';
+		} else {
+			html += '<option value="' + e.id + '">' + e.name + '</option>';
 		}
 	});
 	$('#city').html(html);
@@ -1735,131 +1885,232 @@ function initialize() {
 	getPriceBox();
 	floorPrice();
 }
-$('#J_submitBtn').click(function(){
-	if($("#goodsModifyForm").valid()){
+$('#J_submitBtn').click(function () {
+	if ($("#goodsModifyForm").valid()) {
 		var lastChild = $('.isNotDiscuss table[d-type="priceHtml"] tbody tr').last();
-		if($('#isDiscuss').prop('checked')){
+		if ($('#isDiscuss').prop('checked')) {
 			if ($('.isDiscuss .price-inputs').val()) {
 				textEditor()
 			} else {
-				$.alert('请完善价格信息',true,function(){});
+				$.alert('请完善价格信息', true, function () {
+				});
 			}
-		}else{
+		} else {
 			if ($(lastChild).children('.number-input').find('input').val() && $(lastChild).children('.price-input1').find('input').val() && $(lastChild).children('.price-input2').find('input').val() && $(lastChild).children('.price-input3').find('input').val()) {
 				textEditor()
 			} else {
-				$.alert('请完善价格及规格信息',true,function(){});
+				$.alert('请完善价格及规格信息', true, function () {
+				});
 			}
 		}
 
-	}else{
+	} else {
 		return false;
 	}
-	function textEditor(){
-		if($('[name=isBook]:checked').val() == 1){
-			if(!$('#indate_s').val()){
-				$.alert('上架时间不能为空',true,function(){});
+	function textEditor() {
+		if ($('[name=isBook]:checked').val() == 1) {
+			if (!$('#indate_s').val()) {
+				$.alert('上架时间不能为空', true, function () {
+				});
 				return;
 			}
 		}
-		if(goodsTypeId == 0 || goodsTypeId == 1 || goodsTypeId == 2){
-			if($.trim(editor1.$txt.html()) != "<p><br></p>"){
-				if($.trim(editor2.$txt.html()) != "<p><br></p>"){
-					if($.trim(editor3.$txt.html()) != "<p><br></p>"){
+		if (goodsTypeId == 0 || goodsTypeId == 1 || goodsTypeId == 2) {
+			if ($.trim(editor1.$txt.html()) != "<p><br></p>") {
+				if ($.trim(editor2.$txt.html()) != "<p><br></p>") {
+					if ($.trim(editor3.$txt.html()) != "<p><br></p>") {
 						backAddFn(submitGoodsPublish())
-					}else{
-						$.alert('售后服务不能为空',true,function () {})
+					} else {
+						$.alert('售后服务不能为空', true, function () {
+						})
 					}
-				}else{
-					$.alert('商品优势不能为空',true,function () {})
+				} else {
+					$.alert('商品优势不能为空', true, function () {
+					})
 				}
-			}else{
-				$.alert('商品描述不能为空',true,function () {})
+			} else {
+				$.alert('商品描述不能为空', true, function () {
+				})
 			}
-		}else if(goodsTypeId == 4){
-			if($.trim(editor3.$txt.html()) != "<p><br></p>"){
-				if($.trim(editorAs.$txt.html()) != "<p><br></p>"){
-					if($.trim(editorBs.$txt.html()) != "<p><br></p>"){
-						if($.trim(editorCs.$txt.html()) != "<p><br></p>"){
-							if($.trim(editorDs.$txt.html()) != "<p><br></p>"){
+		} else if (goodsTypeId == 4) {
+			if ($.trim(editor3.$txt.html()) != "<p><br></p>") {
+				if ($.trim(editorAs.$txt.html()) != "<p><br></p>") {
+					if ($.trim(editorBs.$txt.html()) != "<p><br></p>") {
+						if ($.trim(editorCs.$txt.html()) != "<p><br></p>") {
+							if ($.trim(editorDs.$txt.html()) != "<p><br></p>") {
 								backAddFn(submitGoodsPublish())
-							}else{
-								$.alert('所需环境不能为空',true,function () {})
+							} else {
+								$.alert('所需环境不能为空', true, function () {
+								})
 							}
-						}else{
-							$.alert('团队优势不能为空',true,function () {})
+						} else {
+							$.alert('团队优势不能为空', true, function () {
+							})
 						}
-					}else{
-						$.alert('技术优势不能为空',true,function () {})
+					} else {
+						$.alert('技术优势不能为空', true, function () {
+						})
 					}
-				}else{
-					$.alert('核心功能不能为空',true,function () {})
+				} else {
+					$.alert('核心功能不能为空', true, function () {
+					})
 				}
-			}else{
-				$.alert('售后服务不能为空',true,function () {})
+			} else {
+				$.alert('售后服务不能为空', true, function () {
+				})
 			}
-		}else if(goodsTypeId == 5){
-			if($.trim(editor3.$txt.html()) != "<p><br></p>"){
-				if($.trim(editorAs.$txt.html()) != "<p><br></p>"){
-					if($.trim(editorCs.$txt.html()) != "<p><br></p>"){
-						if($.trim(editorDs.$txt.html()) != "<p><br></p>"){
+		} else if (goodsTypeId == 5) {
+			if ($.trim(editor3.$txt.html()) != "<p><br></p>") {
+				if ($.trim(editorAs.$txt.html()) != "<p><br></p>") {
+					if ($.trim(editorCs.$txt.html()) != "<p><br></p>") {
+						if ($.trim(editorDs.$txt.html()) != "<p><br></p>") {
 							backAddFn(submitGoodsPublish())
-						}else{
-							$.alert('所需环境不能为空',true,function () {})
+						} else {
+							$.alert('所需环境不能为空', true, function () {
+							})
 						}
-					}else{
-						$.alert('团队优势不能为空',true,function () {})
+					} else {
+						$.alert('团队优势不能为空', true, function () {
+						})
 					}
-				}else{
-					$.alert('核心功能不能为空',true,function () {})
+				} else {
+					$.alert('核心功能不能为空', true, function () {
+					})
 				}
-			}else{
-				$.alert('售后服务不能为空',true,function () {})
+			} else {
+				$.alert('售后服务不能为空', true, function () {
+				})
 			}
-		}else if(goodsTypeId == 6){
-			if($.trim(editor3.$txt.html()) != "<p><br></p>"){
-				if($.trim(editorA.$txt.html()) != "<p><br></p>"){
-					if($.trim(editorB.$txt.html()) != "<p><br></p>"){
-						if($.trim(editorC.$txt.html()) != "<p><br></p>"){
-							if($.trim(editorD.$txt.html()) != "<p><br></p>"){
+		} else if (goodsTypeId == 6) {
+			if ($.trim(editor3.$txt.html()) != "<p><br></p>") {
+				if ($.trim(editorA.$txt.html()) != "<p><br></p>") {
+					if ($.trim(editorB.$txt.html()) != "<p><br></p>") {
+						if ($.trim(editorC.$txt.html()) != "<p><br></p>") {
+							if ($.trim(editorD.$txt.html()) != "<p><br></p>") {
 								backAddFn(submitGoodsPublish())
-							}else{
-								$.alert('所需环境不能为空',true,function () {})
+							} else {
+								$.alert('所需环境不能为空', true, function () {
+								})
 							}
-						}else{
-							$.alert('团队优势不能为空',true,function () {})
+						} else {
+							$.alert('团队优势不能为空', true, function () {
+							})
 						}
-					}else{
-						$.alert('技术优势不能为空',true,function () {})
+					} else {
+						$.alert('技术优势不能为空', true, function () {
+						})
 					}
-				}else{
-					$.alert('核心功能不能为空',true,function () {})
+				} else {
+					$.alert('核心功能不能为空', true, function () {
+					})
 				}
-			}else{
-				$.alert('售后服务不能为空',true,function () {})
+			} else {
+				$.alert('售后服务不能为空', true, function () {
+				})
 			}
-		}else if(goodsTypeId == 7){
-			if($.trim(editor3.$txt.html()) != "<p><br></p>"){
-				if($.trim(editorA.$txt.html()) != "<p><br></p>"){
-					if($.trim(editorC.$txt.html()) != "<p><br></p>"){
-						if($.trim(editorD.$txt.html()) != "<p><br></p>"){
+		} else if (goodsTypeId == 7) {
+			if ($.trim(editor3.$txt.html()) != "<p><br></p>") {
+				if ($.trim(editorA.$txt.html()) != "<p><br></p>") {
+					if ($.trim(editorC.$txt.html()) != "<p><br></p>") {
+						if ($.trim(editorD.$txt.html()) != "<p><br></p>") {
 							backAddFn(submitGoodsPublish())
-						}else{
-							$.alert('所需环境不能为空',true,function () {})
+						} else {
+							$.alert('所需环境不能为空', true, function () {
+							})
 						}
-					}else{
-						$.alert('团队优势不能为空',true,function () {})
+					} else {
+						$.alert('团队优势不能为空', true, function () {
+						})
 					}
-				}else{
-					$.alert('核心功能不能为空',true,function () {})
+				} else {
+					$.alert('核心功能不能为空', true, function () {
+					})
 				}
-			}else{
-				$.alert('售后服务不能为空',true,function () {})
+			} else {
+				$.alert('售后服务不能为空', true, function () {
+				})
 			}
 		}
 	}
 });
 
-function checkOut(){ //取消form表单默认事件
+function checkOut() { //取消form表单默认事件
 	return false;
 }
+
+//修改API信息
+$('.apiNewUrl-btn').click(function(){
+	var apiUrl = $('#J-apiNewUrl').val();
+
+	if(apiUrl){
+		$.ajax({
+			type: "get",
+			url: host.website + '/api/goodsApi/fetchGoodsApiInfo',
+			data: {
+				url: apiUrl
+			},
+			success: function (data) {
+				if (data.code == 1) {
+					ApiUrlInfo(data.data)
+
+				} else {
+					$.alert(data.message);
+					testNewApiUrl = false;
+				}
+			}
+		});
+	}else{
+		$.alert('请输入接口链接');
+	}
+});
+function ApiUrlInfo(data){
+	$('.apiMethod').html(data.apiMethod == '1' ? 'GET' : 'POST');
+	$('.respDataFormat').html(data.respDataFormat == '1' ? 'JSON' : 'XML');
+	var status = '';
+	switch (data.status)
+	{
+		case '0':
+			status = "删除";
+			break;
+		case '1':
+			status = "草稿";
+			break;
+		case '2':
+			status = "待测试";
+			break;
+		case '3':
+			status = "测试通过";
+			break;
+		case '4':
+			status = "测试未通过";
+			break;
+	}
+	$('.status').html(status);
+	$('.apiType').html( data.apiType== '1' ? 'rest' : 'wsdl');
+	$('.version').html(data.version);
+	$('.reqSample').html(data.reqSample?data.reqSample:'无');
+	var html = '';
+
+	for(var i=0;i<data.reqParamList.length;i++){
+		html += '<tr class="parent-tr"><td>'+data.reqParamList[i].fieldName+'</td><td>'+data.reqParamList[i].describle+'</td></tr>';
+	}
+	$('.reqParamList tbody').html(html);
+	var html2 = '';
+	data.respParamList.forEach(function(item){
+		html2 += '<tr class="parent-tr"><td>'+item.fieldName+'</td><td>'+item.describle+'</td></tr>';
+	});
+	$('.respParamList tbody').html(html2);
+	$('.apiNew').show();
+	testNewApiUrl = true;
+	$('#J-apiNewUrl').on('input onporpertychange', function () {
+		if($('#J-apiNewUrl').val() != apiUrl){
+			$('.apiNew').hide();
+			testNewApiUrl = false;
+		}else{
+			$('.apiNew').show();
+			testNewApiUrl = true;
+		}
+	});
+}
+
+

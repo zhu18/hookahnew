@@ -1,0 +1,48 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
+<script src="/static/js/plugins/widget/jquery.ui.widget.js"></script>
+<script src="/static/js/plugins/fileupload/jquery.fileupload.js"></script>
+
+<link rel="stylesheet" href="/static/css/usercenter/auth/authentication.css">
+
+<%};%>
+
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="grid-right info-center-box  margin-bottom-20">
+
+
+
+            <%if(user.userType == 2){%>
+
+            <a href="/usercenter/pspAuthentication">成为服务商</a>
+            <script>
+              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
+
+            </script>
+
+            <%}else{%>
+            <script>
+              window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
+
+            </script>
+
+            <a href="/usercenter/epAuthentication">成为服务商</a>
+
+            <%}%>
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+<script src="/static/js/usercenter/auth/pspAuthentication.js"></script>
+

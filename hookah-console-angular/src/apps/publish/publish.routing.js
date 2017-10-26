@@ -2,6 +2,7 @@ import publishController from "./publishController";
 import publicController from './publicController';
 import auditingController from './auditingController';
 import detailsController from './detailsController'
+import refundController from './refundController'
 // import transactionManageController from './transactionManageController'
 
 publishRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
@@ -38,25 +39,11 @@ export default function publishRouting($stateProvider, $urlRouterProvider) {
       permission: 'auditing'
 
     })
-    // .state('publish.auditing', {  //报名页面
-    //   url: '/publish/auditing/:id',
-    //   template: require('./auditing.html'),
-    //   controller: auditingController,
-    //   permission: 'publishAuditing'
-    //
-    // })
-    // .state('publish.auditing', {  //验收页面
-    //   url: '/publish/auditing/:id',
-    //   template: require('./auditing.html'),
-    //   controller: auditingController,
-    //   permission: 'publishAuditing'
-    //
-    // })
-    // .state('publish.auditing', {  //审核页面
-    //   url: '/publish/auditing/:id',
-    //   template: require('./auditing.html'),
-    //   controller: auditingController,
-    //   permission: 'publishAuditing'
-    //
-    // })
+    .state('publish.refund', {  //待退款页面
+      url: '/publish/refund/:id/:userId',
+      template: require('./refund.html'),
+      controller: refundController,
+      permission: 'refund'
+
+    })
 };

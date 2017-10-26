@@ -39,7 +39,7 @@ debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.15.203:27017/hookah
+      uri:  mongodb://192.168.15.203:27017/bdgStore
   mvc:
       static-path-pattern: /static/**
   rabbitmq:

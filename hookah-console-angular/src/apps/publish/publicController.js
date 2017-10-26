@@ -18,10 +18,10 @@ class publicController {
                   $scope.contactPhone=item.contactPhone;
                   $scope.title=item.title;
                   $scope.type=item.type;
-                  $scope.tag=item.tag;
+                  $scope.tag=item.tag.split(',');
                   $scope.description=item.description;
                   $scope.deliveryDeadline=item.deliveryDeadline;
-                  var tomorrow = new Date(item.deliveryDeadline);
+                  var tomorrow = new Date();
                   $scope.applyDeadline=new Date(tomorrow.setDate(tomorrow.getDate() + 7));
                   $scope.rewardMoney=item.rewardMoney;
                   $scope.trusteePercent=item.trusteePercent;
@@ -29,14 +29,16 @@ class publicController {
                   $scope.status=item.status;
                   $scope.id=item.id;
                   //进度时间
-                  var mgZbRequireStatus = res.data.data.mgZbRequireStatus;//进度时间
-                  $scope.addTime=mgZbRequireStatus.addTime;//发布需求
-                  $scope.checkTime=mgZbRequireStatus.checkTime;//平台审核
-                  $scope.trusteeTime=mgZbRequireStatus.trusteeTime;//资金托管
-                  $scope.pressTime=mgZbRequireStatus.pressTime;//平台发布
-                  $scope.workingTime=mgZbRequireStatus.workingTime;//服务商工作
-                  $scope.payTime=mgZbRequireStatus.payTime;//验收付款
-                  $scope.commentTime=mgZbRequireStatus.commentTime;//评价
+                  var mgZbRequireStatus = res.data.data.mgZbRequireStatus || null;//进度时间
+                  if(mgZbRequireStatus){
+                      $scope.addTime=mgZbRequireStatus.addTime;//发布需求
+                      $scope.checkTime=mgZbRequireStatus.checkTime;//平台审核
+                      $scope.trusteeTime=mgZbRequireStatus.trusteeTime;//资金托管
+                      $scope.pressTime=mgZbRequireStatus.pressTime;//平台发布
+                      $scope.workingTime=mgZbRequireStatus.workingTime;//服务商工作
+                      $scope.payTime=mgZbRequireStatus.payTime;//验收付款
+                      $scope.commentTime=mgZbRequireStatus.commentTime;//评价
+                  }
                   $scope.readerData(item.deliveryDeadline)
               } else {
 

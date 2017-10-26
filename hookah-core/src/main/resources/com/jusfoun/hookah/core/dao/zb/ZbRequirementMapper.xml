@@ -126,7 +126,7 @@
                 #{item}
             </foreach>
         </if>
-        ORDER BY zr.update_time
+        ORDER BY zr.add_time DESC
     </select>
 
     <select id="selectForDetail" resultType="com.jusfoun.hookah.core.domain.zb.ZbRequirement">
@@ -147,6 +147,6 @@
             u.user_name,u.mobile,o.org_name
         FROM `user` u
         LEFT JOIN organization o ON u.org_id = o.org_id
-        WHERE u.user_id = #{userId};
+        WHERE u.user_id = #{userId}
     </select>
 </mapper>

@@ -115,9 +115,9 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             if(Objects.nonNull(timeType) && !"".equals(timeType) &&
                     Objects.nonNull(pressTime) && !"".equals(pressTime)){
                 if("gtmonth".equals(timeType)){
-                    filters.add(Condition.lt("pressTime",pressTime));
-                } else {
                     filters.add(Condition.le("pressTime",pressTime));
+                } else {
+                    filters.add(Condition.ge("pressTime",pressTime));
                 }
             }
             filters.add(Condition.in("status",new Short[]{5,6}));
@@ -162,7 +162,11 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
             //获取当前用户已报名的需求id集合
             List<Condition> filters = new ArrayList<Condition>();
             if(Objects.nonNull(helper.getApplyStatus()) && !Short.valueOf("-1").equals(helper.getApplyStatus())){
-                filters.add(Condition.eq("status", helper.getApplyStatus()));
+                if(Short.valueOf(ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode().shortValue()).equals(helper.getApplyStatus())){
+                    filters.add(Condition.in("status", new Short[]{7,9}));
+                } else {
+                    filters.add(Condition.eq("status", helper.getApplyStatus()));
+                }
             }
             filters.add(Condition.eq("userId",userId));
             List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyWebsiteService.selectList(filters);
@@ -251,9 +255,10 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
 
         //报名信息
         ZbRequirementApplyVo zbRequirementApplyVo = zbRequireApplyWebsiteService.selectByReqId(reqId) == null ? new ZbRequirementApplyVo() : (ZbRequirementApplyVo) zbRequireApplyWebsiteService.selectByReqId(reqId).getData();
+        zbRequirementApplyVo.setStatus(zbRequirementApplyVo.getStatus().intValue() == ZbContants.ZbRequireMentApplyStatus.DEAL_RENEGE_FAIL.getCode() ? ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode().shortValue() : zbRequirementApplyVo.getStatus());
 
         //时间条信息
-        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
+        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn()) == null ? new MgZbRequireStatus() : mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
 
         //类似任务
         filters.clear();
@@ -329,14 +334,23 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
     private List<ZbRequirementSPVo> copyZbRequirementData(List<ZbRequirement> zbRequirements, String userId) throws Exception{
         List<ZbRequirementSPVo> zbRequirementSPVos = new ArrayList<>();
         for(ZbRequirement zbRequirement : zbRequirements){
+            ZbRequirementSPVo zbRequirementVo = new ZbRequirementSPVo();
             //计算报名截止剩余时间
             Date deadline = zbRequirement.getApplyDeadline();
-            if (deadline != null) zbRequirement.setRemainTime(DateUtil.timeCountDown(deadline));
+            if (deadline != null) {
+                zbRequirement.setRemainTime(DateUtil.timeCountDown(deadline));
+                //计算报名时间是否已截止
+                Long deadLineTimeLong = deadline.getTime();
+                Long currTimeLong = System.currentTimeMillis();
+                if(deadLineTimeLong < currTimeLong){
+                    zbRequirementVo.setIsApplyDeadline(0);
+                }
+            }
+
             Short typeId = zbRequirement.getType();
             ZbType zbType = zbTypeMapper.selectByPrimaryKey(typeId.intValue());
             zbRequirement.setTypeName(zbType == null? "未知类型" : zbType.getTypeName());
             //查看当前用户是否已报名
-            ZbRequirementSPVo zbRequirementVo = new ZbRequirementSPVo();
             BeanUtils.copyProperties(zbRequirement,zbRequirementVo);
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("requirementId",zbRequirement.getId()));
@@ -364,7 +378,7 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
                 for(ZbRequirementApply zbRequirementApply : zbRequirementApplies){
                     Long requirementId = zbRequirementApply.getRequirementId();
                     if(requirementId.equals(zId)){
-                        zbRequirementVo.setOperStatus(zbRequirementApply.getStatus().intValue());
+                        zbRequirementVo.setOperStatus(zbRequirementApply.getStatus().intValue() == ZbContants.ZbRequireMentApplyStatus.DEAL_RENEGE_FAIL.getCode() ? ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode() : zbRequirementApply.getStatus().intValue());
                         break;
                     }
                 }

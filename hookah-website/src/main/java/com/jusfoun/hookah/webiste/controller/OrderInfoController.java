@@ -58,6 +58,12 @@ public class OrderInfoController extends BaseController {
     private RedisOperate redisOperate;
 
 
+    /**
+     * 购物车确定订单信息
+     * @param cartIds
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/order/orderInfo", method = RequestMethod.POST)
     public String orderInfo(String[] cartIds,Model model) {
         try {
@@ -82,6 +88,9 @@ public class OrderInfoController extends BaseController {
             }
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",carts);
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            model.addAttribute("perOrderInfoNum",uuid);
+            redisOperate.set("orderConfirm:"+uuid,"1",0);
             return "/order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
@@ -118,6 +127,9 @@ public class OrderInfoController extends BaseController {
             list.add(vo);
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",list);
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            model.addAttribute("perOrderInfoNum",uuid);
+            redisOperate.set("orderConfirm:"+uuid,"1",0);
             return "/order/orderInfo";
         }catch (Exception e){
             logger.info(e.getMessage());
@@ -411,7 +423,7 @@ public class OrderInfoController extends BaseController {
     }
 
     /**
-     * 订单结算
+     * 生成订单包括购物车生成和直接生成
      * @param orderinfo
      * @param cartIdArray
      * @param goodsId
@@ -421,8 +433,13 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
-    public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,HttpServletRequest request) {
+    public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,
+                              HttpServletRequest request, Model model) {
         try {
+            String perOrderInfoNum = request.getParameter("perOrderInfoNum");
+            if (perOrderInfoNum.isEmpty() || redisOperate.get("orderConfirm:"+perOrderInfoNum) == null){
+                return "/error/confirmOrderError";
+            }
             init(orderinfo);
             if(cartIdArray[0].equals("-1")){
                 orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber);
@@ -440,8 +457,13 @@ public class OrderInfoController extends BaseController {
             session.setAttribute("orderInfo",orderinfo);
             //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
             //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
+            redisOperate.del("orderConfirm:"+perOrderInfoNum);
             return   "redirect:/pay/cash";
-        } catch (Exception e) {
+        }catch (HookahException e){
+            logger.error("生成订单失败", e);
+            model.addAttribute("message",e.getMessage());
+            return "/error/limitedGoodsError";
+        }catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";
         }

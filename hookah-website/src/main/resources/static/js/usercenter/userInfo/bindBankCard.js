@@ -28,8 +28,7 @@ $(function () {
     // 表格验证开始
     var regex = {  //手机号验证正则
         mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
-        zip:/^[1-9][0-9]{5}$/,
-        bank: /^\d{16}|\d{19}$/
+        zip:/^[1-9][0-9]{5}$/
     };
     //让当前表单调用validate方法，实现表单验证功能
     $("#form").validate({
@@ -49,15 +48,13 @@ $(function () {
             },
             bank:{
                 required:true,
-                digits:true,
-                rangelength:[16,19]
+                digits:true
             },
             bindName:{
                 required:true,
 
             },
             verificationCode:{
-                /*required:true,*/
                 isVerificationCode:true
             }
         },

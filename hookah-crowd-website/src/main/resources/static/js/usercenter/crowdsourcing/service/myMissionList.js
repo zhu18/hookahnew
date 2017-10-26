@@ -1,8 +1,12 @@
 /**
  * Created by Dajun on 2017-9-19.
  */
+
+
+
 function loadPageData(data) { //渲染页面数据
-  console.log(data)
+  noRealName();//是否实名认证，未实名认证跳转
+  console.log(data);
   data = data.data.list;
   var tempHtml = '\
         <thead>\
@@ -18,9 +22,9 @@ function loadPageData(data) { //渲染页面数据
           </tr>\
           </thead>\
           <tbody>';
-  for (let i = 0; i < data.length; i++) {
-    let tempState = '';
-    let tempEdit = '';
+  for (var i = 0; i < data.length; i++) {
+    var tempState = '';
+    var tempEdit = '';
     switch (data[i].operStatus) {
       case 0:
         tempState = '待评选';
@@ -65,7 +69,7 @@ function loadPageData(data) { //渲染页面数据
             <td><div class="titleLineHeight">' + data[i].title + '</div></td>\
             <td>' + data[i].rewardMoney / 100 + '</td>\
             <td>' + tempState + '</td>\
-            <td>' + data[i].addTime + '</td>\
+            <td>' + data[i].pressTime + '</td>\
             <td>' + data[i].deliveryDeadline + '</td>\
             <td>' + tempEdit + '</td>\
           </tr>'
@@ -78,7 +82,7 @@ function loadPageData(data) { //渲染页面数据
 
 }
 $(document).on('click', '.j_del', function () { //搜索我的发布
-  let tempId=$(this)[0].id;
+  var tempId=$(this)[0].id;
   // searchFn();
   $.confirm('确定删除？', null, function (type) {
     if (type == 'yes') {

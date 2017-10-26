@@ -142,15 +142,15 @@
                             </tr>
                             <tr>
                                 <th>证明材料：</th>
-                                <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                                <td><a  data-ng-repeat="item in item.certPathsList" data-ng-href="{{item.certPath}}" data-ng-bind="item.certName"></a></td>
                             </tr>
                         </table>
                     </div>
                     <div>
                         <div class=" authentication-title">软件著作权</div>
-                        <table class="table" data-ng-repeat="item in projectsExpList">
+                        <table class="table" data-ng-repeat="item in swpList">
                             <tr>
-                                <th>
+                                <th colspan="2">
                                     <span data-ng-bind="item.softWareName"></span>
                                     (首次发表日期：<span data-ng-bind="item.publicTime"></span>)
                                 </th>
@@ -165,7 +165,7 @@
                             </tr>
                             <tr>
                                 <th>证明材料：</th>
-                                <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                                <td><a  data-ng-repeat="item in item.certPathsList" href="{{item.certPath}}" data-ng-bind="item.certName"></a></td>
                             </tr>
                         </table>
                     </div>
@@ -173,11 +173,11 @@
                         <div class=" authentication-title">发明专利</div>
                         <table class="table" data-ng-repeat="item in inPatentsList">
                             <tr>
-                                <th>
+                                <th colspan="2">
                                     <span data-ng-bind="item.patentName"></span>
                                     (申请日期：<span data-ng-bind="item.applyTime"></span>)
                                 </th>
-                                <td><span data-ng-bind="item.patentName"></span></td>
+
                             </tr>
                             <tr>
                                 <th>专利号：</th>
@@ -189,7 +189,7 @@
                             </tr>
                             <tr>
                                 <th>证明材料：</th>
-                                <td><a href="item.certPath" data-ng-repeat="item in item.certPathsList" data-ng-bind="item.certName"></a></td>
+                                <td><a  data-ng-repeat="item in item.certPathsList" href="{{item.certPath}}" data-ng-bind="item.certName"></a></td>
                             </tr>
                         </table>
                     </div>
@@ -197,7 +197,7 @@
                   </div>
               </div>
               <div class="authentication-button">
-                  <button class="btn btn-primary" data-ng-click="auditing()">通过认证</button>
+                  <button class="btn btn-primary" data-ng-click="auditing()" data-ng-show="status=='未认证'">通过认证</button>
                   <button class="btn btn-default" data-ng-click="back()">返回</button>
               </div>
         </div>

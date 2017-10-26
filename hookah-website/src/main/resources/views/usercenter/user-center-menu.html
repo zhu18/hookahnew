@@ -57,6 +57,15 @@
         <ul>
             <li><a href="${host.crowd}/usercenter/demandList"><span class="fa fa-id-card-o margin-right-22"></span>需求大厅</a></li>
             <li><a href="${host.crowd}/usercenter/myMissionList"><span class="fa fa-id-card-o margin-right-22"></span>我的任务</a></li>
+
+            <%if(user.userType == 2){%>
+            <li><a href="${host.crowd}/usercenter/pspAuthentication"><span class="fa fa-id-card-o margin-right-22"></span>服务商认证</a></li>
+            <%}else if(user.userType == 4){%>
+            <li><a href="${host.crowd}/usercenter/epAuthentication"><span class="fa fa-id-card-o margin-right-22"></span>服务商认证</a></li>
+            <%}else{%>
+            <li><a href="${host.crowd}/usercenter/authentication"><span class="fa fa-id-card-o margin-right-22"></span>服务商认证</a></li>
+            <%}%>
+
         </ul>
     </div>
 

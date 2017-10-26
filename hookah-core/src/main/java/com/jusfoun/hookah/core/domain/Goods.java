@@ -319,6 +319,8 @@ public class Goods extends GenericModel {
 
     private Byte isLocal;//是否是本地商品
 
+    private String apiUrl;
+
     public Byte getIsLocal() {
         return isLocal;
     }
@@ -1010,5 +1012,13 @@ public class Goods extends GenericModel {
 
     public void setIsDiscussPrice(Byte isDiscussPrice) {
         this.isDiscussPrice = isDiscussPrice;
+    }
+
+    public String getApiUrl() {
+        return apiUrl;
+    }
+
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
     }
 }

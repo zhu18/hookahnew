@@ -25,7 +25,7 @@ public class ZbServiceProviderRequireVo extends GenericModel {
 
     private ZbCommentVo zbCommentVo;//评价
 
-    private MgZbRequireStatus mgZbRequireStatus;//进度条状态时间
+    private MgZbRequireStatus mgZbRequireStatus = new MgZbRequireStatus();//进度条状态时间
 
     private List<ZbRequirement>  analogyTask;//类似任务
 

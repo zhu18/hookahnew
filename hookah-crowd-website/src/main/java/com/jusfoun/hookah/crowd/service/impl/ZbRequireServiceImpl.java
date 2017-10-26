@@ -191,9 +191,10 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     @Override
     public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline , Long applyId ,Long programId ,String checkAdvice) {
         try {
-            ZbRequirement zbRequirement = new ZbRequirement();
-            zbRequirement.setId(Long.parseLong(id));
-            zbRequirement.setStatus(Short.parseShort(status));
+            ZbRequirement zbRequirement = this.selectById(Long.parseLong(id));
+            if (status!=null){
+                zbRequirement.setStatus(Short.parseShort(status));
+            }
             zbRequirement.setPressTime(new Date());
             if (applyDeadline!=null){
                 zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
@@ -237,10 +238,10 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 }
                 zbProgramService.updateByIdSelective(zbProgram);
                 //平台审核不通过 修改报名表状态为工作中
-                ZbRequirementApply apply = new ZbRequirementApply();
-                apply.setId(zbProgram.getApplyId());
-                apply.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.getCode().shortValue());
-                zbRequireApplyService.updateByIdSelective(apply);
+//                ZbRequirementApply apply = new ZbRequirementApply();
+//                apply.setId(zbProgram.getApplyId());
+//                apply.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.getCode().shortValue());
+//                zbRequireApplyService.updateByIdSelective(apply);
             }
             zbRequirement.setUpdateTime(new Date());
             super.updateByIdSelective(zbRequirement);
@@ -271,6 +272,12 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             for (ZbRequirement requirement : list) {
                 Date deadline = requirement.getApplyDeadline();
                 if (deadline != null) requirement.setRemainTime(DateUtil.timeCountDown(deadline));
+                List<Condition> filters2 = new ArrayList<>();
+                if(requirement.getId() != null){
+                    filters2.add(Condition.eq("requirementId", requirement.getId()));
+                }
+                List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
+                requirement.setCount(zbRequirementApplies.size());
             }
             pagination.setTotalItems(count);
             pagination.setPageSize(helper.getPageSize());
@@ -355,7 +362,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                         list.add(ment.getId());
                     }
                 }
-                filters.add(Condition.notIn("id",list.toArray()));
+                if(list != null && list.size() > 0){
+                    filters.add(Condition.notIn("id",list.toArray()));
+                }
                 zbRequirement = this.selectList(filters);
             }else {
                 //未登录
@@ -375,7 +384,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                     }
                 }
             }
-            return zbRequirement;
+            return zbRequirement != null ? zbRequirement : "";
         } catch (Exception e) {
             logger.error("系统错误",e);
             return "系统错误";
@@ -446,7 +455,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             ZbRequirement zbRequirement = this.selectById(requirementId);
             int i = 0;
             if(zbRequirement != null){
-                zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
+                if (zbRequirement.getTrusteePercent() == 100){
+                    zbRequirement.setStatus(ZbContants.Zb_Require_Status.WORKINGING.code.shortValue());
+                }else {
+                    zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
+                }
                 i = this.updateById(zbRequirement);
             }
             return ReturnData.success(i);

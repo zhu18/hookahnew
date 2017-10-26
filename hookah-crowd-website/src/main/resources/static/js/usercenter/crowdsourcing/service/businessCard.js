@@ -4,7 +4,7 @@
 function loadPageData(data){
     console.log(222222);
     console.log(data.data.list);
-    var list=data.data.list
+    var list=data.data.list;
     if(pagePath==(host.crowd + '/api/getCommentRecord')){//评价
         console.log("评价");
         var html='';
@@ -38,43 +38,68 @@ function loadPageData(data){
                 // }
             });
         })
-    }else {//我购买的数据
+    }else {//交易记录
+        var html='';
+        var status='';
+        var type='';
         for (var i = 0; i < list.length; i++) {
-            html +='<div class="order-list-item grid-left">';
-            html +='<div class="order-list-top clearfix">';
-            html +='<a href="/exchange/details?id=' + list[i].goodsId + '" target="_blank">';
-            html +='<img class="grid-left" src="'+host.static+'/'+list[i].goodsImg+'" alt="">';
-            html +='<div class="order-list-top-info grid-left">';
-            html +='<h4>'+list[i].goodsName+'</h4>';
-            if(list[i].isDiscussPrice==1){
-                html +='<p>价格面议</span></p>';
-
-            }else {
-                var d=Transformation(list[i].goodsPrice,"10000")
-                html +='<p>价格：<span>￥'+d+'</span></p>';
+            var item=list[i];
+            switch (item.status) {
+                case(2):
+                    status = '参与报名';
+                    break;
+                case(7):
+                    status = '驳回失败';
+                    break;
+                case(8):
+                    status = '交易成功';
+                    break;
+                case(9):
+                    status = '违约失败';
+                    break;
             }
-            html +='</div></a></div>';
-            html +='<div class="order-list-down">购买时间: <span class="buy-time">' + list[i].payTime + '</span></div>';
-            html +='</div>';
+
+            switch (item.type) {
+                case(1):
+                    type = '数据采集';
+                    break;
+                case(2):
+                    type = '数据清洗';
+                    break;
+                case(3):
+                    type = '数据分析';
+                    break;
+                case(4):
+                    type = '数据模型';
+                    break;
+                case(5):
+                    type = '数据应用';
+                    break;
+                case(6):
+                    type = '其他类型';
+                    break;
+            }
+
+            html +='<tr> '
+            html +='<td>'+item.title+'</td> '
+            html +='<td>'+type+'</td> '
+            html +='<td>'+(item.rewardMoney/ 100).toFixed(2)+'</td> '
+            html +='<td>'+item.pressTime+'</td> '
+            html +='<td>'+status+'</td> '
+            html +='</tr>';
         }
-        $('.my-order-list-one ').html(html);
+        $('.tab-trade-list ').html(html);
     }
 }
 $(function () {
-    for(var  i=0;i<5;i++){
-        // (function (i) {
-        //     var score=5-i;
 
-        // })(i)
-
-    }
     $('.businessCard-down-header ul li').on('click',function () {
         $(this).addClass('active').siblings().removeClass('active');
         if($(this).attr('data-flag')=='tab-trade'){
             $('.tab-trade').show();
             $('.tab-comment').hide();
-            // pagePath = host.website + '/order/goodsList';
-            // goPage("1");
+            pagePath = host.crowd + '/api/getTradeRecord';
+            goPage("1");
         }else {
             $('.tab-trade').hide();
             $('.tab-comment').show();

@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>需求列表->退款详情</h5></div>
+        </div>
+        <div class="row margin-top form-inline">
+            <div class="col-md-12" style="margin-bottom: 10px;margin-top: 10px">
+                <label class="col-md-4 " style="text-align: right;" for="">姓名：</label>
+                <div class="col-md-8">
+                    <span data-ng-bind="cardOwner"></span>
+                </div>
+            </div>
+            <div class="col-md-12" style="margin-bottom: 10px;">
+                <label for="" class="col-md-4 " style="text-align: right;" >账号：</label>
+                <div class="col-md-8">
+                    <span data-ng-bind="cardCode"></span>
+                </div>
+            </div>
+            <div class="col-md-12" style="margin-bottom: 10px;">
+                <label for="" class="col-md-4 " style="text-align: right;" >时间：</label>
+                <div class="col-md-8">
+                    <p class="input-group">
+                        <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                               ng-paste="$event.preventDefault()" type="text" class="form-control"
+                               uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="addTime"
+                               is-open="popup1.opened" datepicker-options="inlineOptions" close-text="关闭" clear-text="清除"
+                               current-text="今天" readonly="true"/>
+                        <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="open1()">设置日期</button></span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-12" style="margin-bottom: 10px;">
+                <label for="" class="col-md-4 " style="text-align: right;" >金额：</label>
+                <div class="col-md-8">
+                    <input type="text" data-ng-model="money">
+                </div>
+            </div>
+            <div class="col-md-12" style="margin-bottom: 10px;">
+                <label for="" class="col-md-4 " style="text-align: right;" >备注：</label>
+                <div class="col-md-8">
+                    <textarea style=" resize:none;" name="" id="" cols="30" rows="10" data-ng-model="desc"></textarea>
+                </div>
+            </div>
+            <div class="col-md-offset-5">
+                <button class="btn btn-primary" data-ng-click="auditing()">确认</button>
+                <button class="btn btn-default" data-ng-click="back()">返回</button>
+            </div>
+        </div>
+    </div>
+</div>
