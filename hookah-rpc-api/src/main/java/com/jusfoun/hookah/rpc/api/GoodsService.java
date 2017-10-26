@@ -54,4 +54,6 @@ public interface GoodsService extends GenericService<Goods,String> {
     List<Goods> goodsInfoByCatIds(String[] ids);
 
     int updateGoodsInfoByCatIds(String[] ids);
+
+    public void operaChannelGoods(String goodsId);
 }
