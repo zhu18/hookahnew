@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.jusfoun.hookah.console.server.config.MyProps;
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.common.Pagination;
@@ -67,6 +68,9 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
     @Resource
     UserService userService;
+
+    @Resource
+    MyProps myProps;
 
     @Resource
     public void setDao(GoodsMapper goodsMapper) {
@@ -789,7 +793,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     private void warpperApiInfo(ApiWithBLOBs api, MgGoods.ApiInfoBean apiInfoBean){
 
         //接口链接
-        apiInfoBean.setApiUrl(api.getWrapperUrl() == null ? null : PropertiesManager.getInstance().getProperty("api.wrapper.url")+api.getWrapperUrl());
+        apiInfoBean.setApiUrl(api.getWrapperUrl() == null ? null : myProps.getApi().get("wrapperUrl")+api.getWrapperUrl());
         // 请求方式
         apiInfoBean.setApiMethod(api.getMethod() == null ? null : api.getMethod().toString());
         // 返回格式
