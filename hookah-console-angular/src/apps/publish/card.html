@@ -1,10 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>服务商名片</h5></div>
+        </div>
+        <div class="row margin-top card">
+            <div class="col-sm-12 margin-top-10 info">
+                <div class="float-left " style="width: 45%;border: 1px solid #e5e5e5;padding: 10px;">
+                    <div class="float-left ">
+                          <div style="width: 200px;">
+                              zhange weizhi
+                          </div>
+                    </div>
+                    <div class="float-left" >
+                        <div>
+                            <span data-ng-bind="upname"></span>
+                        </div>
+                        <div>
+                            <label for="">所在城市：</label>
+                            <span data-ng-bind="ucity"></span>
+                        </div>
+                        <div>
+                            <label for="">擅长领域：</label>
+                            <p>
+                                <span data-ng-repeat="item in specialSkills" data-ng-bind="item"></span>
+                            </p>
+
+                        </div>
+                        <div data-ng-show="authType==1">
+                            <label for="">个人自评：</label>
+                            <span data-ng-bind="providerDesc"></span>
+                        </div>
+                        <div data-ng-show="authType==1">
+                            <label for="">最后学历：</label>
+                            <span data-ng-bind="upname"></span>
+                        </div>
+                        <div data-ng-show="authType==2">
+                            <label for="">个人自评：</label>
+                            <span data-ng-bind="providerDesc"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="float-right" style="width: 45%;border: 1px solid #e5e5e5;">
+                    <div style="padding: 5px;background-color: #e5e5e5;">
+                        用户评价
+                    </div>
+                    <div data-ng-repeat="item in level" style="padding: 10px">
+                        <span uib-rating ng-model="item.commentLevel" max="5" read-only="true" aria-labelledby="default-rating"></span>
+                        <p></p>
+                        (<span data-ng-bind="item.commentNum"></span>)
+                    </div>
+                    <div style="text-align: center">
+                        <a href="javascript:void (0)">来自 <span></span>个客服积累评价 <span></span>次></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-12 margin-top-10 tab-box">
+                <uib-tabset active="active">
+                    <uib-tab index="0" heading="交易记录">
+                        <div class="tab-info" >
+                            <table class="table" >
+                                <thead>
+                                <tr>
+                                    <th>需求标题</th>
+                                    <th>需求类型</th>
+                                    <th>悬赏金额（元）</th>
+                                    <th>交易状态</th>
+                                    <th>交易日期</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="item in tradeRecord">
+                                    <td>
+                                        <span data-ng-bind="item.title" ></span>
+                                    </td>
+                                    <td>
+                                        <span  data-ng-show="item.type==1">数据采集</span>
+                                        <span  data-ng-show="item.type==2">数据清洗</span>
+                                        <span  data-ng-show="item.type==3">数据分析</span>
+                                        <span  data-ng-show="item.type==4">数据模型</span>
+                                        <span  data-ng-show="item.type==5">数据应用</span>
+                                        <span  data-ng-show="item.type==6">其他类型</span>
+                                    </td>
+                                    <td>
+                                        <span data-ng-bind="item.rewardMoney / 100 | number:2"></span>
+                                    </td>
+                                    <td>
+                                        <span  data-ng-show="item.status==2">参与报名</span>
+                                        <span  data-ng-show="item.status==7">已被选中</span>
+                                        <span  data-ng-show="item.status==8">驳回失败</span>
+                                        <span  data-ng-show="item.status==9">违约失败</span>
+                                    </td>
+                                    <td>
+                                        <span data-ng-bind="item.pressTime"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="pull-right page-box">
+                                            <div class="pagination-info">
+                                                共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                            </div>
+                                            <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                                ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                                max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                                force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                                last-text="末页">
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="1" heading="客户评价">
+                        <div class="tab-info" >
+                            <table class="table" >
+                                <!--<thead>-->
+                                <!--<tr>-->
+                                    <!--<th>需求标题</th>-->
+                                    <!--<th>需求类型</th>-->
+                                    <!--<th>悬赏金额（元）</th>-->
+                                    <!--<th>交易状态</th>-->
+                                    <!--<th>交易日期</th>-->
+                                <!--</tr>-->
+                                <!--</thead>-->
+                                <tbody>
+                                <tr data-ng-repeat="item in commentRecord">
+                                    <td>
+                                        <span uib-rating ng-model="item.level" max="5" read-only="true" aria-labelledby="default-rating"></span>
+                                    </td>
+                                    <td>
+                                        <span data-ng-bind="item.content"></span>
+                                    </td>
+                                    <td>
+                                        <span data-ng-bind="item.addTime"></span>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" >
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="pull-right page-box">
+                                            <div class="pagination-info">
+                                                共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                            </div>
+                                            <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                                ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                                max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                                force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                                last-text="末页">
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</div>

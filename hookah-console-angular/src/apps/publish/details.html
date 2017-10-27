@@ -181,10 +181,10 @@
                                <tbody>
                                <tr data-ng-repeat="item in zbRequirementApplies">
                                    <td>
-                                       <a data-ng-bind="item.userName" data-ng-model="apply.name" data-ng-click="getCard(item.id)"></a>
+                                       <a data-ng-bind="item.userName" data-ng-model="apply.name" data-ng-click=" getCard(item.userId)"></a>
                                    </td>
                                    <td>
-                                       <span data-ng-bind="item.ucreditValue"></span> 
+                                       <span data-ng-bind="item.ucreditValue"></span>
                                    </td>
                                    <td>
                                        <span data-ng-bind="item.addTime"></span>

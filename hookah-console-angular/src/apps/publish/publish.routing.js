@@ -3,7 +3,7 @@ import publicController from './publicController';
 import auditingController from './auditingController';
 import detailsController from './detailsController'
 import refundController from './refundController'
-// import transactionManageController from './transactionManageController'
+import cardController from './cardController'
 
 publishRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function publishRouting($stateProvider, $urlRouterProvider) {
@@ -44,6 +44,11 @@ export default function publishRouting($stateProvider, $urlRouterProvider) {
       template: require('./refund.html'),
       controller: refundController,
       permission: 'refund'
-
+    })
+    .state('publish.card', {  //待退款页面
+      url: '/publish/card/:id',
+      template: require('./card.html'),
+      controller: cardController,
+      permission: 'card'
     })
 };
