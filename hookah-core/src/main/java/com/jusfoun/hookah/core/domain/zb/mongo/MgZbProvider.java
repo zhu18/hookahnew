@@ -19,7 +19,7 @@ public class MgZbProvider extends GenericModel {
 
     private String ucity;//所在城市
 
-    private Integer ucreditValue;//信誉值
+    private Integer ucreditValue = 60;//信誉值
 
     private List<Evalevel> evalevelList; //用户评价
 

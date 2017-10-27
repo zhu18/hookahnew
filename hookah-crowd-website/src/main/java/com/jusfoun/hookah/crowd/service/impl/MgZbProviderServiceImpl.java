@@ -1,10 +1,6 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.jusfoun.hookah.core.common.Pagination;
-import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
@@ -13,7 +9,6 @@ import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.domain.zb.vo.MgZbProviderVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ProviderQueryVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbCheckVo;
-import com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericMongoServiceImpl;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
@@ -31,6 +26,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -509,6 +505,61 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
     @Override
     public MgZbProvider getAuthInfo() {
         return null;
+    }
+
+    @Override
+    public void setUCreditValueByPJ(String userId, Integer level) {
+
+        try {
+
+            if(!StringUtils.isNotBlank(userId)){
+                logger.error("用户评价信誉参数异常，userID不能为空");
+                return;
+            }
+
+            if(level == null){
+                logger.error("用户评价信誉参数异常，level不能为空");
+                return;
+            }
+
+            MgZbProvider mgZbProvider = mongoTemplate.findById(userId, MgZbProvider.class);
+            if(mgZbProvider == null){
+                logger.error("未查询到用户" + userId + "的服务上认证信息");
+                return;
+            }
+
+            Query query = new Query(Criteria.where("_id").is(userId));
+            Update update = new Update();
+
+            switch (level){
+                case 1:
+                    update.inc("ucreditValue", ZbContants.UCreditValue.C_V_1.code);
+                    break;
+                case 2:
+                    update.inc("ucreditValue", ZbContants.UCreditValue.C_V_2.code);
+                    break;
+                case 3:
+                    update.inc("ucreditValue", ZbContants.UCreditValue.C_V_3.code);
+                    break;
+                case 4:
+                    update.inc("ucreditValue", ZbContants.UCreditValue.C_V_4.code);
+                    break;
+                default:
+                    update.inc("ucreditValue", ZbContants.UCreditValue.C_V_5.code);
+            }
+
+            WriteResult rs =  mongoTemplate.upsert(query, update, MgZbProvider.class);
+            if(rs.getN() == 1){
+
+                logger.info("修改信誉值成功^_^");
+            }else {
+                logger.info("修改信誉值失败^_^");
+            }
+
+        }catch (Exception e){
+            logger.error("用户评价之修改信誉设置异常", e);
+        }
+
     }
 
     public static void main(String[] args) {

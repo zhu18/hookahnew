@@ -321,6 +321,10 @@ public class Goods extends GenericModel {
 
     private String apiUrl;
 
+    private String industry;
+
+    private Byte isUpdate;
+
     public Byte getIsLocal() {
         return isLocal;
     }
@@ -1020,5 +1024,21 @@ public class Goods extends GenericModel {
 
     public void setApiUrl(String apiUrl) {
         this.apiUrl = apiUrl;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    public Byte getIsUpdate() {
+        return isUpdate;
+    }
+
+    public void setIsUpdate(Byte isUpdate) {
+        this.isUpdate = isUpdate;
     }
 }

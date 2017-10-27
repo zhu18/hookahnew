@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -304,6 +305,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             return ReturnData.error("未获取相关信息！");
         }
 
+        //添加状态时间
+        MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbr.getRequireSn());
+
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("correlationId", zbr.getId()));
         filter.add(Condition.eq("type", 0));
@@ -311,6 +315,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         Map<String, Object> map = new HashedMap();
         map.put("zbAnnexes", zbAnnexes);
         map.put("zbRequirement", zbr);
+        map.put("mgZbRequireStatus", mgZbRequireStatus != null ? mgZbRequireStatus : new MgZbRequireStatus());
         returnData.setData(map);
         return returnData;
     }

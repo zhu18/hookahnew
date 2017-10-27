@@ -144,9 +144,8 @@
 
     <select id="selectReleaseInfo" resultType="com.jusfoun.hookah.core.domain.User">
         SELECT
-            u.user_name,u.mobile,o.org_name
+            u.user_name,u.mobile
         FROM `user` u
-        LEFT JOIN organization o ON u.org_id = o.org_id
         WHERE u.user_id = #{userId}
     </select>
 </mapper>

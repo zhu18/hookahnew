@@ -273,13 +273,27 @@
         goodsCheck.check_time,
         org.org_name
         FROM
-        goods_check goodsCheck
+        (SELECT gc.*
+        FROM
+        goods_check gc,
+        (
+        SELECT
+        goods_id,
+        max(check_time) check_time
+        FROM
+        `goods_check`
+        GROUP BY
+        goods_id
+        ) gc1
+        WHERE
+        gc.goods_id = gc1.goods_id
+        AND gc.check_time = gc1.check_time) goodsCheck
         RIGHT JOIN goods goods ON goodsCheck.goods_id = goods.goods_id
         LEFT JOIN user u ON u.user_id = goods.add_user
         LEFT JOIN organization org ON org.org_id = u.org_id
         WHERE
         goods.check_status != 0
-        AND goods.is_delete = 1
+        AND goods.is_delete = 1 AND goods.is_local = 0
         <if test="goodsSn != '' and goodsSn != null">
             AND goods.goods_sn like '%${goodsSn}%'
         </if>
@@ -483,6 +497,9 @@
             <if test="isLocal != null" >
                 is_local,
             </if>
+            <if test="apiUrl != null" >
+                api_url,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="goodsId != null" >
@@ -626,7 +643,9 @@
             <if test="isLocal != null" >
                 #{isLocal,jdbcType=SMALLINT},
             </if>
-
+            <if test="apiUrl != null" >
+                #{apiUrl,jdbcType=SMALLINT},
+            </if>
         </trim>
     </insert>
 

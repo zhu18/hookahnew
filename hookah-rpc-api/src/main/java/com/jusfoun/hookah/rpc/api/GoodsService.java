@@ -61,4 +61,6 @@ public interface GoodsService extends GenericService<Goods,String> {
     int updateGoodsInfoByCatIds(String[] ids);
 
     GoodsVo fetchGoodsApiInfo(String url) throws Exception;
+
+    public void operaChannelGoods(String goodsId);
 }

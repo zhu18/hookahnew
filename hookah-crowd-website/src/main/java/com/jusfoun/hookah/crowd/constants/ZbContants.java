@@ -250,4 +250,30 @@ public class ZbContants {
         }
     }
 
+    /**
+     * 信誉评价体系：
+     *  评价分为5个等级：好评、较好、中评、较差和差评；
+     *  每种评价对应1个分值,具体为:好评+2分,较好+1，中评0，较差-1，差评-2；
+     *  每个用户基础分60分，通过身份认证加10分，手机认证加5分，邮箱认证加5分；由双方互评。
+     */
+    public enum UCreditValue {
+
+        C_V_5(2),
+        C_V_4(1),
+        C_V_3(0),
+        C_V_2(-1),
+        C_V_1(-2),
+        ;
+
+        public Integer code;
+
+        UCreditValue(Integer code) {
+            this.code = code;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+    }
+
 }
