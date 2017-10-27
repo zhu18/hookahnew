@@ -330,14 +330,14 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         Map<String, Object> map = new HashMap<>(6);
         //数据采集
         map.put("dataCollection",applyLastTime(Short.valueOf("1")));
-        //数据加工
+        //数据清洗
         map.put("dataProcess",applyLastTime(Short.valueOf("2")));
         //数据模型
-        map.put("dataModel",applyLastTime(Short.valueOf("3")));
+        map.put("dataModel",applyLastTime(Short.valueOf("4")));
         //数据应用
-        map.put("datApplication",applyLastTime(Short.valueOf("4")));
-        //数据清洗
-        map.put("dataCleansing",applyLastTime(Short.valueOf("5")));
+        map.put("datApplication",applyLastTime(Short.valueOf("5")));
+        //数据分析
+        map.put("dataCleansing",applyLastTime(Short.valueOf("3")));
         //其他
         map.put("otherData",applyLastTime(Short.valueOf("6")));
         return ReturnData.success(map);
