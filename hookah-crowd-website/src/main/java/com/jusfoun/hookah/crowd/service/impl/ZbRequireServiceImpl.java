@@ -465,9 +465,14 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 }else {
                     zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
                 }
+                zbRequirement.setUpdateTime(new Date());
                 i = this.updateById(zbRequirement);
+                if(i > 0){
+                    //添加资格评选时间
+                    mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.SELECTTIME, DateUtil.getSimpleDate(zbRequirement.getUpdateTime()));
+                    return ReturnData.success(i);
+                }
             }
-            return ReturnData.success(i);
         }
         return ReturnData.error("任务报名选中失败！");
     }
