@@ -27,13 +27,13 @@ public class ZbCommentController extends BaseController{
 
     @ResponseBody
     @RequestMapping("/api/levelCount")
-    public ReturnData getLevelCountByUserId(){
+    public ReturnData getLevelCountByUserId(String userId){
 
         List<ZbCommentShowVo> list = null;
 
         try {
-            list = zbCommentService.getLevelCountByUserId(getCurrentUser().getUserId());
-        } catch (HookahException e) {
+            list = zbCommentService.getLevelCountByUserId(userId);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -48,7 +48,7 @@ public class ZbCommentController extends BaseController{
      */
     @ResponseBody
     @RequestMapping("/api/getCommentRecord")
-    public ReturnData getCommentRecord(String currentPage, String pageSize){
+    public ReturnData getCommentRecord(String currentPage, String pageSize, String userId){
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -68,7 +68,7 @@ public class ZbCommentController extends BaseController{
             }
 
             PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
-            List<ZbComment> list = zbCommentService.getCommentRecordByUserId(getCurrentUser().getUserId());
+            List<ZbComment> list = zbCommentService.getCommentRecordByUserId(userId);
 
             page = new PageInfo<ZbComment>(list);
 
@@ -80,7 +80,7 @@ public class ZbCommentController extends BaseController{
             returnData.setData(pagination);
 
 
-        } catch (HookahException e) {
+        } catch (Exception e) {
             logger.error("评价检索异常{}", e);
             returnData.setCode(ExceptionConst.Error);
             return returnData;
@@ -97,7 +97,7 @@ public class ZbCommentController extends BaseController{
      */
     @ResponseBody
     @RequestMapping("/api/getTradeRecord")
-    public ReturnData getTradeRecord(String currentPage, String pageSize){
+    public ReturnData getTradeRecord(String currentPage, String pageSize, String userId){
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -117,7 +117,7 @@ public class ZbCommentController extends BaseController{
             }
 
             PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
-            List<ZbTradeRecord> list = zbCommentService.getTradeRecordByUserId(getCurrentUser().getUserId());
+            List<ZbTradeRecord> list = zbCommentService.getTradeRecordByUserId(userId);
             page = new PageInfo<ZbTradeRecord>(list);
 
             pagination.setTotalItems(page.getTotal());
@@ -128,7 +128,7 @@ public class ZbCommentController extends BaseController{
             returnData.setData(pagination);
 
 
-        } catch (HookahException e) {
+        } catch (Exception e) {
             logger.error("评价检索异常{}", e);
             returnData.setCode(ExceptionConst.Error);
             return returnData;
