@@ -58,7 +58,11 @@ public class ZbRecommendServiceImpl extends GenericServiceImpl<ZbRecommend, Long
                     }
                 }
                 Object[] objects = list.toArray();
-                zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfo(objects);
+                if(objects != null ){
+                    zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfo(objects);
+                }else {
+                    zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfoNo();
+                }
             }else {
                 //未登录
                 zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfoNo();
