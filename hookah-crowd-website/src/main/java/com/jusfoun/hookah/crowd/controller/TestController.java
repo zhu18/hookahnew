@@ -72,8 +72,9 @@ public class TestController {
      * @param level   评分级别 1 2 3 4 5
      */
     @RequestMapping("/testCreditV")
-    public void testCreditV(String userId, Integer level){
+    public String testCreditV(String userId, Integer level){
         mgZbProviderService.setUCreditValueByPJ(userId, level);
+        return null;
     }
 
 }

@@ -21,6 +21,11 @@ public class ZbContants {
     public static final String SELECTTIME = "selectTime";
     //服务商对需求方评价时间
     public static final String REQUIRECOMMENTTIME = "requireCommentTime";
+    //待退款
+    public static final String TOBEREFUNDEDTIME = "toBeRefundedTime";
+
+    // 交易取消时间
+    public static final String CANCELTIME = "cancelTime";
 
     /**
      * 需求周期状态
