@@ -116,7 +116,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
                 filters.add(Condition.eq("correlationId",zbProgram.getId()));
                 filters.add(Condition.eq("type",ZbContants.ZB_ANNEX_TYPE_PROGRAM));
                 List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filters);
-                zbProgramVo.setZbAnnexes(zbAnnexes);
+                zbProgramVo.setAnnex(zbAnnexes);
                 returnData.setData(zbProgramVo);
                 logger.info("@查询方案[id:" + zbProgram.getId() + "]" + zbProgramVo.getTitle() + "成功@");
             } else {
@@ -238,7 +238,7 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             }
 
             //添加附件
-            List<ZbAnnex> zbAnnexes = zbProgramVo.getZbAnnexes();
+            List<ZbAnnex> zbAnnexes = zbProgramVo.getAnnex();
             if(Objects.nonNull(zbAnnexes) && zbAnnexes.size() > 0){
                 for(ZbAnnex zbAnnex : zbAnnexes){
                     zbAnnex.setAddTime(new Date());

@@ -24,6 +24,9 @@ public class ZbContants {
     //待退款
     public static final String TOBEREFUNDEDTIME = "toBeRefundedTime";
 
+    // 交易取消时间
+    public static final String CANCELTIME = "cancelTime";
+
     /**
      * 需求周期状态
      0草稿

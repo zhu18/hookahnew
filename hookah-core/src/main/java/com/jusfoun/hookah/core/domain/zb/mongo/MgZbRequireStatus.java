@@ -49,6 +49,17 @@ public class MgZbRequireStatus extends GenericModel {
     //服务商对需求方评价时间
     private String requireCommentTime;
 
+    // 交易取消时间
+    private String cancelTime;
+
+    public String getCancelTime() {
+        return cancelTime;
+    }
+
+    public void setCancelTime(String cancelTime) {
+        this.cancelTime = cancelTime;
+    }
+
     public String getRequireCommentTime() {
         return requireCommentTime;
     }
