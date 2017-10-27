@@ -22,6 +22,9 @@ public class ZbContants {
     //服务商对需求方评价时间
     public static final String REQUIRECOMMENTTIME = "requireCommentTime";
 
+    // 交易取消时间
+    public static final String CANCELTIME = "cancelTime";
+
     /**
      * 需求周期状态
      0草稿

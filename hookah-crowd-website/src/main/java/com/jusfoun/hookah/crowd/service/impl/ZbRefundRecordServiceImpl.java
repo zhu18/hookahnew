@@ -204,9 +204,16 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                 if(flag == 1){ //标识为流标状态 违约到期  直接改为交易取消
 
                     changeStatus.setStatus(ZbContants.Zb_Require_Status.ZB_CANCEL.getCode().shortValue());
+
+                    mgZbRequireStatusService.
+                            setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.CANCELTIME, DateUtil.getSimpleDate(new Date()));
+
                 }else {
 
                     changeStatus.setStatus(ZbContants.Zb_Require_Status.WAIT_PJ.getCode().shortValue());
+
+                    mgZbRequireStatusService.
+                            setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.PAYTIME, DateUtil.getSimpleDate(new Date()));
                 }
                 int m = zbRequireService.updateByIdSelective(changeStatus);
             }else{
@@ -215,8 +222,6 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
 
             returnData.setMessage("线下转账确认操作完成^_^");
 
-            mgZbRequireStatusService.
-                    setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.PAYTIME, DateUtil.getSimpleDate(new Date()));
 
 
         }catch (Exception e){
