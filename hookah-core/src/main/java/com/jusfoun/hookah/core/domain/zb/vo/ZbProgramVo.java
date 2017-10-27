@@ -10,13 +10,13 @@ import java.util.List;
  */
 public class ZbProgramVo extends ZbProgram {
 
-    private List<ZbAnnex> zbAnnexes;
+    private List<ZbAnnex> annex;
 
-    public List<ZbAnnex> getZbAnnexes() {
-        return zbAnnexes;
+    public List<ZbAnnex> getAnnex() {
+        return annex;
     }
 
-    public void setZbAnnexes(List<ZbAnnex> zbAnnexes) {
-        this.zbAnnexes = zbAnnexes;
+    public void setAnnex(List<ZbAnnex> annex) {
+        this.annex = annex;
     }
 }
