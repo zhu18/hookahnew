@@ -218,7 +218,12 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
                 ZbProgram zbProgram = zbPrograms.get(0);
                 //修改方案
                 zbProgramVo.setId(zbProgram.getId());
-                zbProgramVo.setStatus(ZbContants.Program_Status.DEFAULT.getCode());//修改为默认状态
+                //二次工作中改为 平台审核通过
+                if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.TWO_WORKING.getCode().shortValue())){
+                    zbProgramVo.setStatus(ZbContants.Program_Status.SYSTEM_SUCCESS.getCode());//修改为平台审核通过
+                } else {
+                    zbProgramVo.setStatus(ZbContants.Program_Status.DEFAULT.getCode());//修改为默认状态
+                }
                 zbProgramVo.setUserId(user.getUserId());
                 zbProgramVo.setAddTime(new Date());//添加时间
                 this.updateByIdSelective(zbProgramVo);
