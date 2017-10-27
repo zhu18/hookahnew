@@ -244,7 +244,8 @@ function renderPage(data) {
     $('.j_platevalTime').html(data.mgZbRequireStatus.platevalTime);
     $('.j_requiredAcceptTime').html(data.mgZbRequireStatus.requiredAcceptTime);
     $('.j_payTime').html(data.mgZbRequireStatus.payTime);
-    $('.j_requireCommentTime').html(data.mgZbRequireStatus.requireCommentTime);  }
+    $('.j_requireCommentTime').html(data.mgZbRequireStatus.requireCommentTime);
+  }
 
 }
 
