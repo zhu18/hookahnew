@@ -6,12 +6,14 @@ import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.*;
+import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -48,6 +50,9 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
     ZbCommentService zbCommentService;
 
     @Resource
+    MongoTemplate mongoTemplate;
+
+    @Resource
     public void setDao(ZbRequirementApplyMapper zbRequirementApplyMapper) {
         super.setDao(zbRequirementApplyMapper);
     }
@@ -73,6 +78,13 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         List<Condition> filter = new ArrayList<>();
         for (ZbRequirementApply zbRequirementApply : zbRequirementApplies) {
             User user = userService.selectById(zbRequirementApply.getUserId());
+
+            MgZbProvider mgZbProvider = mongoTemplate.findById(zbRequirementApply.getUserId(), MgZbProvider.class);
+            if(mgZbProvider != null){
+                // 添加报名人的信誉值  dx
+                zbRequirementApply.setUcreditValue(mgZbProvider.getUcreditValue());
+            }
+
             zbRequirementApply.setUserName(user.getUserName());
             zbRequirementApply.setMobile(user.getMobile());
             if (!Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.APPLY_SUCCESS.getCode().shortValue()) && !Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.getCode().shortValue())) {
@@ -92,8 +104,6 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         filter.add(Condition.eq("correlationId", zbRequirement.getId()));
         filter.add(Condition.eq("type", 0));
         List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
-
-
 
         Map<String, Object> map = new HashMap<>();
         map.put("zbRequirement", zbRequirement);
