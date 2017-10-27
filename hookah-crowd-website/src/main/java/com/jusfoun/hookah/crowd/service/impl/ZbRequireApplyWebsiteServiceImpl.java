@@ -52,6 +52,9 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
     private MgZbRequireStatusService mgZbRequireStatusService;
 
     @Resource
+    private ZbRequireApplyWebsiteService zbRequireApplyWebsiteService;
+
+    @Resource
     public void setDao(ZbRequirementApplyMapper zbRequirementApplyMapper) {
         super.setDao(zbRequirementApplyMapper);
     }
@@ -89,6 +92,17 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
                     }
                 }
 
+                //用户是否已报名
+                List<Condition> filters = new ArrayList<>();
+                filters.add(Condition.eq("requirementId" , reqId));
+                filters.add(Condition.eq("userId" , currUserId));
+                List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyWebsiteService.selectList(filters);
+                if(null != zbRequirementApplies && zbRequirementApplies.size() > 0){
+                    returnData.setCode(ExceptionConst.Error);
+                    returnData.setMessage("您已报名");
+                    return returnData;
+                }
+
                 //判断需求的userId和当前用户Id是否相等
                 if(currUserId.equals(zbReqId)){
                     returnData.setCode(ExceptionConst.Error);
@@ -113,7 +127,8 @@ public class ZbRequireApplyWebsiteServiceImpl extends GenericServiceImpl<ZbRequi
             logger.error("@用户报名需求ID为" + zbRequirementApply.getRequirementId() + "的需求失败@");
             e.printStackTrace();
             returnData.setCode(ExceptionConst.Error);
-            returnData.setData(ExceptionConst.get(ExceptionConst.Error));
+            returnData.setMessage(ExceptionConst.get(ExceptionConst.Error));
+            returnData.setData(e.getMessage());
         }
         return returnData;
     }
