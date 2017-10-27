@@ -38,6 +38,8 @@ class publicController {
                       $scope.workingTime=mgZbRequireStatus.workingTime;//服务商工作
                       $scope.payTime=mgZbRequireStatus.payTime;//验收付款
                       $scope.commentTime=mgZbRequireStatus.commentTime;//评价
+                      $scope.cancelTime=mgZbRequireStatus.cancelTime;//交易完成
+                      $scope.toBeRefundedTime =mgZbRequireStatus.toBeRefundedTime ;//待退款
                   }
                   $scope.readerData(item.deliveryDeadline)
               } else {
