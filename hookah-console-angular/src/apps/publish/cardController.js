@@ -9,9 +9,9 @@ class cardController {
             //基本信息
             var promise = $http({
                 method: 'GET',
-                url: $rootScope.site.crowdServer + "/api/auth/providerCard",
+                url: $rootScope.site.crowdServer + "/api/auth/getAuthInfoByUserId",
                 params: {
-                    id: $stateParams.id
+                    userId: $stateParams.id
                 }
             });
             promise.then(function (res, status, config, headers) {
@@ -20,14 +20,14 @@ class cardController {
                 if (res.data.code == '1') {
                     var info= res.data.data;
                     if(info){
-                        $scope.level= res.data.data2;
+
                         $scope.authType  = info.authType;
                         $scope.upname= info.upname;
                         $scope.ucity= info.ucity;
                         $scope.specialSkills= info.specialSkills;
                         $scope.providerDesc= info.providerDesc;
                     }
-
+                    $scope.level= res.data.data2;
                 } else {
                 }
                 $rootScope.loadingState = false;

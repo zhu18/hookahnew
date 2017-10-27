@@ -309,7 +309,14 @@
                             </div>
                         </div>
                         <div class="tab-info" data-ng-show="isZbProgramsShow">
-                            暂无内容
+
+                            <div>
+                                暂无内容
+                            </div>
+                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="status==16 && !isZbRequirementAppliesShow">
+                                <button class="btn btn-primary" data-ng-click="refund(id,userId)">去退款</button>
+                                <button class="btn btn-default">返回</button>
+                            </div>
                         </div>
                     </uib-tab>
                     <uib-tab index="2" heading="任务评价">
