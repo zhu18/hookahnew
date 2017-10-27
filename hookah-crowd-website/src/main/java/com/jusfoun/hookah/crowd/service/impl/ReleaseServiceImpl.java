@@ -462,6 +462,10 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
 
                     }
                     zbRequireService.updateByCondition(zbRequirement,filters1);
+                    if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_TK.code.shortValue())){
+                        //待退款时间
+                        mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.TOBEREFUNDEDTIME, DateUtils.toDefaultNowTime());
+                    }
                 }
             }
             return ReturnData.success("添加验收成果成功！");

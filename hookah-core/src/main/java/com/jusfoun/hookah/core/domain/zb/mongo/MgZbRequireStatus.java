@@ -52,6 +52,9 @@ public class MgZbRequireStatus extends GenericModel {
     // 交易取消时间
     private String cancelTime;
 
+    //待退款时间
+    private String toBeRefundedTime;
+
     public String getCancelTime() {
         return cancelTime;
     }
@@ -180,6 +183,14 @@ public class MgZbRequireStatus extends GenericModel {
         this.requiredAcceptTime = requiredAcceptTime;
     }
 
+    public String getToBeRefundedTime() {
+        return toBeRefundedTime;
+    }
+
+    public void setToBeRefundedTime(String toBeRefundedTime) {
+        this.toBeRefundedTime = toBeRefundedTime;
+    }
+
     @Override
     public String toString() {
         return "MgZbRequireStatus{" +
@@ -197,6 +208,7 @@ public class MgZbRequireStatus extends GenericModel {
                 ", submitTime='" + submitTime + '\'' +
                 ", platevalTime='" + platevalTime + '\'' +
                 ", requiredAcceptTime='" + requiredAcceptTime + '\'' +
+                ", toBeRefundedTime='" + toBeRefundedTime + '\'' +
                 '}';
     }
 }
