@@ -183,7 +183,9 @@
                                    <td>
                                        <a data-ng-bind="item.userName" data-ng-model="apply.name" data-ng-click="getCard(item.id)"></a>
                                    </td>
-                                   <td>88分</td>
+                                   <td>
+                                       <span data-ng-bind="item.ucreditValue"></span> 
+                                   </td>
                                    <td>
                                        <span data-ng-bind="item.addTime"></span>
                                    </td>
