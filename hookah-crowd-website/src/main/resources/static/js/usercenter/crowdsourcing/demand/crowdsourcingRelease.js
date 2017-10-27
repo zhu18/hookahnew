@@ -65,7 +65,6 @@ function crowdsourcingRelease() { //请求草稿
           crowdSourcingId = null;
         }
         renderPage(data.data);
-
       }
     }
   });
