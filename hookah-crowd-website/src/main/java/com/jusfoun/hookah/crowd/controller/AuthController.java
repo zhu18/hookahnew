@@ -170,4 +170,21 @@ public class AuthController extends BaseController {
         }
     }
 
+    /**
+     * 查询认证信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/api/auth/getAuthInfoByUserId")
+    @ResponseBody
+    public ReturnData getAuthInfoByUserId(String userId) {
+
+        try {
+            return mgZbProviderService.getAuthInfoByUserId(userId);
+        } catch (Exception e) {
+            logger.error("认证信息查询失败", e);
+            return ReturnData.error("系统繁忙，请稍后再试！[query]^_^");
+        }
+    }
+
 }

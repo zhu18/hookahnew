@@ -26,7 +26,7 @@ public class ZbRefundRecordController {
     public ReturnData goRefund(
             String userId,
             String requirementId,
-            String refundAmount,
+            Double refundAmount,
             String bankCardNum,
             String desc,
             String payTime,
@@ -40,7 +40,7 @@ public class ZbRefundRecordController {
             ZbRefundRecord zbRefundRecord = new ZbRefundRecord();
             zbRefundRecord.setUserId(userId);
             zbRefundRecord.setRequirementId(Long.parseLong(requirementId));
-            zbRefundRecord.setRefundAmount(Long.parseLong(refundAmount) * 100);
+            zbRefundRecord.setRefundAmount(new Double(refundAmount * 100).longValue());
             zbRefundRecord.setBankCardNum(bankCardNum);
             zbRefundRecord.setDescs(desc);
             zbRefundRecord.setPayTime(payTime);
@@ -63,6 +63,19 @@ public class ZbRefundRecordController {
 
         //根据待退款的用户ID，获取绑定的银行卡信息
         return zbRefundRecordService.selectRefundInfo(userId, requiredmentId);
+    }
+
+
+    public static void main(String[] args){
+
+        double refundAmount = 0;
+
+        Long refundAmount2 = 300l;
+        refundAmount = refundAmount2.doubleValue();
+
+        Object data = (refundAmount == 0) ? refundAmount : (refundAmount / 10000);
+
+        System.out.println(data);
     }
 
 }
