@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -50,7 +52,7 @@ public class TestController {
      * 关于需求状态流程中时间的设置获取
      */
     @RequestMapping("/testMg1")
-    public void testMg1(){
+    public void testMg1(HttpServletRequest request, HttpServletResponse response){
 
         mgZbRequireStatusService.
                 setRequireStatusInfo("zb_01_001", "addTime", "2018-08-08 12:00:00");
@@ -66,6 +68,8 @@ public class TestController {
 
     /**
      * 测试评价信誉分值设置
+     * @param userId  用户主键
+     * @param level   评分级别 1 2 3 4 5
      */
     @RequestMapping("/testCreditV")
     public void testCreditV(String userId, Integer level){
