@@ -143,6 +143,8 @@
         /myseller/** = oauth2Authc
         /usercenter* = oauth2Authc
         /usercenter/** = oauth2Authc
+        /userRecommend/* = oauth2Authc
+        /userRecommend/** = oauth2Authc
         /mybuyer* = oauth2Authc
         /mybuyer/** = oauth2Authc
         /cart* = oauth2Authc
