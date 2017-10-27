@@ -111,6 +111,7 @@ function renderPage(data) {
       domModel.html('已发布');
       missionApplyInfo(data); //任务报名信息显示
       $('.missionApply').html('至报名截止日期： 已报名 '+data.count+'人');
+      $('.missionResult').hide().prev().show();
 
       break;
     case 7: //二次托管
