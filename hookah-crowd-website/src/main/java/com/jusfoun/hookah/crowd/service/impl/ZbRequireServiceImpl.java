@@ -351,6 +351,8 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("type", type));
             filters.add(Condition.in("status", new Short[]{5}));
+            List<OrderBy> orderBys = new ArrayList();
+            orderBys.add(OrderBy.asc("applyDeadline"));
             //从session获取用户信息
             Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
             if (userMap != null) {
@@ -365,10 +367,12 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 if (list != null && list.size() > 0) {
                     filters.add(Condition.notIn("id", list.toArray()));
                 }
-                zbRequirement = this.selectList(filters);
+                zbRequirement = this.selectList(filters, orderBys);
+                //zbRequirement = this.selectList(filters);
             } else {
                 //未登录
-                zbRequirement = this.selectList(filters);
+                zbRequirement = this.selectList(filters, orderBys);
+                //zbRequirement = this.selectList(filters);
             }
             if (zbRequirement != null) {
                 for (ZbRequirement zb : zbRequirement) {

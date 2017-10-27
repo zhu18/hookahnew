@@ -215,6 +215,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
         if (zbRequirement != null) {
             //---------
             if (zbRequirement.getStatus() == 3 ||
+                    zbRequirement.getStatus() == 5 ||
+                    zbRequirement.getStatus() == 6 ||
                     zbRequirement.getStatus() == 7 ||
                     zbRequirement.getStatus() == 8 ||
                     zbRequirement.getStatus() == 9 ||
@@ -245,14 +247,15 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                 filters2.add(Condition.eq("requirementId", zbRequirement.getId()));
             }
             ZbRequirementApply zbRequirementApply = zbRequireApplyService.selectOne(filters2);
-            List<ZbRequirementApply> zbRequirementApplies = null;
+            int count = 0;
             ZbRequirementApply apply = null;
             MgZbProvider user = null;
             if (zbRequirementApply != null) {
                 //计算报名人数
                 List<Condition> filters5 = new ArrayList<>();
                 filters5.add(Condition.eq("requirementId", zbRequirement.getId()));
-                zbRequirementApplies = zbRequireApplyService.selectList(filters5);
+                List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters5);
+                count = zbRequirementApplies.size();
                 //已选中信息
                 List<Condition> filters6 = new ArrayList<>();
                 filters6.add(Condition.eq("requirementId", zbRequirement.getId()));
@@ -283,14 +286,16 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         map.put("zbRequirement", zbRequirement);
                         map.put("zbRequirementFiles", zbAnnexes);
                         break;
+                    case 5:
+                    case 6:
                     case 7: //待二次托管或报名结束
                         map.put("tag", strArray);
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);
                         map.put("zbRequirementFiles", zbAnnexes);
+                        map.put("count", count > 0 ? count : 0);
                         if (zbRequirementApply != null) {
                             //计算报名人数
-                            map.put("count", zbRequirementApplies.size());
                             if (apply != null) {
                                 map.put("zbProgram", "");
                                 map.put("programFiles", "");
@@ -313,7 +318,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         map.put("zbRequirementFiles", zbAnnexes);
                         if (zbRequirementApply != null) {
                             //计算报名人数
-                            map.put("count", zbRequirementApplies.size());
+                            map.put("count", count);
                             if (apply != null) {
                                 //报名时间
                                 map.put("applyTime", df.format(apply.getAddTime()));
@@ -351,9 +356,9 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
                         map.put("managedMoney", managedMoney);
                         map.put("zbRequirement", zbRequirement);
                         map.put("zbRequirementFiles", zbAnnexes);
+                        //计算报名人数
                         if (zbRequirementApply != null) {
-                            //计算报名人数
-                            map.put("count", zbRequirementApplies.size());
+                            map.put("count", count);
                             if (apply != null) {
                                 map.put("applyTime", df.format(apply.getAddTime()));
                                 map.put("user", user != null ? user : "");
