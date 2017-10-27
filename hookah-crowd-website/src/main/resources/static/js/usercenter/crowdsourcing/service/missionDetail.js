@@ -51,6 +51,7 @@ function renderPage(data) {
   $('.j_description').html(insertRequirementsData.zbRequirementSPVo.description);
   $('.j_date').html(insertRequirementsData.zbRequirementSPVo.deliveryDeadline);
   $('.j_money').html('￥ <i>' + insertRequirementsData.zbRequirementSPVo.rewardMoney / 100 + '</i> 元');
+  $('.j_applyDeadline').html(data.zbRequirementSPVo.applyDeadline);
 
   $('.j_checkRemark').html(insertRequirementsData.zbRequirementSPVo.checkRemark);
   let tempTypeHtml = '';
@@ -137,7 +138,7 @@ function renderPage(data) {
       loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo,'false');//有下载按钮的附件列表
 
       switch (data.zbProgramVo.status){
-        case 3:
+        case 1:
           $('.missionStatusResult').html('预评通过，待验收');
           $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
           $('.j_resultStatus').show();
@@ -198,13 +199,17 @@ function renderPage(data) {
       loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo,'false');//有下载按钮的附件列表
 
       $('.missionStatusResult').html('方案不符合需求方要求，驳回交易失败');
-      $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
-      $('.j_resultStatus').show();
+      if(data.zbProgramVo!==null){
+
+        $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
+        $('.j_resultStatus').show();
+      }
 
       break;
     case 8:
       domModel.html('交易完成');
       loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo,'false');//有下载按钮的附件列表
+
 
       $.fn.raty.defaults.path = '/static/images/crowdsourcing';//初始化星星图标位置
 
@@ -221,7 +226,11 @@ function renderPage(data) {
       missionApplyInfo(data); //任务报名信息显示
       break;
    }
-  $('.j_load-file-list').append(loadfileHtml);
+  $('.j_load-file-list').append(loadfileHtml);//需求附件
+  if(insertRequirementsData.zbProgramVo !== null){
+    var programLoadfileHtml=renderLoadFile(insertRequirementsData.zbProgramVo,'false');//有下载按钮的附件列表
+    $('.j_missionResult-load-file-list').append(programLoadfileHtml);
+  }
 
   rewardMoney = insertRequirementsData.zbRequirementSPVo.rewardMoney;
   $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
@@ -291,7 +300,7 @@ $(document).on('click', '.j_submitResult', function () {
         applyId:$('.j_myMissionResult').attr("applyId"),
         requirementId:$('.j_myMissionResult').attr("requirementId"),
         content:$("#resultContent").val(),
-        zbAnnexes:annexList
+        annex:annexList
 
     };
       //TODO：上传成功之后 请求过来的 还是之前的内容
@@ -561,7 +570,6 @@ function missionApplyInfo(data) { //任务报名信息显示
 
   //任务成果内容
   if(data.zbProgramVo !==null){
-    $('.j_applyDeadline').html(data.zbRequirementSPVo.applyDeadline);
     $('.missionTitle').html(data.zbProgramVo.title).attr('acceptanceAdviceId',data.zbProgramVo.id);
     $('.missionResultDes').html(data.zbProgramVo.content);
   }
@@ -628,6 +636,7 @@ function renderLoadFile(loadFileList,noDownloadIco='false') { //渲染附件列�
   if(loadFileList==null){
     return;
   }
+
   let tempHtml = '';
   for (let c = 0; c < loadFileList.length; c++) { //渲染附件
     let NoDownLoadIcoDom='';

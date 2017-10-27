@@ -102,10 +102,16 @@ function renderPage(data) {
      domModel.html('审核未通过');
      break;*/
     case 3:
-
       domModel.html('审核通过<br>待托管赏金');
       $('.detailMoneyBox').show();
       $('.release-first-btnbox div').append('<a id="J_goPay" requirementId="' + insertRequirementsData.zbRequirement.id + '" href="javascript:void(0)">去托管赏金</a>');
+      break;
+    case 5:
+    case 6:
+      domModel.html('已发布');
+      missionApplyInfo(data); //任务报名信息显示
+      $('.missionApply').html('至报名截止日期： 已报名 '+data.count+'人');
+
       break;
     case 7: //二次托管
       domModel.html('报名结束<br>待托管赏金');
@@ -375,6 +381,7 @@ function missionApplyInfo(data) { //任务报名信息显示
     $('.j_companyName').html(data.user.upname);
     $('.j_contentName').html(data.user.upname);
     $('.j_contentPhone').html(data.user.phoneNum);
+    $('.j_ucreditValue').html(data.user.ucreditValue);
   }
   $('.j_SignUpTime').html(data.applyTime);
   //任务成果内容
