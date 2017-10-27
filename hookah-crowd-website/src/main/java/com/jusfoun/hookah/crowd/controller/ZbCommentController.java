@@ -7,13 +7,13 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.zb.ZbComment;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbCommentShowVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord;
-import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.crowd.service.ZbCommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -47,7 +47,7 @@ public class ZbCommentController extends BaseController{
      * @return
      */
     @ResponseBody
-    @RequestMapping("/api/getCommentRecord")
+    @RequestMapping(value = "/api/getCommentRecord", method = RequestMethod.POST)
     public ReturnData getCommentRecord(String currentPage, String pageSize, String userId){
 
         ReturnData returnData = new ReturnData<>();
@@ -96,7 +96,7 @@ public class ZbCommentController extends BaseController{
      * @return
      */
     @ResponseBody
-    @RequestMapping("/api/getTradeRecord")
+    @RequestMapping(value = "/api/getTradeRecord", method = RequestMethod.POST)
     public ReturnData getTradeRecord(String currentPage, String pageSize, String userId){
 
         ReturnData returnData = new ReturnData<>();
