@@ -87,7 +87,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         if (status != null) {
             filter.add(Condition.eq("status", status.equals(Short.parseShort("5")) ? (new Short[]{5, 6}) : status));
         } else {
-            filter.add(Condition.in("status", new Short[]{1, 2, 3, 5, 6, 7, 8, 10, 13, 16, 14, 15 ,19}));
+            filter.add(Condition.in("status", new Short[]{1, 2, 3, 5, 6, 7, 8, 10, 13, 16, 14, 15, 19}));
         }
 
         List<OrderBy> orderBys = new ArrayList<>();
@@ -120,8 +120,8 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 pageSizeNew = Integer.parseInt(pageSize);
             }
 
-            Short[] zbStatus = new Short[]{1, 4, 5, 6,9, 11, 14, 15, 16};
-            if(zbRequirement.getStatus() != null && zbRequirement.getStatus() != -1){
+            Short[] zbStatus = new Short[]{1, 4, 5, 6, 9, 11, 14, 15, 16};
+            if (zbRequirement.getStatus() != null && zbRequirement.getStatus() != -1) {
                 zbStatus = new Short[]{zbRequirement.getStatus()};
             }
 
@@ -130,9 +130,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             List<ZbRequirement> list = zbRequirementMapper.
                     selectListForPageByFilters(zbRequirement.getRequireSn(), zbRequirement.getTitle(), zbStatus);
 
-            for (ZbRequirement zbRequirement1:list){
-                if (zbRequirement1.getStatus()==5&&zbRequirement1.getApplyDeadline()!=null){
-                    if ( zbRequirement1.getApplyDeadline().getTime()<=new Date().getTime()) {
+            for (ZbRequirement zbRequirement1 : list) {
+                if (zbRequirement1.getStatus() == 5 && zbRequirement1.getApplyDeadline() != null) {
+                    if (zbRequirement1.getApplyDeadline().getTime() <= new Date().getTime()) {
                         zbRequirement1.setStatus(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue());
                         zbRequirementMapper.updateByPrimaryKeySelective(zbRequirement1);
                     }
@@ -190,51 +190,51 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline , Long applyId ,Long programId ,String checkAdvice) {
+    public ReturnData<ZbRequirement> updateStatus(String id, String status, String applyDeadline, Long applyId, Long programId, String checkAdvice) {
         try {
             ZbRequirement zbRequirement = this.selectById(Long.parseLong(id));
-            if (status!=null){
+            if (status != null) {
                 zbRequirement.setStatus(Short.parseShort(status));
             }
             zbRequirement.setPressTime(new Date());
-            if (applyDeadline!=null){
+            if (applyDeadline != null) {
                 zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
             }
-            ZbRequirementApply zbRequirementApply= zbRequirementApplyMapper.selectByPrimaryKey(applyId);
-            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue())&& zbRequirementApply.getStatus()!=null){
+            ZbRequirementApply zbRequirementApply = zbRequirementApplyMapper.selectByPrimaryKey(applyId);
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue()) && zbRequirementApply.getStatus() != null) {
                 zbRequirementApply.setId(applyId);
                 zbRequirementApply.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.getCode().shortValue());
-               zbRequireApplyService.updateByIdSelective(zbRequirementApply);
+                zbRequireApplyService.updateByIdSelective(zbRequirementApply);
 
-               //其他未选中用户改为未中标
+                //其他未选中用户改为未中标
                 List<Condition> filters = new ArrayList<>();
-                filters.add(Condition.eq("requirementId",id));
-                filters.add(Condition.ne("userId",zbRequirementApply.getUserId()));
+                filters.add(Condition.eq("requirementId", id));
+                filters.add(Condition.ne("userId", zbRequirementApply.getUserId()));
                 ZbRequirementApply cancelApply = new ZbRequirementApply();
                 cancelApply.setStatus(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.getCode().shortValue());
-                zbRequireApplyService.updateByConditionSelective(cancelApply,filters);
+                zbRequireApplyService.updateByConditionSelective(cancelApply, filters);
             }
             ZbProgram zbProgram = zbProgramMapper.selectByPrimaryKey(programId);
-            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue())&& zbProgram.getStatus()!=null){
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_buyer_YS.getCode().shortValue()) && zbProgram.getStatus() != null) {
                 zbProgram.setId(programId);
                 zbProgram.setStatus(ZbContants.Zb_Require_Status.WAIT_CHECK.getCode().shortValue());
                 //添加平台预评时间
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.PLATEVALTIME, DateUtil.getSimpleDate(zbProgram.getAddTime()));
 
-                if (checkAdvice!=null){
+                if (checkAdvice != null) {
                     zbProgram.setCheckAdvice(checkAdvice);
                 }
-              zbProgramService.updateByIdSelective(zbProgram);
-              //修改报名表状态为验收中（ACCEPTANCE）
+                zbProgramService.updateByIdSelective(zbProgram);
+                //修改报名表状态为验收中（ACCEPTANCE）
                 ZbRequirementApply apply = new ZbRequirementApply();
                 apply.setId(zbProgram.getApplyId());
                 apply.setStatus(ZbContants.ZbRequireMentApplyStatus.ACCEPTANCE.getCode().shortValue());
                 zbRequireApplyService.updateByIdSelective(apply);
             }
-            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_PLAT_YS.getCode().shortValue())&& zbProgram.getStatus()!=null){
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_PLAT_YS.getCode().shortValue()) && zbProgram.getStatus() != null) {
                 zbProgram.setId(programId);
                 zbProgram.setStatus(ZbContants.Zb_Require_Status.CHECK_NOT.getCode().shortValue());
-                if (checkAdvice!=null){
+                if (checkAdvice != null) {
                     zbProgram.setCheckAdvice(checkAdvice);
                 }
                 zbProgramService.updateByIdSelective(zbProgram);
@@ -246,11 +246,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             zbRequirement.setUpdateTime(new Date());
             super.updateByIdSelective(zbRequirement);
-            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue())){
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue())) {
                 //添加资格评选时间
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.SELECTTIME, DateUtil.getSimpleDate(zbRequirement.getUpdateTime()));
             }
-            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.SINGING.getCode().shortValue())){
+            if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.SINGING.getCode().shortValue())) {
                 //添加平台发布时间
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.PRESSTIME, DateUtil.getSimpleDate(zbRequirement.getPressTime()));
             }
@@ -274,7 +274,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                 Date deadline = requirement.getApplyDeadline();
                 if (deadline != null) requirement.setRemainTime(DateUtil.timeCountDown(deadline));
                 List<Condition> filters2 = new ArrayList<>();
-                if(requirement.getId() != null){
+                if (requirement.getId() != null) {
                     filters2.add(Condition.eq("requirementId", requirement.getId()));
                 }
                 List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters2);
@@ -301,7 +301,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         returnData.setCode(ExceptionConst.Success);
 
         ZbRequirement zbr = zbRequirementMapper.selectForDetail(Long.parseLong(id));
-        if(zbr == null){
+        if (zbr == null) {
             return ReturnData.error("未获取相关信息！");
         }
 
@@ -326,59 +326,54 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     }
 
     @Override
-    public ReturnData selectRequirementTypeInfo(){
+    public ReturnData selectRequirementTypeInfo() {
         Map<String, Object> map = new HashMap<>(6);
         //数据采集
-        map.put("dataCollection",applyLastTime(Short.valueOf("1")));
+        map.put("dataCollection", applyLastTime(Short.valueOf("1")));
         //数据清洗
-        map.put("dataProcess",applyLastTime(Short.valueOf("2")));
+        map.put("dataProcess", applyLastTime(Short.valueOf("2")));
         //数据模型
-        map.put("dataModel",applyLastTime(Short.valueOf("4")));
+        map.put("dataModel", applyLastTime(Short.valueOf("4")));
         //数据应用
-        map.put("datApplication",applyLastTime(Short.valueOf("5")));
+        map.put("datApplication", applyLastTime(Short.valueOf("5")));
         //数据分析
-        map.put("dataCleansing",applyLastTime(Short.valueOf("3")));
+        map.put("dataCleansing", applyLastTime(Short.valueOf("3")));
         //其他
-        map.put("otherData",applyLastTime(Short.valueOf("6")));
+        map.put("otherData", applyLastTime(Short.valueOf("6")));
         return ReturnData.success(map);
     }
 
 
     //计算截止报名时间的剩余时间
-    public Object applyLastTime(Short type){
+    public Object applyLastTime(Short type) {
         List<ZbRequirement> zbRequirement = null;
         try {
             List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("type",type));
+            filters.add(Condition.eq("type", type));
             filters.add(Condition.in("status", new Short[]{5}));
             //从session获取用户信息
             Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
-            if(userMap != null){
+            if (userMap != null) {
                 //登录
                 List<Condition> filters1 = new ArrayList<>();
                 filters1.add(Condition.eq("userId", this.getCurrentUser().getUserId()));
                 List<ZbRequirementApply> applies = zbRequireApplyService.selectList(filters1);
-                List list = new ArrayList();
-                for(ZbRequirementApply app : applies){
-                    List<Condition> filters3 = new ArrayList<>();
-                    filters3.add(Condition.eq("id", app.getRequirementId()));
-                    List<ZbRequirement> zbRequirements = this.selectList(filters3);
-                    for(ZbRequirement ment : zbRequirements){
-                        list.add(ment.getId());
-                    }
+                List<Long> list = new ArrayList();
+                for (ZbRequirementApply app : applies) {
+                    list.add(app.getRequirementId());
                 }
-                if(list != null && list.size() > 0){
-                    filters.add(Condition.notIn("id",list.toArray()));
+                if (list != null && list.size() > 0) {
+                    filters.add(Condition.notIn("id", list.toArray()));
                 }
                 zbRequirement = this.selectList(filters);
-            }else {
+            } else {
                 //未登录
                 zbRequirement = this.selectList(filters);
             }
-            if(zbRequirement != null){
-                for(ZbRequirement zb : zbRequirement){
-                    if(zb != null){
-                        if(zb.getApplyDeadline() != null){
+            if (zbRequirement != null) {
+                for (ZbRequirement zb : zbRequirement) {
+                    if (zb != null) {
+                        if (zb.getApplyDeadline() != null) {
                             String time = DateUtil.timeCountDown(zb.getApplyDeadline());
                             zb.setApplyLastTime(time != null ? time : "");
                         }
@@ -391,14 +386,14 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             return zbRequirement != null ? zbRequirement : "";
         } catch (Exception e) {
-            logger.error("系统错误",e);
+            logger.error("系统错误", e);
             return "系统错误";
         }
     }
 
     //服务商管理
     @Override
-    public ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize,  Integer authType ,Integer status ,String upname,String userId, Date startTime, Date endTime) {
+    public ReturnData<MgZbProvider> getAllProvider(String currentPage, String pageSize, Integer authType, Integer status, String upname, String userId, Date startTime, Date endTime) {
 
         PageInfo<MgZbProvider> pageInfo = new PageInfo<>();
         ReturnData returnData = new ReturnData<>();
@@ -414,24 +409,24 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             PageHelper.startPage(pageNumberNew, pageSizeNew);
             List<Condition> filters = new ArrayList();
-            if (authType!=null) {
+            if (authType != null) {
                 filters.add(Condition.eq("authType", authType));
             }
 
-            if (status!=null &&status!=-1) {
+            if (status != null && status != -1) {
                 filters.add(Condition.eq("status", status));
             }
-            if (upname!=null) {
-                filters.add(Condition.like("upname",upname));
+            if (upname != null) {
+                filters.add(Condition.like("upname", upname));
             }
-            if(userId!=null){
-                filters.add(Condition.eq("userId",userId));
+            if (userId != null) {
+                filters.add(Condition.eq("userId", userId));
             }
 
             List<Sort> sorts = new ArrayList<>();
-           sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
+            sorts.add(new Sort(Sort.Direction.DESC, "addTime"));
 
-            Pagination<MgZbProvider> pagination = mgZbProviderService.getListInPageFromMongo(pageNumberNew,pageSizeNew,filters,sorts,startTime,endTime);
+            Pagination<MgZbProvider> pagination = mgZbProviderService.getListInPageFromMongo(pageNumberNew, pageSizeNew, filters, sorts, startTime, endTime);
 
             returnData.setData(pagination);
 
@@ -443,31 +438,31 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         return returnData;
     }
 
-    public ReturnData checkEnroll(Long id, Long requirementId){
-        if(id != null && requirementId != null){
+    public ReturnData checkEnroll(Long id, Long requirementId) {
+        if (id != null && requirementId != null) {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("requirementId", requirementId));
             List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
-            for(ZbRequirementApply zb: zbRequirementApplies){
+            for (ZbRequirementApply zb : zbRequirementApplies) {
                 //zb.setId(zb.getId());
-                if(zb.getId().equals(id)){
+                if (zb.getId().equals(id)) {
                     zb.setStatus(ZbContants.ZbRequireMentApplyStatus.WORKING.code.shortValue());
-                }else {
+                } else {
                     zb.setStatus(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.code.shortValue());
                 }
                 zbRequireApplyService.updateById(zb);
             }
             ZbRequirement zbRequirement = this.selectById(requirementId);
             int i = 0;
-            if(zbRequirement != null){
-                if (zbRequirement.getTrusteePercent() == 100){
+            if (zbRequirement != null) {
+                if (zbRequirement.getTrusteePercent() == 100) {
                     zbRequirement.setStatus(ZbContants.Zb_Require_Status.WORKINGING.code.shortValue());
-                }else {
+                } else {
                     zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_TWO_TG.code.shortValue());
                 }
                 zbRequirement.setUpdateTime(new Date());
                 i = this.updateById(zbRequirement);
-                if(i > 0){
+                if (i > 0) {
                     //添加资格评选时间
                     mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.SELECTTIME, DateUtil.getSimpleDate(zbRequirement.getUpdateTime()));
                     return ReturnData.success(i);
@@ -481,12 +476,12 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     @Override
     public ReturnData<MgZbProvider> provideCheck(String userId, Integer status) {
         try {
-            MgZbProvider mgZbProvider =new MgZbProvider();
+            MgZbProvider mgZbProvider = new MgZbProvider();
             mgZbProvider.setUserId(userId);
             mgZbProvider.setStatus(status);
             mgZbProviderService.updateByIdSelective(mgZbProvider);
             return ReturnData.success("审核成功");
-        }catch (Exception e){
+        } catch (Exception e) {
             return ReturnData.error("审核失败");
         }
     }
