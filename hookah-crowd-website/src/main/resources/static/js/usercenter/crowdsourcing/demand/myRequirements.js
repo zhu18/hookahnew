@@ -36,6 +36,11 @@ function loadPageData(data) { //渲染页面数据
         tempState = '待托管赏金';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">托管资金</a>';
         break;
+      case 5:
+      case 6:
+        tempState = '已发布';
+        tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">查看</a>';
+        break;
       case 7:
         tempState = '待二次托管';
         tempEdit = '<a href="/usercenter/requirementDetail?id=' + data[i].id + '" class="signUp">托管资金</a>';
