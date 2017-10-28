@@ -95,7 +95,8 @@
                     <tr>
                         <th>附件</th>
                         <td colspan="3">
-                            <a data-ng-repeat="item in zbAnnexes" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5" target="_blank"></a>
+                            <a data-ng-repeat="item in zbAnnexes"  data-ng-href="{{item.filePath}}"  class="margin-right-5" target="_blank"><span class="glyphicon glyphicon-save" ></span> <span data-ng-bind="item.fileName" ></span>
+                            </a>
                         </td>
                     </tr>
                     <tr>
