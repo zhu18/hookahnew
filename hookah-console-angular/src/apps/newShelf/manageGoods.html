@@ -1,0 +1,176 @@
+<div class="row" xmlns="http://www.w3.org/1999/html">
+	<div class="col-sm-12">
+		<div class="console-title console-title-border clearfix">
+			<div class="pull-left"><h5>管理货架商品-{{pageTitle}}</h5></div>
+			<div class="pull-right">
+				<button class="btn btn-default" ui-sref="shelf.search">
+					<span class="glyphicon glyphicon-arrow-left"></span> 返回
+				</button>
+			</div>
+		</div>
+		<div class="row margin-top">
+			<div class="col-sm-12">
+				<div class="form-group console-title console-title-border ">
+					<h3>标签类：</h3>
+				</div>
+				<div class="form-group">
+					<table class="table table-hover">
+						<thead>
+						<tr>
+							<th>序号</th>
+							<th>名称</th>
+							<th>描述</th>
+							<th>图片</th>
+							<th>操作</th>
+							<th>备注</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>1</td>
+							<td>身份核验</td>
+							<td>授权核验，安全可靠</td>
+							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
+							<td><a ui-sref="shelf.editTags">修改</a></td>
+							<td>大图标</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>身份核验</td>
+							<td>授权核验，安全可靠</td>
+							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
+							<td><a ui-sref="shelf.editTags">修改</a></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>身份核验</td>
+							<td>授权核验，安全可靠</td>
+							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
+							<td><a ui-sref="shelf.editTags">修改</a></td>
+							<td>大图标</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>身份核验</td>
+							<td>授权核验，安全可靠</td>
+							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
+							<td><a ui-sref="shelf.editTags">修改</a></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>身份核验</td>
+							<td>授权核验，安全可靠</td>
+							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
+							<td><a ui-sref="shelf.editTags">修改</a></td>
+							<td>大图标</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>身份核验</td>
+							<td>授权核验，安全可靠</td>
+							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
+							<td><a ui-sref="shelf.editTags">修改</a></td>
+							<td></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group console-title console-title-border ">
+					<h3>商品类：</h3>
+				</div>
+				<div class="form-group text-center col-sm-6">
+					<label>货架中商品</label>
+					<table class="table table-hover" style="margin-bottom: 57px;">
+						<input type="hidden" name="shelvesId" value="{{shelf.shelvesId}}"/>
+						<thead>
+						<tr>
+							<th width="120" class="text-center">商品名称</th>
+							<th width="180" class="text-center">操作</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr data-ng-if="!loadingState" data-ng-repeat="gid in shelfGids" class="">
+							<td>
+								<span class="column-text" ng-bind="gid.goodsName | limitTo:10"></span>
+							</td>
+							<td class="text-center">
+								<a href="javascript:void(0);" ng-click="delGoods(shelf.shelvesId, gid)">移除商品</a>
+								<span ng-show="shelf.isBackImg == '1'">
+									<span class="text-explode">|</span>
+									<a href="javascript:void(0);" ng-click="addBackImg(shelf, gid)">背景图片</a>
+								</span>
+							</td>
+						</tr>
+						</tbody>
+						<tfoot ng-if="shelfPages.totalItems > 0">
+						<tr>
+							<td colspan="9">
+								<div class="pull-right page-box">
+									<div class="pagination-info">
+										共有{{shelfPages.totalItems}}条，每页显示：{{shelfPages.pageSize}}条
+									</div>
+									<ul uib-pagination ng-change="pageChangedShelf()" total-items="shelfPages.totalItems"
+										ng-model="shelfPages.currentPage" items-per-page="shelfPages.pageSize"
+										max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+										force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+										last-text="末页">
+									</ul>
+								</div>
+							</td>
+						</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="form-group text-center col-sm-6">
+					<label>待添加商品</label>
+					<form id="batchFrom">
+						<table class="table table-hover" style="margin-bottom: 57px;">
+							<thead>
+							<tr>
+								<th width="120" class="text-center">商品名称</th>
+								<th width="180" class="text-center">操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							<input type="hidden" name="shelvesId" value="{{shelf.shelvesId}}"/>
+							<tr data-ng-if="!loadingState" data-ng-repeat="item in allGoods" class="">
+								<td>
+									<input type="hidden" name="goodsId" value="{{item.goodsId}}"/>
+									<span class="column-text" ng-bind="item.goodsName | limitTo:10"></span>
+								</td>
+								<td class="text-center">
+									<a href="javascript:;" ng-click="addGoods(shelf.shelvesId, item)">添加商品</a>
+								</td>
+							</tr>
+							</tbody>
+							<tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo">
+							<tr>
+								<td colspan="9">
+									<div class="pull-right page-box">
+										<a class="btn btn-primary btn-xs text-right" data-ng-click="batchData()">添加本页至货架</a>
+									</div>
+									<div class="pull-right page-box">
+										<div class="pagination-info">
+											共有{{allGoodsPages.totalItems}}条，每页显示：{{allGoodsPages.pageSize}}条
+										</div>
+										<ul uib-pagination ng-change="pageChanged()" total-items="allGoodsPages.totalItems"
+											ng-model="allGoodsPages.currentPage" items-per-page="allGoodsPages.pageSize"
+											max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+											force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+											last-text="末页">
+										</ul>
+									</div>
+								</td>
+							</tr>
+							</tfoot>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

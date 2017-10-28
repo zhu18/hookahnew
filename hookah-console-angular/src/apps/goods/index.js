@@ -63,10 +63,10 @@ app.run(function ($rootScope, $state) {
 					"title": "货架查询",
 					"url": "shelf.search"
 				},
-				{
-					"title": "新增货架",
-					"url": "shelf.add"
-				}
+				// {
+				// 	"title": "新增货架",
+				// 	"url": "shelf.add"
+				// }
 			]
 		},
 		{
