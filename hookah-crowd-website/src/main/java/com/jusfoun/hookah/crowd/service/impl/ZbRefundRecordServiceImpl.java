@@ -170,10 +170,11 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
             if(zbRequirement.getStatus().equals(Short.parseShort("11"))){
                 // 平台付款给
                 zbRefundRecord.setType(ZbContants.PlatPayType.PAY_TO_PROVIDER.getCode());
-            }else{
+            }else if(zbRequirement.getStatus().equals(Short.parseShort("16"))){
 
                 List<Condition> filters = new ArrayList<>();
                 filters.add(Condition.eq("requirementId", zbRefundRecord.getRequirementId()));
+                filters.add(Condition.ne("status", 2));
                 ZbRequirementApply apply = zbRequireApplyService.selectOne(filters);
                 if(apply == null){//未查询到相关需求的报名数据  流标
                     zbRefundRecord.setType(ZbContants.PlatPayType.FAIL_TO_SOLD.getCode());
@@ -193,6 +194,10 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                         return returnData;
                     }
                 }
+            }else {
+                returnData.setCode(ExceptionConst.Error);
+                returnData.setMessage("业务数据有误，请检查^_^");
+                return returnData;
             }
 
             zbRefundRecord.setAddTime(new Date());
@@ -229,8 +234,6 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
             }
 
             returnData.setMessage("线下转账确认操作完成^_^");
-
-
 
         }catch (Exception e){
             logger.error("线下确认付款/确认退款操作异常{}", e);
