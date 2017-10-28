@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.api.goods.storage;
 
+import com.alibaba.fastjson.JSON;
 import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.domain.GoodsStorage;
 import com.jusfoun.hookah.core.domain.mongo.MgGoodsStorage;
@@ -138,14 +139,15 @@ public class GoodsStorageApi extends BaseController {
 
     /**
      * 新增或更新货架详情
-     * @param mgGoodsStorage
+     * @param jsonStr
      * @return
      */
-    @RequestMapping(value = "/upsertDetails", method= RequestMethod.POST)
-    public ReturnData upsertDetails(MgGoodsStorage mgGoodsStorage) {
+    @RequestMapping(value = "/upsertDetails")
+    public ReturnData upsertDetails(String jsonStr) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
+            MgGoodsStorage mgGoodsStorage = JSON.parseObject(jsonStr, MgGoodsStorage.class);
             mgGoodsStorage.setAddUser(getCurrentUser().getUserId());
             mgGoodsStorage.setUpdateTime(DateUtils.toDefaultNowTime());
             mgGoodsStorageService.upsertDetails(mgGoodsStorage);
