@@ -7,54 +7,28 @@ class EditController {
 		}
 
 		$scope.add = function () {
+			$scope.pageData.imgLink=$scope.goodsImgView;
 			var promise = $http({
 				method: 'POST',
-				url: $rootScope.site.apiServer + "/api/shelf/add",
-				data: $("#shelfForm").serialize()
+				url: $rootScope.site.apiServer + "/api/image/add",
+				data: {homeImageVo:JSON.stringify($scope.pageData)},
+				transformRequest: function (obj) {
+					var str = [];
+					for (var p in obj) {
+						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					}
+					return str.join("&");
+				}
 			});
 			promise.then(function (res, status, config, headers) {
 				if (res.data.code == "1") {
-					growl.addSuccessMessage("数据添加完毕。。。");
-					$state.go('shelf.search');
-				}
-			});
-		};
-
-		$scope.update = function () {
-			var promise = $http({
-				method: 'POST',
-				url: $rootScope.site.apiServer + "/api/shelf/update",
-				data: $("#shelfForm").serialize()
-			});
-			promise.then(function (res, status, config, headers) {
-				if (res.data.code == "1") {
-					growl.addSuccessMessage("数据修改完毕。。。");
-					$state.go('shelf.search');
+					alert("数据添加完毕。。。");
+					$state.go('carousel.search');
 				}
 			});
 		};
 
 
-
-		$scope.updateStatus = function (item, flag) {
-			console.log(item.shelvesId, item.shelvesStatus);
-			var promise = $http({
-				method: 'POST',
-				url: $rootScope.site.apiServer + "/api/shelf/updateStatus",
-				params: {shelvesId: item.shelvesId, shelvesStatus: flag}
-			});
-			promise.then(function (res, status, config, headers) {
-				if (res.data.code == 1) {
-					$scope.search();
-				}
-			});
-		};
-
-
-		$scope.updateShelf = function (event, item) {
-			$rootScope.editData = item;
-			$state.go('shelf.update', {data: item});
-		};
 
 		$scope.img_upload = function (files, type, name) {//单次提交图片的函数
 			var fileUrl = $rootScope.site.staticServer + '/upload/img';
