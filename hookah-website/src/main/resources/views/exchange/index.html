@@ -153,8 +153,14 @@ var htmlPart = {
 					var html = '';
 					var html2 = '';
 					for(var j=0;j<data.data.length; j++){
+						if(j+1 == data.data.length){
+							html+='<div><a href="'+data.data[j].imgLink+'" class="imgFloat_'+j+'" style="background:url('+data.data[j].imgLink+') center center no-repeat"></a></div>';
+                        }
 						html+='<div><a href="'+data.data[j].imgLink+'" class="imgFloat_'+j+'" style="background:url('+data.data[j].imgLink+') center center no-repeat"></a></div>';
-                        if(j == 0){
+						if(j == 0){
+							html+='<div><a href="'+data.data[j].imgLink+'" class="imgFloat_'+j+'" style="background:url('+data.data[j].imgLink+') center center no-repeat"></a></div>';
+						}
+						if(j == 0){
 							html2+='<span class="on" index="'+(j+1)+'"></span>';
                         }else{
 							html2+='<span index="'+(j+1)+'"></span>';
