@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.vo.HomeImageVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.rpc.api.HomeImageService;
 import org.springframework.stereotype.Service;
 
@@ -93,5 +94,13 @@ public class HomeImageServiceImpl extends GenericServiceImpl<HomeImage, String> 
             descHomeImage.setImgSort(descImgSort);
             this.updateByIdSelective(descHomeImage);
         }
+    }
+
+    @Override
+    public List<HomeImage> getImageInfoList() {
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList();
+        orderBys.add(OrderBy.asc("imgSort"));
+        return this.selectList(filters, orderBys);
     }
 }

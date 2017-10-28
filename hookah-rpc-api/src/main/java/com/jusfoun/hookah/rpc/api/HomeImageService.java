@@ -8,6 +8,8 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
 
+import java.util.List;
+
 /**
  * @author guoruibing
  */
@@ -18,5 +20,7 @@ public interface HomeImageService extends GenericService<HomeImage,String> {
     int updateSortValByImgId(String imgId);
 
     void sort(String imgId, String flg);
+
+    List<HomeImage> getImageInfoList();
 
 }
