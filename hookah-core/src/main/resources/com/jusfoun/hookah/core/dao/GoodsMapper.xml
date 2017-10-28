@@ -658,7 +658,7 @@
 
     <update id="updateGoodsInfoByCatIds" >
 
-        UPDATE goods SET is_onsale = 2}
+        UPDATE goods SET is_onsale = 2
 
         WHERE   cat_id NOT IN
 
