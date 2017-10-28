@@ -49,11 +49,15 @@ public class ExchangeController extends BaseController{
     @Resource
     MgOrderInfoService mgOrderInfoService;
 
+    @Resource
+    GoodsStorageService goodsStorageService;
+
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
         try {
             model.addAttribute("categoryInfo", categoryService.getCatTree());
-            model.addAttribute("goodsShelvesVoInfo",goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>()));
+            model.addAttribute("goodsStorageInfo", goodsStorageService.getGoodsStorageList());
+//            model.addAttribute("goodsShelvesVoInfo",goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>()));
             return "exchange/index";
         } catch (Exception e) {
             logger.error(e.getMessage());

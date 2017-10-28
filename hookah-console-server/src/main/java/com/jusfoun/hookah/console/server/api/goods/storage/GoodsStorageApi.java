@@ -87,7 +87,7 @@ public class GoodsStorageApi extends BaseController {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("isOpen", 1));
             List<OrderBy> orderBys = new ArrayList();
-            orderBys.add(OrderBy.desc("updateTime"));
+            orderBys.add(OrderBy.desc("stOrder"));
             returnData.setData(goodsStorageService.selectList(filters, orderBys));
         } catch (Exception e) {
             logger.error("查询所有开启货架错误！",e);
@@ -107,7 +107,7 @@ public class GoodsStorageApi extends BaseController {
         returnData.setCode(ExceptionConst.Success);
         try {
             List<OrderBy> orderBys = new ArrayList();
-            orderBys.add(OrderBy.desc("updateTime"));
+            orderBys.add(OrderBy.desc("stOrder"));
             returnData.setData(goodsStorageService.selectList(null, orderBys));
         } catch (Exception e) {
             logger.error("查询所有货架错误！",e);
