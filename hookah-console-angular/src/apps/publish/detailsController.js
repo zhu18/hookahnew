@@ -34,7 +34,11 @@ class detailsController {
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
                     $scope.deliveryDeadline=zbRequirement.deliveryDeadline;
-                    $scope.applyDeadline= new Date(zbRequirement.applyDeadline);
+                    if(!(zbRequirementApplies && zbRequirementApplies.length>0)&& status==6){
+                        $scope.applyDeadline= new Date(zbRequirement.applyDeadline);
+                    }else {
+                        $scope.applyDeadline= zbRequirement.applyDeadline;
+                    }
                     $scope.rewardMoney=zbRequirement.rewardMoney;
                     $scope.trusteePercent=zbRequirement.trusteePercent;
                     $scope.checkRemark=zbRequirement.checkRemark;
