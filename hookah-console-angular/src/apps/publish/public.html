@@ -71,7 +71,7 @@
                         </td>
                         <th>需求标签</th>
                         <td>
-                            <div data-ng-if="tag !=null ">
+                            <div data-ng-if="tag">
                                 <span class="label label-primary" style="margin-right: 5px" data-ng-repeat="item in tag" data-ng-bind="item"></span>
                             </div>
                         </td>
@@ -95,7 +95,8 @@
                     <tr>
                         <th>附件</th>
                         <td colspan="3">
-                            <a data-ng-repeat="item in zbAnnexes" data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"></a>
+                            <a data-ng-repeat="item in zbAnnexes"  data-ng-href="{{item.filePath}}"  class="margin-right-5" target="_blank"><span class="glyphicon glyphicon-save" ></span> <span data-ng-bind="item.fileName" ></span>
+                            </a>
                         </td>
                     </tr>
                     <tr>

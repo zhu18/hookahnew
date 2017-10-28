@@ -30,11 +30,15 @@ class detailsController {
                     $scope.contactName=zbRequirement.contactName;
                     $scope.contactPhone=zbRequirement.contactPhone;
                     $scope.title=zbRequirement.title;
-                    $scope.tag=zbRequirement.tag.split(',');
+                    $scope.tag=zbRequirement.tag?zbRequirement.tag.split(','):null;
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
                     $scope.deliveryDeadline=zbRequirement.deliveryDeadline;
-                    $scope.applyDeadline= new Date(zbRequirement.applyDeadline);
+                    if(!(zbRequirementApplies && zbRequirementApplies.length>0)&& status==6){
+                        $scope.applyDeadline= new Date(zbRequirement.applyDeadline);
+                    }else {
+                        $scope.applyDeadline= zbRequirement.applyDeadline;
+                    }
                     $scope.rewardMoney=zbRequirement.rewardMoney;
                     $scope.trusteePercent=zbRequirement.trusteePercent;
                     $scope.checkRemark=zbRequirement.checkRemark;

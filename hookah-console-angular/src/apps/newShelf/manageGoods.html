@@ -1,3 +1,197 @@
+<style>
+	.goodsImg-box {
+		width: 100px;
+		height: 100px;
+		border: 1px solid #ccc;
+		position: relative;
+		overflow: hidden;
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.goodsImg-box .fileBtn {
+		font-size: 100px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 10;
+		opacity: 0;
+		cursor: pointer;
+	}
+	.goodsImg-box .fileBg {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 8;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		line-height: 100px;
+		color: #fff;
+		background: rgba(0, 0, 0, 0.7);
+	}
+	.goodsImg-box .fileImg {
+		text-align: center;
+		vertical-align: middle;
+		max-width: 100%;
+		max-height: 100%;
+
+	}
+	.goodsImg-box .fileAdd {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 7;
+		width: 100px;
+		height: 100px;
+		text-align: center;
+		line-height: 100px;
+		font-size: 31px;
+
+	}
+	.goodsImg-box:hover .fileBg {
+		display: block;
+	}
+	.uploadFiles {
+		position: relative;
+		display: inline-block;
+		background: #D0EEFF;
+		/*border: 1px solid #99D3F5;*/
+		border-radius: 4px;
+		padding: 0 10px;
+		overflow: hidden;
+		color: #1E88C7;
+		text-decoration: none;
+		text-indent: 0;
+		line-height: 32px;
+		height: 32px;
+		margin-left: 10px;
+	}
+	.uploadFiles input {
+		position: absolute;
+		font-size: 100px;
+		right: 0;
+		top: 0;
+		height: 33px;
+		filter: alpha(opacity=0); /* IE */
+		-moz-opacity: 0; /* 老版Mozilla */
+		-khtml-opacity: 0; /* 老版Safari */
+		opacity: 0; /* 支持opacity的浏览器*/
+	}
+	.uploadFiles:hover {
+		background: #AADFFD;
+		border-color: #78C3F3;
+		color: #004974;
+		text-decoration: none;
+	}
+	.modelWindow {
+		position: absolute;
+		top: 0;
+		left: 0px;
+		z-index: 20;
+		background: #fff;
+		border: 1px solid #ccc;
+		box-shadow: 1px 1px 10px #ccc;
+		width: 100%;
+		height: 100%;
+	}
+	.tags-list {
+		float: left;
+		border: 1px solid #ccc;
+		padding: 5px 10px;
+		margin-right: 5px;
+	}
+	.tags-list i {
+		margin-left: 10px;
+		font-size: 16px;
+		cursor: pointer;
+		color: #ccc;
+	}
+	.tags-list i:hover {
+		color: #6b6b6b;
+	}
+	.add-tags {
+		float: left;
+		padding: 5px 10px;
+		border: 1px solid #ccc;
+		font-size: 16px;
+		cursor: pointer;
+	}
+	.tags-box {
+		width: 800px;
+		top: 0;
+		position: absolute;
+		z-index: 99;
+		border: 2px solid #ccc;
+		background: #fff;
+		box-shadow: 0px 1px 5px #ccc;
+	}
+	.tags-box .box-title {
+		font-size: 18px;
+		padding: 0px 10px 10px;
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 0;
+	}
+	.tags-box .close-tag-btn {
+		float: right;
+		font-size: 16px;
+		margin-top: 4px;
+		cursor: pointer;
+	}
+	.tags-box table tr {
+		border-bottom: 1px solid #ccc;
+	}
+	.tags-box table tr label {
+		margin-right: 15px;
+	}
+	/*.tags-box table tr label input {*/
+	/*margin-right: 5px;*/
+	/*}*/
+	.checkTags {
+		padding: 20px 0;
+		text-align: center;
+	}
+	.checkTags .checkTags—btn {
+		margin: 0 20px;
+		padding: 10px 30px;
+		background: #0b7cc3;
+		color: #fff;
+		border-radius: 3px;
+		cursor: pointer;
+		font-size: 14px;
+	}
+	.checkTags .checkTags—btn:hover {
+		background: #1A61A8;
+	}
+	.apiNewUrl-btn {
+		display: inline-block;
+		padding: 2px 20px;
+	}
+	.labelBox {
+		border-bottom: 1px solid #ccc;
+		padding: 10px 5px 5px;
+		overflow: hidden;
+	}
+	.labelBox .labelBox_l {
+		display: block;
+		width: 60px;
+		text-align: center;
+		float: left;
+		height: 100%;
+		line-height: 2em;
+		font-size: 14px;
+
+	}
+	.labelBox .labelBox_r {
+		display: block;
+		float: right;
+		width: 700px;
+		border-left: 1px solid #ccc;
+	}
+	.labelBox .labelBox_r label {
+		margin: 5px 10px;
+	}
+</style>
 <div class="row" xmlns="http://www.w3.org/1999/html">
 	<div class="col-sm-12">
 		<div class="console-title console-title-border clearfix">
@@ -26,53 +220,18 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td>1</td>
-							<td>身份核验</td>
-							<td>授权核验，安全可靠</td>
-							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
-							<td><a ui-sref="shelf.editTags">修改</a></td>
-							<td>大图标</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>身份核验</td>
-							<td>授权核验，安全可靠</td>
-							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
-							<td><a ui-sref="shelf.editTags">修改</a></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>身份核验</td>
-							<td>授权核验，安全可靠</td>
-							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
-							<td><a ui-sref="shelf.editTags">修改</a></td>
-							<td>大图标</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>身份核验</td>
-							<td>授权核验，安全可靠</td>
-							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
-							<td><a ui-sref="shelf.editTags">修改</a></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>身份核验</td>
-							<td>授权核验，安全可靠</td>
-							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
-							<td><a ui-sref="shelf.editTags">修改</a></td>
-							<td>大图标</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>身份核验</td>
-							<td>授权核验，安全可靠</td>
-							<td><img style="max-width:100px;" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=27ac483e40a7d933bfa8e3759570b62e/5882b2b7d0a20cf419b28cf574094b36acaf99fd.jpg" alt=""></td>
-							<td><a ui-sref="shelf.editTags">修改</a></td>
-							<td></td>
+						<tr ng-repeat="item in pageData.typeList">
+							<td><span class="column-text" ng-bind="item.typeId"></span></td>
+							<td><span class="column-text" ng-bind="item.typeName"></span></td>
+							<td><span class="column-text" ng-bind="item.describle"></span></td>
+							<td><img style="width:50px;" ng-src="{{item.img}}"></td>
+							<!--<td ng-if="item.typeName"><a ui-sref="shelf.editTags">修改</a></td>-->
+							<!--<td ng-if="!item.typeName"><a ui-sref="shelf.editTags">添加</a></td>-->
+							<td><a href="javascript:void(0)" ng-click="editTags(item)">编辑</a></td>
+							<td>
+								<span ng-if="item.typeId == '1'?true:false;">大图标</span>
+								<span ng-if="item.typeId == '4'?true:false;">大图标</span>
+							</td>
 						</tr>
 						</tbody>
 					</table>
@@ -170,6 +329,77 @@
 						</table>
 					</form>
 				</div>
+			</div>
+			<div class="modelWindow" ng-show="editTagBox">
+				<form class="form-horizontal" style="margin-top:100px;" role="form" name="label">
+					<fieldset>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">名称：</label>
+							<div class="col-sm-5">
+								<input type="text" class="form-control" name="typeName" ng-model="tagsItem.typeName"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">描述：</label>
+							<div class="col-sm-5">
+								<input type="text" class="form-control" name="describle" ng-model="tagsItem.describle"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">标签：</label>
+							<div class="col-sm-5">
+								<div style="width: 100%;overflow: hidden">
+									<span class="tags-val">
+										<span class="tags-list" ng-repeat="list in labelSelected" labid="{{list.id}}" labname="{{list.name}}">{{list.name}}<i ng-click="removeLabel($event.target)">×</i></span>
+									</span>
+									<span class="add-tags" ng-click="selectLabel()">+</span>
+									<input type="text" class="form-control" name="keywords" style="width:10px;opacity: 0;" ng-model="label.keywords" placeholder="商品标签" required/>
+								</div>
+								<div class="tags-box" ng-show="labelBox">
+									<h3 class="box-title">选择标签信息<span class="close-tag-btn fa fa-times"></span></h3>
+									<div class="labelBox" ng-repeat="item in labelAll">
+										<span class="labelBox_l" data-ng-bind="item.type"></span>
+										<span class="labelBox_r">
+											<label ng-repeat="list in item.goodsLabels">
+												<input type="checkbox" name="tagsCheck" checked ng-if="list.isChecked" value="{{list.labId}}" tagname="{{list.labName}}">
+												<input type="checkbox" name="tagsCheck" ng-if="!list.isChecked" value="{{list.labId}}" tagname="{{list.labName}}">
+												{{list.labName}}
+											</label>
+										</span>
+									</div>
+									<p class="tags-tip" style="padding-left: 20px;">ps:最少选择1个标签</p>
+									<div class="checkTags">
+										<span class="checkTags—btn checkTags-confirmBtn" ng-click="selectLabelBtn()">确定</span>
+										<span class="checkTags—btn checkTags-cancelBtn" ng-click="labelBox = false">取消</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">图片：</label>
+							<div class="col-sm-5">
+								<div class="goodsImg-box">
+									<input class="fileBtn" type="file" id="one-input" name="filename" accept="image/*" max-size="2MB" file-model="images" onchange="angular.element(this).scope().img_upload(this.files)"/>
+									<img class="fileImg" ng-src="{{goodsImgView}}" alt="">
+									<span class="fileAdd" ng-if="!goodsImgView">+</span>
+									<span class="fileBg" ng-if="goodsImgView">点击替换</span>
+									<input type="text" style="opacity: 0;width:5px;position: absolute;top: 0; z-index:4;" name="img" ng-model="goodsImgView" required>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2"></div>
+							<div class="col-sm-5">
+								<button class="btn btn-primary" data-ng-click="addTagsItem()" ng-disabled="label.$invalid">
+									确定
+								</button>
+								<button class="btn btn-primary" data-ng-click="editTagBox = fasle">
+									取消
+								</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
 			</div>
 		</div>
 	</div>
