@@ -7,6 +7,8 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.rpc.api.GoodsStorageService;
+import com.jusfoun.hookah.rpc.api.MgGoodsStorageService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,6 +26,9 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
     private GoodsStorageMapper goodsStorageMapper;
 
     @Resource
+    private MgGoodsStorageService mgGoodsStorageService;
+
+    @Resource
     public void setDao(GoodsStorageMapper goodsStorageMapper) {
         super.setDao(goodsStorageMapper);
     }
@@ -34,18 +39,24 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
 
     @Override
     public List<GoodsStorageVo> getGoodsStorageList() {
+        List<GoodsStorageVo> vos = new ArrayList<>();
         //查询货架列表
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("isOpen", 1));
         List<OrderBy> orderBys = new ArrayList<>();
         orderBys.add(OrderBy.asc("stOrder"));
         List<GoodsStorage> list = super.selectList(filters, orderBys);
-        //查询mongo里货架配置信息
+        //查询mongo里货架配置信息，并拼装数据
         if(list != null && list.size() > 0) {
-
+            for (GoodsStorage goodsStorage : list) {
+                GoodsStorageVo vo = new GoodsStorageVo();
+                BeanUtils.copyProperties(goodsStorage, vo);
+                vo.setMgGoodsStorageVo(mgGoodsStorageService.findDetail(goodsStorage.getId()));
+                vos.add(vo);
+            }
         }
-        //拼装数据
-        return null;
+
+        return vos;
     }
 
 }
