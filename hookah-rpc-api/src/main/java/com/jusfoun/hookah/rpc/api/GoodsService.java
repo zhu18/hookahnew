@@ -63,4 +63,11 @@ public interface GoodsService extends GenericService<Goods,String> {
     GoodsVo fetchGoodsApiInfo(String url) throws Exception;
 
     public void operaChannelGoods(String goodsId);
+
+    /**
+     * 查询多个商品详情
+     * @param goodsIds
+     * @return
+     */
+    List<Goods> findGoodsByIds(String[] goodsIds);
 }

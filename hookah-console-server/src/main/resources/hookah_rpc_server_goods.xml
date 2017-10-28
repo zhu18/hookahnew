@@ -29,6 +29,9 @@
     <bean id="channelService" class="com.jusfoun.hookah.console.server.service.impl.ChannelServiceImpl"/>
     <!-- 商品标签 -->
     <bean id="goodsLabelService" class="com.jusfoun.hookah.console.server.service.impl.GoodsLabelServiceImpl"/>
+    <!-- 新货架管理 -->
+    <bean id="goodsStorageService" class="com.jusfoun.hookah.console.server.service.impl.GoodsStorageServiceImpl"/>
+    <bean id="mgGoodsStorageService" class="com.jusfoun.hookah.console.server.service.impl.MgGoodsStorageServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.GoodsService"
@@ -66,5 +69,11 @@
     </motan:service>
     <motan:service interface="com.jusfoun.hookah.rpc.api.GoodsLabelService"
                    ref="goodsLabelService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.GoodsStorageService"
+                   ref="goodsStorageService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.MgGoodsStorageService"
+                   ref="mgGoodsStorageService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>
