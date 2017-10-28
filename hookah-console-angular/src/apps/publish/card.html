@@ -6,11 +6,11 @@
         <div class="row margin-top card">
             <div class="col-sm-12 margin-top-10 info">
                 <div class="float-left " style="width: 45%;border: 1px solid #e5e5e5;padding: 10px;">
-                    <div class="float-left ">
-                          <div style="width: 200px;">
-                              zhange weizhi
-                          </div>
-                    </div>
+                    <!--<div class="float-left ">-->
+                          <!--<div style="width: 200px;">-->
+                              <!--zhange weizhi-->
+                          <!--</div>-->
+                    <!--</div>-->
                     <div class="float-left" >
                         <div>
                             <span data-ng-bind="upname"></span>
@@ -21,9 +21,9 @@
                         </div>
                         <div>
                             <label for="">擅长领域：</label>
-                            <p>
-                                <span data-ng-repeat="item in specialSkills" data-ng-bind="item"></span>
-                            </p>
+                            <div style="display: inline-block;">
+                                <span style="margin-right: 5px" data-ng-repeat="item in specialSkills" data-ng-bind="item"></span>
+                            </div>
 
                         </div>
                         <div data-ng-show="authType==1">
@@ -45,12 +45,14 @@
                     <div style="padding: 5px;background-color: #e5e5e5;">
                         用户评价
                     </div>
-                    <div data-ng-repeat="item in level" style="padding: 10px">
-                        <span uib-rating ng-model="item.commentLevel" max="5" read-only="true" aria-labelledby="default-rating"></span>
-                        <p></p>
-                        (<span data-ng-bind="item.commentNum"></span>)
+                    <div style="padding: 20px 110px;">
+                        <div data-ng-repeat="item in level" >
+                            <span uib-rating ng-model="item.commentLevel" max="5" read-only="true" aria-labelledby="default-rating"></span>
+                            <span style="display: inline-block;width: 80px;height: 10px;background-color: #e5e5e5;"><i></i></span>
+                            (<span data-ng-bind="item.commentNum"></span>)
+                        </div>
                     </div>
-                    <div style="text-align: center">
+                    <div style="text-align: center;margin-bottom: 10px;">
                         <a href="javascript:void (0)">来自 <span></span>个客服积累评价 <span></span>次></a>
                     </div>
 
@@ -60,7 +62,7 @@
                 <uib-tabset active="active">
                     <uib-tab index="0" heading="交易记录">
                         <div class="tab-info" >
-                            <table class="table" >
+                            <table class="table" style="margin-bottom: 20px" >
                                 <thead>
                                 <tr>
                                     <th>需求标题</th>
@@ -105,7 +107,7 @@
                                             <div class="pagination-info">
                                                 共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
                                             </div>
-                                            <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                            <ul uib-pagination ng-change="readerTrade()" total-items="pagination.totalItems"
                                                 ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
                                                 max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
                                                 force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
@@ -119,7 +121,7 @@
                     </uib-tab>
                     <uib-tab index="1" heading="客户评价">
                         <div class="tab-info" >
-                            <table class="table" >
+                            <table class="table" style="margin-bottom: 20px">
                                 <!--<thead>-->
                                 <!--<tr>-->
                                     <!--<th>需求标题</th>-->
@@ -151,7 +153,7 @@
                                             <div class="pagination-info">
                                                 共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
                                             </div>
-                                            <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                            <ul uib-pagination ng-change="readerComment()" total-items="pagination.totalItems"
                                                 ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
                                                 max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
                                                 force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
