@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoodsStorage;
 import com.jusfoun.hookah.core.domain.mongo.MgShelvesGoods;
 import com.jusfoun.hookah.core.domain.vo.GoodsCheckedVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
  * @desc
  */
 @RestController
-@RequestMapping(value = "/api/goods")
+@RequestMapping(value = "/goods")
 public class GoodsApi extends BaseController{
 
     @Resource
@@ -60,6 +61,9 @@ public class GoodsApi extends BaseController{
 
     @Resource
     MqSenderService mqSenderService;
+
+    @Resource
+    MgGoodsStorageService mgGoodsStorageService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getListInPage(String currentPage, String pageSize,
@@ -445,4 +449,56 @@ public class GoodsApi extends BaseController{
         return ReturnData.success(pagination);
     }
 
+    /**
+     * 查询未添加到货架上的数据
+     * @param currentPage
+     * @param pageSize
+     * @param storageId
+     * @param goodsName
+     * @param goodsIds
+     * @return
+     */
+    @RequestMapping(value = "/allNotInStorage", method = RequestMethod.GET)
+    public ReturnData allNotInStorageList(String currentPage, String pageSize, String storageId, String goodsName, String goodsIds) {
+        Pagination<Goods> page = new Pagination<>();
+        try {
+
+            List<Condition> filters = new ArrayList();
+            List<OrderBy> orderBys = new ArrayList();
+            orderBys.add(OrderBy.desc("lastUpdateTime"));
+
+            if(StringUtils.isBlank(goodsIds)) {
+                MgGoodsStorage mgGoodsStorage = mgGoodsStorageService.selectById(storageId);
+                if (mgGoodsStorage != null) {
+                    if (StringUtils.isNotBlank(mgGoodsStorage.getGoodsIds())) {
+                        filters.add(Condition.notIn("goodsId", mgGoodsStorage.getGoodsIds().split(",")));
+                    }
+                }
+            }else {
+                filters.add(Condition.notIn("goodsId", goodsIds.split(",")));
+            }
+
+            //只查询商品状态为未删除的商品
+            filters.add(Condition.eq("isDelete", 1));
+            filters.add(Condition.eq("checkStatus", 1));
+            filters.add(Condition.eq("isOnsale", 1));
+            //参数校验
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (StringUtils.isNotBlank(currentPage)) {
+                pageNumberNew = Integer.parseInt(currentPage);
+            }
+            int pageSizeNew = HookahConstants.PAGE_SIZE;
+            if (StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+            if (StringUtils.isNotBlank(goodsName)) {
+                filters.add(Condition.like("goodsName", goodsName));
+            }
+            page = goodsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ReturnData.success(page);
+    }
 }
