@@ -143,4 +143,13 @@ public class CrowdSourcingController {
         return "usercenter/crowdsourcing/service/eBusinessCard";
     }
 
+
+    /**
+     * api活动页
+     */
+    @RequestMapping(value = "/activity", method = RequestMethod.GET)
+    public String activity(Model model) {
+        return "activity/index";
+    }
+
 }
