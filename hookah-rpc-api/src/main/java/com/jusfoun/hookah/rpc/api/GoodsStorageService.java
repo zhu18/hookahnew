@@ -1,5 +1,7 @@
 package com.jusfoun.hookah.rpc.api;
 
+import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.domain.GoodsLabel;
 import com.jusfoun.hookah.core.domain.GoodsStorage;
 import com.jusfoun.hookah.core.domain.vo.GoodsStorageVo;
 import com.jusfoun.hookah.core.generic.GenericService;
@@ -15,4 +17,5 @@ public interface GoodsStorageService extends GenericService<GoodsStorage,String>
 
     List<GoodsStorageVo> getGoodsStorageList();
 
+    Pagination searchByLabels(String storageId, String typeId, String labels, List<GoodsLabel> goodsLabels);
 }

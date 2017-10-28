@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.GoodsStorageMapper;
+import com.jusfoun.hookah.core.domain.GoodsLabel;
 import com.jusfoun.hookah.core.domain.GoodsStorage;
 import com.jusfoun.hookah.core.domain.vo.GoodsStorageVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -37,6 +39,10 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
         return goodsStorageMapper.insertSelective(goodsStorage);
     }
 
+    /**
+     * 前台查询货架详情
+     * @return
+     */
     @Override
     public List<GoodsStorageVo> getGoodsStorageList() {
         List<GoodsStorageVo> vos = new ArrayList<>();
@@ -55,8 +61,13 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
                 vos.add(vo);
             }
         }
-
         return vos;
+    }
+
+    @Override
+    public Pagination searchByLabels(String storageId, String typeId, String labels, List<GoodsLabel> goodsLabels) {
+        //查询st
+        return null;
     }
 
 }
