@@ -14,30 +14,29 @@ html{
 }
 .header-centerbar {
 	width: 100%;
-	height: 75px;
 	min-width: 1200px;
-	border-bottom: 1px solid rgb(81, 1, 15);
-	border-image: initial;
-	background: url("/static/images/top-header.png") center top no-repeat rgb(15, 16, 55);
+	height:131px;
+	border-bottom:1px solid #171717;
+	background: #000;
 }
-.header-centerbar .grid-row {
-	height: 80px;
+.header-tops{
+	height:68px;
+	overflow: hidden;
 }
 .header-centerbar .logo {
-	width: 150px;
+	width: 154px;
 	margin: 12px 0;
 }
 .header-centerbar .logo a {
 	display: inline-block;
-	width: 150px;
+	width: 154px;
 }
 .header-centerbar .logo a img {
 	width: 100%;
 }
 .header-centerbar .search {
-	/*margin-left: 76px;*/
 	position: relative;
-	margin-top: 19px;
+	margin:19px 0 0 210px;
 }
 .header-centerbar .search .fa {
 	position: absolute;
@@ -338,6 +337,18 @@ html{
 	font-size: 14px;
 	color:#8ea4b9;
 	font-weight:bold;
+	padding:10px 10px;
+	border:1px solid #fff;
+	border-radius:50px;
+	color:#fff;
+}
+.topbar-user li a:hover{
+	background: #d20003;
+	border:1px solid #d20003;;
+}
+.header-bottoms{
+	height:40px;
+	margin-top: 23px;
 }
 .userInfos .userInfos-box {
 	position: absolute;
@@ -474,38 +485,45 @@ input:focus, select:focus, textarea:focus {
 	border: 1px solid #69c5dd;
 }
 #navList {
+	height:40px;
 	font-size: 16px;
-	height: 60px;
-	margin-top: 16px;
-	margin-bottom: 0px;
-	margin-left: 105px;
 	list-style: none;
 	padding: 0px;
 }
 #navList li.active {
-	border-bottom: 2px solid rgb(225, 0, 0);
+
 }
 #navList li {
 	float: left;
 	width: 95px;
 	text-align: center;
 	color: rgb(142, 164, 185);
-	height: 57px;
-	line-height: 57px;
 }
-#navList li a {
+#navList li a{
 	display: block;
 	text-decoration: none;
 }
 #navList li.active .text {
 	color: rgb(225, 0, 0);
 }
-#navList li a .text {
+#navList li a .text ,#exchange_menu a .text{
 	display: block;
-	line-height: 56px;
+	line-height: 40px;
 	text-align: center;
 	color: rgb(142, 164, 185);
 	white-space: nowrap;
 	overflow: hidden;
 	font-weight: bold;
 }
+#exchange_menu{
+	width:180px;
+	height:40px;
+	line-height: 40px;
+	background: #404040;
+	text-align: center;
+}
+#exchange_menu a{
+	color:#fff;
+	font-size: 16px;
+}
+#exchange_menu a span{margin-right:10px;}
