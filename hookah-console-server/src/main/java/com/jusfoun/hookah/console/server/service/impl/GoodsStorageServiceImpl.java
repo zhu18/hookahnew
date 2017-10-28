@@ -1,16 +1,23 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.GoodsStorageMapper;
 import com.jusfoun.hookah.core.domain.GoodsLabel;
 import com.jusfoun.hookah.core.domain.GoodsStorage;
+import com.jusfoun.hookah.core.domain.es.EsGoods;
+import com.jusfoun.hookah.core.domain.mongo.MgGoodsStorage;
+import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsStorageVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.rpc.api.ElasticSearchService;
 import com.jusfoun.hookah.rpc.api.GoodsStorageService;
 import com.jusfoun.hookah.rpc.api.MgGoodsStorageService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +36,9 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
 
     @Resource
     private MgGoodsStorageService mgGoodsStorageService;
+
+    @Autowired
+    ElasticSearchService elasticSearchService;
 
     @Resource
     public void setDao(GoodsStorageMapper goodsStorageMapper) {
@@ -65,9 +75,35 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
     }
 
     @Override
-    public Pagination searchByLabels(String storageId, String typeId, String labels, List<GoodsLabel> goodsLabels) {
-        //查询st
-        return null;
+    public Pagination searchByLabels(String storageId, int typeId, String labels, Integer currentPage, Integer pageSize, List<GoodsLabel> goodsLabels) throws Exception {
+        //拼装标签
+        MgGoodsStorage mgGoodsStorage = mgGoodsStorageService.selectById(storageId);
+        List<MgGoodsStorage.LabelsType> list = mgGoodsStorage.getTypeList();
+        for (MgGoodsStorage.LabelsType type : list) {
+            if(typeId == type.getTypeId() && StringUtils.isNotBlank(type.getLabels())) {
+                if(StringUtils.isBlank(labels)) {
+                    labels = type.getLabels();
+                }
+                for(String label : type.getLabels().split(",")) {
+                    GoodsLabel goodsLabel = new GoodsLabel();
+                    goodsLabel.setLabId(label);
+                    goodsLabel.setLabName(DictionaryUtil.getGoodsLabelById(label) == null
+                            ? "" : DictionaryUtil.getGoodsLabelById(label).getLabName());
+                    goodsLabels.add(goodsLabel);
+                }
+                break;
+            }
+        }
+        //es搜索
+        EsGoodsVo vo = new EsGoodsVo();
+        if(pageSize != null)
+            vo.setPageSize(pageSize);
+        if(currentPage != null)
+            vo.setPageNumber(currentPage);
+        EsGoods esGoods = new EsGoods();
+        esGoods.setKeywordsArrays(labels.replace(",", " "));
+        vo.setEsGoods(esGoods);
+        return elasticSearchService.search(vo);
     }
 
 }

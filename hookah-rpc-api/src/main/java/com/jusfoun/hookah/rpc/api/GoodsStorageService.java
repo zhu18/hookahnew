@@ -17,5 +17,5 @@ public interface GoodsStorageService extends GenericService<GoodsStorage,String>
 
     List<GoodsStorageVo> getGoodsStorageList();
 
-    Pagination searchByLabels(String storageId, String typeId, String labels, List<GoodsLabel> goodsLabels);
+    Pagination searchByLabels(String storageId, int typeId, String labels, Integer currentPage, Integer pageSize, List<GoodsLabel> goodsLabels) throws Exception;
 }

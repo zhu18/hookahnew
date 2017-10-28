@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.domain.vo.GoodsLabelVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.PinyinUtils;
 import com.jusfoun.hookah.rpc.api.GoodsLabelService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +26,13 @@ public class GoodsLabelServiceImpl extends GenericServiceImpl<GoodsLabel, String
     @Resource
     public void setDao(GoodsLabelMapper goodsLabelMapper) {
         super.setDao(goodsLabelMapper);
+    }
+
+
+    @Cacheable(value = "goodsLabelInfo")
+    @Override
+    public GoodsLabel selectById(String id) {
+        return goodsLabelMapper.selectByPrimaryKey(id);
     }
 
     @Override
