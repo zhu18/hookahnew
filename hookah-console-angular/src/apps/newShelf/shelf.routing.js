@@ -1,6 +1,7 @@
 import ShelfController from './ShelfController'
 import ManageGoodsController from './ManageGoodsController'
 import EditTagsController from './EditTagsController'
+import EditController from './EditController'
 shelfRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function shelfRouting($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/shelf/search');
@@ -14,16 +15,18 @@ export default function shelfRouting($stateProvider, $urlRouterProvider) {
 			template: require('./list.html'),
 			controller: ShelfController,
 		})
-		.state('shelf.add', {
-			url: '/shelf/add',
+		.state('shelf.edit', {
+			url: '/shelf/edit/:type/:id',
+			params: {'data': null},
 			template: require('./add.html'),
-			controller: ShelfController,
+			controller: EditController,
+			permission: 'shelf_edit'
 		})
 		.state('shelf.update', {
 			url: '/shelf/update',
 			template: require('./update.html'),
 			controller: ShelfController,
-			permission: 'updateShelf'
+			permission: 'shelf_update'
 
 		})
 		.state('shelf.manageGoods', {

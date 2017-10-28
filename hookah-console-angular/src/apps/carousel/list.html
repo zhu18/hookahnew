@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="console-title console-title-border clearfix">
-			<div class="pull-left"><h5>货架查询</h5></div>
+			<div class="pull-left"><h5>轮播图管理</h5></div>
 			<div class="pull-right">
 				<button class="btn btn-default" data-ng-click="refresh()">
 					<span class="glyphicon glyphicon-refresh"></span> 刷新
@@ -16,9 +16,9 @@
 		</div>
 		<div class="row margin-top">
 			<div class="col-sm-12">
-				<div class="searchSection">
+				<div class="searchSection clearfix">
 					<div class="pull-right">
-						<button class="btn btn-default" ui-sref="shelf.edit({type:'add'})"><span class="glyphicon glyphicon-plus"></span> 新增货架
+						<button class="btn btn-default" ui-sref="carousel.edit({type:'add'})"><span class="glyphicon glyphicon-plus"></span>新增轮播图
 						</button>
 					</div>
 				</div>
@@ -27,62 +27,43 @@
 					<table class="table table-hover margin-top" style="margin-bottom: 57px;">
 						<thead>
 						<tr>
-							<th>货架名称</th>
-							<th>描述</th>
+							<th>序号</th>
+							<th>标题</th>
 							<th>图片</th>
-							<th>创建时间</th>
-							<th width="200" class="text-center">操作</th>
+							<th>链接</th>
+							<th>操作</th>
+							<th>排序</th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
 							<td>
-								<a href="JavaScript:void(0);" ng-click="manageGoods($event,item)">
-									<span class="column-text" ng-bind="item.name"></span>
+								<a>
+									<span class="column-text" ng-bind="item.shelvesName"></span>
 								</a>
 							</td>
 							<td>
-								<span class="column-text" ng-bind="item.describle"></span>
+								<span class="column-text" ng-bind="item.shelvesType"></span>
 							</td>
 							<td>
-								<img ng-src="item.img" style="width:50px;">
+								<span class="column-text" ng-bind="item.goodsNumber"></span>
 							</td>
 							<td>
-								<span class="column-text" ng-bind="item.updateTime"></span>
+								<span class="column-text" ng-bind="item.addTime"></span>
 							</td>
-							<td class="text-center">
-								<!--<a href="javascript:;" ng-click="manageGoods($event,item)">管理商品</a>-->
-								<a ui-sref="shelf.manageGoods({id:item.shelvesId,name:item.shelvesName})">管理商品</a>
-								<span class="text-explode">|</span>
-								<i class="link-space"></i>
-								<a  ui-sref="shelf.edit({type:'modify',id:item.shelvesId})">修改</a>
-								<span ng-if="item.shelvesStatus == 0">
-                 		 			<span class="text-explode">|</span>
-                  					<i class="link-space"></i>
-                  					<a href="javascript:;" ng-click="updateStatus(item, 1)">启用</a>
-                				</span>
-								<span ng-if="item.shelvesStatus == 1">
-								  	<span class="text-explode">|</span>
-								  	<i class="link-space"></i>
-								  	<a href="javascript:;" ng-click="updateStatus(item, 0)">停用</a>
-								</span>
-								<span ng-if="item.shelvesStatus == 2">
-								  	<span class="text-explode">|</span>
-								  	<i class="link-space"></i>
-								  	<a href="javascript:;">审核中</a>
-								</span>
-								<!--<span class="text-explode">|</span>-->
-								<!--<i class="link-space"></i>-->
-								<!--<a href="javascript:;" ng-click="updateStatus(item, 3)">删除</a>-->
+							<td>
+								<a ui-sref="carousel.edit({type:'modify',id:item.shelvesId})">编辑</a>
+								<a href="javascript:void(0)">删除</a>
 							</td>
+							<td>
+								<span style="width:30px;display: inline-block"><span class="glyphicon glyphicon-arrow-up" ng-if="!$first" style="font-size: 16px;margin-left:10px;cursor: pointer; "></span></span>
+								<span style="width:30px;display: inline-block"><span class="glyphicon glyphicon-arrow-down" ng-if="!$last" style="font-size: 16px;cursor: pointer; "></span></span>
+							</td>
+
 						</tr>
 						</tbody>
 						<tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
 						<tr>
-							<!--<td width="10" style="width: 29px;">-->
-							<!--<input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"-->
-							<!--class="">-->
-							<!--</td>-->
 							<td colspan="9">
 								<div class="pull-right page-box">
 									<div class="pagination-info">
