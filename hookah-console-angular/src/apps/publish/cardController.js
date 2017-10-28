@@ -40,7 +40,7 @@ class cardController {
                 method: 'post',
                 url: $rootScope.site.crowdServer + "/api/getTradeRecord",
                 params: {
-                    id: $stateParams.id,
+                    userId: $stateParams.id,
                     currentPage:initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
                     pageSize: $rootScope.pagination.pageSize
                 }
@@ -70,7 +70,7 @@ class cardController {
                 method: 'post',
                 url: $rootScope.site.crowdServer + "/api/getCommentRecord",
                 params: {
-                    id: $stateParams.id,
+                    userId: $stateParams.id,
                     currentPage:initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
                     pageSize: $rootScope.pagination.pageSize
                 }

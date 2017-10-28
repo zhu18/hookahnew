@@ -4,6 +4,7 @@ import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoodsStorage;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.MgGoodsStorageVo;
 import com.jusfoun.hookah.core.generic.GenericMongoServiceImpl;
 import com.jusfoun.hookah.core.utils.StringUtils;
@@ -59,7 +60,7 @@ public class MgGoodsStorageServiceImpl extends GenericMongoServiceImpl<MgGoodsSt
         }
         BeanUtils.copyProperties(mgGoodsStorage, vo);
         //商品详情补充
-        List<Goods> list = new ArrayList<>();
+        List<GoodsVo> list = new ArrayList<>();
         if(StringUtils.isNotBlank(mgGoodsStorage.getGoodsIds())) {
             String[] goodsIds = mgGoodsStorage.getGoodsIds().split(",");
             List<Goods> list1 = goodsService.findGoodsByIds(goodsIds);
@@ -69,9 +70,17 @@ public class MgGoodsStorageServiceImpl extends GenericMongoServiceImpl<MgGoodsSt
                 for (String goodsId : goodsIds) {
                     for(Goods goods : list1) {
                         if(goodsId.equals(goods.getGoodsId())) {
-                            Goods goods1 = new Goods();
+                            GoodsVo goods1 = new GoodsVo();
                             goods1.setGoodsId(goods.getGoodsId());
                             goods1.setGoodsName(goods.getGoodsName());
+                            goods1.setGoodsImg(goods.getGoodsImg());
+                            goods1.setGoodsImg(goods.getGoodsImg());
+                            goods1.setCatId(goods.getCatId());
+                            goods1.setShopFormat(goods.getShopFormat());
+                            goods1.setShopPrice(goods.getShopPrice());
+                            goods1.setShopNumber(goods.getShopNumber());
+                            goods1.setCatName(DictionaryUtil.getCategoryById(goods.getCatId().substring(0, 3)) == null
+                                    ? "" : DictionaryUtil.getCategoryById(goods.getCatId().substring(0, 3)).getCatName());
                             list.add(goods1);
                             newGoodsIds.append(goodsId).append(",");
                             break;

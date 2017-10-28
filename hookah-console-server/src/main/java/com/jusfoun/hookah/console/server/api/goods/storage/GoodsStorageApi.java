@@ -39,7 +39,7 @@ public class GoodsStorageApi extends BaseController {
             goodsStorage.setId(GeneratorUtil.getUUID());
             goodsStorageService.insertSelective(goodsStorage);
         } catch (Exception e) {
-            logger.error("创建货架错误！",e);
+            logger.error("创建货架错误！", e);
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("创建货架错误！" + e.getMessage());
         }
@@ -53,7 +53,7 @@ public class GoodsStorageApi extends BaseController {
         try {
             goodsStorageService.delete(id);
         } catch (Exception e) {
-            logger.error("删除货架错误！",e);
+            logger.error("删除货架错误！", e);
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("删除货架错误！" + e.getMessage());
         }
@@ -68,7 +68,7 @@ public class GoodsStorageApi extends BaseController {
             goodsStorage.setAddUser(getCurrentUser().getUserId());
             goodsStorageService.updateByIdSelective(goodsStorage);
         } catch (Exception e) {
-            logger.error("创建货架错误！",e);
+            logger.error("创建货架错误！", e);
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("创建货架错误！" + e.getMessage());
         }
@@ -90,7 +90,7 @@ public class GoodsStorageApi extends BaseController {
             orderBys.add(OrderBy.desc("stOrder"));
             returnData.setData(goodsStorageService.selectList(filters, orderBys));
         } catch (Exception e) {
-            logger.error("查询所有开启货架错误！",e);
+            logger.error("查询所有开启货架错误！", e);
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("查询所有开启货架错误！" + e.getMessage());
         }
@@ -110,7 +110,7 @@ public class GoodsStorageApi extends BaseController {
             orderBys.add(OrderBy.desc("stOrder"));
             returnData.setData(goodsStorageService.selectList(null, orderBys));
         } catch (Exception e) {
-            logger.error("查询所有货架错误！",e);
+            logger.error("查询所有货架错误！", e);
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("查询所有货架错误！" + e.getMessage());
         }
@@ -150,7 +150,7 @@ public class GoodsStorageApi extends BaseController {
             mgGoodsStorage.setUpdateTime(DateUtils.toDefaultNowTime());
             mgGoodsStorageService.upsertDetails(mgGoodsStorage);
         } catch (Exception e) {
-            logger.error("新增或更新货架详情错误！",e);
+            logger.error("新增或更新货架详情错误！", e);
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("新增或更新货架详情错误！" + e.getMessage());
         }
@@ -169,7 +169,7 @@ public class GoodsStorageApi extends BaseController {
         try {
             returnData.setData(mgGoodsStorageService.findDetail(storageId));
         } catch (Exception e) {
-            logger.error("查询货架内容详情错误！",e);
+            logger.error("查询货架内容详情错误！", e);
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage("查询货架内容详情错误！" + e.getMessage());
         }

@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  * @desc
  */
 @RestController
-@RequestMapping(value = "/goods")
+@RequestMapping(value = "/api/goods")
 public class GoodsApi extends BaseController{
 
     @Resource
