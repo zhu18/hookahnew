@@ -102,17 +102,17 @@
 			<fieldset>
 				<h5 style="padding: 0px 20px;">基本信息</h5>
 				<div class="form-group">
-					<label class="col-sm-2 control-label" for="shelvesName">货架名称：<span class="must">*</span></label>
+					<label class="col-sm-2 control-label" for="name">货架名称：<span class="must">*</span></label>
 					<div class="col-sm-4">
-						<input type="text" id="shelvesName" name="shelvesName"
-							   class="form-control" data-ng-model="shelvesName" ng-maxlength="10" placeholder="最长为10" required/>
+						<input type="text" id="name" name="name"
+							   class="form-control" data-ng-model="name" ng-maxlength="10" placeholder="最长为10" required/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">货架描述：<span class="must">*</span></label>
 					<div class="col-sm-4">
-						<input type="text" id="shelvesDesc" name="shelvesDesc"
-							   class="form-control" data-ng-model="shelvesDesc" ng-maxlength="10" placeholder="最长为10" required/>
+						<input type="text" id="describle" name="describle"
+							   class="form-control" data-ng-model="describle" ng-maxlength="10" placeholder="最长为10" required/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -123,7 +123,7 @@
 							<img class="fileImg" ng-src="{{goodsImgView}}" alt="">
 							<span class="fileAdd" ng-if="!goodsImgView">+</span>
 							<span class="fileBg" ng-if="goodsImgView">点击替换</span>
-							<input type="text" style="opacity: 0;width:5px;position: absolute;top: 0; z-index:4;" name="goodsImgView" ng-model="goodsImgView" required>
+							<input type="text" style="opacity: 0;width:5px;position: absolute;top: 0; z-index:4;" name="img" ng-model="goodsImgView" required>
 						</div>
 					</div>
 				</div>

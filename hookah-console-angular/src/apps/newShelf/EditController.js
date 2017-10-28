@@ -1,21 +1,17 @@
 class EditController {
 	constructor($scope, $rootScope, $http, $state,$stateParams, $uibModal, usSpinnerService, growl) {
-		if($stateParams.type == 'add'){
-			$scope.pageTitle = '添加'
-		}else{
-			$scope.pageTitle = '修改'
-		}
+		$scope.pageTitle = $stateParams.type == 'add'?'添加':'修改';
+
 
 		$scope.add = function () {
 			var promise = $http({
 				method: 'POST',
-				url: $rootScope.site.apiServer + "/api/shelf/add",
+				url: $rootScope.site.apiServer + "/api/storage/create",
 				data: $("#shelfForm").serialize()
 			});
 			promise.then(function (res, status, config, headers) {
 				if (res.data.code == "1") {
 					growl.addSuccessMessage("数据添加完毕。。。");
-					$state.go('shelf.search');
 				}
 			});
 		};
