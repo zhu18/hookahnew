@@ -11,7 +11,6 @@ import com.jusfoun.hookah.core.utils.GeneratorUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsStorageService;
 import com.jusfoun.hookah.rpc.api.MgGoodsStorageService;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +31,7 @@ public class GoodsStorageApi extends BaseController {
     MgGoodsStorageService mgGoodsStorageService;
 
     @RequestMapping(value = "/create", method= RequestMethod.POST)
-    public ReturnData create(@RequestBody GoodsStorage goodsStorage) {
+    public ReturnData create(GoodsStorage goodsStorage) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
@@ -62,7 +61,7 @@ public class GoodsStorageApi extends BaseController {
     }
 
     @RequestMapping(value = "/update", method= RequestMethod.POST)
-    public ReturnData update(@RequestBody GoodsStorage goodsStorage) {
+    public ReturnData update(GoodsStorage goodsStorage) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
@@ -143,7 +142,7 @@ public class GoodsStorageApi extends BaseController {
      * @return
      */
     @RequestMapping(value = "/upsertDetails", method= RequestMethod.POST)
-    public ReturnData upsertDetails(@RequestBody MgGoodsStorage mgGoodsStorage) {
+    public ReturnData upsertDetails(MgGoodsStorage mgGoodsStorage) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {

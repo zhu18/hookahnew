@@ -16,18 +16,11 @@
 		</div>
 		<div class="row margin-top">
 			<div class="col-sm-12">
-				<div class="searchSection pull-left">
-					<form class="form-inline">
-						<div class="form-group">
-							<label class="control-label text-right" for="form-field-1">货架名称：</label>
-							<input id="form-field-1" ng-model="shelfName" type="text" class="form-control">
-							<button type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
-						</div>
-					</form>
-				</div>
-				<div class="pull-right">
-					<button class="btn btn-default" ui-sref="shelf.add"><span class="glyphicon glyphicon-plus"></span> 新增货架
-					</button>
+				<div class="searchSection clearfix">
+					<div class="pull-right">
+						<button class="btn btn-default" ui-sref="shelf.edit({type:'add'})"><span class="glyphicon glyphicon-plus"></span> 新增货架
+						</button>
+					</div>
 				</div>
 				<div class="gridSection">
 					<div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
@@ -35,89 +28,40 @@
 						<thead>
 						<tr>
 							<th>货架名称</th>
-							<th>副标题</th>
-							<th>商品数量</th>
-							<th>货架状态</th>
+							<th>描述</th>
+							<th>图片</th>
 							<th>创建时间</th>
 							<th width="200" class="text-center">操作</th>
 						</tr>
 						</thead>
 						<tbody>
-						<tr data-ng-if="!loadingState" data-ng-repeat="item in pagination.store" class="">
-							<!--<td width="10">-->
-							<!--<input type="checkbox" data-ng-model="item.selected" ng-change="changeSelection({data: item})"-->
-							<!--class=" ">-->
-							<!--</td>-->
-							<!--<td class="state-column">-->
-							<!--<span class="state-unread " ng-if="item.Status*1===0">●</span>-->
-							<!--</td>-->
+						<tr data-ng-if="!loadingState" data-ng-repeat="item in storages" class="">
 							<td>
-								<a href="javascript:;" ng-click="manageGoods($event,item)">
-									<span class="column-text" ng-bind="item.shelvesName"></span>
+								<a href="JavaScript:void(0);" ng-click="manageGoods($event,item)">
+									<span class="column-text" ng-bind="item.name"></span>
 								</a>
 							</td>
 							<td>
-								<span class="column-text" ng-bind="item.shelvesType"></span>
+								<span class="column-text" ng-bind="item.describle"></span>
 							</td>
 							<td>
-								<span class="column-text" ng-bind="item.goodsNumber"></span>
+								<img ng-src="item.img" style="width:50px;">
 							</td>
 							<td>
-								<span class="column-text" style="color: red" ng-show="item.shelvesStatus == 0">停用</span>
-								<span class="column-text" style="color: green" ng-show="item.shelvesStatus == 1">启用</span>
-								<span class="column-text" ng-show="item.shelvesStatus == 2">审核中</span>
-							</td>
-							<td>
-								<span class="column-text" ng-bind="item.addTime"></span>
+								<span class="column-text" ng-bind="item.updateTime"></span>
 							</td>
 							<td class="text-center">
 								<!--<a href="javascript:;" ng-click="manageGoods($event,item)">管理商品</a>-->
 								<a ui-sref="shelf.manageGoods({id:item.shelvesId,name:item.shelvesName})">管理商品</a>
 								<span class="text-explode">|</span>
 								<i class="link-space"></i>
-								<a href="javascript:;" ng-click="updateShelf($event,item)">修改</a>
-								<span ng-if="item.shelvesStatus == 0">
-                  <span class="text-explode">|</span>
-                  <i class="link-space"></i>
-                  <a href="javascript:;" ng-click="updateStatus(item, 1)">启用</a>
-                </span>
-								<span ng-if="item.shelvesStatus == 1">
-                  <span class="text-explode">|</span>
-                  <i class="link-space"></i>
-                  <a href="javascript:;" ng-click="updateStatus(item, 0)">停用</a>
-                </span>
-								<span ng-if="item.shelvesStatus == 2">
-                  <span class="text-explode">|</span>
-                  <i class="link-space"></i>
-                  <a href="javascript:;">审核中</a>
-                </span>
-								<!--<span class="text-explode">|</span>-->
-								<!--<i class="link-space"></i>-->
-								<!--<a href="javascript:;" ng-click="updateStatus(item, 3)">删除</a>-->
+								<a  ui-sref="shelf.edit({type:'modify',id:item.shelvesId})">修改</a>
+
+
+
 							</td>
 						</tr>
 						</tbody>
-						<tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
-						<tr>
-							<!--<td width="10" style="width: 29px;">-->
-							<!--<input type="checkbox" data-ng-model="tableState.selectAll" ng-change="changeSelectionAll()"-->
-							<!--class="">-->
-							<!--</td>-->
-							<td colspan="9">
-								<div class="pull-right page-box">
-									<div class="pagination-info">
-										共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
-									</div>
-									<ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
-										ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
-										max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
-										force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
-										last-text="末页">
-									</ul>
-								</div>
-							</td>
-						</tr>
-						</tfoot>
 					</table>
 				</div>
 				<div class="simple-grid-none-data-wrap">

@@ -1,6 +1,7 @@
 import ShelfController from "../newShelf/ShelfController";
 import ManageGoodsController from "../newShelf/ManageGoodsController";
 import EditTagsController from "../newShelf/EditTagsController";
+import EditController from "../newShelf/EditController";
 import CategoryController from "../category/CategoryController";
 import TagsListController from "./TagsListController";
 import MoveController from "../category/MoveController";
@@ -165,11 +166,12 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			controller: ShelfController,
 			permission: 'shelf_search'
 		})
-		.state('shelf.add', {
-			url: '/shelf/add',
+		.state('shelf.edit', {
+			url: '/shelf/edit/:type/:id',
+			params: {'data': null},
 			template: require('../newShelf/add.html'),
-			controller: ShelfController,
-			permission: 'shelf_add'
+			controller: EditController,
+			permission: 'shelf_edit'
 		})
 		.state('shelf.update', {
 			url: '/shelf/update',
