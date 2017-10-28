@@ -1,0 +1,615 @@
+<%
+var head = {
+%>
+<style>
+   .backgorund-blue{
+       background-color: #003A93;
+   }
+   .bannerBox{
+       background: url(/static/images/activity/top.jpg) no-repeat center 0;
+       height: 694px;
+   }
+   .content {}
+   .content .item{}
+   .content .item .item-header{}
+   .content .item .item-header h2{text-align: center;font-size: 36px;color: #F1D582}
+   .content .item .item-header .item-header-img{background: url(/static/images/activity/bar.png) no-repeat center 0;
+       height: 39px;}
+   .content .item ul {margin-right: -25px}
+   .content .item ul li{float: left;position:relative;width: 200px ; height: 340px;background-color: #F7F7F7;margin-right: 25px;margin-bottom: 20px;padding: 10px;border-radius: 3px}
+   .content .item ul li:hover{background-color: #FFECED}
+   .content .item ul li:hover a{background: #FF8400 !important;color: #ffffff}
+   .content .item ul li i{position: absolute;top: 0;left: 0;
+       width: 60px;
+       height: 51px;
+       background: url(/static/images/activity/icon2.png) no-repeat center 0;}
+   .content .item ul li .li-top{
+       height: 217px;
+       border-bottom: 1px dashed #e5e5e5;
+   }
+   .content .item ul li .li-top img{
+       display: block;
+       width: 66px;
+       height: 60px;
+       margin: 18px auto 38px;
+   }
+   .content .item ul li .li-top p{
+       font-size: 18px;
+       padding: 0 10px;
+       margin-top: 15px;
+       text-align: center;
+   }
+   .content .item ul li .li-top p:last-child{
+       font-size: 14px;
+       text-align: center;
+   }
+   .content .item ul li .li-down{
+       height: 83px;
+   }
+   .content .item ul li .li-down p{
+       font-size: 18px;
+       color: #ff8400;
+       margin-top: 20px;
+       text-align: center;
+   }
+   .content .item ul li .li-down a{
+       display: block;
+       width: 140px;
+       height: 36px;
+       font-size: 18px;
+       border-radius: 18px;
+       margin: 21px auto 0;
+       line-height: 36px;
+       text-align: center;
+       background: url(/static/images/activity/but.png) no-repeat center 0;
+   }
+
+</style>
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-blue">
+    <div class="bannerBox">
+
+    </div>
+    <div class="content grid-row">
+        <div>
+            <div class="item">
+                <div class="item-header">
+                    <h2>企业信息</h2>
+                    <div class="item-header-img">
+
+                    </div>
+                </div>
+                <ul class="clearfix">
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-01.png" alt="">
+                            <p>企业动产抵押登记信息-抵押权人</p>
+                            <p>抵押权人相关基本信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=08e03f0ebbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-02.png" alt="">
+                            <p>企业动产抵押登记信息-抵押物 </p>
+                            <p>标的、权属、内容等信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=086e8008bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-03.png" alt="">
+                            <p>企业年报信息 </p>
+                            <p>业绩、股权、债权、财务等重要信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0921dd8ebbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-04.png" alt="">
+                            <p>行政许可信息  </p>
+                            <p>行政许可内容等基本信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0a268b48bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-05.png" alt="">
+                            <p>企业抽查检查信息   </p>
+                            <p>抽检基本记录和结果</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=095ad598bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-06.png" alt="">
+                            <p>行政处罚信息</p>
+                            <p>行政处罚内容和基本信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0a3f00e3bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-07.png" alt="">
+                            <p>银监会-行政处罚 </p>
+                            <p>案由、依据、决定及基本信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0a0654eabbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-08.png" alt="">
+                            <p>证监会-行政处罚 </p>
+                            <p>决定书全文及基本信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0b520d4abbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-09.png" alt="">
+                            <p>保监会-行政处罚 </p>
+                            <p>决定书全文和当事人信息等</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=08a2abadbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-10.png" alt="">
+                            <p>经营异常信息  </p>
+                            <p>列入、移出原因等基本信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0bc757a8bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <h2>经营状况</h2>
+                    <div class="item-header-img">
+
+                    </div>
+                </div>
+                <ul class="clearfix">
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-11.png" alt="">
+                            <p>上市公司-资产负债表 </p>
+                            <p>资产、账务、债务、股权、营收、利润等应载项信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0ab4eed2bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-12.png" alt="">
+                            <p>上市公司-资产负债表构成  </p>
+                            <p>类型、科目、金额等情况</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=088a98bdbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-13.png" alt="">
+                            <p>上市公司-利润表   </p>
+                            <p>营收、成本、分红、毛净利等利润相关财务信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0afe443abbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-14.png" alt="">
+                            <p>上市公司-现金流量表</p>
+                            <p>现金基本信息及进出账明细</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0bb76521bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-15.png" alt="">
+                            <p>上市公司-主要指标</p>
+                            <p>营收、利润、股权、资产等主要指标信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0aa56a3ebbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-16.png" alt="">
+                            <p>上市公司-主要指标-成长能力 </p>
+                            <p>营收、利润、股权、资产同比相关信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=084dc5c9bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-17.png" alt="">
+                            <p>上市公司-主要指标-偿债能力  </p>
+                            <p>年度、季度偿债能力主要指标信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0b872a39bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-18.png" alt="">
+                            <p>上市公司-主要指标-运营能力  </p>
+                            <p>年度、季度存货和账款周转信息</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=0b2b781abbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-19.png" alt="">
+                            <p>上市公司-运营业务数据  </p>
+                            <p>月度、季度业务运营数据</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=094b1174bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-20.png" alt="">
+                            <p>上市公司-董事会经营评述   </p>
+                            <p>年度董事会经营评述情况</p>
+                        </div>
+                        <div class="li-down">
+                             <p class="">活动价：¥<span>0.01</span> 元</p>
+                             <a href="http://www.galaxybigdata.com/exchange/details?id=09f6cf4cbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <h2>司法行政</h2>
+                    <div class="item-header-img">
+
+                    </div>
+                </div>
+                <ul class="clearfix">
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-21.png" alt="">
+                            <p>上市公司-分红情况</p>
+                            <p>分红方案及相关信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=08cef673bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-22.png" alt="">
+                            <p>企业基本信息 </p>
+                            <p>企业工商登记类基本信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0b0dc80abbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-23.png" alt="">
+                            <p>股东及出资信息 </p>
+                            <p>股东基本信息和认缴、实缴信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0b97645dbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-24.png" alt="">
+                            <p>主要人员信息  </p>
+                            <p>企业主要人员的姓名和职务信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0b62c26cbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-25.png" alt="">
+                            <p>企业分支机构信息 </p>
+                            <p>企业分支机构工商登记信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0ac57c56bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-26.png" alt="">
+                            <p>上市公司-董事会 </p>
+                            <p>人员基本信息及股权、职务信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=091175e7bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-27.png" alt="">
+                            <p>上市公司-监事会 </p>
+                            <p>人员基本信息及股权、职务信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0a95694dbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-28.png" alt="">
+                            <p>上市企业高管信息 </p>
+                            <p>人员基本信息及股权、职务信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=08b4f7afbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-29.png" alt="">
+                            <p>被执行人信息  </p>
+                            <p>人员信息及标的、案件信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0a65f82bbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-30.png" alt="">
+                            <p>失信被执行人信息 </p>
+                            <p>人员信息和失信案件信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0838a212bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <h2>资产收益</h2>
+                    <div class="item-header-img">
+
+                    </div>
+                </div>
+                <ul class="clearfix">
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-31.png" alt="">
+                            <p>裁判文书  </p>
+                            <p>裁判文书所载主要内容</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0a168935bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-32.png" alt="">
+                            <p>法院公告 </p>
+                            <p>内容、时间、当事人等信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0b3b30d3bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-33.png" alt="">
+                            <p>企业并购信息 </p>
+                            <p>并购基本信息及标的、方式、状态等重点信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0ad9a1ccbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-34.png" alt="">
+                            <p>上市公司-发行筹资（发行相关） </p>
+                            <p>发行计划及首日开盘情况</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=09e68840bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-35.png" alt="">
+                            <p>上市公司-参股控股公司 </p>
+                            <p>关联公司股权、主营业务、财务等信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0ba70dacbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-36.png" alt="">
+                            <p>上市公司-十大流通股东 </p>
+                            <p>股东基本信息和股权流通情况</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0a85aefcbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-37.png" alt="">
+                            <p>上市公司十大股东信息</p>
+                            <p>股东基本信息和股权变动情况</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=07e8da0ebbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-38.png" alt="">
+                            <p>上市公司-主要指标-每股能力</p>
+                            <p>年度、季度每股资产、收益、利润、现金流等信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0a75c33dbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-39.png" alt="">
+                            <p>上市公司-机构持股汇总</p>
+                            <p>A股机构持股数量、市值、比例、变动等信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=085e67adbbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-top">
+                            <i></i>
+                            <img src="/static/images/activity/ico0-40.png" alt="">
+                            <p>上市公司-机构持股明细 </p>
+                            <p>A股持股机构信息及所持数量、市值、流通比例、变动等信息</p>
+                        </div>
+                        <div class="li-down">
+                            <p class="">活动价：¥<span>0.01</span> 元</p>
+                            <a href="http://www.galaxybigdata.com/exchange/details?id=0a564b80bbb311e7b7dd26d6fa745dc9">立即购买</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+
+
