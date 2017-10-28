@@ -41,4 +41,6 @@ public interface GoodsMapper extends GenericDao<Goods> {
     List<Goods> getGoodsInfoByCatIds(String[] ids);
 
     int updateGoodsInfoByCatIds(String[] ids);
+
+    List<Goods> getGoodsByIds(String[] ids);
 }

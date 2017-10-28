@@ -9428,6 +9428,16 @@ input[type="radio"], input[type="checkbox"] {
 .set-date-style a{ color:#737373}
 .set-date-style a.active{ color:#06C; text-decoration: underline;}
 
+
+
+
+.float-left{
+  float: left !important;
+}
+.float-right{
+  float: right !important;
+}
+
 .publish-status {
   border-right: 1px solid #e5e5e5;
 }
@@ -9625,4 +9635,11 @@ table .roundedTwo{
 }
 .authentication-info .authentication-content .item{
   text-align: center;
+}
+
+.card{
+  padding: 0 15px;
+}
+.card .info{
+
 }

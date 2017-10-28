@@ -66,6 +66,9 @@ public class HookahConstants {
     public static final Byte IS_LOCAL_YES = 0;
     public static final Byte IS_LOCAL_NO = 1;
 
+    //首页模块标签类型数量
+    public static final int HOME_LABELS_NUM = 6;
+
     public enum SmsTypeNew {
         SMS_USER_REGISTER("101"),  //注册
         SMS_FIND_USER_PWD("102"),   //找回登录密码

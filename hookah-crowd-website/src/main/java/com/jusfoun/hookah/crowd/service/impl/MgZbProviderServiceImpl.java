@@ -167,6 +167,8 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                 }
             }
 
+            returnData.setData2(zbCommentService.getLevelCountByUserId(userId));
+
             return returnData;
         } catch (Exception e) {
             logger.error("认证信息获取失败", e);
@@ -503,11 +505,6 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
     }
 
     @Override
-    public MgZbProvider getAuthInfo() {
-        return null;
-    }
-
-    @Override
     public void setUCreditValueByPJ(String userId, Integer level) {
 
         try {
@@ -560,6 +557,32 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             logger.error("用户评价之修改信誉设置异常", e);
         }
 
+    }
+
+    @Override
+    public ReturnData getAuthInfoByUserId(String userId) {
+
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+
+            MgZbProvider mgZbProvider = mongoTemplate.findById(userId, MgZbProvider.class);
+            if(mgZbProvider == null){
+                returnData.setMessage("查询失败");
+                returnData.setCode(ExceptionConst.Failed);
+            }
+
+            returnData.setMessage("查询成功");
+            returnData.setData(mgZbProvider);
+            returnData.setData2(zbCommentService.getLevelCountByUserId(userId));
+
+        } catch (Exception e) {
+            logger.error("认证信息获取失败", e);
+            return ReturnData.error("认证信息获取失败");
+        }
+
+        return returnData;
     }
 
     public static void main(String[] args) {

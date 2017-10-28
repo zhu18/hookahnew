@@ -112,6 +112,16 @@ function renderPage(data) {
   rewardMoney = insertRequirementsData.zbRequirementSPVo.rewardMoney;
   $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
 
+  //时间显示
+  if(insertRequirementsData.mgZbRequireStatus!==null){
+    $('.j_applyTime').html(data.mgZbRequireStatus.applyTime);
+    $('.j_selectTime').html(data.mgZbRequireStatus.selectTime);
+    $('.j_submitTime').html(data.mgZbRequireStatus.submitTime);
+    $('.j_platevalTime').html(data.mgZbRequireStatus.platevalTime);
+    $('.j_requiredAcceptTime').html(data.mgZbRequireStatus.requiredAcceptTime);
+    $('.j_payTime').html(data.mgZbRequireStatus.payTime);
+    $('.j_requireCommentTime').html(data.mgZbRequireStatus.requireCommentTime);
+  }
 }
 
 $(document).on('click', '.j_commentBtn', function () { // 我要报名

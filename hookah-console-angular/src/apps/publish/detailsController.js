@@ -34,7 +34,7 @@ class detailsController {
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
                     $scope.deliveryDeadline=zbRequirement.deliveryDeadline;
-                    $scope.applyDeadline= zbRequirement.applyDeadline;
+                    $scope.applyDeadline= new Date(zbRequirement.applyDeadline);
                     $scope.rewardMoney=zbRequirement.rewardMoney;
                     $scope.trusteePercent=zbRequirement.trusteePercent;
                     $scope.checkRemark=zbRequirement.checkRemark;
@@ -50,6 +50,8 @@ class detailsController {
                         $scope.workingTime=mgZbRequireStatus.workingTime;//服务商工作
                         $scope.payTime=mgZbRequireStatus.payTime;//验收付款
                         $scope.commentTime=mgZbRequireStatus.commentTime;//评价
+                        $scope.cancelTime=mgZbRequireStatus.cancelTime;//交易完成
+                        $scope.toBeRefundedTime =mgZbRequireStatus.toBeRefundedTime ;//待退款
                     }
                     //报名tab
                     if(zbRequirementApplies && zbRequirementApplies.length>0){
@@ -172,12 +174,12 @@ class detailsController {
         }
 
         $scope.public=function () {
-            var data=new Date($scope.applyDeadline);
-            $scope.applyDeadline= data;
-            console.log(data.setDate(tomorrow.getDate() + 5));
-            console.log($filter('format')(data, 'yyyy-MM-dd HH:mm:ss'));
+
+            console.log($scope.applyDeadline.setDate(tomorrow.getDate() + 5));
+            console.log($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss'));
             console.log($scope.deliveryDeadline);
-            if($filter('format')(data, 'yyyy-MM-dd HH:mm:ss')>$scope.deliveryDeadline){
+            console.log($scope.applyDeadline);
+            if($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')>$scope.deliveryDeadline){
                 var modalInstance =$rootScope.openConfirmDialogModal("报名截止日期不得超过交付日期前五天，请重新选择日期！");
                 modalInstance.result.then(function () {
 
@@ -186,7 +188,6 @@ class detailsController {
                 });
 
             } else {
-                alert("shidehdheidheidh");
                 var promise = $http({
                     method: 'GET',
                     url: $rootScope.site.crowdServer + "/api/require/updateStatus",
@@ -272,6 +273,9 @@ class detailsController {
 
         $scope.back=function (id) {
             $state.go('publish.list', {id: id});
+        };
+        $scope.getCard=function (id) {
+            $state.go('publish.card', {id: id});
         };
         $scope.refund=function (id,userId) {
             $state.go('publish.refund', {id: id,userId:userId});

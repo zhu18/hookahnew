@@ -46,7 +46,7 @@
 
 /*我的发布*/
 .myRequirementBox{min-height: 707px;}
-.myRequirement-search  li ul>li{ font-size:13px; margin-right:0;width: 78px; }
+.myRequirement-search  li ul>li{ font-size:13px; margin-right:0;width: 72px; }
 .myRequirement-search  li ul>li.li01{ width: 210px;}
 .myRequirement-search  li ul>li.li01 input{ padding:2px 0 5px 5px}
 .myRequirement-search  li ul>li.li02{ width: 80px; background-color: #f9f9f9;}

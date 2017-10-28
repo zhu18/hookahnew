@@ -22,6 +22,7 @@ import java.util.*;
 
 @Service
 public class ZbRecommendServiceImpl extends GenericServiceImpl<ZbRecommend, Long> implements ZbRecommendService{
+
     @Resource
     ZbRecommendMapper zbRecommendMapper;
 
@@ -48,18 +49,13 @@ public class ZbRecommendServiceImpl extends GenericServiceImpl<ZbRecommend, Long
                 List<Condition> filters = new ArrayList<>();
                 filters.add(Condition.eq("userId", this.getCurrentUser().getUserId()));
                 List<ZbRequirementApply> applies = zbRequireApplyService.selectList(filters);
-                List list = new ArrayList();
+                List<Long> list = new ArrayList();
                 for(ZbRequirementApply app : applies){
-                    List<Condition> filters1 = new ArrayList<>();
-                    filters1.add(Condition.eq("id", app.getRequirementId()));
-                    List<ZbRequirement> zbRequirements = zbRequireService.selectList(filters1);
-                    for(ZbRequirement ment : zbRequirements){
-                        list.add(ment.getId());
-                    }
+                    list.add(app.getRequirementId());
                 }
-                Object[] objects = list.toArray();
-                if(objects != null ){
-                    zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfo(objects);
+
+                if(list != null && list.size() > 0){
+                    zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfo(list.toArray());
                 }else {
                     zbRecommendVos = zbRecommendMapper.selectRecommendTasksInfoNo();
                 }

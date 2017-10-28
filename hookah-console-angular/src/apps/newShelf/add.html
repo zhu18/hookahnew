@@ -1,0 +1,148 @@
+<script src="angular.min.js"></script>
+<style>
+	.goodsImg-box {
+		width: 100px;
+		height: 100px;
+		border: 1px solid #ccc;
+		position: relative;
+		overflow: hidden;
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.goodsImg-box .fileBtn {
+		font-size: 100px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 10;
+		opacity: 0;
+		cursor: pointer;
+	}
+	.goodsImg-box .fileBg {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 8;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		line-height: 100px;
+		color: #fff;
+		background: rgba(0, 0, 0, 0.7);
+	}
+	.goodsImg-box .fileImg {
+		text-align: center;
+		vertical-align: middle;
+		max-width: 100%;
+		max-height: 100%;
+
+	}
+	.goodsImg-box .fileAdd {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 7;
+		width: 100px;
+		height: 100px;
+		text-align: center;
+		line-height: 100px;
+		font-size: 31px;
+
+	}
+	.goodsImg-box:hover .fileBg {
+		display: block;
+	}
+	.uploadFiles {
+		position: relative;
+		display: inline-block;
+		background: #D0EEFF;
+		/*border: 1px solid #99D3F5;*/
+		border-radius: 4px;
+		padding: 0 10px;
+		overflow: hidden;
+		color: #1E88C7;
+		text-decoration: none;
+		text-indent: 0;
+		line-height: 32px;
+		height: 32px;
+		margin-left: 10px;
+	}
+	.uploadFiles input {
+		position: absolute;
+		font-size: 100px;
+		right: 0;
+		top: 0;
+		height: 33px;
+		filter: alpha(opacity=0); /* IE */
+		-moz-opacity: 0; /* 老版Mozilla */
+		-khtml-opacity: 0; /* 老版Safari */
+		opacity: 0; /* 支持opacity的浏览器*/
+	}
+	.uploadFiles:hover {
+		background: #AADFFD;
+		border-color: #78C3F3;
+		color: #004974;
+		text-decoration: none;
+	}
+</style>
+<div class="row" xmlns="http://www.w3.org/1999/html">
+	<div class="col-sm-12">
+		<div class="console-title console-title-border clearfix">
+			<div class="pull-left"><h5>{{pageTitle}}货架</h5></div>
+			<div class="pull-right">
+				<button class="btn btn-default" ui-sref="shelf.search">
+					<span class="glyphicon glyphicon-arrow-left"></span> 返回
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<form class="form-horizontal" role="form" id="shelfForm" name="shelfForm" novalidate>
+			<fieldset>
+				<h5 style="padding: 0px 20px;">基本信息</h5>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="name">货架序号：<span class="must">*</span></label>
+					<div class="col-sm-4">
+						<input type="text" id="stOrder" name="stOrder"
+							   class="form-control" data-ng-model="stOrder" ng-maxlength="10" placeholder="最长为10" required/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="name">货架名称：<span class="must">*</span></label>
+					<div class="col-sm-4">
+						<input type="text" id="name" name="name"
+							   class="form-control" data-ng-model="name" ng-maxlength="10" placeholder="最长为10" required/>
+					</div>
+				</div>
+				<input type="text" name="id" style="height:1px;opacity:0;" data-ng-model="storageId" ng-if="isModify">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">货架描述：<span class="must">*</span></label>
+					<div class="col-sm-4">
+						<input type="text" id="describle" name="describle"
+							   class="form-control" data-ng-model="describle" ng-maxlength="10" placeholder="最长为10" required/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">货架图片：<span class="must">*</span></label>
+					<div class="col-sm-4">
+						<div class="goodsImg-box">
+							<input class="fileBtn" type="file" id="one-input" name="filename" accept="image/*" max-size="2MB" file-model="images" onchange="angular.element(this).scope().img_upload(this.files)"/>
+							<img class="fileImg" ng-src="{{goodsImgView}}" alt="">
+							<span class="fileAdd" ng-if="!goodsImgView">+</span>
+							<span class="fileBg" ng-if="goodsImgView">点击替换</span>
+							<input type="text" style="opacity: 0;width:5px;position: absolute;top: 0; z-index:4;" name="img" ng-model="goodsImgView" required>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-group">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4">
+					<input class="btn btn-primary btn-lg" ng-disabled="shelfForm.$invalid"
+						   type="button" value="{{pageTitle}}" data-ng-click="add()"/>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

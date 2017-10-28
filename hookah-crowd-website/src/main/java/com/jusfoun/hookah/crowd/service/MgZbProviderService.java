@@ -14,8 +14,6 @@ public interface MgZbProviderService extends GenericService<MgZbProvider, String
 
     ReturnData getAuthInfo(String optAuthType, String optArrAySn);
 
-    MgZbProvider getAuthInfo();
-
     ReturnData checkAuthInfo(ZbCheckVo vo);
 
     ReturnData optAuthInfo(MgZbProviderVo vo);
@@ -38,4 +36,6 @@ public interface MgZbProviderService extends GenericService<MgZbProvider, String
      * @param level
      */
     void setUCreditValueByPJ(String userId, Integer level);
+
+    ReturnData getAuthInfoByUserId(String userId);
 }

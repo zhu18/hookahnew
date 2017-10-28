@@ -352,6 +352,11 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
     }
 
+    @Override
+    public List<Goods> findGoodsByIds(String[] goodsIds) {
+        return goodsMapper.getGoodsByIds(goodsIds);
+    }
+
     // 商品上架
     @Override
     public int onsale(String goodsId, String dateTime) {

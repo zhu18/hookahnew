@@ -41,13 +41,21 @@
                                 <p>供应商工作</p>
                                 <p data-ng-bind="workingTime"></p>
                             </li>
-                            <li data-index="6" ng-class="{'visited':commentTime,'active':payTime}">
+                            <li data-ng-if="status!=16" data-index="6" ng-class="{'visited':commentTime,'active':payTime}">
                                 <p>验收付款</p>
                                 <p data-ng-bind="payTime"></p>
                             </li>
-                            <li data-index="7" ng-class="{'active':commentTime}">
+                            <li data-ng-if="status==16" data-index="6" ng-class="{'visited':cancelTime,'active':toBeRefundedTime }">
+                                <p>待退款</p>
+                                <p data-ng-bind="toBeRefundedTime "></p>
+                            </li>
+                            <li data-ng-if="status!=14" data-index="7" ng-class="{'active':commentTime}">
                                 <p>评价</p>
                                 <p data-ng-bind="commentTime"></p>
+                            </li>
+                            <li data-ng-if="status==14" data-index="7" ng-class="{'active':cancelTime  }">
+                                <p>交易取消</p>
+                                <p data-ng-bind="cancelTime  "></p>
                             </li>
                         </ul>
                     </div>
@@ -173,9 +181,11 @@
                                <tbody>
                                <tr data-ng-repeat="item in zbRequirementApplies">
                                    <td>
-                                       <span data-ng-bind="item.userName" data-ng-model="apply.name"></span>
+                                       <a data-ng-bind="item.userName" data-ng-model="apply.name" data-ng-click=" getCard(item.userId)"></a>
                                    </td>
-                                   <td>88分</td>
+                                   <td>
+                                       <span data-ng-bind="item.ucreditValue"></span>
+                                   </td>
                                    <td>
                                        <span data-ng-bind="item.addTime"></span>
                                    </td>
@@ -299,7 +309,14 @@
                             </div>
                         </div>
                         <div class="tab-info" data-ng-show="isZbProgramsShow">
-                            暂无内容
+
+                            <div>
+                                暂无内容
+                            </div>
+                            <div style="margin: auto; width: 190px" class="margin-top-10" data-ng-show="status==16 && !isZbRequirementAppliesShow">
+                                <button class="btn btn-primary" data-ng-click="refund(id,userId)">去退款</button>
+                                <button class="btn btn-default">返回</button>
+                            </div>
                         </div>
                     </uib-tab>
                     <uib-tab index="2" heading="任务评价">

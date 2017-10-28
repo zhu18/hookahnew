@@ -111,6 +111,7 @@ function renderPage(data) {
       domModel.html('已发布');
       missionApplyInfo(data); //任务报名信息显示
       $('.missionApply').html('至报名截止日期： 已报名 '+data.count+'人');
+      $('.missionResult').hide().prev().show();
 
       break;
     case 7: //二次托管
@@ -151,7 +152,9 @@ function renderPage(data) {
         $('.serviceCommentTime').html(insertRequirementsData.zbComment.addTime);
       }
       $('.missionStatusResult').html('验收通过且已付款，待评价！');
-      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
+      if(insertRequirementsData.zbProgram != null){
+          $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
+      }
       $('.release-first-btnbox div').append('<a class="j_commentBtn" href="javascript:void(0)">评价</a>');
       break;
     case 14:

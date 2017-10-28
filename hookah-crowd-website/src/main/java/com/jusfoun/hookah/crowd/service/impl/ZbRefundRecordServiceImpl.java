@@ -62,7 +62,7 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                 return returnData;
             }
 
-            long refundAmount = 0;
+            double refundAmount = 0;
 
             ZbRequirement zbRequirement = zbRequireService.selectById(Long.parseLong(requirementId));
             if(zbRequirement == null){
@@ -127,13 +127,13 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                     }
 
                     for(ZbTrusteeRecord zbTrusteeRecord : list){
-                        refundAmount += zbTrusteeRecord.getActualMoney();
+                        refundAmount += zbTrusteeRecord.getActualMoney().doubleValue();
                     }
 
                 }
             }
 
-            returnData.setData2((refundAmount == 0) ? refundAmount : (refundAmount / 100));
+            returnData.setData2((refundAmount == 0) ? refundAmount : (refundAmount / 10000));
 
         }catch (Exception e){
             logger.error("众包去退款查询用户信息异常{}", e);
@@ -169,11 +169,12 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
 
             if(zbRequirement.getStatus().equals(Short.parseShort("11"))){
                 // 平台付款给
-                zbRefundRecord.setType(ZbContants.PlatPayType.DATE_EXPIRE.getCode());
-            }else{
+                zbRefundRecord.setType(ZbContants.PlatPayType.PAY_TO_PROVIDER.getCode());
+            }else if(zbRequirement.getStatus().equals(Short.parseShort("16"))){
 
                 List<Condition> filters = new ArrayList<>();
                 filters.add(Condition.eq("requirementId", zbRefundRecord.getRequirementId()));
+                filters.add(Condition.ne("status", 2));
                 ZbRequirementApply apply = zbRequireApplyService.selectOne(filters);
                 if(apply == null){//未查询到相关需求的报名数据  流标
                     zbRefundRecord.setType(ZbContants.PlatPayType.FAIL_TO_SOLD.getCode());
@@ -182,6 +183,7 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                     if(apply.getStatus().equals(ZbContants.ZbRequireMentApplyStatus.DEAL_CANCE.getCode().shortValue())){
                         //驳回失败
                         zbRefundRecord.setType(ZbContants.PlatPayType.BREA_FAILE.getCode());
+                        flag = 1;
                     }else if(apply.getStatus().equals(ZbContants.ZbRequireMentApplyStatus.DEAL_RENEGE_FAIL.getCode().shortValue())){
                         // 违约到期
                         zbRefundRecord.setType(ZbContants.PlatPayType.DATE_EXPIRE.getCode());
@@ -192,6 +194,10 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                         return returnData;
                     }
                 }
+            }else {
+                returnData.setCode(ExceptionConst.Error);
+                returnData.setMessage("业务数据有误，请检查^_^");
+                return returnData;
             }
 
             zbRefundRecord.setAddTime(new Date());
@@ -201,14 +207,14 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
             if(n == 1){
                 ZbRequirement changeStatus = new ZbRequirement();
                 changeStatus.setId(zbRefundRecord.getRequirementId());
-                if(flag == 1){ //标识为流标状态 违约到期  直接改为交易取消
+                if(flag == 1){ //标识为流标状态 违约到期 驳回  直接改为交易取消
 
                     changeStatus.setStatus(ZbContants.Zb_Require_Status.ZB_CANCEL.getCode().shortValue());
 
                     mgZbRequireStatusService.
                             setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.CANCELTIME, DateUtil.getSimpleDate(new Date()));
 
-                }else {
+                }else {// 付款改成评价
 
                     changeStatus.setStatus(ZbContants.Zb_Require_Status.WAIT_PJ.getCode().shortValue());
 
@@ -216,13 +222,18 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                             setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.PAYTIME, DateUtil.getSimpleDate(new Date()));
                 }
                 int m = zbRequireService.updateByIdSelective(changeStatus);
+
+                if(m == 1){
+                    logger.info("付款/退款状态修改成功^_^------{}", m);
+                }else{
+                    logger.error("付款/退款状态修改失败^_^------{}", m);
+                    throw new RuntimeException();
+                }
             }else{
                 throw new RuntimeException();
             }
 
             returnData.setMessage("线下转账确认操作完成^_^");
-
-
 
         }catch (Exception e){
             logger.error("线下确认付款/确认退款操作异常{}", e);

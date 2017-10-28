@@ -4,7 +4,6 @@ import com.jusfoun.hookah.core.domain.zb.ZbProgram;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.ZbProgramService;
 import com.jusfoun.hookah.crowd.service.ZbRequireApplyWebsiteService;
@@ -38,12 +37,13 @@ public class ZbRequirementTaskServiceImpl implements ZbRequirementTaskService {
     @Resource
     private ZbRequireService zbRequireService;
 
-    @Override
-    @Scheduled(cron="0 0 0 * * ?")
+//    @Scheduled(cron="0 0 0 * * ?")
+
+    // 每隔10分钟执行一次
+    @Scheduled(cron="0 */2 * * * ?")
     public void flushRequireRenegeStatusTask() {
         flushStatus();
     }
-
 
     private void flushStatus(){
 

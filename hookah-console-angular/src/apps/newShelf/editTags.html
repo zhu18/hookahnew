@@ -1,0 +1,180 @@
+<style>
+	p table tr td {
+		border: 1px solid #ccc;
+		min-width: 60px;
+	}
+	.goodsEditor p {
+		line-height: 1.8;
+		margin: 10px 0;
+	}
+	.tags-list {
+		float: left;
+		border: 1px solid #ccc;
+		padding: 5px 10px;
+		margin-right: 5px;
+	}
+	.tags-list i {
+		margin-left: 10px;
+		font-size: 16px;
+		cursor: pointer;
+		color: #ccc;
+	}
+	.tags-list i:hover {
+		color: #6b6b6b;
+	}
+	.add-tags {
+		float: left;
+		padding: 5px 10px;
+		border: 1px solid #ccc;
+		font-size: 16px;
+		cursor: pointer;
+	}
+	.tags-box {
+		width: 800px;
+		top: 0;
+		position: absolute;
+		z-index: 99;
+		border: 2px solid #ccc;
+		background: #fff;
+		box-shadow: 0px 1px 5px #ccc;
+	}
+	.tags-box .box-title {
+		font-size: 18px;
+		padding: 0px 10px 10px;
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 0;
+	}
+	.tags-box .close-tag-btn {
+		float: right;
+		font-size: 16px;
+		margin-top: 4px;
+		cursor: pointer;
+	}
+	.tags-box table tr {
+		border-bottom: 1px solid #ccc;
+	}
+	.tags-box table tr label {
+		margin-right: 15px;
+	}
+	/*.tags-box table tr label input {*/
+	/*margin-right: 5px;*/
+	/*}*/
+	.checkTags {
+		padding: 20px 0;
+		text-align: center;
+	}
+	.checkTags .checkTags—btn {
+		margin: 0 20px;
+		padding: 10px 30px;
+		background: #0b7cc3;
+		color: #fff;
+		border-radius: 3px;
+		cursor: pointer;
+		font-size: 14px;
+	}
+	.checkTags .checkTags—btn:hover {
+		background: #1A61A8;
+	}
+	.apiNewUrl-btn {
+		display: inline-block;
+		padding: 2px 20px;
+	}
+	.labelBox {
+		border-bottom: 1px solid #ccc;
+		padding: 10px 5px 5px;
+		overflow: hidden;
+	}
+	.labelBox .labelBox_l {
+		display: block;
+		width: 60px;
+		text-align: center;
+		float: left;
+		height: 100%;
+		line-height: 2em;
+		font-size: 14px;
+
+	}
+	.labelBox .labelBox_r {
+		display: block;
+		float: right;
+		width: 700px;
+		border-left: 1px solid #ccc;
+	}
+	.labelBox .labelBox_r label {
+		margin: 5px 10px;
+	}
+
+</style>
+<div class="row" xmlns="http://www.w3.org/1999/html">
+	<div class="col-sm-12">
+		<div class="console-title console-title-border clearfix">
+			<div class="pull-left"><h5>编辑标签类货架</h5></div>
+			<div class="pull-right">
+				<button class="btn btn-default" ui-sref="shelf.manageGoods">
+					<span class="glyphicon glyphicon-arrow-left"></span> 返回
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<form class="form-horizontal" role="form" name="label">
+			<fieldset>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">名称：</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="goodsName" value="{{label.labelname}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">描述：</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="goodsName" value="{{label.goodsName}}"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">标签：</label>
+					<div class="col-sm-5">
+						<div style="width: 100%;overflow: hidden">
+							<span class="tags-val">
+								<span class="tags-list" ng-repeat="list in labelSelected" labid="{{list.id}}" labname="{{list.name}}">{{list.name}}<i ng-click="removeLabel($event.target)">×</i></span>
+							</span>
+							<span class="add-tags" ng-click="selectLabel()">+</span>
+							<input type="text" class="form-control" name="keywords" style="width:10px;opacity: 0;" ng-model="label.keywords" placeholder="商品标签" required/>
+						</div>
+						<div class="tags-box" ng-show="labelBox">
+							<h3 class="box-title">选择标签信息<span class="close-tag-btn fa fa-times"></span></h3>
+							<div class="labelBox" ng-repeat="item in labelAll">
+								<span class="labelBox_l" data-ng-bind="item.type"></span>
+								<span class="labelBox_r">
+									<label ng-repeat="list in item.goodsLabels">
+										<input type="checkbox" name="tagsCheck" checked ng-if="list.isChecked" value="{{list.labId}}" tagname="{{list.labName}}">
+										<input type="checkbox" name="tagsCheck" ng-if="!list.isChecked" value="{{list.labId}}" tagname="{{list.labName}}">
+										{{list.labName}}</label>
+								</span>
+							</div>
+							<p class="tags-tip" style="padding-left: 20px;">ps:最多选择3个标签</p>
+							<div class="checkTags">
+								<span class="checkTags—btn checkTags-confirmBtn" ng-click="selectLabelBtn()">确定</span>
+								<span class="checkTags—btn checkTags-cancelBtn" ng-click="labelBox = false">取消</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">图片：</label>
+					<div class="col-sm-5">
+
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-5">
+						<button class="btn btn-primary" data-ng-click="submitCheck()" ng-disabled="label.$invalid">
+							<span class="glyphicon glyphicon-saved"></span> 提交审核
+						</button>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

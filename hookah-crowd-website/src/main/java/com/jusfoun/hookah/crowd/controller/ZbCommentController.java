@@ -7,13 +7,13 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.zb.ZbComment;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbCommentShowVo;
 import com.jusfoun.hookah.core.domain.zb.vo.ZbTradeRecord;
-import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.crowd.service.ZbCommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -27,13 +27,13 @@ public class ZbCommentController extends BaseController{
 
     @ResponseBody
     @RequestMapping("/api/levelCount")
-    public ReturnData getLevelCountByUserId(){
+    public ReturnData getLevelCountByUserId(String userId){
 
         List<ZbCommentShowVo> list = null;
 
         try {
-            list = zbCommentService.getLevelCountByUserId(getCurrentUser().getUserId());
-        } catch (HookahException e) {
+            list = zbCommentService.getLevelCountByUserId(userId);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -47,8 +47,8 @@ public class ZbCommentController extends BaseController{
      * @return
      */
     @ResponseBody
-    @RequestMapping("/api/getCommentRecord")
-    public ReturnData getCommentRecord(String currentPage, String pageSize){
+    @RequestMapping(value = "/api/getCommentRecord", method = RequestMethod.POST)
+    public ReturnData getCommentRecord(String currentPage, String pageSize, String userId){
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -68,7 +68,7 @@ public class ZbCommentController extends BaseController{
             }
 
             PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
-            List<ZbComment> list = zbCommentService.getCommentRecordByUserId(getCurrentUser().getUserId());
+            List<ZbComment> list = zbCommentService.getCommentRecordByUserId(userId);
 
             page = new PageInfo<ZbComment>(list);
 
@@ -80,7 +80,7 @@ public class ZbCommentController extends BaseController{
             returnData.setData(pagination);
 
 
-        } catch (HookahException e) {
+        } catch (Exception e) {
             logger.error("评价检索异常{}", e);
             returnData.setCode(ExceptionConst.Error);
             return returnData;
@@ -96,8 +96,8 @@ public class ZbCommentController extends BaseController{
      * @return
      */
     @ResponseBody
-    @RequestMapping("/api/getTradeRecord")
-    public ReturnData getTradeRecord(String currentPage, String pageSize){
+    @RequestMapping(value = "/api/getTradeRecord", method = RequestMethod.POST)
+    public ReturnData getTradeRecord(String currentPage, String pageSize, String userId){
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -117,7 +117,7 @@ public class ZbCommentController extends BaseController{
             }
 
             PageHelper.startPage(pageNumberNew, pageSizeNew);   //pageNum为第几页，pageSize为每页数量
-            List<ZbTradeRecord> list = zbCommentService.getTradeRecordByUserId(getCurrentUser().getUserId());
+            List<ZbTradeRecord> list = zbCommentService.getTradeRecordByUserId(userId);
             page = new PageInfo<ZbTradeRecord>(list);
 
             pagination.setTotalItems(page.getTotal());
@@ -128,7 +128,7 @@ public class ZbCommentController extends BaseController{
             returnData.setData(pagination);
 
 
-        } catch (HookahException e) {
+        } catch (Exception e) {
             logger.error("评价检索异常{}", e);
             returnData.setCode(ExceptionConst.Error);
             return returnData;
