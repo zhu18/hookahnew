@@ -1,6 +1,7 @@
 class EditTagsController {
 	constructor($scope, $rootScope, $stateParams, $http, $state, $uibModal, usSpinnerService, growl) {
-
+		$scope.labelBox = false;
+		$scope.labelSelected = [];
 		$scope.selectLabel = function () {
 			var arr = [];
 			if ($scope.labelSelected) {
@@ -104,8 +105,7 @@ class EditTagsController {
 					ids.push(item.id);
 					names.push(item.name);
 				});
-				$scope.goodsData.keywords = ids.join(',');
-				$scope.goodsData.keywordsNames = names.join(',');
+
 			}
 		}
 	}
