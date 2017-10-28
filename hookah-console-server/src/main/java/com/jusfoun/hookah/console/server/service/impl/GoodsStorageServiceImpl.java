@@ -1,13 +1,13 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.console.server.util.DictionaryUtil;
-import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.GoodsStorageMapper;
 import com.jusfoun.hookah.core.domain.GoodsLabel;
 import com.jusfoun.hookah.core.domain.GoodsStorage;
 import com.jusfoun.hookah.core.domain.es.EsGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoodsStorage;
 import com.jusfoun.hookah.core.domain.vo.EsGoodsVo;
+import com.jusfoun.hookah.core.domain.vo.GoodsLabelsPagVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsStorageVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -75,7 +75,8 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
     }
 
     @Override
-    public Pagination searchByLabels(String storageId, int typeId, String labels, Integer currentPage, Integer pageSize, List<GoodsLabel> goodsLabels) throws Exception {
+    public GoodsLabelsPagVo searchByLabels(String storageId, int typeId, String labels, Integer currentPage, Integer pageSize) throws Exception {
+        GoodsLabelsPagVo vo = new GoodsLabelsPagVo();
         //拼装标签
         MgGoodsStorage mgGoodsStorage = mgGoodsStorageService.selectById(storageId);
         List<MgGoodsStorage.LabelsType> list = mgGoodsStorage.getTypeList();
@@ -84,6 +85,7 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
                 if(StringUtils.isBlank(labels)) {
                     labels = type.getLabels();
                 }
+                List<GoodsLabel> goodsLabels = new ArrayList<>();
                 for(String label : type.getLabels().split(",")) {
                     GoodsLabel goodsLabel = new GoodsLabel();
                     goodsLabel.setLabId(label);
@@ -91,19 +93,21 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
                             ? "" : DictionaryUtil.getGoodsLabelById(label).getLabName());
                     goodsLabels.add(goodsLabel);
                 }
+                vo.setGoodsLabelList(goodsLabels);
                 break;
             }
         }
         //es搜索
-        EsGoodsVo vo = new EsGoodsVo();
+        EsGoodsVo vo1 = new EsGoodsVo();
         if(pageSize != null)
-            vo.setPageSize(pageSize);
+            vo1.setPageSize(pageSize);
         if(currentPage != null)
-            vo.setPageNumber(currentPage);
+            vo1.setPageNumber(currentPage);
         EsGoods esGoods = new EsGoods();
         esGoods.setKeywordsArrays(labels.replace(",", " "));
-        vo.setEsGoods(esGoods);
-        return elasticSearchService.search(vo);
+        vo1.setEsGoods(esGoods);
+        vo.setPagination(elasticSearchService.search(vo1));
+        return vo;
     }
 
 }
