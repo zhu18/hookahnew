@@ -668,4 +668,11 @@
 
     </update>
 
+    <select id="getGoodsByIds" resultMap = "BaseResultMap">
+        SELECT * FROM goods WHERE is_onsale = 1 and check_status = 1 and goods_id IN
+        <foreach collection='array' index='index' item='item' open='(' separator=',' close=')'>
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>
