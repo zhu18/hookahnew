@@ -2,6 +2,7 @@ class ManageGoodsController {
 	constructor($scope, $rootScope, $stateParams, $http, $state, $uibModal, usSpinnerService, growl) {
 		$scope.pageTitle = $stateParams.name;
 		$scope.editTagBox = false;
+		$scope.goodsChangeList = '';
 		$scope.search = function () {
 			var promise = $http({
 				method: 'GET',
@@ -11,6 +12,14 @@ class ManageGoodsController {
 			promise.then(function (res, status, config, headers) {
 				$rootScope.loadingState = false;
 				$scope.pageData = res.data.data;
+				if($scope.pageData.goodsList.length > 0){
+					var arr = [];
+					$scope.pageData.goodsList.forEach(function(item){
+						arr.push(item.goodsId)
+					});
+					$scope.goodsChangeList = arr.join(',');
+				}
+				$scope.getGoodsList();
 			});
 		};
 		$scope.editTags = function(lists){  //点击编辑
@@ -186,6 +195,49 @@ class ManageGoodsController {
 			});
 			promise.then(function (res, status, config, headers) {
 				if(res.data.code == 1){
+					$scope.goodsList = res.data.data;
+					if($scope.goodsList.list.length > 0){
+						$scope.goodsList.list.forEach(function(item){
+							if($scope.goodsChangeList.indexOf(item.goodsId) >= 0){
+								item.isChecked = true;
+							}else{
+								item.isChecked = false;
+							}
+						})
+					}
+
+				}
+			});
+		};
+		$scope.delGoods = function(goodsId){
+			$scope.pageData.goodsList.forEach(function(item,index){
+				if(item.goodsId == goodsId){
+					delete $scope.pageData.goodsList.splice(index,1);
+				}
+			});
+			$scope.pageChanged()
+		};
+		$scope.addGoods = function(item){
+			$scope.pageData.goodsList.push(item);
+			item.isChecked = true
+		};
+		$scope.submitStorage = function(){
+			console.log($scope.pageData)
+			var promise = $http({
+				method: 'POST',
+				url: $rootScope.site.apiServer + "/api/goods/allNotInStorage",
+				data: {asdasd:JSON.stringify($scope.pageData)},
+				transformRequest: function (obj) {
+					var str = [];
+					for (var p in obj) {
+						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					}
+					return str.join("&");
+				}
+			});
+			promise.then(function (res, status, config, headers) {
+				if(res.data.code == 1){
+
 
 				}
 			});
@@ -194,7 +246,13 @@ class ManageGoodsController {
 
 
 
-		$scope.getGoodsList()
+
+		$scope.pageChanged = function () {//翻页
+			if($stateParams.data){
+				$rootScope.pagination.currentPage = $stateParams.data.data.Params.currentPage;
+			}
+			$scope.getGoodsList();
+		};//翻页
 		$scope.search()
 
 
