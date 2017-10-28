@@ -45,7 +45,7 @@
 								<span class="column-text" ng-bind="item.describle"></span>
 							</td>
 							<td>
-								<img ng-src="item.img" style="width:50px;">
+								<img ng-src="{{item.img}}" style="width:50px;">
 							</td>
 							<td>
 								<span class="column-text" ng-bind="item.updateTime"></span>
@@ -55,7 +55,7 @@
 								<a ui-sref="shelf.manageGoods({id:item.shelvesId,name:item.shelvesName})">管理商品</a>
 								<span class="text-explode">|</span>
 								<i class="link-space"></i>
-								<a  ui-sref="shelf.edit({type:'modify',id:item.shelvesId})">修改</a>
+								<a  ui-sref="shelf.edit({type:'modify',id:item.id})">修改</a>
 
 
 
