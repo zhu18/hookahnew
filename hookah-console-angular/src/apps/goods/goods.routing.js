@@ -1,5 +1,6 @@
-import ShelfController from "../shelf/ShelfController";
-import ManageGoodsController from "../shelf/ManageGoodsController";
+import ShelfController from "../newShelf/ShelfController";
+import ManageGoodsController from "../newShelf/ManageGoodsController";
+import EditTagsController from "../newShelf/EditTagsController";
 import CategoryController from "../category/CategoryController";
 import TagsListController from "./TagsListController";
 import MoveController from "../category/MoveController";
@@ -61,31 +62,31 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			controller: TagsListController,
 			permission: 'items_tags'
 		})
-		.state('shelf.search', {
-			url: '/shelf/search',
-			template: require('../shelf/list.html'),
-			controller: ShelfController,
-			permission: 'shelf_search'
-		})
-		.state('shelf.add', {
-			url: '/shelf/add',
-			template: require('../shelf/add.html'),
-			controller: ShelfController,
-			permission: 'shelf_add'
-		})
-		.state('shelf.update', {
-			url: '/shelf/update',
-			template: require('../shelf/update.html'),
-			controller: ShelfController,
-			permission: 'shelf_update'
-		})
-		.state('shelf.manageGoods', {
-			params: {'data': null},
-			url: '/shelf/manageGoods',
-			template: require('../shelf/manageGoods.html'),
-			controller: ManageGoodsController,
-			permission: 'goodsGOshelfManageGoods'
-		})
+		// .state('shelf.search', {
+		// 	url: '/shelf/search',
+		// 	template: require('../shelf/list.html'),
+		// 	controller: ShelfController,
+		// 	permission: 'shelf_search'
+		// })
+		// .state('shelf.add', {
+		// 	url: '/shelf/add',
+		// 	template: require('../shelf/add.html'),
+		// 	controller: ShelfController,
+		// 	permission: 'shelf_add'
+		// })
+		// .state('shelf.update', {
+		// 	url: '/shelf/update',
+		// 	template: require('../shelf/update.html'),
+		// 	controller: ShelfController,
+		// 	permission: 'shelf_update'
+		// })
+		// .state('shelf.manageGoods', {
+		// 	params: {'data': null},
+		// 	url: '/shelf/manageGoods',
+		// 	template: require('../shelf/manageGoods.html'),
+		// 	controller: ManageGoodsController,
+		// 	permission: 'goodsGOshelfManageGoods'
+		// })
 		.state('category.search', {
 			url: '/category/search',
 			template: require('../category/list.html'),
@@ -157,5 +158,36 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			template: require('../attrtype/add_child.html'),
 			controller: AttrTypeController,
 			permission: 'attrtype_edit_child'
+		})
+		.state('shelf.search', {
+			url: '/shelf/search',
+			template: require('../newShelf/list.html'),
+			controller: ShelfController,
+			permission: 'shelf_search'
+		})
+		.state('shelf.add', {
+			url: '/shelf/add',
+			template: require('../newShelf/add.html'),
+			controller: ShelfController,
+			permission: 'shelf_add'
+		})
+		.state('shelf.update', {
+			url: '/shelf/update',
+			template: require('../newShelf/update.html'),
+			controller: ShelfController,
+			permission: 'shelf_update'
+		})
+		.state('shelf.manageGoods', {
+			params: {'data': null},
+			url: '/shelf/manageGoods/:id/:name',
+			template: require('../newShelf/manageGoods.html'),
+			controller: ManageGoodsController,
+			permission: 'goodsGOshelfManageGoods'
+		})
+		.state('shelf.editTags', {
+			url: '/shelf/editTags',
+			template: require('../newShelf/editTags.html'),
+			controller: EditTagsController,
+			permission: 'shelf_editTags'
 		})
 };
