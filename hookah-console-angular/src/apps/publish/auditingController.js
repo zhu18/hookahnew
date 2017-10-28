@@ -22,7 +22,7 @@ class auditingController {
                     $scope.contactName=item.contactName;
                     $scope.contactPhone=item.contactPhone;
                     $scope.title=item.title;
-                    $scope.tag=item.tag.split(',');
+                    $scope.tag=item.tag?item.tag.split(','):null;
                     $scope.type=item.type;
                     $scope.description=item.description;
                     $scope.deliveryDeadline=item.deliveryDeadline;

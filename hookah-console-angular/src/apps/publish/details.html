@@ -1,7 +1,19 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="console-title console-title-border clearfix">
-            <div class="pull-left"><h5>需求大厅->报名中</h5></div>
+            <div class="pull-left">
+                <h5>需求大厅->
+                    <span data-ng-show="status==1" >待审核</span>
+                    <span data-ng-show="status==4" >待发布</span>
+                    <span data-ng-show="status==5" >报名中</span>
+                    <span data-ng-show="status==6" >资格筛选</span>
+                    <span data-ng-show="status==9" >待验收</span>
+                    <span data-ng-show="status==11">已验收待付款</span>
+                    <span data-ng-show="status==16">待退款</span>
+                    <span data-ng-show="status==14">交易取消</span>
+                    <span data-ng-show="status==15">交易完成</span>
+                </h5>
+            </div>
         </div>
         <div class="row margin-top form-inline">
             <div class="col-sm-12 margin-top-10 clearfix">
@@ -104,7 +116,7 @@
                         <tr>
                             <th>附件</th>
                             <td colspan="3">
-                                <a data-ng-repeat="item in zbAnnexes"  data-ng-href="{{item.filePath}}" data-ng-bind="item.fileName" class="margin-right-5"><span class="glyphicon glyphicon-download-alt" aria-hidden="true" target="_blank"></span>
+                                <a data-ng-repeat="item in zbAnnexes"  data-ng-href="{{item.filePath}}"  class="margin-right-5" target="_blank"><span class="glyphicon glyphicon-save" ></span> <span data-ng-bind="item.fileName" ></span>
                                 </a>
                             </td>
                         </tr>

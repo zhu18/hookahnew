@@ -30,7 +30,7 @@ class detailsController {
                     $scope.contactName=zbRequirement.contactName;
                     $scope.contactPhone=zbRequirement.contactPhone;
                     $scope.title=zbRequirement.title;
-                    $scope.tag=zbRequirement.tag.split(',');
+                    $scope.tag=zbRequirement.tag?zbRequirement.tag.split(','):null;
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
                     $scope.deliveryDeadline=zbRequirement.deliveryDeadline;

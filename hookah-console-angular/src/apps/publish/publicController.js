@@ -18,7 +18,7 @@ class publicController {
                   $scope.contactPhone=item.contactPhone;
                   $scope.title=item.title;
                   $scope.type=item.type;
-                  $scope.tag=item.tag.split(',');
+                  $scope.tag=item.tag?item.tag.split(','):null;
                   $scope.description=item.description;
                   $scope.deliveryDeadline=item.deliveryDeadline;
                   var tomorrow = new Date();

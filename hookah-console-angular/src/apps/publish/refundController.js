@@ -20,7 +20,7 @@ class refundController {
                 if (res.data.code == '1') {
                     $scope.cardOwner=res.data.data.cardOwner;
                     $scope.cardCode=res.data.data.cardCode;
-                    $scope.addTime=res.data.data.addTime;
+                    $scope.addTime=new Date();
                     $scope.money=res.data.data2;
 
                 } else {
