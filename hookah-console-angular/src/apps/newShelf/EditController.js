@@ -1,56 +1,53 @@
 class EditController {
 	constructor($scope, $rootScope, $http, $state,$stateParams, $uibModal, usSpinnerService, growl) {
-		$scope.pageTitle = $stateParams.type == 'add'?'添加':'修改';
-
-
+		
 		$scope.add = function () {
+			var url = '';
+			if($stateParams.type == 'add'){
+				url = "/api/storage/create"
+			}else{
+				url = "/api/storage/update"
+			}
 			var promise = $http({
 				method: 'POST',
-				url: $rootScope.site.apiServer + "/api/storage/create",
+				url: $rootScope.site.apiServer + url,
 				data: $("#shelfForm").serialize()
 			});
 			promise.then(function (res, status, config, headers) {
 				if (res.data.code == "1") {
-					growl.addSuccessMessage("数据添加完毕。。。");
-				}
-			});
-		};
-
-		$scope.update = function () {
-			var promise = $http({
-				method: 'POST',
-				url: $rootScope.site.apiServer + "/api/shelf/update",
-				data: $("#shelfForm").serialize()
-			});
-			promise.then(function (res, status, config, headers) {
-				if (res.data.code == "1") {
-					growl.addSuccessMessage("数据修改完毕。。。");
+					alert($scope.pageTitle+"成功");
 					$state.go('shelf.search');
 				}
 			});
 		};
-
-
-
-		$scope.updateStatus = function (item, flag) {
-			console.log(item.shelvesId, item.shelvesStatus);
+		$scope.loadData = function (id) {
 			var promise = $http({
 				method: 'POST',
-				url: $rootScope.site.apiServer + "/api/shelf/updateStatus",
-				params: {shelvesId: item.shelvesId, shelvesStatus: flag}
+				url: $rootScope.site.apiServer + "/api/storage/findStorage",
+				params: {
+					id:id
+				}
 			});
 			promise.then(function (res, status, config, headers) {
-				if (res.data.code == 1) {
-					$scope.search();
+				if (res.data.code == "1") {
+					$scope.name = res.data.data.name;
+					$scope.id = res.data.data.id;
+					$scope.describle = res.data.data.describle;
+					$scope.img = res.data.data.img;
+					$scope.goodsImgView = res.data.data.img;
+					$scope.stOrder = res.data.data.stOrder;
 				}
 			});
 		};
-
-
-		$scope.updateShelf = function (event, item) {
-			$rootScope.editData = item;
-			$state.go('shelf.update', {data: item});
-		};
+		if($stateParams.type == 'add'){
+			$scope.pageTitle = '添加';
+			$scope.isModify = false;
+		}else{
+			$scope.pageTitle = '修改';
+			$scope.loadData($stateParams.id);
+			$scope.isModify = true;
+			$scope.storageId = $stateParams.id;
+		}
 
 		$scope.img_upload = function (files, type, name) {//单次提交图片的函数
 			var fileUrl = $rootScope.site.staticServer + '/upload/img';
@@ -73,6 +70,9 @@ class EditController {
 				}
 			});
 		};
+
+
+
 
 	}
 }
