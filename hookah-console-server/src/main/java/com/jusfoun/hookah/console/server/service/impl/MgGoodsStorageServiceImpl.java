@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.console.server.util.DictionaryUtil;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoodsStorage;
@@ -43,6 +44,18 @@ public class MgGoodsStorageServiceImpl extends GenericMongoServiceImpl<MgGoodsSt
                 typeList.add(type);
             }
             mgGoodsStorage.setTypeList(typeList);
+        }else {
+            List<MgGoodsStorage.LabelsType> list = mgGoodsStorage.getTypeList();
+            for(MgGoodsStorage.LabelsType type : list) {
+                if(StringUtils.isNotBlank(type.getLabels())) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for(String label : type.getLabels().split(",")) {
+                        stringBuilder.append(DictionaryUtil.getGoodsLabelById(label) == null
+                                ? "" : DictionaryUtil.getGoodsLabelById(label).getLabName()).append(",");
+                    }
+                    type.setLabelsName(stringBuilder.substring(0, stringBuilder.length() - 1));
+                }
+            }
         }
         BeanUtils.copyProperties(mgGoodsStorage, vo);
         //商品详情补充
@@ -56,7 +69,10 @@ public class MgGoodsStorageServiceImpl extends GenericMongoServiceImpl<MgGoodsSt
                 for (String goodsId : goodsIds) {
                     for(Goods goods : list1) {
                         if(goodsId.equals(goods.getGoodsId())) {
-                            list.add(goods);
+                            Goods goods1 = new Goods();
+                            goods1.setGoodsId(goods.getGoodsId());
+                            goods1.setGoodsName(goods.getGoodsName());
+                            list.add(goods1);
                             newGoodsIds.append(goodsId).append(",");
                             break;
                         }
