@@ -45,7 +45,7 @@ class ManageGoodsController {
 				}
 				$scope.labelSelected = arr;
 			}
-			console.log($scope.labelSelected)
+			// console.log($scope.labelSelected)
 			$scope.selectLabel = function () {
 				var arr = [];
 				if ($scope.labelSelected) {
@@ -184,6 +184,7 @@ class ManageGoodsController {
 			});
 		};
 		$scope.getGoodsList = function () {
+
 			var promise = $http({
 				method: 'GET',
 				url: $rootScope.site.apiServer + "/api/goods/allNotInStorage",
@@ -197,6 +198,7 @@ class ManageGoodsController {
 				if(res.data.code == 1){
 					$scope.goodsList = res.data.data;
 					if($scope.goodsList.list.length > 0){
+
 						$scope.goodsList.list.forEach(function(item){
 							if($scope.goodsChangeList.indexOf(item.goodsId) >= 0){
 								item.isChecked = true;
@@ -218,15 +220,25 @@ class ManageGoodsController {
 			$scope.pageChanged()
 		};
 		$scope.addGoods = function(item){
-			$scope.pageData.goodsList.push(item);
-			item.isChecked = true
+			if($scope.pageData.goodsList.length <= 6) {
+				$scope.pageData.goodsList.push(item);
+				item.isChecked = true
+			}else{
+				$rootScope.openErrorDialogModal("最多选择6个商品");
+			}
 		};
 		$scope.submitStorage = function(){
-			console.log($scope.pageData)
+			var arr = [];
+			$scope.pageData.goodsList.forEach(function(item){
+				arr.push(item.goodsId)
+			});
+
+			$scope.pageData.goodsIds = arr.join(',');
+			// console.log($scope.pageData.goodsIds)
 			var promise = $http({
 				method: 'POST',
-				url: $rootScope.site.apiServer + "/api/goods/allNotInStorage",
-				data: {asdasd:JSON.stringify($scope.pageData)},
+				url: $rootScope.site.apiServer + "/api/storage/upsertDetails",
+				data: {jsonStr:JSON.stringify($scope.pageData)},
 				transformRequest: function (obj) {
 					var str = [];
 					for (var p in obj) {
@@ -237,7 +249,7 @@ class ManageGoodsController {
 			});
 			promise.then(function (res, status, config, headers) {
 				if(res.data.code == 1){
-
+					$scope.search()
 
 				}
 			});
