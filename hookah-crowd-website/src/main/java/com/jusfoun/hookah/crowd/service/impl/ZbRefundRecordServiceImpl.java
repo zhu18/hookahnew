@@ -97,7 +97,7 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
 
                     returnData.setData(payBankCard);
 
-                    refundAmount = 0;
+                    refundAmount = zbRequirement.getRewardMoney() / 100;
 
                 }else {
 
@@ -130,10 +130,12 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                         refundAmount += zbTrusteeRecord.getActualMoney().doubleValue();
                     }
 
+                    refundAmount = (refundAmount == 0) ? refundAmount : (refundAmount / 10000);
+
                 }
             }
 
-            returnData.setData2((refundAmount == 0) ? refundAmount : (refundAmount / 10000));
+            returnData.setData2(refundAmount);
 
         }catch (Exception e){
             logger.error("众包去退款查询用户信息异常{}", e);

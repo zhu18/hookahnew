@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,6 +54,9 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
 
     @Resource
     ZbRequireApplyWebsiteService zbRequireApplyWebsiteService;
+
+    @Resource
+    MgZbProviderService mgZbProviderService;
 
     @Resource
     public void setDao(ZbProgramMapper ZbProgramMapper) {
@@ -165,6 +167,8 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
             ZbRequirementApply zbRequirementApply = new ZbRequirementApply();
             zbRequirementApply.setStatus(Integer.valueOf(ZbContants.ZbRequireMentApplyStatus.DEAL_SUCCESS.getCode()).shortValue());//记得改成常量
             zbRequireApplyWebsiteService.updateByConditionSelective(zbRequirementApply,filters);
+
+            mgZbProviderService.setUCreditValueByPJ(zbRequirement.getUserId(), zbComment.getLevel());
 
             returnData.setData(zbComment);
         } catch (Exception e) {
