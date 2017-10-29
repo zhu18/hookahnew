@@ -1,0 +1,105 @@
+/*menu-start*/
+
+#newBridge{ display: none}
+
+
+.exchange-index-menu {
+    position: absolute;
+    z-index: 1000;
+    width: 180px;
+    height:400px;
+    background: rgba(64,64,64,0.8);
+}
+
+.exchange-index-menu .menu-list {
+    font-size:0;
+    margin-top: 15px;
+}
+.exchange-index-menu .menu-list>li {
+    display: inline-block;
+    color: white;
+    line-height: 42px;
+    height: 42px;
+    width:180px;
+    font-size: 14px;
+}
+.exchange-index-menu .menu-list li .oneA{
+    color:#fff;
+    display: block;
+    height:100%;
+    width:100%;
+    position: relative;
+}
+.exchange-index-menu .menu-list li .oneA i{
+    display: block;
+    float: left;
+    width: 16px;
+    margin: 13px 16px 0 22px;
+}
+.exchange-index-menu .menu-list li .oneA img{
+    display: block;
+    width:100%;
+}
+.exchange-index-menu .menu-list li:hover{
+    background: #fff;
+}
+.exchange-index-menu .menu-list li:hover .oneA{
+    color:#fff;
+    font-weight: bold;
+    text-decoration: none;
+    color:#000;
+}
+
+.exchange-index-menu .menu-list li > a.Bh {
+    color: #0c182d;
+}
+.exchange-index-menu .menu-list li > a.Bh:hover {
+    color: #7791bd;
+}
+.exchange-index-menu>.menu-list>li.menu-item.active>a:before {
+    position: absolute;
+    top: 16px;
+    right: 10px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #000;
+    z-index: 999;
+}
+.exchange-index-menu .menu-list > li:last-child {
+    border-bottom: 2px solid #3E557B;
+}
+.menu-son-list a:hover {
+    color: #e10000;
+    text-decoration: underline;
+}
+.exchange-index-menu .menu-son-list,.exchange-index-menu-item {
+    display: none;
+    top: 0;
+    left: 180px;
+    position: absolute;
+    background-color: white;
+    height: 400px;
+    width: 800px;
+}
+
+.exchange-index-menu .menu-son-list ul li,.exchange-index-menu-item li {
+    float: left;
+    font-size: 14px;
+    padding: 5px 20px;
+    height:26px;
+}
+
+.exchange-index-menu-item{
+    display: block;
+    width: 100%;
+    top: 0;
+    padding: 10px;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-left: 0;
+}
+/*menu-end*/

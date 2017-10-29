@@ -32,7 +32,10 @@ var htmlPart = {
 </script>
 
 <div class="bannerBox">
-
+  <div class="grid-row bdg-row" style="position: relative">
+    <!--菜单-->
+    <%include("/layout/menu.html"){} %>
+  </div>
   <div class="grid-row banner">
     <a href="/usercenter/crowdsourcingRelease" class="banner-btn active">发布需求</a>
     <a href="/crowdsourcing-list" class="banner-btn">接任务</a>

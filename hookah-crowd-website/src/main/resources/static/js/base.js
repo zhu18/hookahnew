@@ -11,6 +11,10 @@ $(document).ready(function () {
         $('#exchange_menu').show();
         $(".exchange-index-menu").hide();
         showMenu()
+    } else if(pathname.indexOf('/crowdsourcing') >= 0) {
+      $('#exchange_menu').show();
+        $(".exchange-index-menu").hide();
+        showMenu()
     }else if(pathname.indexOf('/exchange/label') >= 0) {
         $('#exchange_menu').show();
         $(".exchange-index-menu").hide();
@@ -19,13 +23,18 @@ $(document).ready(function () {
         $('#exchange_menu').hide();
         $(".exchange-index-menu").hide();
     }
-	var pathname = window.location.pathname;
-	if (pathname.indexOf('/exchange') >= 0) {
-		$('#exchange_menu').show();
-		$(".header-bottom-bar ul li").css("width", "14.28%");
-	} else {
-		$('#exchange_menu').hide();
-	}
+
+  function showMenu(){
+    $('#exchange_menu').mouseover(function(){
+      $(".exchange-index-menu").show();
+    });
+    $('.exchange-index-menu').mouseleave(function(){
+      $(".exchange-index-menu").hide();
+    });
+
+  }
+
+
 
 	$('.header-bottom-bar ul li').each(function () {
 		var elementVal = $(this).children('a').attr('href');
@@ -44,15 +53,27 @@ $(document).ready(function () {
 			$('.header-bottom-bar ul li:nth-child(6)').addClass('active');
 		}
 	});
-	$('#navList li').each(function () {
+
+  $(".exchange-index-menu .menu-list .menu-item").hover(function () {
+    $(this).children('.menu-son-list').show().end().siblings().children('.menu-son-list').hide();
+    $(this).addClass('active').siblings().removeClass('active');
+  });
+  $(".exchange-index-menu .menu-list").mouseleave(function(){
+    $(".exchange-index-menu .menu-son-list").css('display', 'none');
+    $(".exchange-index-menu .menu-list .menu-item").removeClass('active');
+
+  })
+
+  $('#navList li').each(function () {
 		if(pathname.indexOf('/exchange/index') >= 0){
 			$('#navList li:nth-child(1)').addClass('active');
 		}
 		if(pathname.indexOf('/crowdsourcing') >= 0){
-			$('#navList li:nth-child(3)').addClass('active');
+			$('#navList li:nth-child(2)').addClass('active');
 		}
 		if(pathname.indexOf('/crowdsourcingRelease') >= 0){
-      $('#navList li:nth-child(3)').removeClass('active');
+      $('#navList li:nth-child(2)').removeClass('active');
+      $('#navList li:nth-child(4)').addClass('active');
 
     }
 		if(pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0){
@@ -62,6 +83,7 @@ $(document).ready(function () {
 			$('#navList li:nth-child(4)').addClass('active');
 		}else if(pathname.indexOf('/usercenter') >= 0){
 			$('#navList li:nth-child(5)').addClass('active');
+			$('#exchange_menu').hide();
 		}
 	});
 
