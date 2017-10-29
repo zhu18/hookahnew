@@ -500,6 +500,8 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             zbComment.setAddTime(new Date());
             zbComment.setUserType(2);
             ZbComment insert = zbCommentService.insert(zbComment);
+            //更改评价信誉分
+            mgZbProviderService.setUCreditValueByPJ(zbProgram.getUserId(), level);
 
             //修改报名状态为待评价
             zbRequireApplyWebsiteService.updateStatus(zbProgram.getApplyId(), ZbContants.ZbRequireMentApplyStatus.COMMENT_ING.getCode());
