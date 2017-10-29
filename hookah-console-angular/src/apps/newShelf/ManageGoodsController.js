@@ -251,6 +251,7 @@ class ManageGoodsController {
 			});
 			promise.then(function (res, status, config, headers) {
 				if(res.data.code == 1){
+					alert('提交成功');
 					$scope.search()
 
 				}

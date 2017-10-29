@@ -13,7 +13,6 @@ var head = {
 	}
 	.cm-banner-in {
 		width: 1260px;
-		height: 400px;
 		position: absolute;
 		top: 0;
 		left: 50%;
@@ -113,13 +112,7 @@ var htmlPart = {
 		<div class="storageList">
 			<h2>${item.name}</h2>
 			<div class="storageBox">
-				<%if(itemLP.index == 1){%>
 				<div class="storageImg storageImg_1 grid-left">
-				<%}else if (itemLP.index == 2){%>
-				<div class="storageImg storageImg_2 grid-left">
-				<%}else if (itemLP.index == 3){%>
-				<div class="storageImg storageImg_3 grid-left">
-				<%}%>
 					<img class="one_img" src="${item.img}" alt="">
 					<%if(itemLP.first){%>
 					<div class="box_1">

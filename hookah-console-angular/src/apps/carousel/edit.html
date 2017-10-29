@@ -98,7 +98,7 @@
 		</div>
 	</div>
 	<div class="col-sm-12">
-		<form class="form-horizontal" role="form" id="carouselForm" name="carouselForm" novalidate>
+		<form class="form-horizontal" role="form" id="carouselForm" name="carouselForm" >
 			<fieldset>
 				<h5 style="padding: 0px 20px;">基本信息</h5>
 				<div class="form-group">
@@ -114,14 +114,20 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-sm-2 control-label">链接：<span class="must">*</span></label>
+					<div class="col-sm-4">
+						<input type="text" id="imgLink" name="imgLink" class="form-control" data-ng-model="pageData.imgLink"  required/>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-2 control-label">图片：<span class="must">*</span></label>
 					<div class="col-sm-4">
 						<div class="goodsImg-box">
 							<input class="fileBtn" type="file" id="one-input" name="filename" accept="image/*" max-size="2MB" file-model="images" onchange="angular.element(this).scope().img_upload(this.files)"/>
-							<img class="fileImg" ng-src="{{goodsImgView}}" alt="">
+							<img class="fileImg" ng-src="{{pageData.imgUrl}}" alt="">
 							<span class="fileAdd" ng-if="!goodsImgView">+</span>
 							<span class="fileBg" ng-if="goodsImgView">点击替换</span>
-							<input type="text" style="opacity: 0;width:5px;position: absolute;top: 0; z-index:4;" name="imgLink" ng-model="goodsImgView" required>
+							<input type="text" style="opacity: 0;width:5px;position: absolute;top: 0; z-index:4;" name="imgUrl" ng-model="pageData.imgUrl" required>
 						</div>
 					</div>
 				</div>

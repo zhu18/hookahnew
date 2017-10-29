@@ -1,16 +1,10 @@
 class EditController {
 	constructor($scope, $rootScope, $http, $state,$stateParams, $uibModal, usSpinnerService, growl) {
-		if($stateParams.type == 'add'){
-			$scope.pageTitle = '添加'
-		}else{
-			$scope.pageTitle = '修改'
-		}
-
+		var url= '';
 		$scope.add = function () {
-			$scope.pageData.imgLink=$scope.goodsImgView;
 			var promise = $http({
 				method: 'POST',
-				url: $rootScope.site.apiServer + "/api/image/add",
+				url: url,
 				data: {homeImageVo:JSON.stringify($scope.pageData)},
 				transformRequest: function (obj) {
 					var str = [];
@@ -22,8 +16,20 @@ class EditController {
 			});
 			promise.then(function (res, status, config, headers) {
 				if (res.data.code == "1") {
-					alert("数据添加完毕。。。");
+					alert($scope.pageTitle+"成功");
 					$state.go('carousel.search');
+				}
+			});
+		};
+		$scope.loadData = function () {
+			var promise = $http({
+				method: 'POST',
+				url: $rootScope.site.apiServer + "/api/image/findById",
+				params: {imgId:$stateParams.id}
+			});
+			promise.then(function (res, status, config, headers) {
+				if (res.data.code == "1") {
+					$scope.pageData = res.data.data;
 				}
 			});
 		};
@@ -46,11 +52,23 @@ class EditController {
 				$rootScope.loadingState = false;
 				if (res.data.code == 1) {
 					$scope.goodsImgView = res.data.data[0].absPath;
+					$scope.pageData.imgUrl = res.data.data[0].absPath;
 				} else {
 					growl.addErrorMessage("上传失败");
 				}
 			});
 		};
+
+
+
+		if($stateParams.type == 'add'){
+			$scope.pageTitle = '添加'
+			url = $rootScope.site.apiServer + "/api/image/add";
+		}else{
+			$scope.pageTitle = '修改'
+			url = $rootScope.site.apiServer + "/api/image/edit";
+			$scope.loadData()
+		}
 
 	}
 }
