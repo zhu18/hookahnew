@@ -1,27 +1,12 @@
 package com.jusfoun.hookah.crowd.controller;
 
-import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.GoodsFavorite;
-import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
-import com.jusfoun.hookah.core.domain.vo.GoodsShelvesVo;
-import com.jusfoun.hookah.core.domain.vo.GoodsVo;
-import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
-import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.crowd.service.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author huang lei
@@ -30,13 +15,20 @@ import java.util.Map;
  */
 @Controller
 public class CrowdSourcingController {
+
+
+    @Resource
+    CategoryService categoryService;
+
     /**
      * 数据众包首页
      */
     @RequestMapping(value = "/crowdsourcing", method = RequestMethod.GET)
     public String index(Model model) {
+        model.addAttribute("categoryInfo", categoryService.getCatTree());
         return "crowdsourcing/index";
     }
+
     /**
      * 数据众包首页
      */
@@ -49,6 +41,7 @@ public class CrowdSourcingController {
      */
     @RequestMapping(value = "/crowdsourcing-list", method = RequestMethod.GET)
     public String crowdsourcingList(Model model) {
+        model.addAttribute("categoryInfo", categoryService.getCatTree());
         return "crowdsourcing/crowdsourcing-list";
     }
 
