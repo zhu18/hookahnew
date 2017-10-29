@@ -40,7 +40,7 @@ public class ZbRequirementTaskServiceImpl implements ZbRequirementTaskService {
 //    @Scheduled(cron="0 0 0 * * ?")
 
     // 每隔10分钟执行一次
-    @Scheduled(cron="0 */2 * * * ?")
+    @Scheduled(cron="0 */30 * * * ?")
     public void flushRequireRenegeStatusTask() {
         flushStatus();
     }
