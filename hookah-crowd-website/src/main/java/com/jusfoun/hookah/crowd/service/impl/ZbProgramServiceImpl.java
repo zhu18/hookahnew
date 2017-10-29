@@ -147,18 +147,19 @@ public class ZbProgramServiceImpl extends GenericServiceImpl<ZbProgram, Long> im
                 return returnData;
             }
 
-            User user = this.getCurrentUser();
-            zbComment.setAddTime(new Date());
-            zbComment.setStatus(ZbContants.Comment_Status.WAIT_CHECK.getCode());
-            zbComment.setUserType(1);//1需方2供方
-            zbComment.setUserId(user == null?"":user.getUserId());
-            zbCommentService.insert(zbComment);
-
             //修改评价服务商评价需求方时间
             ZbRequirement zbRequirement = zbRequireService.selectById(zbComment.getRequirementId());
             if(Objects.nonNull(zbRequirement)){
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(),ZbContants.REQUIRECOMMENTTIME, DateUtils.toDefaultNowTime());
             }
+
+            User user = this.getCurrentUser();
+            zbComment.setAddTime(new Date());
+            zbComment.setStatus(ZbContants.Comment_Status.WAIT_CHECK.getCode());
+            zbComment.setUserType(1);//1需方2供方
+            zbComment.setUserId(user == null?"":user.getUserId());
+            zbComment.setOtherId(zbRequirement.getUserId());
+            zbCommentService.insert(zbComment);
 
             //修改报名表状态(交易完成)
             List<Condition> filters = new ArrayList<Condition>();
