@@ -770,7 +770,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             OrderInfoVo orderInfoVo = findDetailById(orderInfo.getOrderId());
             //支付成功,
             //1、发送api平台
-//            String url = "http://open.galaxybigdata.com/shop/insert/userapi";
+//            String url = "http://open.bdgstore.cn/shop/insert/userapi";
             String apiUrl = myProps.getApi().get("url");
             List<Map> list = new ArrayList();
 
