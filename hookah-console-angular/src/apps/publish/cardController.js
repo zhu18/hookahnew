@@ -27,7 +27,46 @@ class cardController {
                         $scope.specialSkills= info.specialSkills;
                         $scope.providerDesc= info.providerDesc;
                     }
-                    $scope.level= res.data.data2;
+                    var level=res.data.data2?res.data.data2:null;
+                    $scope.levels=[
+                        {
+                            "commentNum": 0,
+                            "commentLevel": 5
+                        },
+                        {
+                            "commentNum": 0,
+                            "commentLevel": 4
+                        },
+                        {
+                            "commentNum": 0,
+                            "commentLevel": 3
+                        },
+                        {
+                            "commentNum": 0,
+                            "commentLevel": 2
+                        },
+                        {
+                            "commentNum": 0,
+                            "commentLevel": 1
+                        }
+                    ]
+                    $scope.total=''
+
+                    level.forEach(function (item) {
+                        var commentLevel=item.commentLevel;
+                        var commentNum=item.commentNum;
+                        $scope.total += item.commentNum;
+                        $scope.myStyle = {
+                            "color" : "white",
+                        }
+                        $scope.levels.forEach(function (item) {
+                            if(commentLevel == item.commentLevel){
+                                item.commentNum=commentNum;
+                            }
+                        })
+                    })
+
+
                 } else {
                 }
                 $rootScope.loadingState = false;
