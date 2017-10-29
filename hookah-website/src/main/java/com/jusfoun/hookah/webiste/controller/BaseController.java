@@ -55,12 +55,4 @@ public abstract class BaseController {
         return user;
     }
 
-
-    /**
-     * api活动页
-     */
-    @RequestMapping(value = "/activity", method = RequestMethod.GET)
-    public String activity(Model model) {
-        return "activity/index";
-    }
 }
