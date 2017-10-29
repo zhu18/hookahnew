@@ -143,13 +143,7 @@ public class OrderInfoController extends BaseController {
             return "/usercenter/buyer/orderManagement";
     }
 
-    /**
-     * api一分购活动页
-     */
-    @RequestMapping(value = "/order/activity", method = RequestMethod.GET)
-    public String activity(Model model) {
-        return "activity/index";
-    }
+
 
     /**
      * 前台分页查询订单列表
