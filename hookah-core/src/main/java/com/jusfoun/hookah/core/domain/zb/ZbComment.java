@@ -328,4 +328,14 @@ public class ZbComment extends GenericModel {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+    public String otherId;
+
+    public String getOtherId() {
+        return otherId;
+    }
+
+    public void setOtherId(String otherId) {
+        this.otherId = otherId;
+    }
 }
