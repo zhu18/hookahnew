@@ -75,6 +75,10 @@ public class ExchangeController extends BaseController{
     public String list(Model model) {
         return "exchange/list";
     }
+    @RequestMapping(value = "/label", method = RequestMethod.GET)
+    public String label(Model model) {
+        return "exchange/label";
+    }
 
     /**
      * 商品查询

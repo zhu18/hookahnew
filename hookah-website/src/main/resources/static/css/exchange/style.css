@@ -1874,6 +1874,7 @@ dl {
 }
 .goodsList .goodsItem p i{
 	font-size: 18px;
+	font-style: inherit;
 }
 .goodsList .goodsItem span{
 	margin-top: 14px;

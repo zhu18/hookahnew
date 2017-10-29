@@ -12,6 +12,7 @@ class ManageGoodsController {
 			promise.then(function (res, status, config, headers) {
 				$rootScope.loadingState = false;
 				$scope.pageData = res.data.data;
+				$scope.pageData.storageId = $stateParams.id;
 				if($scope.pageData.goodsList.length > 0){
 					var arr = [];
 					$scope.pageData.goodsList.forEach(function(item){

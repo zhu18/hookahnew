@@ -135,7 +135,7 @@ var htmlPart = {
 							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
 							<%if(typeListLP.first){%>
 							<div class="tagsItem">
-								<a href="javascript:void(0)">
+								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
 									<h5>${typeList.typeName}</h5>
 									<p>${typeList.describle}</p>
 									<img src="${typeList.img}" alt="">
@@ -148,7 +148,7 @@ var htmlPart = {
 							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
 							<%if(typeListLP.index == 2){%>
 							<div class="tagsItem">
-								<a href="javascript:void(0)">
+								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
 									<h5>${typeList.typeName}</h5>
 									<p>${typeList.describle}</p>
 									<img src="${typeList.img}" alt="">
@@ -159,7 +159,7 @@ var htmlPart = {
 							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
 							<%if(typeListLP.index == 3){%>
 							<div class="tagsItem">
-								<a href="javascript:void(0)">
+								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
 									<h5>${typeList.typeName}</h5>
 									<p>${typeList.describle}</p>
 									<img src="${typeList.img}" alt="">
@@ -172,7 +172,7 @@ var htmlPart = {
 							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
 							<%if(typeListLP.index == 4){%>
 							<div class="tagsItem">
-								<a href="javascript:void(0)">
+								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
 									<h5>${typeList.typeName}</h5>
 									<p>${typeList.describle}</p>
 									<img src="${typeList.img}" alt="">
@@ -185,7 +185,7 @@ var htmlPart = {
 							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
 							<%if(typeListLP.index == 5){%>
 							<div class="tagsItem">
-								<a href="javascript:void(0)">
+								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
 									<h5>${typeList.typeName}</h5>
 									<p>${typeList.describle}</p>
 									<img src="${typeList.img}" alt="">
@@ -196,7 +196,7 @@ var htmlPart = {
 							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
 							<%if(typeListLP.index == 6){%>
 							<div class="tagsItem">
-								<a href="javascript:void(0)">
+								<a href="/exchange/label?storageId=${item.id}&typeId=${typeList.typeId}">
 									<h5>${typeList.typeName}</h5>
 									<p>${typeList.describle}</p>
 									<img src="${typeList.img}" alt="">
@@ -212,7 +212,11 @@ var htmlPart = {
 							<a href="/exchange/details?id=${goodsItem.goodsId}">
 								<h5>${goodsItem.goodsName}</h5>
 								<img src="${goodsItem.goodsImg}" alt="">
-								<p>￥<i>${goodsItem.shopPrice}</i>/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套','面议')}</p>
+								<%if(goodsItem.shopPrice >= 1000000){%>
+								<p>￥<i>${trunc(goodsItem.shopPrice / 1000000,2)}</i>万/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套','面议')}</p>
+								<%}else{%>
+								<p>￥<i>${goodsItem.shopPrice /100}</i>/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套','面议')}</p>
+								<%}%>
 								<span>${goodsItem.catName}</span>
 							</a>
 						</div>

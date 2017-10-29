@@ -11,6 +11,13 @@ $(document).ready(function () {
 		$('#exchange_menu').show();
 		$(".exchange-index-menu").hide();
 		showMenu()
+	}else if(pathname.indexOf('/exchange/label') >= 0) {
+		$('#exchange_menu').show();
+		$(".exchange-index-menu").hide();
+		showMenu()
+	}else{
+		$('#exchange_menu').hide();
+		$(".exchange-index-menu").hide();
 	}
 	function showMenu(){
 		$('#exchange_menu').mouseover(function(){
