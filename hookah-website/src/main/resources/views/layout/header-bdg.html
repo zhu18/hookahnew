@@ -1,37 +1,41 @@
 <div class="grid-0 header-centerbar" style="position: relative">
-	<div class="grid-row" style="position: relative">
-		<div class="logo grid-left"><a href="${host.website}/exchange/index"><img src="/static/images/brand_logo.png" alt=""></a></div>
-		<ul id="navList" class="grid-left">
-			<li class="index"><a href="${host.website}/exchange/index"><span class="text">数据星河</span></a></li>
-			<li class="bdg-cate"><a href="${host.website}/exchange/list?catId=000&prId=101&prNm=%e5%85%a8%e9%83%a8"><span class="text">星河分类</span></a></li>
-			<li class="bdg-cate"><a href="${host.crowd}/crowdsourcing"><span class="text">数据众包</span></a></li>
-			<li class="bdg-projects"><a href="${host.website}/usercenter/buyer/allOrderList"><span class="text">购买记录</span></a></li>
-			<li class="bdg-mine"><a href="${host.website}/usercenter/index"><span class="text">我的BDG</span></a></li>
-		</ul>
-		<ul class="text-align-right topbar-user grid-right margin-left-30" style="margin-top:28px;" >
-			<%if(isEmpty(user)){%>
-			<li class="display-inline-block">
-				<a href="${oauth2.loginUrl}">登录</a>
-			</li>
-			<li class="display-inline-block margin-left-10"><a href="${oauth2.regUrl}" class="color-orange">注册</a></li>
-			<%}else{%>
-
-			<li class="display-inline-block margin-left-10"><a href="${host.auth}/logout">退出</a></li>
-			<%}%>
-
-
-		</ul>
-		<div class="search grid-right">
-			<div class="search-input">
-				<span class="fa fa-search text-align-center"></span>
-				<input type="text" id="J_searchInput" placeholder="请输入...">
-				<button class="btn btn-full-right-red" id="J_searchBtn">搜索</button>
+	<div class="grid-row">
+		<div class="header-tops">
+			<div class="logo grid-left"><a href="${host.website}/exchange/index"><img src="/static/images/brand_logo.png" alt=""></a></div>
+			<div class="search grid-left">
+				<div class="search-input">
+					<span class="fa fa-search text-align-center"></span>
+					<input type="text" id="J_searchInput" placeholder="请输入...">
+					<button class="btn btn-full-right-red" style="border-radius:0;" id="J_searchBtn">搜索</button>
+				</div>
+				<div class="search-sug">
+					<ul>
+					</ul>
+				</div>
 			</div>
-			<div class="search-sug">
-				<ul>
-				</ul>
-			</div>
+			<ul class="text-align-right topbar-user grid-right margin-left-30" style="margin-top:28px;" >
+				<%if(isEmpty(user)){%>
+				<li class="display-inline-block">
+					<a href="${oauth2.loginUrl}" style="padding:10px 20px;">登录</a>
+				</li>
+				<li class="display-inline-block margin-left-10"><a href="${oauth2.regUrl}">免费注册</a></li>
+				<%}else{%>
+				<li class="display-inline-block margin-left-10"><a href="${host.auth}/logout">退出</a></li>
+				<%}%>
+			</ul>
 		</div>
+		<div class="header-bottoms">
+			<div class="grid-left active" id="exchange_menu" style="display: none;"><a href="javascript:void(0)" class=""><span class="fa fa-navicon"></span>全部分类</a></div>
+			<ul id="navList" class="grid-left">
+				<li class="index"><a href="${host.website}/exchange/index"><span class="text">数据星河</span></a></li>
+				<li class="bdg-cate"><a href="${host.website}/exchange/list?catId=000&prId=101&prNm=%e5%85%a8%e9%83%a8"><span class="text">星河分类</span></a></li>
+				<li class="bdg-cate"><a href="${host.crowd}/crowdsourcing"><span class="text">数据众包</span></a></li>
+				<li class="bdg-projects"><a href="${host.website}/usercenter/buyer/allOrderList"><span class="text">购买记录</span></a></li>
+				<li class="bdg-mine"><a href="${host.website}/usercenter/index"><span class="text">我的BDG</span></a></li>
+			</ul>
+		</div>
+
+
 
 
 	</div>
