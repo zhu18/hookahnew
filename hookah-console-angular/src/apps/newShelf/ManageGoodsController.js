@@ -220,7 +220,8 @@ class ManageGoodsController {
 			$scope.pageChanged()
 		};
 		$scope.addGoods = function(item){
-			if($scope.pageData.goodsList.length <= 6) {
+			console.log($scope.pageData.goodsList.length)
+			if($scope.pageData.goodsList.length < 6) {
 				$scope.pageData.goodsList.push(item);
 				item.isChecked = true
 			}else{

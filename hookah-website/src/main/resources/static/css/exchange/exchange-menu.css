@@ -13,7 +13,6 @@
 
 .exchange-index-menu .menu-list {
     font-size:0;
-    display: none;
 }
 .exchange-index-menu .menu-list>li {
     display: inline-block;
@@ -33,8 +32,8 @@
 .exchange-index-menu .menu-list li .oneA i{
     display: block;
     float: left;
-    width:22px;
-    margin:10px 16px 0 22px;
+    width: 16px;
+    margin: 13px 16px 0 22px;
 }
 .exchange-index-menu .menu-list li .oneA img{
     display: block;

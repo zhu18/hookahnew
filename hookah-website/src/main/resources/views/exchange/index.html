@@ -4,147 +4,360 @@ var head = {
 <link rel="stylesheet" href="/static/css/exchange/style.css">
 <link rel="stylesheet" href="/static/css/font/exchange/iconfont.css">
 <style>
-    .container {
-        width: 100%;
-        height: 400px;
-        overflow: hidden;
-        margin: 0 auto;
-        position: relative;
-    }
-    #list {
-        width: 700%;
-        height: 400px;
-        position: absolute;
-    }
-    #list div {
-        width: 14.285715%;
-        float: left;
-        height: 100%;
-    }
-    #list div a{
-        display: block;
-        width:100%;
-        height:100%;
-    }
-    .arrow {
-        position: absolute;
-        color: #fff;
-        text-decoration: none;
-        bottom: 20px;
-        text-align: center;
-        width: 40px;
-        height: 40px;
-        font-size: 30px;
-        top: 230px;
-        font-weight: bold;
-        background: rgba(0, 0, 0, 0.3);
-    }
-    #left {
-        position: absolute;
-        left: 0px;
-        top:0;
-    }
-    #right {
-        position: absolute;
-        right: 0px;
-        top:0;
-    }
-    .btns {
-        height: 10px;
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        margin-left:-0%;
-    }
-    .btns span {
-        cursor: pointer;
-        border: 1px solid #000;
-        border-radius: 50%;
-        margin-right: 8px;
-        -webkit-border-radius: 50%;
-        -moz-border-radius: 50%;
-        width: 10px;
-        height: 10px;
-        float: left;
-        background: #fff;
-    }
-    .btns .on {
-        background: orange;
-        border: 1px solid orange;
-    }
-    .floatBtn{
-        width:1260px;
-        margin:142px auto;
-        position: relative;
-        height:84px;
-    }
-    .floatBtn a{
-        width:30px;
-        height:84px;
-        display: block;
-        background: rgba(255,255,255,0.8);
-        color:#fff;
-        line-height: 84px;
-    }
+	.cm-banner {
+		width: 100%;
+		height: 400px;
+		overflow: hidden;
+		cursor: pointer;
+		position: relative;
+	}
+	.cm-banner-in {
+		width: 1260px;
+		height: 400px;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		margin-left: -630px;
+	}
+	.cm-banner-in span {
+		position: absolute;
+		top:158px;
+		width: 30px;
+		height: 84px;
+		background: rgba(255,255,255,0.4);
+		text-align: center;
+		line-height: 84px;
+		color:#dcdcdc;
+		font-weight: bold;
+		font-size: 24px;
+	}
+	#cm_banner_list li {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 400px;
+	}
+	#cm_banner_list li a {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.cm-banner-num {
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+		text-align: center;
+		z-index: 2; /*如果没有在这里设置层次小圆点的点击效果无法触发*/
+	}
+	.cm-banner-num li {
+		width: 16px;
+		margin: 10px 6px;
+		height: 16px;
+		background-color: #fff;
+		border-radius: 8px;
+		-webkit-border-radius: 8px;
+		display: inline-block;
+		opacity: 0.8;
+	}
+	.cm-banner-num .active {
+		background-color: #cc3333;
+		width:30px;
+	}
+	.cm-banner-arrow {
+		position: absolute;
+		top: 50%;
+		margin-top: -22px;
+		opacity: 0.8;
+		display: none;
+	}
+	#cm_prev {
+		left: 0;
+
+	}
+	#cm_next {
+		right: 0;
+
+	}
 </style>
 <%};%>
 <%
 var htmlPart = {
 %>
 <div class="grid-0 exchange-index">
-
-    <!--顶部轮播图-->
-    <div class="index-banner">
-        <div class="grid-row bdg-row" style="position: relative">
-            <!--菜单-->
-            <%include("/layout/menu.html"){} %>
-        </div>
-        <div class="exchange-index-banner">
-            <div class="container" id="container">
-                <div id="list">
-                </div>
-                <div class="floatBtn">
-                    <a href="javascript:void(0)" class="arrow" id="left" ><</a>
-                    <a href="javascript:void(0)" class="arrow" id="right" >></a>
-                </div>
-
-                <div class="btns">
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
+	<!--顶部轮播图-->
+	<div class="index-banner">
+		<div class="grid-row bdg-row" style="position: relative">
+			<!--菜单-->
+			<%include("/layout/menu.html"){} %>
+		</div>
+		<div class="exchange-index-banner">
+			<div class="cm-banner">
+				<div class="cm-banner-list">
+					<ul id="cm_banner_list">
+					</ul>
+					<ul class="cm-banner-num" id="cm_banner_num"></ul>
+				</div>
+				<div class="cm-banner-in w">
+					<span id="cm_prev" class="cm-banner-arrow"><</span>
+					<span id="cm_next" class="cm-banner-arrow">></span>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+<div class="grid-0">
+	<div class="grid-row">
+		<%for(item in goodsStorageInfo){%>
+		<div class="storageList">
+			<h2>${item.name}</h2>
+			<div class="storageBox">
+				<%if(itemLP.index == 1){%>
+				<div class="storageImg storageImg_1 grid-left">
+				<%}else if (itemLP.index == 2){%>
+				<div class="storageImg storageImg_2 grid-left">
+				<%}else if (itemLP.index == 3){%>
+				<div class="storageImg storageImg_3 grid-left">
+				<%}%>
+					<img class="one_img" src="${item.img}" alt="">
+					<%if(itemLP.first){%>
+					<div class="box_1">
+						<img src="/static/images/exchange/y_1.png" alt="" class="y_1">
+						<img src="/static/images/exchange/y_2.png" alt="" class="y_2">
+						<img src="/static/images/exchange/y_3.png" alt="" class="y_3">
+					</div>
+					<%}%>
+				</div>
+				<div class="storageInfo grid-left">
+					<div class="tagsList">
+						<div class="left grid-left">
+							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
+							<%if(typeListLP.first){%>
+							<div class="tagsItem">
+								<a href="javascript:void(0)">
+									<h5>${typeList.typeName}</h5>
+									<p>${typeList.describle}</p>
+									<img src="${typeList.img}" alt="">
+								</a>
+							</div>
+							<%}%>
+							<%}%>
+						</div>
+						<div class="right grid-left">
+							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
+							<%if(typeListLP.index == 2){%>
+							<div class="tagsItem">
+								<a href="javascript:void(0)">
+									<h5>${typeList.typeName}</h5>
+									<p>${typeList.describle}</p>
+									<img src="${typeList.img}" alt="">
+								</a>
+							</div>
+							<%}%>
+							<%}%>
+							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
+							<%if(typeListLP.index == 3){%>
+							<div class="tagsItem">
+								<a href="javascript:void(0)">
+									<h5>${typeList.typeName}</h5>
+									<p>${typeList.describle}</p>
+									<img src="${typeList.img}" alt="">
+								</a>
+							</div>
+							<%}%>
+							<%}%>
+						</div>
+						<div class="left grid-left">
+							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
+							<%if(typeListLP.index == 4){%>
+							<div class="tagsItem">
+								<a href="javascript:void(0)">
+									<h5>${typeList.typeName}</h5>
+									<p>${typeList.describle}</p>
+									<img src="${typeList.img}" alt="">
+								</a>
+							</div>
+							<%}%>
+							<%}%>
+						</div>
+						<div class="right grid-left">
+							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
+							<%if(typeListLP.index == 5){%>
+							<div class="tagsItem">
+								<a href="javascript:void(0)">
+									<h5>${typeList.typeName}</h5>
+									<p>${typeList.describle}</p>
+									<img src="${typeList.img}" alt="">
+								</a>
+							</div>
+							<%}%>
+							<%}%>
+							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
+							<%if(typeListLP.index == 6){%>
+							<div class="tagsItem">
+								<a href="javascript:void(0)">
+									<h5>${typeList.typeName}</h5>
+									<p>${typeList.describle}</p>
+									<img src="${typeList.img}" alt="">
+								</a>
+							</div>
+							<%}%>
+							<%}%>
+						</div>
+					</div>
+					<div class="goodsList">
+						<%for(goodsItem in item.mgGoodsStorageVo.goodsList){%>
+						<div class="goodsItem grid-left">
+							<a href="/exchange/details?id=${goodsItem.goodsId}">
+								<h5>${goodsItem.goodsName}</h5>
+								<img src="${goodsItem.goodsImg}" alt="">
+								<p>￥<i>${goodsItem.shopPrice}</i>/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套','面议')}</p>
+								<span>${goodsItem.catName}</span>
+							</a>
+						</div>
+						<%}%>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%}%>
+		<!--<div class="storageList">-->
+			<!--<h2>行业大数据</h2>-->
+			<!--<div class="storageBox">-->
+				<!--<div class="storageImg grid-left">-->
+					<!--<img src="/static/images/exchange/storageImg.jpg" alt="">-->
+				<!--</div>-->
+				<!--<div class="storageInfo grid-left">-->
+					<!--<div class="tagsList">-->
+						<!--<div class="left grid-left">-->
+							<!--<div class="tagsItem">-->
+								<!--<a href="javascript:void(0)">-->
+									<!--<h5>企业综合</h5>-->
+									<!--<p>信息全面，查询便捷</p>-->
+									<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--</a>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="right grid-left">-->
+							<!--<div class="tagsItem">-->
+								<!--<a href="javascript:void(0)">-->
+									<!--<h5>企业综合</h5>-->
+									<!--<p>信息全面，查询便捷</p>-->
+									<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--</a>-->
+							<!--</div>-->
+							<!--<div class="tagsItem">-->
+								<!--<a href="javascript:void(0)">-->
+									<!--<h5>企业综合</h5>-->
+									<!--<p>信息全面，查询便捷</p>-->
+									<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--</a>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="left grid-left">-->
+							<!--<div class="tagsItem">-->
+								<!--<a href="javascript:void(0)">-->
+									<!--<h5>企业综合</h5>-->
+									<!--<p>信息全面，查询便捷</p>-->
+									<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--</a>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="right grid-left">-->
+							<!--<div class="tagsItem">-->
+								<!--<a href="javascript:void(0)">-->
+									<!--<h5>企业综合</h5>-->
+									<!--<p>信息全面，查询便捷</p>-->
+									<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--</a>-->
+							<!--</div>-->
+							<!--<div class="tagsItem">-->
+								<!--<a href="javascript:void(0)">-->
+									<!--<h5>企业综合</h5>-->
+									<!--<p>信息全面，查询便捷</p>-->
+									<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--</a>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="goodsList">-->
+						<!--<div class="goodsItem grid-left">-->
+							<!--<a href="javascript:void(0)">-->
+								<!--<h5>企业综合</h5>-->
+								<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--<p>￥0.6/次</p>-->
+								<!--<span>数据源</span>-->
+							<!--</a>-->
+						<!--</div>-->
+						<!--<div class="goodsItem grid-left">-->
+							<!--<a href="javascript:void(0)">-->
+								<!--<h5>企业综合</h5>-->
+								<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--<p>￥0.6/次</p>-->
+								<!--<span>数据源</span>-->
+							<!--</a>-->
+						<!--</div>-->
+						<!--<div class="goodsItem grid-left">-->
+							<!--<a href="javascript:void(0)">-->
+								<!--<h5>企业综合</h5>-->
+								<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--<p>￥0.6/次</p>-->
+								<!--<span>数据源</span>-->
+							<!--</a>-->
+						<!--</div>-->
+						<!--<div class="goodsItem grid-left">-->
+							<!--<a href="javascript:void(0)">-->
+								<!--<h5>企业综合</h5>-->
+								<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--<p>￥0.6/次</p>-->
+								<!--<span>数据源</span>-->
+							<!--</a>-->
+						<!--</div>-->
+						<!--<div class="goodsItem grid-left">-->
+							<!--<a href="javascript:void(0)">-->
+								<!--<h5>企业综合</h5>-->
+								<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--<p>￥0.6/次</p>-->
+								<!--<span>数据源</span>-->
+							<!--</a>-->
+						<!--</div>-->
+						<!--<div class="goodsItem grid-left">-->
+							<!--<a href="javascript:void(0)">-->
+								<!--<h5>企业综合</h5>-->
+								<!--<img src="/static/images/exchange/icon_111.png" alt="">-->
+								<!--<p>￥<i>0.6</i>/次</p>-->
+								<!--<span>数据源</span>-->
+							<!--</a>-->
+						<!--</div>-->
 
-
-
-
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	</div>
+</div>
 <div class="grid-0 exchange-index exchange-recommend-resource jingpintuijian bgc-f5f6f8">
-    <div class="grid-row">
-
-        <h2 class="bdg-overseas-title">合作伙伴</h2>
-
-        <ul class="bdg-partner-list">
-            <li><a  href="javascript:void (0)" title="贵阳大数据交易所"><img src="/static/images/exchange/logo_01.png" alt=""></a></li>
-            <li><a  href="javascript:void (0)" title="中信银行"><img src="/static/images/exchange/logo_02.png" alt=""></a></li>
-            <li><a  href="javascript:void (0)" title="腾讯大数据"><img src="/static/images/exchange/logo_03.png" alt=""></a></li>
-            <li><a  href="javascript:void (0)" title="聚信世纪"><img src="/static/images/exchange/logo_04.png" alt=""></a></li>
-            <li><a  href="javascript:void (0)" title="路通"><img src="/static/images/exchange/logo_05.png" alt=""></a></li>
-        </ul>
-    </div>
+	<div class="grid-row">
+		<h2 class="bdg-overseas-title">合作伙伴</h2>
+		<ul class="bdg-partner-list">
+			<li>
+				<a href="javascript:void (0)" title="贵阳大数据交易所"><img src="/static/images/exchange/logo_01.png" alt=""></a>
+			</li>
+			<li><a href="javascript:void (0)" title="中信银行"><img src="/static/images/exchange/logo_02.png" alt=""></a>
+			</li>
+			<li><a href="javascript:void (0)" title="腾讯大数据"><img src="/static/images/exchange/logo_03.png" alt=""></a>
+			</li>
+			<li><a href="javascript:void (0)" title="聚信世纪"><img src="/static/images/exchange/logo_04.png" alt=""></a>
+			</li>
+			<li><a href="javascript:void (0)" title="路通"><img src="/static/images/exchange/logo_05.png" alt=""></a></li>
+		</ul>
+	</div>
 </div>
-
 <script src="/static/js/exchange/common.js"></script>
 <script src="/static/js/exchange/index.js"></script>
 <script>
-	$(function(){
+	$(function () {
 		$.ajax({
 			type: "get",
 			url: host.website + '/api/image/list',
@@ -152,208 +365,100 @@ var htmlPart = {
 				if (data.code == 1) {
 					var html = '';
 					var html2 = '';
-					for(var j=0;j<data.data.length; j++){
-						if(j+1 == data.data.length){
-							html+='<div><a href="'+data.data[j].imgLink+'" class="imgFloat_'+j+'" style="background:url('+data.data[j].imgLink+') center center no-repeat"></a></div>';
-                        }
-						html+='<div><a href="'+data.data[j].imgLink+'" class="imgFloat_'+j+'" style="background:url('+data.data[j].imgLink+') center center no-repeat"></a></div>';
-						if(j == 0){
-							html+='<div><a href="'+data.data[j].imgLink+'" class="imgFloat_'+j+'" style="background:url('+data.data[j].imgLink+') center center no-repeat"></a></div>';
+					for (var j = 0; j < data.data.length; j++) {
+						html += '<li><a href="' + data.data[j].imgLink + '" class="imgFloat_' + j + '" style="background:url(' + data.data[j].imgLink + ') center center no-repeat"></a></li>';
+						if (j == 0) {
+							html2 += '<span class="on" index="' + (j + 1) + '"></span>';
+						} else {
+							html2 += '<span index="' + (j + 1) + '"></span>';
 						}
-						if(j == 0){
-							html2+='<span class="on" index="'+(j+1)+'"></span>';
-                        }else{
-							html2+='<span index="'+(j+1)+'"></span>';
-                        }
-                    }
-                    $('#list').html(html);
-                    $('.btns').html(html2);
-					var len = data.data.length;
-                    $('#list').css('width',100*len+'%');
-                    $('#list div').css('width',100/len+'%');
-					var oList = $("#list");
-					var oRight = $("#right");
-					var oLeft = $("#left");
-					var oWidth = parseInt(oList.css('width')) / len;      //计算图片的宽度从而达到自适应屏幕宽度
-					var oSpan = $(".btns span");
-					var index = 1;
-					var interval = 3000;
-					var timer = null;
-					oList.css('left',-oWidth);              //图片加载完成时将图片向左偏移一张图片
-
-					function animate(offset){                               //过渡效果
-						var newLeft = parseInt(oList.css('left')) + offset;         //点击后的图片偏移量
-						oList.animate({'left':newLeft + 'px'},function(){
-							if(newLeft > 0){                                 //判断图片是否已经循环一次
-								oList.css('left',-oWidth * len);
+					}
+					$('#cm_banner_list').html(html);
+//                    $('.btns').html(html2);
+					//鼠标移入显示箭头按钮
+					$('.cm-banner').hover(function () {
+						$('.cm-banner-arrow').show();
+						clearInterval(cm_timer);
+					}, function () {
+						$('.cm-banner-arrow').hide();
+						cm_timer = setInterval(function () {
+							i++;
+							if (i > cm_length - 1) {
+								i = 0;
 							}
-							if(newLeft < -oWidth * len){
-								oList.css('left',-oWidth);
-							}
-						});
-					}
-
-					function showBtns(){                //按钮过渡
-						oSpan.each(function(){                  //遍历每个按钮将其Class设置为空
-							$(this).attr('class','');
-						});
-						$(".btns > span").eq(index - 1).addClass('on');          //将当前Span的索引Class设置为on
-					}
-
-					function autoplay(){                        //自动播放
-						timer = setTimeout(function(){
-							oRight.trigger('click');
-							autoplay();
-						},interval);
-					}
-
-					function stop(){
-						clearInterval(timer);
-					}
-
-					oList.on('mouseover',function(){            //判断鼠标是否在容器上面
-						stop();
+							$('#cm_banner_list li').eq(i).fadeIn(800).siblings().fadeOut(800);
+							cm_toggle(i);
+						}, 2500);
 					});
 
-					oList.on('mouseout',function(){
-						autoplay();
+					//鼠标移入箭头按钮高亮
+					$('.cm-banner-arrow').hover(function () {
+						$(this).css('opacity', '1');
+					}, function () {
+						$(this).css('opacity', '0.8');
 					});
 
-					oRight.on('click',function(){
-						if(oList.is(':animated')){
-							return;
+					//初始化必要变量
+					var i = 0;
+					var cm_length = $('#cm_banner_list li').length;
+					var cm_toggle = function (point) {
+						$('#cm_banner_num li').eq(point).addClass('active').siblings().removeClass('active');
+					};
+
+					//动态添加小圆点
+					for (j = 0; j < cm_length; j++) {
+						$('#cm_banner_num').append('<li></li>');
+					}
+
+					//给第一个小圆点添加样式
+					$('#cm_banner_num li').first().addClass('active');
+
+					//给第一张图片添加样式
+					$('#cm_banner_list li').first().css('display', 'block');
+
+					//鼠标点击左箭头切换
+					$('#cm_prev').click(function () {
+						i--;
+						if (i < 0) {
+							i = cm_length - 1;
 						}
-						if(index == len){         //向右点击 index索引+1
-							index = 1;
-						}else{
-							index += 1;
-						}
-						animate(-oWidth);
-						showBtns();
+						$('#cm_banner_list li').eq(i).fadeIn(800).siblings().fadeOut(800);
+						cm_toggle(i);
 					});
 
-					oLeft.on('click',function(){
-						if(oList.is(':animated')){
-							return;
+					//鼠标点击右箭头切换
+					$('#cm_next').click(function () {
+						i++;
+						if (i > cm_length - 1) {
+							i = 0;
 						}
-						if(index == 1){         //向左点击 index索引-1
-							index = len;
-						}else{
-							index -= 1;
-						}
-						animate(oWidth);
-						showBtns();
+						$('#cm_banner_list li').eq(i).fadeIn(800).siblings().fadeOut(800);
+						cm_toggle(i);
 					});
 
-					oSpan.each(function(){                  //底部按钮点击切换图片
-						$(this).on('click',function(){
-							if(oList.is(":animated") || $(this).attr('class') == "on"){
-								return;
-							}
-							var myIndex = $(this).attr('index');
-							var offset = (myIndex - index) * -oWidth;
-							index = myIndex;
-							animate(offset);
-							showBtns();
-						})
-					})
+					//鼠标点击圆点切换
+					$('#cm_banner_num li').click(function () {
+						var cm_index = $(this).index();
+						$('#cm_banner_list li').eq(cm_index).fadeIn(800).siblings().fadeOut(800);
+						i = cm_index;
+						cm_toggle(cm_index);
+					});
 
-					autoplay();
+					//自动播放
+					cm_timer = setInterval(function () {
+						i++;
+						if (i > cm_length - 1) {
+							i = 0;
+						}
+						$('#cm_banner_list li').eq(i).fadeIn(800).siblings().fadeOut(800);
+						cm_toggle(i);
+					}, 2500);
 
 				} else {
 					$.alert(data.message)
 				}
 			}
 		});
-//		var oList = $("#list");
-//		var oRight = $("#right");
-//		var oLeft = $("#left");
-//		var oWidth = parseInt(oList.css('width')) / 7;      //计算图片的宽度从而达到自适应屏幕宽度
-//		var oSpan = $(".btns span");
-//		var len = 5;
-//		var index = 1;
-//		var interval = 3000;
-//		var timer = null;
-//		oList.css('left',-oWidth);              //图片加载完成时将图片向左偏移一张图片
-//
-//		function animate(offset){                               //过渡效果
-//			var newLeft = parseInt(oList.css('left')) + offset;         //点击后的图片偏移量
-//			oList.animate({'left':newLeft + 'px'},function(){
-//				if(newLeft > 0){                                 //判断图片是否已经循环一次
-//					oList.css('left',-oWidth * len);
-//				}
-//				if(newLeft < -oWidth * 5){
-//					oList.css('left',-oWidth);
-//				}
-//			});
-//		}
-//
-//		function showBtns(){                //按钮过渡
-//			oSpan.each(function(){                  //遍历每个按钮将其Class设置为空
-//				$(this).attr('class','');
-//			});
-//			$(".btns > span").eq(index - 1).addClass('on');          //将当前Span的索引Class设置为on
-//		}
-//
-//		function autoplay(){                        //自动播放
-//			timer = setTimeout(function(){
-//				oRight.trigger('click');
-//				autoplay();
-//			},interval);
-//		}
-//
-//		function stop(){
-//			clearInterval(timer);
-//		}
-//
-//		oList.on('mouseover',function(){            //判断鼠标是否在容器上面
-//			stop();
-//		});
-//
-//		oList.on('mouseout',function(){
-//			autoplay();
-//		});
-//
-//		oRight.on('click',function(){
-//			if(oList.is(':animated')){
-//				return;
-//			}
-//			if(index == 5){         //向右点击 index索引+1
-//				index = 1;
-//			}else{
-//				index += 1;
-//			}
-//			animate(-oWidth);
-//			showBtns();
-//		});
-//
-//		oLeft.on('click',function(){
-//			if(oList.is(':animated')){
-//				return;
-//			}
-//			if(index == 1){         //向左点击 index索引-1
-//				index = 5;
-//			}else{
-//				index -= 1;
-//			}
-//			animate(oWidth);
-//			showBtns();
-//		});
-//
-//		oSpan.each(function(){                  //底部按钮点击切换图片
-//			$(this).on('click',function(){
-//				if(oList.is(":animated") || $(this).attr('class') == "on"){
-//					return;
-//				}
-//				var myIndex = $(this).attr('index');
-//				var offset = (myIndex - index) * -oWidth;
-//				index = myIndex;
-//				animate(offset);
-//				showBtns();
-//			})
-//		})
-//
-//		autoplay();
 	});
 </script>
 <%};
