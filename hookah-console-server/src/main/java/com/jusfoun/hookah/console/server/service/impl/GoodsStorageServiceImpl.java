@@ -45,6 +45,7 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
         super.setDao(goodsStorageMapper);
     }
 
+    @Override
     public int insertSelective(GoodsStorage goodsStorage) {
         return goodsStorageMapper.insertSelective(goodsStorage);
     }
@@ -79,6 +80,8 @@ public class GoodsStorageServiceImpl extends GenericServiceImpl<GoodsStorage, St
         GoodsLabelsPagVo vo = new GoodsLabelsPagVo();
         //拼装标签
         MgGoodsStorage mgGoodsStorage = mgGoodsStorageService.selectById(storageId);
+        if (mgGoodsStorage == null)
+            return null;
         List<MgGoodsStorage.LabelsType> list = mgGoodsStorage.getTypeList();
         for (MgGoodsStorage.LabelsType type : list) {
             if(typeId == type.getTypeId() && StringUtils.isNotBlank(type.getLabels())) {
