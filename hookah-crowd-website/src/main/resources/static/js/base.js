@@ -1,4 +1,24 @@
 $(document).ready(function () {
+    var pathname = window.location.pathname;
+    if (pathname.indexOf('/exchange/index') >= 0) {
+        $('#exchange_menu').show();
+        $(".exchange-index-menu").show();
+    } else if(pathname.indexOf('/exchange/list') >= 0) {
+        $('#exchange_menu').show();
+        $(".exchange-index-menu").hide();
+        showMenu()
+    } else if(pathname.indexOf('/exchange/details') >= 0) {
+        $('#exchange_menu').show();
+        $(".exchange-index-menu").hide();
+        showMenu()
+    }else if(pathname.indexOf('/exchange/label') >= 0) {
+        $('#exchange_menu').show();
+        $(".exchange-index-menu").hide();
+        showMenu()
+    }else{
+        $('#exchange_menu').hide();
+        $(".exchange-index-menu").hide();
+    }
 	var pathname = window.location.pathname;
 	if (pathname.indexOf('/exchange') >= 0) {
 		$('#exchange_menu').show();

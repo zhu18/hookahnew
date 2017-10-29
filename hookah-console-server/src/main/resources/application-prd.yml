@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: galaxybigdata.com
+      domain: bdgstore.cn
       name: hookah_sid
 spring:
   datasource:
@@ -46,7 +46,7 @@ spring:
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.galaxybigdata.com
+      host: smtp.bdgstore.cn
       username: service@qddata.com.cn
       password: Bigdata8661101
       transport:
@@ -77,21 +77,21 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: galaxybigdata.com
-    website: ${server.http.protocal}www.galaxybigdata.com
-    static: ${server.http.protocal}static.galaxybigdata.com
-    auth: ${server.http.protocal}auth.galaxybigdata.com
-    console: ${server.http.protocal}console.galaxybigdata.com
-    crowd: ${server.http.protocal}crowd.galaxybigdata.com
+    domain: bdgstore.cn
+    website: ${server.http.protocal}www.bdgstore.cn
+    static: ${server.http.protocal}static.bdgstore.cn
+    auth: ${server.http.protocal}auth.bdgstore.cn
+    console: ${server.http.protocal}console.bdgstore.cn
+    crowd: ${server.http.protocal}crowd.bdgstore.cn
   oauth2:
     clientId: admin
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.galaxybigdata.com/reg
-    loginUrl: http://auth.galaxybigdata.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.galaxybigdata.com/home
-    logoutUrl: http://auth.galaxybigdata.com/logout?redirect_uri=http://www.galaxybigdata.com/login
-    accessTokenUrl: http://auth.galaxybigdata.com/oauth/accessToken
-    userInfoUrl: http://auth.galaxybigdata.com/userInfo
-    redirectUrl: http://auth.galaxybigdata.com/login
+    regUrl: http://auth.bdgstore.cn/reg
+    loginUrl: http://auth.bdgstore.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.bdgstore.cn/home
+    logoutUrl: http://auth.bdgstore.cn/logout?redirect_uri=http://www.bdgstore.cn/login
+    accessTokenUrl: http://auth.bdgstore.cn/oauth/accessToken
+    userInfoUrl: http://auth.bdgstore.cn/userInfo
+    redirectUrl: http://auth.bdgstore.cn/login
   api:
     url: http://202.106.10.250:5555/gateway/insert
     tokenUrl: http://202.106.10.250:5555/gateway/getToken

@@ -4,11 +4,11 @@ server:
     protocal: http://
 myconf:
   host:
-    domain: galaxybigdata.com
-    website: ${server.http.protocal}www.galaxybigdata.com
-    static: ${server.http.protocal}static.galaxybigdata.com
-    auth: ${server.http.protocal}auth.galaxybigdata.com
-    console: ${server.http.protocal}console.galaxybigdata.com
+    domain: bdgstore.cn
+    website: ${server.http.protocal}www.bdgstore.cn
+    static: ${server.http.protocal}static.bdgstore.cn
+    auth: ${server.http.protocal}auth.bdgstore.cn
+    console: ${server.http.protocal}console.bdgstore.cn
 debug: true
 spring:
   data:

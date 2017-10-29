@@ -7,6 +7,9 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -50,5 +53,14 @@ public abstract class BaseController {
         }
         logger.info(JsonUtils.toJson(user));
         return user;
+    }
+
+
+    /**
+     * api活动页
+     */
+    @RequestMapping(value = "/activity", method = RequestMethod.GET)
+    public String activity(Model model) {
+        return "activity/index";
     }
 }
