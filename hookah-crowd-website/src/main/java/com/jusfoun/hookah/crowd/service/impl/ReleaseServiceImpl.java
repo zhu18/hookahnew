@@ -494,6 +494,7 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             ZbComment zbComment = new ZbComment();
             zbComment.setRequirementId(zbProgram.getRequirementId());
             zbComment.setUserId(userId);
+            zbComment.setOtherId(zbProgram.getUserId());
             zbComment.setProgramId(programId);
             zbComment.setLevel(level);
             zbComment.setContent(content);
