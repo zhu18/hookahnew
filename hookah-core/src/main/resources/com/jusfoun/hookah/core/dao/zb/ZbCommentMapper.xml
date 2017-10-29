@@ -54,8 +54,9 @@
             COUNT(zc.`level`) AS commentNum
         FROM
             zb_comment zc
-        LEFT JOIN zb_requirement zr ON zc.requirement_id = zr.id
-        WHERE zr.user_id = #{userId} GROUP BY `level`
+        WHERE
+            zc.other_id = #{userId}
+        GROUP BY `level`
   </select>
 
   <select id="getCommentRecordByUserId" resultType="com.jusfoun.hookah.core.domain.zb.ZbComment">
