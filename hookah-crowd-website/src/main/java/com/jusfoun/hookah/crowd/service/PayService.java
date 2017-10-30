@@ -1,5 +1,7 @@
 package com.jusfoun.hookah.crowd.service;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 
 public interface PayService {
@@ -12,4 +14,12 @@ public interface PayService {
      * @return
      */
     boolean handleZFBRs(HttpServletRequest request);
+
+    /**
+     * 托管资金，跳转到支付页面
+     * @param requirementId
+     * @param trusteePercent
+     * @return
+     */
+    ModelAndView toPayPage(String requirementId, String trusteePercent, String userId);
 }

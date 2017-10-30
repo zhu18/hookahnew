@@ -1,19 +1,19 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
+import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbTrusteeRecord;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
-import com.jusfoun.hookah.crowd.service.MgZbRequireStatusService;
-import com.jusfoun.hookah.crowd.service.PayService;
-import com.jusfoun.hookah.crowd.service.ZbRequireService;
-import com.jusfoun.hookah.crowd.service.ZbTrusteeRecordService;
+import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +32,12 @@ public class PayServiceImpl implements PayService {
 
     @Resource
     private ZbRequireService zbRequireService;
+
+    @Resource
+    PayAccountService payAccountService;
+
+    @Resource
+    UserService userService;
 
     @Override
     public String toPayByZFB(String requirementSn, String tradeSn, Long amount, String flagNum, String notify_url, String return_url) {
@@ -165,5 +171,136 @@ public class PayServiceImpl implements PayService {
             params.put(name, valueStr);
         }
         return params;
+    }
+
+    @Override
+    public ModelAndView toPayPage(String requirementId, String trusteePercent, String userId) {
+
+        ModelAndView mv = new ModelAndView();
+
+        try {
+
+            // 校验参数
+            if(!StringUtils.isNotBlank(requirementId)
+                    || !StringUtils.isNotBlank(trusteePercent)
+                        || !StringUtils.isNotBlank(userId)){
+                mv.setViewName("");
+                mv.addObject("msg", "请求参数不能为空^_^");
+                return mv;
+            }
+
+            // 查询资金账户信息
+            List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("userId", userId));
+            PayAccount payAccount = payAccountService.selectOne(filters);
+            if(payAccount == null){
+                mv.setViewName("");
+                mv.addObject("msg", "账户信息不存在^_^");
+                return mv;
+            }
+
+            // 查询需求信息
+            ZbRequirement zbRequirement =  zbRequireService.selectById(Long.parseLong(requirementId));
+            if(zbRequirement == null){
+                mv.setViewName("");
+                mv.addObject("msg", "该需求数据不存在^_^");
+                return mv;
+            }
+
+            // 根据托管比例参数  修改比例
+            if (zbRequirement.getStatus().equals(Short.parseShort("3"))) {
+                if (StringUtils.isNotBlank(trusteePercent) && !trusteePercent.equals("30")) {
+                    zbRequirement.setId(zbRequirement.getId());
+                    zbRequirement.setTrusteePercent(Integer.parseInt(trusteePercent));
+                    zbRequireService.updateByIdSelective(zbRequirement);
+                }
+            }
+
+            // 插入托管资金记录
+            List<Condition> zbTrusFilter = new ArrayList<>();
+            zbTrusFilter.add(Condition.eq("requirementId", requirementId));
+            zbTrusFilter.add(Condition.eq("status", Short.parseShort("0")));
+            zbTrusFilter.add(Condition.eq("userId", userId));
+            ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(zbTrusFilter);
+            if (zbTrusteeRecord != null) {
+                if (zbRequirement.getStatus().equals(Short.parseShort("3"))) {
+                    //第一次托管
+                    zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
+                    zbTrusteeRecord.setTrusteeNum(1);
+                } else if (zbRequirement.getStatus().equals(Short.parseShort("7"))) {
+                    //第二次托管
+                    zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * (100 - zbRequirement.getTrusteePercent()));
+                    zbTrusteeRecord.setTrusteeNum(2);
+                } else {
+                    mv.setViewName("");
+                    mv.addObject("msg", "该需求数据异常^_^");
+                    return mv;
+                }
+                zbTrusteeRecordService.updateById(zbTrusteeRecord);
+
+            } else {
+                zbTrusteeRecord = new ZbTrusteeRecord();
+                zbTrusteeRecord.setUserId(zbRequirement.getUserId());
+                zbTrusteeRecord.setRequirementId(Long.parseLong(requirementId));
+                zbTrusteeRecord.setRewardMoney(zbRequirement.getRewardMoney());
+                zbTrusteeRecord.setTrusteePercent(zbRequirement.getTrusteePercent());
+                if (zbRequirement.getStatus().equals(Short.parseShort("3"))) {
+                    //第一次托管
+                    zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent());
+                    zbTrusteeRecord.setTrusteeNum(1);
+                } else if (zbRequirement.getStatus().equals(Short.parseShort("7"))) {
+                    //第二次托管
+                    zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * (100 - zbRequirement.getTrusteePercent()));
+                    zbTrusteeRecord.setTrusteeNum(2);
+                } else {
+                    mv.setViewName("");
+                    mv.addObject("msg", "该需求数据异常^_^");
+                    return mv;
+                }
+                zbTrusteeRecord.setSerialNo(CommonUtils.getRequireSn("ZB", "ZFB"));
+                zbTrusteeRecord.setStatus(ZbContants.Trustee_Record_Status.RECORD_INITIAL.getCode());
+                zbTrusteeRecord.setAddTime(new Date());
+                zbTrusteeRecordService.insert(zbTrusteeRecord);
+            }
+
+            if (zbRequirement.getStatus().equals(Short.parseShort("3"))) {
+                //添加悬赏费用托管时间
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.TRUSTEETIME, DateUtil.getSimpleDate(new Date()));
+            }
+
+            List<Map> paymentList = initPaymentList(userId);
+
+            mv.addObject("moneyBalance", payAccount.getUseBalance());
+            mv.addObject("payments", paymentList);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("tradeNo", zbTrusteeRecord.getSerialNo());
+            map.put("tradeAmount", zbTrusteeRecord.getActualMoney());
+            map.put("tradeDate", new Date());
+            map.put("tradeType", "即时到账交易");
+            mv.addObject("orderInfo", map);
+            mv.setViewName("");
+
+        }catch (Exception e){
+            logger.error("跳转支付页面异常", e);
+        }
+
+        return mv;
+    }
+
+    private List<Map> initPaymentList(String userId){
+        List<Map> list = new ArrayList<>(2);
+        User user = userService.selectById(userId);
+        if(user != null){
+            Object[][] payments = {{"账户余额",user.getMoneyBalance()}, {"支付宝",user.getMobile()}};
+            for(int i=0;i<2;i++){
+                Map pay = new HashMap();
+                pay.put("payCode",i+1);
+                pay.put("payName",payments[i][0]);
+                pay.put("payDetail",payments[i][1]);
+                list.add(pay);
+            }
+        }
+        return list;
     }
 }

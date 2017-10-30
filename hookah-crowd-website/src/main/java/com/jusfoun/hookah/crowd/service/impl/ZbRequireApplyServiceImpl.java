@@ -67,9 +67,16 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         if (requirementId == null) {
             return ReturnData.error();
         }
+        Map<String, Object> map = new HashMap<>();
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("requirementId", requirementId));
         ZbRequirement zbRequirement = zbRequirementMapper.selectForDetail(requirementId);
+        double managedMoney = 0;
+        if (zbRequirement.getRewardMoney()!=null && zbRequirement.getTrusteePercent()!=null){
+            managedMoney = zbRequirement.getRewardMoney() * zbRequirement.getTrusteePercent();
+            map.put("managedMoney",managedMoney/10000);
+        }
+
         MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn()) == null ? new MgZbRequireStatus() : mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
         List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
         ZbProgram zbProgram = null;
@@ -105,7 +112,6 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         filter.add(Condition.eq("type", 0));
         List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
 
-        Map<String, Object> map = new HashMap<>();
         map.put("zbRequirement", zbRequirement);
         map.put("zbRequirementApplies", zbRequirementApplies);
         map.put("zbProgram", zbProgram);
