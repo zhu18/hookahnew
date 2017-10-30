@@ -1783,8 +1783,8 @@ dl {
 
 @keyframes myfirst
 {
-	0%   {opacity:0.3;}
-	100% {opacity: 1;}
+	0% {opacity:0.3;}
+	100% {opacity:1;}
 }
 .storageList .storageBox .storageImg_1:hover .one_img{
 	animation:myfirst 2s;
@@ -1940,7 +1940,6 @@ dl {
 	width:1020px;
 }
 .storageInfo .tagsItem{
-	overflow: hidden;
 	width:253px;
 	border-right:2px solid #efefef;
 	position: relative;
@@ -1950,6 +1949,7 @@ dl {
 }
 .storageInfo .right .tagsItem:first-child{
 	border-bottom:2px solid #efefef;
+	z-index: 12;
 }
 .storageInfo .right .tagsItem h5{
 	font-size: 14px;
@@ -1989,6 +1989,24 @@ dl {
 }
 .storageInfo .tagsItem a{
 	display: block;
+	background: #fff;
+	z-index: 11;
+}
+.storageInfo .left .tagsItem a{
+	position: absolute;
+	display: block;
+	top: 0px;
+	left: 0px;
+	width: 253px;
+	height: 226px;
+}
+.storageInfo .right .tagsItem a{
+	position: absolute;
+	display: block;
+	top:0px;
+	left:0px;
+	width: 253px;
+	height: 112px;
 }
 
 .goodsList{
@@ -2047,6 +2065,7 @@ dl {
 	overflow: hidden;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.8);
 	min-height:170px;
+	z-index: 15;
 }
 .goodsList .goodsItem:hover a h5{
 	width: 150px;
@@ -2055,9 +2074,13 @@ dl {
 	text-overflow: inherit;
 	white-space: inherit;
 }
-.goodsList .goodsItem:hover a span{
-	margin-bottom: 10px;
+.tagsItem:hover a{
+ 	background: #f2f2f2;
+ 	box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+	z-index: 15;
 }
+
+
 
 
 

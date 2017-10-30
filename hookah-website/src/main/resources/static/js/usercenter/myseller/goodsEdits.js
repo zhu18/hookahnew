@@ -1150,10 +1150,13 @@ function getGoodsDetails() { //获取商品信息
 	})
 }
 function renderData(data) {//渲染页面
+	if(!data.apiInfo){
+		alert('数据有误');
+		location.href = '/usercenter/goodsOffSale';
+	}
 	catId = data.catId;
 	$('#J-ver').val(data.ver);//版本号
 	$("input[name='typeId']").val(catId.substring(0, 3));
-	$('#J-ver').val(data.ver);//版本号
 	$('#J-goodsName').val(data.goodsName);//商品名称
 	$('#goodsBriefes').val(data.goodsBrief);//简介
 	if (data.isPush == 1) {

@@ -37,7 +37,7 @@ html{
 	position: relative;
 	margin:19px 0 0 210px;
 }
-.header-centerbar .search .fa {
+.header-centerbar .search .searchIconF {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -45,10 +45,10 @@ html{
 	height: 38px;
 	line-height: 38px;
 	font-size: 20px;
-	color: rgb(142, 164, 185);
+	color: #fff;
 }
 .header-centerbar .search input {
-	width: 331px;
+	width: 509px;
 	height: 36px;
 	padding-left: 32px;
 	font-size: 13px;
@@ -71,6 +71,7 @@ html{
 	width: 80px;
 	height: 38px;
 	cursor: pointer;
+	font-size: 20px;
 }
 .header-centerbar .search .search-text {
 	line-height: 26px;
