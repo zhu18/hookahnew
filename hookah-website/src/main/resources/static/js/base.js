@@ -26,8 +26,24 @@ $(document).ready(function () {
 		$('.exchange-index-menu').mouseleave(function(){
 			$(".exchange-index-menu").hide();
 		});
+		var a=$("#exchange_menu");
+		var boxX=a.offset().left;
+		var boxY=a.offset().top;
+		a.mousemove(function(e){
+			var x = e.pageX;
+			var y = e.pageY;
+			var zX=x-boxX;
+			var zY=y-boxY;
+			if(zX >= 175 || zX  <= 5 || zY <= 5){
+				$(".exchange-index-menu").hide();
+			}else{
+				$(".exchange-index-menu").show();
+			}
+		});
 
 	}
+
+
 	$(".exchange-index-menu .menu-list .menu-item").hover(function () {
 		$(this).children('.menu-son-list').show().end().siblings().children('.menu-son-list').hide();
 		$(this).addClass('active').siblings().removeClass('active');
