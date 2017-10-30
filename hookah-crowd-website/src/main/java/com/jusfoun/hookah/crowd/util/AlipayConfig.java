@@ -14,7 +14,7 @@ public class AlipayConfig {
 	public static final String seller_id = partner;
 
 	/** MD5密钥，安全检验码*/
-	public static String key = "o6tn4lterk14v6g260rdr4qkos17ynmi"
+	public static String key = "o6tn4lterk14v6g260rdr4qkos17ynmi";
 //	public static String key = "z7gd4j4u2b9h39p2wgewq9epku0m9nqp";
 	//public static String key = "jffjabg1gda0ob1p98q8x5x05wy5d026";
 
