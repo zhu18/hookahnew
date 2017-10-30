@@ -37,7 +37,7 @@ html{
 	position: relative;
 	margin:19px 0 0 210px;
 }
-.header-centerbar .search .fa {
+.header-centerbar .search .searchIconF {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -45,10 +45,10 @@ html{
 	height: 38px;
 	line-height: 38px;
 	font-size: 20px;
-	color: rgb(142, 164, 185);
+	color: #fff;
 }
 .header-centerbar .search input {
-	width: 331px;
+	width: 509px;
 	height: 36px;
 	padding-left: 32px;
 	font-size: 13px;
@@ -71,6 +71,7 @@ html{
 	width: 80px;
 	height: 38px;
 	cursor: pointer;
+	font-size: 20px;
 }
 .header-centerbar .search .search-text {
 	line-height: 26px;
@@ -334,16 +335,16 @@ html{
 }
 .topbar-user li a{
 	font-size: 14px;
-	color:#8ea4b9;
 	font-weight:bold;
-	padding:10px 10px;
-	border:1px solid #fff;
+	padding:7px 9px;
+	border:1px solid #989898;
 	border-radius:50px;
-	color:#fff;
+	color:#989898;
 }
 .topbar-user li a:hover{
 	background: #d20003;
 	border:1px solid #d20003;;
+	color:#fff;
 }
 .header-bottoms{
 	height:40px;
@@ -487,14 +488,14 @@ input:focus, select:focus, textarea:focus {
 	height:40px;
 	font-size: 16px;
 	list-style: none;
-	padding: 0px;
+	padding: 0;
 }
 #navList li.active {
 
 }
 #navList li {
 	float: left;
-	width: 95px;
+	width: 140px;
 	text-align: center;
 	color: rgb(142, 164, 185);
 }
@@ -503,7 +504,7 @@ input:focus, select:focus, textarea:focus {
 	text-decoration: none;
 }
 #navList li.active .text {
-	color: rgb(225, 0, 0);
+	color: #fff;
 }
 #navList li a .text ,#exchange_menu a .text{
 	display: block;

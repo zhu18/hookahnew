@@ -1,6 +1,7 @@
 function loadPageData(data) { //渲染页面数据
 	var currentPage = data.data.currentPage;
 	if (data.data.list.length > 0) {
+		$('#J_searchCategory').before('');
 		var list = data.data.list;
 		var html = '';
 		for (var i = 0; i < list.length; i++) {
