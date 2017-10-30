@@ -101,7 +101,7 @@ function loadPageData(data) {
           html += '<td><a href="javascript:getDataPackageD(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderSn + '\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
 
         }else{*/
-          html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline + '\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
+          html += '<td><a href="javascript:getKey(\'' + goods[ii].goodsId + '\' , \'' + goods[ii].sourceId + '\',\'' + list[i].orderId + '\',\'' + goods[ii].goodsType + '\',\'' + goods[ii].isOffline +'\',\''+ goods[ii].orderSn+ '\',\'' + goods[ii].goodsSn +'\');">交付信息<br/><span class="fa fa-download font-size-18"></span></a></td>';
 
         //}
 
@@ -260,7 +260,7 @@ var keyDialogHtml = '<div id="myDialog" title="My Dialog">\
     <p>&nbsp;&nbsp;有效期：<em class="j_time">2342342</em></p>\
   </div>\
 ';
-function getKey(goodsId, sourceId, orderId, goodsType, isOffline) {
+function getKey(goodsId, sourceId, orderId, goodsType, isOffline,orderSn,goodsSn) {
 
   console.log('goodsId：' + goodsId, "sourceId：" + sourceId, "orderId：" + orderId, "goodsType：" + goodsType, "isOffline：" + isOffline);
   /*if (goodsType == 1){
