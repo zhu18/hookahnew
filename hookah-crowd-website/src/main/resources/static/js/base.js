@@ -82,8 +82,8 @@ $(document).ready(function () {
 		if(pathname.indexOf('/usercenter/buyer/allOrderList') >= 0 || pathname.indexOf('/usercenter/buyer/orderManagement') >= 0 || pathname.indexOf('/usercenter/buyer/orderStay') >= 0 || pathname.indexOf('/usercenter/buyer/cancelOrderList') >= 0){
 			$('#navList li:nth-child(4)').addClass('active');
 		}else if(pathname.indexOf('/usercenter') >= 0){
-			$('#navList li:nth-child(5)').addClass('active');
-			$('#exchange_menu').hide();
+      $('#navList li:nth-child(4)').addClass('active');
+      $('#exchange_menu').hide();
 		}
 	});
 

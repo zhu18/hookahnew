@@ -26,20 +26,6 @@ $(document).ready(function () {
 		$('.exchange-index-menu').mouseleave(function(){
 			$(".exchange-index-menu").hide();
 		});
-		var a=$("#exchange_menu");
-		var boxX=a.offset().left;
-		var boxY=a.offset().top;
-		a.mousemove(function(e){
-			var x = e.pageX;
-			var y = e.pageY;
-			var zX=x-boxX;
-			var zY=y-boxY;
-			if(zX >= 175 || zX  <= 5 || zY <= 5){
-				$(".exchange-index-menu").hide();
-			}else{
-				$(".exchange-index-menu").show();
-			}
-		});
 
 	}
 
@@ -84,7 +70,7 @@ $(document).ready(function () {
     if(pathname.indexOf('/usercenter/buyer/allOrderList') >= 0 || pathname.indexOf('/usercenter/buyer/orderManagement') >= 0 || pathname.indexOf('/usercenter/buyer/orderStay') >= 0 || pathname.indexOf('/usercenter/buyer/cancelOrderList') >= 0){
       $('#navList li:nth-child(4)').addClass('active');
     }else if(pathname.indexOf('/usercenter') >= 0){
-      $('#navList li:nth-child(5)').addClass('active');
+      $('#navList li:nth-child(4)').addClass('active');
     }
   });
 

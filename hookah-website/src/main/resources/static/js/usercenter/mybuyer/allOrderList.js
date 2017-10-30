@@ -66,7 +66,7 @@ function loadPageData(data) {
                     html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" class="display-inline-block goPay btn btn-full-orange margin-top-5 margin-bottom-5">再次购买</a>';
                   }
                   // html += '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=2" class="display-block color-blue margin-bottom-5">订单详情</a>';
-                  html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">删除</a>';
+                  html += '<a href="javascript:confirmForceDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">删除</a>';
                   html += '</td>';
               }
 
@@ -259,7 +259,7 @@ function loadPageData(data) {
                       html += '<a href="' + host.website + '/order/payOrder?orderSn=' + list[i].orderSn + '"  class="display-inline-block goPay btn btn-full-orange margin-bottom-5 margin-top-5">去支付</a>';
                   }
                   // html += '<a target="_blank" href="/order/viewDetails?orderId=' + list[i].orderId + '&num=2" class="display-block color-blue margin-bottom-5">订单详情</a>';
-                  html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">删除</a>';
+                  html += '<a href="javascript:confirmDelete(\'' + list[i].orderId + '\');" class="display-block margin-bottom-5">取消订单</a>';
                   html += '</td>';
               }
 
@@ -329,10 +329,39 @@ function deleteRadio(orderId) {
     }
   })
 }
-function confirmDelete(orderId) {
+// 取消订单
+function deleteOrder(orderId) {
+  $.ajax({
+    url: '/order/delete',
+    type: 'get',
+    data: {
+      orderId: orderId
+    },
+    success: function (data) {
+      if (!(data.code == 0)) {
+        $.alert('订单已取消', true, function () {
+          location.reload()
+        });
+      } else {
+        console.log("取消订单失败！");
+      }
+    }
+  })
+}
+function confirmForceDelete(orderId) {
   $.confirm('确定要删除该订单吗？', null, function (type) {
     if (type == 'yes') {
       deleteRadio(orderId);
+      this.hide();
+    } else {
+      this.hide();
+    }
+  });
+}
+function confirmDelete(orderId) {
+  $.confirm('确定要取消该订单吗？', null, function (type) {
+    if (type == 'yes') {
+        deleteOrder(orderId);
       this.hide();
     } else {
       this.hide();
