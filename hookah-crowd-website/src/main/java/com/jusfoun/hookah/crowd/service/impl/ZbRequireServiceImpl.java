@@ -85,7 +85,11 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         if (StringUtils.isNotBlank(title)) filter.add(Condition.like("title", title));
         if (StringUtils.isNotBlank(requireSn)) filter.add(Condition.eq("requireSn", requireSn));
         if (status != null) {
-            filter.add(Condition.eq("status", status.equals(Short.parseShort("5")) ? (new Short[]{5, 6}) : status));
+            if(status == 5){
+                filter.add(Condition.in("status", new Short[]{5, 6}));
+            }else{
+                filter.add(Condition.eq("status", status));
+            }
         } else {
             filter.add(Condition.in("status", new Short[]{1, 2, 3, 5, 6, 7, 8, 10, 13, 16, 14, 15, 19}));
         }
@@ -489,5 +493,4 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             return ReturnData.error("审核失败");
         }
     }
-
 }

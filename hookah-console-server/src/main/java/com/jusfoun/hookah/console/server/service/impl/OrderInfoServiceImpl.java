@@ -481,6 +481,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         filter.add(Condition.eq("userId",userId));
         filter.add(Condition.eq("mgOrderGoods.goodsSn",goodsSn));
         filter.add(Condition.eq("isDeleted",(byte)0));
+        filter.add(Condition.eq("forceDeleted",(byte)0));
         List<MgGoodsOrder> list = mgGoodsOrderService.selectList(filter);
         if (list!=null&&list.size()>0){
             return true;

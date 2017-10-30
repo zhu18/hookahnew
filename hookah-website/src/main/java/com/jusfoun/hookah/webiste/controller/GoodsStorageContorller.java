@@ -25,11 +25,11 @@ public class GoodsStorageContorller extends BaseController {
      * @return
      */
     @RequestMapping(value = "/searchByLabels")
-    public ReturnData searchByLabels(String storageId, Integer typeId, String labels, Integer currentPage, Integer pageSize) {
+    public ReturnData searchByLabels(String storageId, Integer typeId, String labels, Integer pageNumber, Integer pageSize) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            GoodsLabelsPagVo vo = goodsStorageService.searchByLabels(storageId, typeId, labels, currentPage,  pageSize);
+            GoodsLabelsPagVo vo = goodsStorageService.searchByLabels(storageId, typeId, labels, pageNumber,  pageSize);
             returnData.setData(vo.getPagination());
             returnData.setData2(vo.getGoodsLabelList());
         } catch (Exception e) {

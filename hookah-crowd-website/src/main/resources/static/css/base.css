@@ -335,16 +335,16 @@ html{
 }
 .topbar-user li a{
 	font-size: 14px;
-	color:#8ea4b9;
 	font-weight:bold;
-	padding:10px 10px;
-	border:1px solid #fff;
+	padding:7px 9px;
+	border:1px solid #989898;
 	border-radius:50px;
-	color:#fff;
+	color:#989898;
 }
 .topbar-user li a:hover{
 	background: #d20003;
 	border:1px solid #d20003;;
+	color:#fff;
 }
 .header-bottoms{
 	height:40px;
@@ -495,7 +495,7 @@ input:focus, select:focus, textarea:focus {
 }
 #navList li {
 	float: left;
-	width: 95px;
+	width: 140px;
 	text-align: center;
 	color: rgb(142, 164, 185);
 }
@@ -504,7 +504,7 @@ input:focus, select:focus, textarea:focus {
 	text-decoration: none;
 }
 #navList li.active .text {
-	color: rgb(225, 0, 0);
+	color: #fff;
 }
 #navList li a .text ,#exchange_menu a .text{
 	display: block;
@@ -527,3 +527,7 @@ input:focus, select:focus, textarea:focus {
 	font-size: 16px;
 }
 #exchange_menu a span{margin-right:10px;}
+/*新添加最顶部bar*/
+.pageTopBar{ background-color: #f2f2f2; font-size:14px; line-height:30px; border-bottom:1px solid #ffffff; color:#949494; overflow: hidden;}
+.pageTopBar a{ padding: 10px;}
+.pageTopBar a:first-child{color:#000000}
