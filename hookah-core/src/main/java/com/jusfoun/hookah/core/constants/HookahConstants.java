@@ -144,6 +144,9 @@ public class HookahConstants {
     public static final Byte GOODS_CHECK_STATUS_YES = 1;
     public static final Byte GOODS_CHECK_STATUS_NOT = 2;
 
+    //商品类型
+    public static final Byte GOODS_TYPE = 1;
+
     public static final Byte GOODS_ON_LINE = 0;//线上支付
     public static final Byte GOODS_OFF_LINE = 1;//线下支付
 

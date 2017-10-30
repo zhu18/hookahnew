@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author huang lei
@@ -125,6 +122,8 @@ public class ExchangeController extends BaseController{
 
             model.addAttribute("goodsGrades",commentService.countGoodsGradesByGoodsId(id).getData());
 
+            if(Objects.isNull(goodsVo.getApiInfo()) && HookahConstants.GOODS_TYPE.equals(goodsVo.getGoodsType()))
+               throw new HookahException("API调用失败");
             model.addAttribute("goodsDetails", goodsVo);
             model.addAttribute("title", goodsVo.getGoodsName() + "-");
             //推荐商品
