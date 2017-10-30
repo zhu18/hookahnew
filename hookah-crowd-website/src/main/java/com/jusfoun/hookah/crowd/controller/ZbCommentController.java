@@ -57,6 +57,12 @@ public class ZbCommentController extends BaseController{
 
         try {
 
+            if(!StringUtils.isNotBlank(userId)){
+                returnData.setMessage("查询参数不能为空^_^");
+                returnData.setCode(ExceptionConst.Error);
+                return returnData;
+            }
+
             int pageNumberNew = HookahConstants.PAGE_NUM;
             if (StringUtils.isNotBlank(currentPage)) {
                 pageNumberNew = Integer.parseInt(currentPage);

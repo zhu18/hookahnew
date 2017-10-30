@@ -770,7 +770,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             OrderInfoVo orderInfoVo = findDetailById(orderInfo.getOrderId());
             //支付成功,
             //1、发送api平台
-//            String url = "http://open.galaxybigdata.com/shop/insert/userapi";
+//            String url = "http://open.bdgstore.cn/shop/insert/userapi";
             String apiUrl = myProps.getApi().get("url");
             List<Map> list = new ArrayList();
 
@@ -1242,7 +1242,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                             if (mgOrderGood.getOffLineData().getIsOnline().equals("0") &&
                                     !mgOrderGood.getOffLineData().getLocalUrl().contains("http")){
                                 String localUrl = mgOrderGood.getOffLineData().getLocalUrl();
-                                mgOrderGood.getOffLineData().setLocalUrl("http://static.galaxybigdata.com/" + localUrl);
+                                mgOrderGood.getOffLineData().setLocalUrl(myProps.getHost().get("static") + localUrl);
                             }
                             map.put("data",mgOrderGood.getOffLineData());
                         }else {
@@ -1266,7 +1266,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                             String configFile = mgOrderGood.getDataModel().getConfigFile().getFileAddress();
                             String configParams = mgOrderGood.getDataModel().getParamFile().getFileAddress();
                             String modelFile = mgOrderGood.getDataModel().getModelFile().getFileAddress();
-                            String prefix = "http://static.galaxybigdata.com/";
+                            String prefix = myProps.getHost().get("static");
                             configFile = prefix + configFile;
                             mgOrderGood.getDataModel().getConfigFile().setFileAddress(configFile);
                             configParams = prefix + configParams;

@@ -46,14 +46,14 @@
                         用户评价
                     </div>
                     <div style="padding: 20px 110px;">
-                        <div data-ng-repeat="item in level" >
+                        <div data-ng-repeat="item in levels" >
                             <span uib-rating ng-model="item.commentLevel" max="5" read-only="true" aria-labelledby="default-rating"></span>
-                            <span style="display: inline-block;width: 80px;height: 10px;background-color: #e5e5e5;"><i></i></span>
+                            <span style="display: inline-block;width: 80px;height: 10px;background-color: #e5e5e5;border-radius: 5px;position: relative"><i style="position: absolute;top: 0;background-color: red;height: 100%;border-radius: 5px;" data-ng-class="with"></i></span>
                             (<span data-ng-bind="item.commentNum"></span>)
                         </div>
                     </div>
                     <div style="text-align: center;margin-bottom: 10px;">
-                        <a href="javascript:void (0)">来自 <span></span>个客服积累评价 <span></span>次></a>
+                        <a href="javascript:void (0)">来自 <span>{{total}}</span>个客服积累评价 <span>{{total}}</span>次></a>
                     </div>
 
                 </div>
