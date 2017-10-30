@@ -108,7 +108,7 @@ public class GoodsStorageApi extends BaseController {
         returnData.setCode(ExceptionConst.Success);
         try {
             List<OrderBy> orderBys = new ArrayList();
-            orderBys.add(OrderBy.desc("stOrder"));
+            orderBys.add(OrderBy.asc("stOrder"));
             returnData.setData(goodsStorageService.selectList(null, orderBys));
         } catch (Exception e) {
             logger.error("查询所有货架错误！", e);
