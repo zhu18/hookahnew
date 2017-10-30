@@ -114,15 +114,27 @@ var htmlPart = {
 		<div class="storageList">
 			<h2>${item.name}</h2>
 			<div class="storageBox">
-				<div class="storageImg storageImg_1 grid-left">
+				<div class="storageImg storageImg_${itemLP.index} grid-left">
 					<img class="one_img" src="${item.img}" alt="">
 					<%if(itemLP.first){%>
-					<div class="box_1">
+					<div class="box">
 						<img src="/static/images/exchange/y_1.png" alt="" class="y_1">
 						<img src="/static/images/exchange/y_2.png" alt="" class="y_2">
 						<img src="/static/images/exchange/y_3.png" alt="" class="y_3">
 					</div>
+					<%}else if(itemLP.index == 2){%>
+					<div class="box">
+						<img src="/static/images/exchange/y2_1.png" alt="" class="y2_1">
+						<img src="/static/images/exchange/y2_2.png" alt="" class="y2_2">
+						<img src="/static/images/exchange/y2_3.png" alt="" class="y2_3">
+					</div>
+					<%}else if(itemLP.index == 3){%>
+					<div class="box">
+						<img src="/static/images/exchange/y3_1.png" alt="" class="y3_1">
+						<img src="/static/images/exchange/y3_2.png" alt="" class="y3_2">
+					</div>
 					<%}%>
+					<p class="describle">${item.describle}</p>
 				</div>
 				<div class="storageInfo grid-left">
 					<div class="tagsList">
@@ -207,11 +219,16 @@ var htmlPart = {
 							<a href="/exchange/details?id=${goodsItem.goodsId}">
 								<h5>${goodsItem.goodsName}</h5>
 								<img src="${goodsItem.goodsImg}" alt="">
-								<%if(goodsItem.shopPrice >= 1000000){%>
-								<p>￥<i>${trunc(goodsItem.shopPrice / 1000000,2)}</i>万/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套','面议')}</p>
+								<%if(goodsItem.shopFormat == -1){%>
+								<p>${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套',-1,'面议')}</p>
 								<%}else{%>
-								<p>￥<i>${goodsItem.shopPrice /100}</i>/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套','面议')}</p>
+									<%if(goodsItem.shopPrice >= 1000000){%>
+									<p>￥<i>${trunc(goodsItem.shopPrice / 1000000,2)}</i>万/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套',-1,'面议')}</p>
+									<%}else{%>
+									<p>￥<i>${goodsItem.shopPrice /100}</i>/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套',-1,'面议')}</p>
+									<%}%>
 								<%}%>
+
 								<span>${goodsItem.catName}</span>
 							</a>
 						</div>

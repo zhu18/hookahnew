@@ -1711,8 +1711,22 @@ dl {
 	width:180px;
 	height:400px;
 	position: relative;
+	overflow: hidden;
 }
-.storageList .storageBox .storageImg .box_1{
+.storageList .storageBox .storageImg .describle{
+	position: absolute;
+	bottom: 60px;
+	color: #fff;
+	text-align: center;
+	width: 180px;
+	font-size: 18px;
+	line-height: 30px;
+}
+.storageList .storageBox .storageImg .one_img{
+	width:100%;
+}
+/**********第一个货架开始**********/
+.storageList .storageBox .storageImg_1 .box{
 	position: absolute;
 	top:54px;
 	left:50%;
@@ -1720,16 +1734,15 @@ dl {
 	width:116px;
 	height:127px;
 }
-.storageList .storageBox .storageImg .box_1 img{
+.storageList .storageBox .storageImg_1 .box img{
 	position: absolute;
 	top:0;
 	left:0;
 	width:116px;
 	height:127px;
 }
-.storageList .storageBox .storageImg .box_1 .y_1{
+.storageList .storageBox .storageImg_1 .box .y_1{
 	-webkit-transition: -webkit-transform 2s;
-	-webkit-border-radius: 5px;
 	-o-transition-property: -o-transform;
 	-o-transition-duration: 2s;
 	-moz-transition-property:-o-transform;
@@ -1737,15 +1750,14 @@ dl {
 	transition-property: transform;
 	transition-duration: 2s;
 }
-.storageList .storageBox .storageImg:hover .box_1 .y_1{
+.storageList .storageBox .storageImg_1:hover .box .y_1{
 	-moz-transform: rotate(-360deg);
 	-webkit-transform: rotate(-360deg);
 	-o-transform: rotate(-360deg);
 	transform: rotate(-360deg);
 }
-.storageList .storageBox .storageImg .box_1 .y_2{
+.storageList .storageBox .storageImg_1 .box .y_2{
 	-webkit-transition: -webkit-transform 2s;
-	-webkit-border-radius: 5px;
 	-o-transition-property: -o-transform;
 	-o-transition-duration: 2s;
 	-moz-transition-property:-o-transform;
@@ -1753,34 +1765,177 @@ dl {
 	transition-property: transform;
 	transition-duration: 2s;
 }
-.storageList .storageBox .storageImg:hover .box_1 .y_2{
+.storageList .storageBox .storageImg_1:hover .box .y_2{
 	-moz-transform: rotate(360deg);
 	-webkit-transform: rotate(360deg);
 	-o-transform: rotate(360deg);
 	transform: rotate(360deg);
 }
-.storageList .storageBox .storageImg .box_1 .y_3{
+.storageList .storageBox .storageImg_1 .box .y_3{
 	transition: 2s;
 }
-.storageList .storageBox .storageImg:hover .box_1 .y_3{
+.storageList .storageBox .storageImg_1:hover .box .y_3{
 	transform: rotateY(180deg);
 }
-.storageList .storageBox .storageImg .one_img{
+.storageList .storageBox .storageImg_1 .one_img{
 	opacity: 1;
 }
+
 @keyframes myfirst
 {
 	0%   {opacity:0.3;}
 	100% {opacity: 1;}
 }
-.storageList .storageBox .storageImg:hover .one_img{
+.storageList .storageBox .storageImg_1:hover .one_img{
 	animation:myfirst 2s;
 	animation-iteration-count: infinite;
 }
 
-.storageList .storageBox .storageImg img{
-	width:100%;
+/**********第一个货架结束**********/
+/**********第2个货架开始**********/
+.storageList .storageBox .storageImg_2 .box{
+	position: absolute;
+	top:74px;
+	left:0;
+	width:180px;
+	height:137px;
 }
+.storageList .storageBox .storageImg_2 .box img{
+	position: absolute;
+}
+.storageList .storageBox .storageImg_2 .box .y2_1{
+	top:21px;
+	left:22px;
+	-moz-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+@keyframes img2Tranform {
+	0%{
+		-moz-transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes img2Tranform2 {
+	0%{
+		-moz-transform: rotate(-360deg);
+		-webkit-transform: rotate(-360deg);
+		-o-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+	}
+}
+.storageList .storageBox .storageImg_2:hover .box .y2_1{
+	animation:img2Tranform 2s linear;
+	animation-iteration-count: infinite;
+}
+.storageList .storageBox .storageImg_2 .box .y2_3{
+	top:0;
+	right:18px;
+	-moz-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+.storageList .storageBox .storageImg_2:hover .box .y2_3{
+	animation:img2Tranform2 5s linear;
+	animation-iteration-count: infinite;
+}
+.storageList .storageBox .storageImg_2 .box .y2_2{
+	bottom:0;
+	left:36px;
+	-moz-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+.storageList .storageBox .storageImg_2:hover .box .y2_2{
+	animation:img2Tranform 3s linear;
+	animation-iteration-count: infinite;
+}
+/**********第2个货架结束**********/
+/**********第3个货架开始**********/
+.storageList .storageBox .storageImg_3 .box{
+	position: absolute;
+	top:90px;
+	left:50%;
+	width:145px;
+	height:145px;
+	margin-left:-72.5px;
+}
+.storageList .storageBox .storageImg_3 .box img{
+	position: absolute;
+}
+.storageList .storageBox .storageImg_3 .box .y3_1{
+	width:145px;
+	height:145px;
+	top:0;
+	left:0;
+	-webkit-transition: -webkit-transform 2s;
+	-o-transition-property: -o-transform;
+	-o-transition-duration: 2s;
+	-moz-transition-property:-o-transform;
+	-moz-transition-duration: 2s;
+	transition-property: transform;
+	transition-duration: 2s;
+}
+.storageList .storageBox .storageImg_3:hover .box .y3_1{
+	-moz-transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+	transform: rotate(360deg);
+}
+.storageList .storageBox .storageImg_3 .box .y3_2{
+	top:35px;
+	left:37px;
+	width:65px;
+	height:57px;
+}
+
+@keyframes myfirstT
+{
+	0%   {
+		filter:blur(0px);
+		-webkit-filter:blur(0px);
+		-moz-filter:blur(0px);
+		-ms-filter:blur(0px);
+		-o-filter:blur(0px);
+	}
+	50% {
+		filter:blur(10px);
+		-webkit-filter:blur(10px);
+		-moz-filter:blur(10px);
+		-ms-filter:blur(10px);
+		-o-filter:blur(10px);
+	}
+	100% {
+		filter:blur(0px);
+		-webkit-filter:blur(0px);
+		-moz-filter:blur(0px);
+		-ms-filter:blur(0px);
+		-o-filter:blur(0px);
+	}
+}
+.storageList .storageBox .storageImg_3:hover .box .y3_2{
+	animation:myfirstT 1s;
+	animation-iteration-count: 1;
+}
+/**********第3个货架结束**********/
+/***********/
+.storageList .storageBox .storageImg .describle{
+	transition-property:bottom 2s;
+	-moz-transition:bottom 2s;
+	-webkit-transition:bottom 2s;
+	-o-transition:bottom 2s;
+	bottom: -60px;
+}
+
+.storageList .storageBox .storageImg:hover .describle{
+	bottom: 60px;
+}
+/***********/
 .storageInfo{
 	width:1020px;
 }
@@ -1873,25 +2028,25 @@ dl {
 .goodsList .goodsItem p{
 	color:#ffb400;
 	font-size: 14px;
-	margin: 14px 0 5px;
+	margin: 8px 0 5px;
 }
 .goodsList .goodsItem p i{
 	font-size: 18px;
 	font-style: inherit;
 }
 .goodsList .goodsItem span{
-	margin-top: 14px;
-	padding:2px 10px;
-	border:1px solid #c9c9c9;
-	border-radius:30px;
+	margin-top: 0px;
+	padding: 0px 8px;
+	border: 1px solid #c9c9c9;
+	border-radius: 30px;
+	margin-bottom: 4px;
+	display: inline-block;
 }
 .goodsList .goodsItem:hover a{
 	background: #f2f2f2;
 	overflow: hidden;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.8);
-	height: auto;
-	min-height: 170px;
-	padding-bottom:10px;
+	min-height:170px;
 }
 .goodsList .goodsItem:hover a h5{
 	width: 150px;

@@ -192,7 +192,8 @@ class ManageGoodsController {
 				params: {
 					currentPage: $rootScope.pagination.currentPage,
 					pageSize: $rootScope.pagination.pageSize,
-					storageId:$stateParams.id
+					storageId:$stateParams.id,
+					goodsName:$scope.searchName
 					}
 			});
 			promise.then(function (res, status, config, headers) {
