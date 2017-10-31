@@ -3,42 +3,41 @@ $(document).ready(function () {
 	if (pathname.indexOf('/exchange/index') >= 0) {
 		$('#exchange_menu').show();
 		$(".exchange-index-menu").show();
-	} else if(pathname.indexOf('/exchange/list') >= 0) {
+	} else if (pathname.indexOf('/exchange/list') >= 0) {
 		$('#exchange_menu').show();
 		$(".exchange-index-menu").hide();
 		showMenu()
-	} else if(pathname.indexOf('/exchange/details') >= 0) {
+	} else if (pathname.indexOf('/exchange/details') >= 0) {
 		$('#exchange_menu').show();
 		$(".exchange-index-menu").hide();
 		showMenu()
-	}else if(pathname.indexOf('/exchange/label') >= 0) {
-        $('#exchange_menu').show();
-        $(".exchange-index-menu").hide();
-        showMenu()
-    }else if(pathname.indexOf('/activity/superCost') >= 0) {
-        $('#exchange_menu').show();
-        $(".exchange-index-menu").hide();
-        showMenu()
-    }else{
+	} else if (pathname.indexOf('/exchange/label') >= 0) {
+		$('#exchange_menu').show();
+		$(".exchange-index-menu").hide();
+		showMenu()
+	} else if (pathname.indexOf('/activity/superCost') >= 0) {
+		$('#exchange_menu').show();
+		$(".exchange-index-menu").hide();
+		showMenu()
+	} else {
 		$('#exchange_menu').hide();
 		$(".exchange-index-menu").hide();
 	}
-	function showMenu(){
-		$('#exchange_menu').mouseover(function(){
+	function showMenu() {
+		$('#exchange_menu').mouseover(function () {
 			$(".exchange-index-menu").show();
 		});
-		$('.exchange-index-menu').mouseleave(function(){
+		$('.exchange-index-menu').mouseleave(function () {
 			$(".exchange-index-menu").hide();
 		});
 
 	}
 
-
 	$(".exchange-index-menu .menu-list .menu-item").hover(function () {
 		$(this).children('.menu-son-list').show().end().siblings().children('.menu-son-list').hide();
 		$(this).addClass('active').siblings().removeClass('active');
 	});
-	$(".exchange-index-menu .menu-list").mouseleave(function(){
+	$(".exchange-index-menu .menu-list").mouseleave(function () {
 		$(".exchange-index-menu .menu-son-list").css('display', 'none');
 		$(".exchange-index-menu .menu-list .menu-item").removeClass('active');
 
@@ -54,29 +53,32 @@ $(document).ready(function () {
 		} else {
 			$('#menu_index').removeClass('active');
 		}
-		if(pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0){
-			$('.header-bottom-bar ul li:nth-child(3)').addClass('active');
+		if (pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0) {
+			$('.header-bottom-bar ul li:nth-child(1)').addClass('active');
 		}
-		if(pathname.indexOf('/information/details') >= 0){
+		if (pathname.indexOf('/information/details') >= 0) {
 			$('.header-bottom-bar ul li:nth-child(6)').addClass('active');
 		}
 	});
-  $('#navList li').each(function () {
-    if(pathname.indexOf('/exchange/index') >= 0){
-      $('#navList li:nth-child(1)').addClass('active');
-    }
-    if(pathname.indexOf('/crowdsourcing') >= 0){
-      $('#navList li:nth-child(3)').addClass('active');
-    }
-    if(pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0){
-      $('#navList li:nth-child(2)').addClass('active');
-    }
-    if(pathname.indexOf('/usercenter/buyer/allOrderList') >= 0 || pathname.indexOf('/usercenter/buyer/orderManagement') >= 0 || pathname.indexOf('/usercenter/buyer/orderStay') >= 0 || pathname.indexOf('/usercenter/buyer/cancelOrderList') >= 0){
-      $('#navList li:nth-child(4)').addClass('active');
-    }else if(pathname.indexOf('/usercenter') >= 0){
-      $('#navList li:nth-child(4)').addClass('active');
-    }
-  });
+	$('#navList li').each(function () {
+		if (pathname.indexOf('/exchange/index') >= 0) {
+			$('#navList li:nth-child(1)').addClass('active');
+		}
+		if (pathname.indexOf('/crowdsourcing') >= 0) {
+			$('#navList li:nth-child(3)').addClass('active');
+		}
+		if (pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0) {
+			$('#navList li:nth-child(1)').addClass('active');
+		}
+		if (pathname.indexOf('/scfw') >= 0) {
+			$('#navList li:nth-child(3)').addClass('active');
+		}
+		if (pathname.indexOf('/usercenter/buyer/allOrderList') >= 0 || pathname.indexOf('/usercenter/buyer/orderManagement') >= 0 || pathname.indexOf('/usercenter/buyer/orderStay') >= 0 || pathname.indexOf('/usercenter/buyer/cancelOrderList') >= 0) {
+			$('#navList li:nth-child(4)').addClass('active');
+		} else if (pathname.indexOf('/usercenter') >= 0) {
+			$('#navList li:nth-child(4)').addClass('active');
+		}
+	});
 
 	$("#J_searchInput").on("input propertychange", function () {
 		if ($(this).val() == "") {
@@ -231,11 +233,15 @@ function getSearchSug(sugText) {
 	})
 }
 function showSugBox(data) {
-	var html = '';
-	data.forEach(function (list) {
-		html += '<li><a target="_blank" href="' + host.website + '/exchange/search?names=' + list + '">' + list + '</a></li>';
-	});
-	$('.search-sug').show().children('ul').html(html);
+	if(data.length > 0){
+		var html = '';
+		data.forEach(function (list) {
+			html += '<li><a target="_blank" href="' + host.website + '/exchange/search?names=' + list + '">' + list + '</a></li>';
+		});
+		$('.search-sug').show().children('ul').html(html);
+	}else{
+		$('.search-sug').hide();
+	}
 }
 
 var Loading = {};
@@ -271,7 +277,7 @@ Attention.add = function (goodsId) {
 				$.ajax({
 					url: '/goodsFavorite/add',
 					type: 'get',
-                    cache:false,
+					cache: false,
 					data: {
 						goodsId: goodsId
 					},
@@ -280,8 +286,8 @@ Attention.add = function (goodsId) {
 							$('.attention .iconfont').css('color', '#e34f4f');
 							$('.attention .eval').html('已关注:');
 							var nums = parseInt($('#J_atonNum').html());
-							$('#J_atonNum').html(nums+1);
-							$('#J_attenBtn').removeAttr('onclick').css('cursor','default');
+							$('#J_atonNum').html(nums + 1);
+							$('#J_attenBtn').removeAttr('onclick').css('cursor', 'default');
 							$.alert("关注成功");
 						} else {
 
@@ -300,9 +306,9 @@ function add(m) {
 	return m < 10 ? '0' + m : m
 };
 function format(time) {
-    // var a = parseInt(time);
-    // var date = new Date(a);
-    var date = new Date(time);
+	// var a = parseInt(time);
+	// var date = new Date(a);
+	var date = new Date(time);
 	var year = date.getFullYear();
 	var month = date.getMonth() + 1;
 	var date1 = date.getDate();
@@ -318,24 +324,24 @@ $.getUrlParam = function (key) { //获取url参数值  使用方法var id = $.ge
 };
 // 转换金额形式
 function splitK(num) {
-    var decimal = String(num).split('.')[1] || '';//小数部分
-    var tempArr = [];
-    var revNumArr = String(num).split('.')[0].split("").reverse();//倒序
-    for (i in revNumArr){
-        tempArr.push(revNumArr[i]);
-        if((i+1)%3 === 0 && i != revNumArr.length-1){
-            tempArr.push(',');
-        }
-    }
-    var zs = tempArr.reverse().join('');//整数部分
-    return decimal?zs+'.'+decimal:zs;
+	var decimal = String(num).split('.')[1] || '';//小数部分
+	var tempArr = [];
+	var revNumArr = String(num).split('.')[0].split("").reverse();//倒序
+	for (i in revNumArr) {
+		tempArr.push(revNumArr[i]);
+		if ((i + 1) % 3 === 0 && i != revNumArr.length - 1) {
+			tempArr.push(',');
+		}
+	}
+	var zs = tempArr.reverse().join('');//整数部分
+	return decimal ? zs + '.' + decimal : zs;
 }
 
-function Transformation(price,quotaPrice) {
-    if( (parseInt(price) /100) >parseInt(quotaPrice)){
-        var price=price.toString().slice(0,-6);
-        return parseInt(price)+'万';
-    }else {
-        return (price / 100 ).toFixed(2);
-    }
+function Transformation(price, quotaPrice) {
+	if ((parseInt(price) / 100) > parseInt(quotaPrice)) {
+		var price = price.toString().slice(0, -6);
+		return parseInt(price) + '万';
+	} else {
+		return (price / 100 ).toFixed(2);
+	}
 }

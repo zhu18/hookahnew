@@ -229,7 +229,7 @@ $("#appCaseAdd").on('click',function () {
                 "caseView": $("#caseView").val(),
                 "startTime": $("#startDate").val() || null,
                 "endTime": $("#endDate").val() || null,
-                "caseDesc": $('#caseDesc').val() || null,
+                "caseDesc": $('#caseDesc').val() || "",
                 "certPathsList":[
                     {
                         "certName":$('.fileTip').html(),
@@ -280,7 +280,7 @@ $("#swpAdd").on('click',function () {
                 "softWareName": $("#softWareName").val(),
                 "registerNum": $("#registerNum").val(),
                 "publicTime": $("#startDate").val() || null,
-                "purpose": $('#purpose').val() || null,
+                "purpose": $('#purpose').val() || "",
                 "certPathsList":[
                     {
                         "certName":$('.fileTip').html(),
@@ -314,7 +314,7 @@ $("#inPatentsAdd").on('click',function () {
         ' </tr> <tr> ' +
         '<td> <div> ' +
         '<label for=""><span class="color-red">*</span>申请日期</label> ' +
-        '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
+        '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text" placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
         '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
         ' <tr> <td colspan="2"> ' +
         '<label for="PatentDesc">专利概述</label> ' +
@@ -330,8 +330,8 @@ $("#inPatentsAdd").on('click',function () {
                 "sn": "SN_6_"+time(),
                 "patentName": $("#patentName").val(),
                 "patentNum": $("#PatentNum").val(),
-                "applyTime": $("#startDate").val() || null,
-                "patentDesc": $('#PatentDesc').val() || null,
+                "applyTime": $("#startDate").val()  ,
+                "patentDesc": $('#PatentDesc').val() ||"",
                 "certPathsList":[
                     {
                         "certName":$('.fileTip').html(),
@@ -1222,6 +1222,9 @@ function validate() {
             endDate:{
                 required:true,
                 isVerificationCode:true
+            },
+            applyTime:{
+                required:true,
             }
         },
         messages:{
@@ -1243,7 +1246,11 @@ function validate() {
             },
             endDate:{
                 required:"*请选择银行名称"
+            },
+            applyTime:{
+                required:true,
             }
+
         }
     });
 // $.validator.addMethod("isMobile", function(value, element) {

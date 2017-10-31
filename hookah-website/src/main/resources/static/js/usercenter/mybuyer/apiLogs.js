@@ -6,7 +6,12 @@ function loadPageData(data) {
             html+="<tr >" ;
             html+="<td>"+list[i].createTime+"</td>" ;
             html+="<td>"+list[i].ip+"</td>" ;
-            html+="<td>"+list[i].resultName +"</td>" ;
+            html+="<td>"+list[i].result +"</td>" ;
+            if (list[i].resultName == 1){
+                html+="<td>成功</td>" ;
+            }else {
+                html+="<td>失败</td>" ;
+            }
             html+="<td>"+list[i].hasCount +"</td>" ;
             html+="</tr >" ;
         }
