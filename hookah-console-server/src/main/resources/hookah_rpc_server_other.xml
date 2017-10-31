@@ -24,6 +24,7 @@
     <bean id="payBankCardService" class="com.jusfoun.hookah.console.server.service.impl.PayBankCardServiceImpl"/>
     <bean id="showService" class="com.jusfoun.hookah.console.server.service.impl.ShowServiceImpl"/>
     <bean id="wxUserRecommendService" class="com.jusfoun.hookah.console.server.service.impl.WXUserRecommendServiceImpl"/>
+    <bean id="wxUserInfoServiceImpl" class="com.jusfoun.hookah.console.server.service.impl.WxUserInfoServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.HomeImageService"
@@ -87,5 +88,9 @@
 
     <motan:service interface="com.jusfoun.hookah.rpc.api.WXUserRecommendService"
                    ref="wxUserRecommendService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+
+    <motan:service interface="com.jusfoun.hookah.rpc.api.WxUserInfoService"
+                   ref="wxUserInfoServiceImpl" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 </beans>
