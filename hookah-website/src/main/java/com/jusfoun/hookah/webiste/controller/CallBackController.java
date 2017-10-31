@@ -1,9 +1,18 @@
 package com.jusfoun.hookah.webiste.controller;
 
+import com.jusfoun.hookah.core.config.WeChatConfig;
 import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.WeChatOAuthInfo;
+import com.jusfoun.hookah.core.domain.WxUserInfo;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.HttpClientUtil;
+import com.jusfoun.hookah.core.utils.JsonUtils;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.OrderInfoService;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
+import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.WxUserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -30,6 +39,12 @@ public class CallBackController {
 
     @Resource
     private OrderInfoService orderInfoService;
+
+    @Resource
+    private WxUserInfoService wxUserInfoService;
+
+    @Resource
+    private UserService userService;
 
     /**
      * 支付宝回调
@@ -117,5 +132,60 @@ public class CallBackController {
         return params;
     }
 
+    @RequestMapping("/loginByWeChat")
+    public String loginByWeChat(HttpServletRequest request){
+        // 微信接口自带 2 个参数
+        String code = request.getParameter("code");
+        String state = request.getParameter("state");
+        if (code!=null && !"".equals(code)){
+            WeChatOAuthInfo weChatOAuthInfo = getAccess_token(code);
+            String openId = weChatOAuthInfo.getOpenId();
+            String accessToken = weChatOAuthInfo.getAccessToken();
 
+            if(accessToken == null) {
+                return "redirect:" + getStartURLToGetCode();
+            }
+
+            // 数据库中查询微信号是否绑定平台账号
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("openId",openId));
+            WxUserInfo wxUserInfo = wxUserInfoService.selectOne(filter);
+            if(wxUserInfo == null) {
+//                request.getSession().setAttribute(openid, randomStr);
+                // 尚未绑定账号 重定向到绑定账号页面
+                return "redirect:/index.jsp?openid=";
+            }
+            User user = userService.selectById(wxUserInfo.getUserid());
+            //账号已绑定 重定向到登陆
+            return "forward:/login?userName="+user.getUserName()+"&password="+user.getPassword();
+        }
+        // 未授权
+        return null;
+    }
+
+    public String getStartURLToGetCode() {
+        String takenUrl = WeChatConfig.getSnsApiUserInfoUrl;
+        takenUrl= takenUrl.replace("APPID", WeChatConfig.appID);
+        takenUrl= takenUrl.replace("REDIRECT_URI", "");
+        //FIXME ： snsapi_userinfo
+        takenUrl= takenUrl.replace("SCOPE", "snsapi_userinfo");
+        return takenUrl;
+    }
+
+    public WeChatOAuthInfo getAccess_token(String code){
+        String authUrl = WeChatConfig.getAccessTokenUrl;
+        authUrl= authUrl.replace("APPID", WeChatConfig.appID);
+        authUrl = authUrl.replace("SECRET", WeChatConfig.appSecret);
+        authUrl = authUrl.replace("CODE", code);
+        Map resultMap = HttpClientUtil.GetMethod(authUrl);
+        WeChatOAuthInfo weChatOAuthInfo = null;
+        try {
+            if (resultMap.get("resultCode").equals("200")) {
+                weChatOAuthInfo = JsonUtils.toObject((String) resultMap.get("result"), WeChatOAuthInfo.class);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return weChatOAuthInfo;
+    }
 }
