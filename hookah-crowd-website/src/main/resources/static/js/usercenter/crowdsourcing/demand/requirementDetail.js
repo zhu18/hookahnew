@@ -420,7 +420,7 @@ $(document).on('click', '.moneyAdd', function () { //托管资金点击增加 �
 
 $(document).on('click', '.moneySub', function () { //托管资金点击增加 托管金额百分比
   let percentage = Number($('.moneyHow').html());
-  if (30 < percentage && percentage < 100) {
+  if (30 < percentage && percentage <= 100) {
     percentage -= 1;
     $('.moneyHow').html(Number(percentage));
     $('.moneyManageMoeny').html(rewardMoney * percentage / 10000);

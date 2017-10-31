@@ -103,13 +103,11 @@ var htmlPart = {
 							<span>价格：</span>
 							<i class="fa fa-jpy font-size-14 color-red-bdg" aria-hidden="true"></i>
 							<span class="font-size-24 color-red-bdg J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">${goodsDetails.shopPrice / 100}</span>
-							<!--<span class="convert color-orange" id="J_goodsNumber">折合0000000000元/次</span>-->
 						</div>
 						<%}else{%>
 						<div>
 							<span>价格</span>
-							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">面议<span style="font-size:12px;">(详情请咨询客服。)</span></span>
-							<!--<span class="convert color-orange" id="J_goodsNumber">折合111111111元/次</span>-->
+							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">面议<span style="font-size:12px;">(详情请咨询客服)</span></span>
 						</div>
 						<%}%>
 						<%if(goodsDetails.formatList.~size > 0 && goodsDetails.IsDiscussPrice == 0){%>
