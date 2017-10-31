@@ -22,4 +22,13 @@ public interface PayService {
      * @return
      */
     ModelAndView toPayPage(String requirementId, String trusteePercent, String userId);
+
+    /**
+     * 众包项目 余额支付
+     * @param orderSn
+     * @param passWord
+     * @param userId
+     * @return
+     */
+    ModelAndView toBalancePay(String orderSn, String passWord, String userId) throws  Exception;
 }

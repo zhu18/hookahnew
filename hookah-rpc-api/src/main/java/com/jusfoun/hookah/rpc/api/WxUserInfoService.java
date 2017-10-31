@@ -6,6 +6,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
 /**
  * Created by lt on 2017/9/25.
  */
-public interface WxUserInfoService extends GenericService<WxUserInfo,String> {
+public interface WxUserInfoService extends GenericService<WxUserInfo,Integer> {
 
 }

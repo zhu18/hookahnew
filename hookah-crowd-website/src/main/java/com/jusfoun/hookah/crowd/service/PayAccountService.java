@@ -8,4 +8,12 @@ import com.jusfoun.hookah.core.generic.GenericService;
  */
 public interface PayAccountService extends GenericService<PayAccount, Long> {
 
+    /**
+     * 根据类型处理金额 不添加内部流水
+     * @param payAccountId
+     * @param operatorType
+     * @param money
+     * @return
+     */
+    int operatorByType(Long payAccountId, Integer operatorType, Long money);
 }
