@@ -104,7 +104,7 @@ public class ZBPayController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/toPayPage")
+    @RequestMapping(value = "/api/zbPay/toPayPage")
     public ModelAndView toPayPage(String requirementId, String trusteePercent){
 
         ModelAndView mv = new ModelAndView();
@@ -116,7 +116,7 @@ public class ZBPayController extends BaseController {
         return mv;
     }
 
-    @RequestMapping(value = "/balancePay", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/zbPay/balancePay", method = RequestMethod.POST)
     public ModelAndView toBalancePay(String orderSn, String passWord) {
 
         ModelAndView mv = new ModelAndView();
