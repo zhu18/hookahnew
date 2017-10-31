@@ -34,15 +34,17 @@ class detailsController {
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
                     $scope.deliveryDeadline=zbRequirement.deliveryDeadline;
-                    if(!(zbRequirementApplies && zbRequirementApplies.length>0)&& status==6){
+                    $scope.status=zbRequirement.status;
+                    if(!(zbRequirementApplies && zbRequirementApplies.length>0) && $scope.status==6){
                         $scope.applyDeadline= new Date(zbRequirement.applyDeadline);
                     }else {
                         $scope.applyDeadline= zbRequirement.applyDeadline;
                     }
                     $scope.rewardMoney=zbRequirement.rewardMoney;
+                    $scope.managedMoney=zbRequirement.managedMoney;
                     $scope.trusteePercent=zbRequirement.trusteePercent;
                     $scope.checkRemark=zbRequirement.checkRemark;
-                    $scope.status=zbRequirement.status;
+
                     $scope.id=zbRequirement.id;
                     $scope.userId=zbRequirement.userId;
                     //进度时间
