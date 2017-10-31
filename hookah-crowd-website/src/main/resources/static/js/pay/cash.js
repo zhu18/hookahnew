@@ -33,7 +33,7 @@ $('.saved-card-list>.row-container').click(function () {
 getPayPwdStatus();
 function getPayPwdStatus() {
 	$.ajax({
-		url: host.website + '/usercenter/payPassSta',
+		url: host.crowd + '/api/zbPay/payPassSta',
 		type: 'get',
 		success: function (data) {
 			if (data.code == 1) {
@@ -127,7 +127,7 @@ function check() {
 				}
 			} else if(this.value == 2){//支付宝方式
                 Loading.start();
-				window.location.href= host.website+'/pay/aliPay?'+'orderSn='+$("#orderSn").html();
+				window.location.href= host.crowd+'/api/zbPay/aliPay?'+'tradeNo='+$("#orderSn").html();
 				return false;
 			}else{
 				$.alert('暂不支持该支付方式');
@@ -139,7 +139,7 @@ function check() {
 // 验证密码
 function testPayPassword(pwd){
     $.ajax({
-		url:host.website+'/usercenter/verifyPayPassword',
+		url:host.crowd+'/api/zbPay/verifyPayPassword',
 		data:{
             passWord:$.md5(pwd)
 		},

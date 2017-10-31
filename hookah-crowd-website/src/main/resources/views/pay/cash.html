@@ -47,12 +47,12 @@ var htmlPart = {
 				</div>
 			</div>
 			<div class="main-container">
-				<form name="payPassword" id="form_paypsw" action="${host.website}/pay/balancePay" method="post">
+				<form name="payPassword" id="form_paypsw" action="${host.crowd}/api/zbPay/balancePay" method="post">
 					<div id="J-rcChannels">
 						<div>
 							<input type="hidden" value="${orderInfo.goodsAmount}" id="goodsAmount">
 							<input type="hidden" value="${moneyBalance}" id="moneyBalance">
-							<input type="hidden" name="orderSn" value="${orderInfo.orderSn}" id="J_orderSn">
+							<input type="hidden" name="orderSn" value="${orderInfo.tradeNo}" id="J_orderSn">
 							<ul id="J_MarketinglList"></ul>
 							<ul class="saved-card-list">
 								<%for(item in payments){%>
