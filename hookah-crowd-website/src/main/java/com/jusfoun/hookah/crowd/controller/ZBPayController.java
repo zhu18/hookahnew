@@ -224,6 +224,12 @@ public class ZBPayController extends BaseController {
                 return returnData;
             }
 
+            if(payAccount.getPayPassword() == null){
+                returnData.setCode(ExceptionConst.Error);
+                returnData.setMessage("请先设置支付密码^_^");
+                return returnData;
+            }
+
             if(!payAccount.getPayPassword().equals(passWord)){
                 returnData.setCode(ExceptionConst.Error);
                 returnData.setMessage("支付密码不正确^_^");

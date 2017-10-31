@@ -331,7 +331,7 @@ public class PayServiceImpl implements PayService {
 
         // 校验参数
         if(!StringUtils.isNotBlank(orderSn)
-                || !StringUtils.isNotBlank(passWord)
+//                || !StringUtils.isNotBlank(passWord)
                 || !StringUtils.isNotBlank(userId)){
             mv.setViewName("pay/fail");
             mv.addObject("message", "请求参数不能为空^_^");
@@ -350,12 +350,12 @@ public class PayServiceImpl implements PayService {
             return mv;
         }
 
-        if(!payAccount.getPayPassword().equals(passWord)){
-            mv.setViewName("pay/fail");
-            mv.addObject("message", "支付密码不正确^_^");
-            mv.addObject("code", 9);
-            return mv;
-        }
+//        if(!payAccount.getPayPassword().equals(passWord)){
+//            mv.setViewName("pay/fail");
+//            mv.addObject("message", "支付密码不正确^_^");
+//            mv.addObject("code", 9);
+//            return mv;
+//        }
 
         //校验众包托管记录
         List<Condition> filters = new ArrayList<>();
@@ -373,7 +373,7 @@ public class PayServiceImpl implements PayService {
         //校验账户余额是否充足
         if(payAccount.getUseBalance() < zbTrusteeRecord.getActualMoney()){
             mv.setViewName("pay/fail");
-            mv.addObject("message", "账户可用余额不足^_^");
+            mv.addObject("message", "账户可用余额不足【可用余额为：" + payAccount.getUseBalance() / 100 + " 元】");
             mv.addObject("code", 9);
             return mv;
         }
@@ -384,7 +384,7 @@ public class PayServiceImpl implements PayService {
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("orderSn", orderSn));
         List<PayTradeRecord> ptrs = payTradeRecordService.selectList(filter);
-        if(ptrs == null){
+        if(ptrs == null || ptrs.size() == 0){
             payTradeRecord.setPayAccountId(payAccount.getId());
             payTradeRecord.setUserId(userId);
             payTradeRecord.setMoney(zbTrusteeRecord.getActualMoney());
@@ -427,7 +427,7 @@ public class PayServiceImpl implements PayService {
             logger.info("余额支付完成后，修改需求状态为待发布/工作中……");
 
             if(zbTrusteeRecord.getTrusteeNum() == 1){
-                //供应商工作时间
+                //资金托管时间
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.TRUSTEETIME, DateUtils.toDefaultNowTime());
             }
             if(zbTrusteeRecord.getTrusteeNum() == 2){
@@ -447,7 +447,7 @@ public class PayServiceImpl implements PayService {
             throw new RuntimeException();
         }
 
-        mv.addObject("money", zbTrusteeRecord.getActualMoney());
+        mv.addObject("money", zbTrusteeRecord.getActualMoney() / 100);
         mv.setViewName("pay/success");
 
         return mv;
