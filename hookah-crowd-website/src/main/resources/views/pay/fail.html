@@ -1,0 +1,33 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/pay/success.css">
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row">
+        <div class="pay-success margin-top-10 margin-bottom-30">
+            <div class="pay-success-box">
+                <%if(code == 9){%>
+                <div>
+                    <div class="error vertical-align-middle">×</div>
+                    <span class="vertical-align-middle font-size-18 margin-left-20">${message}</span>
+                </div>
+                <a href="${host.website}/usercenter/buyer/orderManagement" class="pay-btn btn-full-blue padding-left-5 padding-right-50">已买到宝贝列表</a>
+                <%}else{%>
+                <div>
+                    <div class="error vertical-align-middle">×</div>
+                    <span class="vertical-align-middle font-size-18 margin-left-20">支付失败！</span>
+                </div>
+                <a href="/order/payOrder?orderSn=${orderSn}" class="pay-btn btn-full-orange">重新支付</a>
+                <%}%>
+
+            </div>
+        </div>
+    </div>
+</div>
+<%};
+include("/layout/other-base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
