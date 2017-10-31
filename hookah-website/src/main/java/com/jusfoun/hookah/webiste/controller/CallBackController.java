@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -40,8 +41,8 @@ public class CallBackController {
     @Resource
     private OrderInfoService orderInfoService;
 
-//    @Resource
-//    private WxUserInfoService wxUserInfoService;
+    @Resource
+    private WxUserInfoService wxUserInfoService;
 
     @Resource
     private UserService userService;
@@ -143,14 +144,13 @@ public class CallBackController {
             String accessToken = weChatOAuthInfo.getAccessToken();
 
             if(accessToken == null) {
-                return "redirect:" + getStartURLToGetCode();
+                return "redirect:";
             }
 
             // 数据库中查询微信号是否绑定平台账号
             List<Condition> filter = new ArrayList<>();
             filter.add(Condition.eq("openId",openId));
-//            WxUserInfo wxUserInfo = wxUserInfoService.selectOne(filter);
-            WxUserInfo wxUserInfo = null;
+            WxUserInfo wxUserInfo = wxUserInfoService.selectOne(filter);
             if(wxUserInfo == null) {
 //                request.getSession().setAttribute(openid, randomStr);
                 // 尚未绑定账号 重定向到绑定账号页面
@@ -164,10 +164,10 @@ public class CallBackController {
         return null;
     }
 
-    public String getStartURLToGetCode() {
+    public String getStartURLToGetCode() throws Exception{
         String takenUrl = WeChatConfig.getSnsApiUserInfoUrl;
         takenUrl= takenUrl.replace("APPID", WeChatConfig.appID);
-        takenUrl= takenUrl.replace("REDIRECT_URI", "");
+        takenUrl= takenUrl.replace("REDIRECT_URI", URLEncoder.encode("http://www.bdgstore.cn/exchange/index","UTF-8"));
         //FIXME ： snsapi_userinfo
         takenUrl= takenUrl.replace("SCOPE", "snsapi_userinfo");
         return takenUrl;
@@ -189,4 +189,5 @@ public class CallBackController {
         }
         return weChatOAuthInfo;
     }
+
 }

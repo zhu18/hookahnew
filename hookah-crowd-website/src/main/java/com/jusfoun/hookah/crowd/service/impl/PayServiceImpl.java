@@ -1,6 +1,9 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.PayConstants;
 import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.domain.PayTradeRecord;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbTrusteeRecord;
@@ -13,6 +16,7 @@ import com.jusfoun.hookah.crowd.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -38,6 +42,9 @@ public class PayServiceImpl implements PayService {
 
     @Resource
     UserService userService;
+
+    @Resource
+    PayTradeRecordService payTradeRecordService;
 
     @Override
     public String toPayByZFB(String requirementSn, String tradeSn, Long amount, String flagNum, String notify_url, String return_url) {
@@ -173,7 +180,7 @@ public class PayServiceImpl implements PayService {
         return params;
     }
 
-    @Override
+    @Transactional
     public ModelAndView toPayPage(String requirementId, String trusteePercent, String userId) {
 
         ModelAndView mv = new ModelAndView();
@@ -184,8 +191,9 @@ public class PayServiceImpl implements PayService {
             if(!StringUtils.isNotBlank(requirementId)
                     || !StringUtils.isNotBlank(trusteePercent)
                         || !StringUtils.isNotBlank(userId)){
-                mv.setViewName("");
-                mv.addObject("msg", "请求参数不能为空^_^");
+                mv.setViewName("pay/fail");
+                mv.addObject("message", "请求参数不能为空^_^");
+                mv.addObject("code", 9);
                 return mv;
             }
 
@@ -194,16 +202,18 @@ public class PayServiceImpl implements PayService {
             filters.add(Condition.eq("userId", userId));
             PayAccount payAccount = payAccountService.selectOne(filters);
             if(payAccount == null){
-                mv.setViewName("");
-                mv.addObject("msg", "账户信息不存在^_^");
+                mv.setViewName("pay/fail");
+                mv.addObject("message", "账户信息不存在^_^");
+                mv.addObject("code", 9);
                 return mv;
             }
 
             // 查询需求信息
             ZbRequirement zbRequirement =  zbRequireService.selectById(Long.parseLong(requirementId));
             if(zbRequirement == null){
-                mv.setViewName("");
-                mv.addObject("msg", "该需求数据不存在^_^");
+                mv.setViewName("pay/fail");
+                mv.addObject("message", "该需求数据不存在^_^");
+                mv.addObject("code", 9);
                 return mv;
             }
 
@@ -232,8 +242,9 @@ public class PayServiceImpl implements PayService {
                     zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * (100 - zbRequirement.getTrusteePercent()));
                     zbTrusteeRecord.setTrusteeNum(2);
                 } else {
-                    mv.setViewName("");
-                    mv.addObject("msg", "该需求数据异常^_^");
+                    mv.setViewName("pay/fail");
+                    mv.addObject("message", "该需求数据异常^_^");
+                    mv.addObject("code", 9);
                     return mv;
                 }
                 zbTrusteeRecordService.updateById(zbTrusteeRecord);
@@ -253,11 +264,12 @@ public class PayServiceImpl implements PayService {
                     zbTrusteeRecord.setActualMoney(zbRequirement.getRewardMoney() * (100 - zbRequirement.getTrusteePercent()));
                     zbTrusteeRecord.setTrusteeNum(2);
                 } else {
-                    mv.setViewName("");
-                    mv.addObject("msg", "该需求数据异常^_^");
+                    mv.setViewName("pay/fail");
+                    mv.addObject("message", "该需求数据异常^_^");
+                    mv.addObject("code", 9);
                     return mv;
                 }
-                zbTrusteeRecord.setSerialNo(CommonUtils.getRequireSn("ZB", "ZFB"));
+                zbTrusteeRecord.setSerialNo(CommonUtils.getRequireSn("ZB", "PAY"));
                 zbTrusteeRecord.setStatus(ZbContants.Trustee_Record_Status.RECORD_INITIAL.getCode());
                 zbTrusteeRecord.setAddTime(new Date());
                 zbTrusteeRecordService.insert(zbTrusteeRecord);
@@ -279,7 +291,7 @@ public class PayServiceImpl implements PayService {
             map.put("tradeDate", new Date());
             map.put("tradeType", "即时到账交易");
             mv.addObject("orderInfo", map);
-            mv.setViewName("");
+            mv.setViewName("pay/success");
 
         }catch (Exception e){
             logger.error("跳转支付页面异常", e);
@@ -303,4 +315,105 @@ public class PayServiceImpl implements PayService {
         }
         return list;
     }
+
+    @Transactional
+    public ModelAndView toBalancePay(String orderSn, String passWord, String userId) {
+
+        ModelAndView mv = new ModelAndView();
+
+        // 校验参数
+        if(!StringUtils.isNotBlank(orderSn)
+                || !StringUtils.isNotBlank(passWord)
+                || !StringUtils.isNotBlank(userId)){
+            mv.setViewName("pay/fail");
+            mv.addObject("message", "请求参数不能为空^_^");
+            mv.addObject("code", 9);
+            return mv;
+        }
+
+        //校验众包托管记录
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("serialNo", orderSn));
+        filters.add(Condition.eq("userId", userId));
+        ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filters);
+        if(zbTrusteeRecord.getStatus().equals(Short.parseShort("1"))){
+            mv.setViewName("pay/fail");
+            mv.addObject("message", "该订单已支付^_^");
+            mv.addObject("code", 9);
+            mv.addObject("orderSn", orderSn);
+            return mv;
+        }
+
+        // 查询资金账户信息
+        List<Condition> filters_account = new ArrayList();
+        filters_account.add(Condition.eq("userId", userId));
+        PayAccount payAccount = payAccountService.selectOne(filters_account);
+        if(payAccount == null){
+            mv.setViewName("pay/fail");
+            mv.addObject("message", "账户信息不存在^_^");
+            mv.addObject("code", 9);
+            return mv;
+        }
+
+        //校验账户余额是否充足
+        if(payAccount.getUseBalance() < zbTrusteeRecord.getActualMoney()){
+            mv.setViewName("pay/fail");
+            mv.addObject("message", "账户可用余额不足^_^");
+            mv.addObject("code", 9);
+            return mv;
+        }
+
+        PayTradeRecord payTradeRecord = new PayTradeRecord();
+
+        // 添加扣款流水 暂时只添加扣款流水
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("orderSn", orderSn));
+        List<PayTradeRecord> ptrs = payTradeRecordService.selectList(filter);
+        if(ptrs == null){
+            payTradeRecord.setPayAccountId(payAccount.getId());
+            payTradeRecord.setUserId(userId);
+            payTradeRecord.setMoney(zbTrusteeRecord.getActualMoney());
+            payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
+            payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
+            payTradeRecord.setAddTime(new Date());
+            payTradeRecord.setOrderSn(orderSn);
+            payTradeRecord.setAddOperator(userId);
+            payTradeRecord.setTransferDate(new Date());
+            int n = payTradeRecordService.insertAndGetId(payTradeRecord);
+        }else {
+
+            if(ptrs.size() > 1){
+
+                logger.error("众包支付流水异常");
+
+                mv.setViewName("pay/fail");
+                mv.addObject("message", "系统繁忙^_^");
+                mv.addObject("code", 9);
+                return mv;
+            }
+
+            payTradeRecord = ptrs.get(0);
+        }
+
+        // 扣款
+        int n = payAccountService.operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), zbTrusteeRecord.getActualMoney());
+
+        payTradeRecord.setTradeStatus(PayConstants.TransferStatus.success.getCode());
+        payTradeRecord.setUpdateTime(new Date());
+        int m = payTradeRecordService.updateByIdSelective(payTradeRecord);
+
+        zbTrusteeRecord.setStatus(Short.parseShort("1"));
+        zbTrusteeRecord.setUpdateTime(new Date());
+        int j = zbTrusteeRecordService.updateByIdSelective(zbTrusteeRecord);
+
+        if(n != 1 && m != 1 && j != 1){
+            throw new RuntimeException();
+        }
+
+        mv.addObject("money", zbTrusteeRecord.getActualMoney());
+        mv.setViewName("pay/success");
+
+        return mv;
+    }
+
 }

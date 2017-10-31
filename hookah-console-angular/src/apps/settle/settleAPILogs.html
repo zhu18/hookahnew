@@ -67,9 +67,13 @@
                             <tbody>
                             <tr data-ng-repeat="item in pagination.store">
                                 <td data-ng-bind="item.createTime"></td>
+                                <td data-ng-bind="item.ip"></td>
                                 <td data-ng-bind="item.result"></td>
-                                <td data-ng-bind="item.resultName"></td>
-                                <td data-ng-bind="'item.hasCount"></td>
+                                <td >
+                                    <span data-ng-show="item.resultName==0">失败</span>
+                                    <span data-ng-show="item.resultName==1">成功</span>
+                                </td>
+                                <td data-ng-bind="item.hasCount"></td>
                             </tr>
                             </tbody>
                             <tfoot ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">

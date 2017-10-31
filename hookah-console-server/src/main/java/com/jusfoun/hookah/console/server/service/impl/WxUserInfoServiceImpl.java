@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * Created by lt on 2017/10/31.
  */
 @Service
-public class WxUserInfoServiceImpl extends GenericServiceImpl<WxUserInfo, String> implements WxUserInfoService{
+public class WxUserInfoServiceImpl extends GenericServiceImpl<WxUserInfo, Integer> implements WxUserInfoService{
 
     @Resource
     private WXUserInfoMapper wxUserInfoMapper;
