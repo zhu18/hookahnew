@@ -107,7 +107,9 @@ var htmlPart = {
 						<%}else{%>
 						<div>
 							<span>价格</span>
-							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">面议<span style="font-size:12px;">(详情请咨询客服)</span></span>
+							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">面议
+<span style="font-size:12px;">(详情请咨询客服)</span>
+</span>
 						</div>
 						<%}%>
 						<%if(goodsDetails.formatList.~size > 0 && goodsDetails.IsDiscussPrice == 0){%>
