@@ -233,9 +233,11 @@ public class ServiceProviderServiceImpl extends GenericServiceImpl<ZbRequirement
                 String userId = (String) userMap.get("userId");
                 User user = userService.selectById(userId);
                 //获取用户类型
-                zbServiceProviderRequireVo.setUserType(user.getUserType());
-                zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);//需求信息
-                returnData.setData(loginRequirementDetail(reqId,zbServiceProviderRequireVo,zbRequirementSPVo));
+                if(user != null){
+                    zbServiceProviderRequireVo.setUserType(user.getUserType());
+                    zbServiceProviderRequireVo.setZbRequirementSPVo(zbRequirementSPVo);//需求信息
+                    returnData.setData(loginRequirementDetail(reqId,zbServiceProviderRequireVo,zbRequirementSPVo));
+                }
             }
 
         } catch (Exception e) {
