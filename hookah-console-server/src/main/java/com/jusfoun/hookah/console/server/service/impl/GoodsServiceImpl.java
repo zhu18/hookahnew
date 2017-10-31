@@ -774,7 +774,7 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
         GoodsVo goodsVo = new GoodsVo();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(PropertiesManager.getInstance().getProperty("api.system.url")).append(url);
+        stringBuilder.append(myProps.getApi().get("apiDetailsUrl")).append(url);
         Map<String,String> resultMap = HttpClientUtil.GetMethod(stringBuilder.toString());
         if(resultMap!=null){
             String result = resultMap.get("result");
