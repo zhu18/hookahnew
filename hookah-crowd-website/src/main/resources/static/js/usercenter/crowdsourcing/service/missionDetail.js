@@ -321,7 +321,7 @@ $(document).on('click', '.j_submitResult', function () {
               $('.missionResultDes').html(resultData.content);
               $('.j_missionResult-load-file-list').html($('.j_resultLoadFile').html());
               $('.j_myMissionResult').show().prev().hide(); //显示评价模块
-              $('.j_resultStatus').html('待预评').show();
+              $('.j_resultStatus').html('预评通过，待验收。').show();
               confirmThis.hide();// 隐藏弹出框
               $('.j_submitResult').remove();//上传按钮
               $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
