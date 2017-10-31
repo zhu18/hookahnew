@@ -217,6 +217,14 @@ public class PayServiceImpl implements PayService {
                 return mv;
             }
 
+            if(!zbRequirement.getStatus().equals(Short.parseShort("3"))
+                    && !zbRequirement.getStatus().equals(Short.parseShort("3"))){
+                mv.setViewName("pay/fail");
+                mv.addObject("message", "该需求数据支付状态有误^_^");
+                mv.addObject("code", 9);
+                return mv;
+            }
+
             // 根据托管比例参数  修改比例
             if (zbRequirement.getStatus().equals(Short.parseShort("3"))) {
                 if (StringUtils.isNotBlank(trusteePercent) && !trusteePercent.equals("30")) {
@@ -288,10 +296,10 @@ public class PayServiceImpl implements PayService {
             Map<String, Object> map = new HashMap<>();
             map.put("tradeNo", zbTrusteeRecord.getSerialNo());
             map.put("tradeAmount", zbTrusteeRecord.getActualMoney());
-            map.put("tradeDate", new Date());
+            map.put("tradeDate", DateUtil.getSimpleDate(new Date()));
             map.put("tradeType", "即时到账交易");
             mv.addObject("orderInfo", map);
-            mv.setViewName("pay/success");
+            mv.setViewName("pay/cash");
 
         }catch (Exception e){
             logger.error("跳转支付页面异常", e);
@@ -398,15 +406,37 @@ public class PayServiceImpl implements PayService {
         // 扣款
         int n = payAccountService.operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), zbTrusteeRecord.getActualMoney());
 
-        payTradeRecord.setTradeStatus(PayConstants.TransferStatus.success.getCode());
-        payTradeRecord.setUpdateTime(new Date());
-        int m = payTradeRecordService.updateByIdSelective(payTradeRecord);
+        if(n == 1){
+            ZbRequirement zbRequirement = zbRequireService.selectById(zbTrusteeRecord.getRequirementId());
 
-        zbTrusteeRecord.setStatus(Short.parseShort("1"));
-        zbTrusteeRecord.setUpdateTime(new Date());
-        int j = zbTrusteeRecordService.updateByIdSelective(zbTrusteeRecord);
+            if(zbTrusteeRecord.getTrusteeNum().equals(1)){
+                zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_FB.getCode().shortValue());
+            }else {
+                zbRequirement.setStatus(ZbContants.Zb_Require_Status.WORKINGING.getCode().shortValue());
+            }
+            zbRequirement.setUpdateTime(new Date());
+            zbRequireService.updateByIdSelective(zbRequirement);
 
-        if(n != 1 && m != 1 && j != 1){
+            logger.info("余额支付完成后，修改需求状态为待发布/工作中……");
+
+            if(zbTrusteeRecord.getTrusteeNum() == 1){
+                //供应商工作时间
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.TRUSTEETIME, DateUtils.toDefaultNowTime());
+            }
+            if(zbTrusteeRecord.getTrusteeNum() == 2){
+                //供应商工作时间
+                mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.WORKINGTIME, DateUtils.toDefaultNowTime());
+            }
+
+            payTradeRecord.setTradeStatus(PayConstants.TransferStatus.success.getCode());
+            payTradeRecord.setUpdateTime(new Date());
+            int m = payTradeRecordService.updateByIdSelective(payTradeRecord);
+
+            zbTrusteeRecord.setStatus(Short.parseShort("1"));
+            zbTrusteeRecord.setUpdateTime(new Date());
+            int j = zbTrusteeRecordService.updateByIdSelective(zbTrusteeRecord);
+
+        }else {
             throw new RuntimeException();
         }
 
