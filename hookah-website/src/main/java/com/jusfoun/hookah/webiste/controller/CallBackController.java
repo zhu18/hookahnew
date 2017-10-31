@@ -40,8 +40,8 @@ public class CallBackController {
     @Resource
     private OrderInfoService orderInfoService;
 
-    @Resource
-    private WxUserInfoService wxUserInfoService;
+//    @Resource
+//    private WxUserInfoService wxUserInfoService;
 
     @Resource
     private UserService userService;
@@ -149,7 +149,8 @@ public class CallBackController {
             // 数据库中查询微信号是否绑定平台账号
             List<Condition> filter = new ArrayList<>();
             filter.add(Condition.eq("openId",openId));
-            WxUserInfo wxUserInfo = wxUserInfoService.selectOne(filter);
+//            WxUserInfo wxUserInfo = wxUserInfoService.selectOne(filter);
+            WxUserInfo wxUserInfo = null;
             if(wxUserInfo == null) {
 //                request.getSession().setAttribute(openid, randomStr);
                 // 尚未绑定账号 重定向到绑定账号页面
