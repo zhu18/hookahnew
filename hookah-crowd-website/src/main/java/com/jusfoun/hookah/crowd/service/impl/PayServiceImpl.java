@@ -339,6 +339,24 @@ public class PayServiceImpl implements PayService {
             return mv;
         }
 
+        // 查询资金账户信息
+        List<Condition> filters_account = new ArrayList();
+        filters_account.add(Condition.eq("userId", userId));
+        PayAccount payAccount = payAccountService.selectOne(filters_account);
+        if(payAccount == null){
+            mv.setViewName("pay/fail");
+            mv.addObject("message", "账户信息不存在^_^");
+            mv.addObject("code", 9);
+            return mv;
+        }
+
+        if(!payAccount.getPayPassword().equals(passWord)){
+            mv.setViewName("pay/fail");
+            mv.addObject("message", "支付密码不正确^_^");
+            mv.addObject("code", 9);
+            return mv;
+        }
+
         //校验众包托管记录
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("serialNo", orderSn));
@@ -349,17 +367,6 @@ public class PayServiceImpl implements PayService {
             mv.addObject("message", "该订单已支付^_^");
             mv.addObject("code", 9);
             mv.addObject("orderSn", orderSn);
-            return mv;
-        }
-
-        // 查询资金账户信息
-        List<Condition> filters_account = new ArrayList();
-        filters_account.add(Condition.eq("userId", userId));
-        PayAccount payAccount = payAccountService.selectOne(filters_account);
-        if(payAccount == null){
-            mv.setViewName("pay/fail");
-            mv.addObject("message", "账户信息不存在^_^");
-            mv.addObject("code", 9);
             return mv;
         }
 
