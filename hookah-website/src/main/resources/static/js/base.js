@@ -233,11 +233,15 @@ function getSearchSug(sugText) {
 	})
 }
 function showSugBox(data) {
-	var html = '';
-	data.forEach(function (list) {
-		html += '<li><a target="_blank" href="' + host.website + '/exchange/search?names=' + list + '">' + list + '</a></li>';
-	});
-	$('.search-sug').show().children('ul').html(html);
+	if(data.length > 0){
+		var html = '';
+		data.forEach(function (list) {
+			html += '<li><a target="_blank" href="' + host.website + '/exchange/search?names=' + list + '">' + list + '</a></li>';
+		});
+		$('.search-sug').show().children('ul').html(html);
+	}else{
+		$('.search-sug').hide();
+	}
 }
 
 var Loading = {};
