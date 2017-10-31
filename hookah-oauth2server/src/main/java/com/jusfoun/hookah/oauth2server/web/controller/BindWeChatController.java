@@ -99,12 +99,13 @@ public class BindWeChatController {
             user.setIsEnable((byte) 1);
             user.setHeadImg(site.get("user-default-img"));
 
-            String now = DateUtils.toDateText(new Date(), "yyMMdd");
-            String num = String.format("%06d",Integer.parseInt(redisOperate.incr("userSn")));
-            String userSn = "QD"+ now + num;
+            String date = DateUtils.toDateText(new Date(), "yyMM");
+            List<Condition> filter = new ArrayList<>();
+            filter.clear();
+            long count = userService.count(filter)+1;
+//        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
+            String userSn = HookahConstants.platformCode + date + String.format("%06d",count);
             user.setUserSn(userSn);
-            user.setUserName("BDGStore"+user.getMobile());
-            user.setPassword("000000");
 
             User regUser = userService.insert((User) user);
             //TODO...绑定微信信息

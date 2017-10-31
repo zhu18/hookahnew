@@ -5,50 +5,50 @@ package com.jusfoun.hookah.core.domain;
  */
 public class WeChatOAuthInfo {
 
-    private String accessToken;
+    private String access_token;
 
-    private String expiresIn;
+    private String expires_in;
 
-    private String refreshToken;
+    private String refresh_token;
 
-    private String openId;
+    private String openid;
 
     private String scope;
 
-    private String errCode;
+    private String errcode;
 
-    private String errMsg;
+    private String errmsg;
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getAccess_token() {
+        return access_token;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
     }
 
-    public String getExpiresIn() {
-        return expiresIn;
+    public String getExpires_in() {
+        return expires_in;
     }
 
-    public void setExpiresIn(String expiresIn) {
-        this.expiresIn = expiresIn;
+    public void setExpires_in(String expires_in) {
+        this.expires_in = expires_in;
     }
 
-    public String getRefreshToken() {
-        return refreshToken;
+    public String getRefresh_token() {
+        return refresh_token;
     }
 
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+    public void setRefresh_token(String refresh_token) {
+        this.refresh_token = refresh_token;
     }
 
-    public String getOpenId() {
-        return openId;
+    public String getOpenid() {
+        return openid;
     }
 
-    public void setOpenId(String openId) {
-        this.openId = openId;
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 
     public String getScope() {
@@ -59,19 +59,19 @@ public class WeChatOAuthInfo {
         this.scope = scope;
     }
 
-    public String getErrCode() {
-        return errCode;
+    public String getErrcode() {
+        return errcode;
     }
 
-    public void setErrCode(String errCode) {
-        this.errCode = errCode;
+    public void setErrcode(String errcode) {
+        this.errcode = errcode;
     }
 
-    public String getErrMsg() {
-        return errMsg;
+    public String getErrmsg() {
+        return errmsg;
     }
 
-    public void setErrMsg(String errMsg) {
-        this.errMsg = errMsg;
+    public void setErrmsg(String errmsg) {
+        this.errmsg = errmsg;
     }
 }
