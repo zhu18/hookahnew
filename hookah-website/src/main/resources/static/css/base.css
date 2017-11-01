@@ -513,7 +513,6 @@ input:focus, select:focus, textarea:focus {
 	color: rgb(142, 164, 185);
 	white-space: nowrap;
 	overflow: hidden;
-	font-weight: bold;
 }
 #exchange_menu{
 	width:180px;

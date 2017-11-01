@@ -1703,6 +1703,7 @@ dl {
 }
 .storageList h2{
 	font-size:30px;
+	font-weight: normal;
 }
 .storageList .storageBox{
 	width: 100%;
@@ -1931,11 +1932,11 @@ dl {
 	-moz-transition:bottom 2s;
 	-webkit-transition:bottom 2s;
 	-o-transition:bottom 2s;
-	bottom: -60px;
+	bottom: 60px;
 }
 
 .storageList .storageBox .storageImg:hover .describle{
-	bottom: 60px;
+	bottom: 4px;
 }
 /***********/
 .storageInfo{
@@ -1957,6 +1958,7 @@ dl {
 	font-size: 14px;
 	color:#000;
 	margin:21px 0 0 15px;
+	font-weight: normal;
 }
 .storageInfo .right .tagsItem p{
 	font-size: 14px;
@@ -1977,6 +1979,7 @@ dl {
 	font-size: 24px;
 	color:#000;
 	margin:10px 0 0 12px;
+	font-weight: normal;
 }
 .storageInfo .left .tagsItem p{
 	font-size: 14px;
@@ -2040,6 +2043,7 @@ dl {
 	overflow: hidden;
 	text-overflow:ellipsis;
 	white-space: nowrap;
+	font-weight: normal;
 }
 .goodsList .goodsItem img{
 	width:41px;

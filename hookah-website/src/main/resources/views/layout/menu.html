@@ -5,8 +5,9 @@
         <% for(menuList in categoryInfo){%>
         <li class="menu-item">
             <a class="oneA" href="/exchange/list?catId=${menuList.catId}&prId=${menuList.catId}&prNm=${menuList.catName}">
-                <i><img src="/static/images/exchange/category-six-0${menuListLP.index}.png" alt="" ></i>
+                <i class="qian"><img src="/static/images/exchange/category-six-0${menuListLP.index}.png" alt="" ></i>
                 <span>${menuList.catName}</span>
+                <i class="hou fa fa-angle-right"></i>
             </a>
             <% if(menuList.children.~size > 0){ %>
             <div class="menu-son-list">
