@@ -5,6 +5,9 @@
 }
 .Authentication button{
     cursor: pointer;
+    margin: auto;
+    display: block;
+    border-radius: 3px;
 }
 .Authentication .item label{
     display: inline-block;
@@ -18,20 +21,25 @@
     border: 1px solid #e5e5e5;
 }
 .Authentication table tr{
-    height: 39px;
-    line-height: 39px;
 }
 .Authentication table tr td{
     text-align: center;
+    padding: 8px;
     border: 1px solid #e5e5e5;
 }
 .Authentication table tr td a{
     text-align: center;
 }
 
+.Authentication .addBtn{
+    text-align: center;
+    padding: 5px;
+}
+
  /*基本信息*/
 .Authentication .info{
     border-bottom: 1px solid #e5e5e5;
+    padding: 5px;
 }
 .info .item{
     padding: 10px 0;
@@ -39,12 +47,17 @@
 .info .info-header{
     line-height: 39px;
 }
+.info .info-header a{
+    vertical-align: sub;
+    margin-left: 10px;
+}
 .info .tag-box span{
     display: inline-block;
     background-color: #e6e6e6;
     margin-right: 3px;
     padding: 3px 9px;
     cursor: pointer;
+    border-radius: 3px;
 }
 .info .tag-box span.active{
     background-color: #078cfc;
@@ -69,7 +82,7 @@
 }
 .Authentication-itemBox .Authentication-content .no-data{padding: 20px;display: none}
 .Authentication-itemBox .Authentication-content .content{}
-.content dl{border-bottom: 1px solid #e5e5e5}
+.content dl{border-bottom: 1px solid #e5e5e5;padding: 8px}
 .content dl dt,.content dl dd{
     padding: 10px 0;
 }
@@ -92,9 +105,16 @@
 
 .Authentication-itemBox .Authentication-content .content-span-33{}
 .content-span-33{} dl dd span{ display: inline-block;font-size: 14px; width: 33.33%; }
-
-
+.Authentication-itemBox .addBtn{
+    font-size: 16px;
+    padding: 2px 5px;
+    margin-top: 6px;
+}
+/*添加table的样式*/
 .from{
+  box-shadow: 0px 0px 20px #e5e5e5;
+}
+.from tr{
 
 }
 .from td{
@@ -137,8 +157,8 @@
     height: 25px;
     display: inline-block;
     position: absolute;
-    left: 7px;
-    top: 7px;
+    left: 5px;
+    top: 0px;
     line-height: 25px;
     text-align: center;
     background-color: #078cfc;
@@ -152,6 +172,10 @@
 }
 
 textarea{ resize:none;}
+
+.vertical-align-text-top{
+    vertical-align: text-top !important;
+}
 
 /*服务商引导页*/
 
