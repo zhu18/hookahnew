@@ -504,9 +504,6 @@ public class ReleaseServiceImpl extends GenericServiceImpl<ZbRequirement, String
             //更改评价信誉分
             mgZbProviderService.setUCreditValueByPJ(zbProgram.getUserId(), level);
 
-            //修改报名状态为待评价
-            zbRequireApplyWebsiteService.updateStatus(zbProgram.getApplyId(), ZbContants.ZbRequireMentApplyStatus.COMMENT_ING.getCode());
-
             //评价完之后变更需求状态为交易完成
             ZbRequirement zbRequirement = zbRequireService.selectById(zbProgram.getRequirementId());
             if (zbRequirement.getId() != null) {

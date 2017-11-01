@@ -48,6 +48,9 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
     @Resource
     MgZbRequireStatusService mgZbRequireStatusService;
 
+    @Resource
+    ZbRequireApplyWebsiteService zbRequireApplyWebsiteService;
+
     @Override
     public ReturnData selectRefundInfo(String userId, String requirementId) {
 
@@ -169,15 +172,17 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                 return returnData;
             }
 
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("requirementId", zbRefundRecord.getRequirementId()));
+            filters.add(Condition.ne("status", 2));
+            ZbRequirementApply apply = zbRequireApplyService.selectOne(filters);
+
             if(zbRequirement.getStatus().equals(Short.parseShort("11"))){
                 // 平台付款给
                 zbRefundRecord.setType(ZbContants.PlatPayType.PAY_TO_PROVIDER.getCode());
             }else if(zbRequirement.getStatus().equals(Short.parseShort("16"))){
 
-                List<Condition> filters = new ArrayList<>();
-                filters.add(Condition.eq("requirementId", zbRefundRecord.getRequirementId()));
-                filters.add(Condition.ne("status", 2));
-                ZbRequirementApply apply = zbRequireApplyService.selectOne(filters);
+
                 if(apply == null){//未查询到相关需求的报名数据  流标
                     zbRefundRecord.setType(ZbContants.PlatPayType.FAIL_TO_SOLD.getCode());
                     flag = 1;
@@ -217,6 +222,9 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                             setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.CANCELTIME, DateUtil.getSimpleDate(new Date()));
 
                 }else {// 付款改成评价
+
+                    //修改报名状态为待评价
+                    zbRequireApplyWebsiteService.updateStatus(apply == null ? null : apply.getId(), ZbContants.ZbRequireMentApplyStatus.COMMENT_ING.getCode());
 
                     changeStatus.setStatus(ZbContants.Zb_Require_Status.WAIT_PJ.getCode().shortValue());
 
