@@ -1,31 +1,93 @@
-<div class="float-tool" style="  width: 38px;height: initial;margin-bottom:50px;">
-    <div id="J_gotoTop" style="cursor: pointer; display: none;">
-        <img style="width: 38px;" src="/static/images/toTop2.jpg">
+<div class="float-tool">
+    <div class="showIndex">
+        <ul class="index-1">
+            <li>金融</li>
+            <li>行业</li>
+            <li>政府</li>
+        </ul>
+        <ul class="big-btn index-2">
+            <li>活动<br>速递</li>
+        </ul>
+        <ul class="big-btn index-3">
+            <li>平台<br>动态</li>
+        </ul>
+        <ul class="big-btn index-4">
+            <li>解决<br>方案</li>
+        </ul>
     </div>
-    <!--<div style="position: absolute;bottom: -197px;right: 0;">-->
-    <!--<div style="position: relative;">-->
-    <!--<span id="img-img-close"-->
-    <!--style="display: inline-block;width: 30px;height: 30px;position: absolute;right: 0;top:0;z-index: 10;background: #fff;filter:alpha(opacity=0);opacity: 0; "></span><a-->
-    <!--href="_" target="_blank"-->
-    <!--style="position: relative;z-index: 9;">-->
-    <!--<img height="165"-->
-    <!--src="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg"-->
-    <!--hover="/static/img/TB1BLQsPpXXXXXNXXXXXXXXXXXX-440-330.jpg"></a>-->
-    <!--</div>-->
+    <ul class="gotop-box">
+        <li>
+            <i class="fa fa-angle-up"></i><br>顶部
+        </li>
+    </ul>
+    <!--<div id="J_gotoTop" style="cursor: pointer;">-->
+        <!--<img style="width: 38px;" src="/static/images/toTop2.jpg">-->
     <!--</div>-->
 </div>
 <script class="text/javascript">
+	$('.float-tool').hide();
     $(window).scroll(function () {
         var windowHeight = parseFloat($(window).height())
         var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
         if (totalheight - windowHeight >= 500) {
-            $('#J_gotoTop').show();
+            $('.float-tool').show();
         } else {
-            $('#J_gotoTop').hide();
+            $('.float-tool').hide();
         }
+        if(totalheight - windowHeight >= 563 && totalheight - windowHeight <= 1030){
+			$('.showIndex li').removeClass('active');
+            $('.index-1 li').eq(0).addClass('active');
+        }else if(totalheight - windowHeight >= 1031 && totalheight - windowHeight <= 1497){
+			$('.showIndex li').removeClass('active');
+			$('.index-1 li').eq(1).addClass('active');
+        }else if(totalheight - windowHeight >= 1498 && totalheight - windowHeight <= 1964){
+			$('.showIndex li').removeClass('active');
+			$('.index-1 li').eq(2).addClass('active');
+		}else if(totalheight - windowHeight >= 1965 && totalheight - windowHeight <= 2287){
+        	$('.showIndex li').removeClass('active');
+			$('.index-2 li').addClass('active');
+		}else if(totalheight - windowHeight >= 2288 && totalheight - windowHeight <= 2670){
+			$('.showIndex li').removeClass('active');
+			$('.index-3 li').addClass('active');
+		}else{
+			$('.showIndex li').removeClass('active');
+        }
+        console.log(totalheight - windowHeight)
     });
-    $("#J_gotoTop").click(function() {
-        $("html,body").animate({scrollTop:0}, 600);
+	$('.index-1 li').eq(0).click(function() {
+        $("html,body").animate({scrollTop:564}, 600);
+		$(this).addClass('active').siblings('li').removeClass('active');
     });
-
+	$('.index-1 li').eq(1).click(function() {
+		$("html,body").animate({scrollTop:1032}, 600);
+		$(this).addClass('active').siblings('li').removeClass('active');
+	});
+	$('.index-1 li').eq(2).click(function() {
+		$("html,body").animate({scrollTop:1499}, 600);
+		$(this).addClass('active').siblings('li').removeClass('active');
+	});
+	$('.index-2 li').click(function() {
+		$("html,body").animate({scrollTop:1966}, 600);
+		$('.showIndex li').removeClass('active');
+		$(this).addClass('active')
+	});
+	$('.index-3 li').click(function() {
+		$("html,body").animate({scrollTop:2289}, 600);
+		$('.showIndex li').removeClass('active');
+		$(this).addClass('active')
+	});
+	$('.index-4 li').click(function() {
+		$("html,body").animate({scrollTop:2289}, 600);
+		$('.showIndex li').removeClass('active');
+		$(this).addClass('active')
+	});
+	$('.gotop-box li').click(function() {
+		$("html,body").animate({scrollTop:0}, 600);
+	});
+	var pathname = window.location.pathname;
+	if (pathname.indexOf('/exchange/index') >= 0) {
+		$('.showIndex').show();
+	}else{
+		$('.showIndex').hide();
+    }
 </script>
