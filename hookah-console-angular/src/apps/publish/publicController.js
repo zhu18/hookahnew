@@ -24,7 +24,7 @@ class publicController {
                   var tomorrow = new Date();
                   $scope.applyDeadline=new Date(tomorrow.setDate(tomorrow.getDate() + 7));
                   $scope.rewardMoney=item.rewardMoney;
-                  $scope.managedMoney=item.managedMoney;
+                  $scope.managedMoney=res.data.data.managedMoney;
                   $scope.trusteePercent=item.trusteePercent;
                   $scope.checkRemark=item.checkRemark;
                   $scope.status=item.status;

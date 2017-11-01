@@ -41,7 +41,7 @@ class detailsController {
                         $scope.applyDeadline= zbRequirement.applyDeadline;
                     }
                     $scope.rewardMoney=zbRequirement.rewardMoney;
-                    $scope.managedMoney=zbRequirement.managedMoney;
+                    $scope.managedMoney=res.data.data.managedMoney;
                     $scope.trusteePercent=zbRequirement.trusteePercent;
                     $scope.checkRemark=zbRequirement.checkRemark;
 
