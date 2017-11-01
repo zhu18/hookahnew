@@ -28,7 +28,7 @@ class auditingController {
                     $scope.deliveryDeadline=item.deliveryDeadline;
                     $scope.applyDeadline=item.applyDeadline;
                     $scope.rewardMoney=item.rewardMoney;
-                    $scope.managedMoney=item.managedMoney;
+                    $scope.managedMoney=res.data.data.managedMoney;
                     $scope.trusteePercent=item.trusteePercent;
                     $scope.applyDeadline=item.applyDeadline;
                     $scope.checkRemark=item.checkRemark;

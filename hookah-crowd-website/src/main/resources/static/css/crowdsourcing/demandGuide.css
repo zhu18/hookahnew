@@ -39,7 +39,7 @@
 .similarMissionBottomBoxRight li{ position: relative; width: 215px; float: left; margin:0 17px;}
 .similarMissionBottomBoxRight li:last-child{ margin-right:0;}
 
-.similarMissionDemandName{ margin:16px 0 5px 0 ; font-size: 18px; color: #535353;}
+.similarMissionDemandName{ margin:16px 0 5px 0 ; font-size: 18px; color: #535353;overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .similarMissionDeadData{ color: #959494;font-size: 14px;}
 .similarMissionLastTime{ margin-top:4px;color: #959494;font-size: 14px;}
 .similarMissionMoney{ font-size: 18px; color: #ffc600;}

@@ -17,7 +17,7 @@ var htmlPart = {
 					<h4 class="order-title">请支付</h4>
 				</div>
 				<!--<div class="order-seller">&nbsp;&nbsp; 收款方&nbsp;:<span> 山东省大数据BDGStore</span></div>-->
-				<div class="order-amount"><span>${orderInfo.tradeAmount/10000}</span>元</div>
+				<div class="order-amount"><span>${orderInfo.tradeAmount}</span>元</div>
 				<a class="order-ext-trigger" href="javascript:void(0)">
 					订单详情
 				</a>
@@ -30,7 +30,7 @@ var htmlPart = {
 						</tr>
 						<tr>
 							<td class="sub-th" align="right">交易金额：</td>
-							<td>${orderInfo.tradeAmount/10000}元</td>
+							<td>${orderInfo.tradeAmount}元</td>
 						</tr>
 						<tr>
 							<td class="sub-th" align="right">购买时间：</td>
@@ -71,7 +71,7 @@ var htmlPart = {
 											<span class="pay-amount">
 												<span class="amount">
 													<span>支付</span>
-													<span class="amount-font-R16">${orderInfo.tradeAmount / 10000}</span>
+													<span class="amount-font-R16">${orderInfo.tradeAmount}</span>
 													<span> 元</span>
 												</span>
                                             	<span></span>

@@ -303,10 +303,15 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     public ReturnData<ZbRequirement> reqCheck(String id) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
-
+        Map<String, Object> map = new HashedMap();
         ZbRequirement zbr = zbRequirementMapper.selectForDetail(Long.parseLong(id));
         if (zbr == null) {
             return ReturnData.error("未获取相关信息！");
+        }
+        double managedMoney = 0;
+        if (zbr.getRewardMoney()!=null && zbr.getTrusteePercent()!=null){
+            managedMoney = zbr.getRewardMoney() * zbr.getTrusteePercent();
+            map.put("managedMoney",managedMoney/10000);
         }
 
         //添加状态时间
@@ -316,7 +321,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         filter.add(Condition.eq("correlationId", zbr.getId()));
         filter.add(Condition.eq("type", 0));
         List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
-        Map<String, Object> map = new HashedMap();
+
         map.put("zbAnnexes", zbAnnexes);
         map.put("zbRequirement", zbr);
         map.put("mgZbRequireStatus", mgZbRequireStatus != null ? mgZbRequireStatus : new MgZbRequireStatus());

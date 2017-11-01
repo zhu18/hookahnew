@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.crowd.service.*;
+import com.jusfoun.hookah.crowd.util.CommonUtils;
 import com.jusfoun.hookah.crowd.util.PayConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -172,11 +173,20 @@ public class ZBPayController extends BaseController {
             }
 
             ZbRequirement zbRequirement = zbRequireService.selectById(zbTrusteeRecord.getRequirementId());
-            if(zbRequirement != null){
+            if(zbRequirement == null){
                 logger.error("众包支付宝支付异常--{未查询到需求信息}");
                 model.addAttribute("orderSn", tradeNo);
-                model.addAttribute("message", "订单支付失败^_^");
+                model.addAttribute("message", "订单已过期，支付失败^_^");
+                model.addAttribute("code", 9);
                 return "pay/fail";
+            }
+
+            // 为防止逗比用户使用支付宝扫码成功但不支付，再去修改订单数据，最后去支付支付宝校验失败，每次重新生成订单号
+            zbTrusteeRecord.setSerialNo(CommonUtils.getRequireSn("ZB", "PAY"));
+            int n = zbTrusteeRecordService.updateByIdSelective(zbTrusteeRecord);
+            if(n != 1){
+                logger.error("众包支付宝支付修改订单号失败^_^");
+                throw new Exception();
             }
 
             reqHtml = payService.toPayByZFB(zbRequirement.getRequireSn(), zbTrusteeRecord.getSerialNo(), zbTrusteeRecord.getActualMoney() / 100, zbTrusteeRecord.getTrusteeNum().toString(), PayConfiguration.ALIPAY_NOTIFY_URL, PayConfiguration.ALIPAY_RETURN_URL);
@@ -186,6 +196,7 @@ public class ZBPayController extends BaseController {
             logger.error("众包支付宝支付异常--{}", e);
             model.addAttribute("orderSn", tradeNo);
             model.addAttribute("message", "订单支付失败");
+            model.addAttribute("code", 9);
             return "pay/fail";
         }
 
@@ -193,6 +204,7 @@ public class ZBPayController extends BaseController {
 
             model.addAttribute("orderSn", tradeNo);
             model.addAttribute("message", "订单支付失败");
+            model.addAttribute("code", 9);
             return "pay/fail";
         }else
             return new ResponseEntity<String>(reqHtml, HttpStatus.OK);
