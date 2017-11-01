@@ -137,6 +137,7 @@ public class PayServiceImpl implements PayService {
                         zbRequirement.setStatus(ZbContants.Zb_Require_Status.WORKINGING.getCode().shortValue());
                         zbRequirement.setTrusteePercent(100);
                     }
+                    zbRequirement.setUpdateTime(new Date());
                     zbRequireService.updateByIdSelective(zbRequirement);
                     if(zbTrusteeRecord.getTrusteeNum() == 2){
                         //供应商工作时间
@@ -144,6 +145,7 @@ public class PayServiceImpl implements PayService {
                     }
                 }
                 zbTrusteeRecord.setStatus(Short.parseShort("1"));
+                zbTrusteeRecord.setUpdateTime(new Date());
                 int n = zbTrusteeRecordService.updateByIdSelective(zbTrusteeRecord);
                 logger.info("支付宝支付成功====>" + n);
                 return true;
@@ -255,6 +257,7 @@ public class PayServiceImpl implements PayService {
                     mv.addObject("code", 9);
                     return mv;
                 }
+                zbTrusteeRecord.setTrusteePercent(zbRequirement.getTrusteePercent());
                 zbTrusteeRecordService.updateById(zbTrusteeRecord);
 
             } else {
@@ -295,7 +298,7 @@ public class PayServiceImpl implements PayService {
 
             Map<String, Object> map = new HashMap<>();
             map.put("tradeNo", zbTrusteeRecord.getSerialNo());
-            map.put("tradeAmount", zbTrusteeRecord.getActualMoney());
+            map.put("tradeAmount", zbTrusteeRecord.getActualMoney().doubleValue() / 10000);
             map.put("tradeDate", DateUtil.getSimpleDate(new Date()));
             map.put("tradeType", "即时到账交易");
             mv.addObject("orderInfo", map);
@@ -387,7 +390,7 @@ public class PayServiceImpl implements PayService {
         if(ptrs == null || ptrs.size() == 0){
             payTradeRecord.setPayAccountId(payAccount.getId());
             payTradeRecord.setUserId(userId);
-            payTradeRecord.setMoney(zbTrusteeRecord.getActualMoney());
+            payTradeRecord.setMoney(zbTrusteeRecord.getActualMoney() / 10000);
             payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
             payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
             payTradeRecord.setAddTime(new Date());
@@ -408,10 +411,14 @@ public class PayServiceImpl implements PayService {
             }
 
             payTradeRecord = ptrs.get(0);
+            payTradeRecord.setMoney(zbTrusteeRecord.getActualMoney() / 10000);
+            payTradeRecord.setUpdateTime(new Date());
+            payTradeRecordService.updateByIdSelective(payTradeRecord);
+
         }
 
         // 扣款
-        int n = payAccountService.operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), zbTrusteeRecord.getActualMoney());
+        int n = payAccountService.operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), zbTrusteeRecord.getActualMoney() / 10000);
 
         if(n == 1){
             ZbRequirement zbRequirement = zbRequireService.selectById(zbTrusteeRecord.getRequirementId());
@@ -447,8 +454,8 @@ public class PayServiceImpl implements PayService {
             throw new RuntimeException();
         }
 
-        mv.addObject("money", zbTrusteeRecord.getActualMoney() / 100);
-        mv.setViewName("pay/success");
+        mv.addObject("money", zbTrusteeRecord.getActualMoney().doubleValue() / 10000);
+        mv.setViewName("zbPay/success");
 
         return mv;
     }
