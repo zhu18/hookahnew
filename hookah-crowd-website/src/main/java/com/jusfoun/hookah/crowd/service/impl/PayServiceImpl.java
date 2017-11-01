@@ -220,7 +220,7 @@ public class PayServiceImpl implements PayService {
             }
 
             if(!zbRequirement.getStatus().equals(Short.parseShort("3"))
-                    && !zbRequirement.getStatus().equals(Short.parseShort("3"))){
+                    && !zbRequirement.getStatus().equals(Short.parseShort("7"))){
                 mv.setViewName("pay/fail");
                 mv.addObject("message", "该需求数据支付状态有误^_^");
                 mv.addObject("code", 9);
