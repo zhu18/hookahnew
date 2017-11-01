@@ -441,8 +441,21 @@ $(document).on('click', '.otherDetailBoxNav li', function () { //需求详情下
 });
 
 $(document).on('click', '#J_goPay', function () { //
-    location.href= "/api/release/managedMoney?requirementId=" + $(this).attr('requirementId') + "&trusteePercent=" + $("#trusteePercent1").html();
+    location.href= "/api/zbPay/toPayPage?requirementId=" + $(this).attr('requirementId') + "&trusteePercent=" + $("#trusteePercent1").html();
+/*  //
+  var goPayData={};
+  goPayData.requirementId=$(this).attr('requirementId');
+  goPayData.trusteePercent =$("#trusteePercent1").html();
 
+  $.ajax({
+    type: 'post',
+    url: "/api/zbPay/toPayPage",
+    cache: false,
+    data:goPayData,
+    success: function (data) {
+      console.log(data);
+    }
+  })*/
 });
 
 

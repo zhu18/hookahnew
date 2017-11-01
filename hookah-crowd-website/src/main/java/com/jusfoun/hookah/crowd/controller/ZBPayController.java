@@ -1,11 +1,13 @@
 package com.jusfoun.hookah.crowd.controller;
 
+import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbTrusteeRecord;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.crowd.service.PayService;
-import com.jusfoun.hookah.crowd.service.ZbRequireService;
-import com.jusfoun.hookah.crowd.service.ZbTrusteeRecordService;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.crowd.service.*;
 import com.jusfoun.hookah.crowd.util.PayConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import tk.mybatis.mapper.util.StringUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +41,12 @@ public class ZBPayController extends BaseController {
 
     @Resource
     ZbTrusteeRecordService zbTrusteeRecordService;
+
+    @Resource
+    PayAccountService payAccountService;
+
+    @Resource
+    UserService userService;
 
     /**
      * 支付宝回调
@@ -116,36 +125,48 @@ public class ZBPayController extends BaseController {
         return mv;
     }
 
+    /**
+     * 余额支付方式
+     * @param tradeNo
+     * @param passWord
+     * @return
+     */
     @RequestMapping(value = "/api/zbPay/balancePay", method = RequestMethod.POST)
-    public ModelAndView toBalancePay(String orderSn, String passWord) {
+    public ModelAndView toBalancePay(String tradeNo, String passWord) {
 
         ModelAndView mv = new ModelAndView();
 
         try {
-            mv = payService.toBalancePay(orderSn, passWord, getCurrentUser().getUserId());
+            mv = payService.toBalancePay(tradeNo, passWord, getCurrentUser().getUserId());
         }catch (Exception e){
             logger.error("众包余额支付异常--{}", e);
             mv.addObject("message", "系统繁忙^_^");
-            mv.addObject("orderSn", orderSn);
+            mv.addObject("orderSn", tradeNo);
             mv.setViewName("pay/fail");
             return mv;
         }
         return mv;
     }
 
-    @RequestMapping(value = "/aliPay", method = RequestMethod.GET)
-    public Object toAliPay(String orderSn, Model model) {
+    /**
+     * 支付宝支付方式
+     * @param tradeNo
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/api/zbPay/aliPay", method = RequestMethod.GET)
+    public Object toAliPay(String tradeNo, Model model) {
 
         String reqHtml = null;
 
         try {
 
             List<Condition> filters = new ArrayList<>();
-            filters.add(Condition.eq("serialNo", orderSn));
+            filters.add(Condition.eq("serialNo", tradeNo));
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
             ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filters);
             if(zbTrusteeRecord.getStatus().equals(Short.parseShort("1"))){
-                model.addAttribute("orderSn", orderSn);
+                model.addAttribute("orderSn", tradeNo);
                 model.addAttribute("message", "该订单已支付^_^");
                 return "pay/fail";
             }
@@ -153,7 +174,7 @@ public class ZBPayController extends BaseController {
             ZbRequirement zbRequirement = zbRequireService.selectById(zbTrusteeRecord.getRequirementId());
             if(zbRequirement != null){
                 logger.error("众包支付宝支付异常--{未查询到需求信息}");
-                model.addAttribute("orderSn", orderSn);
+                model.addAttribute("orderSn", tradeNo);
                 model.addAttribute("message", "订单支付失败^_^");
                 return "pay/fail";
             }
@@ -163,18 +184,93 @@ public class ZBPayController extends BaseController {
         } catch (Exception e) {
 
             logger.error("众包支付宝支付异常--{}", e);
-            model.addAttribute("orderSn", orderSn);
+            model.addAttribute("orderSn", tradeNo);
             model.addAttribute("message", "订单支付失败");
             return "pay/fail";
         }
 
         if(StringUtils.isEmpty(reqHtml)){
 
-            model.addAttribute("orderSn", orderSn);
+            model.addAttribute("orderSn", tradeNo);
             model.addAttribute("message", "订单支付失败");
             return "pay/fail";
         }else
             return new ResponseEntity<String>(reqHtml, HttpStatus.OK);
     }
 
+    /**
+     * 验证支付密码
+     * @return
+     */
+    @RequestMapping(value = "/api/zbPay/verifyPayPassword")
+    @ResponseBody
+    public ReturnData verifyPayPassword(String passWord) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+
+            if(StringUtil.isEmpty(passWord)){
+                returnData.setCode(ExceptionConst.Error);
+                returnData.setMessage("请输入支付密码^_^");
+                return returnData;
+            }
+
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
+            PayAccount payAccount = payAccountService.selectOne(filters);
+            if(payAccount == null){
+                returnData.setCode(ExceptionConst.Error);
+                returnData.setMessage("账户信息不存在^_^");
+                return returnData;
+            }
+
+            if(payAccount.getPayPassword() == null){
+                returnData.setCode(ExceptionConst.Error);
+                returnData.setMessage("请先设置支付密码^_^");
+                return returnData;
+            }
+
+            if(!payAccount.getPayPassword().equals(passWord)){
+                returnData.setCode(ExceptionConst.Error);
+                returnData.setMessage("支付密码不正确^_^");
+                return returnData;
+            }
+
+            returnData.setMessage("支付密码验证成功^_^");
+
+        }catch (Exception e){
+            e.printStackTrace();
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("系统繁忙^_^");
+            return returnData;
+        }
+
+        return  returnData;
+    }
+
+    /**
+     * 验证是否设置支付密码
+     * @return
+     */
+    @RequestMapping(value = "/api/zbPay/payPassSta")
+    @ResponseBody
+    public ReturnData payPassSta() {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+
+            User user = userService.selectById(getCurrentUser().getUserId());
+            returnData.setData(user.getPaymentPasswordStatus());
+
+            returnData.setMessage("验证是否设置支付密码^_^");
+
+        }catch (Exception e){
+            e.printStackTrace();
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("系统繁忙^_^");
+            return returnData;
+        }
+
+        return  returnData;
+    }
 }
