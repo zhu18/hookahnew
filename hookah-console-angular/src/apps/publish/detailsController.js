@@ -180,11 +180,7 @@ class detailsController {
         }
 
         $scope.public=function () {
-
-            console.log($scope.applyDeadline.setDate(tomorrow.getDate() + 5));
-            console.log($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss'));
-            console.log($scope.deliveryDeadline);
-            console.log($scope.applyDeadline);
+                $scope.applyDeadline.setDate(tomorrow.getDate() + 5);
             if($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')>$scope.deliveryDeadline){
                 var modalInstance =$rootScope.openConfirmDialogModal("报名截止日期不得超过交付日期前五天，请重新选择日期！");
                 modalInstance.result.then(function () {
@@ -203,7 +199,7 @@ class detailsController {
                         applyDeadline:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
                     }
                 });
-                promise.then(function (res, status, config, headers) {
+                promise.then(function (res) {
                     console.log('数据在这里');
                     console.log(res);
                     if (res.data.code == '1') {
