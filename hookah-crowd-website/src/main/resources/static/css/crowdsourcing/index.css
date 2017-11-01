@@ -47,10 +47,10 @@
 .toBeServiceBottomBoxLeft img{ margin-top:14px;}
 .toBeServiceBottomBoxLeft span{ font-size:24px;color:#48c8e3; display: block; }
 .toBeServiceBottomBoxRight{ float: left; width: 1043px; overflow: hidden;}
-.toBeServiceBottomBoxRight li{ position: relative; float: left; margin:0 34px 0 23px;}
+.toBeServiceBottomBoxRight li{ position: relative; float: left; width:215px; margin:0 17px 0 23px;}
 .toBeServiceBottomBoxRight li:last-child{ margin-right:0;}
 
-.toBeServiceDemandName{ margin:16px 0 5px 0 ; font-size: 18px; color: #535353;}
+.toBeServiceDemandName{ margin:16px 0 5px 0 ; font-size: 18px; color: #535353;overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .toBeServiceDeadData{ color: #959494;font-size: 14px;}
 .toBeServiceLastTime{ margin-top:4px;color: #959494;font-size: 14px;}
 .toBeServiceMoney{ font-size: 18px; color: #ffc600;}
