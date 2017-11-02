@@ -90,7 +90,7 @@
         AND (
             req.`status` = 14
             OR req.`status` = 15
-        ) ORDER BY req.add_time
+        ) ORDER BY req.add_time DESC
   </select>
 
 </mapper>
