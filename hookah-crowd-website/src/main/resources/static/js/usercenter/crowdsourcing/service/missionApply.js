@@ -128,7 +128,6 @@ $(document).on('click', '.j_commentBtn', function () { // 我要报名
   $.confirm('\
   <div class="checkMissionBox applyBox">\
     <h5>我要报名</h5>\
-    <span>请您根据本次交易，给予真实客观评价。您的评价将影响需求方的信用</span>\
     <table class="crowdsourcing-table myRequirement-table">\
       <tr>\
         <td valign="top">自荐理由：</td>\

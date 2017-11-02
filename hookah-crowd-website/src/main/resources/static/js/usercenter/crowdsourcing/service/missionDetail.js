@@ -26,8 +26,6 @@ function getRequirementType() {
   });
 }
 getRequirementType();
-
-
 function showDetail() { //修改，从我的发布点击'查看'调转过来的
   $.ajax({
     type: 'get',
@@ -39,9 +37,6 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
     }
   });
 }
-
-
-
 
 function renderPage(data) {
   var insertRequirementsData = data;
@@ -89,7 +84,7 @@ function renderPage(data) {
     case 1://工作中
       domModel.html('工作中');
       $('.j_myMissionStatus').html('已选中').show();
-      $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">已选中！提交成果</a>');
+      $('.release-first-btnbox div').append('<a class="j_submitResult" resultType="firstLoadResult" href="javascript:void(0)">已选中！提交成果</a>');
       $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id}).hide().prev().show();
 
       loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo,'false');//有下载按钮的附件列表
@@ -123,7 +118,7 @@ function renderPage(data) {
           $('.missionStatusResult').html('预评不通过，待修改');
           $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
           $('.j_resultStatus').show();
-          $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">重新提交成果</a>');
+          $('.release-first-btnbox div').append('<a class="j_submitResult" resultType="reloadResult" href="javascript:void(0)">重新提交成果</a>');
           $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id});
 
           break;
@@ -148,7 +143,7 @@ function renderPage(data) {
           $('.missionStatusResult').html('验收不通过，待修改');
           $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
           $('.j_resultStatus').show();
-          $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">重新提交成果</a>');
+          $('.release-first-btnbox div').append('<a class="j_submitResult" resultType="reloadResult" href="javascript:void(0)">重新提交成果</a>');
           $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id});
 
           break;
@@ -179,7 +174,7 @@ function renderPage(data) {
 
       $.fn.raty.defaults.path = '/static/images/crowdsourcing';//初始化星星图标位置
 
-      if(insertRequirementsData.zbCommentVo.servicerComment.addTime){
+      if(insertRequirementsData.zbCommentVo !== null && insertRequirementsData.zbCommentVo.servicerComment!==null){
         $('.serviceCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbCommentVo.servicerComment.level });
         $('.serviceCommentDetail').html(insertRequirementsData.zbCommentVo.servicerComment.content);
         $('.serviceCommentTime').html(insertRequirementsData.zbCommentVo.servicerComment.addTime);
@@ -252,7 +247,13 @@ function renderPage(data) {
 
 
 $(document).on('click', '.j_submitResult', function () {
-
+  console.log($(this).attr('resultType'));
+  var resultDOM='';
+  if($(this).attr('resultType')=='firstLoadResult'){
+    resultDOM='待预评。'
+  }else{
+    resultDOM='预评通过，待验收。'
+  }
   // 提交成果
   $.confirm('\
   <div class="checkMissionBox submitResultBox">\
@@ -315,13 +316,15 @@ $(document).on('click', '.j_submitResult', function () {
           contentType: 'application/json',
           data: JSON.stringify(resultData),
           success: function (data) {
+
             console.log(data);
             if(data.code==1){
               $('.missionTitle').html(resultData.title);
               $('.missionResultDes').html(resultData.content);
               $('.j_missionResult-load-file-list').html($('.j_resultLoadFile').html());
               $('.j_myMissionResult').show().prev().hide(); //显示评价模块
-              $('.j_resultStatus').html('预评通过，待验收。').show();
+              $('.j_resultStatus').html(resultDOM).show();
+              // location.reload();
               confirmThis.hide();// 隐藏弹出框
               $('.j_submitResult').remove();//上传按钮
               $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
