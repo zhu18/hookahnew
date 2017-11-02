@@ -280,7 +280,7 @@ class detailsController {
             $state.go('publish.card', {id: id});
         };
         $scope.refund=function (id,userId) {
-            $state.go('publish.refund', {id: id,userId:userId});
+            $state.go('publish.refund', {id: id,userId:userId,status:status});
         };
         $scope.giveUp=function (id) {
             var promise = $http({

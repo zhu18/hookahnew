@@ -143,6 +143,7 @@ public class ZBPayController extends BaseController {
             logger.error("众包余额支付异常--{}", e);
             mv.addObject("message", "系统繁忙^_^");
             mv.addObject("orderSn", tradeNo);
+            mv.addObject("code", 9);
             mv.setViewName("pay/fail");
             return mv;
         }
@@ -166,9 +167,18 @@ public class ZBPayController extends BaseController {
             filters.add(Condition.eq("serialNo", tradeNo));
             filters.add(Condition.eq("userId", getCurrentUser().getUserId()));
             ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filters);
+
+            if(zbTrusteeRecord == null){
+                model.addAttribute("orderSn", tradeNo);
+                model.addAttribute("message", "订单异常，请重新支付^_^");
+                model.addAttribute("code", 9);
+                return "pay/fail";
+            }
+
             if(zbTrusteeRecord.getStatus().equals(Short.parseShort("1"))){
                 model.addAttribute("orderSn", tradeNo);
                 model.addAttribute("message", "该订单已支付^_^");
+                model.addAttribute("code", 9);
                 return "pay/fail";
             }
 

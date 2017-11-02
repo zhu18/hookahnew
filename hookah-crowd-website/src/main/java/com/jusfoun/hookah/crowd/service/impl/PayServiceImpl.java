@@ -353,18 +353,20 @@ public class PayServiceImpl implements PayService {
             return mv;
         }
 
-//        if(!payAccount.getPayPassword().equals(passWord)){
-//            mv.setViewName("pay/fail");
-//            mv.addObject("message", "支付密码不正确^_^");
-//            mv.addObject("code", 9);
-//            return mv;
-//        }
-
         //校验众包托管记录
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("serialNo", orderSn));
         filters.add(Condition.eq("userId", userId));
         ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filters);
+
+        if(zbTrusteeRecord == null){
+            mv.setViewName("pay/fail");
+            mv.addObject("message", "订单异常，请重新支付^_^");
+            mv.addObject("code", 9);
+            mv.addObject("orderSn", orderSn);
+            return mv;
+        }
+
         if(zbTrusteeRecord.getStatus().equals(Short.parseShort("1"))){
             mv.setViewName("pay/fail");
             mv.addObject("message", "该订单已支付^_^");
@@ -374,7 +376,7 @@ public class PayServiceImpl implements PayService {
         }
 
         //校验账户余额是否充足
-        if(payAccount.getUseBalance() < zbTrusteeRecord.getActualMoney()){
+        if(payAccount.getUseBalance() < (zbTrusteeRecord.getActualMoney() / 100)){
             mv.setViewName("pay/fail");
             mv.addObject("message", "账户可用余额不足【可用余额为：" + payAccount.getUseBalance() / 100 + " 元】");
             mv.addObject("code", 9);
@@ -390,7 +392,7 @@ public class PayServiceImpl implements PayService {
         if(ptrs == null || ptrs.size() == 0){
             payTradeRecord.setPayAccountId(payAccount.getId());
             payTradeRecord.setUserId(userId);
-            payTradeRecord.setMoney(zbTrusteeRecord.getActualMoney() / 10000);
+            payTradeRecord.setMoney(zbTrusteeRecord.getActualMoney() / 100);
             payTradeRecord.setTradeType(PayConstants.TradeType.SalesOut.getCode());
             payTradeRecord.setTradeStatus(PayConstants.TransferStatus.handing.getCode());
             payTradeRecord.setAddTime(new Date());
@@ -411,14 +413,14 @@ public class PayServiceImpl implements PayService {
             }
 
             payTradeRecord = ptrs.get(0);
-            payTradeRecord.setMoney(zbTrusteeRecord.getActualMoney() / 10000);
+            payTradeRecord.setMoney(zbTrusteeRecord.getActualMoney() / 100);
             payTradeRecord.setUpdateTime(new Date());
             payTradeRecordService.updateByIdSelective(payTradeRecord);
 
         }
 
         // 扣款
-        int n = payAccountService.operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), zbTrusteeRecord.getActualMoney() / 10000);
+        int n = payAccountService.operatorByType(payAccount.getId(), HookahConstants.TradeType.SalesOut.getCode(), zbTrusteeRecord.getActualMoney() / 100);
 
         if(n == 1){
             ZbRequirement zbRequirement = zbRequireService.selectById(zbTrusteeRecord.getRequirementId());
