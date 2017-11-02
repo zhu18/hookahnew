@@ -19,11 +19,14 @@ function render() {
                     cache:false,
                     type:'get',
                     success:function (data) {
-                        $(".account-funds-content-left .money").html("￥"+splitK((data.data.useBalance / 100).toFixed(2)));
-                        $(".freeze").html("￥"+splitK((data.data.frozenBalance / 100).toFixed(2)));
-                        $(".useBalance").html("￥"+splitK((data.data.balance / 100).toFixed(2)));
+                        var useBalance=data.data.useBalance?"￥"+splitK((data.data.useBalance / 100).toFixed(2)):"￥0.00";
+                        var frozenBalance=data.data.frozenBalance?"￥"+splitK((data.data.frozenBalance / 100).toFixed(2)):"￥0.00";
+                        var balance=data.data.balance?"￥"+splitK((data.data.balance / 100).toFixed(2)):"￥0.00";
+                        $(".account-funds-content-left .money").html(useBalance);
+                        $(".freeze").html(frozenBalance);
+                        $(".useBalance").html(balance);
 
-                        if(data.data.userType == 4){
+                        if(data.data.userType == 4 || data.data.userType == 2){
                             for(var i=0;i<list.length;i++){
                                 if(list[i].id==data.data.bankId){
                                     data.data.bankId=list[i].bankName;

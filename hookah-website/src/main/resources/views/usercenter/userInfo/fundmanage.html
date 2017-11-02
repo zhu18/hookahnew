@@ -25,7 +25,7 @@ var htmlPart = {
                                     <div class="balance-title margin-bottom-15">我的可用余额</div>
                                     <div class="money margin-bottom-15"></div>
                                     <div class="operation-btn margin-bottom-20">
-                                        <%if(userCur.userType == 4){%>
+                                        <%if(userCur.userType == 4||userCur.userType == 2 ){%>
                                         <a href="/usercenter/recharge" class="btn-full-orange margin-right-20">充值</a>
                                         <a href="javascript:void(0);"  class="btn-full-blue withdrawals-btn">提现</a>
                                         <%}else{%>

@@ -8,7 +8,8 @@
              data: {},
              type: 'get',
              success: function (data) {
-                  $("#J_useBalance").html("￥" + (data.data.useBalance / 100).toFixed(2));
+                 var useBalance=data.data.useBalance?"￥"+splitK((data.data.useBalance / 100).toFixed(2)):"￥0.00";
+                 $("#J_useBalance").html(useBalance);
                   $("#J_cardCode").html(data.data.userName);
              }
        });

@@ -6,10 +6,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.OrganizationService;
-import com.jusfoun.hookah.rpc.api.PayAccountService;
-import com.jusfoun.hookah.rpc.api.PayBankCardService;
-import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +40,9 @@ public class PayBankCardController extends BaseController{
     @Resource
     OrganizationService organizationService;
 
+    @Resource
+    UserDetailService userDetailService;
+
     /**
      * 查询银行信息  银行账户类型 开户行
      * @param
@@ -66,6 +66,13 @@ public class PayBankCardController extends BaseController{
                 if(StringUtils.isNotBlank(organization.getOrgName())){
                     map.put("cardOwner",organization.getOrgName());
                     map.put("bankAccountType",1);
+                }
+                return ReturnData.success(map);
+            }else if(user.getUserId() != null){
+                UserDetail userDetail = userDetailService.selectById(user.getUserId());
+                if(StringUtils.isNotBlank(userDetail.getRealName())){
+                    map.put("cardOwner",userDetail.getRealName());
+                    //map.put("bankAccountType",1);
                 }
                 return ReturnData.success(map);
             }else{
