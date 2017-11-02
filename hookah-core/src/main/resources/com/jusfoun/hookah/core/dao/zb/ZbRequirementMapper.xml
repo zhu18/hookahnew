@@ -161,6 +161,7 @@
         LEFT JOIN `user` us ON zr.user_id = us.user_id
         LEFT JOIN organization org ON us.org_id = org.org_id
         WHERE 1 = 1
+        zr.status = 5
         <if test="requireSn != null and requireSn != ''">
             and zr.require_sn like '%${requireSn}%'
         </if>
