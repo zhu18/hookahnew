@@ -42,6 +42,7 @@ $('#infoAddSave').on('click',function () {
     });
 
 });
+//六个模块添加按钮
 // 添加教育经历
 $("#educationAdd").on('click',function () {
     var html='<dl> ' +
@@ -62,11 +63,11 @@ $("#educationAdd").on('click',function () {
         '</tr>' +
         ' <tr> ' +
         '<td> ' +
-        '<div> <label for=""><span class="color-red">*</span>就学时间</label> ' +
+        '<div> <label for="">就学时间</label> ' +
         '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
-        '<td> <div> <label for="edu"><span class="color-red">*</span>学历</label> <select name="edu" id="edu" required > <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> ' +
+        '<td> <div> <label for="edu">学历</label> <select name="edu" id="edu" required > <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> ' +
         '</td> </tr>' +
-        ' <tr> <td> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
+        ' <tr> <td> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
         ' <tr> <td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="null">保存</button> </td>' +
         ' </tr> </table> </form> </dl>'
 
@@ -114,13 +115,12 @@ $("#workAdd").on('click',function () {
         '<label for="departName"><span class="color-red">*</span>部门名称</label>' +
         ' <input type="text" id="departName" name="departName" placeholder="请输入部门名称" required> </div> </td> </tr>' +
         ' <tr> <td> <div>' +
-        ' <label for=""><span class="color-red">*</span>工作时间</label> ' +
+        ' <label for="">工作时间</label> ' +
         '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required> </div> </div> </td>' +
         ' <td> <div>' +
-        ' <label for="position"><span class="color-red">*</span>职位</label> ' +
+        ' <label for="position">职位</label> ' +
         '<input type="text" name="position" id="position"> </div> </td> </tr> ' +
         '<tr> <td> <div>' +
-        '<span class="color-red">*</span>'+
         '<label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
         '<tr> <td colspan="2"> ' +
         '<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="workAddSave" data-sn="null">保存</button> </td> </tr> </table> </form> </dl>'
@@ -166,7 +166,7 @@ $("#projectAdd").on('click',function () {
         '<label for="projectDuty"><span class="color-red">*</span>项目职责</label> ' +
         '<input type="text" id="projectDuty" name="projectDuty" placeholder="请输入项目职责"required> </div> </td>' +
         ' </tr> <tr> <td colspan="2"> <div> ' +
-        '<label for=""><span class="color-red">*</span>项目时间</label> ' +
+        '<label for="">项目时间</label> ' +
         '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择开始时间" readonly="" required>至 <input id="endDate" name="endDate" type="text"placeholder="请选择结束时间" readonly="" required> </div> </div> </td> </tr>' +
         ' <tr> <td colspan="2"> ' +
         '<label for="projectDesc">项目描述</label> ' +
