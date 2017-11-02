@@ -2172,10 +2172,10 @@ dl {
 	left:-331px;
 	z-index: 4;
 	background: url(/static/images/exchange/bg_new.jpg) no-repeat;
-	transition: all 2s;
-	-moz-transition: all 2s;
-	-webkit-transition: all 2s;
-	-o-transition: all 2s;
+	transition: all 0.8s;
+	-moz-transition: all 0.8s;
+	-webkit-transition: all 0.8s;
+	-o-transition: all 0.8s;
 }
 .activity_item:hover  .activityBottom .botNew{
 	left:0;

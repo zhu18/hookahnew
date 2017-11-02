@@ -397,13 +397,13 @@ var htmlPart = {
 		$('.activity_item').hover(function(){
 			var thisElm = $(this).children('.activityBottom').children('.botNew')
 			setTimeout(function(){
-				thisElm.animate({height:'317px',bottom:'0'});
-			},2000)
+				thisElm.animate({height:'317px',bottom:'0'},10);
+			},700)
 		},function(){
 			var thisElm = $(this).children('.activityBottom').children('.botNew')
 			setTimeout(function(){
-				thisElm.css({height:'221px',bottom:'36px'});
-			},2000)
+				thisElm.css({height:'221px',bottom:'36px'},10);
+			},700)
 		});
 	});
 
