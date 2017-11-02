@@ -57,7 +57,7 @@
 
   <logger name="jdbc.connection" level="ERROR"/>
 
-  <logger name="com.jusfoun.hookah.core.dao" level="DEBUG"/>
+  <!--<logger name="com.jusfoun.hookah.core.dao" level="DEBUG"/>-->
 
   <!-- 日志输出级别 -->
   <root level="INFO">

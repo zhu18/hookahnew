@@ -4,12 +4,12 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: weifangdata.com
+      domain: qddata.com.cn
       name: hookah_sid
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.15.204:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: password
     initialize: true
@@ -38,9 +38,9 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.204:27017/hookah_pay
+      uri:  mongodb://192.168.15.90:27017/hookah_pay
   rabbitmq:
-    addresses: 192.168.15.204:5672
+    addresses: 192.168.200.116:5672
     username: root
     password: password
     publisher-confirms: true
@@ -80,22 +80,22 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: weifangdata.com
-    website: ${server.http.protocal}www.weifangdata.com
-    static: ${server.http.protocal}static.weifangdata.com
-    auth: ${server.http.protocal}auth.weifangdata.com
-    console: ${server.http.protocal}console.weifangdata.com
+    domain: qddata.com.cn
+    website: ${server.http.protocal}trade.qddata.com.cn
+    static: ${server.http.protocal}static.qddata.com.cn
+    auth: ${server.http.protocal}auth.qddata.com.cn
+    console: ${server.http.protocal}console.qddata.com.cn
   oauth2:
     clientId: admin
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.weifangdata.com/reg
-    loginUrl: http://auth.weifangdata.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.weifangdata.com/home
-    logoutUrl: http://auth.weifangdata.com/logout?redirect_uri=http://www.weifangdata.com/login
-    accessTokenUrl: http://auth.weifangdata.com/oauth/accessToken
-    userInfoUrl: http://auth.weifangdata.com/userInfo
-    redirectUrl: http://auth.weifangdata.com/login
+    regUrl: http://auth.qddata.com.cn/reg
+    loginUrl: http://auth.qddata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.qddata.com.cn/home
+    logoutUrl: http://auth.qddata.com.cn/logout?redirect_uri=http://trade.qddata.com.cn/login
+    accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
+    userInfoUrl: http://auth.qddata.com.cn/userInfo
+    redirectUrl: http://auth.qddata.com.cn/login
   redis:
-    ipPort: 192.168.15.204:7000,192.168.15.204:7001,192.168.15.204:7002
+    ipPort: 192.168.15.90:7000,192.168.15.90:7001,192.168.15.90:7002
   consul:
-    ipPort: 192.168.15.204:8500
+    ipPort: 192.168.15.90:8500
 debug: true

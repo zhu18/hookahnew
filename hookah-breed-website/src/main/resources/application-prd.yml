@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: weifangdata.com
+      domain: qddata.com.cn
       name: hookah_sid
 myconf:
   beetl:
@@ -14,21 +14,21 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: weifangdata.com
-    website: ${server.http.protocal}www.weifangdata.com
-    static: ${server.http.protocal}static.weifangdata.com
-    auth: ${server.http.protocal}auth.weifangdata.com
-    console: ${server.http.protocal}console.weifangdata.com
-    admin: ${server.http.protocal}admin.weifangdata.com
+    domain: qddata.com.cn
+    website: ${server.http.protocal}trade.qddata.com.cn
+    static: ${server.http.protocal}static.qddata.com.cn
+    auth: ${server.http.protocal}auth.qddata.com.cn
+    console: ${server.http.protocal}console.qddata.com.cn
+    admin: ${server.http.protocal}admin.qddata.com.cn
   oauth2:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.weifangdata.com/reg
-    loginUrl: http://auth.weifangdata.com/oauth/authorize?client_id=website&response_type=code&redirect_uri=
-    logoutUrl: http://auth.weifangdata.com/logout?redirect_uri=http://www.weifangdata.com/login
-    accessTokenUrl: http://auth.weifangdata.com/oauth/accessToken
-    userInfoUrl: http://auth.weifangdata.com/userInfo
-    redirectUrl: http://auth.weifangdata.com/login
+    regUrl: http://auth.qddata.com.cn/reg
+    loginUrl: http://auth.qddata.com.cn/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    logoutUrl: http://auth.qddata.com.cn/logout?redirect_uri=http://trade.qddata.com.cn/login
+    accessTokenUrl: http://auth.qddata.com.cn/oauth/accessToken
+    userInfoUrl: http://auth.qddata.com.cn/userInfo
+    redirectUrl: http://auth.qddata.com.cn/login
   redis:
     ipPort: 172.16.201.41:7000,172.16.201.41:7001,172.16.201.41:7002
   consul:
