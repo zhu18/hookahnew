@@ -37,4 +37,10 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
 
     //服务商审核
     ReturnData<MgZbProvider> provideCheck(String userId, Integer status);
+
+    //任务管理
+    ReturnData<ZbRequirement> getTaskManagement(String currentPage, String pageSize, String userName, String title, String requireSn);
+
+    ReturnData addTaskNumber(int orderNum, Long requirementId);
+
 }

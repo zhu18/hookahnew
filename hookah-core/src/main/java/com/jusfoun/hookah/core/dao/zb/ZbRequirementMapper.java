@@ -24,4 +24,8 @@ public interface ZbRequirementMapper extends GenericDao<ZbRequirement> {
     ZbRequirement selectForDetail(@Param("id") Long id);
 
     User selectReleaseInfo(String userId);
+
+    List<ZbRequirement> getTaskManagement(@Param("userName") String userName,
+                                          @Param("title") String title,
+                                          @Param("requireSn") String requireSn);
 }

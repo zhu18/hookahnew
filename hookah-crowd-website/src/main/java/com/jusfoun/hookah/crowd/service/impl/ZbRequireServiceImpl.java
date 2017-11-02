@@ -65,6 +65,8 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     @Resource
     MgZbProviderService mgZbProviderService;
 
+    @Resource
+    ZbRecommendService zbRecommendService;
 
     @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
@@ -497,5 +499,79 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         } catch (Exception e) {
             return ReturnData.error("审核失败");
         }
+    }
+
+
+
+    //任务管理
+    @Override
+    public ReturnData<ZbRequirement> getTaskManagement(String currentPage, String pageSize, String userName, String title, String requireSn){
+        Pagination<ZbRequirement> pagination = new Pagination<>();
+        PageInfo<ZbRequirement> pageInfo = new PageInfo<>();
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(currentPage)) {
+                pageNumberNew = Integer.parseInt(currentPage);
+            }
+
+            int pageSizeNew = HookahConstants.PAGE_SIZE;
+            if (com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+
+            PageHelper.startPage(pageNumberNew, pageSizeNew);
+
+            List<ZbRequirement> list = zbRequirementMapper.
+                    getTaskManagement(userName, title, requireSn);
+
+            for(ZbRequirement zb : list){
+                if (zb != null) {
+                    if (zb.getApplyDeadline() != null) {
+                        String time = DateUtil.timeCountDown(zb.getApplyDeadline());
+                        zb.setApplyLastTime(time != null ? time : "");
+                    }
+                }
+            }
+
+            pageInfo = new PageInfo<ZbRequirement>(list);
+            pagination.setTotalItems(pageInfo.getTotal());
+            pagination.setPageSize(pageSizeNew);
+            pagination.setCurrentPage(pageNumberNew);
+            pagination.setList(pageInfo.getList());
+            returnData.setData(pagination);
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
+    //保存任务推荐编号
+    public ReturnData addTaskNumber(int orderNum, Long requirementId){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("orderNum", orderNum));
+        boolean exists = zbRecommendService.exists(filters);
+        if(exists == true){
+            return ReturnData.error("该需求编号已存在，请修改！！！");
+        }
+
+        if(orderNum > 10 || orderNum < 0){
+            return ReturnData.error("需求编号最小为0，最大为10，请修改！！！");
+        }
+
+        //推荐信息
+        filters.clear();
+        filters.add(Condition.eq("requirementId", requirementId));
+        ZbRecommend zbRecommend = zbRecommendService.selectOne(filters);
+        if(zbRecommend == null){
+            return  ReturnData.error("该推荐需求信息不存在！！！");
+        }
+        //更改任务推荐表编号
+        zbRecommend.setOrderNum(orderNum);
+        zbRecommendService.updateByCondition(zbRecommend, filters);
+        return  ReturnData.success("更改推荐编号正确！！！");
     }
 }
