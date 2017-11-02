@@ -93,12 +93,12 @@ myconf:
     userInfoUrl: http://auth.bdgstore.cn/userInfo
     redirectUrl: http://auth.bdgstore.cn/login
   api:
-    url: http://192.168.15.174:5555/gateway/insert
-    tokenUrl: http://192.168.15.174:5555/gateway/getToken
-    changeUrl: http://192.168.15.174:5555/gateway/changeToken
-    apiRestUrl: http://192.168.15.174:8070/apirest/findInvokeStatus
+    url: http://192.168.15.206:5555/gateway/insert
+    tokenUrl: http://192.168.15.206:5555/gateway/getToken
+    changeUrl: http://192.168.15.206:5555/gateway/changeToken
+    apiRestUrl: http://192.168.15.206:8070/apirest/findInvokeStatus
     wrapperUrl: http://192.168.200.116:5555
-    apiDetailsUrl: http://192.168.15.174:8070/apirest/findByUrl?url=
+    apiDetailsUrl: http://192.168.15.206:8070/apirest/findByUrl?url=
   redis:
     ipPort: 192.168.15.203:7000,192.168.15.203:7001,192.168.15.203:7002
   consul:

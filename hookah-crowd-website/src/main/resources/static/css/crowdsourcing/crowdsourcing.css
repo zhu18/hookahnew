@@ -41,6 +41,7 @@
 .crowdsourcing-progress-box:after{ content: ''; width:100%; height: 4px; position: absolute;top:24px;left:0; background-color: #b3e1fb; }
 .crowdsourcing-progress-box li{ position: relative; z-index:1; float: left; width: 120px;  flex:1; overflow: hidden; text-align: center; }
 .step{ display: block; height:30px; width:30px; margin:0 auto; margin-top:10px; overflow: hidden; font-size:15px; border-radius:30px; line-height:30px; color:#fff; background-color: #2cabf8;}
+.step.active{ background-color: #d5d5d5;}
 .progress-content{ display: block; margin:10px 0 0; font-size: 15px;}
 .addtime{ display: block; color:#ccc;}
 
@@ -153,8 +154,9 @@
 .myRequirement-table tr td .crowdsourcing-user input{  width: 70px; margin-left: 10px;}
 .myRequirement-table tr td .crowdsourcing-user input:last-child{  width: 140px;}
 .myRequirement-table tr td .crowdsourcing-user input.tag{  width: 230px;}
-.myRequirement-table tr td .crowdsourcing-user .tagNotice{ position: relative; font-style: normal ; width: 21px;display: inline-block;text-align: center; cursor:pointer}
-.myRequirement-table tr td .crowdsourcing-user .tagNoticeContent{  display: none;position: absolute; top: 1px; background: #d4d4d4; width: 335px; height: 35px; line-height: 17px; padding: 5px; right: 25px;;}
+.myRequirement-table tr td .crowdsourcing-user .tagNotice{position: absolute; font-style: normal; width: 21px; display: block; text-align: center; cursor: pointer; height: 21px; line-height: 21px; background: #c34f4f;
+  color: #fff; border-radius: 21px; right: 2px; top: 14px;}
+.myRequirement-table tr td .crowdsourcing-user .tagNoticeContent{  display: none;position: absolute; top: 1px; background: #d4d4d4; width: 335px; height: 35px; line-height: 17px; padding: 5px; right: 25px; color:#c34f4f;}
 .myRequirement-table tr td .crowdsourcing-user .tagNoticeContent:after{
   content: ''; height:0; width:0; border:7px solid transparent; border-left:7px solid #d4d4d4; position: absolute; right: -14px; top: 16px;
 }

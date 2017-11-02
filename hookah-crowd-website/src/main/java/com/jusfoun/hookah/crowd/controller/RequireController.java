@@ -218,4 +218,29 @@ public class RequireController extends BaseController {
             return ReturnData.error("审核失败");
         }
     }
+
+    /**
+     * 后台任务管理
+     * @author zahoshuai
+     */
+    @ResponseBody
+    @RequestMapping(value = "/api/require/taskManagement", method = RequestMethod.GET)
+    public ReturnData<ZbRequirement> getTaskManagement(String currentPage, String pageSize,String userName, String title, String requireSn) {
+        try {
+            return zbRequireService.getTaskManagement(currentPage, pageSize, userName, title, requireSn);
+        } catch (Exception e) {
+            logger.error("getTaskManagement", e);
+            return ReturnData.error("系统错误：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 保存任务推荐编号
+     * @author zahoshuai
+     */
+    @ResponseBody
+    @RequestMapping(value = "/api/require/taskNumber", method = RequestMethod.GET)
+    public ReturnData addTaskNumber(int orderNum, Long requirementId){
+        return zbRequireService.addTaskNumber(orderNum,requirementId);
+    }
 }

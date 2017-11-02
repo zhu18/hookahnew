@@ -42,6 +42,7 @@ $('#infoAddSave').on('click',function () {
     });
 
 });
+//六个模块添加按钮
 // 添加教育经历
 $("#educationAdd").on('click',function () {
     var html='<dl> ' +
@@ -62,12 +63,12 @@ $("#educationAdd").on('click',function () {
         '</tr>' +
         ' <tr> ' +
         '<td> ' +
-        '<div> <label for=""><span class="color-red">*</span>就学时间</label> ' +
-        '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
-        '<td> <div> <label for="edu"><span class="color-red">*</span>学历</label> <select name="edu" id="edu" required > <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> ' +
+        '<div> <label for="">就学时间</label> ' +
+        '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly=""  >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" > </div> </div> </td> ' +
+        '<td> <div> <label for="edu">学历</label> <select name="edu" id="edu"  > <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> ' +
         '</td> </tr>' +
-        ' <tr> <td> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
-        ' <tr> <td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="null">保存</button> </td>' +
+        ' <tr> <td> <input type="checkbox" name="orExam" value="n" id="orExam" />是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
+        ' <tr> <td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="null">保存</button> </td>' +
         ' </tr> </table> </form> </dl>'
 
          $(".content-education").append(html);
@@ -114,16 +115,15 @@ $("#workAdd").on('click',function () {
         '<label for="departName"><span class="color-red">*</span>部门名称</label>' +
         ' <input type="text" id="departName" name="departName" placeholder="请输入部门名称" required> </div> </td> </tr>' +
         ' <tr> <td> <div>' +
-        ' <label for=""><span class="color-red">*</span>工作时间</label> ' +
+        ' <label for="">工作时间</label> ' +
         '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required> </div> </div> </td>' +
         ' <td> <div>' +
-        ' <label for="position"><span class="color-red">*</span>职位</label> ' +
+        ' <label for="position">职位</label> ' +
         '<input type="text" name="position" id="position"> </div> </td> </tr> ' +
         '<tr> <td> <div>' +
-        '<span class="color-red">*</span>'+
         '<label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
         '<tr> <td colspan="2"> ' +
-        '<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="workAddSave" data-sn="null">保存</button> </td> </tr> </table> </form> </dl>'
+        '<button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="workAddSave" data-sn="null">保存</button> </td> </tr> </table> </form> </dl>'
     $(".content-work").append(html);
     $('.content-work-noData').hide();
     $("#workAddSave").on('click',function () {
@@ -166,12 +166,12 @@ $("#projectAdd").on('click',function () {
         '<label for="projectDuty"><span class="color-red">*</span>项目职责</label> ' +
         '<input type="text" id="projectDuty" name="projectDuty" placeholder="请输入项目职责"required> </div> </td>' +
         ' </tr> <tr> <td colspan="2"> <div> ' +
-        '<label for=""><span class="color-red">*</span>项目时间</label> ' +
+        '<label for="">项目时间</label> ' +
         '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择开始时间" readonly="" required>至 <input id="endDate" name="endDate" type="text"placeholder="请选择结束时间" readonly="" required> </div> </div> </td> </tr>' +
         ' <tr> <td colspan="2"> ' +
         '<label for="projectDesc">项目描述</label> ' +
         '<textarea name="projectDesc" id="projectDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
-        '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="projectAddSave" data-sn="null"' +
+        '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="projectAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
     $(".content-project").append(html);
     $('.content-project-noData').hide();
@@ -216,7 +216,7 @@ $("#appCaseAdd").on('click',function () {
         ' <tr> <td colspan="2"> ' +
         '<label for="caseDesc">解决方案</label> ' +
         '<textarea name="caseDesc" id="caseDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
-        '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="appCaseAddSave" data-sn="null"' +
+        '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="appCaseAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
 
     $(".content-appCase").append(html);
@@ -268,7 +268,7 @@ $("#swpAdd").on('click',function () {
         ' <tr> <td colspan="2"> ' +
         '<label for="purpose">软件用途</label> ' +
         '<textarea name="purpose" id="purpose" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
-        '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="swpAddSave" data-sn="null"' +
+        '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="swpAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
 
     $(".content-swp").append(html);
@@ -319,7 +319,7 @@ $("#inPatentsAdd").on('click',function () {
         ' <tr> <td colspan="2"> ' +
         '<label for="PatentDesc">专利概述</label> ' +
         '<textarea name="PatentDesc" id="PatentDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
-        '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="inPatentsAddSave" data-sn="null"' +
+        '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="inPatentsAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
 
     $(".content-inPatents").append(html);
@@ -445,7 +445,7 @@ function educationEdit(r) {
                     '<td> <div> <label for="edu"><span class="color-red">*</span>学历</label> <select name="edu" id="edu" required > <option value="1">大专</option> <option value="2">本科</option> <option value="3">硕士</option> <option value="4">博士</option> </select> </div> ' +
                     '</td> </tr>' +
                     ' <tr> <td> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
-                    ' <tr> <td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'">保存</button> </td>' +
+                    ' <tr> <td colspan="2"> <button class=" btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'">保存</button> </td>' +
                     ' </tr> </table> </form>'
                 // var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
                 // $(".education tr").eq(index).html(html);
@@ -530,7 +530,7 @@ function workEdit(r) {
                     '<span class="color-red">*</span>'+
                     '<label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
                     '<tr> <td colspan="2"> ' +
-                    '<button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="workAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'">保存</button> </td> </tr> </table> </form> </dl>'
+                    '<button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="workAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'">保存</button> </td> </tr> </table> </form> </dl>'
                 // var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
                 // $(".education tr").eq(index).html(html);
                 _this.parent().parent().parent().html(html);
@@ -610,7 +610,7 @@ function projectEdit(r) {
                     ' <tr> <td colspan="2"> ' +
                     '<label for="projectDesc">项目描述</label> ' +
                     '<textarea name="projectDesc" id="projectDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
-                    '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="projectAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'" >保存 </button> </td> </tr> </table> </form> </dl>';
+                    '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="projectAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'" >保存 </button> </td> </tr> </table> </form> </dl>';
                 _this.parent().parent().parent().html(html);
 
                 $('#projectName').val(data.data.projectName);
@@ -681,7 +681,7 @@ function appCaseEdit(r) {
                     ' <tr> <td colspan="2"> ' +
                     '<label for="caseDesc">解决方案</label> ' +
                     '<textarea name="caseDesc" id="caseDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
-                    '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="appCaseAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
+                    '<td colspan="2"> <button class=" btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="appCaseAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
                     '>保存 </button> </td> </tr> </table> </form> </dl>';
 
                 _this.parent().parent().parent().html(html);
@@ -703,9 +703,9 @@ function appCaseEdit(r) {
                             "sn":$('#appCaseAddSave').attr('data-sn'),
                             "caseName": $("#caseName").val(),
                             "caseView": $("#caseView").val(),
-                            "startTime": $("#startDate").val() || null,
-                            "endTime": $("#endDate").val() || null,
-                            "caseDesc": $('#caseDesc').val() || null,
+                            "startTime": $("#startDate").val() ,
+                            "endTime": $("#endDate").val() ,
+                            "caseDesc": $('#caseDesc').val() || "",
                             "certPathsList":[
                                 {
                                     "certName":$('.fileTip').html(),
@@ -764,7 +764,7 @@ function swpEdit(r) {
                     ' <tr> <td colspan="2"> ' +
                     '<label for="purpose">软件用途</label> ' +
                     '<textarea name="purpose" id="purpose" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
-                    '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="swpAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
+                    '<td colspan="2"> <button class=" btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="swpAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
                     '>保存 </button> </td> </tr> </table> </form> </dl>';
 
                 _this.parent().parent().parent().html(html);
@@ -785,8 +785,8 @@ function swpEdit(r) {
                             "sn":$('#swpAddSave').attr('data-sn'),
                             "softWareName": $("#softWareName").val(),
                             "registerNum": $("#registerNum").val(),
-                            "publicTime": $("#startDate").val() || null,
-                            "purpose": $('#purpose').val() || null,
+                            "publicTime": $("#startDate").val() ,
+                            "purpose": $('#purpose').val() || "",
                             "certPathsList":[
                                 {
                                     "certName":$('.fileTip').html(),
@@ -844,7 +844,7 @@ function inPatentsEdit(r) {
                     ' <tr> <td colspan="2"> ' +
                     '<label for="patentDesc">专利概述</label> ' +
                     '<textarea name="patentDesc" id="patentDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
-                    '<td colspan="2"> <button class="btn btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="inPatentsAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
+                    '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="inPatentsAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
                     '>保存 </button> </td> </tr> </table> </form> </dl>';
 
                 _this.parent().parent().parent().html(html);
@@ -865,8 +865,8 @@ function inPatentsEdit(r) {
                             "sn":$('#inPatentsAddSave').attr('data-sn'),
                             "patentName": $("#patentName").val(),
                             "patentNum": $("#patentNum").val(),
-                            "applyTime": $("#startDate").val() || null,
-                            "patentDesc": $('#patentDesc').val() || null,
+                            "applyTime": $("#startDate").val() ,
+                            "patentDesc": $('#patentDesc').val() || "",
                             "certPathsList":[
                                 {
                                     "certName":$('.fileTip').html(),
@@ -925,7 +925,7 @@ function reader() {
                         html+='<div class="grid-left">'
                         html+='<span class="schoolName sub-title">'+item.schoolName+'</span> '
                         html+='<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span></div> '
-                        html+='<div class="grid-right operation"> '
+                        html+='<div class="grid-right operation btn"> '
                         html+='<a href="javascript:void (0)" class="educationEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
                         html+='<a href="javascript:void (0)" class="educationDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> '
                         html+='</dt><dd>'
@@ -957,7 +957,7 @@ function reader() {
                         html+='<div class="grid-left">'
                         html+='<span class="companyName sub-title">'+item.companyName+'</span> '
                         html+='<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span></div> '
-                        html+='<div class="grid-right"> '
+                        html+='<div class="grid-right btn"> '
                         html+='<a href="javascript:void (0)" class="workEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
                         html+='<a href="javascript:void (0)" class="workDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> '
                         html+='</dt> '
@@ -989,7 +989,7 @@ function reader() {
                             '<div class="grid-left">' +
                             '<span class="projectName sub-title">'+item.projectName+'</span> ' +
                             '<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span> </div> ' +
-                            '<div class="grid-right"> ' +
+                            '<div class="grid-right btn"> ' +
                             '<a href="javascript:void (0)" class="projectEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> ' +
                             '<a href="javascript:void (0)" class="projectDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> ' +
                             '<dd> ' +
@@ -1019,7 +1019,7 @@ function reader() {
                         html +='<div class="grid-left"> '
                         html +='<span class="caseName sub-title">'+item.caseName+'</span> '
                         html +='<span class="">('+formatDate(item.startTime)+'-'+formatDate(item.endTime)+')</span> </div> '
-                        html +='<div class="grid-right"> '
+                        html +='<div class="grid-right btn"> '
                         html +='<a href="javascript:void (0)" class="appCaseEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
                         html +='<a href="javascript:void (0)" class="appCaseDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
                         html +='<dd> '
@@ -1056,7 +1056,7 @@ function reader() {
                         html +='<div class="grid-left"> '
                         html +='<span class="caseName sub-title">'+item.softWareName+'</span> '
                         html +='<span class="">(首次发表日期:'+item.publicTime+')</span> </div> '
-                        html +='<div class="grid-right"> '
+                        html +='<div class="grid-right btn"> '
                         html +='<a href="javascript:void (0)" class="swpEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
                         html +='<a href="javascript:void (0)" class="swpDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
                         html +='<dd> '
@@ -1093,7 +1093,7 @@ function reader() {
                         html +='<div class="grid-left"> '
                         html +='<span class="caseName sub-title">'+item.patentName+'</span> '
                         html +='<span class="">(首次发表日期:'+item.applyTime+')</span> </div> '
-                        html +='<div class="grid-right"> '
+                        html +='<div class="grid-right btn"> '
                         html +='<a href="javascript:void (0)" class="inPatentsEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
                         html +='<a href="javascript:void (0)" class="inPatentsDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
                         html +='<dd> '

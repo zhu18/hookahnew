@@ -97,18 +97,23 @@ function renderPage(data) {
   switch (insertRequirementsData.zbRequirement.status) {
     case 1:
       domModel.html('待审核');
+      $(".crowdsourcing-progress-box li:gt(1) .step").addClass('active');
       break;
     /*case 2:
      domModel.html('审核未通过');
      break;*/
     case 3:
       domModel.html('审核通过<br>待托管赏金');
+      $(".crowdsourcing-progress-box li:gt(2) .step").addClass('active');
+
       $('.detailMoneyBox').show();
       $('.release-first-btnbox div').append('<a id="J_goPay" requirementId="' + insertRequirementsData.zbRequirement.id + '" href="javascript:void(0)">去托管赏金</a>');
       break;
     case 5:
     case 6:
       domModel.html('已发布');
+      $(".crowdsourcing-progress-box li:gt(3) .step").addClass('active');
+
       missionApplyInfo(data); //任务报名信息显示
       $('.missionApply').html('至报名截止日期： 已报名 '+data.count+'人');
       $('.missionResult').hide().prev().show();
@@ -116,6 +121,7 @@ function renderPage(data) {
       break;
     case 7: //二次托管
       domModel.html('报名结束<br>待托管赏金');
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
       $('.managedMoneySpanText').html('已托管比例');
       $('.detailMoneyBox,.otherDetailBox').show();
       $('.managedMoneyNotice').hide();
@@ -129,18 +135,21 @@ function renderPage(data) {
     case 8: //工作中
     case 12: //二次工作中
       domModel.html('工作中');
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
+
       missionApplyInfo(data); //任务报名信息显示
       break;
     case 10:
       domModel.html('待验收');//TODO:验收要根据成果验收的三个状态显示
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
       missionApplyInfo(data); //任务报名信息显示
-
       $('.release-first-btnbox div').append('<a class="j_checkMission" href="javascript:void(0)">成果验收</a>');
 
 
       break;
     case 13:
       domModel.html('已付款<br>待评价');
+      $(".crowdsourcing-progress-box li:gt(5) .step").addClass('active');
       missionApplyInfo(data); //任务报名信息显示
       $('.missionStatus').show();
 
@@ -159,8 +168,10 @@ function renderPage(data) {
       break;
     case 14:
       domModel.html('交易取消');
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
+
       $('.missionStatusResult').html('方案不符合需求方要求，验收驳回！');
-      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
+      $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice?insertRequirementsData.zbProgram.checkAdvice:'');//验收意见
       $('.canNotSelect').show();//禁止选择
       $('.missionStatus').show();//验收结果和查看验收意见按钮
       $('.cancleStatusNotice').show();// 悬赏金额 最右侧提示
@@ -190,6 +201,8 @@ function renderPage(data) {
       break;
     case 16://待退款
       domModel.html('失败待退款');
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
+
       $('.missionStatus').html('方案不符合需求方要求验收驳回，交易失败').show();
       $('.checkAdviceDetailBox').html(insertRequirementsData.zbProgram.checkAdvice);//验收意见
       $('.canNotSelect').show();//禁止选择
@@ -202,6 +215,8 @@ function renderPage(data) {
       break;
     case 19: //流标
       domModel.html('交易取消');
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
+
       $('.cancleStatusNotice').show().prev().hide();// 悬赏金额 最右侧提示
       $('.cancleStatusNoticeContent').html('无报名流标，交易取消已退款 。');//悬赏金额 最右侧提示内容
       $('.detailMoneyBox').show();

@@ -8,8 +8,7 @@
     <version>0.0.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>hookah-oauth2server</artifactId>
-  <packaging>jar</packaging>
+  <artifactId>hookah-pay</artifactId>
   <dependencies>
     <dependency>
       <groupId>com.jusfoun</groupId>
@@ -21,6 +20,7 @@
       <artifactId>hookah-rpc-api</artifactId>
       <version>0.0.1</version>
     </dependency>
+
     <dependency>
       <groupId>com.weibo</groupId>
       <artifactId>motan-core</artifactId>
@@ -28,14 +28,56 @@
     <dependency>
       <groupId>com.weibo</groupId>
       <artifactId>motan-transport-netty</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.jboss.netty</groupId>
+          <artifactId>netty</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty</artifactId>
+      <version>3.10.6.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.netty</groupId>
+      <artifactId>netty</artifactId>
+      <version>3.2.5.Final</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.weibo</groupId>
       <artifactId>motan-springsupport</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.weibo</groupId>
       <artifactId>motan-registry-consul</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!--shiro -->
     <dependency>
@@ -46,21 +88,10 @@
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-spring</artifactId>
     </dependency>
-
-    <!-- captcha,验证码 -->
     <dependency>
-      <groupId>com.github.penggle</groupId>
-      <artifactId>kaptcha</artifactId>
-      <version>2.3.2</version>
-      <exclusions>
-        <exclusion>
-          <artifactId>javax.servlet-api</artifactId>
-          <groupId>javax.servlet</groupId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-quartz</artifactId>
     </dependency>
-
-
     <!--oltu-->
     <dependency>
       <groupId>org.apache.oltu.oauth2</groupId>
@@ -68,7 +99,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.oltu.oauth2</groupId>
-      <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+      <artifactId>org.apache.oltu.oauth2.client</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.oltu.oauth2</groupId>
@@ -110,6 +141,10 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-amqp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-mail</artifactId>
       <version>1.2.6.RELEASE</version>
     </dependency>
@@ -124,10 +159,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-amqp</artifactId>
     </dependency>
 
     <!-- JSON -->
@@ -193,10 +224,6 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.jboss.netty</groupId>
-      <artifactId>netty</artifactId>
-    </dependency>
-    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
@@ -210,6 +237,93 @@
       <groupId>com.googlecode.log4jdbc</groupId>
       <artifactId>log4jdbc</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.elasticsearch.client</groupId>
+      <artifactId>transport</artifactId>
+      <version>5.2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.elasticsearch</groupId>
+      <artifactId>elasticsearch</artifactId>
+      <version>5.2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+      <version>1.47</version>
+    </dependency>
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.9.11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- 清算中心相关jar -->
+    <dependency>
+      <groupId>fixcommom</groupId>
+      <artifactId>fixcommom</artifactId>
+      <version>3.7.3_1</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/lib/fixcommon-3.7.3_1.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>jdom</groupId>
+      <artifactId>jdom</artifactId>
+      <version>1.1.3</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/lib/jdom-1.1.3.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>not-yet-commons-ssl</groupId>
+      <artifactId>not-yet-commons-ssl</artifactId>
+       <version>0.3.11</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/lib/not-yet-commons-ssl-0.3.11.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>qss-client-1.0-jdk1.6</groupId>
+      <artifactId>qss-client-1.0-jdk1.6</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/src/lib/qss-client-1.0-jdk1.6.jar</systemPath>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+    </dependency>
+
   </dependencies>
   <build>
     <resources>
@@ -234,13 +348,13 @@
           <include>**/.txt</include>
         </includes>
       </resource>
-       <!--打包时注释下面的resource-->
+      <!-- 打包时注释下面的resource -->
 
-     <resource>
+     <!--<resource>
         <targetPath>${project.build.directory}/classes</targetPath>
         <directory>src/main/resources</directory>
         <filtering>false</filtering>
-     </resource>
+      </resource>-->
 
     </resources>
     <pluginManagement>
@@ -265,7 +379,7 @@
           <archive>
             <addMavenDescriptor>true</addMavenDescriptor>
             <manifest>
-              <mainClass>com.jusfoun.hookah.oauth2server.Oauth2ServerLauncher</mainClass>
+              <mainClass>com.jusfoun.hookah.pay.PayServerLauncher</mainClass>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
             </manifest>
@@ -302,4 +416,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>

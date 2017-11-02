@@ -66,9 +66,8 @@
             zc.add_time
         FROM
             zb_comment zc
-        LEFT JOIN zb_requirement zr ON zc.requirement_id = zr.id
         WHERE
-            zr.user_id = #{userId}
+            zc.other_id = #{userId}
         ORDER BY
             zc.add_time DESC
   </select>

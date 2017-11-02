@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,7 +66,7 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                 return returnData;
             }
 
-            double refundAmount = 0;
+            BigDecimal refundAmount = new BigDecimal(0);
 
             ZbRequirement zbRequirement = zbRequireService.selectById(Long.parseLong(requirementId));
             if(zbRequirement == null){
@@ -100,7 +101,8 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
 
                     returnData.setData(payBankCard);
 
-                    refundAmount = zbRequirement.getRewardMoney() / 100;
+//                    refundAmount = zbRequirement.getRewardMoney().doubleValue() / 100;
+                    refundAmount = refundAmount.add(new BigDecimal(zbRequirement.getRewardMoney().doubleValue() / 100));
 
                 }else {
 
@@ -130,10 +132,11 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                     }
 
                     for(ZbTrusteeRecord zbTrusteeRecord : list){
-                        refundAmount += zbTrusteeRecord.getActualMoney().doubleValue();
+//                        refundAmount += zbTrusteeRecord.getActualMoney().doubleValue();
+                        refundAmount = refundAmount.add(new BigDecimal(zbTrusteeRecord.getActualMoney().doubleValue() / 10000));
                     }
 
-                    refundAmount = (refundAmount == 0) ? refundAmount : (refundAmount / 10000);
+//                    refundAmount = (refundAmount == 0) ? refundAmount : (refundAmount / 10000);
 
                 }
             }
@@ -250,6 +253,13 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
         }
 
         return returnData;
-
     }
+
+    public static void main(String[] args){
+
+        Double d1 = 0.1;
+        Double d2 = 0.02;
+        System.out.println(d1 + d2);
+    }
+
 }

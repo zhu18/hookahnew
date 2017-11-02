@@ -26,8 +26,6 @@ function getRequirementType() {
   });
 }
 getRequirementType();
-
-
 function showDetail() { //修改，从我的发布点击'查看'调转过来的
   $.ajax({
     type: 'get',
@@ -39,9 +37,6 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
     }
   });
 }
-
-
-
 
 function renderPage(data) {
   var insertRequirementsData = data;
@@ -88,8 +83,10 @@ function renderPage(data) {
   switch (insertRequirementsData.reqStatus) {
     case 1://工作中
       domModel.html('工作中');
+      $(".crowdsourcing-progress-box li:gt(2) .step").addClass('active');
+
       $('.j_myMissionStatus').html('已选中').show();
-      $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">已选中！提交成果</a>');
+      $('.release-first-btnbox div').append('<a class="j_submitResult" resultType="firstLoadResult" href="javascript:void(0)">已选中！提交成果</a>');
       $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id}).hide().prev().show();
 
       loadfileHtml=renderLoadFile(insertRequirementsData.zbRequirementSPVo,'false');//有下载按钮的附件列表
@@ -100,6 +97,7 @@ function renderPage(data) {
       break;
     case 2: //未中标
       domModel.html('未中标');
+      $(".crowdsourcing-progress-box li:gt(1) .step").addClass('active');
       $('.j_myMissionStatus').html('未中标').show();
       $('.release-first-btnbox div').append('<a class="" href="javascript:void(0)">报名未被选中</a>');
       missionApplyInfo(data);
@@ -110,6 +108,8 @@ function renderPage(data) {
       break;
     case 3: //预评中
       domModel.html('预评中');
+      $(".crowdsourcing-progress-box li:gt(3) .step").addClass('active');
+
       missionApplyInfo(data);
       $('.j_myMissionStatus').html('已选中').show();
 
@@ -123,7 +123,7 @@ function renderPage(data) {
           $('.missionStatusResult').html('预评不通过，待修改');
           $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
           $('.j_resultStatus').show();
-          $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">重新提交成果</a>');
+          $('.release-first-btnbox div').append('<a class="j_submitResult" resultType="reloadResult" href="javascript:void(0)">重新提交成果</a>');
           $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id});
 
           break;
@@ -131,7 +131,8 @@ function renderPage(data) {
 
       break;
     case 4: //验收中
-      domModel.html('验收中');
+      domModel.html('验收中')
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
       missionApplyInfo(data);
       $('.j_myMissionStatus').html('已选中').show();
 
@@ -148,7 +149,7 @@ function renderPage(data) {
           $('.missionStatusResult').html('验收不通过，待修改');
           $('.checkAdviceDetailBox').html(data.zbProgramVo.checkAdvice);
           $('.j_resultStatus').show();
-          $('.release-first-btnbox div').append('<a class="j_submitResult" href="javascript:void(0)">重新提交成果</a>');
+          $('.release-first-btnbox div').append('<a class="j_submitResult" resultType="reloadResult" href="javascript:void(0)">重新提交成果</a>');
           $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id});
 
           break;
@@ -158,6 +159,7 @@ function renderPage(data) {
       break;
     case 5://待付款
       domModel.html('待付款');//
+      $(".crowdsourcing-progress-box li:gt(5) .step").addClass('active');
       missionApplyInfo(data);
       $('.j_myMissionStatus').html('已选中').show();
 
@@ -171,6 +173,7 @@ function renderPage(data) {
       break;
     case 6:
       domModel.html('待评价');
+
       missionApplyInfo(data); //任务报名信息显示
       $('.missionStatus').show();
       $('.hasPayMoney').append('<span class="signUp">已付款</span>');
@@ -179,7 +182,7 @@ function renderPage(data) {
 
       $.fn.raty.defaults.path = '/static/images/crowdsourcing';//初始化星星图标位置
 
-      if(insertRequirementsData.zbCommentVo.servicerComment.addTime){
+      if(insertRequirementsData.zbCommentVo !== null && insertRequirementsData.zbCommentVo.servicerComment!==null){
         $('.serviceCommentStar').raty({ readOnly: true, score: insertRequirementsData.zbCommentVo.servicerComment.level });
         $('.serviceCommentDetail').html(insertRequirementsData.zbCommentVo.servicerComment.content);
         $('.serviceCommentTime').html(insertRequirementsData.zbCommentVo.servicerComment.addTime);
@@ -193,6 +196,8 @@ function renderPage(data) {
       break;
     case 7:
       domModel.html('交易取消');
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
+
       missionApplyInfo(data);
       $('.j_myMissionStatus').html('已选中').show();
 
@@ -252,7 +257,13 @@ function renderPage(data) {
 
 
 $(document).on('click', '.j_submitResult', function () {
-
+  console.log($(this).attr('resultType'));
+  var resultDOM='';
+  if($(this).attr('resultType')=='firstLoadResult'){
+    resultDOM='待预评。'
+  }else{
+    resultDOM='预评通过，待验收。'
+  }
   // 提交成果
   $.confirm('\
   <div class="checkMissionBox submitResultBox">\
@@ -315,13 +326,15 @@ $(document).on('click', '.j_submitResult', function () {
           contentType: 'application/json',
           data: JSON.stringify(resultData),
           success: function (data) {
+
             console.log(data);
             if(data.code==1){
               $('.missionTitle').html(resultData.title);
               $('.missionResultDes').html(resultData.content);
               $('.j_missionResult-load-file-list').html($('.j_resultLoadFile').html());
               $('.j_myMissionResult').show().prev().hide(); //显示评价模块
-              $('.j_resultStatus').html('预评通过，待验收。').show();
+              $('.j_resultStatus').html(resultDOM).show();
+              // location.reload();
               confirmThis.hide();// 隐藏弹出框
               $('.j_submitResult').remove();//上传按钮
               $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
