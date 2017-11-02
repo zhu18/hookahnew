@@ -70,13 +70,11 @@ function setPayPwdCon() {
 }
 var goodsAmount = parseInt($('#goodsAmount').val());
 var moneyBalance = parseInt($('#moneyBalance').val());
-console.log('商品价格goodsAmount------'+goodsAmount+'账户余额moneyBalance------'+moneyBalance);
 getCheckVal();
 function getCheckVal() {
 	$("input[name='apiCode']:radio").each(function () {
 		if (this.checked) {
 			if (this.value == 1) {
-				console.log('======1');
 				if (goodsAmount > moneyBalance) {
 					$('#J-security').hide();
 					$('#J-rcSubmit').hide();
@@ -192,7 +190,6 @@ _formPay.validate({
 		}
 	},
 	errorPlacement: function (error, element) {
-        console.log(1);
         element.closest('div[data-error="i_error"]').append(error);
 	},
 	submitHandler: function (form) {
@@ -258,6 +255,6 @@ payPassword.on('keyup', "input[name='paymentPassword']", function (e) {
 
 $(function () {
     $(".channel-label .money-balance").html(splitK($(".channel-label .money-balance").html()))
-
+	$('.saved-card-list li').eq(0).children('.row-basic').children('.channel-label').children('.channel-input').prop("checked",true);
 })
 
