@@ -353,18 +353,20 @@ public class PayServiceImpl implements PayService {
             return mv;
         }
 
-//        if(!payAccount.getPayPassword().equals(passWord)){
-//            mv.setViewName("pay/fail");
-//            mv.addObject("message", "支付密码不正确^_^");
-//            mv.addObject("code", 9);
-//            return mv;
-//        }
-
         //校验众包托管记录
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("serialNo", orderSn));
         filters.add(Condition.eq("userId", userId));
         ZbTrusteeRecord zbTrusteeRecord = zbTrusteeRecordService.selectOne(filters);
+
+        if(zbTrusteeRecord == null){
+            mv.setViewName("pay/fail");
+            mv.addObject("message", "订单异常，请重新支付^_^");
+            mv.addObject("code", 9);
+            mv.addObject("orderSn", orderSn);
+            return mv;
+        }
+
         if(zbTrusteeRecord.getStatus().equals(Short.parseShort("1"))){
             mv.setViewName("pay/fail");
             mv.addObject("message", "该订单已支付^_^");
