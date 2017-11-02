@@ -4,6 +4,7 @@ import auditingController from './auditingController';
 import detailsController from './detailsController'
 import refundController from './refundController'
 import cardController from './cardController'
+import recommendController from './recommendController'
 
 publishRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function publishRouting($stateProvider, $urlRouterProvider) {
@@ -50,5 +51,11 @@ export default function publishRouting($stateProvider, $urlRouterProvider) {
       template: require('./card.html'),
       controller: cardController,
       permission: 'card'
+    })
+    .state('publish.recommend', {  //需求推荐页面
+      url: '/publish/recommend/:id',
+      template: require('./recommend.html'),
+      controller: recommendController,
+      permission: 'recommend'
     })
 };

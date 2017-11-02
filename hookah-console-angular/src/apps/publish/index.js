@@ -38,6 +38,10 @@ app.run(function ($rootScope, $state) {
     {
       "title":"需求查询",
       "url":"publish.list"
+    },
+    {
+      "title":"推荐管理",
+      "url":"publish.recommend"
     }
   ];
 

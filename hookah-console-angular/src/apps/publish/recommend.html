@@ -1,0 +1,92 @@
+<style>
+    .form-inline .form-control {
+        width: 110px;
+    }
+
+    .form-inline label {
+        margin-top: 5px;
+    }
+    .input-group a{ font-size:14px;padding-right: 14px;}
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>推荐管理</h5></div>
+            <div class="pull-right">
+                <button class="btn btn-default" data-ng-click="refresh()"><span
+                        class="glyphicon glyphicon-refresh"></span> 刷新
+                </button>
+                <!--<a ui-sref="help.add" class="btn btn-primary">新增</a>-->
+            </div>
+        </div>
+        <div class="row margin-top form-inline">
+            <div class="col-sm-12">
+
+                <div style="padding:15px 0 0;">
+                    <label class="control-label">需求标题：</label>
+                    <input ng-model="requireSn" type="text" class="form-control" placeholder="请输入需求标题">
+                    <label class="control-label">需求方：</label>
+                    <input ng-model="requireSn" type="text" class="form-control" placeholder="请输入需求方">
+                    <label class="control-label">需求编号：</label>
+                    <input ng-model="title" type="text" class="form-control" placeholder="请输入需求编号">
+                    <button class="btn btn-primary" data-ng-click="search()">
+                        搜索
+                    </button>
+                    <div class="gridSection">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>需求编号</th>
+                                <th>需求标题</th>
+                                <th>需求方</th>
+                                <th>报名剩余有效期</th>
+                                <th>排序优先</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in publishList">
+                                <td data-ng-bind="$index+1"></td>
+                                <td data-ng-bind="item.requireSn"></td>
+                                <td data-ng-bind="item.title"></td>
+                                <td data-ng-bind="item.requiremetName"></td>
+                                <td data-ng-bind="item.requiremetName"></td>
+                                <td>
+                                    <input type="text" data-ng-click="prior(item.id,val)">
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                        <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                            <tr>
+                                <td colspan="9">
+                                    <div class="pull-right page-box">
+                                        <div class="pagination-info">
+                                            共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                        </div>
+                                        <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                            ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                            max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                            force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                            last-text="末页">
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="simple-grid-none-data-wrap">
+                        <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+                            <div class="row-padding row-margin text-center">
+                                <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+                                <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
