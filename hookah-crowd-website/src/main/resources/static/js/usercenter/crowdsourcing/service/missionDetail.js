@@ -83,6 +83,8 @@ function renderPage(data) {
   switch (insertRequirementsData.reqStatus) {
     case 1://工作中
       domModel.html('工作中');
+      $(".crowdsourcing-progress-box li:gt(2) .step").addClass('active');
+
       $('.j_myMissionStatus').html('已选中').show();
       $('.release-first-btnbox div').append('<a class="j_submitResult" resultType="firstLoadResult" href="javascript:void(0)">已选中！提交成果</a>');
       $('.j_myMissionResult').attr({"requirementId":insertRequirementsData.zbRequirementSPVo.id,"applyId":insertRequirementsData.zbRequirementApplyVo.id}).hide().prev().show();
@@ -95,6 +97,7 @@ function renderPage(data) {
       break;
     case 2: //未中标
       domModel.html('未中标');
+      $(".crowdsourcing-progress-box li:gt(1) .step").addClass('active');
       $('.j_myMissionStatus').html('未中标').show();
       $('.release-first-btnbox div').append('<a class="" href="javascript:void(0)">报名未被选中</a>');
       missionApplyInfo(data);
@@ -105,6 +108,8 @@ function renderPage(data) {
       break;
     case 3: //预评中
       domModel.html('预评中');
+      $(".crowdsourcing-progress-box li:gt(3) .step").addClass('active');
+
       missionApplyInfo(data);
       $('.j_myMissionStatus').html('已选中').show();
 
@@ -126,7 +131,8 @@ function renderPage(data) {
 
       break;
     case 4: //验收中
-      domModel.html('验收中');
+      domModel.html('验收中')
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
       missionApplyInfo(data);
       $('.j_myMissionStatus').html('已选中').show();
 
@@ -153,6 +159,7 @@ function renderPage(data) {
       break;
     case 5://待付款
       domModel.html('待付款');//
+      $(".crowdsourcing-progress-box li:gt(5) .step").addClass('active');
       missionApplyInfo(data);
       $('.j_myMissionStatus').html('已选中').show();
 
@@ -166,6 +173,7 @@ function renderPage(data) {
       break;
     case 6:
       domModel.html('待评价');
+
       missionApplyInfo(data); //任务报名信息显示
       $('.missionStatus').show();
       $('.hasPayMoney').append('<span class="signUp">已付款</span>');
@@ -188,6 +196,8 @@ function renderPage(data) {
       break;
     case 7:
       domModel.html('交易取消');
+      $(".crowdsourcing-progress-box li:gt(4) .step").addClass('active');
+
       missionApplyInfo(data);
       $('.j_myMissionStatus').html('已选中').show();
 
