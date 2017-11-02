@@ -3,16 +3,16 @@ var config = {
   permissionList: "",
   permissionArray:"",
   site: {
-    adminServer: "http://admin.qddata.com.cn",
-    apiServer: "http://console.qddata.com.cn",
-    websiteServer: "http://trade.qddata.com.cn",
-    authServer: "http://auth.qddata.com.cn",
-    staticServer: "http://static.qddata.com.cn"
+    adminServer: "http://admin.wfbdex.com",
+    apiServer: "http://console.wfbdex.com",
+    websiteServer: "http://trade.wfbdex.com",
+    authServer: "http://auth.wfbdex.com",
+    staticServer: "http://static.wfbdex.com"
   },
   url: {
-    loginUrl: "http://auth.qddata.com.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.qddata.com.cn/login&backurl=",
-    uploadUrl: "http://static.qddata.com.cn/upload/fileUpload",
-    uploadEditor: "http://static.qddata.com.cn/upload/wangeditor",
+    loginUrl: "http://auth.wfbdex.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.wfbdex.com/login&backurl=",
+    uploadUrl: "http://static.wfbdex.com/upload/fileUpload",
+    uploadEditor: "http://static.wfbdex.com/upload/wangeditor",
   }
 };
 
@@ -87,7 +87,7 @@ export default angular.module('Common', [
   'angular-growl',
   'angularSpinner',
 ])
-  .constant('loginUrl', "http://auth.qddata.com.cn/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
+  .constant('loginUrl', "http://auth.wfbdex.com/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
      * 配置消息提示
