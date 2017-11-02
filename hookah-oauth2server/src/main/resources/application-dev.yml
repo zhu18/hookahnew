@@ -1,17 +1,19 @@
 server:
-  port: 9100
+  port: 9900
   http:
-    protocal: http://
+      protocal: http://
   session:
     cookie:
-      domain: weifangdata.com
+      domain: bdgstore.cn
       name: hookah_sid
 spring:
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://172.16.201.43:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:log4jdbc:mysql://192.168.15.203:3306/bdgStore?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    driverClassName: net.sf.log4jdbc.DriverSpy
+    #driverClassName: com.mysql.jdbc.Driver
+    #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: jusfoun2017
+    password: password
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -38,16 +40,16 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://172.16.201.42:27017/hookah
+      uri:  mongodb://192.168.15.203:27017/bdgStore
   rabbitmq:
-    addresses: 172.16.201.41:5672
+    addresses: 192.168.200.116:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.weifangdata.com
-      username: service@weifangdata.com
+      host: smtp.bdgstore.cn
+      username: service@qddata.com.cn
       password: Bigdata8661101
       transport:
         protocol: smtp
@@ -77,29 +79,17 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: weifangdata.com
-    website: ${server.http.protocal}www.weifangdata.com
-    static: ${server.http.protocal}static.weifangdata.com
-    auth: ${server.http.protocal}auth.weifangdata.com
-    console: ${server.http.protocal}console.weifangdata.com
-  oauth2:
-    clientId: admin
-    clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.weifangdata.com/reg
-    loginUrl: http://auth.weifangdata.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.weifangdata.com/home
-    logoutUrl: http://auth.weifangdata.com/logout?redirect_uri=http://www.weifangdata.com/login
-    accessTokenUrl: http://auth.weifangdata.com/oauth/accessToken
-    userInfoUrl: http://auth.weifangdata.com/userInfo
-    redirectUrl: http://auth.weifangdata.com/login
-  api:
-    url: http://202.106.10.250:5555/gateway/insert
-    tokenUrl: http://202.106.10.250:5555/gateway/getToken
-    changeUrl: http://202.106.10.250:5555/gateway/changeToken
-    apiRestUrl: http://202.106.10.250:5555/apirest/findInvokeStatus
+    domain: bdgstore.cn
+    cms: ${server.http.protocal}www.bdgstore.cn
+    website: ${server.http.protocal}www.bdgstore.cn
+    static: ${server.http.protocal}static.bdgstore.cn
+    auth: ${server.http.protocal}auth.bdgstore.cn
+    console: ${server.http.protocal}console.bdgstore.cn
+    crowd: ${server.http.protocal}crowd.bdgstore.cn
+  site:
+      user-default-img: /static/images/user-safe-head.png
   redis:
-    ipPort: 172.16.201.41:7000,172.16.201.41:7001,172.16.201.41:7002
+    ipPort: 192.168.15.203:7000,192.168.15.203:7001,192.168.15.203:7002
   consul:
-    ipPort: 172.16.201.41:8500
-  es:
-    ipPort: 172.16.201.42:9300
+      ipPort: localhost:8500
 debug: true

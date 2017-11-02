@@ -76,7 +76,7 @@ public class FreemarkerWord {
         out.flush();
         out.close();
         fos.close();
-        returnData.setData("http://trade.qddata.com.cn" + tempath + fileName);
+        returnData.setData("http://www.weifangdata.com" + tempath + fileName);
 
 		return returnData;
     }  

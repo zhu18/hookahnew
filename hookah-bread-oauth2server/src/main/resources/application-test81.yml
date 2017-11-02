@@ -48,8 +48,8 @@ spring:
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.qddata.com.cn
-      username: service@qddata.com.cn
+      host: smtp.weifangdata.com
+      username: service@weifangdata.com
       password: Bigdata8661101
       transport:
         protocol: smtp
@@ -82,7 +82,7 @@ myconf:
     domain: test.com.cn:81
     cms: ${server.http.protocal}www.test.com.cn:81
     website: ${server.http.protocal}trade.test.com.cn:81
-    static: ${server.http.protocal}static.qddata.com.cn
+    static: ${server.http.protocal}static.weifangdata.com
     auth: ${server.http.protocal}auth.test.com.cn:81
     console: ${server.http.protocal}console.test.com.cn:81
   site:
