@@ -247,7 +247,7 @@ var htmlPart = {
 						开启数据之旅<br>
 						让数据实现资产化
 					</p>
-					<a href="javascript:void(0)">马上去注册</a>
+					<a target="_blank" href="http://www.bdgstore.cn/activity/superCost">马上去注册</a>
 				</div>
 				<div class="activityBottom">
 					<div class="botOld"></div>
@@ -262,7 +262,7 @@ var htmlPart = {
 						<i>30000</i>条数据源<br>
 						实现数据资产化
 					</p>
-					<a href="javascript:void(0)">马上去注册</a>
+					<a target="_blank" href="http://cms.bdgstore.cn/gysjxh/index.jhtml">马上去注册</a>
 				</div>
 				<div class="activityBottom">
 					<div class="botOld"></div>
@@ -277,7 +277,7 @@ var htmlPart = {
 						获得专业的<br>
 						个性化数据定制方案
 					</p>
-					<a href="javascript:void(0)">马上去注册</a>
+					<a target="_blank" href="http://www.bdgstore.cn/exchange/details?id=02b343c87e6011e79931fefcfe6cbde7 ">马上去注册</a>
 				</div>
 				<div class="activityBottom">
 					<div class="botOld"></div>
@@ -394,7 +394,19 @@ var htmlPart = {
 				}
 			}
 		});
+		$('.activity_item').hover(function(){
+			var thisElm = $(this).children('.activityBottom').children('.botNew')
+			setTimeout(function(){
+				thisElm.animate({height:'317px',bottom:'0'});
+			},2000)
+		},function(){
+			var thisElm = $(this).children('.activityBottom').children('.botNew')
+			setTimeout(function(){
+				thisElm.css({height:'221px',bottom:'36px'});
+			},2000)
+		});
 	});
+
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}

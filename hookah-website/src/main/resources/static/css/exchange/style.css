@@ -2166,22 +2166,21 @@ dl {
 }
 .activity_item .activityBottom .botNew{
 	width: 331px;
-	height:221px;
 	position: absolute;
+	height:221px;
 	bottom:36px;
 	left:-331px;
 	z-index: 4;
 	background: url(/static/images/exchange/bg_new.jpg) no-repeat;
-	transition-property: all 2s;
+	transition: all 2s;
 	-moz-transition: all 2s;
 	-webkit-transition: all 2s;
 	-o-transition: all 2s;
 }
 .activity_item:hover  .activityBottom .botNew{
 	left:0;
-	height:317px;
-	bottom:0;
 }
+
 .activity_item:hover .activityTop .activity_img{
 	border:2px solid #fff;
 	background: none;
