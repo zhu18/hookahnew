@@ -160,7 +160,6 @@
         zb_requirement zr
         LEFT JOIN `user` us ON zr.user_id = us.user_id
         LEFT JOIN organization org ON us.org_id = org.org_id
-        LEFT JOIN zb_recommend zm  ON zm.requirement_id = zr.id
         WHERE 1 = 1
         <if test="requireSn != null and requireSn != ''">
             and zr.require_sn like '%${requireSn}%'
@@ -171,6 +170,6 @@
         <if test="userName != null and userName != ''">
             and requiremetName like '%${userName}%'
         </if>
-        ORDER BY zm.order_num ASC ,zr.apply_deadline ASC
+        ORDER BY zr.apply_deadline ASC
     </select>
 </mapper>
