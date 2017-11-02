@@ -40,12 +40,12 @@ export default function publishRouting($stateProvider, $urlRouterProvider) {
 
     })
     .state('publish.refund', {  //待退款页面
-      url: '/publish/refund/:id/:userId',
+      url: '/publish/refund/:id/:userId/:status',
       template: require('./refund.html'),
       controller: refundController,
       permission: 'refund'
     })
-    .state('publish.card', {  //待退款页面
+    .state('publish.card', {  //服务商名片页面
       url: '/publish/card/:id',
       template: require('./card.html'),
       controller: cardController,

@@ -5,6 +5,8 @@ class refundController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
         console.log($stateParams.userId);
+        console.log($stateParams.status);
+        $scope.status=$stateParams.status;
         $scope.reader = function () {
             var promise = $http({
                 method: 'GET',

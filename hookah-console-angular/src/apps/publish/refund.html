@@ -1,7 +1,10 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="console-title console-title-border clearfix">
-            <div class="pull-left"><h5>需求列表->退款详情</h5></div>
+            <div class="pull-left"><h5>需求列表->
+               <span data-ng-show="status==16">退款详情</span>
+               <span data-ng-show="status==11">付款详情</span>
+            </h5></div>
         </div>
         <div class="row margin-top form-inline">
             <div class="col-md-12" style="margin-bottom: 10px;margin-top: 10px">
