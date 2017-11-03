@@ -34,9 +34,10 @@
         SELECT * FROM zb_recommend a
         LEFT JOIN zb_requirement b
         ON a.requirement_id = b.id
-        WHERE b.`status` IN (5) AND
-        a.order_num IS NOT NULL AND
-        b.id NOT IN
+        WHERE b.`status` IN (5)
+        AND a.order_num NOT IN (0)
+        AND a.`status` = 1
+        AND b.id NOT IN
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
         </foreach>
@@ -47,8 +48,9 @@
     SELECT * FROM zb_recommend a
     LEFT JOIN zb_requirement b
     ON a.requirement_id = b.id
-    WHERE b.`status` IN (5) AND
-    a.order_num IS NOT NULL
+    WHERE b.`status` IN (5)
+    AND a.order_num NOT IN (0)
+    AND a.`status` = 1
     ORDER BY a.order_num
   </select>
 </mapper>

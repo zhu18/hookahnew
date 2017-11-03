@@ -37,9 +37,6 @@ import java.util.*;
 public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long> implements ZbRequireService {
 
     @Resource
-    private ZbRequirementMapper zbRequirementMapper;
-
-    @Resource
     ZbTypeMapper zbTypeMapper;
 
     @Resource
@@ -70,10 +67,12 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
     ZbRecommendService zbRecommendService;
 
     @Resource
+    private ZbRequirementMapper zbRequirementMapper;
+
+    @Resource
     public void setDao(ZbRequirementMapper zbRequirementMapper) {
         super.setDao(zbRequirementMapper);
     }
-
 
     @Override
     public int insertRecord(ZbRequirement zbRequirement) {
@@ -544,7 +543,6 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
             List<ZbRecommendVo> list = zbRequirementMapper.
                     getTaskManagement(order, sort, userName, title, requireSn);
-
 
             for(ZbRecommendVo zb : list){
                 if (zb != null) {

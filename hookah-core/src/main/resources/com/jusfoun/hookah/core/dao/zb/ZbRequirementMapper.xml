@@ -164,6 +164,7 @@
         LEFT JOIN zb_recommend zm ON  zm.requirement_id = zr.id
         WHERE 1 = 1
         AND zr.`status` = 5
+        AND zm.`status` = 1
         <if test="requireSn != null and requireSn != ''">
             and zr.require_sn like '%${requireSn}%'
         </if>
