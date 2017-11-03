@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
+import com.jusfoun.hookah.core.domain.zb.vo.ZbRecommendVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
@@ -225,9 +226,11 @@ public class RequireController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/api/require/taskManagement", method = RequestMethod.GET)
-    public ReturnData<ZbRequirement> getTaskManagement(String currentPage, String pageSize,String userName, String title, String requireSn) {
+    public ReturnData<ZbRecommendVo> getTaskManagement(String sort, String currentPage, String pageSize, String userName, String title, String requireSn) {
         try {
-            return zbRequireService.getTaskManagement(currentPage, pageSize, userName, title, requireSn);
+            String order = "apply_deadline";
+            sort = "desc";
+            return zbRequireService.getTaskManagement(order, sort, currentPage, pageSize, userName, title, requireSn);
         } catch (Exception e) {
             logger.error("getTaskManagement", e);
             return ReturnData.error("系统错误：" + e.getMessage());

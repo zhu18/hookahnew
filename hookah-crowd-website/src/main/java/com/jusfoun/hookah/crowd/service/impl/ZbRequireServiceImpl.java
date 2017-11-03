@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.dao.zb.ZbTypeMapper;
 import com.jusfoun.hookah.core.domain.zb.*;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
+import com.jusfoun.hookah.core.domain.zb.vo.ZbRecommendVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -141,6 +142,16 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                     if (zbRequirement1.getApplyDeadline().getTime() <= new Date().getTime()) {
                         zbRequirement1.setStatus(ZbContants.Zb_Require_Status.SELECTING.getCode().shortValue());
                         zbRequirementMapper.updateByPrimaryKeySelective(zbRequirement1);
+                        //报名结束，变更推荐信息为无效
+                        if(zbRequirement1.getStatus().equals(ZbContants.Zb_Require_Status.SELECTING.code.shortValue())){
+                            List<Condition> filters = new ArrayList();
+                            filters.add(Condition.eq("requirementId", zbRequirement1.getId()));
+                            ZbRecommend zbRecommend = zbRecommendService.selectOne(filters);
+                            if(zbRecommend != null){
+                                zbRecommend.setStatus(0);
+                                zbRecommendService.updateById(zbRecommend);
+                            }
+                        }
                     }
                 }
             }
@@ -252,6 +263,14 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             zbRequirement.setUpdateTime(new Date());
             super.updateByIdSelective(zbRequirement);
+            //报名中时插入推荐信息
+            if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.SINGING.code.shortValue())){
+                ZbRecommend zbRecommend = new ZbRecommend();
+                zbRecommend.setAddTime(new Date());
+                zbRecommend.setRequirementId(zbRequirement.getId());
+                zbRecommendService.insert(zbRecommend);
+            }
+
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue())) {
                 //添加资格评选时间
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.SELECTTIME, DateUtil.getSimpleDate(zbRequirement.getUpdateTime()));
@@ -505,9 +524,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
     //任务管理
     @Override
-    public ReturnData<ZbRequirement> getTaskManagement(String currentPage, String pageSize, String userName, String title, String requireSn){
-        Pagination<ZbRequirement> pagination = new Pagination<>();
-        PageInfo<ZbRequirement> pageInfo = new PageInfo<>();
+    public ReturnData<ZbRecommendVo> getTaskManagement(String order, String sort, String currentPage, String pageSize, String userName, String title, String requireSn){
+        Pagination<ZbRecommendVo> pagination = new Pagination<>();
+        PageInfo<ZbRecommendVo> pageInfo = new PageInfo<>();
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
@@ -523,19 +542,21 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
 
             PageHelper.startPage(pageNumberNew, pageSizeNew);
 
-            List<ZbRequirement> list = zbRequirementMapper.
-                    getTaskManagement(userName, title, requireSn);
+            List<ZbRecommendVo> list = zbRequirementMapper.
+                    getTaskManagement(order, sort, userName, title, requireSn);
 
-            for(ZbRequirement zb : list){
+
+            for(ZbRecommendVo zb : list){
                 if (zb != null) {
                     if (zb.getApplyDeadline() != null) {
                         String time = DateUtil.timeCountDown(zb.getApplyDeadline());
                         zb.setApplyLastTime(time != null ? time : "");
+                        zb.setDayTime(time.substring(0,time.indexOf("天")));
                     }
                 }
             }
 
-            pageInfo = new PageInfo<ZbRequirement>(list);
+            pageInfo = new PageInfo<ZbRecommendVo>(list);
             pagination.setTotalItems(pageInfo.getTotal());
             pagination.setPageSize(pageSizeNew);
             pagination.setCurrentPage(pageNumberNew);
