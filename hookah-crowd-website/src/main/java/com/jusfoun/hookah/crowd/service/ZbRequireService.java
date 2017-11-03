@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.domain.zb.ZbRequirement;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementApply;
 import com.jusfoun.hookah.core.domain.zb.ZbRequirementPageHelper;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
+import com.jusfoun.hookah.core.domain.zb.vo.ZbRecommendVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -39,7 +40,7 @@ public interface ZbRequireService extends GenericService<ZbRequirement, Long> {
     ReturnData<MgZbProvider> provideCheck(String userId, Integer status);
 
     //任务管理
-    ReturnData<ZbRequirement> getTaskManagement(String currentPage, String pageSize, String userName, String title, String requireSn);
+    ReturnData<ZbRecommendVo> getTaskManagement(String order, String sort, String currentPage, String pageSize, String userName, String title, String requireSn);
 
     ReturnData addTaskNumber(int orderNum, Long requirementId);
 

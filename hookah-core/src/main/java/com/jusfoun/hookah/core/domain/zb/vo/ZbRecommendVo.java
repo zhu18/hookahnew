@@ -1,9 +1,11 @@
 package com.jusfoun.hookah.core.domain.zb.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jusfoun.hookah.core.domain.zb.ZbRecommend;
 
 import javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 
 public class ZbRecommendVo{
 
@@ -17,6 +19,12 @@ public class ZbRecommendVo{
 
     private String description;
 
+    private String requireSn;
+
+    private String userName;
+
+    private List<ZbRecommend> zbRecommendList;
+
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
     private Date deliveryDeadline;
 
@@ -29,7 +37,9 @@ public class ZbRecommendVo{
 
     //报名数量
     @Transient
-    private int count;
+    private Integer count;
+
+    private String dayTime;
 
     public Integer getRequirementId() {
         return requirementId;
@@ -87,11 +97,11 @@ public class ZbRecommendVo{
         this.applyLastTime = applyLastTime;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 
@@ -101,5 +111,37 @@ public class ZbRecommendVo{
 
     public void setApplyDeadline(Date applyDeadline) {
         this.applyDeadline = applyDeadline;
+    }
+
+    public String getRequireSn() {
+        return requireSn;
+    }
+
+    public void setRequireSn(String requireSn) {
+        this.requireSn = requireSn;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public List<ZbRecommend> getZbRecommendList() {
+        return zbRecommendList;
+    }
+
+    public void setZbRecommendList(List<ZbRecommend> zbRecommendList) {
+        this.zbRecommendList = zbRecommendList;
+    }
+
+    public String getDayTime() {
+        return dayTime;
+    }
+
+    public void setDayTime(String dayTime) {
+        this.dayTime = dayTime;
     }
 }
