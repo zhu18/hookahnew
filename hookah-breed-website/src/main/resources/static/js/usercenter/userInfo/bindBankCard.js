@@ -153,9 +153,7 @@ $(function () {
                         $.alert(data.data);
                         settime(that);
                     }else{
-                        $.alert({
-                            content:'获取验证码失败，请重新获取！'
-                        })
+                        $.alert('获取验证码失败，请重新获取！')
                     }
                 },
                 error: function() {
@@ -164,9 +162,7 @@ $(function () {
             });
 
         }else {
-            $.alert({
-                content:'请先输入正确的手机号！'
-            })
+            $.alert('请先输入正确的手机号！')
         }
     });
     // 提交事件
@@ -185,17 +181,12 @@ $(function () {
                 type:'get',
                 success:function (data) {
                     if (data.code=="1"){
-                        $.alert({
-                            content:'绑定银行账户成功！',
-                            buttons:true,
-                            callback:function () {
+                        $.alert('绑定银行账户成功！', true,function () {
                                 window.location.href= host.website+'/usercenter/fundmanage';
-                            }
+
                         })
                     }else {
-                        $.alert({
-                            content:'绑定银行账户失败！'
-                        })
+                        $.alert('绑定银行账户失败！')
                     }
                 }
             });

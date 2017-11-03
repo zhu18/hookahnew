@@ -37,22 +37,17 @@ function loadPageData(data) {
                 contentType: 'application/json',
                 success: function (data) {
                     if (data.code == 1) {
-                        $.alert({
-                            content:'删除成功',
-                            button:true,
-                            callback:function () {
+                        $.alert('删除成功', true, function () {
                                 location.reload();
                             }
-                        });
+                        );
                     } else {
                         console.log("删除失败！");
                     }
                 }
             })
         } else {
-            $.alert({
-                content:'至少选择一条消息'
-            })
+            $.alert('至少选择一条消息')
         }
     });
     // 标记
@@ -70,13 +65,10 @@ function loadPageData(data) {
             data: JSON.stringify(list),
             success: function (data) {
                 if (data.code == 1) {
-                    $.alert({
-                        content:'标记成功',
-                        button:true,
-                        callback:function () {
+                    $.alert('标记成功',true, function () {
                             location.reload();
                         }
-                    });
+                    );
                 } else {
                     console.log("标记失败！");
                 }
@@ -122,19 +114,10 @@ function getInfo(that, id) {
 				html += '<h5>&nbsp;&nbsp;发送人：<span>' + sendUser + '</span></h5>';
 				html += '</div></div>';
 				num();
-				$.confirm({
-				    header:'消息',
-				    content:html,
-				    button:[{close:'确定'}],
-				    callback:function(){
+				$.confirm(html, [{close:'关闭'}], function(){
 				        this.hide();
-				    },
-				    settings:{width:"500"}
-				});
-//				$.confirm(html, [{close: '确定'}], function () {
-//                        this.hide();
-//                    }, {width: "500"},"消息"
-//                );
+				    }, {width:"500"}
+            );
 
 				$(that).css('color', '#666');
 			} else {

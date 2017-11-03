@@ -48,6 +48,7 @@ function getPayPwdStatus() {
 							$('#J_authSubmit').attr('disabled','disabled').css({'background':'#ccc','cursor':'no-drop'});
 						}
 					})
+
 				} else {
 
 				}

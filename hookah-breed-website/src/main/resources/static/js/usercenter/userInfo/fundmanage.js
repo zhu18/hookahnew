@@ -55,9 +55,7 @@ function render() {
                                         if(data.data.bindFlag=="0"){
                                             window.location.href='/withdrawRecord/getUserInfo'
                                         }else {
-                                            $.alert({
-                                                content:"请先绑定银行账户！"
-                                            })
+                                            $.alert("请先绑定银行账户！")
                                         }
                                     }
                                 });
@@ -107,9 +105,7 @@ function render() {
                                     nowTime:data.getHours()+':'+data.getMinutes(),
                                     info:"请在指定的时间段充值！",
                                     callback:function () {
-                                        $.confirm({
-                                            content:'您确定要删除已绑定的银行账户吗',
-                                            callback:function (type) {
+                                        $.confirm('您确定要删除已绑定的银行账户吗', null,function (type) {
                                                 if(type == 'yes'){
                                                     this.hide();
                                                     $.ajax({
@@ -133,7 +129,7 @@ function render() {
                                                     this.hide();
                                                 }
                                             }
-                                        })
+                                        )
                                     }
                                 });
 
