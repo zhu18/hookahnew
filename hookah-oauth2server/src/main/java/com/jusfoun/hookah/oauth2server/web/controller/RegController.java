@@ -7,14 +7,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.WxUserRecommend;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
-import com.jusfoun.hookah.core.exception.UserRegConfirmPwdException;
-import com.jusfoun.hookah.core.exception.UserRegEmptyPwdException;
-import com.jusfoun.hookah.core.exception.UserRegExistMobileException;
-import com.jusfoun.hookah.core.exception.UserRegExistUsernameException;
-import com.jusfoun.hookah.core.exception.UserRegExpiredSmsException;
-import com.jusfoun.hookah.core.exception.UserRegInvalidCaptchaException;
-import com.jusfoun.hookah.core.exception.UserRegInvalidSmsException;
-import com.jusfoun.hookah.core.exception.UserRegSimplePwdException;
+import com.jusfoun.hookah.core.exception.*;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
@@ -171,13 +164,13 @@ public class RegController {
         user.setIsEnable((byte) 1);
         user.setHeadImg(site.get("user-default-img"));
 
-        String date = DateUtils.toDateText(new Date(), "yyMM");
-        List<Condition> filter = new ArrayList<>();
-        filter.clear();
-        long count = userService.count(filter)+1;
+//        String date = DateUtils.toDateText(new Date(), "yyMM");
+//        List<Condition> filter = new ArrayList<>();
+//        filter.clear();
+//        long count = userService.count(filter)+1;
 //        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
-        String userSn = HookahConstants.platformCode + date + String.format("%06d",count);
-        user.setUserSn(userSn);
+//        String userSn = HookahConstants.platformCode + date + String.format("%06d",count);
+        user.setUserSn(generateUserSn());
 
         User regUser = userService.insert((User) user);
         //redirectAttributes.addAttribute(regUser);
@@ -200,6 +193,18 @@ public class RegController {
         logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
 //            return "redirect:"+host.get("website")+"/login";
         return ReturnData.success("注册成功");
+    }
+
+    public String generateUserSn(){
+        String date = DateUtils.toDateText(new Date(), "yyMM");
+        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("userSn",userSn));
+        User user = userService.selectOne(filter);
+        if (user != null){
+            generateUserSn();
+        }
+        return userSn;
     }
 
 

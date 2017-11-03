@@ -99,21 +99,34 @@ public class BindWeChatController {
             user.setIsEnable((byte) 1);
             user.setHeadImg(site.get("user-default-img"));
 
-            String date = DateUtils.toDateText(new Date(), "yyMM");
-            List<Condition> filter = new ArrayList<>();
-            filter.clear();
-            long count = userService.count(filter)+1;
-//        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
-            String userSn = HookahConstants.platformCode + date + String.format("%06d",count);
-            user.setUserSn(userSn);
+//            String date = DateUtils.toDateText(new Date(), "yyMM");
+//            List<Condition> filter = new ArrayList<>();
+//            filter.clear();
+//            long count = userService.count(filter)+1;
+//            String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
+//            String userSn = HookahConstants.platformCode + date + String.format("%06d",count);
+            user.setUserSn(generateUserSn());
 
             User regUser = userService.insert((User) user);
-            //TODO...绑定微信信息
+            //绑定微信信息
+//            wxUserInfoService.insert(wxUserInfo);
             payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
             logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
         }
         //绑定完成 登录
         return "forward:/login?userName="+user.getUserName()+"&password="+user.getPassword();
+    }
+
+    public String generateUserSn(){
+        String date = DateUtils.toDateText(new Date(), "yyMM");
+        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("userSn",userSn));
+        User user = userService.selectOne(filter);
+        if (user != null){
+            generateUserSn();
+        }
+        return userSn;
     }
 
 }
