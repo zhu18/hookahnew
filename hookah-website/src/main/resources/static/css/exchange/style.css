@@ -1929,7 +1929,7 @@ dl {
 /**********第3个货架结束**********/
 /***********/
 .storageList .storageBox .storageImg .describle {
-	transition-property: bottom 2s;
+	transition: bottom 2s;
 	-moz-transition: bottom 2s;
 	-webkit-transition: bottom 2s;
 	-o-transition: bottom 2s;
@@ -2108,7 +2108,7 @@ dl {
 	background: #e1e1e1;
 	margin:12px auto 0;
 	border-radius:50%;
-	transition-property: all 2s;
+	transition: all 2s;
 	-moz-transition: all 2s;
 	-webkit-transition: all 2s;
 	-o-transition: all 2s;
@@ -2119,10 +2119,13 @@ dl {
 	font-size: 14px;
 	text-align: center;
 	color:#646464;
-	transition-property: all 2s;
+	transition: all 2s;
 	-moz-transition: all 2s;
 	-webkit-transition: all 2s;
 	-o-transition: all 2s;
+}
+.activity_item .activityTop span{
+	font-size: 12px;
 }
 .activity_item .activityTop p i{
 	color:#cc3333;
@@ -2139,7 +2142,7 @@ dl {
 	font-size: 14px;
 	margin:47px auto 0;
 	border-radius:20px;
-	transition-property: all 2s;
+	transition: all 2s;
 	-moz-transition: all 2s;
 	-webkit-transition: all 2s;
 	-o-transition: all 2s;
