@@ -429,6 +429,7 @@ public class PayServiceImpl implements PayService {
                 zbRequirement.setStatus(ZbContants.Zb_Require_Status.WAIT_FB.getCode().shortValue());
             }else {
                 zbRequirement.setStatus(ZbContants.Zb_Require_Status.WORKINGING.getCode().shortValue());
+                zbRequirement.setTrusteePercent(100);
             }
             zbRequirement.setUpdateTime(new Date());
             zbRequireService.updateByIdSelective(zbRequirement);
