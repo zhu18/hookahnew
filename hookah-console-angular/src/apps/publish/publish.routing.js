@@ -53,7 +53,7 @@ export default function publishRouting($stateProvider, $urlRouterProvider) {
       permission: 'card'
     })
     .state('publish.recommend', {  //需求推荐页面
-      url: '/publish/recommend/:id',
+      url: '/publish/recommend',
       template: require('./recommend.html'),
       controller: recommendController,
       permission: 'recommend'
