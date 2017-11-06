@@ -20,11 +20,11 @@ class cardController {
                 if (res.data.code == '1') {
                     var info= res.data.data;
                     if(info){
-
                         $scope.authType  = info.authType;
                         $scope.upname= info.upname;
                         $scope.ucity= info.ucity;
                         $scope.specialSkills= info.specialSkills;
+                        $scope.educationsExpList= info.educationsExpList?info.educationsExpList[0]:"";
                         $scope.providerDesc= info.providerDesc;
                     }
                     var level=res.data.data2?res.data.data2:null;
