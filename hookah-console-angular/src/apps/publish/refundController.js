@@ -26,6 +26,12 @@ class refundController {
                     $scope.money=res.data.data2;
 
                 } else {
+                    var modalInstance =$rootScope.openConfirmDialogModal(res.data.message);
+                    modalInstance.result.then(function () {
+                        $state.go('publish.list');
+                    }, function () {
+
+                    });
                 }
                 $rootScope.loadingState = false;
                 growl.addSuccessMessage("订单数据加载完毕。。。");
@@ -50,15 +56,15 @@ class refundController {
                 console.log('数据在这里');
                 console.log(res);
                 if (res.data.code == '1') {
-                    var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交成功！");
+                    var modalInstance =$rootScope.openConfirmDialogModal("保存成功！");
                     modalInstance.result.then(function () {
                         $state.go('publish.list');
                     }, function () {
-                        $state.go('publish.list');
+
                     });
 
                 } else {
-                    var modalInstance =$rootScope.openConfirmDialogModal("审核结果提交失败！");
+                    var modalInstance =$rootScope.openConfirmDialogModal("保存失败！");
                     modalInstance.result.then(function () {
 
                     }, function () {

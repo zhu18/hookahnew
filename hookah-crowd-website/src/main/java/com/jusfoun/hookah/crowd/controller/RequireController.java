@@ -229,7 +229,6 @@ public class RequireController extends BaseController {
     public ReturnData<ZbRecommendVo> getTaskManagement(String sort, String currentPage, String pageSize, String userName, String title, String requireSn) {
         try {
             String order = "apply_deadline";
-            sort = "desc";
             return zbRequireService.getTaskManagement(order, sort, currentPage, pageSize, userName, title, requireSn);
         } catch (Exception e) {
             logger.error("getTaskManagement", e);

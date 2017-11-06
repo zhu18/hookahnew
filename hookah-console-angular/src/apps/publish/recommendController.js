@@ -7,8 +7,14 @@
 class recommendController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
-        $rootScope.pagination.currentPage="1"
-        $scope.search = function (order) { //渲染页面数据
+        $rootScope.pagination.currentPage="1";
+        $scope.sort='desc';
+        $scope.search = function (sort) { //渲染页面数据
+            if(sort=='desc'){
+                $scope.sort='asc';
+            }else if(sort=='asc'){
+                $scope.sort='desc';
+            }
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.crowdServer + "/api/require/taskManagement",
@@ -18,7 +24,7 @@ class recommendController {
                     pageSize: $rootScope.pagination.pageSize,
                     userName:$scope.userName ,
                     requireSn:$scope.requireSn,
-                    sort:order?order:"desc"
+                    sort: $scope.sort
                 }
             });
             promise.then(function (res, status, config, headers) {

@@ -40,7 +40,8 @@
                                 <th>需求编号</th>
                                 <th>需求标题</th>
                                 <th>需求方</th>
-                                <th style="cursor: pointer" data-ng-click="search()">报名剩余有效期 <i class="glyphicon glyphicon-arrow-down"></i></th>
+                                <th style="cursor: pointer" data-ng-show="sort=='desc'" data-ng-click="search('desc')">报名剩余有效期 <i class="glyphicon glyphicon-arrow-down"></i></th>
+                                <th style="cursor: pointer" data-ng-show="sort=='asc'" data-ng-click="search('asc')">报名剩余有效期 <i class="glyphicon glyphicon-arrow-up"></i></th>
                                 <th>排序优先</th>
                             </tr>
                             </thead>
@@ -51,8 +52,8 @@
                                 <td data-ng-bind="item.title"></td>
                                 <td data-ng-bind="item.requiremetName"></td>
                                 <td >
-                                    <span data-ng-show="{{(item.applyLastTime | limitTo :2) > '8天'}}" data-ng-bind="item.applyLastTime"></span>
-                                    <span data-ng-show="{{(item.applyLastTime | limitTo :2) <= '8天'}}" style="color:red " data-ng-bind="item.applyLastTime"></span>
+                                    <span data-ng-show="{{(item.dayTime > 8)}}" data-ng-bind="item.applyLastTime"></span>
+                                    <span data-ng-show="{{(item.dayTime <= 8)}}" style="color:red " data-ng-bind="item.applyLastTime"></span>
                                 </td>
                                 <td>
                                     <input type="text" data-ng-model="item.orderNum" data-ng-blur="prior(item.id,item.orderNum)">
