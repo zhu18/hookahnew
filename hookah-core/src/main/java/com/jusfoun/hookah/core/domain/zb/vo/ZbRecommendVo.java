@@ -41,6 +41,9 @@ public class ZbRecommendVo{
 
     private String dayTime;
 
+    //需求方名称
+    private String requiremetName;
+
     public Integer getRequirementId() {
         return requirementId;
     }
@@ -143,5 +146,13 @@ public class ZbRecommendVo{
 
     public void setDayTime(String dayTime) {
         this.dayTime = dayTime;
+    }
+
+    public String getRequiremetName() {
+        return requiremetName;
+    }
+
+    public void setRequiremetName(String requiremetName) {
+        this.requiremetName = requiremetName;
     }
 }
