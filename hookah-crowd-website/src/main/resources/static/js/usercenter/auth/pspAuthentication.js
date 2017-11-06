@@ -917,9 +917,24 @@ function reader() {
                 if( educationsExpList && educationsExpList.length>0){ //教育
                     $('.content-education-noData').hide();
                     var html='';
+                    var edu='';
                     for (var i=0,len=educationsExpList.length;i<len;i++){
                         var item=educationsExpList[i];
                         console.log(item);
+                        switch(item.edu){
+                            case('1'):
+                                edu = '大专';
+                                break;
+                            case('2'):
+                                edu = '本科';
+                                break;
+                            case('3'):
+                                edu = '硕士';
+                                break;
+                            case('4'):
+                                edu = '博士';
+                                break;
+                        }
                         html+='<dl> '
                         html+='<dt class="clearfix"> '
                         html+='<div class="grid-left">'
@@ -930,7 +945,7 @@ function reader() {
                         html+='<a href="javascript:void (0)" class="educationDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> '
                         html+='</dt><dd>'
                         html+='<span class="major">专业名称：'+item.major+'</span>'
-                        html+='<span class="edu">学历：'+item.edu+'</span>'
+                        html+='<span class="edu">学历：'+edu+'</span>'
                         html+='<span class="orExam">是否统招：'+(item.orExam=="1"?"是":"否")+'</span> '
                         if(item.certPathsList && item.certPathsList.length>0) {
                             html += '<span class="certPath"><i class="fa fa-download" aria-hidden="true"></i><a href="'+item.certPathsList[0].certPath+'">材料证明</a> </span> '
