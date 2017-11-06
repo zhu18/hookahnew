@@ -258,6 +258,6 @@ payPassword.on('keyup', "input[name='paymentPassword']", function (e) {
 
 $(function () {
     $(".channel-label .money-balance").html(splitK($(".channel-label .money-balance").html()))
-
+  $('.saved-card-list li').eq(0).children('.row-basic').children('.channel-label').children('.channel-input').prop("checked",true);
 })
 
