@@ -75,6 +75,19 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                 return returnData;
             }else {
 
+                // 查询银行开卡信息
+                List<Condition> filtersBankCard = new ArrayList<>();
+                filtersBankCard.add(Condition.eq("userId", userId));
+                filtersBankCard.add(Condition.eq("bindFlag", 0));
+                PayBankCard payBankCard = payBankCardService.selectOne(filtersBankCard);
+                if(payBankCard == null){
+                    returnData.setCode(ExceptionConst.Error);
+                    returnData.setMessage("该用户未绑定银行卡^_^");
+                    return returnData;
+                }
+
+                returnData.setData(payBankCard);
+
                 if(zbRequirement.getStatus().equals(Short.parseShort("11"))){
 
                     // 查询服务商银行卡信息  去查询报名表userID信息
@@ -88,36 +101,9 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                         return returnData;
                     }
 
-                    // 查询银行开卡信息
-                    List<Condition> filters3 = new ArrayList<>();
-                    filters3.add(Condition.eq("userId", zbRequireApply.getUserId()));
-                    filters3.add(Condition.eq("bindFlag", 0));
-                    PayBankCard payBankCard = payBankCardService.selectOne(filters3);
-                    if(payBankCard == null){
-                        returnData.setCode(ExceptionConst.Error);
-                        returnData.setMessage("该用户未绑定银行卡^_^");
-                        return returnData;
-                    }
-
-                    returnData.setData(payBankCard);
-
-//                    refundAmount = zbRequirement.getRewardMoney().doubleValue() / 100;
-                    refundAmount = refundAmount.add(new BigDecimal(zbRequirement.getRewardMoney().doubleValue() / 100));
+                    refundAmount = refundAmount.add(new BigDecimal(String.valueOf(zbRequirement.getRewardMoney().doubleValue() / 100)));
 
                 }else {
-
-                    // 查询银行开卡信息
-                    List<Condition> filters = new ArrayList<>();
-                    filters.add(Condition.eq("userId", userId));
-                    filters.add(Condition.eq("bindFlag", 0));
-                    PayBankCard payBankCard = payBankCardService.selectOne(filters);
-                    if(payBankCard == null){
-                        returnData.setCode(ExceptionConst.Error);
-                        returnData.setMessage("该用户未绑定银行卡^_^");
-                        return returnData;
-                    }
-
-                    returnData.setData(payBankCard);
 
                     //查询退款金额信息
                     List<Condition> filters2 = new ArrayList<>();
@@ -132,12 +118,8 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                     }
 
                     for(ZbTrusteeRecord zbTrusteeRecord : list){
-//                        refundAmount += zbTrusteeRecord.getActualMoney().doubleValue();
-                        refundAmount = refundAmount.add(new BigDecimal(zbTrusteeRecord.getActualMoney().doubleValue() / 10000));
+                        refundAmount = refundAmount.add(new BigDecimal(String.valueOf(zbTrusteeRecord.getActualMoney().doubleValue() / 10000)));
                     }
-
-//                    refundAmount = (refundAmount == 0) ? refundAmount : (refundAmount / 10000);
-
                 }
             }
 
@@ -259,6 +241,13 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
 
         Double d1 = 0.1;
         Double d2 = 0.02;
+
+
+        System.out.println(d2.toString());
+
+
+        System.out.println(String.valueOf(d2));
+
         System.out.println(d1 + d2);
     }
 

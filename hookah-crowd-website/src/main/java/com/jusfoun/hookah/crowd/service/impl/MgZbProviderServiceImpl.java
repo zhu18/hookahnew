@@ -573,6 +573,13 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                 returnData.setCode(ExceptionConst.Failed);
             }
 
+            if(mgZbProvider.getEducationsExpList() != null && mgZbProvider.getEducationsExpList().size() > 1){
+                mgZbProvider.getEducationsExpList().
+                        sort((x, y) -> {
+                            return Integer.parseInt(y.getEdu()) - Integer.parseInt(x.getEdu());
+                        });
+            }
+
             returnData.setMessage("查询成功");
             returnData.setData(mgZbProvider);
             returnData.setData2(zbCommentService.getLevelCountByUserId(userId));
