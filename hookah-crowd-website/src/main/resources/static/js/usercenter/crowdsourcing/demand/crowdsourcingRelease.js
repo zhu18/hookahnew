@@ -3,8 +3,9 @@
  */
 
 
-let crowdSourcingId = GetUrlValue('id');
+var crowdSourcingId = GetUrlValue('id');
 noRealName();//是否实名认证，未实名认证跳转
+$(".crowdsourcing-progress-box li:gt(0) .step").addClass('active');
 
 // 获取需求类型
 function getRequirementType() {
@@ -14,10 +15,10 @@ function getRequirementType() {
     dataType: 'json',
     contentType: 'application/json',
     success: function (data) {
-      let list = data.data;
+      var list = data.data;
       console.log(data);
-      let tempHtml = '';
-      for (let i = 0; i < list.length; i++) {
+      var tempHtml = '';
+      for (var i = 0; i < list.length; i++) {
         tempHtml += '<span class="type-span" value="' + list[i].id + '">' + list[i].typeName + '</span>'
       }
       $('.requirement-type').html(tempHtml);
@@ -83,15 +84,15 @@ function renderPage(data) {
   $('#J_date').val(data.zbRequirement.deliveryDeadline);
   $('#J_money').val(data.zbRequirement.rewardMoney / 100);
   $('#J_checkRemark').val(data.zbRequirement.checkRemark);
-  let spanList = $('.requirement-type span');
-  for (let i = 0; i < spanList.length; i++) {
+  var spanList = $('.requirement-type span');
+  for (var i = 0; i < spanList.length; i++) {
     if (spanList.eq(i).attr('value') == data.zbRequirement.type) {
       spanList.eq(i).addClass('active');
     }
   }
-  let tempHtml = '';
+  var tempHtml = '';
 
-  for (let c = 0; c < data.zbRequirementFiles.length; c++) {
+  for (var c = 0; c < data.zbRequirementFiles.length; c++) {
 
     var className = fileTypeClassName(data.zbRequirementFiles[c].fileName);
     tempHtml += '\
@@ -282,17 +283,17 @@ function fileTypeClassName(fileName) { //返回class
 }
 
 $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示工具栏
-  let annexList = [];//附件列表
-  let list = $('dl.load-file');
-  for (let i = 0; i < list.length; i++) {
-    let tempObj = {
+  var annexList = [];//附件列表
+  var list = $('dl.load-file');
+  for (var i = 0; i < list.length; i++) {
+    var tempObj = {
       fileName: list.eq(i).attr('fileName'),
       filePath: list.eq(i).attr('filePath')
     };
     annexList.push(tempObj);
   }
 
-  let insertRequirementsData = {
+  var insertRequirementsData = {
     "zbRequirement": {
       "id": crowdSourcingId,//id
       "title": $('#J_title').val(),//标题
@@ -324,10 +325,10 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
           $('.j_description').html(insertRequirementsData.zbRequirement.description);
           $('.j_date').html(insertRequirementsData.zbRequirement.deliveryDeadline);
           $('.j_money').html(insertRequirementsData.rewardMoney);
-          let temTagHtml = '';
-          let temTagArr = insertRequirementsData.zbRequirement.tag.split(',');
+          var temTagHtml = '';
+          var temTagArr = insertRequirementsData.zbRequirement.tag.split(',');
           if (temTagArr[0]) {
-            for (let t = 0; t < temTagArr.length; t++) {
+            for (var t = 0; t < temTagArr.length; t++) {
               temTagHtml += '<i class="type-span">' + temTagArr[t] + '</i>'
             }
           }
@@ -335,7 +336,7 @@ $(document).on('click', '#J_nextPage', function () { //鼠标离开描述显示�
 
           $('.j_checkRemark').html(insertRequirementsData.zbRequirement.checkRemark);
 
-          let tempTypeHtml = '';
+          var tempTypeHtml = '';
           switch (Number(insertRequirementsData.zbRequirement.type)) {
             case 1 : {
               $('.requirement-type-active span').html('数据采集');
