@@ -93,7 +93,7 @@ public class MgZbProvider extends GenericModel {
         private String major;       //专业名称
         private String startTime;     //就学开始时间
         private String endTime;       //结束时间
-        private String edu;         //学历
+        private Integer edu;         //学历
         private Integer orExam;     //是否统招
         private List<CertPaths> certPathsList;//证明材料
 
@@ -145,11 +145,11 @@ public class MgZbProvider extends GenericModel {
             this.endTime = endTime;
         }
 
-        public String getEdu() {
+        public Integer getEdu() {
             return edu;
         }
 
-        public void setEdu(String edu) {
+        public void setEdu(Integer edu) {
             this.edu = edu;
         }
 

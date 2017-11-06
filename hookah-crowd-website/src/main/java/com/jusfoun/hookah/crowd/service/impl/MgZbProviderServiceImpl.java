@@ -576,7 +576,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
             if(mgZbProvider.getEducationsExpList() != null && mgZbProvider.getEducationsExpList().size() > 1){
                 mgZbProvider.getEducationsExpList().
                         sort((x, y) -> {
-                            return Integer.parseInt(y.getEdu()) - Integer.parseInt(x.getEdu());
+                            return y.getEdu() - x.getEdu();
                         });
             }
 
