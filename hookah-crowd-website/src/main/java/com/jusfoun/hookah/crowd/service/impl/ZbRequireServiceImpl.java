@@ -148,6 +148,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                             ZbRecommend zbRecommend = zbRecommendService.selectOne(filters);
                             if(zbRecommend != null){
                                 zbRecommend.setStatus(0);
+                                zbRecommend.setOrderNum(0);
                                 zbRecommendService.updateByCondition(zbRecommend, filters);
                             }
                         }
@@ -587,16 +588,19 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             return ReturnData.error("需求编号最小为0，最大为10，请重新输入！！！");
         }
 
+        if(requirementId == null){
+            return ReturnData.error("该推荐需求信息不存在！！！");
+        }
+
         //推荐信息
         filters.clear();
         filters.add(Condition.eq("requirementId", requirementId));
         ZbRecommend zbRecommend = zbRecommendService.selectOne(filters);
-        if(zbRecommend == null){
-            return  ReturnData.error("该推荐需求信息不存在！！！");
+        if(zbRecommend != null){
+            //更改任务推荐表编号
+            zbRecommend.setOrderNum(orderNum);
+            zbRecommendService.updateByCondition(zbRecommend, filters);
         }
-        //更改任务推荐表编号
-        zbRecommend.setOrderNum(orderNum);
-        zbRecommendService.updateByCondition(zbRecommend, filters);
         return  ReturnData.success("更改推荐编号正确！！！");
     }
 }
