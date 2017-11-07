@@ -6,16 +6,24 @@ package com.jusfoun.hookah.core.config;
 public class WeChatConfig {
 
     /*开发者ID*/
-    public static final String appID = "wxaad146db776a22bc";
+    public static final String appID = "wx7549cb36340fd780";
 
     /*开发者密码*/
-    public static final String appSecret = "43ee266d02159ed8b54e6651ad3e0ca8";
+    public static final String appSecret = "1a94a158b0bbc3092f5a548f8634c8c2";
 
-    /*换取token链接*/
+    /*获取用户授权链接*/
+    public static final String getAuthorizationUrl =
+            "https://open.weixin.qq.com/connect/qrconnect?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+
+    /*换取AccessToken链接*/
     public static final String getAccessTokenUrl =
             "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 
-    /*获取用户授权链接*/
-    public static final String getSnsApiUserInfoUrl =
-            "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+    /*刷新AccessToken链接*/
+    public static final String refreshAccessTokenUrl =
+            "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=APPID&grant_type=refresh_token&refresh_token=REFRESH_TOKEN";
+
+    /*获取用户信息链接*/
+    public static final String getUserInfoUrl =
+            "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN ";
 }

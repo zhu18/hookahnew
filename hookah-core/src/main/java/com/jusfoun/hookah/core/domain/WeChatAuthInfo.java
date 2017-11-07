@@ -3,11 +3,11 @@ package com.jusfoun.hookah.core.domain;
 /**
  * Created by lt on 2017/10/31.
  */
-public class WeChatOAuthInfo {
+public class WeChatAuthInfo {
 
     private String access_token;
 
-    private String expires_in;
+    private Integer expires_in;
 
     private String refresh_token;
 
@@ -19,6 +19,8 @@ public class WeChatOAuthInfo {
 
     private String errmsg;
 
+    private String unionid;
+
     public String getAccess_token() {
         return access_token;
     }
@@ -27,11 +29,11 @@ public class WeChatOAuthInfo {
         this.access_token = access_token;
     }
 
-    public String getExpires_in() {
+    public Integer getExpires_in() {
         return expires_in;
     }
 
-    public void setExpires_in(String expires_in) {
+    public void setExpires_in(Integer expires_in) {
         this.expires_in = expires_in;
     }
 
@@ -73,5 +75,13 @@ public class WeChatOAuthInfo {
 
     public void setErrmsg(String errmsg) {
         this.errmsg = errmsg;
+    }
+
+    public String getUnionid() {
+        return unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
     }
 }
