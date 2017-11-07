@@ -81,7 +81,7 @@ $("#educationAdd").on('click',function () {
                      "major": $("#major").val(),
                      "startTime": $("#startDate").val() || null,
                      "endTime": $("#endDate").val() || null,
-                     "edu": $('#edu').val() || null,
+                     "edu": $('#edu').val() || "",
                      "orExam": $('#orExam').is(':checked')?"1":"0",
                      "certPathsList":[
                          {
@@ -134,7 +134,7 @@ $("#workAdd").on('click',function () {
                 "departName": $("#departName").val(),
                 "startTime": $("#startDate").val() || null,
                 "endTime": $("#endDate").val() || null,
-                "position": $('#position').val() || null,
+                "position": $('#position').val() || "",
                 "certPathsList":[
                     {
                         "certName":$('.fileTip').html(),
@@ -183,7 +183,7 @@ $("#projectAdd").on('click',function () {
                 "projectDuty": $("#projectDuty").val(),
                 "startTime": $("#startDate").val() || null,
                 "endTime": $("#endDate").val() || null,
-                "projectDesc": $('#projectDesc').val() || null
+                "projectDesc": $('#projectDesc').val() || ""
             }]
         })
         addSave({
@@ -1218,25 +1218,10 @@ function validate() {
         debug:true, //调试模式，即使验证成功也不会跳转到目标页面
         rules:{     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
             schoolName:{  //学校名称
-                required:true,  //必填。如果验证方法不需要参数，则配置为true
-                rangelength:[2,12]
+                required:true  //必填。如果验证方法不需要参数，则配置为true
             },
             major:{ //专业名称
                 required:true
-            },
-            edu:{ //学历
-                required:true
-            },
-            orExam:{//是否统招
-                required:true
-            },
-            startDate:{
-                required:true,
-
-            },
-            endDate:{
-                required:true,
-                isVerificationCode:true
             },
             applyTime:{
                 required:true,
@@ -1244,23 +1229,10 @@ function validate() {
         },
         messages:{
             schoolName:{
-                required:"*请输入学校名称",
-                rangelength:$.validator.format("*用户名长度为{0}-{1}个字符")
+                required:"*请输入学校名称"
             },
             major:{
                 required:"*请输入专业名称"
-            },
-            edu:{
-                required:"*请输入您的学历!"
-            },
-            orExam:{
-                required:"*请选择是否统招!"
-            },
-            startDate:{
-                required:"*请输入银行账户"
-            },
-            endDate:{
-                required:"*请选择银行名称"
             },
             applyTime:{
                 required:true,
