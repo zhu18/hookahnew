@@ -4,20 +4,17 @@ import com.jusfoun.hookah.core.dao.CategoryMapper;
 import com.jusfoun.hookah.core.dao.GoodsTypeMapper;
 import com.jusfoun.hookah.core.domain.Category;
 import com.jusfoun.hookah.core.domain.CategoryVo;
-import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.GoodsType;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.StrUtil;
 import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +50,7 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         return categoryMapper.selectByPrimaryKey(id);
     }
 
-
+    @Cacheable(value = "CategoryVo")
     public List<CategoryVo> getCatTree() {
         List<CategoryVo> vo = new ArrayList<>();
         List<Condition> filters = new ArrayList<>();
@@ -122,7 +119,7 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         return nodeVo;
     }
 
-    @Override
+    @CacheEvict(value="CategoryVo", beforeInvocation=true)
     public ReturnData addCat(Category category) {
         ReturnData<Category> returnData = new ReturnData<Category>();
         returnData.setCode(ExceptionConst.Success);
@@ -164,7 +161,7 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         return returnData;
     }
 
-    @Override
+    @CacheEvict(value="CategoryVo", beforeInvocation=true)
     public ReturnData editCat(Category category) {
         ReturnData<Category> returnData = new ReturnData<Category>();
         returnData.setCode(ExceptionConst.Success);
@@ -200,7 +197,7 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         return returnData;
     }
 
-    @Override
+    @CacheEvict(value="CategoryVo", beforeInvocation=true)
     public ReturnData deleteById(String cateId) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);

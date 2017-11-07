@@ -55,9 +55,13 @@ public class ExchangeController extends BaseController{
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
         try {
+
             model.addAttribute("categoryInfo", categoryService.getCatTree());
+
             model.addAttribute("goodsStorageInfo", goodsStorageService.getGoodsStorageList());
-            model.addAttribute("imagesInfo", homeImageService.getImageInfoList());
+
+            // 前端没用这个
+//            model.addAttribute("imagesInfo", homeImageService.getImageInfoList());
 //            model.addAttribute("goodsShelvesVoInfo",goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>()));
             return "exchange/index";
         } catch (Exception e) {
