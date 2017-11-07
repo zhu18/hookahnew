@@ -1240,10 +1240,6 @@ function validate() {
 
         }
     });
-// $.validator.addMethod("isMobile", function(value, element) {
-//     var mobile = regex.mobile.test(value);
-//     return this.optional(element) || (mobile);
-// }, "*请填写有效的手机号");
 }
 // 标签渲染
 function tagBax() {
