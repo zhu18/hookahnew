@@ -550,6 +550,10 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                         String time = DateUtil.timeCountDown(zb.getApplyDeadline());
                         zb.setApplyLastTime(time != null ? time : "");
                         zb.setDayTime(time.substring(0,time.indexOf("天")));
+                        List<Condition> filters = new ArrayList();
+                        filters.add(Condition.eq("requireSn", zb.getRequireSn()));
+                        ZbRequirement zbRequirement = this.selectOne(filters);
+                        zb.setRequirementId(Integer.parseInt(zbRequirement.getId().toString()));
                     }
                 }
             }
@@ -574,11 +578,13 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         filters.add(Condition.eq("orderNum", orderNum));
         boolean exists = zbRecommendService.exists(filters);
         if(exists == true){
-            return ReturnData.error("该需求编号已存在，请修改！！！");
+            if(orderNum != 0){
+                return ReturnData.error("该需求编号已存在，请重新输入！！！");
+            }
         }
 
         if(orderNum > 10 || orderNum < 0){
-            return ReturnData.error("需求编号最小为0，最大为10，请修改！！！");
+            return ReturnData.error("需求编号最小为0，最大为10，请重新输入！！！");
         }
 
         //推荐信息

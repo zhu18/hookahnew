@@ -41,7 +41,7 @@
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
         </foreach>
-        ORDER BY a.order_num
+        ORDER BY a.order_num DESC, b.apply_deadline ASC
     </select>
 
     <select id="selectRecommendTasksInfoNo" resultType="com.jusfoun.hookah.core.domain.zb.vo.ZbRecommendVo">
@@ -51,6 +51,6 @@
     WHERE b.`status` IN (5)
     AND a.order_num NOT IN (0)
     AND a.`status` = 1
-    ORDER BY a.order_num
+    ORDER BY a.order_num DESC, b.apply_deadline ASC
   </select>
 </mapper>
