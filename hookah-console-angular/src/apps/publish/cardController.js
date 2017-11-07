@@ -68,6 +68,14 @@ class cardController {
 
 
                 } else {
+
+                    var modalInstance =$rootScope.openConfirmDialogModal(res.data.message);
+                    modalInstance.result.then(function () {
+                        $state.go('publish.list');
+
+                    }, function () {
+
+                    });
                 }
                 $rootScope.loadingState = false;
                 growl.addSuccessMessage("订单数据加载完毕。。。");
