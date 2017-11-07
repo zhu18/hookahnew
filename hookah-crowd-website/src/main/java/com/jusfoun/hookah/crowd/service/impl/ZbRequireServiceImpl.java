@@ -148,7 +148,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                             ZbRecommend zbRecommend = zbRecommendService.selectOne(filters);
                             if(zbRecommend != null){
                                 zbRecommend.setStatus(0);
-                                zbRecommendService.updateById(zbRecommend);
+                                zbRecommendService.updateByCondition(zbRecommend, filters);
                             }
                         }
                     }
