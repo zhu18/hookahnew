@@ -61,6 +61,11 @@ public class MyBuyerController {
     public String myGoods() {
         return "usercenter/buyer/myGoods";
     }
+//    我的优惠券页面
+    @RequestMapping(value = "/myCoupon", method = RequestMethod.GET)
+    public String myCoupon() {
+        return "usercenter/buyer/myCoupon";
+    }
 
 //    @RequestMapping(value = "/viewDetails", method = RequestMethod.GET)
 //    public String viewDetails() {  return "usercenter/buyer/viewDetails"; }
