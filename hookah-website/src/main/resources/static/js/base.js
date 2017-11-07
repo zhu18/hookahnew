@@ -1,6 +1,11 @@
 $(document).ready(function () {
 	var pathname = window.location.pathname;
-	if (pathname.indexOf('/exchange/index') >= 0) {
+	var path = pathname.replace("/","");
+	var host = window.location.host;
+    if (path==""){
+        $('#exchange_menu').show();
+        $(".exchange-index-menu").show();
+	}else if (pathname.indexOf('/exchange/index') >= 0) {
 		$('#exchange_menu').show();
 		$(".exchange-index-menu").show();
 	} else if (pathname.indexOf('/exchange/list') >= 0) {

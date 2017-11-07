@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.rpc.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,7 @@ import javax.annotation.Resource;
 @Controller
 //@RequestMapping("/")
 public class IndexController {
-
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     ApplicationContext context;
@@ -39,10 +41,30 @@ public class IndexController {
     @Resource
     MailService mailService;
 
+    @Resource
+    CategoryService categoryService;
+
+    @Resource
+    GoodsStorageService goodsStorageService;
+
+    @Resource
+    HomeImageService homeImageService;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
         userService.setPVCountByDate();
-        return "index";
+        try {
+            model.addAttribute("categoryInfo", categoryService.getCatTree());
+            model.addAttribute("goodsStorageInfo", goodsStorageService.getGoodsStorageList());
+            model.addAttribute("imagesInfo", homeImageService.getImageInfoList());
+//            model.addAttribute("goodsShelvesVoInfo",goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>()));
+            return "exchange/index";
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            model.addAttribute("errorInfo", e);
+            return "/error/500";
+        }
     }
     @RequestMapping(value = "/height.html", method = RequestMethod.GET)
     public String iframeHeight() {
