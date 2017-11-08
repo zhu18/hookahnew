@@ -144,11 +144,13 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                         //报名结束，变更推荐信息为无效
                         if(zbRequirement1.getStatus().equals(ZbContants.Zb_Require_Status.SELECTING.code.shortValue())){
                             List<Condition> filters = new ArrayList();
+                            filters.add(Condition.eq("status", 1));
                             filters.add(Condition.eq("requirementId", zbRequirement1.getId()));
                             ZbRecommend zbRecommend = zbRecommendService.selectOne(filters);
                             if(zbRecommend != null){
                                 zbRecommend.setStatus(0);
                                 zbRecommend.setOrderNum(0);
+                                zbRecommend.setUpdateTime(new Date());
                                 zbRecommendService.updateByCondition(zbRecommend, filters);
                             }
                         }
@@ -265,10 +267,9 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             super.updateByIdSelective(zbRequirement);
             //报名中时插入推荐信息
             if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.SINGING.code.shortValue())){
-                ZbRecommend zbRecommend = new ZbRecommend();
-                zbRecommend.setAddTime(new Date());
-                zbRecommend.setRequirementId(zbRequirement.getId());
-                zbRecommendService.insert(zbRecommend);
+                if(zbRequirement.getId() != null){
+                    increaseZbRecommend(zbRequirement.getId());
+                }
             }
 
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue())) {
@@ -284,6 +285,15 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             return ReturnData.error("发布失败");
         }
         return ReturnData.success("发布成功");
+    }
+
+
+    //报名中时插入推荐信息
+    public void increaseZbRecommend(Long id){
+        ZbRecommend zbRecommend = new ZbRecommend();
+        zbRecommend.setAddTime(new Date());
+        zbRecommend.setRequirementId(id);
+        zbRecommendService.insert(zbRecommend);
     }
 
     @Override
