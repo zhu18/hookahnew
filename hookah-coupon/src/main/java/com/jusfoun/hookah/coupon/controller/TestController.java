@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.crowd.controller;
+package com.jusfoun.hookah.coupon.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

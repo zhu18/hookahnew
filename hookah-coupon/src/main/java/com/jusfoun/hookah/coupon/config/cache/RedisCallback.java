@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.crowd.config.cache;
+package com.jusfoun.hookah.coupon.config.cache;
 
 import redis.clients.jedis.JedisCluster;
 

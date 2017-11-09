@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.crowd.config.mq;
+package com.jusfoun.hookah.coupon.config.mq;
 
 /**
  * @author:jsshao

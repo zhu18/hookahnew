@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.jusfoun.hookah.crowd.config;
+package com.jusfoun.hookah.coupon.config;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;

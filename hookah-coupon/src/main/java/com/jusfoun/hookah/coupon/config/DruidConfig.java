@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.crowd.config;
+package com.jusfoun.hookah.coupon.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;

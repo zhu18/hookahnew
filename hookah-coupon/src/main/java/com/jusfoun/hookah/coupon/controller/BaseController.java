@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.crowd.controller;
+package com.jusfoun.hookah.coupon.controller;
 
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.exception.HookahException;

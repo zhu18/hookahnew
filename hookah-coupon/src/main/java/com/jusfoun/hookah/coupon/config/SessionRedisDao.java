@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.crowd.config;
+package com.jusfoun.hookah.coupon.config;
 
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import org.apache.shiro.session.Session;

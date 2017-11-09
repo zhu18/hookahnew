@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.crowd.config;
+package com.jusfoun.hookah.coupon.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.commons.lang3.StringUtils;

@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.crowd.config;
+package com.jusfoun.hookah.coupon.config;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;

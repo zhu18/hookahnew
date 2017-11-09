@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jusfoun.hookah.crowd.config.cache.serializer;
+package com.jusfoun.hookah.coupon.config.cache.serializer;
 
 /**
  * Basic interface serialization and deserialization of Objects to byte arrays (binary data). It is recommended that
