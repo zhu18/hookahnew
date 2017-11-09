@@ -129,4 +129,10 @@ public class BindWeChatController {
         return userSn;
     }
 
+    @RequestMapping("/sns/bindWeChat")
+    public String bindPhone(String openid, String state){
+
+        return "bindPhone";
+    }
+
 }
