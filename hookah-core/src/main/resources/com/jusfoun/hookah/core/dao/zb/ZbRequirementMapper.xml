@@ -172,8 +172,8 @@
             and zr.title like '%${title}%'
         </if>
         <if test="userName != null and userName != ''">
-            and requiremetName like '%${userName}%'
+            and (org.org_name like '%${userName}%' OR us.user_name like '%${userName}%')
         </if>
-        ORDER BY ${order} ${sort}
+        ORDER BY zm.order_num DESC, ${order} ${sort}
     </select>
 </mapper>

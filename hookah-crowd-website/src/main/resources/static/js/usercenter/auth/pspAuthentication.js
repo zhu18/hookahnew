@@ -65,7 +65,7 @@ $("#educationAdd").on('click',function () {
         '<td> ' +
         '<div> <label for="">就学时间</label> ' +
         '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly=""  >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" > </div> </div> </td> ' +
-        '<td> <div> <label for="edu">学历</label> <select name="edu" id="edu"  > <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> ' +
+        '<td> <div> <label for="edu">学历</label> <select name="edu" id="edu"  > <option value="1">大专</option> <option value="2">本科</option> <option value="3">硕士</option> <option value="4">博士</option> </select> </div> ' +
         '</td> </tr>' +
         ' <tr> <td> <input type="checkbox" name="orExam" value="n" id="orExam" />是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
         ' <tr> <td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="null">保存</button> </td>' +
@@ -81,7 +81,7 @@ $("#educationAdd").on('click',function () {
                      "major": $("#major").val(),
                      "startTime": $("#startDate").val() || null,
                      "endTime": $("#endDate").val() || null,
-                     "edu": $('#edu').val() || null,
+                     "edu": $('#edu').val() || "",
                      "orExam": $('#orExam').is(':checked')?"1":"0",
                      "certPathsList":[
                          {
@@ -134,7 +134,7 @@ $("#workAdd").on('click',function () {
                 "departName": $("#departName").val(),
                 "startTime": $("#startDate").val() || null,
                 "endTime": $("#endDate").val() || null,
-                "position": $('#position').val() || null,
+                "position": $('#position').val() || "",
                 "certPathsList":[
                     {
                         "certName":$('.fileTip').html(),
@@ -183,7 +183,7 @@ $("#projectAdd").on('click',function () {
                 "projectDuty": $("#projectDuty").val(),
                 "startTime": $("#startDate").val() || null,
                 "endTime": $("#endDate").val() || null,
-                "projectDesc": $('#projectDesc').val() || null
+                "projectDesc": $('#projectDesc').val() || ""
             }]
         })
         addSave({
@@ -307,14 +307,14 @@ $("#inPatentsAdd").on('click',function () {
         '<td>' +
         '<div>' +
         '<label for="patentName"><span class="color-red">*</span>发明名称</label> ' +
-        '<input type="text" id="patentName" name="patentName" placeholder="请输入软件名称" required> </div> </td>' +
+        '<input type="text" id="patentName" name="patentName" placeholder="请输入发明名称" required> </div> </td>' +
         '<td><div>' +
         '<label for="PatentNum"><span class="color-red">*</span>专利号</label> ' +
-        '<input type="text" id="PatentNum" name="PatentNum" placeholder="请输入登记号" required> </div> </td>' +
+        '<input type="text" id="PatentNum" name="PatentNum" placeholder="请输入专利号" required> </div> </td>' +
         ' </tr> <tr> ' +
         '<td> <div> ' +
         '<label for=""><span class="color-red">*</span>申请日期</label> ' +
-        '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text" placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
+        '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text" placeholder="请选择申请日期" readonly="" required></div> </div> </td> ' +
         '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
         ' <tr> <td colspan="2"> ' +
         '<label for="PatentDesc">专利概述</label> ' +
@@ -922,16 +922,16 @@ function reader() {
                         var item=educationsExpList[i];
                         console.log(item);
                         switch(item.edu){
-                            case('1'):
+                            case(1):
                                 edu = '大专';
                                 break;
-                            case('2'):
+                            case(2):
                                 edu = '本科';
                                 break;
-                            case('3'):
+                            case(3):
                                 edu = '硕士';
                                 break;
-                            case('4'):
+                            case(4):
                                 edu = '博士';
                                 break;
                         }
@@ -1218,25 +1218,10 @@ function validate() {
         debug:true, //调试模式，即使验证成功也不会跳转到目标页面
         rules:{     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
             schoolName:{  //学校名称
-                required:true,  //必填。如果验证方法不需要参数，则配置为true
-                rangelength:[2,12]
+                required:true  //必填。如果验证方法不需要参数，则配置为true
             },
             major:{ //专业名称
                 required:true
-            },
-            edu:{ //学历
-                required:true
-            },
-            orExam:{//是否统招
-                required:true
-            },
-            startDate:{
-                required:true,
-
-            },
-            endDate:{
-                required:true,
-                isVerificationCode:true
             },
             applyTime:{
                 required:true,
@@ -1244,23 +1229,10 @@ function validate() {
         },
         messages:{
             schoolName:{
-                required:"*请输入学校名称",
-                rangelength:$.validator.format("*用户名长度为{0}-{1}个字符")
+                required:"*请输入学校名称"
             },
             major:{
                 required:"*请输入专业名称"
-            },
-            edu:{
-                required:"*请输入您的学历!"
-            },
-            orExam:{
-                required:"*请选择是否统招!"
-            },
-            startDate:{
-                required:"*请输入银行账户"
-            },
-            endDate:{
-                required:"*请选择银行名称"
             },
             applyTime:{
                 required:true,
@@ -1268,10 +1240,6 @@ function validate() {
 
         }
     });
-// $.validator.addMethod("isMobile", function(value, element) {
-//     var mobile = regex.mobile.test(value);
-//     return this.optional(element) || (mobile);
-// }, "*请填写有效的手机号");
 }
 // 标签渲染
 function tagBax() {

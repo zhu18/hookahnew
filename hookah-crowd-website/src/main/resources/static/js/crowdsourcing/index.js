@@ -32,8 +32,8 @@ function recommendTasks() { //推荐任务
 function initRecommendTasksDOMFn(selector,data){ //推荐任务
   var  initRecommendTasksDOM='';
   var tempLength=null;
-  if(data.length>3){
-    tempLength=3;
+  if(data.length>4){
+    tempLength=4;
   }else{
     tempLength=data.length;
   }

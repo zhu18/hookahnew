@@ -53,19 +53,19 @@
                     <div style="padding: 20px 110px;">
                         <div data-ng-repeat="item in levels" >
                             <span uib-rating ng-model="item.commentLevel" max="5" read-only="true" aria-labelledby="default-rating"></span>
-                            <span style="display: inline-block;width: 80px;height: 10px;background-color: #e5e5e5;border-radius: 5px;position: relative"><i style="position: absolute;top: 0;background-color: red;height: 100%;border-radius: 5px;width: {{item.commentNum/total}}%" ></i></span>
+                            <span style="display: inline-block;width: 80px;height: 10px;background-color: #e5e5e5;border-radius: 5px;position: relative"><i style="position: absolute;top: 0;background-color: red;height: 100%;border-radius: 5px;width: {{(item.commentNum/total)*100}}%" ></i></span>
                             (<span data-ng-bind="item.commentNum"></span>)
                         </div>
                     </div>
                     <div style="text-align: center;margin-bottom: 10px;">
-                        <a href="javascript:void (0)">来自 <span>{{total}}</span>个客服积累评价 <span>{{total}}</span>次></a>
+                        <a href="javascript:void (0)">来自<span>{{total}}</span>个客服积累评价 <span>{{total}}</span>次></a>
                     </div>
 
                 </div>
             </div>
             <div class="col-sm-12 margin-top-10 tab-box">
                 <uib-tabset active="active">
-                    <uib-tab index="0" heading="交易记录">
+                    <uib-tab index="0" heading="交易记录" select="readerTrade()">
                         <div class="tab-info" >
                             <table class="table" style="margin-bottom: 20px" >
                                 <thead>
@@ -124,7 +124,8 @@
                             </table>
                         </div>
                     </uib-tab>
-                    <uib-tab index="1" heading="客户评价">
+
+                    <uib-tab index="1" heading="客户评价" select="readerComment()">
                         <div class="tab-info" >
                             <table class="table" style="margin-bottom: 20px">
                                 <!--<thead>-->
@@ -156,10 +157,10 @@
                                     <td colspan="3">
                                         <div class="pull-right page-box">
                                             <div class="pagination-info">
-                                                共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                                共有{{pagination.totalItems1}}条，每页显示：{{pagination.pageSize1}}条
                                             </div>
-                                            <ul uib-pagination ng-change="readerComment()" total-items="pagination.totalItems"
-                                                ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                            <ul uib-pagination ng-change="readerComment()" total-items="pagination.totalItems1"
+                                                ng-model="pagination.currentPage1" items-per-page="pagination.pageSize1"
                                                 max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
                                                 force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
                                                 last-text="末页">

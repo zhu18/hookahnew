@@ -8,7 +8,7 @@ class recommendController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
         $rootScope.pagination.currentPage="1";
-        $scope.sort='desc';
+        $scope.sort='asc';
         $scope.search = function (sort) { //渲染页面数据
             if(sort=='desc'){
                 $scope.sort='asc';

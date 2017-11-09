@@ -89,7 +89,7 @@ var htmlPart = {
 
               <div class="toBeServiceTitle">成为服务商
               <%if(user==null){%>
-                 <a href="/usercenter/index">点击这里</a>
+                 <a href="${host.crowd}/usercenter/authentication">点击这里</a>
               <%}else{%>
                 <%if(user.userType == 2){%>
                   <a href="/usercenter/pspAuthentication ">点击这里</a>

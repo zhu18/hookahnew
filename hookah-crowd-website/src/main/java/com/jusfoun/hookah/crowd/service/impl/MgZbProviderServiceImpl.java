@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Service
+@Service("mgZbProviderService")
 public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvider, String> implements MgZbProviderService {
 
     @Resource
