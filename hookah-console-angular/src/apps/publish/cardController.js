@@ -88,7 +88,7 @@ class cardController {
                 url: $rootScope.site.crowdServer + "/api/getTradeRecord",
                 params: {
                     userId: $stateParams.id,
-                    currentPage:initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
+                    currentPage:$rootScope.pagination.currentPage, //当前页码
                     pageSize: $rootScope.pagination.pageSize
                 }
             });
@@ -97,6 +97,10 @@ class cardController {
                 console.log(res);
                 if (res.data.code == '1') {
                     $scope.tradeRecord= res.data.data.list;
+                    $rootScope.pagination.currentPage= res.data.data.currentPage;
+                    $rootScope.pagination.totalItems= res.data.data.totalItems;
+                    $rootScope.pagination.pageSize= res.data.data.pageSize;
+
                     $scope.showNoneDataInfoTip = true;
                     if (res.data.data.totalPage > 0) {
                         $scope.showNoneDataInfoTip = false;
@@ -118,8 +122,8 @@ class cardController {
                 url: $rootScope.site.crowdServer + "/api/getCommentRecord",
                 params: {
                     userId: $stateParams.id,
-                    currentPage:initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
-                    pageSize: $rootScope.pagination.pageSize
+                    currentPage:$rootScope.pagination.currentPage1, //当前页码
+                    pageSize: $rootScope.pagination.pageSize1
                 }
             });
             promise.then(function (res, status, config, headers) {
@@ -127,6 +131,9 @@ class cardController {
                 console.log(res);
                 if (res.data.code == '1') {
                     $scope.commentRecord= res.data.data.list;
+                    $rootScope.pagination.currentPage1= res.data.data.currentPage;
+                    $rootScope.pagination.totalItems1= res.data.data.totalItems;
+                    $rootScope.pagination.pageSize1= res.data.data.pageSize;
                     $scope.showNoneDataInfoTip = true;
                     if (res.data.data.totalPage > 0) {
                         $scope.showNoneDataInfoTip = false;
@@ -141,9 +148,9 @@ class cardController {
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
         };
+
         $scope.readerInfo();
         $scope.readerTrade();
-        $scope.readerComment();
     }
 }
 
