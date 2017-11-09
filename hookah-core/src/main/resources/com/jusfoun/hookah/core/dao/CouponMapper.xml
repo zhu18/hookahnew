@@ -26,9 +26,11 @@
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
     <result column="activated_time" property="activatedTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="add_user" property="addUser" jdbcType="VARCHAR" />
     <result column="activated_user" property="activatedUser" jdbcType="VARCHAR" />
     <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="SMALLINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -38,6 +40,6 @@
     id, coupon_sn, coupon_type, coupon_name, apply_platform, total_count, received_count,
     used_count, face_value, limited_count, apply_channel, discount_value, expiry_start_date, 
     expiry_end_date, valid_days, apply_goods, coupon_status, add_time, activated_time, 
-    update_time, add_user, activated_user, update_user
+    update_time, user_name, add_user, activated_user, update_user, is_deleted
   </sql>
 </mapper>

@@ -94,7 +94,6 @@ public class SnsController {
         WxUserInfo wxUserInfo = wxUserInfoService.selectOne(filter);
         if (wxUserInfo == null){
             //未绑定账号 重定向到绑定手机页面
-            redisOperate.set("WeChatAccessToken:"+openid,accessToken,7200);
             return "redirect:"+myProps.getHost().get("auth")+"/sns/bindWeChat?openid"+openid+"&state="+state;
         }
         User user = userService.selectById(wxUserInfo.getUserid());
