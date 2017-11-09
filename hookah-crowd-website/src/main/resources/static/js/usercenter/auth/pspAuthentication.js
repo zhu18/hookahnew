@@ -307,14 +307,14 @@ $("#inPatentsAdd").on('click',function () {
         '<td>' +
         '<div>' +
         '<label for="patentName"><span class="color-red">*</span>发明名称</label> ' +
-        '<input type="text" id="patentName" name="patentName" placeholder="请输入软件名称" required> </div> </td>' +
+        '<input type="text" id="patentName" name="patentName" placeholder="请输入发明名称" required> </div> </td>' +
         '<td><div>' +
         '<label for="PatentNum"><span class="color-red">*</span>专利号</label> ' +
-        '<input type="text" id="PatentNum" name="PatentNum" placeholder="请输入登记号" required> </div> </td>' +
+        '<input type="text" id="PatentNum" name="PatentNum" placeholder="请输入专利号" required> </div> </td>' +
         ' </tr> <tr> ' +
         '<td> <div> ' +
         '<label for=""><span class="color-red">*</span>申请日期</label> ' +
-        '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text" placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
+        '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text" placeholder="请选择申请日期" readonly="" required></div> </div> </td> ' +
         '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
         ' <tr> <td colspan="2"> ' +
         '<label for="PatentDesc">专利概述</label> ' +
