@@ -147,10 +147,10 @@ var htmlPart = {
 						<li class="grid-left active">详情介绍</li>
 						<%if(goodsDetails.goodsType == 0){%>
 						<li class="grid-left">数据特性</li>
-						<li class="grid-left">产品优势</li>
+						<li class="grid-left">商品优势</li>
 						<li class="grid-left">售后服务</li>
 						<%}else if(goodsDetails.goodsType == 1){%>
-						<li class="grid-left">产品优势</li>
+						<li class="grid-left">商品优势</li>
 						<%if(isNotEmpty(goodsDetails.appCase)){%>
 						<li class="grid-left">应用案例</li>
 						<%}%>
@@ -158,8 +158,8 @@ var htmlPart = {
 						<li class="grid-left">API详情</li>
 						<li class="grid-left">返回参数</li>
 						<%}else if(goodsDetails.goodsType == 2){%>
-						<li class="grid-left">产品优势</li>
-						<li class="grid-left">产品特性</li>
+						<li class="grid-left">商品优势</li>
+						<li class="grid-left">商品特性</li>
 						<li class="grid-left">售后服务</li>
 						<%}else if(goodsDetails.goodsType == 6 || goodsDetails.goodsType == 7){%>
 						<li class="grid-left">核心功能</li>
@@ -205,7 +205,7 @@ var htmlPart = {
 								<td>${goodsDetails.goodsAreaFullName}</td>
 							</tr>
 							<tr>
-								<td>产品描述：</td>
+								<td>商品描述：</td>
 								<%if(isNotEmpty(goodsDetails.goodsDesc)){%>
 								<td>
 									<div class="goodsDescBox">${goodsDetails.goodsDesc}</div>

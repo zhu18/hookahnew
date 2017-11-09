@@ -25,13 +25,7 @@ public class CouponController extends BaseController {
     @ResponseBody
     public ReturnData getAllList(){
         try {
-            String userId = this.getCurrentUser().getUserId();
-            Coupon coupon = new Coupon();
-            coupon.setCouponName("ssss");
-            coupon.setCouponSn("2");
-            coupon.setAddTime(new Date());
-            coupon.setAddUser(userId);
-            Coupon coupons = couponService.insert(coupon);
+            List<Coupon> coupons = couponService.selectList();
             return ReturnData.success(coupons);
         }catch (Exception e){
             e.printStackTrace();
