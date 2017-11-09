@@ -65,7 +65,7 @@ $("#educationAdd").on('click',function () {
         '<td> ' +
         '<div> <label for="">就学时间</label> ' +
         '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly=""  >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" > </div> </div> </td> ' +
-        '<td> <div> <label for="edu">学历</label> <select name="edu" id="edu"  > <option value="大专">大专</option> <option value="本科">本科</option> <option value="硕士">硕士</option> <option value="博士">博士</option> </select> </div> ' +
+        '<td> <div> <label for="edu">学历</label> <select name="edu" id="edu"  > <option value="1">大专</option> <option value="2">本科</option> <option value="3">硕士</option> <option value="4">博士</option> </select> </div> ' +
         '</td> </tr>' +
         ' <tr> <td> <input type="checkbox" name="orExam" value="n" id="orExam" />是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
         ' <tr> <td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="null">保存</button> </td>' +
@@ -922,16 +922,16 @@ function reader() {
                         var item=educationsExpList[i];
                         console.log(item);
                         switch(item.edu){
-                            case('1'):
+                            case(1):
                                 edu = '大专';
                                 break;
-                            case('2'):
+                            case(2):
                                 edu = '本科';
                                 break;
-                            case('3'):
+                            case(3):
                                 edu = '硕士';
                                 break;
-                            case('4'):
+                            case(4):
                                 edu = '博士';
                                 break;
                         }
