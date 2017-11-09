@@ -70,7 +70,7 @@ public class ZbRefundRecordController {
 
         double refundAmount = 0;
 
-        Long refundAmount2 = 300l;
+        Long refundAmount2 = 300L;
         refundAmount = refundAmount2.doubleValue();
 
         Object data = (refundAmount == 0) ? refundAmount : (refundAmount / 10000);
