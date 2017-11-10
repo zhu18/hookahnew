@@ -1,118 +1,77 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="console-title console-title-border clearfix">
-            <div class="pull-left"><h5>优惠券管理</h5></div>
+            <div class="pull-left"><h5>优惠券列表</h5></div>
             <div class="pull-right">
-                <button class="btn btn-default" data-ng-click="refresh()"><span
-                    class="glyphicon glyphicon-refresh"></span> 刷新
-                </button>
+                <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新</button>
                 <!--<a ui-sref="help.add" class="btn btn-primary">新增</a>-->
             </div>
         </div>
         <div class="row margin-top form-inline">
             <div class="col-sm-12">
-                审核状态：
-                <div class="searchSection  btn-group">
-                    <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio=""
-                            data-ng-click="search()"> 全部
-                    </button>
-                    <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="0"
-                            data-ng-click="search()"> 待审核
-                    </button>
-                    <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="1"
-                            data-ng-click="search()"> 已通过
-                    </button>
-                    <button class="btn btn-default" data-ng-model="checkStatus" uib-btn-radio="2"
-                            data-ng-click="search()"> 未通过
-                    </button>
+                <div class="screen-list">
+                    <div class="list-item header clearfix">
+                        <div class="title pull-left">筛选查询</div>
+                        <div class="tool pull-right">
+                            <span class="controlScreenBtn" data-ng-click="controlScreenBtn()">收起筛选</span>
+                            <button class="btn btn-primary" data-ng-click="search()">查询结果</button>
+
+                        </div>
+                    </div>
+                    <div class="list-item content clearfix" data-ng-show="controlScreenShow">
+                        <div class="col-md-4">
+                            <label class="control-label">优惠券名称：</label>
+                            <input ng-model="orgName" type="text" class="form-control" placeholder="请输入优惠券名称">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">优惠券类型：</label>
+                            <select ng-model="item.apiParaType" ng-options="typeStatus.id as typeStatus.name for typeStatus in typeStatuss" style="width: 155px;height: 32px"></select>
+                        </div>
+                    </div>
                 </div>
 
-
-                <div style="padding:15px 0 0;"><label class="control-label">单位名称：</label>
-                    <input ng-model="orgName" type="text" class="form-control" placeholder="请输入单位名称">
-                    <label class="control-label">联系电话：</label>
-                    <input ng-model="contactPhone" type="text" class="form-control" placeholder="请输入联系电话">
-                    <div>
-                        <label class="control-label">申请日期：</label>
-                        <p class="input-group" style="margin-top: 15px">
-                            <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
-                                   ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                   uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate"
-                                   is-open="popup1.opened" datepicker-options="dateOptions" close-text="关闭"
-                                   clear-text="清除"
-                                   current-text="今天" readonly="true"/>
-                            <span class="input-group-btn">
-                         <button type="button" class="btn btn-default" ng-click="open1()"><i
-                             class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                        </p>
-                        <!--<input ng-model="addTime" type="text" class="form-control" placeholder="起始日期">-->
-                        <label class="control-label">至</label>
-                        <p class="input-group" style="margin-top: 15px">
-                            <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
-                                   ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                   uib-datepicker-popup
-                                   ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions"
-                                   close-text="Close" close-text="关闭" clear-text="清除" current-text="今天"
-                                   readonly="true"/>
-                            <span class="input-group-btn">
-                         <button type="button" class="btn btn-default" ng-click="open2()"><i
-                             class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                        </p>
-                        <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">
-                            搜索
-                        </button>
-
+                <div class="gridSection" style="margin-top: 20px">
+                    <div class="header clearfix">
+                        <div class="title pull-left">数据列表</div>
+                        <div class="tool pull-right">
+                            <button class="btn btn-primary" data-ng-click="add()">添加优惠券</button>
+                            <select ng-model="item.pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
+                        </div>
                     </div>
-
-                    <div class="gridSection">
-                        <div us-spinner ng-show="showSpinner" spinner-start-active="true"
-                             spinner-key="showSpinner"></div>
-
-                        <table class="table table-hover">
+                    <table class="table table-hover">
                             <thead>
-                            <tr>
-
-                                <th>序号</th>
-                                <th>企业名称</th>
-                                <th>联系人</th>
-                                <th>联系电话</th>
-                                <th>审核状态</th>
-                                <th>申请日期</th>
-                                <th>操作</th>
-                            </tr>
+                               <tr>
+                                   <th>编号</th>
+                                   <th>优惠劵名称</th>
+                                   <th>优惠券类型</th>
+                                   <th>可使用商品</th>
+                                   <th>使用门槛</th>
+                                   <th>面值</th>
+                                   <th>适用平台</th>
+                                   <th>有效期</th>
+                                   <th>状态</th>
+                                   <th>操作</th>
+                               </tr>
                             </thead>
                             <tbody>
-                            <tr data-ng-repeat="item in supplierList">
-                                <td>{{$index + 1}}</td>
-                                <td data-ng-bind="item.orgName"></td>
-                                <td data-ng-bind="item.contactName"></td>
-                                <td data-ng-bind="item.contactPhone"></td>
-                                <td>
-                                    <span text-length="50" ng-show="item.checkStatus == 2">未通过</span>
-                                    <span text-length="50" ng-show="item.checkStatus == 1">已通过</span>
-                                    <span text-length="50" ng-show="item.checkStatus == 0">待审核</span>
-                                </td>
-                                <td data-ng-bind="item.addTime"></td>
-                                <td>
-                                    <div ng-if="item.checkStatus == 0">
-                                        <button class="btn btn-primary"  ng-show="item.userType==4 " ng-disabled="sonItem.goodsType==1" ng-click="remark(item)">
-                                            审核
-                                        </button>
-                                        <button class="btn btn-primary-red"  ng-show="item.userType!=4 " ng-disabled="true" ng-click="remark(item)">
-                                            审核
-                                        </button>
-                                    </div>
-
-                                    <button class="btn btn-primary-red"  ng-show="item.checkStatus == 1" ng-disabled="sonItem.goodsType==1" ng-click="remark(item)">
-                                        查看
-                                    </button>
-                                    <button class="btn btn-primary-red"  ng-show="item.checkStatus == 2" ng-disabled="sonItem.goodsType==1" ng-click="remark(item)">
-                                        查看
-                                    </button>
-                                </td>
-                            </tr>
+                            <!--<tr data-ng-repeat="item in couponList">-->
+                                <!--<td>{{$index + 1}}</td>-->
+                                <!--<td data-ng-bind="item.orgName"></td>-->
+                                <!--<td data-ng-bind="item.contactName"></td>-->
+                                <!--<td data-ng-bind="item.contactPhone"></td>-->
+                                <!--<td>-->
+                                    <!--<span text-length="50" ng-show="item.checkStatus == 2">注册赠券</span>-->
+                                    <!--<span text-length="50" ng-show="item.checkStatus == 1">购物赠券</span>-->
+                                    <!--<span text-length="50" ng-show="item.checkStatus == 0">全场赠券</span>-->
+                                    <!--<span text-length="50" ng-show="item.checkStatus == 0">会员赠券</span>-->
+                                <!--</td>-->
+                                <!--<td data-ng-bind="item.addTime"></td>-->
+                                <!--<td>-->
+                                    <!--<button class="btn btn-primary"  ng-click="look(item)">查看</button>-->
+                                    <!--<button class="btn btn-primary"  ng-click="edit(item)">编辑</button>-->
+                                    <!--<button class="btn btn-primary"  ng-click="delete(item)">删除</button>-->
+                                <!--</td>-->
+                            <!--</tr>-->
 
                             </tbody>
                         </table>
@@ -148,3 +107,4 @@
             </div>
         </div>
     </div>
+</div>

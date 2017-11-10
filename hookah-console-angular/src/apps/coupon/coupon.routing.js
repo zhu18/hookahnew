@@ -17,7 +17,7 @@ export default function supplierRouting($stateProvider, $urlRouterProvider) {
       controller: couponController,
       permission: 'list'
     })
-    .state('coupon.query', { //优惠券查询
+    .state('coupon.query', { //优惠券用户查询
       url: '/coupon/query',
       template: require('./query.html'),
       controller: queryController,

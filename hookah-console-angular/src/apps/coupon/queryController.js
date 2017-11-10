@@ -3,6 +3,25 @@
  */
 class queryController {
     constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
+        $scope.pageSizes = [               //自定定义类型数据
+            {id:-1, name:"显示条数"},
+            {id:1, name:"20"},
+            {id:2, name:"50"}
+        ];
+        $scope.selectDates = [               //自定定义类型数据
+            {id:-1, name:"导出数据"},
+            {id:1, name:"选中用户"},
+            {id:2, name:"全部用户"}
+        ];
+        $scope.controlScreenShow=true;
+        $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
+            if ($scope.controlScreenShow){
+                $scope.controlScreenShow=false;
+            }else {
+                $scope.controlScreenShow=true;
+
+            }
+        }
         $scope.search = function (initCurrentPage) {
             console.log($scope.levelStar);
             var promise = $http({
@@ -23,7 +42,7 @@ class queryController {
                 console.log(res);
 
                 if (res.data.code == '1') {
-                    $scope.supplierList = res.data.data.list;
+                    $scope.userList = res.data.data.list;
                     // $rootScope.pagination = res.data.data;
                     $scope.showNoneDataInfoTip = false;
                     if (res.data.data.list.length > 0) {
@@ -58,140 +77,10 @@ class queryController {
         $scope.pageChanged = function () {
             $scope.search();
         };
-        $scope.remark = function (item) {
-            console.log(item.id);
-            console.log(item.checkStatus);
-            var promise = null;
-            if (item.checkStatus == "0") {
-                var modalInstance = null;
-                modalInstance = $rootScope.openConfirmDialogModalSupplier();
-                modalInstance.result.then(function () { //模态点提交
-                    var promise = null;
-                    promise = $http({
-                        method: 'POST',
-                        url: $rootScope.site.apiServer + "/api/supplier/updateInfo",
-                        params: {
-                            id: item.id,
-                            checkContent: $('#checkContent').val(),
-                            checkStatus: $('input:radio[name="tRadio"]:checked').val()
-                        }
-                    });
-                    promise.then(function (res, status, config, headers) {
-                        $rootScope.loadingState = false;
-                        if (res.data.code == 1) {
-                            growl.addSuccessMessage("保存成功。。。");
-                            $scope.search();
-                        } else {
-                            growl.addErrorMessage("保存失败。。。");
-                        }
+        $scope.getDetail = function (item) {
 
-                    });
-                }, function () {
-                });
-            } else {
-                promise = $http({
-                    method: 'get',
-                    url: $rootScope.site.apiServer + "/api/supplier/viewResult",
-                    params: {
-                        id: item.id
-                    }
-                });
-                promise.then(function (res, status, config, headers) {
-                    $rootScope.loadingState = false;
-                    var tempVal = '审核意见：' + res.data.data.checkContent + '<br><br>审核结果：';
+        };
 
-                    if (res.data.code == 1) {
-                        if (res.data.data.checkStatus == 1) {
-                            tempVal += '审核通过';
-                        } else if (res.data.data.checkStatus == 2) {
-                            tempVal += '审核不通过';
-                        }
-                        $rootScope.openJustShowDialogModal(tempVal);
-                    } else {
-                    }
-                });
-            }
-        };
-        // 处理日期插件的获取日期的格式
-        var format = function (time, format) {
-            var t = new Date(time);
-            var tf = function (i) {
-                return (i < 10 ? '0' : "") + i
-            };
-            return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
-                switch (a) {
-                    case 'yyyy':
-                        return tf(t.getFullYear());
-                        break;
-                    case 'MM':
-                        return tf(t.getMonth() + 1);
-                        break;
-                    case 'mm':
-                        return tf(t.getMinutes());
-                        break;
-                    case 'dd':
-                        return tf(t.getDate());
-                        break;
-                    case 'HH':
-                        return tf(t.getHours());
-                        break;
-                    case 'ss':
-                        return tf(t.getSeconds());
-                        break;
-                }
-            })
-        }
-        // 日历插件开始
-        $scope.inlineOptions = {
-            customClass: getDayClass,
-            minDate: new Date(2000, 5, 22),
-            showWeeks: true
-        };
-        $scope.open1 = function () {
-            $scope.popup1.opened = true;
-        };
-        $scope.open2 = function () {
-            $scope.popup2.opened = true;
-        };
-        $scope.popup1 = {
-            opened: false
-        };
-        $scope.popup2 = {
-            opened: false
-        };
-        var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        var afterTomorrow = new Date();
-        afterTomorrow.setDate(tomorrow.getDate() + 1);
-        $scope.events = [
-            {
-                date: tomorrow,
-                status: 'full'
-            },
-            {
-                date: afterTomorrow,
-                status: 'partially'
-            }
-        ];
-        function getDayClass(data) {
-            var date = data.date,
-                mode = data.mode;
-            if (mode === 'day') {
-                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-
-                for (var i = 0; i < $scope.events.length; i++) {
-                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
-
-                    if (dayToCheck === currentDay) {
-                        return $scope.events[i].status;
-                    }
-                }
-            }
-
-            return '';
-        }
-
-        // 日历插件结束
     }
 }
 
