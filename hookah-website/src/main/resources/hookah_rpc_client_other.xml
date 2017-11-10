@@ -68,7 +68,4 @@
   <motan:referer id="wxUserInfoServiceImpl"
                  interface="com.jusfoun.hookah.rpc.api.WxUserInfoService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
-  <motan:referer id="couponServiceImpl"
-                 interface="com.jusfoun.hookah.rpc.api.CouponService"
-                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

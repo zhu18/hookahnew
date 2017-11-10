@@ -18,18 +18,18 @@ import java.util.List;
 @RequestMapping("/coupon")
 public class CouponController extends BaseController {
 
-    @Resource
-    private CouponService couponService;
-
-    @RequestMapping("/getAllList")
-    @ResponseBody
-    public ReturnData getAllList(){
-        try {
-            List<Coupon> coupons = couponService.selectList();
-            return ReturnData.success(coupons);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ReturnData.error(e.getMessage());
-        }
-    }
+//    @Resource
+//    private CouponService couponService;
+//
+//    @RequestMapping("/getAllList")
+//    @ResponseBody
+//    public ReturnData getAllList(){
+//        try {
+////            List<Coupon> coupons = couponService.selectList();
+//            return ReturnData.success(coupons);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return ReturnData.error(e.getMessage());
+//        }
+//    }
 }
