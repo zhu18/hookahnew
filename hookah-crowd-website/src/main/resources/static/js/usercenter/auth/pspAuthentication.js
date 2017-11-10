@@ -51,23 +51,23 @@ $("#educationAdd").on('click',function () {
         '<tr> ' +
         '<td>' +
         ' <div> ' +
-        '<label for="schoolName"><span class="color-red">*</span>学校名称</label> ' +
+        '<label for="schoolName"><span class="color-red">*</span>学校名称：</label> ' +
         '<input type="text" id="schoolName" name="schoolName" placeholder="请输入学校名称" required>' +
         ' </div> ' +
         '</td>' +
         ' <td> ' +
         '<div> ' +
-        '<label for="major"><span class="color-red">*</span>专业名称</label> ' +
+        '<label for="major"><span class="color-red">*</span>专业名称：</label> ' +
         '<input type="text" id="major" name="major" placeholder="请输入专业名称" required> </div> ' +
         '</td> ' +
         '</tr>' +
         ' <tr> ' +
         '<td> ' +
-        '<div> <label for="">就学时间</label> ' +
+        '<div> <label for="">就学时间：</label> ' +
         '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly=""  >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" > </div> </div> </td> ' +
-        '<td> <div> <label for="edu">学历</label> <select name="edu" id="edu"  > <option value="1">大专</option> <option value="2">本科</option> <option value="3">硕士</option> <option value="4">博士</option> </select> </div> ' +
+        '<td> <div> <label for="edu">学历：</label> <select name="edu" id="edu"  > <option value="1">大专</option> <option value="2">本科</option> <option value="3">硕士</option> <option value="4">博士</option> </select> </div> ' +
         '</td> </tr>' +
-        ' <tr> <td> <input type="checkbox" name="orExam" value="n" id="orExam" />是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
+        ' <tr> <td> <input type="checkbox" name="orExam" value="n" id="orExam" />是否统招 </td> <td> <div><label for="">证明材料：</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
         ' <tr> <td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="null">保存</button> </td>' +
         ' </tr> </table> </form> </dl>'
 
@@ -108,20 +108,20 @@ $("#workAdd").on('click',function () {
         '<tr> ' +
         '<td> ' +
         '<div> ' +
-        '<label for="companyName"><span class="color-red">*</span>公司名称</label> ' +
+        '<label for="companyName"><span class="color-red">*</span>公司名称：</label> ' +
         '<input type="text" id="companyName" name="companyName" placeholder="请输入公司名称" required> ' +
         '</div> </td>' +
         ' <td> <div> ' +
-        '<label for="departName"><span class="color-red">*</span>部门名称</label>' +
+        '<label for="departName"><span class="color-red">*</span>部门名称：</label>' +
         ' <input type="text" id="departName" name="departName" placeholder="请输入部门名称" required> </div> </td> </tr>' +
         ' <tr> <td> <div>' +
-        ' <label for="">工作时间</label> ' +
+        ' <label for="">工作时间：</label> ' +
         '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required> </div> </div> </td>' +
         ' <td> <div>' +
-        ' <label for="position">职位</label> ' +
+        ' <label for="position">职位：</label> ' +
         '<input type="text" name="position" id="position"> </div> </td> </tr> ' +
         '<tr> <td> <div>' +
-        '<label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
+        '<label for="">证明材料：</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr> ' +
         '<tr> <td colspan="2"> ' +
         '<button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="workAddSave" data-sn="null">保存</button> </td> </tr> </table> </form> </dl>'
     $(".content-work").append(html);
@@ -160,16 +160,16 @@ $("#projectAdd").on('click',function () {
         '<tr> ' +
         '<td> ' +
         '<div> ' +
-        '<label for="projectName"><span class="color-red">*</span>项目名称</label> ' +
+        '<label for="projectName"><span class="color-red">*</span>项目名称：</label> ' +
         '<input type="text" id="projectName" name="projectName"placeholder="请输入项目名称" required> </div> </td>' +
         '<td> <div>' +
-        '<label for="projectDuty"><span class="color-red">*</span>项目职责</label> ' +
+        '<label for="projectDuty"><span class="color-red">*</span>项目职责：</label> ' +
         '<input type="text" id="projectDuty" name="projectDuty" placeholder="请输入项目职责"required> </div> </td>' +
         ' </tr> <tr> <td colspan="2"> <div> ' +
-        '<label for="">项目时间</label> ' +
+        '<label for="">项目时间：</label> ' +
         '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择开始时间" readonly="" required>至 <input id="endDate" name="endDate" type="text"placeholder="请选择结束时间" readonly="" required> </div> </div> </td> </tr>' +
         ' <tr> <td colspan="2"> ' +
-        '<label for="projectDesc">项目描述</label> ' +
+        '<label for="projectDesc">项目描述：</label> ' +
         '<textarea name="projectDesc" id="projectDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
         '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="projectAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
@@ -203,18 +203,18 @@ $("#appCaseAdd").on('click',function () {
         '<tr> ' +
         '<td> ' +
         '<div> ' +
-        '<label for="caseName"><span class="color-red">*</span>案例名称</label> ' +
+        '<label for="caseName"><span class="color-red">*</span>案例名称：</label> ' +
         '<input type="text" id="caseName" name="caseName" placeholder="请输入案例名称" required> </div> </td>' +
         '<td> <div>' +
-        '<label for="caseView"><span class="color-red">*</span>案例概述</label> ' +
+        '<label for="caseView"><span class="color-red">*</span>案例概述：</label> ' +
         '<input type="text" id="caseView" name="caseView" placeholder="请输入案例概述"required> </div> </td>' +
         ' </tr> <tr> ' +
         '<td> <div> ' +
-        '<label for=""><span class="color-red">*</span>项目时间</label> ' +
+        '<label for=""><span class="color-red">*</span>项目时间：</label> ' +
         '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择开始时间" readonly="" required>至 <input id="endDate" name="endDate" type="text"placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
-        '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+        '<td> <div><label for="">证明材料：</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
         ' <tr> <td colspan="2"> ' +
-        '<label for="caseDesc">解决方案</label> ' +
+        '<label for="caseDesc">解决方案：</label> ' +
         '<textarea name="caseDesc" id="caseDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
         '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="appCaseAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
@@ -255,18 +255,18 @@ $("#swpAdd").on('click',function () {
         '<tr>' +
         '<td>' +
         '<div>' +
-        '<label for="softWareName"><span class="color-red">*</span>软件名称</label> ' +
+        '<label for="softWareName"><span class="color-red">*</span>软件名称：</label> ' +
         '<input type="text" id="softWareName" name="softWareName" placeholder="请输入软件名称" required> </div> </td>' +
         '<td><div>' +
-        '<label for="registerNum"><span class="color-red">*</span>登记号</label> ' +
+        '<label for="registerNum"><span class="color-red">*</span>登记号：</label> ' +
         '<input type="text" id="registerNum" name="registerNum" placeholder="请输入登记号" required> </div> </td>' +
         ' </tr> <tr> ' +
         '<td> <div> ' +
-        '<label for=""><span class="color-red">*</span>首次发表日期</label> ' +
+        '<label for=""><span class="color-red">*</span>首次发表日期：</label> ' +
         '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
-        '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+        '<td> <div><label for="">证明材料：</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
         ' <tr> <td colspan="2"> ' +
-        '<label for="purpose">软件用途</label> ' +
+        '<label for="purpose">软件用途：</label> ' +
         '<textarea name="purpose" id="purpose" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
         '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="swpAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
@@ -306,18 +306,18 @@ $("#inPatentsAdd").on('click',function () {
         '<tr>' +
         '<td>' +
         '<div>' +
-        '<label for="patentName"><span class="color-red">*</span>发明名称</label> ' +
+        '<label for="patentName"><span class="color-red">*</span>发明名称：</label> ' +
         '<input type="text" id="patentName" name="patentName" placeholder="请输入发明名称" required> </div> </td>' +
         '<td><div>' +
-        '<label for="PatentNum"><span class="color-red">*</span>专利号</label> ' +
+        '<label for="PatentNum"><span class="color-red">*</span>专利号：</label> ' +
         '<input type="text" id="PatentNum" name="PatentNum" placeholder="请输入专利号" required> </div> </td>' +
         ' </tr> <tr> ' +
         '<td> <div> ' +
-        '<label for=""><span class="color-red">*</span>申请日期</label> ' +
+        '<label for=""><span class="color-red">*</span>申请日期：</label> ' +
         '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text" placeholder="请选择申请日期" readonly="" required></div> </div> </td> ' +
-        '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+        '<td> <div><label for="">证明材料：</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
         ' <tr> <td colspan="2"> ' +
-        '<label for="PatentDesc">专利概述</label> ' +
+        '<label for="PatentDesc">专利概述：</label> ' +
         '<textarea name="PatentDesc" id="PatentDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
         '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="inPatentsAddSave" data-sn="null"' +
         '>保存 </button> </td> </tr> </table> </form> </dl>';
@@ -444,7 +444,7 @@ function educationEdit(r) {
                     '<div class="display-inline-block"> <input id="startDate"  name="startDate" type="text" placeholder="请选择开始时间" readonly="" required >至 <input id="endDate"  name="endDate" type="text" placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
                     '<td> <div> <label for="edu"><span class="color-red">*</span>学历</label> <select name="edu" id="edu" required > <option value="1">大专</option> <option value="2">本科</option> <option value="3">硕士</option> <option value="4">博士</option> </select> </div> ' +
                     '</td> </tr>' +
-                    ' <tr> <td> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
+                    ' <tr> <td class="pdleft110"> <span class="color-red">*</span> <input type="checkbox" name="orExam" value="n" id="orExam" required/>是否统招 </td> <td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename" class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td> </tr>' +
                     ' <tr> <td colspan="2"> <button class=" btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="educationAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'">保存</button> </td>' +
                     ' </tr> </table> </form>'
                 // var index =r.currentTarget.parentNode.parentNode.parentNode.rowIndex;
@@ -668,18 +668,18 @@ function appCaseEdit(r) {
                     '<tr> ' +
                     '<td> ' +
                     '<div> ' +
-                    '<label for="caseName"><span class="color-red">*</span>案例名称</label> ' +
+                    '<label for="caseName"><span class="color-red">*</span>案例名称：</label> ' +
                     '<input type="text" id="caseName" name="caseName" placeholder="请输入案例名称" required> </div> </td>' +
                     '<td> <div>' +
-                    '<label for="caseView"><span class="color-red">*</span>案例概述</label> ' +
+                    '<label for="caseView"><span class="color-red">*</span>案例概述：</label> ' +
                     '<input type="text" id="caseView" name="caseView" placeholder="请输入案例概述"required> </div> </td>' +
                     ' </tr> <tr> ' +
                     '<td> <div> ' +
-                    '<label for=""><span class="color-red">*</span>项目时间</label> ' +
+                    '<label for=""><span class="color-red">*</span>项目时间：</label> ' +
                     '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择开始时间" readonly="" required>至 <input id="endDate" name="endDate" type="text"placeholder="请选择结束时间" readonly="" required> </div> </div> </td> ' +
-                    '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+                    '<td> <div><label for="">证明材料：</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
                     ' <tr> <td colspan="2"> ' +
-                    '<label for="caseDesc">解决方案</label> ' +
+                    '<label for="caseDesc">解决方案：</label> ' +
                     '<textarea name="caseDesc" id="caseDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
                     '<td colspan="2"> <button class=" btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="appCaseAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
                     '>保存 </button> </td> </tr> </table> </form> </dl>';
@@ -751,18 +751,18 @@ function swpEdit(r) {
                     '<tr>' +
                     '<td>' +
                     '<div>' +
-                    '<label for="softWareName"><span class="color-red">*</span>软件名称</label> ' +
+                    '<label for="softWareName"><span class="color-red">*</span>软件名称：</label> ' +
                     '<input type="text" id="softWareName" name="softWareName" placeholder="请输入软件名称" required> </div> </td>' +
                     '<td><div>' +
-                    '<label for="registerNum"><span class="color-red">*</span>登记号</label> ' +
+                    '<label for="registerNum"><span class="color-red">*</span>登记号：</label> ' +
                     '<input type="text" id="registerNum" name="registerNum" placeholder="请输入登记号" required> </div> </td>' +
                     ' </tr> <tr> ' +
                     '<td> <div> ' +
-                    '<label for=""><span class="color-red">*</span>首次发表日期</label> ' +
+                    '<label for=""><span class="color-red">*</span>首次发表日期：</label> ' +
                     '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
-                    '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+                    '<td> <div><label for="">证明材料：</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
                     ' <tr> <td colspan="2"> ' +
-                    '<label for="purpose">软件用途</label> ' +
+                    '<label for="purpose">软件用途：</label> ' +
                     '<textarea name="purpose" id="purpose" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
                     '<td colspan="2"> <button class=" btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="swpAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
                     '>保存 </button> </td> </tr> </table> </form> </dl>';
@@ -831,18 +831,18 @@ function inPatentsEdit(r) {
                     '<tr>' +
                     '<td>' +
                     '<div>' +
-                    '<label for="patentName"><span class="color-red">*</span>发明名称</label> ' +
+                    '<label for="patentName"><span class="color-red">*</span>发明名称：</label> ' +
                     '<input type="text" id="patentName" name="patentName" placeholder="请输入软件名称" required> </div> </td>' +
                     '<td><div>' +
-                    '<label for="patentNum"><span class="color-red">*</span>专利号</label> ' +
+                    '<label for="patentNum"><span class="color-red">*</span>专利号：</label> ' +
                     '<input type="text" id="patentNum" name="patentNum" placeholder="请输入登记号" required> </div> </td>' +
                     ' </tr> <tr> ' +
                     '<td> <div> ' +
-                    '<label for=""><span class="color-red">*</span>申请日期</label> ' +
+                    '<label for=""><span class="color-red">*</span>申请日期：</label> ' +
                     '<div class="display-inline-block"> <input id="startDate" name="startDate" type="text"placeholder="请选择首次发表日期" readonly="" required></div> </div> </td> ' +
-                    '<td> <div><label for="">证明材料</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
+                    '<td> <div><label for="">证明材料：</label> <div class="upload-box display-inline-block"> <input type="file" name="filename"  class="fileUploadBtn j_firstPage"> <span class="falseBen j_firstPage">上传附件</span> <span class="fileTip"></span> <input type="hidden" name="filename" value="" id="file"> </div> </div> </td></tr>' +
                     ' <tr> <td colspan="2"> ' +
-                    '<label for="patentDesc">专利概述</label> ' +
+                    '<label for="patentDesc">专利概述：</label> ' +
                     '<textarea name="patentDesc" id="patentDesc" cols="100" rows="10"></textarea> </td> </tr> <tr> ' +
                     '<td colspan="2"> <button class="btn-full-blue padding-top-5 padding-right-10 padding-left-10 padding-bottom-5 " id="inPatentsAddSave" data-sn="'+r.currentTarget.attributes[2].nodeValue+'"' +
                     '>保存 </button> </td> </tr> </table> </form> </dl>';
@@ -1070,17 +1070,17 @@ function reader() {
                         html +='<dt class="clearfix"> '
                         html +='<div class="grid-left"> '
                         html +='<span class="caseName sub-title">'+item.softWareName+'</span> '
-                        html +='<span class="">(首次发表日期:'+item.publicTime+')</span> </div> '
+                        html +='<span class="">(首次发表日期：'+item.publicTime+')</span> </div> '
                         html +='<div class="grid-right btn"> '
                         html +='<a href="javascript:void (0)" class="swpEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
                         html +='<a href="javascript:void (0)" class="swpDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
                         html +='<dd> '
-                        html +='<label>登记号:</label>'
+                        html +='<label>登记号：</label>'
                         html +='<div >'+item.registerNum+'</div> </dd> '
                         html +='<dd>'
-                        html +='<label>软件用途:</label> '
+                        html +='<label>软件用途：</label> '
                         html +='<div>'+item.purpose+'</div> </dd> <dd> '
-                        html +='<label>证明材料:</label> '
+                        html +='<label>证明材料：</label> '
                         html +='<div>'
                         if(item.certPathsList && item.certPathsList.length>0) {
                             html +='<span class="certPath"><i class="fa fa-download" aria-hidden="true"></i><a href="'+item.certPathsList[0].certPath+'">材料证明</a> </span> '
@@ -1107,17 +1107,17 @@ function reader() {
                         html +='<dt class="clearfix"> '
                         html +='<div class="grid-left"> '
                         html +='<span class="caseName sub-title">'+item.patentName+'</span> '
-                        html +='<span class="">(首次发表日期:'+item.applyTime+')</span> </div> '
+                        html +='<span class="">(首次发表日期：'+item.applyTime+')</span> </div> '
                         html +='<div class="grid-right btn"> '
                         html +='<a href="javascript:void (0)" class="inPatentsEdit"   data-sn="'+item.sn+'"> <i class="fa fa-pencil-square-o font-size-20" aria-hidden="true"></i></a> '
                         html +='<a href="javascript:void (0)" class="inPatentsDelete" data-sn="'+item.sn+'"><i class="fa fa-trash-o font-size-20" aria-hidden="true"></i></a> </div> </dt> '
                         html +='<dd> '
-                        html +='<label>专利号:</label> '
+                        html +='<label>专利号：</label> '
                         html +='<div >'+item.patentNum+'</div> </dd> '
                         html +='<dd>'
-                        html +=' <label>专利概述:</label> '
+                        html +=' <label>专利概述：</label> '
                         html +='<div>'+item.patentDesc+'</div> </dd> <dd> '
-                        html +='<label>证明材料:</label> '
+                        html +='<label>证明材料：</label> '
                         html +='<div>'
                         if(item.certPathsList && item.certPathsList.length>0) {
                             html +='<span class="certPath"><i class="fa fa-download" aria-hidden="true"></i><a href="'+item.certPathsList[0].certPath+'">材料证明</a> </span> '
