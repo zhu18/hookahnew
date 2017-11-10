@@ -1327,7 +1327,6 @@ span.label {
   background: #FFF;
   font-size: 12px;
   border-top: 1px solid #e1e6eb;
-  margin-top: 8px;
   border: 1px solid #e1e6eb
 }
 
@@ -9642,4 +9641,35 @@ table .roundedTwo{
 }
 .card .info{
 
+}
+
+
+
+.screen-list{border: 1px solid #e5e5e5;}
+.header{
+  height: 45px;
+  line-height: 32px;
+  background-color: #e5e5e5;
+  padding: 5px 5px;
+}
+.header .tool{
+
+}
+.header .tool select{
+  width: 95px !important;
+}
+.header .tool .controlScreenBtn{
+  display: inline-block;
+  height: 100%;
+  width: 75px;
+  user-select: none;
+  text-align: center;
+  cursor: pointer;
+}
+.content{
+ padding: 10px 0;
+}
+
+.cursor-pointer{
+  cursor: pointer !important;
 }

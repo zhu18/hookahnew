@@ -75,19 +75,6 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                 return returnData;
             }else {
 
-                // 查询银行开卡信息
-                List<Condition> filtersBankCard = new ArrayList<>();
-                filtersBankCard.add(Condition.eq("userId", userId));
-                filtersBankCard.add(Condition.eq("bindFlag", 0));
-                PayBankCard payBankCard = payBankCardService.selectOne(filtersBankCard);
-                if(payBankCard == null){
-                    returnData.setCode(ExceptionConst.Error);
-                    returnData.setMessage("该用户未绑定银行卡^_^");
-                    return returnData;
-                }
-
-                returnData.setData(payBankCard);
-
                 if(zbRequirement.getStatus().equals(Short.parseShort("11"))){
 
                     // 查询服务商银行卡信息  去查询报名表userID信息
@@ -101,9 +88,35 @@ public class ZbRefundRecordServiceImpl extends GenericServiceImpl<ZbRefundRecord
                         return returnData;
                     }
 
+                    // 需求方已验收，查询服务商银行卡信息
+                    List<Condition> filtersBankCard = new ArrayList<>();
+                    filtersBankCard.add(Condition.eq("userId", zbRequireApply.getUserId()));
+                    filtersBankCard.add(Condition.eq("bindFlag", 0));
+                    PayBankCard payBankCard = payBankCardService.selectOne(filtersBankCard);
+                    if(payBankCard == null){
+                        returnData.setCode(ExceptionConst.Error);
+                        returnData.setMessage("该用户未绑定银行卡^_^");
+                        return returnData;
+                    }
+
+                    returnData.setData(payBankCard);
+
                     refundAmount = refundAmount.add(new BigDecimal(String.valueOf(zbRequirement.getRewardMoney().doubleValue() / 100)));
 
                 }else {
+
+                    // 退款状态 查询需求方银行卡信息
+                    List<Condition> filtersBankCard = new ArrayList<>();
+                    filtersBankCard.add(Condition.eq("userId", zbRequirement.getUserId()));
+                    filtersBankCard.add(Condition.eq("bindFlag", 0));
+                    PayBankCard payBankCard = payBankCardService.selectOne(filtersBankCard);
+                    if(payBankCard == null){
+                        returnData.setCode(ExceptionConst.Error);
+                        returnData.setMessage("该用户未绑定银行卡^_^");
+                        return returnData;
+                    }
+
+                    returnData.setData(payBankCard);
 
                     //查询退款金额信息
                     List<Condition> filters2 = new ArrayList<>();

@@ -50,7 +50,6 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         return categoryMapper.selectByPrimaryKey(id);
     }
 
-    @Cacheable(value = "CategoryVo")
     public List<CategoryVo> getCatTree() {
         List<CategoryVo> vo = new ArrayList<>();
         List<Condition> filters = new ArrayList<>();
@@ -119,7 +118,6 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         return nodeVo;
     }
 
-    @CacheEvict(value="CategoryVo", beforeInvocation=true)
     public ReturnData addCat(Category category) {
         ReturnData<Category> returnData = new ReturnData<Category>();
         returnData.setCode(ExceptionConst.Success);
@@ -161,7 +159,6 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         return returnData;
     }
 
-    @CacheEvict(value="CategoryVo", beforeInvocation=true)
     public ReturnData editCat(Category category) {
         ReturnData<Category> returnData = new ReturnData<Category>();
         returnData.setCode(ExceptionConst.Success);
@@ -197,7 +194,6 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
         return returnData;
     }
 
-    @CacheEvict(value="CategoryVo", beforeInvocation=true)
     public ReturnData deleteById(String cateId) {
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
