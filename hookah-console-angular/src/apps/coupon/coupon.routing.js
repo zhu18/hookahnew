@@ -1,6 +1,7 @@
 import couponController from "./couponController";
 import queryController from "./queryController";
-import detailController from "./detailController";
+import couponDetailController from "./couponDetailController";
+import userDetailController from "./userDetailController";
 import addController from "./addController";
 
 supplierRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
@@ -23,11 +24,17 @@ export default function supplierRouting($stateProvider, $urlRouterProvider) {
       controller: queryController,
       permission: 'query'
     })
-    .state('coupon.detail', { //优惠券详情
-      url: '/coupon/detail',
-      template: require('./detail.html'),
-      controller: detailController,
-      permission: 'detail'
+    .state('coupon.couponDetail', { //优惠券详情
+      url: '/coupon/couponDetail',
+      template: require('./couponDetail.html'),
+      controller: couponDetailController,
+      permission: 'couponDetail'
+    })
+    .state('coupon.userDetail', { //优惠券用户详情
+      url: '/coupon/userDetail',
+      template: require('./userDetail.html'),
+      controller: userDetailController,
+      permission: 'userDetail'
     })
     .state('coupon.add', { //优惠券添加
       url: '/coupon/add',

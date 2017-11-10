@@ -1,0 +1,146 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>优惠券明细</h5></div>
+            <div class="pull-right">
+
+                <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 返回</button>
+                <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新</button>
+
+            </div>
+        </div>
+        <div class="row margin-top form-inline">
+            <div class="col-sm-12">
+                <div>
+                    <table class="table">
+                        <tr>
+                            <th>名称</th>
+                            <th>优惠券类型</th>
+                            <th>可使用商品</th>
+                            <th>使用门槛</th>
+                            <th>面值</th>
+                            <th>状态</th>
+                        </tr>
+                        <tr>
+                            <td>用户ID</td>
+                            <td>用户账号</td>
+                            <td>用户昵称</td>
+                            <td>会员等级</td>
+                            <td>已使用</td>
+                            <td>未使用</td>
+                        </tr>
+                        <tr>
+                            <th>有效期</th>
+                            <th>总发行量</th>
+                            <th>已领取</th>
+                            <th>待领取</th>
+                            <th>已使用</th>
+                            <th>未使用</th>
+                        </tr>
+                        <tr>
+                            <td>用户ID</td>
+                            <td>用户账号</td>
+                            <td>用户昵称</td>
+                            <td>会员等级</td>
+                            <td>已使用</td>
+                            <td>未使用</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="screen-list">
+                    <div class="list-item header clearfix">
+                        <div class="title pull-left">筛选查询</div>
+                        <div class="tool pull-right">
+                            <span class="controlScreenBtn" data-ng-click="controlScreenBtn()">收起筛选</span>
+                            <button class="btn btn-primary" data-ng-click="search()">查询结果</button>
+
+                        </div>
+                    </div>
+                    <div class="list-item content clearfix" data-ng-show="controlScreenShow">
+                        <div class="col-md-4">
+                            <label class="control-label">使用状态：</label>
+                            <select ng-model="item.apiParaType" ng-options="useStatu.id as useStatu.name for useStatu in useStatus" style="width: 155px;height: 32px"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">订单编号：</label>
+                            <input ng-model="orgName" type="text" class="form-control" placeholder="请输入订单编号">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="gridSection" style="margin-top: 20px">
+                    <div class="header clearfix">
+                        <div class="title pull-left">数据列表</div>
+                        <div class="tool pull-right">
+                            <select ng-model="item.pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
+                        </div>
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>优惠码</th>
+                            <th>领取会员</th>
+                            <th>领取方式</th>
+                            <th>领取时间</th>
+                            <th>当前状态</th>
+                            <th>使用时间</th>
+                            <th>订单编号</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--<tr data-ng-repeat="item in couponList">-->
+                        <!--<td>{{$index + 1}}</td>-->
+                        <!--<td data-ng-bind="item.orgName"></td>-->
+                        <!--<td data-ng-bind="item.contactName"></td>-->
+                        <!--<td data-ng-bind="item.contactPhone"></td>-->
+                        <!--<td>-->
+                        <!--<span text-length="50" ng-show="item.checkStatus == 2">注册赠券</span>-->
+                        <!--<span text-length="50" ng-show="item.checkStatus == 1">购物赠券</span>-->
+                        <!--<span text-length="50" ng-show="item.checkStatus == 0">全场赠券</span>-->
+                        <!--<span text-length="50" ng-show="item.checkStatus == 0">会员赠券</span>-->
+                        <!--</td>-->
+                        <!--<td data-ng-bind="item.addTime"></td>-->
+                        <!--<td>-->
+                        <!--<button class="btn btn-primary"  ng-click="look(item)">查看</button>-->
+                        <!--<button class="btn btn-primary"  ng-click="edit(item)">编辑</button>-->
+                        <!--<button class="btn btn-primary"  ng-click="delete(item)">删除</button>-->
+                        <!--</td>-->
+                        <!--</tr>-->
+
+                        </tbody>
+                    </table>
+                    <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                        <tr>
+                            <td colspan="9">
+                                <div class="pull-right page-box">
+                                    <div class="pagination-info">
+                                        共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                    </div>
+                                    <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                        ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                        max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                        force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                        last-text="末页">
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </div>
+                <div class="simple-grid-none-data-wrap">
+                    <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+                        <div class="row-padding row-margin text-center">
+                            <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+                            <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

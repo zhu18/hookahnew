@@ -1,8 +1,29 @@
 /**
  * Created by Administrator on 2017/11/9 0009.
  */
-class detailController {
+class couponDetailController {
     constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
+        $scope.pageSizes = [               //自定定义类型数据
+            {id:-1, name:"显示条数"},
+            {id:1, name:"20"},
+            {id:2, name:"50"}
+        ];
+        $scope.useStatus = [               //自定定义类型数据
+            {id:-1, name:"全部"},
+            {id:1, name:"已使用"},
+            {id:2, name:"未使用"},
+            {id:2, name:"已过期"}
+        ];
+        $scope.controlScreenShow=true;
+        $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
+            if ($scope.controlScreenShow){
+                $scope.controlScreenShow=false;
+            }else {
+                $scope.controlScreenShow=true;
+
+            }
+        };
+
         $scope.search = function (initCurrentPage) {
             console.log($scope.levelStar);
             var promise = $http({
@@ -58,62 +79,9 @@ class detailController {
         $scope.pageChanged = function () {
             $scope.search();
         };
-        $scope.remark = function (item) {
-            console.log(item.id);
-            console.log(item.checkStatus);
-            var promise = null;
-            if (item.checkStatus == "0") {
-                var modalInstance = null;
-                modalInstance = $rootScope.openConfirmDialogModalSupplier();
-                modalInstance.result.then(function () { //模态点提交
-                    var promise = null;
-                    promise = $http({
-                        method: 'POST',
-                        url: $rootScope.site.apiServer + "/api/supplier/updateInfo",
-                        params: {
-                            id: item.id,
-                            checkContent: $('#checkContent').val(),
-                            checkStatus: $('input:radio[name="tRadio"]:checked').val()
-                        }
-                    });
-                    promise.then(function (res, status, config, headers) {
-                        $rootScope.loadingState = false;
-                        if (res.data.code == 1) {
-                            growl.addSuccessMessage("保存成功。。。");
-                            $scope.search();
-                        } else {
-                            growl.addErrorMessage("保存失败。。。");
-                        }
 
-                    });
-                }, function () {
-                });
-            } else {
-                promise = $http({
-                    method: 'get',
-                    url: $rootScope.site.apiServer + "/api/supplier/viewResult",
-                    params: {
-                        id: item.id
-                    }
-                });
-                promise.then(function (res, status, config, headers) {
-                    $rootScope.loadingState = false;
-                    var tempVal = '审核意见：' + res.data.data.checkContent + '<br><br>审核结果：';
-
-                    if (res.data.code == 1) {
-                        if (res.data.data.checkStatus == 1) {
-                            tempVal += '审核通过';
-                        } else if (res.data.data.checkStatus == 2) {
-                            tempVal += '审核不通过';
-                        }
-                        $rootScope.openJustShowDialogModal(tempVal);
-                    } else {
-                    }
-                });
-            }
-        };
     }
 }
 
-export default detailController;
+export default couponDetailController;
 
