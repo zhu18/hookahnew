@@ -83,7 +83,7 @@
 .Authentication-itemBox .Authentication-content .content{}
 .content dl{border-bottom: 1px solid #e5e5e5;padding: 8px}
 .content dl .btn{display: none}
-.content dl:hover{box-shadow: 2px 1px 15px #e5e5e5;}
+.content dl{box-shadow: 2px 1px 15px #e5e5e5;}
 .content dl:hover .btn{display: block}
 .content dl dt,.content dl dd{
     padding: 10px 0;
