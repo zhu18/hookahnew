@@ -3,8 +3,8 @@
  */
 
 
-let crowdSourcingId = GetUrlValue('id');
-let userType = null;
+var crowdSourcingId = GetUrlValue('id');
+var userType = null;
 
 
 function recommendTasks() { //推荐任务
@@ -20,8 +20,8 @@ function recommendTasks() { //推荐任务
   })
 }
 function initRecommendTasksDOM(selector,data){//推荐任务渲染函数
-  let initRecommendTasksDOM='';
-  for(let i=0;i < data.length;i++){
+  var initRecommendTasksDOM='';
+  for(var i=0;i < data.length;i++){
     initRecommendTasksDOM+='\
    <li>\
       <div class="similarMissionDemandName">'+data[i].title+'</div>\
@@ -63,16 +63,16 @@ function demandDetail() { //需求详情
 recommendTasks();//推荐任务
 demandDetail();//6大类数据请求
 
-let box=$('.similarMissionBottomBoxRight');
+var box=$('.similarMissionBottomBoxRight');
 $('.prev').on('click',function () {
-  let boxLeft=parseFloat(box.css('left'));
-  let leftVal=(parseFloat($('.similarMissionBottomBoxRight').css('width'))-(215+34)*4)*-1;
+  var boxLeft=parseFloat(box.css('left'));
+  var leftVal=(parseFloat($('.similarMissionBottomBoxRight').css('width'))-(215+34)*4)*-1;
   if(boxLeft>leftVal){
     box.css('left',boxLeft-=215+34)
   }
 });
 $('.next').on('click',function () {
-  let boxLeft=parseFloat(box.css('left'));
+  var boxLeft=parseFloat(box.css('left'));
   if(boxLeft<0){
     box.css('left',boxLeft+=215+34)
   }

@@ -3,8 +3,8 @@
  */
 
 
-let crowdSourcingId = GetUrlValue('id');
-let rewardMoney = null;
+var crowdSourcingId = GetUrlValue('id');
+var rewardMoney = null;
 
 // 获取需求类型
 function getRequirementType() {
@@ -14,10 +14,10 @@ function getRequirementType() {
     dataType: 'json',
     contentType: 'application/json',
     success: function (data) {
-      let list = data.data;
+      var list = data.data;
       console.log(data);
-      let tempHtml = '';
-      for (let i = 0; i < list.length; i++) {
+      var tempHtml = '';
+      for (var i = 0; i < list.length; i++) {
         tempHtml += '<span class="type-span" value="' + list[i].id + '">' + list[i].typeName + '</span>'
       }
       $('.requirement-type').html(tempHtml);
@@ -44,7 +44,7 @@ function showDetail() { //修改，从我的发布点击'查看'调转过来的
 
 
 function renderPage(data) {
-  let insertRequirementsData = data;
+  var insertRequirementsData = data;
   $('.j_title').html(insertRequirementsData.zbRequirement.title);
   $('.j_username').html(insertRequirementsData.zbRequirement.contactName);
   $('.j_phone').html(insertRequirementsData.zbRequirement.contactPhone);
@@ -52,16 +52,16 @@ function renderPage(data) {
   $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
   $('.j_date').html(insertRequirementsData.zbRequirement.deliveryDeadline);
   $('.j_money').html('￥ <i>' + insertRequirementsData.zbRequirement.rewardMoney / 100 + '</i> 元');
-  let temTagHtml = '';
-  let temTagArr = insertRequirementsData.zbRequirement.tag.split(',');
+  var temTagHtml = '';
+  var temTagArr = insertRequirementsData.zbRequirement.tag.split(',');
   if (temTagArr[0]) {
-    for (let t = 0; t < temTagArr.length; t++) {
+    for (var t = 0; t < temTagArr.length; t++) {
       temTagHtml += '<i class="type-span">' + temTagArr[t] + '</i>'
     }
   }
   $('.j_tag').html(temTagHtml);
   $('.j_checkRemark').html(insertRequirementsData.zbRequirement.checkRemark);
-  let tempTypeHtml = '';
+  var tempTypeHtml = '';
   switch (Number(insertRequirementsData.zbRequirement.type)) { //需求标签
     case 1 : {
       $('.requirement-type-active span').html('数据采集');
@@ -89,11 +89,11 @@ function renderPage(data) {
     }
   }
 
-  let loadfileHtml=renderLoadFile(data.zbRequirementFiles);
+  var loadfileHtml=renderLoadFile(data.zbRequirementFiles);
   $('.j_load-file-list').append(loadfileHtml);
 
 
-  let domModel = $('.crowdsourcing-status span');
+  var domModel = $('.crowdsourcing-status span');
   switch (insertRequirementsData.zbRequirement.status) {
     case 1:
       domModel.html('待审核');
@@ -238,7 +238,7 @@ function renderPage(data) {
 
 }
 
-let commentData={};
+var commentData={};
 $(document).on('click', '.j_commentBtn', function () { // 评价
   $.confirm('\
   <div class="checkMissionBox">\
@@ -261,7 +261,7 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
   </div>', null, function (type) {
 
     if (type == 'yes') {
-      let confirmThis=this;
+      var confirmThis=this;
       commentData.programId=$('.missionTitle').attr('acceptanceAdviceId');
       commentData.content=$("#commentContent").val();
       console.log(commentData);
@@ -316,7 +316,7 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
 
 
 $(document).on('click', '.j_checkMission', function () { // 成果验收
-   let missionTitle=$('.missionTitle').html();
+   var missionTitle=$('.missionTitle').html();
   $.confirm('\
   <div class="checkMissionBox">\
     <h5>需求方验收-' + missionTitle + '</h5>\
@@ -338,8 +338,8 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
     </table>\
   </div>', null, function (type) {
     if (type == 'yes') {
-      let confirmThis=this;
-      let acceptanceAdvice={};
+      var confirmThis=this;
+      var acceptanceAdvice={};
       acceptanceAdvice.status=$("input[name='resultStatus']:checked").val();
       acceptanceAdvice.id=$('.missionTitle').attr('acceptanceAdviceId');
       acceptanceAdvice.checkAdvice=$("#checkAdvice").val();
@@ -410,7 +410,7 @@ function missionApplyInfo(data) { //任务报名信息显示
   }
   //方案附件列表
   if(data.programFiles!==undefined){
-    let missionResultLoadfileHtml=renderLoadFile(data.programFiles);
+    var missionResultLoadfileHtml=renderLoadFile(data.programFiles);
     $('.j_missionResult-load-file-list').append(missionResultLoadfileHtml);
   }
 }
@@ -424,7 +424,7 @@ $('.j_checkAdviceDetail').on('mouseover', function () { //鼠标离开描述显�
 
 
 $(document).on('click', '.moneyAdd', function () { //托管资金点击增加 托管金额百分比
-  let percentage = Number($('.moneyHow').html());
+  var percentage = Number($('.moneyHow').html());
   if (30 <= percentage && percentage < 100) {
     percentage += 1;
     $('.moneyHow').html(Number(percentage));
@@ -434,7 +434,7 @@ $(document).on('click', '.moneyAdd', function () { //托管资金点击增加 �
 });
 
 $(document).on('click', '.moneySub', function () { //托管资金点击增加 托管金额百分比
-  let percentage = Number($('.moneyHow').html());
+  var percentage = Number($('.moneyHow').html());
   if (30 < percentage && percentage <= 100) {
     percentage -= 1;
     $('.moneyHow').html(Number(percentage));
@@ -487,10 +487,10 @@ $('.tagNotice').on('mouseover', function () { //鼠标离开描述显示工具�
 
 
 function renderLoadFile(loadFileList) { //渲染附件列表
-  let tempHtml = '';
-  for (let c = 0; c < loadFileList.length; c++) { //渲染附件
+  var tempHtml = '';
+  for (var c = 0; c < loadFileList.length; c++) { //渲染附件
 
-    let className = fileTypeClassName(loadFileList[c].filePath);
+    var className = fileTypeClassName(loadFileList[c].filePath);
     tempHtml += '\
         <dl fileName="' + loadFileList[c].fileName + '" filePath="' + loadFileList[c].filePath + '" class="load-file ' + className + '">\
           <dt><a href="javascript:void(0)" title=""><img src="' + loadFileList[c].filePath + '"></a></dt>\
@@ -506,10 +506,10 @@ function renderLoadFile(loadFileList) { //渲染附件列表
 }
 
 function fileTypeClassName(fileName) { //返回class
-  let fileTypeReg = /[^.]*$/;
-  let fileType = fileTypeReg.exec(fileName)[0];
+  var fileTypeReg = /[^.]*$/;
+  var fileType = fileTypeReg.exec(fileName)[0];
 
-  let fileTypeObj = {
+  var fileTypeObj = {
     image: {
       'gif': 'gif',
       'jpg': 'jpg',
@@ -533,7 +533,7 @@ function fileTypeClassName(fileName) { //返回class
 
     }
   };
-  let attachmentListClassName = '';
+  var attachmentListClassName = '';
   switch (fileType) {
     case fileTypeObj.file.doc:
     case fileTypeObj.file.docx:

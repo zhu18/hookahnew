@@ -785,7 +785,11 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
                 ApiWithBLOBs apiInfo = JSON.parseObject(JSON.parseObject(result).getString("data"), ApiWithBLOBs.class);
 
                 MgGoods.ApiInfoBean apiInfoBean = new MgGoods.ApiInfoBean();
-                this.warpperApiInfo(apiInfo, apiInfoBean);
+                if(!Objects.isNull(apiInfo)){
+                    this.warpperApiInfo(apiInfo, apiInfoBean);
+                }else{
+                    throw new HookahException("URL[" + url + "]获取API信息失败。原因：" + result);
+                }
                 goodsVo.setApiInfo(apiInfoBean);
 
             } else {

@@ -2,9 +2,9 @@
  * Created by Dajun on 2017-9-19.
  */
 
-let crowdSourcingId = GetUrlValue('id');
-let rewardMoney = null;
-let commentData={};
+var crowdSourcingId = GetUrlValue('id');
+var rewardMoney = null;
+var commentData={};
 
 // 获取需求类型
 function getRequirementType() {
@@ -14,10 +14,10 @@ function getRequirementType() {
     dataType: 'json',
     contentType: 'application/json',
     success: function (data) {
-      let list = data.data;
+      var list = data.data;
       console.log(data);
-      let tempHtml = '';
-      for (let i = 0; i < list.length; i++) {
+      var tempHtml = '';
+      for (var i = 0; i < list.length; i++) {
         tempHtml += '<span class="type-span" value="' + list[i].id + '">' + list[i].typeName + '</span>'
       }
       $('.requirement-type').html(tempHtml);
@@ -49,7 +49,7 @@ function renderPage(data) {
   $('.j_applyDeadline').html(data.zbRequirementSPVo.applyDeadline);
 
   $('.j_checkRemark').html(insertRequirementsData.zbRequirementSPVo.checkRemark);
-  let tempTypeHtml = '';
+  var tempTypeHtml = '';
   switch (Number(insertRequirementsData.zbRequirementSPVo.type)) { //需求标签
     case 1 : {
       $('.requirement-type-active span').html('数据采集');
@@ -76,10 +76,10 @@ function renderPage(data) {
       break;
     }
   }
-  let loadfileHtml=null;
+  var loadfileHtml=null;
 
 
-  let domModel = $('.crowdsourcing-status span');
+  var domModel = $('.crowdsourcing-status span');
   switch (insertRequirementsData.reqStatus) {
     case 1://工作中
       domModel.html('工作中');
@@ -297,17 +297,17 @@ $(document).on('click', '.j_submitResult', function () {
   </div>', null, function (type) {
 
     if (type == 'yes') {
-      let confirmThis=this;
-      let annexList = [];//附件列表
-      let list = $('.j_resultLoadFile dl.load-file');
-      for (let i = 0; i < list.length; i++) {
-        let tempObj = {
+      var confirmThis=this;
+      var annexList = [];//附件列表
+      var list = $('.j_resultLoadFile dl.load-file');
+      for (var i = 0; i < list.length; i++) {
+        var tempObj = {
           fileName: list.eq(i).attr('fileName'),
           filePath: list.eq(i).attr('filePath')
         };
         annexList.push(tempObj);
       }
-      let resultData={
+      var resultData={
         title:$('.j_resultTitle').val(),
         applyId:$('.j_myMissionResult').attr("applyId"),
         requirementId:$('.j_myMissionResult').attr("requirementId"),
@@ -441,7 +441,7 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
   </div>', null, function (type) {
 
     if (type == 'yes') {
-      let confirmThis=this;
+      var confirmThis=this;
       commentData.programId=$('.missionTitle').attr('acceptanceAdviceId');
       commentData.content=$("#commentContent").val();
       commentData.requirementId=$('.j_myMissionResult').attr("requirementId");
@@ -498,7 +498,7 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
 
 
 $(document).on('click', '.j_checkMission', function () { // 成果验收
-   let missionTitle=$('.missionTitle').html();
+   var missionTitle=$('.missionTitle').html();
   $.confirm('\
   <div class="checkMissionBox">\
     <h5>需求方验收-' + missionTitle + '</h5>\
@@ -520,8 +520,8 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
     </table>\
   </div>', null, function (type) {
     if (type == 'yes') {
-      let confirmThis=this;
-      let acceptanceAdvice={};
+      var confirmThis=this;
+      var acceptanceAdvice={};
       acceptanceAdvice.status=$("input[name='resultStatus']:checked").val();
       acceptanceAdvice.id=$('.missionTitle').attr('acceptanceAdviceId');
       acceptanceAdvice.checkAdvice=$("#checkAdvice").val();
@@ -601,7 +601,7 @@ $('.j_checkAdviceDetail').on('mouseover', function () { //鼠标离开描述显�
 
 
 $(document).on('click', '.moneyAdd', function () { //托管资金点击增加 托管金额百分比
-  let percentage = Number($('.moneyHow').html());
+  var percentage = Number($('.moneyHow').html());
   if (30 <= percentage && percentage < 100) {
     percentage += 1;
     $('.moneyHow').html(Number(percentage));
@@ -611,7 +611,7 @@ $(document).on('click', '.moneyAdd', function () { //托管资金点击增加 �
 });
 
 $(document).on('click', '.moneySub', function () { //托管资金点击增加 托管金额百分比
-  let percentage = Number($('.moneyHow').html());
+  var percentage = Number($('.moneyHow').html());
   if (30 < percentage && percentage < 100) {
     percentage -= 1;
     $('.moneyHow').html(Number(percentage));
@@ -651,16 +651,16 @@ function renderLoadFile(loadFileList,noDownloadIco='false') { //渲染附件列�
     return;
   }
 
-  let tempHtml = '';
-  for (let c = 0; c < loadFileList.length; c++) { //渲染附件
-    let NoDownLoadIcoDom='';
+  var tempHtml = '';
+  for (var c = 0; c < loadFileList.length; c++) { //渲染附件
+    var NoDownLoadIcoDom='';
     if(noDownloadIco !== 'true'){
       NoDownLoadIcoDom='<div class="crowdsourcing-table-edit">\
             <a href="' + loadFileList[c].filePath + '" target="_blank" class="download"><img src="/static/images/crowdsourcing/download.png" alt=""></a>\
           </div>';
     }
 
-    let className = fileTypeClassName(loadFileList[c].filePath);
+    var className = fileTypeClassName(loadFileList[c].filePath);
     tempHtml += '\
         <dl fileName="' + loadFileList[c].fileName + '" filePath="' + loadFileList[c].filePath + '" class="load-file ' + className + '">\
           <dt><a href="javascript:void(0)" title=""><img src="' + loadFileList[c].filePath + '"></a></dt>\
@@ -674,10 +674,10 @@ function renderLoadFile(loadFileList,noDownloadIco='false') { //渲染附件列�
 }
 
 function fileTypeClassName(fileName) { //返回class
-  let fileTypeReg = /[^.]*$/;
-  let fileType = fileTypeReg.exec(fileName)[0];
+  var fileTypeReg = /[^.]*$/;
+  var fileType = fileTypeReg.exec(fileName)[0];
 
-  let fileTypeObj = {
+  var fileTypeObj = {
     image: {
       'gif': 'gif',
       'jpg': 'jpg',
@@ -701,7 +701,7 @@ function fileTypeClassName(fileName) { //返回class
 
     }
   };
-  let attachmentListClassName = '';
+  var attachmentListClassName = '';
   switch (fileType) {
     case fileTypeObj.file.doc:
     case fileTypeObj.file.docx:
