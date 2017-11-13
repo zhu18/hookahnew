@@ -8,12 +8,12 @@ function loadPageData(data) { //渲染页面数据
   userType=data.data.userType;
   data = data.data.list;
   console.log(data);
-  let demandList = '';
-  for (let i = 0; i < data.length; i++) {
-    let tempState = '';
-    let tempType = '';
-    let tempClass = '';
-    let tempButtonHtml = '';
+  var demandList = '';
+  for (var i = 0; i < data.length; i++) {
+    var tempState = '';
+    var tempType = '';
+    var tempClass = '';
+    var tempButtonHtml = '';
     var aHref = '';
     switch (data[i].status) {
       case 5:
