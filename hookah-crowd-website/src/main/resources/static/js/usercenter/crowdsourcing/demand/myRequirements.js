@@ -19,9 +19,9 @@ function loadPageData(data) { //渲染页面数据
           </tr>\
           </thead>\
           <tbody>';
-  for (let i = 0; i < data.length; i++) {
-    let tempState = '';
-    let tempEdit = '';
+  for (var i = 0; i < data.length; i++) {
+    var tempState = '';
+    var tempEdit = '';
     switch (data[i].status) {
       case 1:
         tempState = '待审核';
@@ -96,7 +96,7 @@ function loadPageData(data) { //渲染页面数据
 
 }
 $(document).on('click', '.j_del', function () { //搜索我的发布
-  let tempId=$(this)[0].id;
+  var tempId=$(this)[0].id;
   // searchFn();
   $.confirm('确定删除？', null, function (type) {
     if (type == 'yes') {
