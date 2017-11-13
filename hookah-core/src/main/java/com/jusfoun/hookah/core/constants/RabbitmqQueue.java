@@ -33,4 +33,9 @@ public interface RabbitmqQueue {
 
     /** 状态推送 */
     public final String CONTRACE_CENTER_STATUS ="CONTRACE_CENTER_STATUS";
+
+    /**
+     * 首页分类修改 货架修改 货架商品修改 触发生成新的首页
+     */
+    public final String CONTRACE_GENERATE_INDEX ="CONTRACE_GENERATE_INDEX";
 }
