@@ -27,17 +27,8 @@ var htmlPart = {
                         <%if(user.userType == 2){%>
 
                         <a href="/usercenter/pspAuthentication" class="btn btn-full-blue">马上成为服务商</a>
-                        <script>
-                            window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/pspAuthentication');
-                        </script>
-
                         <%}else if(user.userType == 4){%>
-                        <script>
-                            window.location.href = host.loginUrl + encodeURIComponent(host.crowd+'/usercenter/epAuthentication');
-                        </script>
-
                         <a href="/usercenter/epAuthentication" class="btn btn-full-blue">马上成为服务商</a>
-
                         <%}%>
                     </div>
                     <div class="facilitator-card clearfix">
