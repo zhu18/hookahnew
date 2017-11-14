@@ -65,10 +65,14 @@
       <if test="userId != '' and userId != null">
         cp.id = #{userId}
       </if>
-      <if test="">
-
+      <if test="userName != '' and userName != null">
+        AND
+        `user`.user_name like CONCAT('%', #{userName}, '%')
       </if>
-
+      <if test="userSn != '' and userSn != null">
+        AND
+        `user`.user_sn = #{userSn}
+      </if>
     </where>
   </select>
 </mapper>
