@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon.config.mq;
+package com.jusfoun.hookah.integral.config.mq;
 
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;

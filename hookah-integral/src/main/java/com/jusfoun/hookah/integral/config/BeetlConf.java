@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon.config;
+package com.jusfoun.hookah.integral.config;
 
 import org.beetl.core.resource.ClasspathResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;

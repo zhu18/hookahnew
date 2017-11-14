@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon.config.cache;
+package com.jusfoun.hookah.integral.config.cache;
 
 import static org.apache.commons.lang3.StringUtils.trimToEmpty;
 import static org.springframework.util.Assert.notNull;

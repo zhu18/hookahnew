@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon.config.mq;
+package com.jusfoun.hookah.integral.config.mq;
 
 import com.jusfoun.hookah.core.constants.RabbitmqExchange;
 import org.slf4j.Logger;

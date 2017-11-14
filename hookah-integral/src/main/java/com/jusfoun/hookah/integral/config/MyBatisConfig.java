@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.jusfoun.hookah.coupon.config;
+package com.jusfoun.hookah.integral.config;
 
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.plugin.Interceptor;

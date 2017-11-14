@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon.config;
+package com.jusfoun.hookah.integral.config;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;

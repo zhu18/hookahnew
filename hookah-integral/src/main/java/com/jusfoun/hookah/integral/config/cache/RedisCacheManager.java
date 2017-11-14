@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon.config.cache;
+package com.jusfoun.hookah.integral.config.cache;
 
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.AbstractCacheManager;

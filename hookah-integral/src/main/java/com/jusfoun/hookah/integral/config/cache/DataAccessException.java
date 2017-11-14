@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon.config.cache;
+package com.jusfoun.hookah.integral.config.cache;
 
 /**
  * DataAccessException

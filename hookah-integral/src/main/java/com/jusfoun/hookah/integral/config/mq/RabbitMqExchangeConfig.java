@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon.config.mq;
+package com.jusfoun.hookah.integral.config.mq;
 
 /**
  * @author:jsshao
@@ -8,6 +8,7 @@ package com.jusfoun.hookah.coupon.config.mq;
 import com.jusfoun.hookah.core.constants.RabbitmqExchange;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.constants.RabbitmqRoutekey;
+import com.jusfoun.hookah.coupon.config.mq.RabbitMqConfig;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

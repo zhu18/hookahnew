@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon.config.cache;
+package com.jusfoun.hookah.integral.config.cache;
 
 import com.jusfoun.hookah.coupon.config.cache.serializer.JacksonJsonRedisSerializer;
 import com.jusfoun.hookah.coupon.config.cache.serializer.RedisSerializer;
