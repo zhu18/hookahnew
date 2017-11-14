@@ -17,7 +17,7 @@
     <module>hookah-static-server</module>
     <module>hookah-pay</module>
     <module>hookah-coupon</module>
-      <module>hookah-crowd-website</module>
+    <module>hookah-crowd-website</module>
   </modules>
 
   <properties>

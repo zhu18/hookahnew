@@ -1150,7 +1150,7 @@ function getGoodsDetails() { //获取商品信息
 	})
 }
 function renderData(data) {//渲染页面
-	if(!data.apiUrl){
+	if(data.goodsType == '1'){
 		if(!data.apiInfo){
 			alert('数据有误');
 			location.href = '/usercenter/goodsOffSale';

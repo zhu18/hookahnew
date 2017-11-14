@@ -1,5 +1,7 @@
 package com.jusfoun.hookah.coupon;
 
+import com.weibo.api.motan.common.MotanConstants;
+import com.weibo.api.motan.util.MotanSwitcherUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +34,7 @@ public class CouponLauncher {
                 "classpath*:hookah_rpc_client_coupon.xml",
                 "classpath*:hookah_rpc_server_coupon.xml",
                 CouponLauncher.class},args);
+        MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
         System.out.println("-------------->CouponLauncher Start <---------------");
     }
 }
