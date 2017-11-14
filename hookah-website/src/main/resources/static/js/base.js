@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	var pathname = window.location.pathname;
 	var path = pathname.replace("/","");
-	var host = window.location.host;
+	// var host = window.location.host;
     if (path==""){
         $('#exchange_menu').show();
         $(".exchange-index-menu").show();
