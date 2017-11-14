@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.coupon;
+package com.jusfoun.hookah.integral;
 
 import com.weibo.api.motan.common.MotanConstants;
 import com.weibo.api.motan.util.MotanSwitcherUtil;
