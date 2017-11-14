@@ -37,6 +37,7 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
     }
 
     @Cacheable(value = "CategoryVo")
+    @Override
     public List<CategoryVo> getCatTree() {
         List<CategoryVo> vo = new ArrayList<>();
         List<Condition> filters = new ArrayList<>();
