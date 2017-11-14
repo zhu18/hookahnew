@@ -1,7 +1,7 @@
 package com.jusfoun.hookah.integral.config.cache;
 
-import com.jusfoun.hookah.coupon.config.cache.serializer.JacksonJsonRedisSerializer;
-import com.jusfoun.hookah.coupon.config.cache.serializer.RedisSerializer;
+import com.jusfoun.hookah.integral.config.cache.serializer.JacksonJsonRedisSerializer;
+import com.jusfoun.hookah.integral.config.cache.serializer.RedisSerializer;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;

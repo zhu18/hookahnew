@@ -29,7 +29,7 @@ public class IntegralLauncher {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(new Object[]{
-                "classpath*:spring_spring-config.xml",
+                "classpath*:spring/spring-config.xml",
                 "classpath*:hookah_rpc_server.xml",
                 "classpath*:hookah_rpc_client.xml",
                 "classpath*:hookah_rpc_server_integral.xml",
