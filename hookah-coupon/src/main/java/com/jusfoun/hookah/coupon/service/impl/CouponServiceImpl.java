@@ -60,7 +60,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         coupon.setCouponSn(CouponHelper.createCouponSn(PropertiesManager.getInstance().getProperty("couponCode"),
                 coupon.getCouponType().toString()));
         coupon.setCouponName(coupon.getCouponName().replaceAll(" ",""));
-        coupon.setCouponStatus((short)1);
+        coupon.setCouponStatus((byte)1);
         switch (coupon.getApplyGoods()) {
             case 1: //指定商品
                 String[] goodsSnList = goodsList.split(",");

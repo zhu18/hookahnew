@@ -6,8 +6,8 @@ import com.jusfoun.hookah.core.generic.GenericDao;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface CouponMapper extends GenericDao<Coupon> {
+
     List<UserCouponVo> getUserCouponCount(HashMap<String, Object> paramMap);
 }
