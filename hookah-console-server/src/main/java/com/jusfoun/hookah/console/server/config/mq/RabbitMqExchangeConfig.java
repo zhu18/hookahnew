@@ -100,6 +100,13 @@ public class RabbitMqExchangeConfig {
         return queue;
     }
 
+    @Bean
+    Queue queueHtmlGenerate(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_GENERATE_INDEX, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
 
     /*************   开始  将 queue 绑定到 指定交换机   *******************/
 
@@ -191,6 +198,20 @@ public class RabbitMqExchangeConfig {
     @Bean
     Binding bindingExchangeCenterStatus(Queue queueStatus, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_CENTER_STATUS);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeHtmlGenerate(Queue queueStatus, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeHtmlGenerate(Queue queueStatus, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }

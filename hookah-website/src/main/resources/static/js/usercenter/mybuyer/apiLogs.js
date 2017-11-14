@@ -1,6 +1,6 @@
 function loadPageData(data) {
     var list = data.data.list;
-    if(list.length > 0){
+    if(list != null && list.length > 0){
         var html = '';
         for(var i=0; i<list.length; i++){
             html+="<tr >" ;
