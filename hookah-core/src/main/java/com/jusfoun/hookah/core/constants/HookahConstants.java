@@ -1,5 +1,8 @@
 package com.jusfoun.hookah.core.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by wangjl on 2017-3-22.
  */
@@ -280,6 +283,89 @@ public class HookahConstants {
 
         public String getCode() {
             return code;
+        }
+    }
+
+    /**
+     *  商品类型
+     */
+    public enum GoodsType{
+        offLine("0","离线"),
+        api("1","API"),
+        model("2","模型"),
+        atSoft("4","软件"), // 分析工具-独立软件
+        atSaas("5","SaaS"), // 分析工具-SaaS
+        asSoft("6","软件"), // 应用场景-独立软件
+        asSaas("7","SaaS"); // 应用场景-SaaS
+        private String code;
+        private String name;
+        private GoodsType(String code,String name){
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public static String getNameByCode(String code){
+            String result = code;
+            for (GoodsType goodsType:GoodsType.values()){
+                if (code.equalsIgnoreCase(goodsType.getCode())){
+                    result = goodsType.getName();
+                }
+            }
+            return result;
+        }
+
+    }
+
+    public enum PurchaseLimitName{
+        currency("0","通用"),
+        person("1","个人"),
+        enterprise("2","企业");
+        private String code;
+        private String name;
+        private PurchaseLimitName(String code, String name){
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+        public static String getNameByCode(String code){
+            String result = code;
+            for (PurchaseLimitName purchaseLimitName:PurchaseLimitName.values()){
+                if (code.equalsIgnoreCase(purchaseLimitName.getCode())){
+                    result = purchaseLimitName.getName();
+                }
+            }
+            return result;
         }
     }
 

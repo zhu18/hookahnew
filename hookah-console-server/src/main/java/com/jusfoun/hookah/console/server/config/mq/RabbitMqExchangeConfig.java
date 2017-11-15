@@ -87,6 +87,13 @@ public class RabbitMqExchangeConfig {
     }
 
     @Bean
+    Queue queueRegCoupon(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACT_REG_COUPON, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
     Queue queueChannel(RabbitAdmin rabbitAdmin) {
         Queue queue = new Queue(RabbitmqQueue.CONTRACE_CENTER_CHANNEL, true);
         rabbitAdmin.declareQueue(queue);
@@ -177,6 +184,13 @@ public class RabbitMqExchangeConfig {
     @Bean
     Binding bindingExchangeWaitSettleOrder(Queue queueWaitSettleOrder, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueWaitSettleOrder).to(exchange).with(RabbitmqQueue.WAIT_SETTLE_ORDERS);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeRegCoupon(Queue queueRegCoupon, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueRegCoupon).to(exchange).with(RabbitmqQueue.CONTRACT_REG_COUPON);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }

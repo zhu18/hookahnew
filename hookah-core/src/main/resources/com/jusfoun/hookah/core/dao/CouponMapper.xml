@@ -42,6 +42,26 @@
     expiry_end_date, valid_days, apply_goods, coupon_status, add_time, activated_time, 
     update_time, user_name, add_user, activated_user, update_user, is_deleted
   </sql>
+  <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.jusfoun.hookah.core.domain.Coupon" >
+    insert into coupon (id, coupon_sn, coupon_type,
+    coupon_name, apply_platform, total_count,
+    received_count, used_count, face_value,
+    limited_count, apply_channel, discount_value,
+    expiry_start_date, expiry_end_date, valid_days,
+    apply_goods, coupon_status, add_time,
+    activated_time, update_time, user_name,
+    add_user, activated_user, update_user,
+    is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{couponSn,jdbcType=VARCHAR}, #{couponType,jdbcType=TINYINT},
+    #{couponName,jdbcType=VARCHAR}, #{applyPlatform,jdbcType=TINYINT}, #{totalCount,jdbcType=INTEGER},
+    #{receivedCount,jdbcType=INTEGER}, #{usedCount,jdbcType=INTEGER}, #{faceValue,jdbcType=BIGINT},
+    #{limitedCount,jdbcType=TINYINT}, #{applyChannel,jdbcType=TINYINT}, #{discountValue,jdbcType=BIGINT},
+    #{expiryStartDate,jdbcType=TIMESTAMP}, #{expiryEndDate,jdbcType=TIMESTAMP}, #{validDays,jdbcType=INTEGER},
+    #{applyGoods,jdbcType=TINYINT}, #{couponStatus,jdbcType=TINYINT}, #{addTime,jdbcType=TIMESTAMP},
+    #{activatedTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{userName,jdbcType=VARCHAR},
+    #{addUser,jdbcType=VARCHAR}, #{activatedUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR},
+    #{isDeleted,jdbcType=TINYINT})
+  </insert>
   <select id="getUserCouponCount" resultType="com.jusfoun.hookah.core.domain.vo.UserCouponVo" parameterType="java.util.HashMap">
     SELECT cp.id AS userId,
     `user`.user_name AS userName,
