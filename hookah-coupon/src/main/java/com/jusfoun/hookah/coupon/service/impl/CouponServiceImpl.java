@@ -73,8 +73,8 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             case 2: //指定分类
                 break;
         }
-        int couponId = couponMapper.insertAndGetId(coupon);
-        coupon.setId((long)couponId);
+        couponMapper.insertAndGetId(coupon);
+        coupon.setId(coupon.getId());
         BeanUtils.copyProperties(coupon,mgCoupon);
         mgCouponService.insert(mgCoupon);
         return ReturnData.success("");

@@ -43,7 +43,7 @@
     update_time, user_name, add_user, activated_user, update_user, is_deleted
   </sql>
   <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.jusfoun.hookah.core.domain.Coupon" >
-    insert into coupon (id, coupon_sn, coupon_type,
+    insert into coupon (coupon_sn, coupon_type,
     coupon_name, apply_platform, total_count,
     received_count, used_count, face_value,
     limited_count, apply_channel, discount_value,
@@ -52,7 +52,7 @@
     activated_time, update_time, user_name,
     add_user, activated_user, update_user,
     is_deleted)
-    values (#{id,jdbcType=BIGINT}, #{couponSn,jdbcType=VARCHAR}, #{couponType,jdbcType=TINYINT},
+    values (#{couponSn,jdbcType=VARCHAR}, #{couponType,jdbcType=TINYINT},
     #{couponName,jdbcType=VARCHAR}, #{applyPlatform,jdbcType=TINYINT}, #{totalCount,jdbcType=INTEGER},
     #{receivedCount,jdbcType=INTEGER}, #{usedCount,jdbcType=INTEGER}, #{faceValue,jdbcType=BIGINT},
     #{limitedCount,jdbcType=TINYINT}, #{applyChannel,jdbcType=TINYINT}, #{discountValue,jdbcType=BIGINT},
