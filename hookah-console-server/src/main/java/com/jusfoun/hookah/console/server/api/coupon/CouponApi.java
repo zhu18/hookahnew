@@ -9,9 +9,11 @@ import com.jusfoun.hookah.core.domain.vo.CouponVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.CouponService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,8 +33,9 @@ public class CouponApi extends BaseController {
     private CouponService couponService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ReturnData addCoupon(CouponVo couponVo, String goodsList, String categoriesList){
+    public ReturnData addCoupon(String coupon, String goodsList, String categoriesList){
         try {
+            CouponVo couponVo = JsonUtils.toObject(coupon,CouponVo.class);
             String userId = this.getCurrentUser().getUserId();
             if (StringUtils.isNotBlank(couponVo.getExpiryStartTime())){
                 Date expiryStartTime = DateUtils.getDate(DateUtils.transferTime(couponVo.getExpiryStartTime()),DateUtils.DATE_FORMAT);
