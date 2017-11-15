@@ -54,18 +54,19 @@ public class CouponApi extends BaseController {
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public ReturnData modifyCoupon(Coupon coupon, String expiryStartDate, String expiryEndDate, String goodsList, String categoriesList){
+    public ReturnData modifyCoupon(String coupon, String goodsList, String categoriesList){
         try {
+            CouponVo couponVo = JsonUtils.toObject(coupon,CouponVo.class);
             String userId = this.getCurrentUser().getUserId();
-            if (StringUtils.isNotBlank(expiryStartDate)){
-                Date expiryStartTime = DateUtils.getDate(expiryStartDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
-                coupon.setExpiryStartDate(expiryStartTime);
+            if (StringUtils.isNotBlank(couponVo.getExpiryStartTime())){
+                Date expiryStartTime = DateUtils.getDate(DateUtils.transferTime(couponVo.getExpiryStartTime()),DateUtils.DATE_FORMAT);
+                couponVo.setExpiryStartDate(expiryStartTime);
             }
-            if (StringUtils.isNotBlank(expiryEndDate)){
-                Date expiryEndTime = DateUtils.getDate(expiryEndDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
-                coupon.setExpiryEndDate(expiryEndTime);
+            if (StringUtils.isNotBlank(couponVo.getExpiryEndTime())){
+                Date expiryEndTime = DateUtils.getDate(DateUtils.transferTime(couponVo.getExpiryEndTime()),DateUtils.DEFAULT_DATE_TIME_FORMAT);
+                couponVo.setExpiryEndDate(expiryEndTime);
             }
-            return couponService.modify(coupon,goodsList,userId,categoriesList);
+            return couponService.modify(couponVo,goodsList,userId,categoriesList);
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());
