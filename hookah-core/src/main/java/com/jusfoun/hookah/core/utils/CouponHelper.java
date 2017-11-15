@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class CouponHelper {
 
-    public static String createCouponSn(String prefix, String type){
+    public static String createCouponSn(String prefix, Byte type){
 
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);

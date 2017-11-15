@@ -10,4 +10,6 @@ import java.util.List;
 public interface CouponMapper extends GenericDao<Coupon> {
 
     List<UserCouponVo> getUserCouponCount(HashMap<String, Object> paramMap);
+
+    int insertAndGetId(Coupon coupon);
 }

@@ -38,4 +38,9 @@ public interface RabbitmqQueue {
      * 首页分类修改 货架修改 货架商品修改 触发生成新的首页
      */
     public final String CONTRACE_GENERATE_INDEX ="CONTRACE_GENERATE_INDEX";
+
+    /**
+     * 注册赠送优惠券
+     */
+    public final String CONTRACT_REG_COUPON ="CONTRACT_REG_COUPON";
 }
