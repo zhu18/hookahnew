@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Coupon;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.CouponVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
@@ -30,20 +31,18 @@ public class CouponApi extends BaseController {
     private CouponService couponService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ReturnData addCoupon(Coupon coupon, String expiryStartDate, String expiryEndDate,  String goodsList, String categoriesList){
+    public ReturnData addCoupon(CouponVo couponVo, String goodsList, String categoriesList){
         try {
             String userId = this.getCurrentUser().getUserId();
-            Date expiryStartTime = null;
-            Date expiryEndTime = null;
-            if (StringUtils.isNotBlank(expiryStartDate)){
-                expiryStartTime = DateUtils.getDate(expiryStartDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+            if (StringUtils.isNotBlank(couponVo.getExpiryStartTime())){
+                Date expiryStartTime = DateUtils.getDate(couponVo.getExpiryStartTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT);
+                couponVo.setExpiryStartDate(expiryStartTime);
             }
-            if (StringUtils.isNotBlank(expiryEndDate)){
-                expiryEndTime = DateUtils.getDate(expiryEndDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+            if (StringUtils.isNotBlank(couponVo.getExpiryEndTime())){
+                Date expiryEndTime = DateUtils.getDate(couponVo.getExpiryEndTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT);
+                couponVo.setExpiryEndDate(expiryEndTime);
             }
-            coupon.setExpiryStartDate(expiryStartTime);
-            coupon.setExpiryEndDate(expiryEndTime);
-            return couponService.addCoupon(coupon,goodsList,userId,categoriesList);
+            return couponService.addCoupon(couponVo,goodsList,userId,categoriesList);
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());
