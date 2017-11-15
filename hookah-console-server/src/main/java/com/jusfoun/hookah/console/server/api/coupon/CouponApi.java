@@ -30,7 +30,8 @@ public class CouponApi extends BaseController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnData addCoupon(Coupon coupon, String goodsList, String categoriesList){
         try {
-            return couponService.addCoupon(coupon,goodsList,categoriesList);
+            String userId = this.getCurrentUser().getUserId();
+            return couponService.addCoupon(coupon,goodsList,userId,categoriesList);
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -41,7 +42,8 @@ public class CouponApi extends BaseController {
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public ReturnData modifyCoupon(Coupon coupon, String goodsList, String categoriesList){
         try {
-            return couponService.modify(coupon,goodsList,categoriesList);
+            String userId = this.getCurrentUser().getUserId();
+            return couponService.modify(coupon,goodsList,userId,categoriesList);
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());

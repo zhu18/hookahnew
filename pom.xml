@@ -18,6 +18,7 @@
     <module>hookah-pay</module>
     <module>hookah-coupon</module>
     <module>hookah-crowd-website</module>
+    <module>hookah-integral</module>
   </modules>
 
   <properties>

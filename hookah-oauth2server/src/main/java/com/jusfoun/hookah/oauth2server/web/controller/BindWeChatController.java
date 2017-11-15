@@ -119,7 +119,7 @@ public class BindWeChatController {
 
     public String generateUserSn(){
         String date = DateUtils.toDateText(new Date(), "yyMM");
-        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
+        String userSn = HookahConstants.platformCode + date + String.format("%06d",Integer.parseInt(redisOperate.incr("userSn")));
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("userSn",userSn));
         User user = userService.selectOne(filter);
