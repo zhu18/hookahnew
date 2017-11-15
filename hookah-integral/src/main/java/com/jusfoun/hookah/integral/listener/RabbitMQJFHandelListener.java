@@ -29,7 +29,7 @@ public class RabbitMQJFHandelListener {
         JfRecord jfRecord = new JfRecord();
         jfRecord.setUserId(jfBo.getUserId());
         jfRecord.setSourceId(jfBo.getSourceId());
-        jfRecord.setNote();
+//        jfRecord.setNote();
         jfRecord.setExpire(Short.parseShort("0"));
         jfRecord.setOperator("System");
         jfRecord.setAddTime(new Date());
