@@ -25,19 +25,19 @@ export default function supplierRouting($stateProvider, $urlRouterProvider) {
       permission: 'query'
     })
     .state('coupon.couponDetail', { //优惠券详情
-      url: '/coupon/couponDetail',
+      url: '/coupon/couponDetail/:id',
       template: require('./couponDetail.html'),
       controller: couponDetailController,
       permission: 'couponDetail'
     })
     .state('coupon.userDetail', { //优惠券用户详情
-      url: '/coupon/userDetail',
+      url: '/coupon/userDetail/:id',
       template: require('./userDetail.html'),
       controller: userDetailController,
       permission: 'userDetail'
     })
     .state('coupon.add', { //优惠券添加
-      url: '/coupon/add',
+      url: '/coupon/add/:id',
       template: require('./add.html'),
       controller: addController,
       permission: 'add'
