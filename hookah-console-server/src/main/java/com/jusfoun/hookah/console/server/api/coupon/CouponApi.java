@@ -35,11 +35,12 @@ public class CouponApi extends BaseController {
         try {
             String userId = this.getCurrentUser().getUserId();
             if (StringUtils.isNotBlank(couponVo.getExpiryStartTime())){
-                Date expiryStartTime = DateUtils.getDate(couponVo.getExpiryStartTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT);
+                String time = DateUtils.transferTime(couponVo.getExpiryStartTime());
+                Date expiryStartTime = DateUtils.getDate(DateUtils.transferTime(couponVo.getExpiryStartTime()),DateUtils.DEFAULT_DATE_TIME_FORMAT);
                 couponVo.setExpiryStartDate(expiryStartTime);
             }
             if (StringUtils.isNotBlank(couponVo.getExpiryEndTime())){
-                Date expiryEndTime = DateUtils.getDate(couponVo.getExpiryEndTime(),DateUtils.DEFAULT_DATE_TIME_FORMAT);
+                Date expiryEndTime = DateUtils.getDate(DateUtils.transferTime(couponVo.getExpiryEndTime()),DateUtils.DEFAULT_DATE_TIME_FORMAT);
                 couponVo.setExpiryEndDate(expiryEndTime);
             }
             return couponService.addCoupon(couponVo,goodsList,userId,categoriesList);
