@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.Coupon;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.CouponService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,9 +30,19 @@ public class CouponApi extends BaseController {
     private CouponService couponService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ReturnData addCoupon(Coupon coupon, String goodsList, String categoriesList){
+    public ReturnData addCoupon(Coupon coupon, String expiryStartDate, String expiryEndDate,  String goodsList, String categoriesList){
         try {
             String userId = this.getCurrentUser().getUserId();
+            Date expiryStartTime = null;
+            Date expiryEndTime = null;
+            if (StringUtils.isNotBlank(expiryStartDate)){
+                expiryStartTime = DateUtils.getDate(expiryStartDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+            }
+            if (StringUtils.isNotBlank(expiryEndDate)){
+                expiryEndTime = DateUtils.getDate(expiryEndDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+            }
+            coupon.setExpiryStartDate(expiryStartTime);
+            coupon.setExpiryEndDate(expiryEndTime);
             return couponService.addCoupon(coupon,goodsList,userId,categoriesList);
         }catch (Exception e){
             e.printStackTrace();
@@ -40,9 +52,17 @@ public class CouponApi extends BaseController {
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public ReturnData modifyCoupon(Coupon coupon, String goodsList, String categoriesList){
+    public ReturnData modifyCoupon(Coupon coupon, String expiryStartDate, String expiryEndDate, String goodsList, String categoriesList){
         try {
             String userId = this.getCurrentUser().getUserId();
+            if (StringUtils.isNotBlank(expiryStartDate)){
+                Date expiryStartTime = DateUtils.getDate(expiryStartDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+                coupon.setExpiryStartDate(expiryStartTime);
+            }
+            if (StringUtils.isNotBlank(expiryEndDate)){
+                Date expiryEndTime = DateUtils.getDate(expiryEndDate,DateUtils.DEFAULT_DATE_TIME_FORMAT);
+                coupon.setExpiryEndDate(expiryEndTime);
+            }
             return couponService.modify(coupon,goodsList,userId,categoriesList);
         }catch (Exception e){
             e.printStackTrace();
@@ -159,7 +179,8 @@ public class CouponApi extends BaseController {
     public ReturnData getCouponReceivedDetail(String userId, Long couponId, Byte userCouponStatus, String orderSn,
                                               String currentPage, String pageSize){
         try {
-            Pagination page = couponService.getCouponReceivedDetail(userId,couponId,userCouponStatus,orderSn,currentPage,pageSize);
+            Byte couponTag = null;
+            Pagination page = couponService.getCouponReceivedDetail(userId,couponId,userCouponStatus,orderSn,currentPage,pageSize,couponTag);
             return ReturnData.success(page);
         }catch (Exception e){
             e.printStackTrace();

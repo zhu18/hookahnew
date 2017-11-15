@@ -56,6 +56,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         User user = userService.selectById(userId);
         coupon.setAddUser(user.getUserId());
         coupon.setUserName(user.getUserName());
+        coupon.setFaceValue(coupon.getFaceValue()*100);
         coupon.setAddTime(date);
         coupon.setCouponSn(CouponHelper.createCouponSn(PropertiesManager.getInstance().getProperty("couponCode"), coupon.getCouponType()));
         coupon.setCouponName(coupon.getCouponName().trim());
@@ -100,10 +101,18 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
 
     @Override
     public Pagination getCouponReceivedDetail(String userId, Long couponId, Byte userCouponStatus, String orderSn,
-                                              String currentPage, String pageSize) throws Exception {
+                                              String currentPage, String pageSize, Byte couponTag) throws Exception {
         List<Condition> filter = new ArrayList<>();
         List<OrderBy> orderBys = new ArrayList<>();
-        orderBys.add(OrderBy.desc("receivedTime"));
+        if (couponTag!=null){
+            if (couponTag==0){
+                orderBys.add(OrderBy.desc("receivedTime"));
+            }else if (couponTag==1){
+                orderBys.add(OrderBy.asc("expiryEndDate"));
+            }
+        }else {
+            orderBys.add(OrderBy.desc("receivedTime"));
+        }
         int pageNumberNew = HookahConstants.PAGE_NUM;
         if (StringUtils.isNotBlank(currentPage)) {
             pageNumberNew = Integer.parseInt(currentPage);
@@ -127,6 +136,16 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         filter.add(Condition.eq("isDeleted",(byte)0));
         Pagination pagination = userCouponService.getListInPage(pageNumberNew,pageSizeNew,filter,orderBys);
         return pagination;
+    }
+
+    @Override
+    public Pagination getCouponByUserId(String userId, Long couponId, Byte userCouponStatus, String orderSn, String currentPage, String pageSize, Byte couponTag) throws Exception {
+        Pagination page = getCouponReceivedDetail(userId,couponId,userCouponStatus,orderSn,currentPage,pageSize,couponTag);
+        List<UserCoupon> userCoupons = page.getList();
+        for (UserCoupon userCoupon : userCoupons){
+
+        }
+        return null;
     }
 
     @Override

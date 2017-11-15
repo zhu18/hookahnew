@@ -20,7 +20,10 @@ public interface CouponService extends GenericService<Coupon,Long> {
     ReturnData modify(Coupon coupon, String goodsList, String userId, String categoriesList) throws Exception;
 
     Pagination getCouponReceivedDetail(String userId, Long couponId, Byte userCouponStatus, String orderSn,
-                                       String currentPage, String pageSize) throws Exception;
+                                       String currentPage, String pageSize, Byte couponTag) throws Exception;
+
+    Pagination getCouponByUserId(String userId, Long couponId, Byte userCouponStatus, String orderSn, String currentPage,
+                                 String pageSize, Byte couponTag) throws Exception;
 
     void logicDelete(Long couponId) throws Exception;
 
