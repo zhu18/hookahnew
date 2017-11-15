@@ -42,8 +42,8 @@ class couponController {
                             $scope.limitedCount=info.limitedCount;
                             $scope.applyChannel=info.applyChannel;
                             $scope.discountValue=info.discountValue;
-                            $scope.expiryStartTime=new Date(info.expiryStartTime);
-                            $scope.expiryEndTime=new Date(info.expiryEndTime);
+                            $scope.expiryStartTime=new Date(info.expiryStartDate);
+                            $scope.expiryEndTime=new Date(info.expiryEndDate);
                             $scope.validDays=info.validDays;
                             $scope.applyGood=info.applyGood;
                     } else {

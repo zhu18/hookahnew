@@ -90,7 +90,7 @@
                                 <p class="input-group col-sm-4" style="float: left">
                                     <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
                                            ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                           uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="expiryStartTime" name="expiryStartTime"
+                                           uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="expiryStartTime"
                                            is-open="popup1.opened" datepicker-options="startDateOptions" close-text="关闭" clear-text="清除"
                                            current-text="今天" readonly="true"/>
                                     <span class="input-group-btn">
@@ -101,7 +101,7 @@
                                 <p class="input-group col-sm-4" style="float: left">
                                     <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
                                            ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                           uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="expiryEndTime" name="expiryEndTime"
+                                           uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="expiryEndTime"
                                            is-open="popup2.opened" datepicker-options="endDateOptions"
                                            close-text="Close" close-text="关闭" clear-text="清除" current-text="今天" readonly="true"/>
                                     <span class="input-group-btn">
@@ -132,9 +132,9 @@
                     <label class="col-sm-4 control-label" >可使用商品</label>
                     <div class="col-sm-4">
                         <div class="col-sm-12">
-                            <input type="radio" name="applyGoods" ng-model="applyGoods" value="0" ng-checked="applyGoods==2" style="margin-right: 10px"/>全部商品
-                            <input type="radio" name="applyGoods" ng-model="applyGoods" value="1" ng-checked="applyGoods==3" style="margin-right: 10px"/>部分商品
-                            <input type="radio" name="applyGoods" ng-model="applyGoods" value="2" ng-checked="applyGoods==1" style="margin-right: 10px"/>部分分类
+                            <input type="radio" name="applyGoods" ng-model="applyGoods" value="0" ng-checked="applyGoods==0" style="margin-right: 10px"/>全部商品
+                            <input type="radio" name="applyGoods" ng-model="applyGoods" value="1" ng-checked="applyGoods==1" style="margin-right: 10px"/>部分商品
+                            <input type="radio" name="applyGoods" ng-model="applyGoods" value="2" ng-checked="applyGoods==2" style="margin-right: 10px"/>部分分类
                         </div>
 
                     </div>
