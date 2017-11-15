@@ -1,5 +1,5 @@
 class couponController {
-  constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
+  constructor($scope, $rootScope, $http, $state) {
       $scope.typeStatuss = [               //自定定义类型数据
           {id:-1, name:"全部"},
           {id:1, name:"注册赠券"},
@@ -20,55 +20,85 @@ class couponController {
               $scope.controlScreenShow=true;
 
           }
-      }
+      };
     $scope.search = function (initCurrentPage) { //Render page function
-      //
-      // var promise = $http({
-      //   method: 'GET',
-      //   url: $rootScope.site.apiServer + "/api/supplier/all",
-      //   params: {
-      //     checkStatus: $scope.checkStatus == 0 ? '0' : ($scope.checkStatus ? $scope.checkStatus : null),//审核状态
-      //     contactPhone: $scope.contactPhone ? $scope.contactPhone : null,
-      //     orgName: $scope.orgName ? $scope.orgName : null,
-      //     startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
-      //     endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-      //     currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
-      //     pageSize: $rootScope.pagination.pageSize,
-      //   }
-      // });
-      // promise.then(function (res, status, config, headers) {
-      //   console.log('数据在这里');
-      //   console.log(res);
-      //
-      //   if (res.data.code == '1') {
-      //     $scope.couponList = res.data.data.list;
-      //     // $rootScope.pagination = res.data.data;
-      //     $scope.showNoneDataInfoTip = false;
-      //     if (res.data.data.list.length > 0) {
-      //       if (res.data.data.totalPage > 1) {
-      //         $scope.showPageHelpInfo = true;
-      //       } else {
-      //
-      //         $scope.showPageHelpInfo = false;
-      //
-      //       }
-      //     } else {
-      //       $rootScope.loadingState = false;
-      //       $scope.showNoneDataInfoTip = true;
-      //     }
-      //
-      //
-      //   } else {
-      //     $scope.supplierList = [];
-      //     $scope.showNoneDataInfoTip = true;
-      //
-      //   }
-      //
-      //   $rootScope.loadingState = false;
-      //   growl.addSuccessMessage("订单数据加载完毕。。。");
-      // });
+
+      var promise = $http({
+        method: 'GET',
+        url: $rootScope.site.apiServer + "/api/coupon/all",
+        params: {
+          couponName: $scope.checkStatus,//审核状态
+          couponType: $scope.contactPhone,
+          currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
+          pageSize: $rootScope.pagination.pageSize,
+        }
+      });
+      promise.then(function (res, status, config, headers) {
+        console.log('数据在这里');
+        console.log(res);
+
+        if (res.data.code == '1') {
+          $scope.showNoneDataInfoTip = false;
+          if (res.data.data.list.length > 0) {
+              $scope.couponList = res.data.data.list;
+            if (res.data.data.totalPage > 1) {
+              $scope.showPageHelpInfo = true;
+            } else {
+
+              $scope.showPageHelpInfo = false;
+
+            }
+          } else {
+            $rootScope.loadingState = false;
+            $scope.showNoneDataInfoTip = true;
+          }
+
+
+        } else {
+          $scope.supplierList = [];
+          $scope.showNoneDataInfoTip = true;
+
+        }
+
+        $rootScope.loadingState = false;
+        growl.addSuccessMessage("订单数据加载完毕。。。");
+      });
 
     };
+    $scope.delete=function (id) {
+        var promise = $http({
+            method: 'GET',
+            url: $rootScope.site.apiServer + "/api/coupon/delete",
+            params: {
+                couponId:id
+            }
+        });
+        promise.then(function (res, status, config, headers) {
+            console.log('数据在这里');
+            console.log(res);
+
+            if (res.data.code == '1') {
+                var modalInstance =$rootScope.openConfirmDialogModal("删除成功！");
+                modalInstance.result.then(function () {
+
+                }, function () {
+
+                });
+            } else {
+                var modalInstance =$rootScope.openConfirmDialogModal("删除失败！");
+                modalInstance.result.then(function () {
+
+                }, function () {
+
+                });
+            }
+
+            $rootScope.loadingState = false;
+            growl.addSuccessMessage("订单数据加载完毕。。。");
+        });
+    }
+
+      $scope.search();
     $scope.refresh = function () {
       $scope.search();
     };
@@ -76,7 +106,10 @@ class couponController {
       $scope.search();
     };
 
-    $scope.add = function (id) { //Go to add page
+    $scope.add = function () { //Go to add page
+        $state.go('coupon.add')
+    };
+    $scope.edit = function (id) { //Go to add page
         $state.go('coupon.add',{id:id})
     };
     $scope.getDetail = function (id) {//Go to detail page
