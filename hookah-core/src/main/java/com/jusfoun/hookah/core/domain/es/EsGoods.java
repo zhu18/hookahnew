@@ -21,8 +21,8 @@ public class EsGoods implements Serializable {
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.LC_INDEX,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.LC_SEARCH)
     private String goodsName;
-    @EsField
-    private String goodsTypeName;
+    @EsField(type = Type.BYTE)
+    private Byte goodsType;
     @EsField
     private String goodsBrief;
     @EsField
@@ -79,8 +79,8 @@ public class EsGoods implements Serializable {
     @EsField(type = Type.BYTE)
     private Byte isDiscussPrice;
 
-    @EsField
-    private String purchaseLimitName;
+    @EsField(type = Type.BYTE)
+    private Byte purchaseLimit;
 
     public String getGoodsId() {
         return goodsId;
@@ -98,12 +98,12 @@ public class EsGoods implements Serializable {
         this.goodsName = goodsName;
     }
 
-    public String getGoodsTypeName() {
-        return goodsTypeName;
+    public Byte getGoodsTypeName() {
+        return goodsType;
     }
 
-    public void setGoodsTypeName(String goodsTypeName) {
-        this.goodsTypeName = goodsTypeName;
+    public void setGoodsTypeName(Byte goodsType) {
+        this.goodsType = goodsType;
     }
 
     public String getGoodsBrief() {
@@ -282,11 +282,11 @@ public class EsGoods implements Serializable {
         this.isDiscussPrice = isDiscussPrice;
     }
 
-    public String getPurchaseLimitName() {
-        return purchaseLimitName;
+    public Byte getPurchaseLimit() {
+        return purchaseLimit;
     }
 
-    public void setPurchaseLimitName(String purchaseLimitName) {
-        this.purchaseLimitName = purchaseLimitName;
+    public void setPurchaseLimit(Byte purchaseLimit) {
+        this.purchaseLimit = purchaseLimit;
     }
 }
