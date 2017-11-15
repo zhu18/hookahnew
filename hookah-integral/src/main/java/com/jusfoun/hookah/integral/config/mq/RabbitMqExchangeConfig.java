@@ -8,7 +8,6 @@ package com.jusfoun.hookah.integral.config.mq;
 import com.jusfoun.hookah.core.constants.RabbitmqExchange;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.constants.RabbitmqRoutekey;
-import com.jusfoun.hookah.integral.config.mq.RabbitMqConfig;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -83,6 +82,13 @@ public class RabbitMqExchangeConfig {
     @Bean
     Queue queueWaitSettleOrder(RabbitAdmin rabbitAdmin) {
         Queue queue = new Queue(RabbitmqQueue.WAIT_SETTLE_ORDERS, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
+    Queue queueRegCoupon(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACT_REG_COUPON, true);
         rabbitAdmin.declareQueue(queue);
         return queue;
     }
@@ -183,6 +189,13 @@ public class RabbitMqExchangeConfig {
     }
 
     @Bean
+    Binding bindingExchangeRegCoupon(Queue queueRegCoupon, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueRegCoupon).to(exchange).with(RabbitmqQueue.CONTRACT_REG_COUPON);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
     Binding bindingExchangeChannel(Queue queueChannel, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueChannel).to(exchange).with(RabbitmqQueue.CONTRACE_CENTER_CHANNEL);
         rabbitAdmin.declareBinding(binding);
@@ -211,29 +224,29 @@ public class RabbitMqExchangeConfig {
     }
 
     @Bean
-    Binding bindingExchangeHtmlGenerate(Queue queueStatus, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
+    Binding bindingExchangeHtmlGenerate(Queue queueHtmlGenerate, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueHtmlGenerate).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
 
     @Bean
-    Binding bindingExchangeHtmlGenerate(Queue queueStatus, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
+    Binding bindingExchangeHtmlGenerate(Queue queueHtmlGenerate, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueHtmlGenerate).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
 
     @Bean
-    Binding bindingExchangeJF(Queue queueStatus, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
+    Binding bindingExchangeJF(Queue queueJF, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
 
     @Bean
-    Binding bindingExchangeJF(Queue queueStatus, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
+    Binding bindingExchangeJF(Queue queueJF, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }

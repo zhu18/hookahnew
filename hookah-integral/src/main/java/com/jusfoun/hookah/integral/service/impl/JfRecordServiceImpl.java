@@ -25,4 +25,8 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
         super.setDao(jfRecordMapper);
     }
 
+    @Override
+    public int insertAndGetId(JfRecord jfRecord) {
+        return jfRecordMapper.insertAndGetId(jfRecord);
+    }
 }

@@ -9,4 +9,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * @desc
  */
 public interface JfRecordService extends GenericService<JfRecord, Long> {
+
+    int insertAndGetId(JfRecord jfRecord);
 }
