@@ -22,9 +22,10 @@
     display: inline-block;
     height: 15px;
     width: 15px;
+    margin-left: 5px;
     border-radius: 15px;
     background-color: #feb351;
     color: #fff;
     line-height: 15px;
     text-align: center;
-    margin-left: 5px;}
+    }
