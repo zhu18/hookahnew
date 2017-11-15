@@ -8,6 +8,7 @@ package com.jusfoun.hookah.core.constants;
  * queue队列配置
  */
 public interface RabbitmqQueue {
+
     /** 订单 */
     public final String CONTRACE_ORDER ="CONTRACT_ORDER";
 
@@ -38,4 +39,9 @@ public interface RabbitmqQueue {
      * 首页分类修改 货架修改 货架商品修改 触发生成新的首页
      */
     public final String CONTRACE_GENERATE_INDEX ="CONTRACE_GENERATE_INDEX";
+
+    /**
+     * 积分队列
+     */
+    public final String CONTRACE_JF_MSG ="CONTRACE_JF_MSG";
 }
