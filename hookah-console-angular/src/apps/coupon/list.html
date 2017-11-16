@@ -35,7 +35,7 @@
                         <div class="title pull-left">数据列表</div>
                         <div class="tool pull-right">
                             <button class="btn btn-primary" data-ng-click="add()">添加优惠券</button>
-                            <select ng-model="item.pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
+                            <select ng-model="pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
                         </div>
                     </div>
                     <table class="table table-hover">

@@ -1,17 +1,18 @@
 class couponController {
   constructor($scope, $rootScope, $http, $state) {
       $scope.typeStatuss = [               //自定定义类型数据
-          {id:-1, name:"全部"},
+          {id:"", name:"全部"},
           {id:1, name:"注册赠券"},
           {id:2, name:"购物赠券"},
           {id:3, name:"全场赠券"},
           {id:4, name:"会员赠券"}
       ];
+      $scope.couponType="";
       $scope.pageSizes = [               //自定定义类型数据
-          {id:-1, name:"显示条数"},
           {id:1, name:"20"},
           {id:2, name:"50"}
       ];
+      $scope.pageSize=1;
       $scope.controlScreenShow=true;
       $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
           if ($scope.controlScreenShow){
@@ -22,13 +23,12 @@ class couponController {
           }
       };
     $scope.search = function (initCurrentPage) { //Render page function
-
       var promise = $http({
         method: 'GET',
         url: $rootScope.site.apiServer + "/api/coupon/all",
         params: {
-          couponName: $scope.checkStatus,//审核状态
-          couponType: $scope.contactPhone,
+          couponName: $scope.couponName,//审核状态
+          couponType: $scope.couponType,
           currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize,
         }
@@ -67,7 +67,7 @@ class couponController {
     };
     $scope.delete=function (id) {
         var promise = $http({
-            method: 'GET',
+            method: 'POST',
             url: $rootScope.site.apiServer + "/api/coupon/delete",
             params: {
                 couponId:id
@@ -80,7 +80,7 @@ class couponController {
             if (res.data.code == '1') {
                 var modalInstance =$rootScope.openConfirmDialogModal("删除成功！");
                 modalInstance.result.then(function () {
-
+                    $scope.search();
                 }, function () {
 
                 });
@@ -98,7 +98,7 @@ class couponController {
         });
     }
 
-      $scope.search();
+    $scope.search();
     $scope.refresh = function () {
       $scope.search();
     };
@@ -113,7 +113,7 @@ class couponController {
         $state.go('coupon.add',{id:id})
     };
     $scope.getDetail = function (id) {//Go to detail page
-        $state.go('coupon.detail',{id:id})
+        $state.go('coupon.couponDetail',{id:id})
     };
 
   }
