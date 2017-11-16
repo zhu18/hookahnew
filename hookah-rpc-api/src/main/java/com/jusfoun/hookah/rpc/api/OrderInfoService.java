@@ -48,6 +48,9 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     public Pagination<OrderInfoVo> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                      Date startTime, Date endTime);
 
+    public Pagination<OrderInfoVo> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                     Date startTime, Date endTime, Long startMoney, Long endMoney);
+
     /**
      * 根据订单号查询支付信息
      * @param orderId
