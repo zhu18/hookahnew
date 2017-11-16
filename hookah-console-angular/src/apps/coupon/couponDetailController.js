@@ -96,7 +96,7 @@ class couponDetailController {
             $scope.search();
         };
         $scope.pageChanged = function () {
-            $scope.search();
+            $scope.renderList();
         };
 
     }
