@@ -178,8 +178,12 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 CouponVo couponVo = new CouponVo();
                 BeanUtils.copyProperties(coupon,couponVo);
                 Date receivedTime = userCouponVo.getReceivedTime();
+                Date expiryEndDate = userCouponVo.getExpiryEndDate();
                 if (DateUtils.isSameDay(receivedTime,new Date())){
                     couponVo.setTagName(CouponVo.NEW_RECEIVED);
+                }
+                if (DateUtils.isSoonExpire(new Date(),expiryEndDate,3)) {
+                    couponVo.setTagName(CouponVo.SOON_EXPIRE);
                 }
                 list.add(couponVo);
             }
