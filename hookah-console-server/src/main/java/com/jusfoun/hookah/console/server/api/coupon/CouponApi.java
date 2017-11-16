@@ -38,11 +38,11 @@ public class CouponApi extends BaseController {
             CouponVo couponVo = JsonUtils.toObject(coupon,CouponVo.class);
             String userId = this.getCurrentUser().getUserId();
             if (StringUtils.isNotBlank(couponVo.getExpiryStartTime())){
-                Date expiryStartTime = DateUtils.getDate(DateUtils.transferTime(couponVo.getExpiryStartTime()),DateUtils.DATE_FORMAT);
+                Date expiryStartTime = DateUtils.getDate(couponVo.getExpiryStartTime(),DateUtils.DATE_FORMAT);
                 couponVo.setExpiryStartDate(expiryStartTime);
             }
             if (StringUtils.isNotBlank(couponVo.getExpiryEndTime())){
-                Date expiryEndTime = DateUtils.getDate(DateUtils.transferTime(couponVo.getExpiryEndTime()),DateUtils.DEFAULT_DATE_TIME_FORMAT);
+                Date expiryEndTime = DateUtils.getDate(couponVo.getExpiryEndTime(),DateUtils.DATE_FORMAT);
                 couponVo.setExpiryEndDate(expiryEndTime);
             }
             return couponService.addCoupon(couponVo,goodsList,userId,categoriesList);
@@ -194,14 +194,17 @@ public class CouponApi extends BaseController {
 
     /**
      * 后台 用户优惠券数据列表
-     * @param user
      * @param currentPage
      * @param pageSize
      * @return
      */
     @RequestMapping(value = "/getUserCouponList", method = RequestMethod.GET)
-    public ReturnData getUserCouponList(User user, String currentPage, String pageSize){
+    public ReturnData getUserCouponList(String userName, Integer userType, String userSn, String currentPage, String pageSize){
         try {
+            User user = new User();
+            user.setUserName(userName);
+            user.setUserType(userType);
+            user.setUserSn(userSn);
             Pagination page = couponService.getUserCouponList(user,currentPage,pageSize);
             return ReturnData.success(page);
         }catch (Exception e){

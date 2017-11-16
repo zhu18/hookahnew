@@ -66,6 +66,8 @@
     SELECT cp.id AS userId,
     `user`.user_name AS userName,
     `user`.user_sn AS userSn,
+    `user`.mobile AS mobile,
+    `user`.user_type AS userType,
     cp.c1 AS unused,
     cp.c2 AS used,
     cp.c3 AS expired
@@ -92,6 +94,10 @@
       <if test="userSn != '' and userSn != null">
         AND
         `user`.user_sn = #{userSn}
+      </if>
+      <if test="userType != '' and userType != null">
+        AND
+        `user`.user_type = #{userType}
       </if>
     </where>
   </select>
