@@ -68,4 +68,13 @@
   <motan:referer id="wxUserInfoService"
                  interface="com.jusfoun.hookah.rpc.api.WxUserInfoService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="couponService"
+                 interface="com.jusfoun.hookah.rpc.api.CouponService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="userCouponService"
+                 interface="com.jusfoun.hookah.rpc.api.UserCouponService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="mgCouponService"
+                 interface="com.jusfoun.hookah.rpc.api.MgCouponService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

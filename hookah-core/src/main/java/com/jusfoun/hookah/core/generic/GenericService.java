@@ -180,4 +180,7 @@ public interface GenericService<Model extends GenericModel, ID extends Serializa
 
     Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters, List<Sort> Sorts,
                                              Date startTime, Date endTime);
+
+    Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters, List<Sort> Sorts,
+                                             Date startTime, Date endTime, Long startMoney, Long endMoney);
 }

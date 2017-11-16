@@ -826,7 +826,7 @@ function submitGoodsPublish() {
 	data.goodsName = $('input[name="goodsName"]').val();
 	data.goodsBrief = $('textarea[name="goodsBrief"]').val();
 	data.keywords = $('input[name="keywords"]').val();
-
+	data.purchaseLimit = $('select[name="purchaseLimit"]').val();
 	data.attrTypeList = [];
 	$('.chosen-select').each(function () {
 		var attrTypeList = {};
@@ -1157,6 +1157,7 @@ function renderData(data) {//渲染页面
 		}
 	}
 	catId = data.catId;
+	$('select[name="purchaseLimit"]').val(data.purchaseLimit);
 	$('#J-ver').val(data.ver);//版本号
 	$("input[name='typeId']").val(catId.substring(0, 3));
 	$('#J-goodsName').val(data.goodsName);//商品名称

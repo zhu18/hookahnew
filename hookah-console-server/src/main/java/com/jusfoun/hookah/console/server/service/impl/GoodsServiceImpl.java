@@ -100,6 +100,10 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         obj.setLastUpdateTime(date);
         obj.setGoodsSn(generateSn(obj, currentUser));
         obj.setAddUser(currentUser.getUserId());
+        // 商品类型名称
+        obj.setGoodsTypeName(HookahConstants.GoodsType.getNameByCode(obj.getGoodsType().toString()));
+        // 购买限制名称
+        obj.setPurchaseLimitName(HookahConstants.PurchaseLimitName.getNameByCode(obj.getPurchaseLimit().toString()));
 
         obj = (GoodsVo)super.insert(obj);
         if(obj == null)
@@ -226,6 +230,10 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         Integer verNum = Integer.parseInt(version);
         obj.setVer("V"+ (verNum + 1));
         /* Add guoruibing end */
+        // 商品类型名称
+        obj.setGoodsTypeName(HookahConstants.GoodsType.getNameByCode(obj.getGoodsType().toString()));
+        // 购买限制名称
+        obj.setPurchaseLimitName(HookahConstants.PurchaseLimitName.getNameByCode(obj.getPurchaseLimit().toString()));
         int i = super.updateByIdSelective(obj);
         if(i < 1) {
             throw new HookahException("更新失败！");

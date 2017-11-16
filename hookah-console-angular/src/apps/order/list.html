@@ -56,6 +56,16 @@
                     </span>
                 </p>
               </div>
+              <div style="display: inline-block" >
+                <label class="control-label">订单金额：</label>
+                <p class="input-group" style="margin-top: 15px">
+                  <input ng-model="startMoney" type="number" class="form-control" placeholder="0.00" step="0.01" />
+                </p>
+                <label class="control-label">至</label>
+                <p class="input-group" style="margin-top: 15px">
+                  <input ng-model="endMoney" type="number" class="form-control" placeholder="0.00" step="0.01" />
+                </p>
+              </div>
               <!--<input ng-model="addTime" type="text" class="form-control" placeholder="结束日期">-->
               <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
             </div>

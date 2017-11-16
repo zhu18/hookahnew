@@ -3,6 +3,7 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 import com.google.code.kaptcha.Constants;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.UserRegExpiredSmsException;
@@ -12,6 +13,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.rpc.api.LoginLogService;
+import com.jusfoun.hookah.rpc.api.MqSenderService;
 import com.jusfoun.hookah.rpc.api.PayAccountService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.slf4j.Logger;
@@ -51,6 +53,9 @@ public class BindWeChatController {
 
     @Resource
     LoginLogService loginLogService;
+
+    @Resource
+    MqSenderService mqSenderService;
 
     @RequestMapping(value = "/reg/bindWeChat", method = RequestMethod.POST)
     public String bindWeChat(UserValidVo user, RedirectAttributes redirectAttributes, HttpServletRequest request){
@@ -111,6 +116,8 @@ public class BindWeChatController {
             //绑定微信信息
 //            wxUserInfoService.insert(wxUserInfo);
             payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
+            //完成注册 发消息到MQ送优惠券
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,user.getUserId());
             logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
         }
         //绑定完成 登录
@@ -119,7 +126,7 @@ public class BindWeChatController {
 
     public String generateUserSn(){
         String date = DateUtils.toDateText(new Date(), "yyMM");
-        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
+        String userSn = HookahConstants.platformCode + date + String.format("%06d",Integer.parseInt(redisOperate.incr("userSn")));
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("userSn",userSn));
         User user = userService.selectOne(filter);

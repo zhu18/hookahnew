@@ -1,0 +1,28 @@
+/**
+ * Created by Dajun on 2017/11/15.
+ */
+.points-detail{ overflow: hidden; padding: 20px 23px 23px;}
+.howManyPoints{ position: relative; float: left; width: 340px; height:90px; background:url("../../../images/usercenter/buyer/points-01.png") no-repeat 0 0; text-align: center; color: #ffffff;}
+.howManyPoints span{ position: absolute; left:17px; top:9px;}
+.howManyPoints i{ line-height: 90px; font-size:48px; font-style: normal;}
+.howManyPoints sm{padding-left: 7px;}
+
+.getOtherThing{ float: left; width: 167px; margin-left:15px; padding-left: 7px; background-color: #f6f6f6; border:1px solid #e5e5e5; line-height:88px; font-size:16px; color:#737373}
+.getOtherThing:hover{ background-color: #b7d5f7; font-weight: bold; text-decoration: underline; border:1px solid #b7d5f7; }
+.getOtherThing img{vertical-align: middle}
+
+.pointsList{padding: 13px; border:1px solid #e5e5e5;}
+
+.listNav{ margin-bottom:30px; padding-left:9px; border-bottom:1px solid #ededed;}
+.listNav a{ display: inline-block; margin-right:50px; color: #464647; font-size: 18px;}
+.listNav a.active{ color: #237ee8; border-bottom: 1px solid #237ee8;}
+.pointsListDetail{ width: 100%; border:none; font-size:14px; color: #333333;}
+.pointsListDetail thead{ border:1px solid #e5e5e5;line-height:38px; }
+.pointsListDetail th{ background-color: #f4f4f4;   color: #333333;}
+.pointsListDetail td { border-bottom: 1px dashed #e5e5e5; line-height:38px; text-align: center; }
+.pointsListDetail td .pointsDetail{ line-height:23px; padding: 9px 0}
+.pointsListDetail tr:hover { background-color: #f5fcfd;}
+
+
+.red{ color: #ec0000;}
+.gray{ color: #b1b1b1;}

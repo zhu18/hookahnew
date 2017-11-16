@@ -17,10 +17,7 @@ import com.jusfoun.hookah.core.utils.CouponHelper;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.coupon.utils.PropertiesManager;
-import com.jusfoun.hookah.rpc.api.CouponService;
-import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.MgCouponService;
-import com.jusfoun.hookah.rpc.api.UserCouponService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -47,20 +44,24 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     @Resource
     UserCouponService userCouponService;
 
+    @Resource
+    UserService userService;
+
     @Override
-    public ReturnData addCoupon(Coupon coupon, String goodsList, String categoriesList) throws Exception{
-        User user = super.getCurrentUser();
+    public ReturnData addCoupon(Coupon coupon, String goodsList, String userId, String categoriesList) throws Exception{
         List<Condition>  filter = new ArrayList<>();
         List<MgCoupon.CouponGoods> couponGoods = new ArrayList<>();
         Date date = new Date();
         MgCoupon mgCoupon = new MgCoupon();
+        User user = userService.selectById(userId);
         coupon.setAddUser(user.getUserId());
         coupon.setUserName(user.getUserName());
+        coupon.setFaceValue(coupon.getFaceValue()*100);
         coupon.setAddTime(date);
-        coupon.setCouponSn(CouponHelper.createCouponSn(PropertiesManager.getInstance().getProperty("couponCode"),
-                coupon.getCouponType().toString()));
-        coupon.setCouponName(coupon.getCouponName().replaceAll(" ",""));
+        coupon.setCouponSn(CouponHelper.createCouponSn(PropertiesManager.getInstance().getProperty("couponCode"), coupon.getCouponType()));
+        coupon.setCouponName(coupon.getCouponName().trim());
         coupon.setCouponStatus((byte)1);
+        coupon.setIsDeleted((byte)0);
         switch (coupon.getApplyGoods()) {
             case 1: //指定商品
                 String[] goodsSnList = goodsList.split(",");
@@ -73,15 +74,15 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             case 2: //指定分类
                 break;
         }
+        couponMapper.insertAndGetId(coupon);
+        coupon.setId(coupon.getId());
         BeanUtils.copyProperties(coupon,mgCoupon);
         mgCouponService.insert(mgCoupon);
-        couponMapper.insert(coupon);
         return ReturnData.success("");
     }
 
     @Override
-    public ReturnData modify(Coupon coupon, String goodsList, String categoriesList) throws Exception {
-        String userId = super.getCurrentUser().getUserId();
+    public ReturnData modify(Coupon coupon, String goodsList, String userId, String categoriesList) throws Exception {
         Date date = new Date();
         MgCoupon mgCoupon = new MgCoupon();
         coupon.setUpdateUser(userId);
@@ -100,10 +101,18 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
 
     @Override
     public Pagination getCouponReceivedDetail(String userId, Long couponId, Byte userCouponStatus, String orderSn,
-                                              String currentPage, String pageSize) throws Exception {
+                                              String currentPage, String pageSize, Byte couponTag) throws Exception {
         List<Condition> filter = new ArrayList<>();
         List<OrderBy> orderBys = new ArrayList<>();
-        orderBys.add(OrderBy.desc("receivedTime"));
+        if (couponTag!=null){
+            if (couponTag==0){
+                orderBys.add(OrderBy.desc("receivedTime"));
+            }else if (couponTag==1){
+                orderBys.add(OrderBy.asc("expiryEndDate"));
+            }
+        }else {
+            orderBys.add(OrderBy.desc("receivedTime"));
+        }
         int pageNumberNew = HookahConstants.PAGE_NUM;
         if (StringUtils.isNotBlank(currentPage)) {
             pageNumberNew = Integer.parseInt(currentPage);
@@ -127,6 +136,16 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         filter.add(Condition.eq("isDeleted",(byte)0));
         Pagination pagination = userCouponService.getListInPage(pageNumberNew,pageSizeNew,filter,orderBys);
         return pagination;
+    }
+
+    @Override
+    public Pagination getCouponByUserId(String userId, Long couponId, Byte userCouponStatus, String orderSn, String currentPage, String pageSize, Byte couponTag) throws Exception {
+        Pagination page = getCouponReceivedDetail(userId,couponId,userCouponStatus,orderSn,currentPage,pageSize,couponTag);
+        List<UserCoupon> userCoupons = page.getList();
+        for (UserCoupon userCoupon : userCoupons){
+
+        }
+        return null;
     }
 
     @Override

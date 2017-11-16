@@ -1670,4 +1670,24 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         c.set(Calendar.MILLISECOND, 999);
         return c.getTime();
     }
+
+    /**
+     * 新增价格区间
+     * @param pageNum
+     * @param pageSize
+     * @param filters
+     * @param startTime
+     * @param endTime
+     * @param startMoney
+     * @param endMoney
+     * @return
+     */
+    @Override
+    public Pagination<OrderInfoVo> getUserListInPage(Integer pageNum, Integer pageSize, List<Condition> filters, Date startTime, Date endTime, Long startMoney, Long endMoney) {
+
+        List<Sort> sorts = new ArrayList<>();
+        sorts.add(new Sort(Sort.Direction.DESC,"addTime"));
+        Pagination<OrderInfoVo> pagination = mgOrderInfoService.getListInPageFromMongo(pageNum, pageSize, filters,sorts, startTime, endTime, startMoney, endMoney);
+        return pagination;
+    }
 }

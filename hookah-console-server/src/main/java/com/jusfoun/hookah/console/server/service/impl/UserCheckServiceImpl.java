@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.dao.UserCheckMapper;
 import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCheck;
+import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.core.domain.vo.UserCheckVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -87,8 +88,19 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
                     messageCode.setBusinessId(userCheck.getId());//此处填写业务id号（即主键id）
                     mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);//将数据添加到队列
                 }
+            }else {
+                // 请问此处如何处理？ 不写else 每次else之外的都会走下面的代码【dx觉得】
+
+
             }
             userService.updateByIdSelective(user);
+
+            // 用户通过审核发放积分【账号身份认证】
+            if(user.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK)
+                    || user.getUserType().equals(HookahConstants.UserType.PERSON_CHECK_OK)){
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(user.getUserId(), 3));
+            }
+
             //更新微信用户推荐表
             wxUserRecommendService.updateWXUserRecommendIsAuthenticate(user.getUserId());
 

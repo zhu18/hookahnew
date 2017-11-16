@@ -21,11 +21,11 @@
                     <div class="list-item content clearfix" data-ng-show="controlScreenShow">
                         <div class="col-md-4">
                             <label class="control-label">优惠券名称：</label>
-                            <input ng-model="orgName" type="text" class="form-control" placeholder="请输入优惠券名称">
+                            <input ng-model="couponName" type="text" class="form-control" placeholder="请输入优惠券名称">
                         </div>
                         <div class="col-md-4">
                             <label class="control-label">优惠券类型：</label>
-                            <select ng-model="item.apiParaType" ng-options="typeStatus.id as typeStatus.name for typeStatus in typeStatuss" style="width: 155px;height: 32px"></select>
+                            <select ng-model="couponType" ng-options="typeStatus.id as typeStatus.name for typeStatus in typeStatuss" style="width: 155px;height: 32px"></select>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         <div class="title pull-left">数据列表</div>
                         <div class="tool pull-right">
                             <button class="btn btn-primary" data-ng-click="add()">添加优惠券</button>
-                            <select ng-model="item.pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
+                            <select ng-model="pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -54,24 +54,44 @@
                                </tr>
                             </thead>
                             <tbody>
-                            <!--<tr data-ng-repeat="item in couponList">-->
-                                <!--<td>{{$index + 1}}</td>-->
-                                <!--<td data-ng-bind="item.orgName"></td>-->
-                                <!--<td data-ng-bind="item.contactName"></td>-->
-                                <!--<td data-ng-bind="item.contactPhone"></td>-->
-                                <!--<td>-->
-                                    <!--<span text-length="50" ng-show="item.checkStatus == 2">注册赠券</span>-->
-                                    <!--<span text-length="50" ng-show="item.checkStatus == 1">购物赠券</span>-->
-                                    <!--<span text-length="50" ng-show="item.checkStatus == 0">全场赠券</span>-->
-                                    <!--<span text-length="50" ng-show="item.checkStatus == 0">会员赠券</span>-->
-                                <!--</td>-->
-                                <!--<td data-ng-bind="item.addTime"></td>-->
-                                <!--<td>-->
-                                    <!--<button class="btn btn-primary"  ng-click="look(item)">查看</button>-->
-                                    <!--<button class="btn btn-primary"  ng-click="edit(item)">编辑</button>-->
-                                    <!--<button class="btn btn-primary"  ng-click="delete(item)">删除</button>-->
-                                <!--</td>-->
-                            <!--</tr>-->
+                            <tr data-ng-repeat="item in couponList">
+                                <td data-ng-bind="item.couponSn"></td>
+                                <td data-ng-bind="item.couponName"></td>
+                                <td>
+                                    <span text-length="50" ng-show="item.couponType == 0">注册赠券</span>
+                                    <span text-length="50" ng-show="item.couponType == 1">购物赠券</span>
+                                    <span text-length="50" ng-show="item.couponType == 2">全场赠券</span>
+                                    <span text-length="50" ng-show="item.couponType == 3">会员赠券</span>
+                                </td>
+                                <td>
+                                    <span text-length="50" ng-show="item.applyGoods == 0">全部商品</span>
+                                    <span text-length="50" ng-show="item.applyGoods == 1">部分商品</span>
+                                    <span text-length="50" ng-show="item.applyGoods == 2">部分分类</span>
+                                </td>
+                                <td>
+                                    <span text-length="50" ng-show="item.applyChannel == 0">注册赠券</span>
+                                    <span text-length="50" ng-show="item.applyChannel == 1">购物赠券</span>
+                                    <span text-length="50" ng-show="item.applyChannel == 2">全场赠券</span>
+                                </td>
+
+                                <td data-ng-bind="item.faceValue"></td>
+                                <td data-ng-bind="item.applyPlatform"></td>
+                                <td >
+                                    <span data-ng-bind="item.expiryStartDate"></span>
+                                    至
+                                    <span data-ng-bind="item.expiryEndDate"></span>
+                                </td>
+                                <td>
+                                    <span text-length="50" ng-show="item.couponStatus == 0">未激活</span>
+                                    <span text-length="50" ng-show="item.couponStatus == 1">未过期</span>
+                                    <span text-length="50" ng-show="item.couponStatus == 2">已过期</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary"  ng-click="getDetail(item.id)">查看</button>
+                                    <button class="btn btn-primary"  ng-click="edit(item.id)">编辑</button>
+                                    <button class="btn btn-primary"  ng-click="delete(item.id)">删除</button>
+                                </td>
+                            </tr>
 
                             </tbody>
                         </table>

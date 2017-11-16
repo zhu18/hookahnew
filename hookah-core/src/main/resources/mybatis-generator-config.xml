@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
   <!--数据库驱动-->
-  <classPathEntry location="D:/java/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar"/>
+  <classPathEntry location="C:\Users\hhh\.m2\repository\mysql\mysql-connector-java\5.1.38/mysql-connector-java-5.1.38.jar"/>
   <!--
     执行命令：mvn mybatis-generator:generate -Dmybatis.generator.overwrite=truecd
     一个数据库一个context
@@ -42,25 +42,25 @@
     </commentGenerator>
     <!--数据库链接地址账号密码-->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                    connectionURL="jdbc:mysql://192.168.15.90:3306/bdgStore?characterEncoding=utf8&amp;tinyInt1isBit=false"
+                    connectionURL="jdbc:mysql://192.168.15.203:3306/bdgStore?characterEncoding=utf8&amp;tinyInt1isBit=false"
                     userId="root" password="password"/>
     <javaTypeResolver>
       <property name="forceBigDecimals" value="false"/>
     </javaTypeResolver>
     <!--生成Model类存放位置-->
-    <javaModelGenerator targetPackage="com.jusfoun.hookah.core.domain.zb" targetProject="src/main/java">
+    <javaModelGenerator targetPackage="com.jusfoun.hookah.core.domain" targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
       <property name="trimStrings" value="true"/>
       <property name="rootClass" value="com.jusfoun.hookah.core.generic.GenericModel"/>
     </javaModelGenerator>
     <!--生成映射文件存放位置-->
-    <sqlMapGenerator targetPackage="com.jusfoun.hookah.core.dao.zb" targetProject="src/main/resources">
+    <sqlMapGenerator targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/resources">
       <property name="enableSubPackages" value="true"/>
     </sqlMapGenerator>
     <!--生成Dao类存放位置-->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.jusfoun.hookah.core.dao.zb" targetProject="src/main/java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.jusfoun.hookah.core.dao" targetProject="src/main/java">
       <property name="enableSubPackages" value="true"/>
-      <property name="rootInterface" value="com.jusfoun.hookah.core.generic.GenericDao&lt;ZbRefundRecord&gt;"/>
+      <property name="rootInterface" value="com.jusfoun.hookah.core.generic.GenericDao&lt;ReCoupon&gt;"/>
     </javaClientGenerator>
     <!--生成对应表及类名-->
     <!-- <table tableName="hb_enterprise_copy"  domainObjectName="EnterprisePojo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
@@ -76,7 +76,7 @@
       <columnOverride column="seller_note" javaType="java.lang.String" jdbcType="VARCHAR" />
     </table>-->
 
-    <table schema="hookah" tableName="zb_refund_record" domainObjectName="ZbRefundRecord"
+    <table schema="" tableName="coupon" domainObjectName="ReCoupon"
            enableCountByExample="false" enableUpdateByExample="false"
            enableDeleteByExample="false" enableSelectByExample="false"
            selectByExampleQueryId="false" >

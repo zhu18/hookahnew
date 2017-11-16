@@ -47,6 +47,12 @@ public class OrderInfoVo extends OrderInfo {
 	private Integer addressId;
 
 	@Transient
+	private Double startMoney;
+
+	@Transient
+	private Double endMoney;
+
+	@Transient
 	private List<MgOrderGoods> orderGoodsList;//订单里的商品列表
 	@Transient
 	private String goumaiStartTime;//购买开始时间
@@ -240,5 +246,21 @@ public class OrderInfoVo extends OrderInfo {
 
 	public void setSolveStatus(Integer solveStatus) {
 		this.solveStatus = solveStatus;
+	}
+
+	public Double getStartMoney() {
+		return startMoney;
+	}
+
+	public void setStartMoney(Double startMoney) {
+		this.startMoney = startMoney;
+	}
+
+	public Double getEndMoney() {
+		return endMoney;
+	}
+
+	public void setEndMoney(Double endMoney) {
+		this.endMoney = endMoney;
 	}
 }

@@ -20,6 +20,10 @@ public class UserCouponVo extends GenericModel {
 
     private Long expired;
 
+    private String mobile;
+
+    private Byte userType;
+
     public String getUserId() {
         return userId;
     }
@@ -66,5 +70,21 @@ public class UserCouponVo extends GenericModel {
 
     public void setExpired(Long expired) {
         this.expired = expired;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Byte getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Byte userType) {
+        this.userType = userType;
     }
 }

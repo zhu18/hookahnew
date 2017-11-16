@@ -116,6 +116,14 @@ public abstract class DateUtils {
         return toDate;
     }
 
+    public static String transferTime(String fromDate){
+        String toDate = null;
+        if(com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(fromDate)){
+            toDate = fromDate.substring(0, 10) + " 23:59:59";
+        }
+        return toDate;
+    }
+
     public static Date thisTimeNextMonth(Date time, Integer i){
         Calendar cld = Calendar.getInstance();
         cld.setTime(time);
