@@ -9,11 +9,13 @@ import com.jusfoun.hookah.core.domain.Coupon;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCoupon;
 import com.jusfoun.hookah.core.domain.mongo.MgCoupon;
+import com.jusfoun.hookah.core.domain.vo.CouponVo;
 import com.jusfoun.hookah.core.domain.vo.UserCouponVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.CouponHelper;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.coupon.utils.PropertiesManager;
@@ -168,11 +170,22 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     @Override
     public Pagination getCouponByUserId(String userId, Long couponId, Byte userCouponStatus, String orderSn, String currentPage, String pageSize, Byte couponTag) throws Exception {
         Pagination page = getCouponReceivedDetail(userId,couponId,userCouponStatus,orderSn,currentPage,pageSize,couponTag);
-        List<UserCoupon> userCoupons = page.getList();
-        for (UserCoupon userCoupon : userCoupons){
-
+        List<UserCouponVo> userCouponVos = page.getList();
+        List<CouponVo> list = new ArrayList<>();
+        if (userCouponVos!=null&&userCouponVos.size()>0){
+            for (UserCouponVo userCouponVo : userCouponVos){
+                Coupon coupon = couponMapper.selectByPrimaryKey(userCouponVo.getCouponId());
+                CouponVo couponVo = new CouponVo();
+                BeanUtils.copyProperties(coupon,couponVo);
+                Date receivedTime = userCouponVo.getReceivedTime();
+                if (DateUtils.isSameDay(receivedTime,new Date())){
+                    couponVo.setTagName(CouponVo.NEW_RECEIVED);
+                }
+                list.add(couponVo);
+            }
         }
-        return null;
+        page.setList(list);
+        return page;
     }
 
     @Override
@@ -234,5 +247,18 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         return ReturnData.success(list.get(0));
     }
 
-
+    public ReturnData getUserCouponDetail(String userId, Long userCouponId) throws Exception {
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("userId",userId));
+        filter.add(Condition.eq("id",userCouponId));
+        UserCoupon userCoupon = userCouponService.selectOne(filter);
+        Coupon coupon = couponMapper.selectByPrimaryKey(userCoupon.getCouponId());
+        CouponVo couponVo = new CouponVo();
+        BeanUtils.copyProperties(coupon,couponVo);
+        couponVo.setUserCouponStatus(userCoupon.getUserCouponStatus());
+        couponVo.setReceivedTime(userCoupon.getReceivedTime());
+        couponVo.setOrderSn(userCoupon.getOrderSn());
+        couponVo.setUsedTime(userCoupon.getUsedTime());
+        return ReturnData.success(couponVo);
+    }
 }

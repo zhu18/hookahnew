@@ -30,4 +30,6 @@ public interface CouponService extends GenericService<Coupon,Long> {
     Pagination getUserCouponList(User user, String currentPage, String pageSize) throws Exception;
 
     ReturnData getUserCouponById(String userId) throws Exception;
+
+    ReturnData getUserCouponDetail(String userId, Long userCouponId) throws Exception;
 }
