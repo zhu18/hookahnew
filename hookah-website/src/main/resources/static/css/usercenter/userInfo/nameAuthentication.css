@@ -58,3 +58,20 @@
     border-radius: 5px;
     background-color: #F8A23A;
 }
+
+
+
+/*注册/认证 送积分提示*/
+.forPoints{
+    position: absolute;
+    left: 522px;
+    top: -21px;
+    width: 121px;
+    height: 31px;
+    padding-left: 10px;
+    color: #fff;
+    background: url(../../../images/common/forPoints.png) no-repeat 0 0;
+    line-height: 22px;
+    font-size: 14px;
+}
+.forPoints span{ display: inline-block; height: 15px; width: 15px; cursor: pointer;}

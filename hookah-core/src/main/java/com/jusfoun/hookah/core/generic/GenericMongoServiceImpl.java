@@ -207,6 +207,65 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
         return new Pagination<Model>();
     }
 
+    /**
+     * 新增价格区间查询
+     * @param pageNum
+     * @param pageSize
+     * @param filters
+     * @param sorts
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters,
+                                                    List<Sort> sorts, Date startTime, Date endTime,
+                                                    Long startMoney, Long endMoney) {
+        Type type = getClass().getGenericSuperclass();
+        Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
+
+        Query query = this.convertFilter2Query(filters);
+        if (startTime!=null && endTime!=null){
+            query.addCriteria(Criteria.where("addTime").gte(startTime).lt(endTime));
+        }else if (startTime==null && endTime!=null){
+            query.addCriteria(Criteria.where("addTime").lt(endTime));
+        }else if (startTime!=null && endTime==null){
+            query.addCriteria(Criteria.where("addTime").gte(startTime));
+        }
+
+        if(startMoney > 0 && endMoney > 0){
+            if(startMoney < endMoney){
+                query.addCriteria(Criteria.where("orderAmount").gte(startMoney).lte(endMoney));
+                query.with(new Sort(new Sort.Order(Sort.Direction.ASC, "orderAmount")));
+            }else if(startMoney > endMoney){
+                query.addCriteria(Criteria.where("orderAmount").gte(endMoney).lte(startMoney));
+                query.with(new Sort(new Sort.Order(Sort.Direction.DESC, "orderAmount")));
+            }else {
+                query.addCriteria(Criteria.where("orderAmount").is(startMoney));
+            }
+        }else if(startMoney > 0 && endMoney == 0){
+            query.addCriteria(Criteria.where("orderAmount").is(startMoney));
+        }else if(startMoney == 0 && endMoney > 0){
+            query.addCriteria(Criteria.where("orderAmount").is(endMoney));
+        }
+
+        long list = this.mongoTemplate.count(query, (Class)trueType);
+        if (sorts!=null&&sorts.size()!=0)
+            for (Sort sort:sorts){
+                query.with(sort);
+            };
+        query.skip((pageNum-1)*pageSize);
+        query.limit(pageSize);
+        logger.info("[Mongo Dao ]queryPage:{}({},{})" , query,pageNum,pageSize );
+        List<Model> page = this.mongoTemplate.find(query, (Class)trueType);
+        Pagination<Model> pagination = new Pagination<Model>();
+        pagination.setTotalItems(list);
+        pagination.setPageSize(pageSize);
+        pagination.setCurrentPage(pageNum);
+        pagination.setList(page);
+        return pagination;
+    }
+
     @Override
     public Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters,
                                                     List<Sort> sorts, Date startTime, Date endTime) {

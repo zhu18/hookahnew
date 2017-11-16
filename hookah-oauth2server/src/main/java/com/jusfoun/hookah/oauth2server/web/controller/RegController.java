@@ -197,6 +197,9 @@ public class RegController {
         // TODO …… 新注册用户赠送积分
         mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(user.getUserId(), 1));
 
+        // TODO …… 新注册用户赠送积分
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(recommendUserId, 1));
+
         //TODO...登录日志
         logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
 //            return "redirect:"+host.get("website")+"/login";

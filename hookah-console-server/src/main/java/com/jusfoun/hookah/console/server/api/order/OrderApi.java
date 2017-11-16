@@ -47,6 +47,19 @@ public class OrderApi extends BaseController{
             Integer payStatus = orderInfoVo.getPayStatus();
             Integer solveStatus = orderInfoVo.getSolveStatus();
 
+
+            Long startMoney = 0L;
+            Long endMoney = 0L;
+
+            if(orderInfoVo.getStartMoney() != null){
+
+                startMoney = new Double(orderInfoVo.getStartMoney() * 100).longValue();
+            }
+            if(orderInfoVo.getEndMoney() != null){
+
+                endMoney = new Double(orderInfoVo.getEndMoney() * 100).longValue();
+            }
+
             Date startTime = null;
             Date endTime = null;
             if (StringUtils.isNotBlank(startDate)) {
@@ -65,6 +78,7 @@ public class OrderApi extends BaseController{
             if (payStatus != null){
                 filters.add(Condition.eq("payStatus", payStatus));
             }
+
             if (solveStatus != null){
                 filters.add(Condition.eq("solveStatus", solveStatus));
             }
@@ -82,7 +96,8 @@ public class OrderApi extends BaseController{
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-            page = orderInfoService.getUserListInPage(pageNumberNew, pageSizeNew, filters, startTime, endTime);
+            page = orderInfoService.getUserListInPage(pageNumberNew, pageSizeNew,
+                    filters, startTime, endTime, startMoney, endMoney);
         } catch (Exception e) {
             e.printStackTrace();
         }

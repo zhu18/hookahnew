@@ -14,6 +14,8 @@ class ShelfController {
                   userName:$scope.userName?$scope.userName:null,
                   userType:$scope.userType?$scope.userType:null,
                   payStatus:$scope.payStatus?$scope.payStatus:null,
+                  startMoney:$scope.startMoney?$scope.startMoney:null,
+                  endMoney:$scope.endMoney?$scope.endMoney:null,
                   startDate:$scope.startDate?format($scope.startDate, 'yyyy-MM-dd HH:mm:ss'):null,
                   solveStatus:$scope.solveStatus?$scope.solveStatus:null,
                   endDate:$scope.endDate?format($scope.endDate, 'yyyy-MM-dd HH:mm:ss'):null
