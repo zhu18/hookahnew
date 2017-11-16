@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 积分业务
+ */
+
 @RestController
 public class JfController extends BaseController {
 
@@ -24,7 +28,7 @@ public class JfController extends BaseController {
     JfRecordService jfRecordService;
 
     @RequestMapping("/jf/getList")
-    public ReturnData getJfList(String currentPage, String pageSize, String type){
+    public ReturnData getJfList(String pageNum, String pageSize, String type){
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -38,8 +42,8 @@ public class JfController extends BaseController {
             }
 
             int pageNumberNew = HookahConstants.PAGE_NUM;
-            if (StringUtils.isNotBlank(currentPage)) {
-                pageNumberNew = Integer.parseInt(currentPage);
+            if (StringUtils.isNotBlank(pageNum)) {
+                pageNumberNew = Integer.parseInt(pageNum);
             }
 
             int pageSizeNew = HookahConstants.PAGE_SIZE;
