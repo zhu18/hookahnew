@@ -37,4 +37,45 @@
         #{updateTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR})
     </insert>
 
+    <select id="selectListByUserId" resultType="com.jusfoun.hookah.core.domain.vo.JfShowVo">
+
+        SELECT
+            jr.add_time,
+            js.action,
+            js.action_desc,
+            js.score,
+            jr.note
+        FROM
+            jf_record jr
+        LEFT JOIN jf_source js ON jr.source_id = js.id
+        WHERE
+            jr.user_id = #{userId}
+    </select>
+
+    <select id="selectListByUserIdAndType" resultType="com.jusfoun.hookah.core.domain.vo.JfShowVo">
+
+        SELECT
+            jr.add_time AS addTime,
+            js.action AS action,
+            js.action_desc as actionDesc,
+            js.score AS score,
+            jr.note AS note
+        FROM
+            jf_record jr
+        LEFT JOIN jf_source js ON jr.source_id = js.id
+        WHERE
+            jr.user_id = #{userId}
+
+            <if test="type == 1 or type == 2">
+                and js.action = #{type}
+            </if>
+
+            <if test="type == 3">
+                and jr.expire = 1
+            </if>
+
+            ORDER BY jr.add_time
+
+    </select>
+
 </mapper>

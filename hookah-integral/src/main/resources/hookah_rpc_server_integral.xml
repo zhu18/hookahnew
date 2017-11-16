@@ -5,8 +5,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://api.weibo.com/schema/motan http://api.weibo.com/schema/motan.xsd">
 
-
     <!-- 业务具体实现类 -->
+    <bean id="jfRecordService" class="com.jusfoun.hookah.integral.service.impl.JfRecordServiceImpl"/>
+
     <!-- 具体rpc服务配置，声明实现的接口类。-->
+    <motan:service interface="com.jusfoun.hookah.rpc.api.JfRecordService"
+                   ref="jfRecordService" export="hookah:5010" basicService="serviceBasicConfig">
+    </motan:service>
 
 </beans>

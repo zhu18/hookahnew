@@ -21,7 +21,7 @@ $(function () {
                 }else if(data.data.userType == '5'){
                     html +="<li><label>认证状态</label><p class='position-relative'><span>认证中</span></p></li>";
                 }else if(data.data.userType == '1'){
-                    html +="<li><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p></li>";
+                    html +="<li style='position: relative;'><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p><div class='forPoints'>成功认证送积分 <span></span></div></li>";
                 }
                 $('.ul1').html(html);
                 if(data.data.organization){
@@ -53,12 +53,18 @@ $(function () {
                     $('#taxCode').html( data.data.organization.taxCode?data.data.organization.taxCode:"无");
                     $('#taxPath').attr({"src":host.static+'/' + data.data.organization.taxPath});
                 }
+
             }else {
                 var html="";
                 html +="<li><label>用户类型</label><p>单位用户</p></li>";
-                html +="<li><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p></li>"
+                html +="<li style='position: relative;'><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p><div class='forPoints'>成功认证送积分 <span></span></div></li>"
                 $('.ul1').html(html);
             }
+
+          $(document).on('click','.forPoints span',function(){//点击移出积分
+            $(this).parent().remove()
+          })
+
         }
     });
 })

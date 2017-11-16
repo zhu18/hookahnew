@@ -104,6 +104,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                                               String currentPage, String pageSize, Byte couponTag) throws Exception {
         List<Condition> filter = new ArrayList<>();
         List<OrderBy> orderBys = new ArrayList<>();
+        Pagination pagination = new Pagination();
         if (couponTag!=null){
             if (couponTag==0){
                 orderBys.add(OrderBy.desc("receivedTime"));
@@ -127,14 +128,40 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         if (userCouponStatus != null){
             filter.add(Condition.eq("userCouponStatus",userCouponStatus));
         }
+        filter.add(Condition.eq("isDeleted",(byte)0));
         if (StringUtils.isNotBlank(userId)){
             filter.add(Condition.eq("userId",userId));
+            pagination = userCouponService.getListInPage(pageNumberNew,pageSizeNew,filter,orderBys);
+            List<UserCoupon> list = pagination.getList();
+            List<UserCouponVo> page = new ArrayList<>();
+            if (list!=null && list.size()>0){
+                for (UserCoupon userCoupon:list){
+                    Coupon coupon = couponMapper.selectByPrimaryKey(userCoupon.getCouponId());
+                    UserCouponVo userCouponVo = new UserCouponVo();
+                    BeanUtils.copyProperties(userCoupon,userCouponVo);
+                    userCouponVo.setCouponName(coupon.getCouponName());
+                    userCouponVo.setFaceValue(coupon.getFaceValue());
+                    page.add(userCouponVo);
+                }
+            }
+            pagination.setList(page);
         }
         if (couponId!=null){
             filter.add(Condition.eq("couponId",couponId));
+            pagination = userCouponService.getListInPage(pageNumberNew,pageSizeNew,filter,orderBys);
+            List<UserCoupon> list = pagination.getList();
+            List<UserCouponVo> page = new ArrayList<>();
+            if (list!=null && list.size()>0){
+                for (UserCoupon userCoupon:list){
+                    User user = userService.selectById(userCoupon.getUserId());
+                    UserCouponVo userCouponVo = new UserCouponVo();
+                    BeanUtils.copyProperties(userCoupon,userCouponVo);
+                    userCouponVo.setUserName(user.getUserName());
+                    page.add(userCouponVo);
+                }
+            }
+            pagination.setList(page);
         }
-        filter.add(Condition.eq("isDeleted",(byte)0));
-        Pagination pagination = userCouponService.getListInPage(pageNumberNew,pageSizeNew,filter,orderBys);
         return pagination;
     }
 

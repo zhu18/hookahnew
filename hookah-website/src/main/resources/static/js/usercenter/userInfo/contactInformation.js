@@ -12,7 +12,9 @@ $(function () {
             var contactPhone=data.data.contactPhone?data.data.contactPhone:"";
             var contactAddress=data.data.contactAddress?data.data.contactAddress:"";
             var postCode=data.data.postCode?data.data.postCode:"";
-            $(".contactName").html(contactName);
+            var email=data.data.email?data.data.email:"";
+            $(".contactEmail").html(email);
+             $(".contactName").html(contactName);
             $(".contactPhone").html(contactPhone);
             $(".contactAddress").html(contactAddress);
             $(".postCode").html(postCode);
