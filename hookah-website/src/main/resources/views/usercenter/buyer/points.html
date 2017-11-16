@@ -6,15 +6,12 @@ var head = {
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <script src="/static/js/plugins/jedate/jquery.jedate.min.js"></script>
 <script type="text/javascript">
-    	var pagePath = '/order/pageData';
+    	var pagePath = '/jf/getList';
     	var pageType = 'get';
     	var dataParm = {};
     	dataParm.pageNumber = 1;
-    	dataParm.pageSize = 5;
-    	dataParm.payStatus = 1;//0:未付款，1：已付款
-        dataParm.startDate = null;
-        dataParm.endDate = null;
-        dataParm.commentFlag = null;
+    	dataParm.pageSize = 2;
+    	dataParm.type = 0; // 0全部 1获取 2兑换 3过期
 </script>
 <%};%>
 
@@ -47,10 +44,10 @@ var htmlPart = {
             </div>
             <div class="pointsList">
                 <div class="listNav">
-                    <a href="javascript:void(0)" class="active">所有积分明细</a>
-                    <a href="javascript:void(0)">获取明细</a>
-                    <a href="javascript:void(0)">兑换明细</a>
-                    <a href="javascript:void(0)">过期明细</a>
+                    <a typeVal="0" href="javascript:void(0)" class="active">所有积分明细</a>
+                    <a typeVal="1" href="javascript:void(0)">获取明细</a>
+                    <a typeVal="2" href="javascript:void(0)">兑换明细</a>
+                    <a typeVal="3" href="javascript:void(0)">过期明细</a>
                 </div>
                 <table class="pointsListDetail">
                     <thead>
@@ -136,6 +133,8 @@ var htmlPart = {
                     </tbody>
 
                 </table>
+                <%include("/layout/pageaction.html"){} %>
+
             </div>
         </div>
     </div>
@@ -144,4 +143,4 @@ var htmlPart = {
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
-<script src="/static/js/usercenter/mybuyer/orderManage.js"></script>
+<script src="/static/js/usercenter/mybuyer/points.js"></script>
