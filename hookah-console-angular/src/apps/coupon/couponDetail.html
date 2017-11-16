@@ -1,5 +1,20 @@
+<style>
+    .couponDetail table{
+
+    }
+    .couponDetail table th{
+        border: 1px solid #e5e5e5;
+        background-color: #F5F6FA;
+        text-align: center;
+    }
+    .couponDetail table td{
+        border: 1px solid #e5e5e5;
+        text-align: center;
+
+    }
+</style>
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12 couponDetail">
         <div class="console-title console-title-border clearfix">
             <div class="pull-left"><h5>优惠券明细</h5></div>
             <div class="pull-right">
@@ -22,12 +37,32 @@
                             <th>状态</th>
                         </tr>
                         <tr>
-                            <td>用户ID</td>
-                            <td>用户账号</td>
-                            <td>用户昵称</td>
-                            <td>会员等级</td>
-                            <td>已使用</td>
-                            <td>未使用</td>
+                            <td>
+                                <span data-ng-bind="couponName"></span>
+                            </td>
+                            <td>
+                                <span data-ng-show="couponType == 0">注册赠券</span>
+                                <span data-ng-show="couponType == 1">购物赠券</span>
+                                <span data-ng-show="couponType == 2">全场赠券</span>
+                                <span data-ng-show="couponType == 3">会员赠券</span>
+                            </td>
+                            <td>
+                                <span data-ng-show="applyGoods == 0">全部商品</span>
+                                <span data-ng-show="applyGoods == 1">部分商品</span>
+                                <span data-ng-show="applyGoods == 2">部分分类</span>
+                            </td>
+                            <td>
+                                <span data-ng-show="applyChannel ==0 ">无限制</span>
+                                <span data-ng-show="applyChannel ==1 ">满 <span data-ng-bind="discountValue"></span>可用</span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="faceValue"></span>
+                            </td>
+                            <td>
+                                <span data-ng-show="couponStatus == 0">未激活</span>
+                                <span data-ng-show="couponStatus == 1">未过期</span>
+                                <span data-ng-show="couponStatus == 2">已过期</span>
+                            </td>
                         </tr>
                         <tr>
                             <th>有效期</th>
@@ -38,12 +73,27 @@
                             <th>未使用</th>
                         </tr>
                         <tr>
-                            <td>用户ID</td>
-                            <td>用户账号</td>
-                            <td>用户昵称</td>
-                            <td>会员等级</td>
-                            <td>已使用</td>
-                            <td>未使用</td>
+                            <td>
+                                <span data-ng-bind="expiryStartDate"></span>
+                                至
+                                <span data-ng-bind="expiryEndDate"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="totalCount"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="receivedCount"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="receivedCount"></span>
+
+                            </td>
+                            <td>
+                                <span data-ng-bind="usedCount"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="usedCount"></span>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -59,11 +109,11 @@
                     <div class="list-item content clearfix" data-ng-show="controlScreenShow">
                         <div class="col-md-4">
                             <label class="control-label">使用状态：</label>
-                            <select ng-model="item.apiParaType" ng-options="useStatu.id as useStatu.name for useStatu in useStatus" style="width: 155px;height: 32px"></select>
+                            <select ng-model="userCouponStatus" ng-options="item.id as item.name for item in useStatus" style="width: 155px;height: 32px"></select>
                         </div>
                         <div class="col-md-4">
                             <label class="control-label">订单编号：</label>
-                            <input ng-model="orgName" type="text" class="form-control" placeholder="请输入订单编号">
+                            <input ng-model="orderSn" type="text" class="form-control" placeholder="请输入订单编号">
                         </div>
 
                     </div>
@@ -90,24 +140,33 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--<tr data-ng-repeat="item in couponList">-->
-                        <!--<td>{{$index + 1}}</td>-->
-                        <!--<td data-ng-bind="item.orgName"></td>-->
-                        <!--<td data-ng-bind="item.contactName"></td>-->
-                        <!--<td data-ng-bind="item.contactPhone"></td>-->
-                        <!--<td>-->
-                        <!--<span text-length="50" ng-show="item.checkStatus == 2">注册赠券</span>-->
-                        <!--<span text-length="50" ng-show="item.checkStatus == 1">购物赠券</span>-->
-                        <!--<span text-length="50" ng-show="item.checkStatus == 0">全场赠券</span>-->
-                        <!--<span text-length="50" ng-show="item.checkStatus == 0">会员赠券</span>-->
-                        <!--</td>-->
-                        <!--<td data-ng-bind="item.addTime"></td>-->
-                        <!--<td>-->
-                        <!--<button class="btn btn-primary"  ng-click="look(item)">查看</button>-->
-                        <!--<button class="btn btn-primary"  ng-click="edit(item)">编辑</button>-->
-                        <!--<button class="btn btn-primary"  ng-click="delete(item)">删除</button>-->
-                        <!--</td>-->
-                        <!--</tr>-->
+                        <tr data-ng-repeat="item in userList">
+                            <td>
+                                <span data-ng-bind="item.userCouponSn"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.userName"></span>
+                            </td>
+
+                            <td>
+                                <span text-length="50" ng-show="item.receivedMode == 0">后台赠送</span>
+                                <span text-length="50" ng-show="item.receivedMode == 1">主动领取</span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.receivedTime"></span>
+                            </td>
+                            <td>
+                                <span text-length="50" ng-show="item.userCouponStatus == 0">未使用</span>
+                                <span text-length="50" ng-show="item.userCouponStatus == 1">已使用</span>
+                                <span text-length="50" ng-show="item.userCouponStatus == 2">已过期</span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.usedTime"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.orderSn"></span>
+                            </td>
+                        </tr>
 
                         </tbody>
                     </table>
