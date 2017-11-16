@@ -154,6 +154,8 @@
         /order/** = oauth2Authc
         /coupon* = oauth2Authc
         /coupon/** = oauth2Authc
+        /goods* = oauth2Authc
+        /goods/** = oauth2Authc
         /pay* = oauth2Authc
         /pay/** = oauth2Authc
         /logout = logout
