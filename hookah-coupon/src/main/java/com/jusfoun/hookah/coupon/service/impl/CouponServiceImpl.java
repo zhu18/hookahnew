@@ -64,6 +64,8 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         coupon.setCouponName(coupon.getCouponName().trim());
         coupon.setCouponStatus((byte)1);
         coupon.setIsDeleted((byte)0);
+        coupon.setReceivedCount(0);
+        coupon.setUsedCount(0);
         switch (coupon.getApplyGoods()) {
             case 1: //指定商品
                 String[] goodsSnList = goodsList.split(",");

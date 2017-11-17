@@ -1,4 +1,4 @@
-package com.jusfoun.hookah.console.server.common.listener;
+package com.jusfoun.hookah.coupon.common.listener;
 
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Coupon;
@@ -28,11 +28,11 @@ public class RabbitMQRegCouponListener {
     CouponService couponService;
 
     @RabbitListener(queues = RabbitmqQueue.CONTRACT_REG_COUPON)
-    public synchronized void handleRegCoupon(String userId) {
+    public void handleRegCoupon(String userId) {
         logger.info("CONTRACT_REG_COUPON待处理注册送优惠券-->用户ID{}", userId);
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("couponType",(byte)0));
-        filter.add(Condition.eq("isDelete",(byte)0));
+        filter.add(Condition.eq("isDeleted",(byte)0));
         filter.add(Condition.eq("couponStatus",(byte)1));
         List<Coupon> coupons = couponService.selectList(filter);
         if (coupons != null && coupons.size() > 0){
@@ -42,9 +42,13 @@ public class RabbitMQRegCouponListener {
                 if (receivedCount < totalCount){
                     UserCoupon userCoupon = new UserCoupon();
                     userCoupon.setUserId(userId);
+                    userCoupon.setUserCouponSn(coupon.getCouponSn()+(receivedCount+1));
                     userCoupon.setReceivedMode((byte)0);
                     userCoupon.setReceivedTime(new Date());
                     userCoupon.setCouponId(coupon.getId());
+                    userCoupon.setUserCouponStatus((byte)0);
+                    userCoupon.setExpiryEndDate(coupon.getExpiryEndDate());
+                    userCoupon.setExpiryStartDate(coupon.getExpiryStartDate());
                     coupon.setReceivedCount(receivedCount++);
                     userCouponService.insert(userCoupon);
                     couponService.updateByIdSelective(coupon);
