@@ -192,7 +192,7 @@ public class RegController {
             }
         }
         //完成注册 发消息到MQ送优惠券
-        mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,user.getUserId());
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,regUser.getUserId());
 
         // TODO …… 新注册用户赠送积分
         mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(user.getUserId(), 1));

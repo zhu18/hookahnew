@@ -213,4 +213,15 @@ public class CouponApi extends BaseController {
             return ReturnData.error("");
         }
     }
+
+    @RequestMapping(value = "/getUserCouponDetail", method = RequestMethod.GET)
+    public ReturnData getUserCouponDetail(String userId, Long userCouponId){
+        try {
+            return couponService.getUserCouponDetail(userId,userCouponId);
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return ReturnData.error("");
+        }
+    }
 }

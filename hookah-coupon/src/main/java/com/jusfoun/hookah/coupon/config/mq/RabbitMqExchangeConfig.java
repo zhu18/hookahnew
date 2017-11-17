@@ -1,10 +1,5 @@
 package com.jusfoun.hookah.coupon.config.mq;
 
-/**
- * @author:jsshao
- * @date: 2017-4-12
- */
-
 import com.jusfoun.hookah.core.constants.RabbitmqExchange;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.constants.RabbitmqRoutekey;
@@ -87,11 +82,40 @@ public class RabbitMqExchangeConfig {
     }
 
     @Bean
+    Queue queueRegCoupon(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACT_REG_COUPON, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
     Queue queueChannel(RabbitAdmin rabbitAdmin) {
         Queue queue = new Queue(RabbitmqQueue.CONTRACE_CENTER_CHANNEL, true);
         rabbitAdmin.declareQueue(queue);
         return queue;
     }
+
+    @Bean
+    Queue queueStatus(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_CENTER_STATUS, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
+    Queue queueHtmlGenerate(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_GENERATE_INDEX, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
+    @Bean
+    Queue queueJF(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_JF_MSG, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
+
 
     /*************   开始  将 queue 绑定到 指定交换机   *******************/
 
@@ -160,6 +184,13 @@ public class RabbitMqExchangeConfig {
     }
 
     @Bean
+    Binding bindingExchangeRegCoupon(Queue queueRegCoupon, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueRegCoupon).to(exchange).with(RabbitmqQueue.CONTRACT_REG_COUPON);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
     Binding bindingExchangeChannel(Queue queueChannel, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
         Binding binding = BindingBuilder.bind(queueChannel).to(exchange).with(RabbitmqQueue.CONTRACE_CENTER_CHANNEL);
         rabbitAdmin.declareBinding(binding);
@@ -173,5 +204,46 @@ public class RabbitMqExchangeConfig {
         return binding;
     }
 
+    @Bean
+    Binding bindingExchangeCenterStatus(Queue queueStatus, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_CENTER_STATUS);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeCenterStatus(Queue queueStatus, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_CENTER_STATUS);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeHtmlGenerate(Queue queueHtmlGenerate, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueHtmlGenerate).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeHtmlGenerate(Queue queueHtmlGenerate, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueHtmlGenerate).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeJF(Queue queueJF, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeJF(Queue queueJF, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
 
 }
