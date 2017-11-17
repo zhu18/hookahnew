@@ -6,7 +6,19 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.*;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.params.ClientPNames;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -235,4 +247,67 @@ public class HttpClientUtil {
 		return resMap;
 	}
 
+
+	static RequestConfig requestConfig = RequestConfig.custom()
+			.setSocketTimeout(25000)
+			.setConnectTimeout(25000)
+			.setConnectionRequestTimeout(25000)
+			.build();
+
+	/**
+	 * 发送 post请求
+	 * @param httpUrl 地址
+	 * @param headers 参数
+	 */
+	public static String sendHttpPost(String httpUrl, String json,Header headers) throws Exception {
+		HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
+		httpPost.setHeader(HTTP.CONTENT_TYPE, "application/json");
+		httpPost.addHeader(headers);
+		//StringEntity se = new StringEntity(json);
+		StringEntity se = new StringEntity(json,"UTF-8");
+		se.setContentType("application/json");
+//        se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "text/json"));
+		httpPost.setEntity(se);
+		return sendHttpMethod(httpPost);
+	}
+
+	/**
+	 * 发送Post请求
+	 * @param httpReq
+	 * @return
+	 */
+	private static String sendHttpMethod(HttpRequestBase httpReq) throws Exception {
+		CloseableHttpClient httpClient = null;
+		CloseableHttpResponse response = null;
+		HttpEntity entity = null;
+		String responseContent = null;
+		try {
+			// 创建默认的httpClient实例.
+			httpClient = HttpClients.createDefault();
+			httpReq.setConfig(requestConfig);
+			// 执行请求
+			response = httpClient.execute(httpReq);
+			entity = response.getEntity();
+			responseContent = EntityUtils.toString(entity, "UTF-8");
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		} finally {
+			closeRes(httpClient,response);
+		}
+		return responseContent;
+	}
+
+	/**
+	 * 关闭连接,释放资源
+	 * @param httpClient
+	 * @param response
+	 */
+	private static void closeRes(CloseableHttpClient httpClient,CloseableHttpResponse response) throws Exception{
+		if (response != null) {
+			response.close();
+		}
+		if (httpClient != null) {
+			httpClient.close();
+		}
+	}
 }
