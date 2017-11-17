@@ -1,6 +1,6 @@
 package com.jusfoun.hookah.rpc.api;
 
-public interface JfRecordCacheService {
+public interface CacheService {
 
     Integer getUseScoreByUserId(String userId);
 }

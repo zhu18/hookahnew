@@ -3,10 +3,12 @@ package com.jusfoun.hookah.integral.listener;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.core.domain.jf.JfRecord;
-import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.domain.jf.JfRule;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.integral.contants.JfEnum;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
+import com.jusfoun.hookah.rpc.api.JfRuleService;
 import com.jusfoun.hookah.rpc.api.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +16,11 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 处理积分消息业务
@@ -54,6 +57,7 @@ public class RabbitMQJFHandelListener {
 
             JfRecord jfRecord = new JfRecord();
             jfRecord.setUserId(jfBo.getUserId());
+            // 对应积分规则的sn
             jfRecord.setSourceId(jfBo.getSourceId());
             jfRecord.setNote(JfEnum.getMsgByCode(jfBo.getSourceId()));
             jfRecord.setExpire(Short.parseShort("0"));
