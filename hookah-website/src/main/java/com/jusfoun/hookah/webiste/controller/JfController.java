@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.vo.JfShowVo;
 import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -32,8 +33,6 @@ public class JfController extends BaseController {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
-        PageInfo<JfShowVo> page = new PageInfo<>();
-        Pagination<JfShowVo> pagination = new Pagination<>();
 
         try {
 
@@ -53,18 +52,12 @@ public class JfController extends BaseController {
 
             String userId = getCurrentUser().getUserId();
 
-            PageHelper.startPage(pageNumberNew, pageSizeNew);
-            List<JfShowVo> list = jfRecordService.getJfRecord(userId, type);
-            page = new PageInfo<JfShowVo>(list);
+            returnData = jfRecordService.getJfRecord(pageNumberNew, pageSizeNew, userId, type);
 
-            pagination.setTotalItems(page.getTotal());
-            pagination.setPageSize(pageSizeNew);
-            pagination.setCurrentPage(pageNumberNew);
-            pagination.setList(page.getList());
-
-            returnData.setData(pagination);
-
-        } catch (Exception e) {
+        }catch (HookahException e2){
+            logger.error("用户登录异常", e2);
+            return ReturnData.error(e2.getMessage());
+        }catch (Exception e){
             logger.error("用户积分查询异常", e);
             return ReturnData.error("系统繁忙，请稍后再试！[del]^_^");
         }
