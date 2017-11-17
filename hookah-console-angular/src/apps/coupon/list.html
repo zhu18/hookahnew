@@ -69,13 +69,13 @@
                                     <span text-length="50" ng-show="item.applyGoods == 2">部分分类</span>
                                 </td>
                                 <td>
-                                    <span text-length="50" ng-show="item.applyChannel == 0">注册赠券</span>
-                                    <span text-length="50" ng-show="item.applyChannel == 1">购物赠券</span>
-                                    <span text-length="50" ng-show="item.applyChannel == 2">全场赠券</span>
+                                    <span text-length="50" ng-show="item.applyChannel == 0">无限制</span>
+                                    <span text-length="50" ng-show="item.applyChannel == 1">满 <span data-ng-bind="item.discountValue"></span>可用</span>
+                                    <span text-length="50" ng-show="item.applyChannel == 2">折扣</span>
                                 </td>
 
                                 <td data-ng-bind="item.faceValue"></td>
-                                <td data-ng-bind="item.applyPlatform"></td>
+                                <td data-ng-bind="item.userName"></td>
                                 <td >
                                     <span data-ng-bind="item.expiryStartDate"></span>
                                     至
