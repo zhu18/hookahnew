@@ -1,14 +1,13 @@
 package com.jusfoun.hookah.core.domain.vo;
 
+import com.jusfoun.hookah.core.domain.UserCoupon;
 import com.jusfoun.hookah.core.generic.GenericModel;
 
 /**
  * Created by hhh on 2017/11/8.
  * 用户优惠券扩展类 用于后台展示用户优惠券信息
  */
-public class UserCouponVo extends GenericModel {
-
-    private String userId;
+public class UserCouponVo extends UserCoupon {
 
     private String userName;
 
@@ -20,13 +19,13 @@ public class UserCouponVo extends GenericModel {
 
     private Long expired;
 
-    public String getUserId() {
-        return userId;
-    }
+    private String mobile;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+    private Byte userType;
+
+    private Long faceValue;
+
+    private String couponName;
 
     public String getUserName() {
         return userName;
@@ -66,5 +65,37 @@ public class UserCouponVo extends GenericModel {
 
     public void setExpired(Long expired) {
         this.expired = expired;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Byte getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Byte userType) {
+        this.userType = userType;
+    }
+
+    public Long getFaceValue() {
+        return faceValue;
+    }
+
+    public void setFaceValue(Long faceValue) {
+        this.faceValue = faceValue;
+    }
+
+    public String getCouponName() {
+        return couponName;
+    }
+
+    public void setCouponName(String couponName) {
+        this.couponName = couponName;
     }
 }

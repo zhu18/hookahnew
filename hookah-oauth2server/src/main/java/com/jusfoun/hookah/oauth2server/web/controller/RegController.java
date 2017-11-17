@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.WxUserRecommend;
+import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.*;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -38,11 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author huang lei
@@ -195,7 +192,14 @@ public class RegController {
             }
         }
         //完成注册 发消息到MQ送优惠券
-//        mqSenderService.sendDirect(RabbitmqQueue.REG_COUPON,user.getUserId());
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,regUser.getUserId());
+
+        // TODO …… 新注册用户赠送积分
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(user.getUserId(), 1));
+
+        // TODO …… 新注册用户赠送积分
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(recommendUserId, 1));
+
         //TODO...登录日志
         logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
 //            return "redirect:"+host.get("website")+"/login";

@@ -224,29 +224,29 @@ public class RabbitMqExchangeConfig {
     }
 
     @Bean
-    Binding bindingExchangeHtmlGenerate(Queue queueStatus, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
+    Binding bindingExchangeHtmlGenerate(Queue queueHtmlGenerate, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueHtmlGenerate).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
 
     @Bean
-    Binding bindingExchangeHtmlGenerate(Queue queueStatus, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
+    Binding bindingExchangeHtmlGenerate(Queue queueHtmlGenerate, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueHtmlGenerate).to(exchange).with(RabbitmqQueue.CONTRACE_GENERATE_INDEX);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
 
     @Bean
-    Binding bindingExchangeJF(Queue queueStatus, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
+    Binding bindingExchangeJF(Queue queueJF, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
 
     @Bean
-    Binding bindingExchangeJF(Queue queueStatus, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueStatus).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
+    Binding bindingExchangeJF(Queue queueJF, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }

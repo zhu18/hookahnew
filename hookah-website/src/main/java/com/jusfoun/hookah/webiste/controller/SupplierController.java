@@ -86,7 +86,7 @@ public class SupplierController extends BaseController{
     }
 
     @RequestMapping(value = "/updateContactInfo", method = RequestMethod.POST)
-    public ReturnData updateContactInfo(String contactName, String contactPhone, String contactAddress, String postCode){
+    public ReturnData updateContactInfo(String contactName, String contactPhone, String contactAddress, String postCode, String contactEmail){
         try {
             String userId = this.getCurrentUser().getUserId();
             User user = userService.selectById(userId);
@@ -95,6 +95,11 @@ public class SupplierController extends BaseController{
                 return ReturnData.error("联系人手机号格式不正确");
             }else {
                 user.setContactPhone(contactPhone);
+            }
+            if (contactEmail!=null && !FormatCheckUtil.checkEmail(contactEmail)){
+                return ReturnData.error("联系人电子邮箱格式不正确");
+            }else {
+                user.setEmail(contactEmail);
             }
             user.setContactAddress(contactAddress);
             user.setPostCode(postCode);
@@ -125,6 +130,7 @@ public class SupplierController extends BaseController{
             map.put("contactName",user.getContactName());
             map.put("contactAddress",user.getContactAddress());
             map.put("postCode",user.getPostCode());
+            map.put("email",user.getEmail());
         }catch (Exception e){
             logger.error(e.getMessage());
             return ReturnData.error(e.getMessage());

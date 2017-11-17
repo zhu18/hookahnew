@@ -105,8 +105,9 @@ var htmlPart = {
 							</div>
 						</div>
 					</div>
-					<div class="form-item form-item-short">
+					<div class="form-item form-item-short" style="position: relative;">
 						<div class="loading_btns"></div>
+						<div class="forPoints">成功注册送积分 <span></span></div>
 						<button type="submit" class="btn btn-large tsl" data-phase-id="r_p_next" id="J_BtnInfoForm" disabled="disabled" style="background:#ccc;cursor:no-drop;">立即注册
 						</button>
 						<div class="msg msg-hide" data-show="0" id="J_MsgInfoForm" data-display="block"><i
@@ -854,6 +855,13 @@ $('#J_Agreement').change(function(){
 		$('#J_BtnInfoForm').attr('disabled','disabled').css({'background':'#ccc','cursor':'no-drop'});
 	}
 })
+
+	$('.forPoints span').click(function(){//点击移出积分
+		$(this).parent().remove()
+	})
+
+
+
 </script>
 <%};
 include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}

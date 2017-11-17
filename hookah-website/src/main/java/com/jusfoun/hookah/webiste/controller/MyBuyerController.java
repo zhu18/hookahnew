@@ -56,15 +56,21 @@ public class MyBuyerController {
     public String myAttention() {
         return "usercenter/buyer/myAttention";
     }
-//    我的商品
+    //    我的商品
     @RequestMapping(value = "/myGoods", method = RequestMethod.GET)
     public String myGoods() {
         return "usercenter/buyer/myGoods";
     }
-//    我的优惠券页面
+    //    我的优惠券页面
     @RequestMapping(value = "/myCoupon", method = RequestMethod.GET)
     public String myCoupon() {
         return "usercenter/buyer/myCoupon";
+    }
+
+    //积分
+    @RequestMapping(value = "/buyer/points", method = RequestMethod.GET)
+    public String points() {
+        return "usercenter/buyer/points";
     }
 
 //    @RequestMapping(value = "/viewDetails", method = RequestMethod.GET)

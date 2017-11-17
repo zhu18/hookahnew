@@ -20,11 +20,11 @@
                     <div class="list-item content clearfix" data-ng-show="controlScreenShow">
                         <div class="col-md-4">
                             <label class="control-label">用户账号：</label>
-                            <input ng-model="orgName" type="text" class="form-control" placeholder="请输入用户ID/账号">
+                            <input ng-model="userSn" type="text" class="form-control" placeholder="请输入用户ID/账号">
                         </div>
                         <div class="col-md-4">
                             <label class="control-label">用户昵称：</label>
-                            <input ng-model="orgName" type="text" class="form-control" placeholder="请输入用户昵称">
+                            <input ng-model="userName" type="text" class="form-control" placeholder="请输入用户昵称">
 
                         </div>
                         <!--<div class="col-md-4">-->
@@ -38,18 +38,20 @@
                     <div class="header clearfix">
                         <div class="title pull-left">数据列表</div>
                         <div class="tool pull-right">
-                            <select ng-model="item.pageSize" ng-options="selectDate.id as selectDate.name for selectDate in selectDates" style="width: 155px;height: 32px"></select>
+                            <select ng-model="export" style="width: 155px;height: 32px">
+                                <option data-ng-repeat="x in exports" value="{{x.id}}"><a href="{{x.href}}">{{x.name}}</a></option>
+                            </select>
                             <select ng-model="item.pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
                         </div>
                     </div>
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>编号</th>
+                            <th></th>
                             <th>用户ID</th>
                             <th>用户账号</th>
                             <th>用户昵称</th>
-                            <th>会员等级</th>
+                            <!--<th>会员等级</th>-->
                             <th>已使用</th>
                             <th>未使用</th>
                             <th>已过期</th>
@@ -57,23 +59,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--<tr data-ng-repeat="item in userList">-->
-                        <!--<td>{{$index + 1}}</td>-->
-                        <!--<td data-ng-bind="item.orgName"></td>-->
-                        <!--<td data-ng-bind="item.contactName"></td>-->
-                        <!--<td data-ng-bind="item.contactPhone"></td>-->
+                        <tr data-ng-repeat="item in userList">
+                        <td>
+                            <input type="radio" >
+                        </td>
+                        <td>
+                            <span data-ng-bind="item.userId"></span>
+                        </td>
+                        <td>
+                            <span data-ng-bind="item.userSn"></span>
+                        </td>
+                        <td>
+                            <span data-ng-bind="item.userName"></span>
+                        </td>
+
                         <!--<td>-->
-                        <!--<span text-length="50" ng-show="item.checkStatus == 2">注册赠券</span>-->
-                        <!--<span text-length="50" ng-show="item.checkStatus == 1">购物赠券</span>-->
-                        <!--<span text-length="50" ng-show="item.checkStatus == 0">全场赠券</span>-->
-                        <!--<span text-length="50" ng-show="item.checkStatus == 0">会员赠券</span>-->
+                           <!--<span text-length="50" ng-show="item. userType == 2">注册赠券</span>-->
+                           <!--<span text-length="50" ng-show="item. userType == 1">购物赠券</span>-->
+                           <!--<span text-length="50" ng-show="item. userType == 0">全场赠券</span>-->
+                           <!--<span text-length="50" ng-show="item. userType == 0">会员赠券</span>-->
                         <!--</td>-->
-                        <!--<td data-ng-bind="item.addTime"></td>-->
-                        <!--<td>-->
-                        <!--<button class="btn btn-primary"  ng-click="look(item)">查看明细</button>-->
-                        <!--<button class="btn btn-primary"  ng-click="edit(item)">赠送优惠券</button>-->
-                        <!--</td>-->
-                        <!--</tr>-->
+                        <td>
+                            <span data-ng-bind=" item.used"></span>
+                        </td>
+                        <td>
+                            <span data-ng-bind=" item.unused"></span>
+                        </td>
+                        <td>
+                            <span data-ng-bind=" item.expired"></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary"  ng-click="getDetail(item.userId)">查看明细</button>
+                            <button class="btn btn-primary"  ng-click="giveCoupon(item.userId)">赠送优惠券</button>
+                        </td>
+                        </tr>
 
                         </tbody>
                     </table>

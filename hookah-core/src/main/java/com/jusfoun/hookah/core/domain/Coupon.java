@@ -110,7 +110,7 @@ public class Coupon extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
     private Date expiryStartDate;
 
     /**
@@ -119,7 +119,7 @@ public class Coupon extends GenericModel {
      *
      * @mbggenerated
      */
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
     private Date expiryEndDate;
 
     /**

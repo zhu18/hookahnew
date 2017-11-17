@@ -568,8 +568,7 @@ public class GenericServiceImpl<Model extends GenericModel, ID extends Serializa
     }
 
     @Override
-    public Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters,
-                                                    List<Sort> Sorts, Date startTime, Date endTime, String startSum, String endSum) {
+    public Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters, List<Sort> Sorts, Date startTime, Date endTime, Long startMoney, Long endMoney) {
         return new Pagination<Model>();
     }
 

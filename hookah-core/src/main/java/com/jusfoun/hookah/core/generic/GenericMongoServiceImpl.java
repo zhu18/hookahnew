@@ -207,24 +207,48 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
         return new Pagination<Model>();
     }
 
+    /**
+     * 新增价格区间查询
+     * @param pageNum
+     * @param pageSize
+     * @param filters
+     * @param sorts
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @Override
     public Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters,
-                                                    List<Sort> sorts, Date startTime, Date endTime) {
+                                                    List<Sort> sorts, Date startTime, Date endTime,
+                                                    Long startMoney, Long endMoney) {
         Type type = getClass().getGenericSuperclass();
         Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
 
         Query query = this.convertFilter2Query(filters);
-        Criteria criteria = null;
         if (startTime!=null && endTime!=null){
-            criteria = Criteria.where("addTime").gte(startTime).lt(endTime);
-            query.addCriteria(criteria);
+            query.addCriteria(Criteria.where("addTime").gte(startTime).lt(endTime));
         }else if (startTime==null && endTime!=null){
-            criteria = Criteria.where("addTime").lt(endTime);
-            query.addCriteria(criteria);
+            query.addCriteria(Criteria.where("addTime").lt(endTime));
         }else if (startTime!=null && endTime==null){
-            criteria = Criteria.where("addTime").gte(startTime);
-            query.addCriteria(criteria);
+            query.addCriteria(Criteria.where("addTime").gte(startTime));
         }
+
+        if(startMoney > 0 && endMoney > 0){
+            if(startMoney < endMoney){
+                query.addCriteria(Criteria.where("orderAmount").gte(startMoney).lte(endMoney));
+                query.with(new Sort(new Sort.Order(Sort.Direction.ASC, "orderAmount")));
+            }else if(startMoney > endMoney){
+                query.addCriteria(Criteria.where("orderAmount").gte(endMoney).lte(startMoney));
+                query.with(new Sort(new Sort.Order(Sort.Direction.DESC, "orderAmount")));
+            }else {
+                query.addCriteria(Criteria.where("orderAmount").is(startMoney));
+            }
+        }else if(startMoney > 0 && endMoney == 0){
+            query.addCriteria(Criteria.where("orderAmount").is(startMoney));
+        }else if(startMoney == 0 && endMoney > 0){
+            query.addCriteria(Criteria.where("orderAmount").is(endMoney));
+        }
+
         long list = this.mongoTemplate.count(query, (Class)trueType);
         if (sorts!=null&&sorts.size()!=0)
             for (Sort sort:sorts){
@@ -244,7 +268,7 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
 
     @Override
     public Pagination<Model> getListInPageFromMongo(Integer pageNum, Integer pageSize, List<Condition> filters,
-                                                    List<Sort> sorts, Date startTime, Date endTime, String startSum ,String endSum) {
+                                                    List<Sort> sorts, Date startTime, Date endTime) {
         Type type = getClass().getGenericSuperclass();
         Type trueType = ((ParameterizedType) type).getActualTypeArguments()[0];
 
@@ -259,17 +283,6 @@ public class GenericMongoServiceImpl<Model extends GenericModel, ID extends Seri
         }else if (startTime!=null && endTime==null){
             criteria = Criteria.where("addTime").gte(startTime);
             query.addCriteria(criteria);
-        }
-        Criteria criteria1 = null;
-        if (startSum!=null && endSum!=null){
-            criteria1 = Criteria.where("orderAmount").gte(startSum).lt(endSum);
-            query.addCriteria(criteria1);
-        }else if (startSum==null && endSum!=null){
-            criteria1 = Criteria.where("orderAmount").lt(endSum);
-            query.addCriteria(criteria1);
-        }else if (startSum!=null && endSum==null){
-            criteria1 = Criteria.where("orderAmount").gte(startSum);
-            query.addCriteria(criteria1);
         }
         long list = this.mongoTemplate.count(query, (Class)trueType);
         if (sorts!=null&&sorts.size()!=0)

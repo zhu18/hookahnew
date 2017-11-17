@@ -116,6 +116,14 @@ public abstract class DateUtils {
         return toDate;
     }
 
+    public static String transferTime(String fromDate){
+        String toDate = null;
+        if(com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(fromDate)){
+            toDate = fromDate.substring(0, 10) + " 23:59:59";
+        }
+        return toDate;
+    }
+
     public static Date thisTimeNextMonth(Date time, Integer i){
         Calendar cld = Calendar.getInstance();
         cld.setTime(time);
@@ -130,6 +138,31 @@ public abstract class DateUtils {
         cld.add(Calendar.YEAR, i);
         Date d2 = cld.getTime();
         return d2;
+    }
+
+    public static boolean isSameDay(Date date1, Date date2) {
+        if (date1 == null || date2 == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        final Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        final Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        return cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) &&
+                cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
+
+    public static boolean isSoonExpire(Date date1, Date date2, Integer day){
+        if (date1 == null || date2 == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        final Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        final Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        int n = cal2.get(Calendar.DAY_OF_YEAR)-cal1.get(Calendar.DAY_OF_YEAR)+1;
+        return n<=day;
     }
 
 }
