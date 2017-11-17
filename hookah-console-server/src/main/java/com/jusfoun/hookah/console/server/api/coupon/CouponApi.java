@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.CouponService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -103,30 +104,8 @@ public class CouponApi extends BaseController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ReturnData getAllCoupon(String couponName, Byte couponType, String currentPage, String pageSize,String sort){
         Pagination page = new Pagination<>();
-        List<Condition> filters = new ArrayList();
-        List<OrderBy> orderBys = new ArrayList<>();
         try {
-            int pageNumberNew = HookahConstants.PAGE_NUM;
-            if (StringUtils.isNotBlank(currentPage)) {
-                pageNumberNew = Integer.parseInt(currentPage);
-            }
-            int pageSizeNew = HookahConstants.PAGE_SIZE;
-            if (StringUtils.isNotBlank(pageSize)) {
-                pageSizeNew = Integer.parseInt(pageSize);
-            }
-            if (StringUtils.isNotBlank(couponName)){
-                filters.add(Condition.like("couponName",couponName));
-            }
-            if (couponType != null){
-                filters.add(Condition.eq("couponType",couponType));
-            }
-            filters.add(Condition.eq("isDeleted",(byte)0));
-            if (StringUtils.isNotBlank(sort)){
-                orderBys.add(OrderBy.desc(sort));
-            }else {
-                orderBys.add(OrderBy.asc("expiryEndDate"));
-            }
-            page = couponService.getListInPage(pageNumberNew,pageSizeNew,filters,orderBys);
+            page = couponService.getCouponList(couponName,couponType,currentPage,pageSize,sort);
             return ReturnData.success(page);
         }catch (Exception e){
             e.printStackTrace();
@@ -144,7 +123,11 @@ public class CouponApi extends BaseController {
     public ReturnData getCouponById(Long couponId){
         try {
             Coupon coupon = couponService.selectById(couponId);
-            return ReturnData.success(coupon);
+            CouponVo couponVo = new CouponVo();
+            BeanUtils.copyProperties(coupon, couponVo);
+            couponVo.setUnReceivedCount(coupon.getTotalCount() - coupon.getReceivedCount());
+            couponVo.setUnUsedCount(coupon.getReceivedCount() - coupon.getUsedCount());
+            return ReturnData.success(couponVo);
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -222,6 +205,18 @@ public class CouponApi extends BaseController {
             e.printStackTrace();
             logger.error(e.getMessage());
             return ReturnData.error("");
+        }
+    }
+
+    @RequestMapping(value = "/sendCouponToUser", method = RequestMethod.POST)
+    public ReturnData sendCoupon2User(String userId,String couponIds){
+        try {
+            couponService.sendCoupon2User(userId,couponIds);
+            return ReturnData.success("优惠券已发送");
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return ReturnData.error("优惠券发送失败");
         }
     }
 }

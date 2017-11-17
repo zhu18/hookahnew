@@ -14,7 +14,6 @@ import com.jusfoun.hookah.core.domain.vo.UserCouponVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.CouponHelper;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
@@ -24,6 +23,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -60,7 +61,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         coupon.setUserName(user.getUserName());
         coupon.setFaceValue(coupon.getFaceValue()*100);
         coupon.setAddTime(date);
-        coupon.setCouponSn(CouponHelper.createCouponSn(PropertiesManager.getInstance().getProperty("couponCode"), coupon.getCouponType()));
+        coupon.setCouponSn(createCouponSn(PropertiesManager.getInstance().getProperty("couponCode"), coupon.getCouponType()));
         coupon.setCouponName(coupon.getCouponName().trim());
         coupon.setCouponStatus((byte)1);
         coupon.setIsDeleted((byte)0);
@@ -245,6 +246,47 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     }
 
     @Override
+    public Pagination getCouponList(String couponName, Byte couponType, String currentPage, String pageSize, String sort) throws Exception {
+        Pagination page = new Pagination<>();
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList<>();
+        int pageNumberNew = HookahConstants.PAGE_NUM;
+        if (StringUtils.isNotBlank(currentPage)) {
+            pageNumberNew = Integer.parseInt(currentPage);
+        }
+        int pageSizeNew = HookahConstants.PAGE_SIZE;
+        if (StringUtils.isNotBlank(pageSize)) {
+            pageSizeNew = Integer.parseInt(pageSize);
+        }
+        if (StringUtils.isNotBlank(couponName)) {
+            filters.add(Condition.like("couponName", couponName));
+        }
+        if (couponType != null) {
+            filters.add(Condition.eq("couponType", couponType));
+        }
+        filters.add(Condition.eq("isDeleted", (byte) 0));
+        if (StringUtils.isNotBlank(sort)) {
+            orderBys.add(OrderBy.desc(sort));
+        } else {
+            orderBys.add(OrderBy.asc("expiryEndDate"));
+        }
+        page = this.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+        List<Coupon> coupons = page.getList();
+        List<CouponVo> couponVos = new ArrayList<>();
+        if (coupons != null && coupons.size() > 0) {
+            for (Coupon coupon : coupons) {
+                CouponVo couponVo = new CouponVo();
+                BeanUtils.copyProperties(coupon, couponVo);
+                couponVo.setUnReceivedCount(coupon.getTotalCount() - coupon.getReceivedCount());
+                couponVo.setUnUsedCount(coupon.getReceivedCount() - coupon.getUsedCount());
+                couponVos.add(couponVo);
+            }
+        }
+        page.setList(couponVos);
+        return page;
+    }
+
+    @Override
     public ReturnData getUserCouponById(String userId) throws Exception {
         HashMap<String, Object> condition = new HashMap();
         condition.put("isDeleted",(byte)0);
@@ -267,5 +309,85 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         couponVo.setUsedTime(userCoupon.getUsedTime());
         couponVo.setReceivedMode(userCoupon.getReceivedMode());
         return ReturnData.success(couponVo);
+    }
+
+    public List<Coupon> getUserCoupons(String userId, Long goodsAmount) throws Exception{
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("isDeleted",(byte)0));
+        filter.add(Condition.eq("userId",userId));
+        filter.add(Condition.eq("userCouponStatus",(byte)0));
+        filter.add(Condition.eq("orderSn",null));
+        List<UserCoupon> userCoupons = userCouponService.selectList(filter);
+        List<Coupon> coupons = new ArrayList<>();
+        for (UserCoupon userCoupon : userCoupons){
+            Coupon coupon = couponMapper.selectByPrimaryKey(userCoupon.getCouponId());
+            switch (coupon.getApplyChannel()){
+                case 0:
+                    coupons.add(coupon);
+                    break;
+                case 1:
+                    if (goodsAmount >= coupon.getDiscountValue()){
+                        coupons.add(coupon);
+                    }
+                    break;
+            }
+        }
+        return coupons;
+    }
+
+    public synchronized void sendCoupon2User(String userId, String couponIdList) throws Exception{
+        String[] couponIds = couponIdList.split(",");
+        for (int i=0;i<couponIds.length;i++){
+            Long couponId = Long.getLong(couponIds[i]);
+            Coupon coupon = couponMapper.selectByPrimaryKey(couponId);
+            Integer receivedCount = coupon.getReceivedCount();
+            Integer totalCount = coupon.getTotalCount();
+            Integer validDays = coupon.getValidDays();
+            if (receivedCount < totalCount){
+                UserCoupon userCoupon = new UserCoupon();
+                userCoupon.setUserId(userId);
+                userCoupon.setUserCouponSn(createUserCouponSn(coupon.getCouponSn()));
+                userCoupon.setReceivedMode((byte)0);
+                userCoupon.setReceivedTime(new Date());
+                userCoupon.setCouponId(coupon.getId());
+                userCoupon.setUserCouponStatus((byte)0);
+                userCoupon.setExpiryEndDate(coupon.getExpiryEndDate());
+                userCoupon.setExpiryStartDate(coupon.getExpiryStartDate());
+                coupon.setReceivedCount(receivedCount++);
+                userCouponService.insert(userCoupon);
+                this.updateByIdSelective(coupon);
+            }
+        }
+    }
+
+    public String createCouponSn(String prefix, Byte type){
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        int num = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数
+        sb.append(prefix);
+        sb.append(String.format("%02d",type));
+        sb.append(DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now()));
+        sb.append(num);
+        String couponSn = sb.toString();
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("couponSn",couponSn));
+        List<Coupon> coupons = this.selectList(filter);
+        if (coupons!=null && coupons.size()>0){
+            createCouponSn(prefix,type);
+        }
+        return sb.toString();
+    }
+
+    public String createUserCouponSn(String couponSn){
+        Random random = new Random();
+        int num = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数
+        String userCouponSn = couponSn+num;
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("couponSn",couponSn));
+        List<Coupon> coupons = this.selectList(filter);
+        if (coupons!=null && coupons.size()>0){
+            createUserCouponSn(couponSn);
+        }
+        return userCouponSn;
     }
 }
