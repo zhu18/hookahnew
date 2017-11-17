@@ -63,7 +63,7 @@
     #{isDeleted,jdbcType=TINYINT})
   </insert>
   <select id="getUserCouponCount" resultType="com.jusfoun.hookah.core.domain.vo.UserCouponVo" parameterType="java.util.HashMap">
-    SELECT cp.id AS userId,
+    SELECT `user`.user_id AS userId,
     `user`.user_name AS userName,
     `user`.user_sn AS userSn,
     `user`.mobile AS mobile,
