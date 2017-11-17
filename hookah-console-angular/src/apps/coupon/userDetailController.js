@@ -9,12 +9,14 @@ class userDetailController {
             {id:1, name:"20"},
             {id:2, name:"50"}
         ];
+        $scope.pageSize=20
         $scope.useStatus = [               //自定定义类型数据
             {id:-1, name:"全部"},
-            {id:1, name:"已使用"},
-            {id:2, name:"未使用"},
+            {id:0, name:"已使用"},
+            {id:1, name:"未使用"},
             {id:2, name:"已过期"}
         ];
+        $scope.userCouponStatus="";
         $scope.controlScreenShow=true;
         $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
             if ($scope.controlScreenShow){
@@ -89,10 +91,14 @@ class userDetailController {
         };
         $scope.renderList();
         $scope.refresh = function () {
-            $scope.search();
+            $scope.renderInfo();
+            $scope.renderList();
         };
         $scope.pageChanged = function () {
             $scope.renderList();
+        };
+        $scope.back = function () { //返回按钮
+            $state.go('coupon.list')
         };
 
         $scope.getDetail=function (id) {

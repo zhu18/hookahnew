@@ -35,7 +35,7 @@
                         <div class="title pull-left">数据列表</div>
                         <div class="tool pull-right">
                             <button class="btn btn-primary" data-ng-click="add()">添加优惠券</button>
-                            <select ng-model="pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
+                            <select ng-model="pagination.pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" ng-change="search()" style="width: 155px;height: 32px"></select>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -78,7 +78,7 @@
                                 <td data-ng-bind="item.userName"></td>
                                 <td >
                                     <span data-ng-bind="item.expiryStartDate"></span>
-                                    至
+                                    <span data-ng-show="item.expiryStartDate && item.expiryEndDate">至</span>
                                     <span data-ng-bind="item.expiryEndDate"></span>
                                 </td>
                                 <td>

@@ -9,8 +9,8 @@ class queryController {
         ];
         $scope.exports = [               //自定定义类型数据
             {id:"", name:"导出数据"},
-            {id:1, name:"选中用户",href:"1"},
-            {id:2, name:"全部用户",href:"2"}
+            {id:0, name:"选中用户",href:"1"},
+            {id:1, name:"全部用户",href:"2"}
         ];
         $scope.export="";
         $scope.pageSize=1;

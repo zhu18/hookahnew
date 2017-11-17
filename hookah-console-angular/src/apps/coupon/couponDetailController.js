@@ -4,17 +4,19 @@
 class couponDetailController {
     constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl,$stateParams) {
         console.log($stateParams.id);
-        $scope.pageSizes = [               //自定义显示条数
-            {id:-1, name:"显示条数"},
-            {id:1, name:"20"},
-            {id:2, name:"50"}
+        $scope.pageSizes = [               //自定定义类型数据
+            {id:'20', name:"20"},
+            {id:'50', name:"50"}
         ];
+        $rootScope.pagination.pageSize="20";
+
         $scope.useStatus = [               //自定义使用状态数据
             {id:-1, name:"全部"},
-            {id:1, name:"已使用"},
-            {id:2, name:"未使用"},
+            {id:0, name:"已使用"},
+            {id:1, name:"未使用"},
             {id:2, name:"已过期"}
         ];
+        $scope.userCouponStatus=0
         $scope.controlScreenShow=true;
         $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
             if ($scope.controlScreenShow){
@@ -80,11 +82,25 @@ class couponDetailController {
             promise.then(function (res, status, config, headers) {
                 console.log('数据在这里');
                 console.log(res);
-
                 if (res.data.code == '1') {
-                    $scope.userList=res.data.data.list;
-                } else {
+                    $scope.userList = res.data.data.list;
+                    $scope.showNoneDataInfoTip = false;
+                    if (res.data.data.list.length > 0) {
 
+                        if (res.data.data.totalPage > 1) { //当页面大于1页的时候才显示下面的页面选择
+                            $scope.showPageHelpInfo = true;
+                        } else {
+                            $scope.showPageHelpInfo = false;
+
+                        }
+                    } else {
+                        $rootScope.loadingState = false;
+                        $scope.showNoneDataInfoTip = true;
+                    }
+
+                } else {
+                    $scope.userList = [];
+                    $scope.showNoneDataInfoTip = true;
                 }
 
                 $rootScope.loadingState = false;
