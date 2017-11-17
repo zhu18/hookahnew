@@ -2,6 +2,14 @@
 var head = {
 %>
 <link rel="stylesheet" href="/static/css/error/error.css">
+<style>
+	.toIndex{
+		background-color: #304848;
+	}
+	.toIndex:hover{
+		background-color: #57c0d5;
+	}
+</style>
 <%};%>
 
 <%
@@ -10,79 +18,14 @@ var htmlPart = {
 <div class="grid-0 error">
 	<div class="grid-row">
 		<div class="error-prompt">
-			<div class="display-inline-block error-prompt-content">
-				<!--<img src="/static/images/error_06.png" alt="">-->
-				<p>抱歉！你访问的页面出错了...</p>
-				<p>500</p>
-				<ul>
-					<li>你可以逛逛：</li>
-					<li><a href="/">首页    </a></li>
-					<li><a href="/exchange/index">BDGStore  </a></li>
-				</ul>
+			<div class="display-inline-block error-prompt-content" style="height: auto;margin-top: 25px;">
+				<img style="width: 458px;" src="/static/images/500.jpg" alt="">
+				<div style="border:1px dashed #304848;position: relative;top: 20px;">
+					<a class="toIndex" style="border-radius: 25px;position: absolute;top: -20px;left: 50%;transform: translate(-72px,0);display: inline-block;color:#fff;font-size: 24px;width: 155px;line-height: 40px;" href="/">返回首页</a>
+					<p style="margin-bottom: 25px;color: #304848;font-size: 30px;font-weight: normal;line-height: 48px;">网络异常，请刷新重试～</p>
+				</div>
 			</div>
 		</div>
-		<!--<div class="error-recommend">-->
-			<!--<div>为你推荐</div>-->
-			<!--<div class="order-list">-->
-				<!--<ul class="clearfix">-->
-					<!--<li>-->
-						<!--<a class="item-top" href="javascript:void(0)">-->
-							<!--<p class="goods-img"><img src="/static/images/4-3.jpg" alt=""/></p>-->
-							<!--<p class="goods-name">信用查询</p>-->
-							<!--<p class="goods-brief">查询关于人的乙烯类信息哈哈</p>-->
-						<!--</a>-->
-						<!--<div class="item-down">-->
-							<!--<span class="grid-left goods-price"><span>22222</span>元</span>-->
-							<!--<a class="grid-right" href="javascript:void(0)">加入购物车</a>-->
-						<!--</div>-->
-					<!--</li>-->
-					<!--<li>-->
-						<!--<a class="item-top" href="javascript:void(0)">-->
-							<!--<p class="goods-img"><img src="/static/images/4-3.jpg" alt=""/></p>-->
-							<!--<p class="goods-name">信用查询</p>-->
-							<!--<p class="goods-brief">查询关于人的乙烯类信息哈哈</p>-->
-						<!--</a>-->
-						<!--<div class="item-down">-->
-							<!--<span class="grid-left goods-price"><span>22222</span>元</span>-->
-							<!--<a class="grid-right" href="javascript:void(0)">加入购物车</a>-->
-						<!--</div>-->
-					<!--</li>-->
-					<!--<li>-->
-						<!--<a class="item-top" href="javascript:void(0)">-->
-							<!--<p class="goods-img"><img src="/static/images/4-3.jpg" alt=""/></p>-->
-							<!--<p class="goods-name">信用查询</p>-->
-							<!--<p class="goods-brief">查询关于人的乙烯类信息哈哈</p>-->
-						<!--</a>-->
-						<!--<div class="item-down">-->
-							<!--<span class="grid-left goods-price"><span>22222</span>元</span>-->
-							<!--<a class="grid-right" href="javascript:void(0)">加入购物车</a>-->
-						<!--</div>-->
-					<!--</li>-->
-					<!--<li>-->
-						<!--<a class="item-top" href="javascript:void(0)">-->
-							<!--<p class="goods-img"><img src="/static/images/4-3.jpg" alt=""/></p>-->
-							<!--<p class="goods-name">信用查询</p>-->
-							<!--<p class="goods-brief">查询关于人的乙烯类信息哈哈</p>-->
-						<!--</a>-->
-						<!--<div class="item-down">-->
-							<!--<span class="grid-left goods-price"><span>22222</span>元</span>-->
-							<!--<a class="grid-right" href="javascript:void(0)">加入购物车</a>-->
-						<!--</div>-->
-					<!--</li>-->
-					<!--<li>-->
-						<!--<a class="item-top" href="javascript:void(0)">-->
-							<!--<p class="goods-img"><img src="/static/images/4-3.jpg" alt=""/></p>-->
-							<!--<p class="goods-name">信用查询</p>-->
-							<!--<p class="goods-brief">查询关于人的乙烯类信息哈哈</p>-->
-						<!--</a>-->
-						<!--<div class="item-down">-->
-							<!--<span class="grid-left goods-price"><span>22222</span>元</span>-->
-							<!--<a class="grid-right" href="javascript:void(0)">加入购物车</a>-->
-						<!--</div>-->
-					<!--</li>-->
-				<!--</ul>-->
-			<!--</div>-->
-		<!--</div>-->
 	</div>
 </div>
 <%};

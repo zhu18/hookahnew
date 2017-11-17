@@ -4,6 +4,7 @@
 class couponController {
     constructor($scope, $rootScope, $http, $state,$stateParams,growl,$filter) {
         console.log($stateParams.id);
+        var data={};
         $scope.typeStatus = [               //自定定义类型数据
             {id:0, name:"注册赠券"},
             {id:1, name:"购物赠券"},
@@ -15,7 +16,7 @@ class couponController {
         $scope.applyPlatforms = [            //自定定义类型数据
             {id:0, name:"全平台"}
         ];
-        $scope.applyPlatform="0";
+        $scope.applyPlatform=0;
 
         if ($stateParams.id){
             console.log('修改');
@@ -56,42 +57,47 @@ class couponController {
 
             };
             $scope.getCouponById();
-            var url=$rootScope.site.apiServer + "/api/coupon/modify";
-            var data= {
-                id:$stateParams.id,
-                couponType:$scope.couponType,
-                couponName:$scope.couponName,
-                applyPlatform:$scope.applyPlatform,
-                totalCount:$scope.totalCount,
-                faceValue:($scope.faceValue*100),
-                limitedCount:$scope.limitedCount,
-                applyChannel:$scope.applyChannel,
-                discountValue:$scope.discountValue,
-                expiryStartTime:$scope.expiryStartTime,
-                expiryEndTime:$scope.expiryEndTime,
-                validDays:$scope.validDays,
-                applyGoods:$scope.applyGoods
-            };
         }else {
             console.log('添加');
             $scope.title="添加";
-            var url=$rootScope.site.apiServer + "/api/coupon/add";
-            var data= {
-                couponType:$scope.couponType,
-                couponName:$scope.couponName,
-                applyPlatform:$scope.applyPlatform,
-                totalCount:$scope.totalCount,
-                faceValue:($scope.faceValue*100),
-                limitedCount:$scope.limitedCount,
-                applyChannel:$scope.applyChannel,
-                discountValue:$scope.discountValue,
-                expiryStartTime:$scope.expiryStartTime,
-                expiryEndTime:$scope.expiryEndTime,
-                validDays:$scope.validDays,
-                applyGoods:$scope.applyGoods
-            };
+
+
         }
         $scope.save=function () {
+            if ($stateParams.id){
+                var url=$rootScope.site.apiServer + "/api/coupon/modify";
+                data= {
+                    id:$stateParams.id,
+                    couponType:$scope.couponType,
+                    couponName:$scope.couponName,
+                    applyPlatform:$scope.applyPlatform,
+                    totalCount:$scope.totalCount,
+                    faceValue:($scope.faceValue*100),
+                    limitedCount:$scope.limitedCount,
+                    applyChannel:$scope.applyChannel,
+                    discountValue:$scope.discountValue,
+                    expiryStartTime:$scope.expiryStartTime,
+                    expiryEndTime:$scope.expiryEndTime,
+                    validDays:$scope.validDays,
+                    applyGoods:$scope.applyGoods
+                };
+            }else {
+                var url=$rootScope.site.apiServer + "/api/coupon/add";
+                data= {
+                    couponType:$scope.couponType,
+                    couponName:$scope.couponName,
+                    applyPlatform:$scope.applyPlatform,
+                    totalCount:$scope.totalCount,
+                    faceValue:($scope.faceValue*100),
+                    limitedCount:$scope.limitedCount,
+                    applyChannel:$scope.applyChannel,
+                    discountValue:$scope.discountValue,
+                    expiryStartTime:$scope.expiryStartTime,
+                    expiryEndTime:$scope.expiryEndTime,
+                    validDays:$scope.validDays,
+                    applyGoods:$scope.applyGoods
+                };
+            }
             var promise = $http({
                 method: 'post',
                 url: url ,
@@ -102,23 +108,19 @@ class couponController {
                 console.log(res);
 
                 if (res.data.code == '1') {
-                    $scope.showNoneDataInfoTip = false;
-                    if (res.data.data.list.length > 0) {
-                        $scope.couponList = res.data.data.list;
-                        if (res.data.data.totalPage > 1) {
-                            $scope.showPageHelpInfo = true;
-                        } else {
+                    var modalInstance =$rootScope.openJustShowDialogModal("添加成功！");
+                    modalInstance.result.then(function () {
+                        $state.go('coupon.list')
+                    }, function () {
 
-                            $scope.showPageHelpInfo = false;
-
-                        }
-                    } else {
-                        $rootScope.loadingState = false;
-                        $scope.showNoneDataInfoTip = true;
-                    }
+                    });
                 } else {
-                    $scope.supplierList = [];
-                    $scope.showNoneDataInfoTip = true;
+                    var modalInstance =$rootScope.openJustShowDialogModal(res.data.message);
+                    modalInstance.result.then(function () {
+
+                    }, function () {
+
+                    });
 
                 }
 

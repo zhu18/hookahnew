@@ -24,11 +24,15 @@ public class CouponVo extends Coupon {
 
     private String orderSn;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date receivedTime;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date usedTime;
 
     private Byte userCouponStatus;
+
+    private Byte receivedMode;
 
     public Byte getCouponTag() {
         return couponTag;
@@ -92,5 +96,13 @@ public class CouponVo extends Coupon {
 
     public void setUserCouponStatus(Byte userCouponStatus) {
         this.userCouponStatus = userCouponStatus;
+    }
+
+    public Byte getReceivedMode() {
+        return receivedMode;
+    }
+
+    public void setReceivedMode(Byte receivedMode) {
+        this.receivedMode = receivedMode;
     }
 }
