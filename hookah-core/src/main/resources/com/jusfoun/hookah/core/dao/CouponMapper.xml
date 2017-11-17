@@ -100,5 +100,6 @@
         `user`.user_type = #{userType}
       </if>
     </where>
+    ORDER BY `user`.reg_time DESC
   </select>
 </mapper>
