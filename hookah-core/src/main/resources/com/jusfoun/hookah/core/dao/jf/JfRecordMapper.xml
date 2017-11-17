@@ -9,6 +9,7 @@
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="user_id" property="userId" jdbcType="VARCHAR" />
         <result column="source_id" property="sourceId" jdbcType="INTEGER" />
+        <result column="score" property="score" jdbcType="INTEGER" />
         <result column="note" property="note" jdbcType="VARCHAR" />
         <result column="expire" property="expire" jdbcType="SMALLINT" />
         <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
@@ -20,13 +21,13 @@
     <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.jusfoun.hookah.core.domain.jf.JfRecord" >
 
         insert into jf_record (user_id, source_id,
-        note, expire, add_time,
-        update_time, operator, add_date
-        )
+          score, note, expire,
+          add_time, update_time, operator,
+          add_date)
         values (#{userId,jdbcType=VARCHAR}, #{sourceId,jdbcType=INTEGER},
-        #{note,jdbcType=VARCHAR}, #{expire,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP},
-        #{updateTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR}, #{addDate,jdbcType=VARCHAR}
-        )
+          #{score,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, #{expire,jdbcType=SMALLINT},
+          #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR},
+          #{addDate,jdbcType=VARCHAR})
     </insert>
 
     <select id="selectListByUserId" resultType="com.jusfoun.hookah.core.domain.vo.JfShowVo">
@@ -39,7 +40,7 @@
             jr.note
         FROM
             jf_record jr
-        LEFT JOIN jf_source js ON jr.source_id = js.id
+        LEFT JOIN jf_rule js ON jr.source_id = js.id
         WHERE
             jr.user_id = #{userId}
     </select>
@@ -54,16 +55,12 @@
             jr.note AS note
         FROM
             jf_record jr
-        LEFT JOIN jf_source js ON jr.source_id = js.id
+        LEFT JOIN jf_rule js ON jr.source_id = js.id
         WHERE
             jr.user_id = #{userId}
 
             <if test="type == 1 or type == 2">
                 and js.action = #{type}
-            </if>
-
-            <if test="type == 3">
-                and jr.expire = 1
             </if>
 
             ORDER BY jr.add_time
@@ -76,7 +73,7 @@
             SUM(js.score)
         FROM
             jf_record jr
-        LEFT JOIN jf_source js ON jr.source_id = js.id
+        LEFT JOIN jf_rule js ON jr.source_id = js.id
         WHERE
             jr.expire = 0 AND jr.user_id = #{userId}
     </select>

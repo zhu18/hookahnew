@@ -4,17 +4,22 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.jf.JfRecordMapper;
+import com.jusfoun.hookah.core.domain.jf.JfOverdueDetails;
 import com.jusfoun.hookah.core.domain.jf.JfRecord;
 import com.jusfoun.hookah.core.domain.vo.JfShowVo;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.JfRecordCacheService;
+import com.jusfoun.hookah.rpc.api.CacheService;
+import com.jusfoun.hookah.rpc.api.JfOverdueDetailsService;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +40,10 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
     }
 
     @Resource
-    JfRecordCacheService jfRecordCacheService;
+    CacheService cacheService;
+
+    @Resource
+    JfOverdueDetailsService jfOverdueDetailsService;
 
     @CacheEvict(value = "personUseJfSum", key="#jfRecord.getUserId()")
     @Override
@@ -46,19 +54,10 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
     @Override
     public ReturnData getJfRecord(Integer pageNumberNew, Integer pageSizeNew, String userId, String type) throws Exception {
 
-//        // 获取用户所有积分记录
-//        List<JfShowVo> jfList = jfRecordMapper.selectListByUserId(userId);
-//
-//        // 获取用户所有获取积分的记录
-//        List<JfShowVo> ObtainList = jfList.parallelStream().filter(x -> x.getAction().equals(Short.parseShort("1"))).collect(Collectors.toList());
-//
-//        // 获取用户所有兑换积分的记录
-//        List<JfShowVo> ExchangeList = jfList.parallelStream().filter(x -> x.getAction().equals(Short.parseShort("2"))).collect(Collectors.toList());
-
-
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         Pagination<JfShowVo> pagination = new Pagination<>();
+        Pagination<JfOverdueDetails> overPages = new Pagination<>();
 
         if(!type.equals("3")){
 
@@ -75,10 +74,19 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
             returnData.setData(pagination);
         }else {
 
-            // 处理过期积分
-            List<JfShowVo> jfList = jfRecordMapper.selectListByUserIdAndType(userId, type);
+            // 获取处理过的过期积分
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("userId", userId));
+
+            List<OrderBy > orderBys = new ArrayList<>();
+            orderBys.add(OrderBy.desc("addTime"));
+
+            overPages = jfOverdueDetailsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+            returnData.setData(overPages);
+
         }
-        returnData.setData2(jfRecordCacheService.getUseScoreByUserId(userId));
+
+        returnData.setData2(cacheService.getUseScoreByUserId(userId));
 
         return returnData;
     }

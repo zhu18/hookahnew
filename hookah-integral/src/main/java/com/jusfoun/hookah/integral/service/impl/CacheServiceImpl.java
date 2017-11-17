@@ -1,14 +1,14 @@
 package com.jusfoun.hookah.integral.service.impl;
 
 import com.jusfoun.hookah.core.dao.jf.JfRecordMapper;
-import com.jusfoun.hookah.rpc.api.JfRecordCacheService;
+import com.jusfoun.hookah.rpc.api.CacheService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Service
-public class JfRecordCacheServiceImpl implements JfRecordCacheService {
+public class CacheServiceImpl implements CacheService {
 
     @Resource
     JfRecordMapper jfRecordMapper;
