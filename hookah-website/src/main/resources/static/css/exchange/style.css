@@ -1083,6 +1083,9 @@ dl {
 	border: 1px solid #E5E5E5;
 	margin: 10px 10px 0 0;
 }
+.search .search-order .order-list ul li:hover{
+	box-shadow: 0 0 8px rgba(0,0,0,0.35);
+}
 .search .search-order .order-list ul li .item-top {
 	display: block;
 }
@@ -1104,6 +1107,22 @@ dl {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding: 0 30px 0 20px;
+}
+.search .search-order .order-list ul li .item-top .goods-tag{
+	height: 30px;
+	text-align: center;
+	padding-top: 22px;
+}
+.search .search-order .order-list ul li .item-top .goods-tag span{
+	height:13px;
+	border:1px solid #bfbfbf;
+	line-height: 13px;
+	padding:0 4px;
+	border-radius:50%;
+	margin:0 3px;
+}
+.search .search-order .order-list ul li .item-top .goods-tag{
+
 }
 .search .search-order .order-list ul li .item-top .goods-brief {
 	padding: 0 10px 3px;
@@ -1584,11 +1603,16 @@ dl {
 }
 .exchange-search .order-list ul li {
 	width: 230px;
+	height: 225px;
 	float: left;
 	color: black;
 	background-color: white;
 	border: 1px solid #E5E5E5;
 	margin: 10px 10px 0 0;
+}
+.exchange-search .order-list ul li:hover{
+	box-shadow: 0 0 8px rgba(0,0,0,0.35);
+	background: #f8f8f8;
 }
 .exchange-search .order-list ul li:nth-child(5n) {
 	margin-right: 0;
@@ -1613,6 +1637,60 @@ dl {
 	text-overflow: ellipsis;
 	padding: 0 30px 0 20px;
 	font-weight: bold;
+}
+.exchange-search .order-list ul li .item-top .goods-tag{
+	height: 30px;
+	text-align: center;
+	padding-top: 22px;
+}
+.exchange-search .order-list ul li .item-top .goods-tag .item-tag{
+	height:13px;
+	border:1px solid #bfbfbf;
+	line-height: 13px;
+	padding:0 4px;
+	border-radius:13px;
+	margin:0 3px;
+	position: relative;
+}
+.exchange-search .order-list ul li .item-top .goods-tag .item-tag .tag-in{
+	position: absolute;
+	top: -24px;
+	text-decoration: none;
+	left:-50%;
+	border:1px dashed #fa8818;
+	color:#fa8818;
+	margin-left: -20%;
+	white-space: nowrap;
+	display: none;
+}
+.exchange-search .order-list ul li .item-top .goods-tag .item-tag .tag-in .in-nol{
+	background: #ffedbd;
+	height: 13px;
+	display: inline-block;
+	z-index: 20;
+	padding:1px 8px;
+	position: relative;
+}
+.exchange-search .order-list ul li .item-top .goods-tag .item-tag .tag-in:after{
+	position: absolute;
+	left: 50%;
+	margin-left: -5px;
+	top: 11px;
+	content: '';
+	width: 6px;
+	height: 6px;
+	border: 1px dashed #fa8818;
+	background: #ffedbd;
+	z-index: 19;
+	transform: rotate(45deg);
+}
+.exchange-search .order-list ul li .item-top .goods-tag .item-tag:hover{
+	background: #e34f4f;
+	color:#faf40c;
+	border:1px solid #e34f4f;
+}
+.exchange-search .order-list ul li .item-top .goods-tag .item-tag:hover .tag-in{
+	display: block;
 }
 .exchange-search .order-list ul li .item-top .goods-brief {
 	padding: 0 10px 3px;
@@ -1643,7 +1721,15 @@ dl {
 .exchange-search .order-list ul li .item-down .goods-cart {
 	border-radius: 3px;
 	margin-top: 9px;
+	padding:5px;
 }
+.exchange-search .order-list ul li .item-down .goods-cart:hover {
+	border:1px solid #f08d4b;
+	background: #febe4a;
+	color:#ec5b00;
+	padding: 4px ;
+}
+
 .exchange-search .order-list .info {
 	font-size: 20px;
 	text-align: center;
