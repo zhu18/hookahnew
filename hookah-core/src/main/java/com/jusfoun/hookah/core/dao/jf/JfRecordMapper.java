@@ -14,4 +14,6 @@ public interface JfRecordMapper extends GenericDao<JfRecord> {
     List<JfShowVo> selectListByUserId(@Param("userId") String userId);
 
     List<JfShowVo> selectListByUserIdAndType(@Param("userId") String userId, @Param("type") String type);
+
+    Integer getUseScoreByUserId(@Param("userId") String userId);
 }

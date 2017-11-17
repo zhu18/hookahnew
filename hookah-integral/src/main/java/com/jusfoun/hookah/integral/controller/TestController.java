@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.integral.controller;
 
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
@@ -15,8 +16,17 @@ public class TestController {
     @Resource
     MqSenderService mqSenderService;
 
+    @Resource
+    RedisOperate redisOperate;
+
     @RequestMapping("/")
     public String Test1() {
+
+        String set = redisOperate.set("zs", "123456", 0);
+        String get = redisOperate.get("zs");
+
+        System.out.println(set);
+        System.out.println(get);
         return "jf";
     }
 
@@ -43,6 +53,5 @@ public class TestController {
 
         return "jf";
     }
-
 
 }

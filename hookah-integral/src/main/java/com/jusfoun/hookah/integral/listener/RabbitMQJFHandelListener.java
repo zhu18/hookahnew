@@ -28,9 +28,6 @@ public class RabbitMQJFHandelListener {
     @Resource
     UserService userService;
 
-    @Resource
-    RedisOperate redisOperate;
-
     @RabbitListener(queues = RabbitmqQueue.CONTRACE_JF_MSG)
     public void jfHandle(JfBo jfBo) {
 
@@ -70,18 +67,4 @@ public class RabbitMQJFHandelListener {
 
     }
 
-
-
-
-
-    public static void main(String[] args) {
-
-//        System.out.println(2 + (-3));
-//        System.out.println(2 + (+3));
-
-        System.out.println(new Random().nextInt(8));
-
-
-
-    }
 }
