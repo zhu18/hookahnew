@@ -265,6 +265,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         couponVo.setReceivedTime(userCoupon.getReceivedTime());
         couponVo.setOrderSn(userCoupon.getOrderSn());
         couponVo.setUsedTime(userCoupon.getUsedTime());
+        couponVo.setReceivedMode(userCoupon.getReceivedMode());
         return ReturnData.success(couponVo);
     }
 }
