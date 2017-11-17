@@ -54,4 +54,13 @@ public class TestController {
         return "jf";
     }
 
+    @RequestMapping("/msg4")
+    public String Test4(String userId) {
+
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG,
+                new JfBo(userId, new Random().nextInt(7) + 1));
+
+        return "jf";
+    }
+
 }
