@@ -335,13 +335,11 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         return coupons;
     }
 
-    public synchronized void sendCoupon2User(String userId, Long[] couponIdList) throws Exception{
-        for (int i=0;i<couponIdList.length;i++){
-            Long couponId = couponIdList[i];
+    public synchronized void sendCoupon2User(String userId, List<Long> couponIdList) throws Exception{
+        for (Long couponId:couponIdList){
             Coupon coupon = couponMapper.selectByPrimaryKey(couponId);
             Integer receivedCount = coupon.getReceivedCount();
             Integer totalCount = coupon.getTotalCount();
-            Integer validDays = coupon.getValidDays();
             if (receivedCount < totalCount){
                 UserCoupon userCoupon = new UserCoupon();
                 userCoupon.setUserId(userId);

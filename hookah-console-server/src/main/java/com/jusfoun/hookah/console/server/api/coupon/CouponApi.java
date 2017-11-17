@@ -214,8 +214,12 @@ public class CouponApi extends BaseController {
         try {
             Map<String,Object> map = JsonUtils.toObject(coupon,Map.class);
             String userId = (String) map.get("userId");
-            Long[] couponIds = (Long[]) map.get("couponIds");
-            couponService.sendCoupon2User(userId,couponIds);
+            List<Integer> couponIds = (List<Integer>) map.get("couponIds");
+            List<Long> couponList = new ArrayList<>();
+            for (Integer couponId:couponIds){
+                couponList.add((long) couponId);
+            }
+            couponService.sendCoupon2User(userId,couponList);
             return ReturnData.success("优惠券已发送");
         }catch (Exception e){
             e.printStackTrace();
