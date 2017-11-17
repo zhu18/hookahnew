@@ -385,7 +385,6 @@ function selectLineInfo(that) {
 		} else if (p_val == 2) {
 			$('.dataModel-isOnLine-box').show()
 		}
-		console.log('p_val==:' + p_val + '----c_val==:' + c_val)
 	}
 
 } //选择交付方式
@@ -544,7 +543,6 @@ function uploadGoodsImg() { //上传商品图片
 		add: function (e, data) {
 			var filesize = data.files[0].size;
 			if (Math.ceil(filesize / 1024) > 1024 * 5) {
-				console.log('文件过大' + filesize);
 				$.alert('文件过大');
 				return;
 			}
@@ -974,7 +972,6 @@ function submitGoodsPublish() {
 				listData.describle = $(this).find('textarea[name="describle"]').val();
 				data.apiInfo.respParamList.push(listData);
 			});
-			console.log(data.apiInfo.respParamList);//----------------------
 			data.apiInfo.respSample = $('#respSample').val();
 			data.apiInfo.respDataFormat = $('.api-info-box').find('input[name="respDataFormat"]:checked').val();
 			data.apiInfo.respDataMapping = {};
@@ -1184,7 +1181,6 @@ function renderData(data) {//渲染页面
 			arr3.push(rst)
 		}
 	}
-	console.log(arr3);
 	var html = '';
 	for (list in arr3) {
 		html += '<span class="tags-list" labid="' + arr3[list].id + '">' + arr3[list].name + '<i class="fa fa-times-circle"></i></span>';
@@ -1265,12 +1261,10 @@ function renderData(data) {//渲染页面
 			if(data.apiUrl){
 				$('#J-apiNewUrl').val(data.apiUrl)
 				renderNewApiInfo(data.apiInfo);
-				console.log('11111111111111')
 			}else{
 				$('.apiNewUrl').hide();
 				$('.apiOld').show();
 				renderApiInfo(data.apiInfo);
-				console.log('22222222222222')
 			}
 		} else if (data.goodsType == 2) {
 			renderDataModel(data.dataModel);
@@ -1332,10 +1326,8 @@ function renderData(data) {//渲染页面
 		} else if (data.goodsType == 1) {
 			if(data.apiUrl){
 				renderNewApiInfo(data.apiInfo);
-				console.log('aaaaa')
 			}else{
 				renderApiInfo(data.apiInfo);
-				console.log('bbbbb')
 			}
 		} else if (data.goodsType == 2) {
 			renderDataModel(data.dataModel);
@@ -1360,7 +1352,6 @@ function renderData(data) {//渲染页面
 			attrIds.push(item.attrId);
 		});
 	});
-	console.log(host.static + data.goodsImg);
 	$('#preview-img').attr('src', data.goodsImg);//图片
 	$('input[name="goodsImg"]').val(data.goodsImg);
 	$('input[name="goodsImges"]').val(data.goodsImg);
@@ -1664,9 +1655,7 @@ function renderApiInfo(apiInfo) { //渲染API ----- 1
 			} else {
 				html2 += '<option value="int">int</option>';
 			}
-			console.log(111)
 		} else {
-			console.log(222)
 			html2 += '<option value="String">String</option>';
 			html2 += '<option value="int">int</option>';
 		}
@@ -1695,7 +1684,6 @@ function renderNewApiInfo(apiInfo){
 	ApiUrlInfo(apiInfo)
 }
 function renderDataModel(dataModel) { //渲染数据模型---2
-	console.log(JSON.stringify(dataModel));
 	// $('.dataModel-info-box select[name="modelType"]').val(dataModel.modelType); //模型类型
 	$('.dataModel-info-box select[name="complexity"]').val(dataModel.complexity);//复杂度
 	$('.dataModel-info-box select[name="maturity"]').val(dataModel.maturity);//成熟度
@@ -1733,7 +1721,6 @@ function renderToolSaasInfo(atSaaS) {
 	$('.visitOnline-isOnLine-box input[name="dataAddress"]').val(atSaaS.dataAddress);
 }
 function renderAppInfo(asAloneSoftware) {
-	console.log(asAloneSoftware.coreFunction);
 	$('.downloadAddress-isOnLine-box input[name="dataAddress"]').val(asAloneSoftware.dataAddress);
 	$('.app-info-box #textareaA').val(asAloneSoftware.coreFunction);
 	$('.app-info-box #textareaB').val(asAloneSoftware.technologicalSuperiority);

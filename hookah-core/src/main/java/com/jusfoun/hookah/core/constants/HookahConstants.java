@@ -171,6 +171,7 @@ public class HookahConstants {
     /** 消息编号 */
     public static final Integer MESSAGE_201 = 201;//单位认证通过
     public static final Integer MESSAGE_202 = 202;//单位认证不通过
+    public static final Integer MESSAGE_203 = 203;//单位认证审核中
     public static final Integer MESSAGE_301 = 301;//银行卡签约绑定申请时，验证预留手机号码
     public static final Integer MESSAGE_302 = 302;//银行卡签约绑定成功后，通知用户
     public static final Integer MESSAGE_303 = 303;//银行卡签约绑定失败后，通知用户
