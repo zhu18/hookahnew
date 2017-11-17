@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lt on 2017/11/8.
@@ -209,8 +210,11 @@ public class CouponApi extends BaseController {
     }
 
     @RequestMapping(value = "/sendCouponToUser", method = RequestMethod.POST)
-    public ReturnData sendCoupon2User(String userId,Long[] couponIds){
+    public ReturnData sendCoupon2User(String coupon){
         try {
+            Map<String,Object> map = JsonUtils.toObject(coupon,Map.class);
+            String userId = (String) map.get("userId");
+            Long[] couponIds = (Long[]) map.get("couponIds");
             couponService.sendCoupon2User(userId,couponIds);
             return ReturnData.success("优惠券已发送");
         }catch (Exception e){
