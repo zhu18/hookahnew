@@ -52,6 +52,7 @@ class couponDetailController {
                     $scope.receivedCount=info.receivedCount;
 
                     $scope.usedCount=info.usedCount;
+                    $scope.discountValue=info.discountValue;
 
                 } else {
 
@@ -61,7 +62,7 @@ class couponDetailController {
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
 
-        };
+        };  //优惠券基本信息
         $scope.renderInfo();
 
         $scope.renderList = function () {
@@ -90,13 +91,17 @@ class couponDetailController {
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
 
-        };
+        };  //单条优惠券-使用用户列表
         $scope.renderList();
-        $scope.refresh = function () {
+        $scope.refresh = function () { //刷新按钮
+            $scope.renderInfo();
+            $scope.renderList();
+        };
+        $scope.pageChanged = function () { //翻页按钮
             $scope.search();
         };
-        $scope.pageChanged = function () {
-            $scope.renderList();
+        $scope.back = function () { //返回按钮
+            $state.go('coupon.list')
         };
 
     }

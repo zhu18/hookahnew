@@ -1,5 +1,5 @@
 class couponController {
-  constructor($scope, $rootScope, $http, $state) {
+  constructor($scope, $rootScope, $http, $state,growl) {
       $scope.typeStatuss = [               //自定定义类型数据
           {id:"", name:"全部"},
           {id:1, name:"注册赠券"},
@@ -7,12 +7,12 @@ class couponController {
           {id:3, name:"全场赠券"},
           {id:4, name:"会员赠券"}
       ];
-      $scope.couponType="";
+      $scope.couponType="";  //设置默认值
       $scope.pageSizes = [               //自定定义类型数据
           {id:1, name:"20"},
           {id:2, name:"50"}
       ];
-      $scope.pageSize=1;
+      $scope.pageSize=1;    //设置默认值
       $scope.controlScreenShow=true;
       $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
           if ($scope.controlScreenShow){
@@ -64,7 +64,7 @@ class couponController {
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
 
-    };
+    }; //列表搜索
     $scope.delete=function (id) {
         var promise = $http({
             method: 'POST',
@@ -96,7 +96,7 @@ class couponController {
             $rootScope.loadingState = false;
             growl.addSuccessMessage("订单数据加载完毕。。。");
         });
-    }
+    }  //删除功能
 
     $scope.search();
     $scope.refresh = function () {
