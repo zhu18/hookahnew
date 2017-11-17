@@ -70,7 +70,7 @@
                     <div class="header clearfix">
                         <div class="title pull-left">数据列表</div>
                         <div class="tool pull-right">
-                            <select ng-model="pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
+                            <select ng-model="pagination.pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" ng-change="renderList()" style="width: 155px;height: 32px"></select>
                         </div>
                     </div>
                     <table class="table table-hover">

@@ -29,7 +29,13 @@ public interface CouponService extends GenericService<Coupon,Long> {
 
     Pagination getUserCouponList(User user, String currentPage, String pageSize) throws Exception;
 
+    Pagination getCouponList(String couponName, Byte couponType, String currentPage, String pageSize,String sort) throws Exception;
+
     ReturnData getUserCouponById(String userId) throws Exception;
 
     ReturnData getUserCouponDetail(String userId, Long userCouponId) throws Exception;
+
+    List getUserCoupons(String userId, Long goodsAmount) throws Exception;
+
+    void sendCoupon2User(String userId,Long[] couponIdList) throws Exception;
 }

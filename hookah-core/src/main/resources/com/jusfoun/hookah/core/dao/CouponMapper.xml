@@ -63,7 +63,7 @@
     #{isDeleted,jdbcType=TINYINT})
   </insert>
   <select id="getUserCouponCount" resultType="com.jusfoun.hookah.core.domain.vo.UserCouponVo" parameterType="java.util.HashMap">
-    SELECT cp.id AS userId,
+    SELECT `user`.user_id AS userId,
     `user`.user_name AS userName,
     `user`.user_sn AS userSn,
     `user`.mobile AS mobile,
@@ -71,7 +71,7 @@
     cp.c1 AS unused,
     cp.c2 AS used,
     cp.c3 AS expired
-    FROM `user` RIGHT JOIN(
+    FROM `user` LEFT JOIN(
     SELECT uc.id,a.c1,b.c2,c.c3 FROM (SELECT DISTINCT(user_id) id from user_coupon) AS uc
     LEFT JOIN
     (SELECT user_id,user_coupon_status, COUNT(user_id) c1 FROM user_coupon WHERE user_coupon_status =0 GROUP BY user_id) AS a
@@ -100,5 +100,6 @@
         `user`.user_type = #{userType}
       </if>
     </where>
+    ORDER BY `user`.reg_time DESC
   </select>
 </mapper>

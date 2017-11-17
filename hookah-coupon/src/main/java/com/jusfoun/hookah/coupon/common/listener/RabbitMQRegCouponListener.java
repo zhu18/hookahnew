@@ -30,30 +30,23 @@ public class RabbitMQRegCouponListener {
     @RabbitListener(queues = RabbitmqQueue.CONTRACT_REG_COUPON)
     public void handleRegCoupon(String userId) {
         logger.info("CONTRACT_REG_COUPON待处理注册送优惠券-->用户ID{}", userId);
+
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("couponType",(byte)0));
         filter.add(Condition.eq("isDeleted",(byte)0));
         filter.add(Condition.eq("couponStatus",(byte)1));
         List<Coupon> coupons = couponService.selectList(filter);
-        if (coupons != null && coupons.size() > 0){
-            for (Coupon coupon:coupons){
-                Integer receivedCount = coupon.getReceivedCount();
-                Integer totalCount = coupon.getTotalCount();
-                if (receivedCount < totalCount){
-                    UserCoupon userCoupon = new UserCoupon();
-                    userCoupon.setUserId(userId);
-                    userCoupon.setUserCouponSn(coupon.getCouponSn()+(receivedCount+1));
-                    userCoupon.setReceivedMode((byte)0);
-                    userCoupon.setReceivedTime(new Date());
-                    userCoupon.setCouponId(coupon.getId());
-                    userCoupon.setUserCouponStatus((byte)0);
-                    userCoupon.setExpiryEndDate(coupon.getExpiryEndDate());
-                    userCoupon.setExpiryStartDate(coupon.getExpiryStartDate());
-                    coupon.setReceivedCount(receivedCount++);
-                    userCouponService.insert(userCoupon);
-                    couponService.updateByIdSelective(coupon);
+        try {
+            if (coupons!=null&&coupons.size()>0){
+                Long[] couponList = new Long[]{};
+                for (Coupon coupon : coupons){
+                    couponList[couponList.length] = coupon.getId();
                 }
+                couponService.sendCoupon2User(userId,couponList);
             }
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("注册送优惠券失败"+e.getMessage());
         }
     }
 }

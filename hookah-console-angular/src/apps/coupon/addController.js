@@ -46,7 +46,7 @@ class couponController {
                             $scope.expiryStartTime=new Date(info.expiryStartDate);
                             $scope.expiryEndTime=new Date(info.expiryEndDate);
                             $scope.validDays=info.validDays;
-                            $scope.applyGood=info.applyGood;
+                            $scope.applyGoods=info.applyGoods;
                     } else {
 
                     }
@@ -128,7 +128,9 @@ class couponController {
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
         }
-
+        $scope.back = function () { //返回按钮
+            $state.go('coupon.list')
+        };
 
 // 日历插件开始
         $scope.inlineOptions = {

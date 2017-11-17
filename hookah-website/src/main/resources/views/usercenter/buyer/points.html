@@ -10,7 +10,7 @@ var head = {
     	var pageType = 'get';
     	var dataParm = {};
     	dataParm.pageNumber = 1;
-    	dataParm.pageSize = 2;
+    	dataParm.pageSize = 10;
     	dataParm.type = 0; // 0全部 1获取 2兑换 3过期
 </script>
 <%};%>
@@ -29,10 +29,10 @@ var htmlPart = {
             <div class="points-detail">
                 <div class="howManyPoints">
                     <span>当前积分</span>
-                    <i>234</i>
+                    <i></i>
                     <sm>分</sm>
                 </div>
-                <a href="#" class="getOtherThing">
+                <!--<a href="#" class="getOtherThing">
                     <img src="/static/images/usercenter/buyer/points-02.png" alt="">积分兑换
                 </a>
                 <a href="#" class="getOtherThing">
@@ -40,7 +40,7 @@ var htmlPart = {
                 </a>
                 <a href="#" class="getOtherThing">
                     <img src="/static/images/usercenter/buyer/points-04.png" alt="">我的抽奖结果
-                </a>
+                </a>-->
             </div>
             <div class="pointsList">
                 <div class="listNav">
@@ -50,87 +50,7 @@ var htmlPart = {
                     <a typeVal="3" href="javascript:void(0)">过期明细</a>
                 </div>
                 <table class="pointsListDetail">
-                    <thead>
-                    <tr>
-                        <th width="180">行为时间</th>
-                        <th width="112">行为</th>
-                        <th width="156">行为来源</th>
-                        <th width="100">数量</th>
-                        <th>备注</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="red">+50</span></td>
-                        <td><div class="pointsDetail">产品编码：122323242455，注意优惠券有效使用时间2019-12-31，注意。</div></td>
-                    </tr>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="gray">-50</span></td>
-                        <td><div class="pointsDetail">产品用时间2019-12-31，注意。</div></td>
-                    </tr>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="gray">-50</span></td>
-                        <td><div class="pointsDetail">注意优惠券有效使用时间2019-12-31，注意。</div></td>
-                    </tr>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="gray">-50</span></td>
-                        <td><div class="pointsDetail">产品编码：122323242455，。</div></td>
-                    </tr>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="gray">-50</span></td>
-                        <td><div class="pointsDetail">产品编码：122323242455，。</div></td>
-                    </tr>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="red">+50</span></td>
-                        <td><div class="pointsDetail">产品编码：122323242455，注</div></td>
-                    </tr>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="gray">-50</span></td>
-                        <td><div class="pointsDetail">产品编码：122323242455，</div></td>
-                    </tr>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="gray">-50</span></td>
-                        <td><div class="pointsDetail">产品编码：122323242455</div></td>
-                    </tr>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="gray">-50</span></td>
-                        <td><div class="pointsDetail">注意优惠券有效使用时间2019-12-31，注意。</div></td>
-                    </tr>
-                    <tr>
-                        <td>2017-06-01  11:10:02</td>
-                        <td>兑换</td>
-                        <td>产品免费使用</td>
-                        <td><span class="red">+50</span></td>
-                        <td><div class="pointsDetail">。</div></td>
-                    </tr>
-                    </tbody>
+
 
                 </table>
                 <%include("/layout/pageaction.html"){} %>

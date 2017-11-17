@@ -24,6 +24,10 @@ public class CouponVo extends Coupon {
 
     private String orderSn;
 
+    private Integer unReceivedCount;
+
+    private Integer unUsedCount;
+
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date receivedTime;
 
@@ -104,5 +108,21 @@ public class CouponVo extends Coupon {
 
     public void setReceivedMode(Byte receivedMode) {
         this.receivedMode = receivedMode;
+    }
+
+    public Integer getUnReceivedCount() {
+        return unReceivedCount;
+    }
+
+    public void setUnReceivedCount(Integer unReceivedCount) {
+        this.unReceivedCount = unReceivedCount;
+    }
+
+    public Integer getUnUsedCount() {
+        return unUsedCount;
+    }
+
+    public void setUnUsedCount(Integer unUsedCount) {
+        this.unUsedCount = unUsedCount;
     }
 }
