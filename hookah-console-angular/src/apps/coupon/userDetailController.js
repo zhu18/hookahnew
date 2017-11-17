@@ -5,15 +5,14 @@ class userDetailController {
     constructor($scope, $rootScope, $http, $state, growl,$stateParams) {
         console.log($stateParams.id);
         $scope.pageSizes = [               //自定定义类型数据
-            {id:-1, name:"显示条数"},
-            {id:1, name:"20"},
-            {id:2, name:"50"}
+            {id:'20', name:"20"},
+            {id:'50', name:"50"}
         ];
-        $scope.pageSize=20
+        $rootScope.pagination.pageSize="20";
         $scope.useStatus = [               //自定定义类型数据
-            {id:-1, name:"全部"},
-            {id:0, name:"已使用"},
-            {id:1, name:"未使用"},
+            {id:"", name:"全部"},
+            {id:0, name:"未使用"},
+            {id:1, name:"已使用"},
             {id:2, name:"已过期"}
         ];
         $scope.userCouponStatus="";
@@ -77,10 +76,27 @@ class userDetailController {
             promise.then(function (res, status, config, headers) {
                 console.log('数据在这里');
                 console.log(res);
-
                 if (res.data.code == '1') {
-                    $scope.userList=res.data.data.list;
+                    $scope.userList = res.data.data.list;
+                    $scope.showNoneDataInfoTip = false;
+                    if (res.data.data.list.length > 0) {
+
+                        if (res.data.data.totalPage > 1) {
+                            $scope.showPageHelpInfo = true;
+                        } else {
+
+                            $scope.showPageHelpInfo = false;
+
+                        }
+                    } else {
+                        $rootScope.loadingState = false;
+                        $scope.showNoneDataInfoTip = true;
+                    }
+
+
                 } else {
+                    $scope.userList = [];
+                    $scope.showNoneDataInfoTip = true;
 
                 }
 
@@ -98,7 +114,7 @@ class userDetailController {
             $scope.renderList();
         };
         $scope.back = function () { //返回按钮
-            $state.go('coupon.list')
+            $state.go('coupon.query')
         };
 
         $scope.getDetail=function (id) {
@@ -169,7 +185,7 @@ class userDetailController {
 
                     switch (info.applyPlatform){
                         case 0:
-                            receivedMode='全平台';
+                            applyPlatform='全平台';
                             break;
                     }
                     var html='<table class="table">' +

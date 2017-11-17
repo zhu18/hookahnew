@@ -4,9 +4,10 @@
 class queryController {
     constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
         $scope.pageSizes = [               //自定定义类型数据
-            {id:1, name:"20"},
-            {id:2, name:"50"}
+            {id:'20', name:"20"},
+            {id:'50', name:"50"}
         ];
+        $rootScope.pagination.pageSize="20";
         $scope.exports = [               //自定定义类型数据
             {id:"", name:"导出数据"},
             {id:0, name:"选中用户",href:"1"},
@@ -23,14 +24,14 @@ class queryController {
 
             }
         };
-        $scope.search = function (initCurrentPage) { //Render page function
+        $scope.search = function () { //Render page function
             var promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/coupon/getUserCouponList",
                 params: {
                     userName: $scope.userName,
-                    userType: $scope.userType,
-                    currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
+                    userSn: $scope.userSn,
+                    currentPage:$rootScope.pagination.currentPage, //当前页码
                     pageSize: $rootScope.pagination.pageSize,
                 }
             });
@@ -39,26 +40,21 @@ class queryController {
                 console.log(res);
 
                 if (res.data.code == '1') {
+                    $scope.userList = res.data.data.list;
                     $scope.showNoneDataInfoTip = false;
                     if (res.data.data.list.length > 0) {
-                        $scope.userList = res.data.data.list;
                         if (res.data.data.totalPage > 1) {
                             $scope.showPageHelpInfo = true;
                         } else {
-
                             $scope.showPageHelpInfo = false;
-
                         }
                     } else {
                         $rootScope.loadingState = false;
                         $scope.showNoneDataInfoTip = true;
                     }
-
-
                 } else {
-                    $scope.supplierList = [];
+                    $scope.userList = [];
                     $scope.showNoneDataInfoTip = true;
-
                 }
 
                 $rootScope.loadingState = false;
