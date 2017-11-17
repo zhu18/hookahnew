@@ -3,6 +3,7 @@ import queryController from "./queryController";
 import couponDetailController from "./couponDetailController";
 import userDetailController from "./userDetailController";
 import addController from "./addController";
+import giveCouponController from "./giveCouponController";
 
 supplierRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function supplierRouting($stateProvider, $urlRouterProvider) {
@@ -40,6 +41,12 @@ export default function supplierRouting($stateProvider, $urlRouterProvider) {
       url: '/coupon/add/:id',
       template: require('./add.html'),
       controller: addController,
+      permission: 'add'
+    })
+    .state('coupon.giveCoupon', { //赠送优惠券
+      url: '/coupon/giveCoupon/:id',
+      template: require('./giveCoupon.html'),
+      controller: giveCouponController,
       permission: 'add'
     })
 };

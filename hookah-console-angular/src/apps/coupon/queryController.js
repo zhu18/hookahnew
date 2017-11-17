@@ -105,6 +105,9 @@ class queryController {
         $scope.getDetail = function (id) {//Go to detail page
             $state.go('coupon.userDetail',{id:id})
         };
+        $scope.giveCoupon = function (id) {//Go to detail page
+            $state.go('coupon.giveCoupon',{id:id})
+        };
 
     }
 }

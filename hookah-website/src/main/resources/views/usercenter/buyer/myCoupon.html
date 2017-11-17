@@ -5,11 +5,11 @@ var head = {
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 
 <script type="text/javascript">
-//    var pagePath = '/goodsFavorite/list';
-//    var pageType = 'get';
-//    var dataParm = {};
-//    dataParm.pageNumber = 1;
-//    dataParm.pageSize = 8;
+    var pagePath = '/coupon/getCouponByUserId';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 10;
 
 </script>
 <%};%>
@@ -23,8 +23,8 @@ var htmlPart = {
         <div class="grid-right myCoupon info-center-box ">
             <div class="user-center-box grid-right">
                 <div class="header">
-                    <span class="grid-left font-size-18">优惠券</span>
-                    <span class="grid-right explain">优惠券规则说明 <sm>!</sm></span>
+                    <h4 class="center-title">优惠券</h4>
+                    <a href="#" class="ruleLink">优惠券规则说明</a>
                 </div>
                 <div class="content">
                     <div class="coupon-header">
@@ -82,6 +82,7 @@ var htmlPart = {
                                   <div class="bg-wrapper"></div>
                               </li>
                           </ul>
+                          <%include("/layout/pageaction.html"){} %>
                     </div>
                 </div>
             </div>
