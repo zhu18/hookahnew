@@ -28,7 +28,6 @@ E.config.menus = $.map(wangEditor.config.menus, function (item, key) {
 	return item;
 });
 $(document).ready(function () {
-
 	if (urlPath == '/usercenter/goodsEdit') { //上传商品
 		if (!catId) {
 			window.location.href = '/usercenter/goodsManage';
@@ -142,10 +141,12 @@ function initializeGoodsTypeEnd(goodsTypeVal, endTypeVal) {
 function renderFormatFn(goodsTypeId) {
 	if (goodsTypeId == 0 || goodsTypeId == 2 || goodsTypeId == 4 || goodsTypeId == 6) {
 		$('select[name="format"] option').each(function () {
-			if ($(this).val() == 3) {
-				$(this).attr('selected', 'selected')
-			} else {
-				$(this).removeAttrs('selected')
+			if(urlPath == '/usercenter/goodsEdit'){
+				if ($(this).val() == 3) {
+					$(this).attr('selected', 'selected')
+				} else {
+					$(this).removeAttrs('selected')
+				}
 			}
 			if ($(this).val() != 3) {
 				$(this).attr('disabled', 'disabled')
@@ -161,10 +162,12 @@ function renderFormatFn(goodsTypeId) {
 			} else {
 				$(this).removeAttrs('disabled');
 			}
-			if ($(this).val() == 0) {
-				$(this).attr('selected', 'selected')
-			} else {
-				$(this).removeAttrs('selected')
+			if(urlPath == '/usercenter/goodsEdit'){
+				if ($(this).val() == 0) {
+					$(this).attr('selected', 'selected')
+				} else {
+					$(this).removeAttrs('selected')
+				}
 			}
 		})
 	} else if (goodsTypeId == 5 || goodsTypeId == 7) {
@@ -174,10 +177,12 @@ function renderFormatFn(goodsTypeId) {
 			} else {
 				$(this).removeAttrs('disabled');
 			}
-			if ($(this).val() == 1) {
-				$(this).attr('selected', 'selected')
-			} else {
-				$(this).removeAttrs('selected')
+			if(urlPath == '/usercenter/goodsEdit'){
+				if ($(this).val() == 1) {
+					$(this).attr('selected', 'selected')
+				} else {
+					$(this).removeAttrs('selected')
+				}
 			}
 		})
 	}
@@ -789,6 +794,10 @@ $.validator.addMethod("lt", function (value, element, param) {
 	return this.optional(element) || value <= 100000000.00;
 }, $.validator.format("输入值必须小于{100000000.00}!"));
 function backAddFn(data) {
+	if(data == 'noTest'){
+		$.alert('接口验证不正确');
+		return;
+	}
 	Loading.start();
 	$.ajax({
 		type: 'POST',
@@ -851,7 +860,7 @@ function submitGoodsPublish() {
 		$('#isPush').val('0');
 	}
 	data.isPush = $('input[name="isPush"]').val();
-	data.isLocal = $('input[name="isLocal"]').val();
+	data.isLocal = 0;
 	if ($('#isDiscuss').prop('checked')) {
 		data.isDiscussPrice = 1;
 		data.formatList = [];
@@ -942,8 +951,7 @@ function submitGoodsPublish() {
 			if(testNewApiUrl){
 				data.apiUrl=$('#J-apiNewUrl').val();
 			}else{
-				$.alert('接口链接未验证');
-				return;
+				return 'noTest';
 			}
 		}else{
 			data.apiInfo = {};
@@ -1260,7 +1268,7 @@ function renderData(data) {//渲染页面
 		} else if (data.goodsType == 1) {
 			if(data.apiUrl){
 				$('#J-apiNewUrl').val(data.apiUrl)
-				renderNewApiInfo(data.apiInfo);
+				renderNewApiInfo(data.apiInfo,data.apiUrl);
 			}else{
 				$('.apiNewUrl').hide();
 				$('.apiOld').show();
@@ -1325,7 +1333,7 @@ function renderData(data) {//渲染页面
 			rederDateDL()
 		} else if (data.goodsType == 1) {
 			if(data.apiUrl){
-				renderNewApiInfo(data.apiInfo);
+				renderNewApiInfo(data.apiInfo,data.apiUrl);
 			}else{
 				renderApiInfo(data.apiInfo);
 			}
@@ -1679,9 +1687,9 @@ function renderApiInfo(apiInfo) { //渲染API ----- 1
 	$('.api-info-box input[name="updateFreq"]').val(apiInfo.updateFreq);
 	$('.api-info-box input[name="dataNumDivRowNum"]').val(apiInfo.dataNumDivRowNum);
 }
-function renderNewApiInfo(apiInfo){
+function renderNewApiInfo(apiInfo,apiUrl){
 
-	ApiUrlInfo(apiInfo)
+	ApiUrlInfo(apiInfo,apiUrl)
 }
 function renderDataModel(dataModel) { //渲染数据模型---2
 	// $('.dataModel-info-box select[name="modelType"]').val(dataModel.modelType); //模型类型
@@ -2044,8 +2052,13 @@ $('.apiNewUrl-btn').click(function(){
 			},
 			success: function (data) {
 				if (data.code == 1) {
-					ApiUrlInfo(data.data)
-
+					if (data.data.apiUrl) {
+						ApiUrlInfo(data.data,apiUrl)
+					} else {
+						$.alert('获取失败');
+						testNewApiUrl = false;
+						$('.apiNew').hide();
+					}
 				} else {
 					$.alert(data.message);
 					testNewApiUrl = false;
@@ -2056,7 +2069,7 @@ $('.apiNewUrl-btn').click(function(){
 		$.alert('请输入接口链接');
 	}
 });
-function ApiUrlInfo(data){
+function ApiUrlInfo(data,apiUrl){
 	$('.apiMethod').html(data.apiMethod == '1' ? 'GET' : 'POST');
 	$('.respDataFormat').html(data.respDataFormat == '1' ? 'JSON' : 'XML');
 	var status = '';
