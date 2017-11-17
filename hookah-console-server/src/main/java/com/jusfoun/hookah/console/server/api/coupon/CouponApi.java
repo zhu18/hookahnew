@@ -209,7 +209,7 @@ public class CouponApi extends BaseController {
     }
 
     @RequestMapping(value = "/sendCouponToUser", method = RequestMethod.POST)
-    public ReturnData sendCoupon2User(String userId,String couponIds){
+    public ReturnData sendCoupon2User(String userId,Long[] couponIds){
         try {
             couponService.sendCoupon2User(userId,couponIds);
             return ReturnData.success("优惠券已发送");

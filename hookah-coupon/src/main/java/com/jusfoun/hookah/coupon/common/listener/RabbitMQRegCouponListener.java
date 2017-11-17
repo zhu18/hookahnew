@@ -38,9 +38,11 @@ public class RabbitMQRegCouponListener {
         List<Coupon> coupons = couponService.selectList(filter);
         try {
             if (coupons!=null&&coupons.size()>0){
+                Long[] couponList = new Long[]{};
                 for (Coupon coupon : coupons){
-                    couponService.sendCoupon2User(userId,coupon.getId().toString());
+                    couponList[couponList.length] = coupon.getId();
                 }
+                couponService.sendCoupon2User(userId,couponList);
             }
         }catch (Exception e){
             e.printStackTrace();
