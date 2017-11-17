@@ -1,9 +1,9 @@
 package com.jusfoun.hookah.integral.listener;
 
-import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.core.domain.jf.JfRecord;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.integral.contants.JfEnum;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
@@ -14,9 +14,15 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Random;
 
+/**
+ * 处理积分消息业务
+ * ps:非生产环境下由于有多个消费端，不一定是你的消费端消费消息，收不到消息正常
+ */
 @Component
 public class RabbitMQJFHandelListener {
 
@@ -53,18 +59,22 @@ public class RabbitMQJFHandelListener {
             jfRecord.setExpire(Short.parseShort("0"));
             jfRecord.setOperator("System");
             jfRecord.setAddTime(new Date());
+            jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
+            jfRecord.setUpdateTime(new Date());
             jfRecordService.insertAndGetId(jfRecord);
             if(jfRecord.getId() != null){
                 logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理成功>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }else {
                 logger.error("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理失败>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }
-
-
         }catch (Exception e){
             logger.error("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理失败>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         }
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
     }
 
 }

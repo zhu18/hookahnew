@@ -105,6 +105,8 @@ $(function () {
                         $.alert('保存成功',true,function(){
                             window.location.href= host.website+"/usercenter/contactInformation"
                         });
+                    }else{
+                        $.alert(data.message);
                     }
                 }
             });

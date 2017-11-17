@@ -33,7 +33,7 @@ public class FormatCheckUtil {
      * @return 验证成功返回true，验证失败返回false
      */
     public static boolean checkMobile(String mobile){
-        String regExp = "^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\\d{8}$";
+        String regExp = "^1(3[0-9]|4[57]|5[0-35-9]|7[013678]|8[0-9])\\d{8}$";
         return Pattern.matches(regExp,mobile);
     }
     /**

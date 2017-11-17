@@ -27,7 +27,6 @@ class CommentController {
             if (res.data.data.totalPage > 1) {
               $scope.showPageHelpInfo = true;
             } else {
-
               $scope.showPageHelpInfo = false;
 
             }

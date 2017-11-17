@@ -35,7 +35,7 @@
                         <div class="title pull-left">数据列表</div>
                         <div class="tool pull-right">
                             <button class="btn btn-primary" data-ng-click="add()">添加优惠券</button>
-                            <select ng-model="pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" style="width: 155px;height: 32px"></select>
+                            <select ng-model="pagination.pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" ng-change="search()" style="width: 155px;height: 32px"></select>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -47,7 +47,7 @@
                                    <th>可使用商品</th>
                                    <th>使用门槛</th>
                                    <th>面值</th>
-                                   <th>适用平台</th>
+                                   <th>创建人</th>
                                    <th>有效期</th>
                                    <th>状态</th>
                                    <th>操作</th>
@@ -69,16 +69,16 @@
                                     <span text-length="50" ng-show="item.applyGoods == 2">部分分类</span>
                                 </td>
                                 <td>
-                                    <span text-length="50" ng-show="item.applyChannel == 0">注册赠券</span>
-                                    <span text-length="50" ng-show="item.applyChannel == 1">购物赠券</span>
-                                    <span text-length="50" ng-show="item.applyChannel == 2">全场赠券</span>
+                                    <span text-length="50" ng-show="item.applyChannel == 0">无限制</span>
+                                    <span text-length="50" ng-show="item.applyChannel == 1">满 <span data-ng-bind="item.discountValue"></span>可用</span>
+                                    <span text-length="50" ng-show="item.applyChannel == 2">折扣</span>
                                 </td>
 
                                 <td data-ng-bind="item.faceValue"></td>
-                                <td data-ng-bind="item.applyPlatform"></td>
+                                <td data-ng-bind="item.userName"></td>
                                 <td >
                                     <span data-ng-bind="item.expiryStartDate"></span>
-                                    至
+                                    <span data-ng-show="item.expiryStartDate && item.expiryEndDate">至</span>
                                     <span data-ng-bind="item.expiryEndDate"></span>
                                 </td>
                                 <td>
