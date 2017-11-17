@@ -14,7 +14,7 @@ $(function () {
             var postCode=data.data.postCode?data.data.postCode:"";
             var email=data.data.email?data.data.email:"";
             $(".contactEmail").html(email);
-             $(".contactName").html(contactName);
+            $(".contactName").html(contactName);
             $(".contactPhone").html(contactPhone);
             $(".contactAddress").html(contactAddress);
             $(".postCode").html(postCode);
