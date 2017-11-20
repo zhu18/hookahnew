@@ -51,4 +51,14 @@ public interface JfRecordService extends GenericService<JfRecord, Long> {
      * @throws Exception
      */
     ReturnData selectOneByUserId(String userId) throws Exception;
+
+    /**
+     * admin根据用户ID手动增加减少用户积分
+     * @param userId
+     * @param optType
+     * @param score
+     * @return
+     * @throws Exception
+     */
+    ReturnData optJf(String userId, String optType, String score, String note) throws Exception;
 }
