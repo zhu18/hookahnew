@@ -99,6 +99,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     MgGoodsOrderService mgGoodsOrderService;
 
     @Resource
+    CouponService couponService;
+
+    @Resource
+    UserCouponService userCouponService;
+
+    @Resource
     private WXUserRecommendService wxUserRecommendService;
 
     @Resource
@@ -302,6 +308,15 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             mgGoodsOrder.setIsDeleted((byte)1);
             mgGoodsOrderService.updateByIdSelective(mgGoodsOrder);
         }
+        //取消订单时查看该订单是否使用了优惠券 如果使用了优惠券则把优惠券还原回去
+        filter.add(Condition.eq("userId",order.getUserId()));
+        List<UserCoupon> userCoupons = userCouponService.selectList(filter);
+        if (userCoupons != null && userCoupons.size() > 0){
+            for (UserCoupon userCoupon:userCoupons){
+                userCoupon.setOrderSn(null);
+                userCouponService.updateByIdSelective(userCoupon);
+            }
+        }
     }
 
     /**
@@ -498,7 +513,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      */
     @Transactional(readOnly=false)
     @Override
-    public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray) throws Exception {
+    public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray, Long userCouponId) throws Exception {
         init(orderInfo);
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.in("recId",cartIdArray));
@@ -531,6 +546,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setGoodsAmount(goodsAmount);
             orderInfo.setOrderAmount(goodsAmount);
 
+            if (userCouponId!=null){
+                orderInfo = useCoupon(userCouponId,orderInfo);
+            }
             insertOrder(ordergoodsList, orderInfoVo, orderInfo ,mgGoodsOrder);
 //            if(goodsAmount.compareTo(0L)==0){
 //                updatePayStatus(orderInfo.getOrderSn(),2);
@@ -553,7 +571,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      */
     @Transactional(readOnly=false)
     @Override
-    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber) throws Exception {
+    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber, Long userCouponId) throws Exception {
         init(orderInfo);
 
         List<MgOrderGoods> ordergoodsList = null;
@@ -584,11 +602,29 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setGoodsAmount(goodsAmount);
         orderInfo.setOrderAmount(goodsAmount);
 
+        if (userCouponId!=null){
+            orderInfo = useCoupon(userCouponId,orderInfo);
+        }
         insertOrder(ordergoodsList, orderInfoVo, orderInfo, mgGoodsOrder);
 //        if(goodsAmount.compareTo(0L)==0){
 //            updatePayStatus(orderInfo.getOrderSn(),2);
 //        }
 
+        return orderInfo;
+    }
+
+    public OrderInfo useCoupon(Long userCouponId, OrderInfo orderInfo){
+        UserCoupon userCoupon = userCouponService.selectById(userCouponId);
+        Coupon coupon = couponService.selectById(userCoupon.getCouponId());
+        orderInfo.setGoodsDiscountFee(coupon.getFaceValue());
+        Long goodsAmount = orderInfo.getGoodsAmount();
+        if (goodsAmount > coupon.getFaceValue()){
+            orderInfo.setOrderAmount(goodsAmount-coupon.getFaceValue());
+        }else {
+            orderInfo.setOrderAmount(goodsAmount);
+        }
+        userCoupon.setOrderSn(orderInfo.getOrderSn());
+        userCouponService.updateByIdSelective(userCoupon);
         return orderInfo;
     }
 
@@ -688,13 +724,13 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             mgGoodsOrderService.insert(mgGoodsOrder);
         }
 
-
         //支付成功后,API类商品调用api平台接口，启用api调用跟踪
         //进行商品销量统计
+        //如果使用了优惠券则修改优惠券状态
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
             managePaySuccess(orderInfo);
             countSales(orderInfo.getOrderId());
-
+            updateUserCoupon(orderInfo.getOrderSn());
             //更新微信推荐是否成功交易状态
 //            wxUserRecommendService.updateWXUserRecommendIsDeal(orderInfo.getUserId());
 
@@ -705,6 +741,26 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //            throw new ShopException("无法设置支付状态");
         //        }
 
+    }
+
+    /**
+     * 支付完成改优惠券状态
+     * @param orderSn
+     */
+    public synchronized void updateUserCoupon(String orderSn){
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("orderSn",orderSn));
+        List<UserCoupon> userCoupons = userCouponService.selectList(filter);
+        if (userCoupons != null && userCoupons.size() > 0){
+            for (UserCoupon userCoupon : userCoupons){
+                Coupon coupon = couponService.selectById(userCoupon.getCouponId());
+                coupon.setUsedCount(coupon.getUsedCount()+1);
+                userCoupon.setUserCouponStatus((byte)1);
+                userCoupon.setUsedTime(new Date());
+                couponService.updateByIdSelective(coupon);
+                userCouponService.updateByIdSelective(userCoupon);
+            }
+        }
     }
 
     /**
@@ -1381,20 +1437,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         return ReturnData.success(pagination);
     }
 
-    @Scheduled(cron = "0 0/10 * * * ?")
-    @Transactional
-    public void deleteOrderByTime(){
-        Date date = new Date();
-        long now = date.getTime();
-        List<OrderInfo> orderInfos = orderinfoMapper.selectAll();
-        for (OrderInfo orderInfo:orderInfos){
-            long addTime = orderInfo.getAddTime().getTime();
-            long time = now - addTime;
-            if (orderInfo.getPayStatus()==0 && time>24*60*60*1000){
-                deleteByLogic(orderInfo.getOrderId());
-            }
-        }
-    }
 //    @Scheduled(cron = "0 55 12 * * ?")
 //    @Transactional
 //    public void reOrderByTime(){

@@ -3,9 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
-import com.jusfoun.hookah.core.domain.Goods;
-import com.jusfoun.hookah.core.domain.OrderInfo;
-import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
@@ -17,10 +15,7 @@ import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.CartService;
-import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.OrderInfoService;
-import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -57,6 +53,12 @@ public class OrderInfoController extends BaseController {
     @Autowired
     private RedisOperate redisOperate;
 
+    @Resource
+    CouponService couponService;
+
+    @Resource
+    UserCouponService userCouponService;
+
 
     /**
      * 购物车确定订单信息
@@ -67,6 +69,7 @@ public class OrderInfoController extends BaseController {
     @RequestMapping(value = "/order/orderInfo", method = RequestMethod.POST)
     public String orderInfo(String[] cartIds,Model model) {
         try {
+            String userId = this.getCurrentUser().getUserId();
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.in("recId",cartIds));
             List<CartVo> carts = cartService.selectDetailList(filters);
@@ -86,6 +89,8 @@ public class OrderInfoController extends BaseController {
                     }
                 }
             }
+            List<Coupon> couponList = couponService.getUserCoupons(userId,goodsAmount);
+            model.addAttribute("couponList",couponList);
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",carts);
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
@@ -98,11 +103,21 @@ public class OrderInfoController extends BaseController {
         }
 
     }
+
+    /**
+     * 直接购买确定订单信息
+     * @param goodsId
+     * @param formatId
+     * @param goodsNumber
+     * @param model
+     * @return
+     */
     @Log(platform = "front",logType = "f0012",optType = "insert")
     @RequestMapping(value = "/order/directInfo")
     public String orderInfo(String goodsId, Integer formatId,Long goodsNumber,Model model) {
         List<CartVo> list = new ArrayList<>(1);
         try {
+            String userId = this.getCurrentUser().getUserId();
             Long goodsAmount = new Long(0);
 
             //验证商品是否下架
@@ -125,6 +140,9 @@ public class OrderInfoController extends BaseController {
             vo.setFormatId(formatId);
             vo.setGoods(g);
             list.add(vo);
+            //所有能用的优惠券
+            List<Coupon> couponList = couponService.getUserCoupons(userId,goodsAmount);
+            model.addAttribute("couponList",couponList);
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",list);
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
@@ -436,7 +454,7 @@ public class OrderInfoController extends BaseController {
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
     public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,
-                              HttpServletRequest request, Model model) {
+                              HttpServletRequest request, Model model, Long userCouponId) {
         try {
             String perOrderInfoNum = request.getParameter("perOrderInfoNum");
             if (perOrderInfoNum.isEmpty() || redisOperate.get("orderConfirm:"+perOrderInfoNum) == null){
@@ -444,9 +462,9 @@ public class OrderInfoController extends BaseController {
             }
             init(orderinfo);
             if(cartIdArray[0].equals("-1")){
-                orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber);
+                orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber, userCouponId);
             }else{
-                orderinfo = orderInfoService.insert(orderinfo, cartIdArray);
+                orderinfo = orderInfoService.insert(orderinfo, cartIdArray, userCouponId);
             }
             HttpSession session = request.getSession();
             List<Map> paymentList = initPaymentList(session);
@@ -486,12 +504,32 @@ public class OrderInfoController extends BaseController {
         }
     }
 
+    /**
+     * 待付款订单去付款
+     * 付款前检查一下订单中使用的优惠券是否过期
+     * 过期的话重新下单
+     * @param orderSn
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/order/payOrder", method = RequestMethod.GET)
     public String payOrder(String orderSn,HttpServletRequest request) {
         try {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("orderSn",orderSn));
             OrderInfo orderinfo = orderInfoService.selectOne(filters);
+            List<UserCoupon> userCoupons = userCouponService.selectList(filters);
+            if (userCoupons != null && userCoupons.size() > 0){
+                for (UserCoupon userCoupon : userCoupons){
+                    Coupon coupon = couponService.selectById(userCoupon.getCouponId());
+                    if (userCoupon.getUserCouponStatus()==2){
+                        throw new HookahException("订单中的优惠券已过期，请重新下单");
+                    }else if (DateUtils.isExpired(userCoupon.getReceivedTime(),coupon.getValidDays(),new Date())){
+                        throw new HookahException("订单中的优惠券已超过使用天数，请重新下单");
+
+                    }
+                }
+            }
 
             HttpSession session = request.getSession();
             List<Map> paymentList = initPaymentList(session);
@@ -505,7 +543,10 @@ public class OrderInfoController extends BaseController {
             //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
             //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             return   "redirect:/pay/cash";
-        } catch (Exception e) {
+        } catch (HookahException e) {
+
+            return "/error/500";
+        }catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";
         }
@@ -536,10 +577,11 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/directOrder", method = RequestMethod.POST)
-    public String directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber,Model model,HttpServletRequest request) {
+    public String directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber,
+                               Model model,HttpServletRequest request,Long userCouponId) {
         try {
             init(orderinfo);
-            orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber);
+            orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber,userCouponId);
             model.addAttribute("orderInfo",orderinfo);
             model.addAttribute("payments",initPaymentList(request.getSession()));
             return  "pay/cash";
@@ -612,11 +654,6 @@ public class OrderInfoController extends BaseController {
         orderinfo.setForceDeleted((byte)0);
         orderinfo.setCommentFlag(0);
         return orderinfo;
-    }
-
-    @Scheduled(cron = "0 0 0 * * ?")
-    public void cleanOrderNum(){
-        redisOperate.del("orderNumPerDay");
     }
 
     /**
