@@ -399,7 +399,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         return userCouponSn;
     }
 
-    public void updateStatusEveryDay(){
+    public void updateStatusEveryDay() throws Exception{
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("isDeleted",(byte)0));
         filter.add(Condition.eq("couponStatus",(byte)1));
@@ -407,7 +407,21 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         for (Coupon coupon:couponList){
             Date expireEndDate = coupon.getExpiryEndDate();
             Date now = new Date();
-            DateUtils.isExpired(expireEndDate,now);
+            if (DateUtils.isExpired(expireEndDate,now)){
+                filter.clear();
+                filter.add(Condition.eq("isDeleted",(byte)0));
+                filter.add(Condition.eq("couponId",coupon.getId()));
+                filter.add(Condition.eq("userCouponStatus",(byte)0));
+                List<UserCoupon> userCoupons = userCouponService.selectList(filter);
+                if (userCoupons != null && userCoupons.size() > 0){
+                    for (UserCoupon userCoupon : userCoupons){
+                        userCoupon.setUserCouponStatus((byte)2);
+                        userCouponService.updateByIdSelective(userCoupon);
+                    }
+                }
+                coupon.setCouponStatus((byte)2);
+                this.updateByIdSelective(coupon);
+            }
         }
     }
 }

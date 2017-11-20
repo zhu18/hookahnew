@@ -177,4 +177,16 @@ public abstract class DateUtils {
         return n>0;
     }
 
+    public static boolean isExpired(Date receivedDate, Integer validDays, Date now){
+        if (receivedDate == null || now == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        final Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(receivedDate);
+        final Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(now);
+        int n = cal2.get(Calendar.DAY_OF_YEAR)-cal1.get(Calendar.DAY_OF_YEAR)-validDays+1;
+        return n>0;
+    }
+
 }

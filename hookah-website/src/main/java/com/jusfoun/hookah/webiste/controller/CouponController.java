@@ -22,12 +22,12 @@ public class CouponController extends BaseController {
 
     @RequestMapping(value = "/getCouponByUserId", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData getCouponByUserId(String currentPage, String pageSize, Byte userCouponStatus, Byte couponTag){
+    public ReturnData getCouponByUserId(String pageNumber, String pageSize, Byte userCouponStatus, Byte couponTag){
         try {
             String userId =this.getCurrentUser().getUserId();
             Long couponId = null;
             String orderSn = null;
-            Pagination page = couponService.getCouponByUserId(userId,couponId,userCouponStatus,orderSn,currentPage,pageSize,couponTag);
+            Pagination page = couponService.getCouponByUserId(userId,couponId,userCouponStatus,orderSn,pageNumber,pageSize,couponTag);
             return ReturnData.success(page);
         } catch (Exception e) {
             e.printStackTrace();
