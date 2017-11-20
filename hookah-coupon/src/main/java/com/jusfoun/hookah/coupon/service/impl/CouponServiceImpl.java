@@ -63,6 +63,11 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         coupon.setFaceValue(coupon.getFaceValue()*100);
         coupon.setAddTime(date);
         coupon.setCouponSn(createCouponSn(PropertiesManager.getInstance().getProperty("couponCode"), coupon.getCouponType()));
+        filter.add(Condition.eq("couponName",coupon.getCouponName().trim()));
+        List<Coupon> coupons = this.selectList(filter);
+        if (coupons!=null&&coupons.size()>0){
+            throw new HookahException("名称为["+coupon.getCouponName().trim()+"]的优惠券已存在");
+        }
         coupon.setCouponName(coupon.getCouponName().trim());
         coupon.setCouponStatus((byte)1);
         coupon.setIsDeleted((byte)0);
@@ -70,12 +75,12 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         coupon.setUsedCount(0);
         switch (coupon.getApplyGoods()) {
             case 1: //指定商品
-                String[] goodsSnList = goodsList.split(",");
-                for (String goodsSn:goodsSnList){
-                    filter.add(Condition.eq("goodsSn",goodsSn));
+//                String[] goodsSnList = goodsList.split(",");
+//                for (String goodsSn:goodsSnList){
+//                    filter.add(Condition.eq("goodsSn",goodsSn));
 //                    goodsService.selectOne(filter);
-                }
-                mgCoupon.setCouponGoods(couponGoods);
+//                }
+//                mgCoupon.setCouponGoods(couponGoods);
                 break;
             case 2: //指定分类
                 break;
@@ -91,6 +96,14 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     public ReturnData modify(Coupon coupon, String goodsList, String userId, String categoriesList) throws Exception {
         Date date = new Date();
         MgCoupon mgCoupon = new MgCoupon();
+        if (coupon.getCouponName().trim()!=null){
+            List<Condition>  filter = new ArrayList<>();
+            filter.add(Condition.eq("couponName",coupon.getCouponName().trim()));
+            List<Coupon> coupons = this.selectList(filter);
+            if (coupons!=null&&coupons.size()>0){
+                throw new HookahException("名称为["+coupon.getCouponName().trim()+"]的优惠券已存在");
+            }
+        }
         coupon.setUpdateUser(userId);
         coupon.setUpdateTime(date);
         if (goodsList!=null){
@@ -233,7 +246,11 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             condition.put("userName",user.getUserName());
         }
         if (user.getUserSn()!=null){
-            condition.put("userSn",user.getUserSn());
+            if (user.getUserSn().contains(HookahConstants.platformCode)){
+                condition.put("userSn",user.getUserSn());
+            }else {
+                condition.put("userId",user.getUserSn());
+            }
         }
         condition.put("isDeleted",(byte)0);
         PageHelper.startPage(pageNumberNew, pageSizeNew);

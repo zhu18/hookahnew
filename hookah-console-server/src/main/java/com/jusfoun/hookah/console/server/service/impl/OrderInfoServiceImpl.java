@@ -882,7 +882,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             logger.info("订单{}API商品插入网管接口：{}", orderInfo.getOrderId(),  JsonUtils.toJson(apiRs));
         }catch (Exception e){
             e.printStackTrace();
-            logger.error("发送商品到api平台发生异常");
+            logger.error("订单{}发送商品到api平台发生异常",orderInfo.getOrderSn());
         }
     }
 

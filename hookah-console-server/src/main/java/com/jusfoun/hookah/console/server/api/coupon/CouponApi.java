@@ -35,6 +35,13 @@ public class CouponApi extends BaseController {
     @Resource
     private CouponService couponService;
 
+    /**
+     * 添加优惠券
+     * @param coupon
+     * @param goodsList
+     * @param categoriesList
+     * @return
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ReturnData addCoupon(String coupon, String goodsList, String categoriesList){
         try {
@@ -49,6 +56,9 @@ public class CouponApi extends BaseController {
                 couponVo.setExpiryEndDate(expiryEndTime);
             }
             return couponService.addCoupon(couponVo,goodsList,userId,categoriesList);
+        }catch (HookahException e){
+            e.printStackTrace();
+            return ReturnData.error(e.getMessage());
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -56,6 +66,13 @@ public class CouponApi extends BaseController {
         }
     }
 
+    /**
+     * 修改优惠券参数
+     * @param coupon
+     * @param goodsList
+     * @param categoriesList
+     * @return
+     */
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public ReturnData modifyCoupon(String coupon, String goodsList, String categoriesList){
         try {
@@ -70,6 +87,9 @@ public class CouponApi extends BaseController {
                 couponVo.setExpiryEndDate(expiryEndTime);
             }
             return couponService.modify(couponVo,goodsList,userId,categoriesList);
+        }catch (HookahException e){
+            e.printStackTrace();
+            return ReturnData.error(e.getMessage());
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());
