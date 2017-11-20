@@ -1,9 +1,12 @@
 package com.jusfoun.hookah.core.domain.jf;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
+
 import java.util.Date;
 
 public class JfOverdueDetails extends GenericModel {
+
     private Long id;
 
     private String settleDate;
@@ -18,8 +21,10 @@ public class JfOverdueDetails extends GenericModel {
 
     private String obtainDate;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private String operator;
 
     private String userId;

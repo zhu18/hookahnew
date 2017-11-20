@@ -12,6 +12,4 @@ public interface JfRuleService extends GenericService<JfRule, Long> {
 
     int insertAndGetId(JfRule jfRule);
 
-    JfRule selectBySn(Integer sn);
-
 }

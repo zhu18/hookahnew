@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.jf.JfRule;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.integral.contants.JfEnum;
+import com.jusfoun.hookah.rpc.api.CacheService;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
 import com.jusfoun.hookah.rpc.api.JfRuleService;
 import com.jusfoun.hookah.rpc.api.UserService;
@@ -37,6 +38,9 @@ public class RabbitMQJFHandelListener {
     @Resource
     UserService userService;
 
+    @Resource
+    JfRuleService jfRuleService;
+
     @RabbitListener(queues = RabbitmqQueue.CONTRACE_JF_MSG)
     public void jfHandle(JfBo jfBo) {
 
@@ -55,24 +59,44 @@ public class RabbitMQJFHandelListener {
                 return;
             }
 
-            JfRecord jfRecord = new JfRecord();
-            jfRecord.setUserId(jfBo.getUserId());
-            // 对应积分规则的sn
-            jfRecord.setSourceId(jfBo.getSourceId());
-            jfRecord.setNote(JfEnum.getMsgByCode(jfBo.getSourceId()));
-            jfRecord.setExpire(Short.parseShort("0"));
-            jfRecord.setOperator("System");
-            jfRecord.setAddTime(new Date());
-            jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
-            jfRecord.setUpdateTime(new Date());
-            jfRecordService.insertAndGetId(jfRecord);
-            if(jfRecord.getId() != null){
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("sn", jfBo.getSourceId()));
+            JfRule jfRule = jfRuleService.selectOne(filters);
+            if(jfRule == null){
+                logger.error("<<<<<<<积分规则查询不存在>>>>>>>");
+                return;
+            }
+
+//            JfRecord jfRecord = new JfRecord();
+//            jfRecord.setUserId(jfBo.getUserId());
+//            // 对应积分规则的sn
+//            jfRecord.setSourceId(jfBo.getSourceId());
+//            jfRecord.setAction(jfRule.getAction());
+//            jfRecord.setNote(jfRule.getActionDesc());
+//            jfRecord.setScore(jfRule.getScore());
+//            jfRecord.setExpire(Short.parseShort("0"));
+//            jfRecord.setOperator("System");
+//            jfRecord.setAddTime(new Date());
+//            jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
+            int n = jfRecordService.insertAndGetId(
+                    new JfRecord(
+                            jfBo.getUserId(),
+                            jfBo.getSourceId(),
+                            jfRule.getScore(),
+                            jfRule.getActionDesc(),
+                            Short.parseShort("0"),
+                            new Date(),
+                            "System",
+                            LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
+                            jfRule.getAction(),
+                            jfRule.getActionDesc()));
+            if(n == 1){
                 logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理成功>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }else {
                 logger.error("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理失败>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }
         }catch (Exception e){
-            logger.error("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理失败>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            logger.error("<积分消息处理失败>>>{}", e);
         }
 
     }
