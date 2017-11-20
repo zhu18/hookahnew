@@ -133,3 +133,58 @@
     border-radius: 3px;
     font-size: 16px;
 }
+
+.order-info .order-info-down .coupon-list{
+
+}
+.order-info .order-info-down .coupon-list ul{
+   padding: 15px 0;
+}
+.order-info .order-info-down .coupon-list ul li{
+  float: left;
+  width: calc(25% - 20px);
+  height: 125px;
+  padding: 10px;
+}
+.order-info .order-info-down .coupon-list ul li .list-item{
+    border: 1px solid #e5e5e5;
+    height: 100%;
+}
+.order-info .order-info-down .coupon-list ul li .list-item .list-item-l{
+    height: calc(100% - 50px);
+    width: 115px;
+    padding: 25px 0px;
+    background-color: #e5e5e5;
+}
+.order-info .order-info-down .coupon-list ul li .list-item .list-item-l p{
+    text-align: center;
+    color: #ffffff;
+}
+.order-info .order-info-down .coupon-list ul li .list-item .list-item-l p:first-child{
+    font-size: 38px;
+}
+
+
+.order-info .order-info-down .coupon-list ul li .list-item .list-item-r{
+    padding: 15px 15px;
+}
+.order-info .order-info-down .coupon-list ul li .list-item .list-item-r span{
+    background-color: #DED7DB;
+    padding: 0 1px;
+    color: #ffffff;
+}
+.order-info .order-info-down .coupon-list ul li .list-item .list-item-r p{
+    color: #C6C6C6;
+}
+.order-info .order-info-down .coupon-list ul li .list-item.active{
+    border: 1px solid #E34F4F  !important;
+}
+.order-info .order-info-down .coupon-list ul li .list-item.active .list-item-l{
+    background-color: #E34F4F !important;
+}
+.order-info .order-info-down .coupon-list ul li .list-item.active-blue{
+    border: 1px solid #33CFDD;
+}
+.order-info .order-info-down .coupon-list ul li .list-item.active-blue .list-item-l{
+    background-color: #33CFDD;
+}

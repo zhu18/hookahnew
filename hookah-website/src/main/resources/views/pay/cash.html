@@ -17,7 +17,7 @@ var htmlPart = {
 					<h4 class="order-title">请支付</h4>
 				</div>
 				<!--<div class="order-seller">&nbsp;&nbsp; 收款方&nbsp;:<span> 山东省大数据BDGStore</span></div>-->
-				<div class="order-amount"><span>${orderInfo.goodsAmount/100}</span>元</div>
+				<div class="order-amount"><span>${orderInfo.orderAmount/100}</span>元</div>
 				<a class="order-ext-trigger" href="javascript:void(0)">
 					订单详情
 				</a>
@@ -30,7 +30,7 @@ var htmlPart = {
 						</tr>
 						<tr>
 							<td class="sub-th" align="right">交易金额：</td>
-							<td>${orderInfo.goodsAmount/100}元</td>
+							<td>${orderInfo.orderAmount/100}元</td>
 						</tr>
 						<tr>
 							<td class="sub-th" align="right">购买时间：</td>
@@ -50,7 +50,7 @@ var htmlPart = {
 				<form name="payPassword" id="form_paypsw" action="${host.website}/pay/balancePay" method="post">
 					<div id="J-rcChannels">
 						<div>
-							<input type="hidden" value="${orderInfo.goodsAmount}" id="goodsAmount">
+							<input type="hidden" value="${orderInfo.orderAmount}" id="goodsAmount">
 							<input type="hidden" value="${moneyBalance}" id="moneyBalance">
 							<input type="hidden" name="orderSn" value="${orderInfo.orderSn}" id="J_orderSn">
 							<ul id="J_MarketinglList"></ul>
@@ -71,7 +71,7 @@ var htmlPart = {
 											<span class="pay-amount">
 												<span class="amount">
 													<span>支付</span>
-													<span class="amount-font-R16">${orderInfo.goodsAmount / 100}</span>
+													<span class="amount-font-R16">${orderInfo.orderAmount / 100}</span>
 													<span> 元</span>
 												</span>
                                             	<span></span>
