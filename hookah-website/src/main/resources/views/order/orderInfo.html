@@ -75,7 +75,7 @@ var htmlPart = {
 													<%for(list in couponList){%>
 													<li>
 														<div class="list-item active-blue">
-															<input type="hidden" value="${list.id}" name="couponId">
+															<input type="hidden" value="${list.userCouponId}" name="couponId">
 															<div class="grid-left list-item-l" >
 																<p >￥<span class="j_faceValue">${list.faceValue / 100}</span></p>
 																<p>
