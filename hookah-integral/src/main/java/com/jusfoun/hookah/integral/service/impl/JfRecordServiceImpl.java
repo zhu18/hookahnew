@@ -26,7 +26,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -215,6 +219,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
         return ReturnData.success(page);
     }
+
     @Override
     public ReturnData selectOneByUserId(String userId) throws Exception {
 
@@ -243,5 +248,118 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
         }
 
         return ReturnData.success(jfUserVo);
+    }
+
+    @Override
+    public ReturnData optJf(String userId, String optType, String score, String note) throws Exception {
+
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        if (!StringUtils.isNotBlank(userId) || !StringUtils.isNotBlank(optType)
+                || !StringUtils.isNotBlank(optType) || !StringUtils.isNotBlank(note)
+                || Integer.parseInt(score) <= 0) {
+            return ReturnData.error("参数不能为空！^_^");
+        }
+
+        if (optType.equals("11") || optType.equals("12")) {
+
+            List<String> list = new ArrayList<>();
+
+            Arrays.asList(userId.split(",")).parallelStream().forEach(uid -> {
+
+                User user = userService.selectById(uid);
+                if (user == null) {
+                    returnData.setCode(ExceptionConst.Error);
+                    returnData.setMessage("用户不存在！^_^");
+                    logger.info("用户不存在！^_^");
+                } else {
+
+                    if (optType.equals("11")) {
+
+                        // optType 归到source_id中去 增加为11 减少为12
+                        // action  admin的action为3
+                        int n = insertAndGetId(
+                                new JfRecord(
+                                        uid,
+                                        Integer.parseInt(optType),
+                                        Integer.parseInt(score),
+                                        note,
+                                        Short.parseShort("0"),
+                                        new Date(),
+                                        "admin",
+                                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
+                                        Short.parseShort("3"),
+                                        "管理员操作"));
+
+                        if (n == 1) {
+                            logger.info("用户【" + user.getUserName() + "】操作积分成功！");
+                            list.add("用户【" + user.getUserName() + "】操作积分成功！");
+                        } else {
+                            logger.info("用户【" + user.getUserName() + "】操作积分失败！");
+                            list.add("用户【" + user.getUserName() + "】操作积分失败！");
+                        }
+
+                    } else if (optType.equals("12")) {
+
+                        List<Condition> jfilters = new ArrayList<>();
+                        jfilters.add(Condition.eq("userId", uid));
+                        jfilters.add(Condition.eq("expire", Short.parseShort("0")));
+                        List<JfRecord> jfRecordList = selectList(jfilters);
+                        if (jfRecordList == null || jfRecordList.size() <= 0) {
+                            logger.info("用户【" + user.getUserName() + "】可用积分不足！");
+                            list.add("用户【" + user.getUserName() + "】可用积分不足！");
+                        } else {
+                            if (jfRecordList.parallelStream().mapToInt(v -> v.getScore()).sum() < Math.abs(Integer.parseInt(score))) {
+                                logger.info("用户【" + user.getUserName() + "】可用积分不足！");
+                                list.add("用户【" + user.getUserName() + "】可用积分不足！");
+                            } else {
+                                // optType 归到source_id中去 增加为11 减少为12
+                                // action  admin的action为3
+                                int n = insertAndGetId(
+                                        new JfRecord(
+                                                uid,
+                                                Integer.parseInt(optType),
+                                                0 - Integer.parseInt(score),
+                                                note,
+                                                Short.parseShort("0"),
+                                                new Date(),
+                                                "admin",
+                                                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
+                                                Short.parseShort("3"),
+                                                "管理员操作"));
+
+                                if (n == 1) {
+                                    logger.info("用户【" + user.getUserName() + "】操作积分成功！");
+                                    list.add("用户【" + user.getUserName() + "】操作积分成功！");
+                                } else {
+                                    logger.info("用户【" + user.getUserName() + "】操作积分失败！");
+                                    list.add("用户【" + user.getUserName() + "】操作积分失败！");
+                                }
+                            }
+                        }
+                    } else {
+                        returnData.setCode(ExceptionConst.Success);
+                        returnData.setMessage("参数有误！^_^");
+                    }
+                }
+            });
+            returnData.setMessage("管理员操作完成！^_^");
+            returnData.setData(list);
+        } else {
+            returnData.setCode(ExceptionConst.Success);
+            returnData.setMessage("参数有误！^_^");
+        }
+        return returnData;
+    }
+
+
+    public static void main(String[] args) {
+
+        String sv = "zs,ls";
+        String[] sp = sv.split(",");
+        Arrays.asList(sp).forEach(c -> System.out.println(c));
+        System.out.println(Arrays.asList(sp).size());
+        System.out.println(Arrays.asList(sp));
     }
 }

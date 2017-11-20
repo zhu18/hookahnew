@@ -146,4 +146,29 @@ public class TestController {
         return returnData;
     }
 
+    /**
+     * 修改用户积分
+     * @param userId
+     * @param optType
+     * @param score
+     * @param note
+     * @return
+     */
+    @RequestMapping("/msg8")
+    public ReturnData Test8(String userId, String optType, String score, String note) {
+
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+            returnData = jfRecordService.optJf(userId, optType, score, note);
+        }catch (Exception e) {
+            logger.error("修改用户积分异常-{}", e);
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("系统繁忙，请稍后再试[8]^_^");
+        }
+
+        return returnData;
+    }
+
 }
