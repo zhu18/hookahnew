@@ -440,5 +440,15 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 this.updateByIdSelective(coupon);
             }
         }
+        filter.clear();
+        filter.add(Condition.eq("isDeleted",(byte)0));
+        filter.add(Condition.eq("userCouponStatus",(byte)0));
+        List<UserCoupon> userCoupons = userCouponService.selectList(filter);
+        for (UserCoupon userCoupon : userCoupons){
+            if (DateUtils.isExpired(userCoupon.getReceivedTime(),userCoupon.getValidDays(),new Date())){
+                userCoupon.setUserCouponStatus((byte)2);
+                userCouponService.updateByIdSelective(userCoupon);
+            }
+        }
     }
 }

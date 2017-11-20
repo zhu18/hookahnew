@@ -524,9 +524,8 @@ public class OrderInfoController extends BaseController {
                     Coupon coupon = couponService.selectById(userCoupon.getCouponId());
                     if (userCoupon.getUserCouponStatus()==2){
                         throw new HookahException("订单中的优惠券已过期，请重新下单");
-                    }else if (DateUtils.isExpired(userCoupon.getReceivedTime(),coupon.getValidDays(),new Date())){
-                        throw new HookahException("订单中的优惠券已超过使用天数，请重新下单");
-
+                    }else if (userCoupon.getIsDeleted()==1){
+                        throw new HookahException("订单中的优惠券已失效，请重新下单");
                     }
                 }
             }
