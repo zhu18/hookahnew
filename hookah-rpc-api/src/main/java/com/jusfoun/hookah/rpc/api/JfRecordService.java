@@ -20,7 +20,7 @@ public interface JfRecordService extends GenericService<JfRecord, Long> {
      * @param pageNum
      * @param pageSize
      * @param userName
-     * @param type
+     * @param userType
      * @param mobile
      * @return
      * @throws Exception

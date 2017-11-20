@@ -147,14 +147,14 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                 jfilters.add(Condition.eq("expire", Short.parseShort("0")));
 
                 List<JfRecord> jfRecordList = selectList(jfilters);
-
-                x.setUseJf(jfRecordList.parallelStream().mapToInt(y -> y.getScore()).sum());
-
-                x.setExchangeJf(jfRecordList.parallelStream().filter(JfRecord
-                        -> JfRecord.getAction().equals(Short.parseShort("2"))).mapToInt(JfRecord::getScore).sum());
-
                 JfUserVo jfUserVo = new JfUserVo();
                 BeanUtils.copyProperties(x, jfUserVo);
+
+                jfUserVo.setUseJf(jfRecordList.parallelStream().mapToInt(y -> y.getScore()).sum());
+
+                jfUserVo.setExchangeJf(jfRecordList.parallelStream().filter(JfRecord
+                        -> JfRecord.getAction().equals(Short.parseShort("2"))).mapToInt(JfRecord::getScore).sum());
+
                 jfUserVoList.add(jfUserVo);
             });
         }
