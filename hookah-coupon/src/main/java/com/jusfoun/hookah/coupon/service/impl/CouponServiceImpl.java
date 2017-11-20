@@ -329,23 +329,26 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         return ReturnData.success(couponVo);
     }
 
-    public List<Coupon> getUserCoupons(String userId, Long goodsAmount) throws Exception{
+    public List<CouponVo> getUserCoupons(String userId, Long goodsAmount) throws Exception{
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("isDeleted",(byte)0));
         filter.add(Condition.eq("userId",userId));
         filter.add(Condition.eq("userCouponStatus",(byte)0));
         filter.add(Condition.eq("orderSn",null));
         List<UserCoupon> userCoupons = userCouponService.selectList(filter);
-        List<Coupon> coupons = new ArrayList<>();
+        List<CouponVo> coupons = new ArrayList<>();
         for (UserCoupon userCoupon : userCoupons){
             Coupon coupon = couponMapper.selectByPrimaryKey(userCoupon.getCouponId());
-            switch (coupon.getApplyChannel()){
+            CouponVo couponVo = new CouponVo();
+            BeanUtils.copyProperties(coupon,couponVo);
+            couponVo.setExpiryEndTime(DateUtils.toDateText(coupon.getExpiryEndDate()));
+            switch (couponVo.getApplyChannel()){
                 case 0:
-                    coupons.add(coupon);
+                    coupons.add(couponVo);
                     break;
                 case 1:
                     if (goodsAmount >= coupon.getDiscountValue()){
-                        coupons.add(coupon);
+                        coupons.add(couponVo);
                     }
                     break;
             }
