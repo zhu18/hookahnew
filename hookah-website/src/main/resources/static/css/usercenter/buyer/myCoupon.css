@@ -81,9 +81,10 @@
 .content .coupon-list ul li .bg-content .message .money{
     position: relative;
     color: #ffffff;
-    font-size: 80px;
+    font-size: 60px;
     display: inline-block;
     line-height: 73px;
+    margin-left: 23px;
 }
 .content .coupon-list ul li .bg-content .message .money:before{
     content: '￥';
