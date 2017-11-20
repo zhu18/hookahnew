@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface GoodsLabelMapper extends GenericDao<GoodsLabel> {
-    @Select("select * from goods_label order by lab_py")
+    @Select("select * from goods_label where delete_status = 1 order by lab_py")
     List<GoodsLabel> getAllGoodsLabel();
 }

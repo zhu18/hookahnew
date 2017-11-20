@@ -15,6 +15,7 @@ public class GoodsLabel extends GenericModel {
     private String labPy;
     private String labAllPy;
     private String userId;
+    private Byte deleteStatus;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
@@ -73,5 +74,13 @@ public class GoodsLabel extends GenericModel {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Byte getDeleteStatus() {
+        return deleteStatus;
+    }
+
+    public void setDeleteStatus(Byte deleteStatus) {
+        this.deleteStatus = deleteStatus;
     }
 }
