@@ -20,14 +20,14 @@ $(function () {
             $(this).removeClass('active');
             $('#coupon-list li .list-item').addClass('active-blue');
             $('#pay-money').html(val);
+            $('.J_arrived').html("0");
 		}else {
             $(this).addClass('active').parent().siblings().find('.list-item').removeClass('active active-blue');
             var id=$(this).find("input[name='couponId']").val();
-            console.log(id);
             $("input[name='userCouponId']").val(id);
             var faceVal=$(this).find('.j_faceValue').html();
             var payVal=parseFloat(val)-parseFloat(faceVal);
-
+            $('.J_arrived').html(faceVal);
             if(payVal < 0.01){
                 payVal=0;
 			}

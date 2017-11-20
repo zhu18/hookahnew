@@ -29,15 +29,15 @@ var htmlPart = {
                 <div class="content">
                     <div class="coupon-header">
                        <select name="" id="">
-                           <option value="">可用优惠券</option>
-                           <option value="">已用优惠券</option>
-                           <option value="">过期优惠券</option>
-                           <option value="">回收站优惠券</option>
+                           <option value="0">可用优惠券</option>
+                           <option value="1">已用优惠券</option>
+                           <option value="2">过期优惠券</option>
+                           <!--<option value="">回收站优惠券</option>-->
                        </select>
-                       <ul class="clearfix">
-                           <li class="active">新到账</li>
-                           <li>即将过期</li>
-                           <li>最优惠</li>
+                       <ul class="clearfix" id="tagName">
+                           <li data-coupon-id="0" class="active">新到账</li>
+                           <li data-coupon-id="1">即将过期</li>
+                           <!--<li data-coupon-id="">最优惠</li>-->
                        </ul>
                     </div>
                     <div class="coupon-list">
