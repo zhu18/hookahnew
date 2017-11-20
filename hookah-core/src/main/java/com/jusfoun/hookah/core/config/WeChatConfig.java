@@ -25,5 +25,9 @@ public class WeChatConfig {
 
     /*获取用户信息链接*/
     public static final String getUserInfoUrl =
-            "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN ";
+            "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
+
+    /**检查access_token有效性**/
+    public static final String checkAccessTokenAuthUrl = "https://api.weixin.qq.com/sns/auth?access_token=ACCESS_TOKEN&openid=OPENID";
+
 }

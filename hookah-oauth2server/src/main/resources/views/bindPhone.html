@@ -290,7 +290,7 @@ var htmlPart = {
 	/*图片校验码*/
 	function changeImg(obj) {
 		$("#validCode").off("click");
-		obj.src = host.auth + "/captcha?_"+new Date().getTime();
+		obj.src = "${host.auth}/captcha?_"+new Date().getTime();
 	}
 	$("#validCode").on('click', function () {
 		changeImg(this);
@@ -314,7 +314,7 @@ var htmlPart = {
 		}
 		var self = obj;
 		/*请求验证码*/
-		sendReq(host.auth+'/sms/send','post',{mobile:$('#phoneNum').val(),type:3},function (data) {
+		sendReq('${host.auth}/sms/send','post',{mobile:$('#phoneNum').val(),type:3},function (data) {
 			if(data.code == 1){
 				$(self).off('click');
 				self.style.cssText = "background-color: #ccc;cursor: not-allowed;";
