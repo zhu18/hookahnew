@@ -79,3 +79,10 @@ function loadPageData(data) {
 
 
 }
+
+$('#tagName li').click(function () {
+    $(this).addClass('active').siblings().removeClass('active');
+    console.log($(this).attr('data-coupon-id'));
+    dataParm.couponTag= $(this).attr('data-coupon-id');
+    goPage("1");
+});
