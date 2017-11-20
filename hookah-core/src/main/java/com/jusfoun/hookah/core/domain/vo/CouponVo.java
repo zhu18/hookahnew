@@ -38,6 +38,16 @@ public class CouponVo extends Coupon {
 
     private Byte receivedMode;
 
+    private Long userCouponId;
+
+    public Long getUserCouponId() {
+        return userCouponId;
+    }
+
+    public void setUserCouponId(Long userCouponId) {
+        this.userCouponId = userCouponId;
+    }
+
     public Byte getCouponTag() {
         return couponTag;
     }

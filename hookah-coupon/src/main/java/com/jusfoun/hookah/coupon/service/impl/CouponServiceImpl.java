@@ -340,6 +340,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         for (UserCoupon userCoupon : userCoupons){
             Coupon coupon = couponMapper.selectByPrimaryKey(userCoupon.getCouponId());
             CouponVo couponVo = new CouponVo();
+            couponVo.setUserCouponId(userCoupon.getId());
             BeanUtils.copyProperties(coupon,couponVo);
             couponVo.setExpiryEndTime(DateUtils.toDateText(coupon.getExpiryEndDate()));
             switch (couponVo.getApplyChannel()){
@@ -381,6 +382,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             userCoupon.setUserCouponStatus((byte)0);
             userCoupon.setExpiryEndDate(coupon.getExpiryEndDate());
             userCoupon.setExpiryStartDate(coupon.getExpiryStartDate());
+            userCoupon.setValidDays(coupon.getValidDays());
             coupon.setReceivedCount(receivedCount+1);
             userCouponService.insert(userCoupon);
             this.updateByIdSelective(coupon);
