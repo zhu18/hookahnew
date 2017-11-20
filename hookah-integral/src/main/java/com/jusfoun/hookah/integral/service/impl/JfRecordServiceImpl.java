@@ -3,18 +3,25 @@ package com.jusfoun.hookah.integral.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.jf.JfRecordMapper;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.jf.JfOverdueDetails;
 import com.jusfoun.hookah.core.domain.jf.JfRecord;
 import com.jusfoun.hookah.core.domain.vo.JfShowVo;
+import com.jusfoun.hookah.core.domain.vo.JfUserVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.CacheService;
 import com.jusfoun.hookah.rpc.api.JfOverdueDetailsService;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
+import com.jusfoun.hookah.rpc.api.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +31,7 @@ import java.util.List;
 
 /**
  * 积分服务
+ *
  * @author:jsshao
  * @date: 2017-3-17
  */
@@ -43,9 +51,12 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
     CacheService cacheService;
 
     @Resource
+    UserService userService;
+
+    @Resource
     JfOverdueDetailsService jfOverdueDetailsService;
 
-    @CacheEvict(value = "personUseJfSum", key="#jfRecord.getUserId()")
+    @CacheEvict(value = "personUseJfSum", key = "#jfRecord.getUserId()")
     @Override
     public int insertAndGetId(JfRecord jfRecord) {
         return jfRecordMapper.insertAndGetId(jfRecord);
@@ -59,7 +70,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
         Pagination<JfShowVo> pagination = new Pagination<>();
         Pagination<JfOverdueDetails> overPages = new Pagination<>();
 
-        if(!type.equals("3")){
+        if (!type.equals("3")) {
 
             // 根据用户userId 和 请求类型 获取所有积分记录
             PageHelper.startPage(pageNumberNew, pageSizeNew);
@@ -72,13 +83,13 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
             pagination.setList(page.getList());
 
             returnData.setData(pagination);
-        }else {
+        } else {
 
             // 获取处理过的过期积分
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("userId", userId));
 
-            List<OrderBy > orderBys = new ArrayList<>();
+            List<OrderBy> orderBys = new ArrayList<>();
             orderBys.add(OrderBy.desc("addTime"));
 
             overPages = jfOverdueDetailsService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
@@ -92,11 +103,145 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
     }
 
     @Override
-    public ReturnData selectListByUserInfo(Integer pageNumberNew, Integer pageSizeNew, String userName, String type, String userSn) throws Exception {
+    public ReturnData selectListByUserInfo(String pageNum, String pageSize, String userName, String userType, String mobile) throws Exception {
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
+        Pagination<User> pages = new Pagination<>();
+        Pagination<JfUserVo> jfUserVoPag = new Pagination<>();
 
-        return null;
+        List<Condition> filters = new ArrayList<>();
+
+        if (StringUtils.isNotBlank(userName)) {
+            filters.add(Condition.like("userName", userName));
+        }
+        if (StringUtils.isNotBlank(mobile)) {
+            filters.add(Condition.eq("mobile", mobile));
+        }
+        if (StringUtils.isNotBlank(userType)) {
+            filters.add(Condition.eq("userType", Integer.parseInt(userType)));
+        }
+
+        List<OrderBy> orderBys = new ArrayList<>();
+        orderBys.add(OrderBy.desc("addTime"));
+
+        int pageNumberNew = HookahConstants.PAGE_NUM;
+        if (StringUtils.isNotBlank(pageNum)) {
+            pageNumberNew = Integer.parseInt(pageNum);
+        }
+
+        int pageSizeNew = HookahConstants.PAGE_SIZE;
+        if (StringUtils.isNotBlank(pageSize)) {
+            pageSizeNew = Integer.parseInt(pageSize);
+        }
+
+        List<JfUserVo> jfUserVoList = new ArrayList<>();
+
+        pages = userService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+
+        if (pages.getList() != null && pages.getList().size() > 0) {
+            pages.getList().parallelStream().forEach(x -> {
+
+                List<Condition> jfilters = new ArrayList<>();
+                jfilters.add(Condition.eq("userId", x.getUserId()));
+                jfilters.add(Condition.eq("expire", Short.parseShort("0")));
+
+                List<JfRecord> jfRecordList = selectList(jfilters);
+
+                x.setUseJf(jfRecordList.parallelStream().mapToInt(y -> y.getScore()).sum());
+
+                x.setExchangeJf(jfRecordList.parallelStream().filter(JfRecord
+                        -> JfRecord.getAction().equals(Short.parseShort("2"))).mapToInt(JfRecord::getScore).sum());
+
+                JfUserVo jfUserVo = new JfUserVo();
+                BeanUtils.copyProperties(x, jfUserVo);
+                jfUserVoList.add(jfUserVo);
+            });
+        }
+
+        jfUserVoPag.setTotalItems(pages.getTotalItems());
+        jfUserVoPag.setPageSize(pageSizeNew);
+        jfUserVoPag.setCurrentPage(pageNumberNew);
+        jfUserVoPag.setList(jfUserVoList);
+
+        returnData.setData(jfUserVoPag);
+
+        return returnData;
+    }
+
+    @Override
+    public ReturnData selectJfRecordListByUserId(String pageNum, String pageSize,
+                                                 String userId, String action, String sourceId, String startTime, String endTime) throws Exception {
+
+        Pagination<JfRecord> page = new Pagination<>();
+        List<Condition> filters = new ArrayList();
+        List<OrderBy> orderBys = new ArrayList();
+        orderBys.add(OrderBy.desc("addTime"));
+
+        if (StringUtils.isNotBlank(userId)) {
+            filters.add(Condition.eq("userId", userId));
+        } else {
+
+            return ReturnData.error("用户标识不能为空！^_^");
+        }
+
+        if (StringUtils.isNotBlank(action)) {
+            filters.add(Condition.eq("action", action));
+        }
+
+        if (StringUtils.isNotBlank(sourceId)) {
+            filters.add(Condition.eq("sourceId", sourceId));
+        }
+
+        if (StringUtils.isNotBlank(startTime)) {
+            filters.add(Condition.ge("addTime", DateUtils.transferTime(startTime)));
+        }
+
+        if (StringUtils.isNotBlank(endTime)) {
+            filters.add(Condition.le("addTime", DateUtils.transferTime(startTime)));
+        }
+
+        int pageNumberNew = HookahConstants.PAGE_NUM;
+        if (StringUtils.isNotBlank(pageNum)) {
+            pageNumberNew = Integer.parseInt(pageNum);
+        }
+
+        int pageSizeNew = HookahConstants.PAGE_SIZE;
+        if (StringUtils.isNotBlank(pageSize)) {
+            pageSizeNew = Integer.parseInt(pageSize);
+        }
+
+        page = this.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
+
+        return ReturnData.success(page);
+    }
+    @Override
+    public ReturnData selectOneByUserId(String userId) throws Exception {
+
+        if (!StringUtils.isNotBlank(userId)) {
+            return ReturnData.error("参数不能为空");
+        }
+
+        User user = userService.selectById(userId);
+        if (user == null) {
+            return ReturnData.error("请求用户信息不存在");
+        }
+
+        JfUserVo jfUserVo = new JfUserVo();
+
+        BeanUtils.copyProperties(user, jfUserVo);
+
+        List<Condition> jfilters = new ArrayList<>();
+        jfilters.add(Condition.eq("userId", userId));
+        jfilters.add(Condition.eq("expire", Short.parseShort("0")));
+        List<JfRecord> jfRecordList = selectList(jfilters);
+        if (jfRecordList != null) {
+            jfUserVo.setUseJf(jfRecordList.parallelStream().mapToInt(y -> y.getScore()).sum());
+
+            jfUserVo.setExchangeJf(jfRecordList.parallelStream().filter(JfRecord
+                    -> JfRecord.getAction().equals(Short.parseShort("2"))).mapToInt(JfRecord::getScore).sum());
+        }
+
+        return ReturnData.success(jfUserVo);
     }
 }

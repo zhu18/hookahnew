@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.core.domain.jf;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
+
 import java.util.Date;
 
 public class JfRule extends GenericModel {
@@ -82,6 +84,7 @@ public class JfRule extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     /**
@@ -90,6 +93,7 @@ public class JfRule extends GenericModel {
      *
      * @mbggenerated
      */
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**
