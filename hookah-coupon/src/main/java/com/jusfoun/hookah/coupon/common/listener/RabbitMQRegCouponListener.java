@@ -3,6 +3,7 @@ package com.jusfoun.hookah.coupon.common.listener;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Coupon;
 import com.jusfoun.hookah.core.domain.UserCoupon;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.CouponService;
 import com.jusfoun.hookah.rpc.api.UserCouponService;
@@ -44,6 +45,9 @@ public class RabbitMQRegCouponListener {
                 }
                 couponService.sendCoupon2User(userId,couponList);
             }
+        }catch (HookahException e){
+            e.printStackTrace();
+            logger.error(e.getMessage());
         }catch (Exception e){
             e.printStackTrace();
             logger.error("注册送优惠券失败"+e.getMessage());

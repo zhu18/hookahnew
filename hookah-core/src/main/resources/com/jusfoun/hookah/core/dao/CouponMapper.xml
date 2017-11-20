@@ -74,18 +74,18 @@
     FROM `user` LEFT JOIN(
     SELECT uc.id,a.c1,b.c2,c.c3 FROM (SELECT DISTINCT(user_id) id from user_coupon) AS uc
     LEFT JOIN
-    (SELECT user_id,user_coupon_status, COUNT(user_id) c1 FROM user_coupon WHERE user_coupon_status =0 GROUP BY user_id) AS a
+    (SELECT user_id,user_coupon_status, COUNT(user_id) c1 FROM user_coupon WHERE user_coupon_status =0 AND is_deleted =0 GROUP BY user_id) AS a
     ON uc.id = a.user_id
     LEFT JOIN
-    (SELECT user_id,user_coupon_status, COUNT(user_id) c2 FROM user_coupon WHERE user_coupon_status =1 GROUP BY user_id) AS b
+    (SELECT user_id,user_coupon_status, COUNT(user_id) c2 FROM user_coupon WHERE user_coupon_status =1 AND is_deleted =0 GROUP BY user_id) AS b
     ON uc.id = b.user_id
     LEFT JOIN
-    (SELECT user_id,user_coupon_status, COUNT(user_id) c3 FROM user_coupon WHERE user_coupon_status =2 GROUP BY user_id) AS c
+    (SELECT user_id,user_coupon_status, COUNT(user_id) c3 FROM user_coupon WHERE user_coupon_status =2 AND is_deleted =0 GROUP BY user_id) AS c
     ON uc.id=c.user_id ) cp
     ON `user`.user_id = cp.id
     <where>
       <if test="userId != '' and userId != null">
-        cp.id = #{userId}
+        `user`.user_id = #{userId}
       </if>
       <if test="userName != '' and userName != null">
         AND

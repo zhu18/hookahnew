@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.Coupon;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.CouponVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
@@ -221,6 +222,8 @@ public class CouponApi extends BaseController {
             }
             couponService.sendCoupon2User(userId,couponList);
             return ReturnData.success("优惠券已发送");
+        }catch (HookahException e){
+            return ReturnData.error(e.getMessage());
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());

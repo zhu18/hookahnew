@@ -165,4 +165,16 @@ public abstract class DateUtils {
         return n<=day;
     }
 
+    public static boolean isExpired(Date settledDate, Date now){
+        if (settledDate == null || now == null) {
+            throw new IllegalArgumentException("The date must not be null");
+        }
+        final Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(settledDate);
+        final Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(now);
+        int n = cal2.get(Calendar.DAY_OF_YEAR)-cal1.get(Calendar.DAY_OF_YEAR);
+        return n>0;
+    }
+
 }
