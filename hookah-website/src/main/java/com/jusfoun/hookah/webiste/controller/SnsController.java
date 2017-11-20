@@ -142,7 +142,7 @@ public class SnsController {
         String userid = wxUserInfo.getUserid();
         if(Objects.isNull(userid)){
             //未绑定账号 重定向到绑定手机页面
-            return "redirect:"+myProps.getHost().get("auth")+"/sns/bindWeChat?openid"+openid+"&state="+state;
+            return "redirect:"+myProps.getHost().get("auth")+"/sns/bindWeChat?openid="+openid+"&state="+state;
         }
 
         User user = userService.selectById(wxUserInfo.getUserid());
