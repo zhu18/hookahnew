@@ -64,7 +64,7 @@ var htmlPart = {
 							<%}%>
 							<tr>
 								<td colspan="9">
-									<table class="coupon-list">
+									<table class="coupon-list margin-top-20 margin-bottom-10">
 										<tr class="tab-title">
 											<th colspan="9"><h5>使用优惠券</h5></th>
 										</tr>
@@ -93,10 +93,10 @@ var htmlPart = {
 												</ul>
 											</td>
 										</tr>
-										<tr>
-											<td colspan="9">
+										<tr class="tab-title">
+											<th colspan="9">
 												金额抵用：<span class="J_arrived">100</span>元
-											</td>
+											</th>
 										</tr>
 									</table>
 								</td>
@@ -117,6 +117,15 @@ var htmlPart = {
 									<!--</div>-->
 								<!--</td>-->
 							<!--</tr>-->
+							<tr class="tab-agreement">
+								<td colspan="9">
+									<div class="tab-price">
+										<span>商品总金额：<span class="color-red">￥${orderAmount / 100}</span></span> <br>
+										<span>商品优惠券：<span class="color-red J_couponM">￥0</span></span>
+									</div>
+								</td>
+							</tr>
+
 							<tr class="tab-submit">
 								<td colspan="9">
 									<div>
