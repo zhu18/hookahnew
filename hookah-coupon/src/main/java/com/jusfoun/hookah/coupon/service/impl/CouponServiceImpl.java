@@ -4,8 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.CouponMapper;
 import com.jusfoun.hookah.core.domain.Coupon;
+import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCoupon;
 import com.jusfoun.hookah.core.domain.mongo.MgCoupon;
@@ -50,6 +52,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
 
     @Resource
     UserService userService;
+
+    @Resource
+    MqSenderService mqSenderService;
 
     @Override
     public ReturnData addCoupon(Coupon coupon, String goodsList, String userId, String categoriesList) throws Exception{
@@ -189,7 +194,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         Pagination page = getCouponReceivedDetail(userId,couponId,userCouponStatus,orderSn,currentPage,pageSize,couponTag);
         List<UserCouponVo> userCouponVos = page.getList();
         List<CouponVo> list = new ArrayList<>();
-        if (userCouponVos!=null&&userCouponVos.size()>0){
+        if (userCouponVos != null && userCouponVos.size() > 0 && userCouponStatus==1){
             for (UserCouponVo userCouponVo : userCouponVos){
                 Coupon coupon = couponMapper.selectByPrimaryKey(userCouponVo.getCouponId());
                 CouponVo couponVo = new CouponVo();
@@ -389,6 +394,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             this.updateByIdSelective(coupon);
         }
         // TODO …… 赠送优惠券之后发送消息给用户
+        MessageCode messageCode = new MessageCode();
+        messageCode.setCode(HookahConstants.MESSAGE_701);//此处填写相关事件编号
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);//将数据添加到队列
     }
 
     public String createCouponSn(String prefix, Byte type){
@@ -427,7 +435,10 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         filter.add(Condition.eq("isDeleted",(byte)0));
         filter.add(Condition.eq("couponStatus",(byte)1));
         List<Coupon> couponList = this.selectList(filter);
-        for (Coupon coupon:couponList){
+        if (couponList.size() == 0){
+            return ;
+        }
+        for (Coupon coupon : couponList){
             Date expireEndDate = coupon.getExpiryEndDate();
             Date now = new Date();
             if (DateUtils.isExpired(expireEndDate,now)){
@@ -437,10 +448,15 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 filter.add(Condition.eq("userCouponStatus",(byte)0));
                 List<UserCoupon> userCoupons = userCouponService.selectList(filter);
                 if (userCoupons != null && userCoupons.size() > 0){
-                    for (UserCoupon userCoupon : userCoupons){
-                        userCoupon.setUserCouponStatus((byte)2);
-                        userCouponService.updateByIdSelective(userCoupon);
+                    UserCoupon userCoupon = new UserCoupon();
+                    userCoupon.setUserCouponStatus((byte)2);
+                    Long[] ids = new Long[userCoupons.size()];
+                    for (int i=0;i<userCoupons.size();i++){
+                        ids[i] = userCoupons.get(i).getId();
                     }
+                    filter.clear();
+                    filter.add(Condition.in("id",ids));
+                    userCouponService.updateByConditionSelective(userCoupon,filter);
                 }
                 coupon.setCouponStatus((byte)2);
                 this.updateByIdSelective(coupon);
