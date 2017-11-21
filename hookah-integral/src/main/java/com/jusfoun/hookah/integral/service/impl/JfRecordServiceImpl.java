@@ -163,10 +163,12 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
             });
         }
 
+        jfUserVoList.sort((JfUserVo m, JfUserVo n) -> m.getAddTime().compareTo(n.getAddTime()));
         jfUserVoPag.setTotalItems(pages.getTotalItems());
         jfUserVoPag.setPageSize(pageSizeNew);
         jfUserVoPag.setCurrentPage(pageNumberNew);
         jfUserVoPag.setList(jfUserVoList);
+
 
         returnData.setData(jfUserVoPag);
 
