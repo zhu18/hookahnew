@@ -2,7 +2,7 @@
  * Created by lss on 2017/11/9 0009
  */
 class couponController {
-    constructor($scope, $rootScope, $http, $state,$stateParams,growl,$filter) {
+    constructor($scope, $rootScope, $http, $state,$stateParams,growl) {
         console.log($stateParams.id);
         var data={};
         $scope.typeStatus = [               //自定定义类型数据
@@ -17,6 +17,8 @@ class couponController {
             {id:0, name:"全平台"}
         ];
         $scope.applyPlatform=0;
+        $scope.applyChannel="0";
+        $scope.applyGoods="0";
 
         if ($stateParams.id){
             console.log('修改');

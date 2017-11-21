@@ -10,6 +10,7 @@ public class JfUserVo implements Serializable{
     private String userId;
     private String userSn;
     private String userName;
+    private String mobile;
     private Integer userType;
     private String userLevel;
     private String userTypeShow;
@@ -102,5 +103,13 @@ public class JfUserVo implements Serializable{
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }
