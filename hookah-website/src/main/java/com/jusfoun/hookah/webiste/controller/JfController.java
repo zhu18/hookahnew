@@ -63,34 +63,4 @@ public class JfController extends BaseController {
         return returnData;
     }
 
-    @RequestMapping("/jf/opt")
-    public ReturnData optJfRecord(
-            @RequestParam("userId") String userId,
-            @RequestParam("action") String action,
-            @RequestParam("score") Integer score,
-            @RequestParam("note") String note
-    ){
-
-        ReturnData returnData = new ReturnData<>();
-        returnData.setCode(ExceptionConst.Success);
-
-        try {
-
-            // 参数校验
-
-            int n = jfRecordService.insertAndGetId(new JfRecord(userId, 11, score, note, Short.parseShort("0"),
-                    new Date(), "System", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
-                    Short.parseShort("3"), ""));
-            if(n != 1){
-                returnData.setCode(ExceptionConst.Error);
-            }
-
-        }catch (Exception e){
-            logger.error("管理员操作用户积分异常", e);
-            returnData.setCode(ExceptionConst.Error);
-        }
-
-        return returnData;
-
-    }
 }
