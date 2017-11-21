@@ -3,6 +3,8 @@ function loadPageData(data){ //渲染页面数据
         if(data.data.list.length > 0){
             var list = data.data.list;
             var html = '';
+			var goodsTypeName = '';
+			var goodsTypeAllName = '';
 			var purchaseLimitName = '';
 			var purchaseLimitAllName = '';
             for(var i=0; i<list.length; i++){
