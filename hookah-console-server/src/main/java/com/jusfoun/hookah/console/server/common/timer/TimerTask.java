@@ -76,12 +76,18 @@ public class TimerTask {
 
     /**
      * 1、每天零点清除当天的订单编号
-     * 2、每天零点修改已过期的优惠券的状态
-     * 3、每天零点修改用户超过有效使用时间的优惠券的状态
      */
     @Scheduled(cron = "0 0 0 * * ?")
     public void cleanOrderNum(){
         redisOperate.del("orderNumPerDay");
+    }
+
+    /**
+     * 1、每天零点修改已过期的优惠券的状态
+     * 2、每天零点修改用户超过有效使用时间的优惠券的状态
+     */
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void updateCouponStatus(){
         // TODO …… 修改过期优惠券状态
         try {
             couponService.updateStatusEveryDay();

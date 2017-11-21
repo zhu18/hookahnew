@@ -9,6 +9,8 @@ public class UserValidVo extends User {
     //图片验证码
     private String captcha;
 
+    //微信用户标识
+    private String openid;
 
     private String passwordRepeat;
 
@@ -34,5 +36,13 @@ public class UserValidVo extends User {
 
     public void setPasswordRepeat(String passwordRepeat) {
         this.passwordRepeat = passwordRepeat;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 }
