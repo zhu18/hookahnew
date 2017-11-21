@@ -13,25 +13,29 @@ function check() {
 }
 $(function () {
 
-    $('#coupon-list li .list-item').click(function () {
-        console.log(1);
-        var val=$("input[name='payMoney']").val();
-        if($(this).hasClass('active')){
+    $('#coupon-list li .list-item').click(function () { //优惠券的点击事件
+        var val=$("input[name='payMoney']").val();//商品的总价格
+        $('.J_couponM').html("￥0");
+        if($(this).hasClass('active')){ //没有选中任何优惠券
             $(this).removeClass('active');
             $('#coupon-list li .list-item').addClass('active-blue');
             $('#pay-money').html(val);
             $('.J_arrived').html("0");
-		}else {
+            $('.J_couponM').html("￥0");
+		}else {//选中单个优惠券
             $(this).addClass('active').parent().siblings().find('.list-item').removeClass('active active-blue');
+            //把选中的优惠券id传给后台
             var id=$(this).find("input[name='couponId']").val();
             $("input[name='userCouponId']").val(id);
-            var faceVal=$(this).find('.j_faceValue').html();
+
+            var faceVal=$(this).find('.j_faceValue').html();//选中优惠卷的面值
             var payVal=parseFloat(val)-parseFloat(faceVal);
             $('.J_arrived').html(faceVal);
             if(payVal < 0.01){
                 payVal=0;
 			}
             $('#pay-money').html(payVal);
+            $('.J_couponM').html("-￥"+faceVal);
 		}
 
     });
