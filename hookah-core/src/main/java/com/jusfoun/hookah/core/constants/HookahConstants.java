@@ -187,6 +187,7 @@ public class HookahConstants {
     public static final Integer MESSAGE_602 = 602;//充值失败
     public static final Integer MESSAGE_603 = 603;//支付成功
     public static final Integer MESSAGE_604 = 604;//支付失败
+    public static final Integer MESSAGE_701 = 701;//优惠券
 
     // 消息类型
     public static final byte MESSAGE_TYPE_SMS = 0;//短信
