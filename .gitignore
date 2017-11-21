@@ -137,6 +137,7 @@ local.properties
 /npm-debug.log
 /*.ipr
 /hookah-pay/src/main/resources/application-dev.yml
+/hookah-coupon/src/main/resources/application-dev.yml
 /hookah-console-server/src/main/resources/application-dev.yml
 /hookah-oauth2server/src/main/resources/application-dev.yml
 /hookah-crowd-website/src/main/resources/application-dev.yml

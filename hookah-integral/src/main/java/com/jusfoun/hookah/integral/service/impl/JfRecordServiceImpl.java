@@ -163,10 +163,12 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
             });
         }
 
+        jfUserVoList.sort((JfUserVo m, JfUserVo n) -> m.getAddTime().compareTo(n.getAddTime()));
         jfUserVoPag.setTotalItems(pages.getTotalItems());
         jfUserVoPag.setPageSize(pageSizeNew);
         jfUserVoPag.setCurrentPage(pageNumberNew);
         jfUserVoPag.setList(jfUserVoList);
+
 
         returnData.setData(jfUserVoPag);
 
@@ -251,7 +253,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
     }
 
     @Override
-    public ReturnData optJf(String userId, String optType, String score, String note) throws Exception {
+    public ReturnData optJf(String userId, String optType, String score, String note, String operatorId) throws Exception {
 
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
@@ -266,7 +268,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
             List<String> list = new ArrayList<>();
 
-            Arrays.asList(userId.split(",")).parallelStream().forEach(uid -> {
+            Arrays.asList(userId.split(",")).parallelStream().forEach((String uid) -> {
 
                 User user = userService.selectById(uid);
                 if (user == null) {
@@ -281,16 +283,16 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                         // action  admin的action为3
                         int n = insertAndGetId(
                                 new JfRecord(
-                                        uid,
-                                        Integer.parseInt(optType),
-                                        Integer.parseInt(score),
-                                        note,
-                                        Short.parseShort("0"),
-                                        new Date(),
-                                        "admin",
-                                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
-                                        Short.parseShort("3"),
-                                        "管理员操作"));
+                                    uid,
+                                    Byte.parseByte(optType),
+                                    Byte.parseByte("3"),
+                                    Integer.parseInt(score),
+                                    note,
+                                    Byte.parseByte("0"),
+                                    new Date(),
+                                    operatorId,
+                                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
+                                    "管理员操作"));
 
                         if (n == 1) {
                             logger.info("用户【" + user.getUserName() + "】操作积分成功！");
@@ -319,14 +321,14 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                                 int n = insertAndGetId(
                                         new JfRecord(
                                                 uid,
-                                                Integer.parseInt(optType),
+                                                Byte.parseByte(optType),
+                                                Byte.parseByte("3"),
                                                 0 - Integer.parseInt(score),
                                                 note,
-                                                Short.parseShort("0"),
+                                                Byte.parseByte("0"),
                                                 new Date(),
-                                                "admin",
+                                                operatorId,
                                                 LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
-                                                Short.parseShort("3"),
                                                 "管理员操作"));
 
                                 if (n == 1) {

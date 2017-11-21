@@ -6,18 +6,19 @@ import com.jusfoun.hookah.core.generic.GenericModel;
 import java.util.Date;
 
 public class JfRecord extends GenericModel {
-
     private Long id;
 
     private String userId;
 
-    private Integer sourceId;
+    private Byte sourceId;
+
+    private Byte action;
 
     private Integer score;
 
     private String note;
 
-    private Short expire;
+    private Byte expire;
 
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
@@ -28,8 +29,6 @@ public class JfRecord extends GenericModel {
     private String operator;
 
     private String addDate;
-
-    private Short action;
 
     private String actionDesc;
 
@@ -49,12 +48,20 @@ public class JfRecord extends GenericModel {
         this.userId = userId == null ? null : userId.trim();
     }
 
-    public Integer getSourceId() {
+    public Byte getSourceId() {
         return sourceId;
     }
 
-    public void setSourceId(Integer sourceId) {
+    public void setSourceId(Byte sourceId) {
         this.sourceId = sourceId;
+    }
+
+    public Byte getAction() {
+        return action;
+    }
+
+    public void setAction(Byte action) {
+        this.action = action;
     }
 
     public Integer getScore() {
@@ -73,11 +80,11 @@ public class JfRecord extends GenericModel {
         this.note = note == null ? null : note.trim();
     }
 
-    public Short getExpire() {
+    public Byte getExpire() {
         return expire;
     }
 
-    public void setExpire(Short expire) {
+    public void setExpire(Byte expire) {
         this.expire = expire;
     }
 
@@ -113,36 +120,29 @@ public class JfRecord extends GenericModel {
         this.addDate = addDate == null ? null : addDate.trim();
     }
 
-    public Short getAction() {
-        return action;
-    }
-
-    public void setAction(Short action) {
-        this.action = action;
-    }
-
     public String getActionDesc() {
         return actionDesc;
     }
 
     public void setActionDesc(String actionDesc) {
-        this.actionDesc = actionDesc;
+        this.actionDesc = actionDesc == null ? null : actionDesc.trim();
     }
 
     public JfRecord() {
     }
 
-    public JfRecord(String userId, Integer sourceId, Integer score, String note, Short expire,
-                    Date addTime, String operator, String addDate, Short action, String actionDesc) {
+    public JfRecord(String userId, Byte sourceId, Byte action, Integer score,
+                    String note, Byte expire, Date addTime,
+                    String operator, String addDate, String actionDesc) {
         this.userId = userId;
         this.sourceId = sourceId;
+        this.action = action;
         this.score = score;
         this.note = note;
         this.expire = expire;
         this.addTime = addTime;
         this.operator = operator;
         this.addDate = addDate;
-        this.action = action;
         this.actionDesc = actionDesc;
     }
 }

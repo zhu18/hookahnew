@@ -254,6 +254,10 @@ public class RabbitMQMessageListener {
                 map.put("time", DateUtils.toDateText(payAccountRecord.getAddTime(), HookahConstants.TIME_FORMAT));
                 map.put("money", String.valueOf(longToMoney(payAccountRecord.getMoney())));
                 break;
+            case 701:
+                user = userMapper.selectByPrimaryKey(messageCode.getBusinessId());
+                map.put("userName", user.getUserName());
+                break;
         }
         return user;
     }

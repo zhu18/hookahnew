@@ -3,9 +3,11 @@ package com.jusfoun.hookah.integral.controller;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.bo.JfBo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
+import com.jusfoun.hookah.rpc.api.JfRuleService;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,7 @@ import javax.annotation.Resource;
 import java.util.Random;
 
 @RestController
-public class TestController {
+public class TestController extends BaseController {
 
     protected Logger logger = LoggerFactory.getLogger(TestController.class);
 
@@ -25,6 +27,9 @@ public class TestController {
 
     @Resource
     RedisOperate redisOperate;
+
+    @Resource
+    JfRuleService jfRuleService;
 
     @Resource
     JfRecordService jfRecordService;
@@ -161,7 +166,11 @@ public class TestController {
         returnData.setCode(ExceptionConst.Success);
 
         try {
-            returnData = jfRecordService.optJf(userId, optType, score, note);
+            returnData = jfRecordService.optJf(userId, optType, score, note, this.getCurrentUser().getUserId());
+        }catch (HookahException ex) {
+            logger.error("修改用户积分异常-{}", ex);
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(ex.getMessage());
         }catch (Exception e) {
             logger.error("修改用户积分异常-{}", e);
             returnData.setCode(ExceptionConst.Error);
@@ -170,5 +179,29 @@ public class TestController {
 
         return returnData;
     }
+
+    /**
+     * 获取积分设置规则
+     * @return
+     */
+    @RequestMapping("/msg9")
+    public ReturnData Test9() {
+
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+            returnData.setData(jfRuleService.selectList());
+        }catch (Exception e) {
+            logger.error("获取积分规则异常-{}", e);
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("系统繁忙，请稍后再试[8]^_^");
+        }
+
+        return returnData;
+    }
+
+
+
 
 }

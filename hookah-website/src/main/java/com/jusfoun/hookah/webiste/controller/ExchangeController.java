@@ -52,6 +52,9 @@ public class ExchangeController extends BaseController{
     @Resource
     HomeImageService homeImageService;
 
+    @Resource
+    UserService userService;
+
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
         try {
@@ -129,6 +132,7 @@ public class ExchangeController extends BaseController{
             if(Objects.isNull(goodsVo.getApiInfo()) && HookahConstants.GOODS_TYPE.equals(goodsVo.getGoodsType()))
                throw new HookahException("API调用失败");
             model.addAttribute("goodsDetails", goodsVo);
+            model.addAttribute("userType", userService.selectById(getCurrentUser().getUserId()).getUserType());
             model.addAttribute("title", goodsVo.getGoodsName() + "-");
             //推荐商品
             Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());

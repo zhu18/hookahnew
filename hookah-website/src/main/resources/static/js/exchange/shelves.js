@@ -3,6 +3,10 @@ function loadPageData(data){ //渲染页面数据
         if(data.data.list.length > 0){
             var list = data.data.list;
             var html = '';
+			var goodsTypeName = '';
+			var goodsTypeAllName = '';
+			var purchaseLimitName = '';
+			var purchaseLimitAllName = '';
             for(var i=0; i<list.length; i++){
                 var shopFormat = '';
                 if(list[i].shopFormat == 0 ){
@@ -14,6 +18,52 @@ function loadPageData(data){ //渲染页面数据
                 }else if(list[i].shopFormat == 3 ){
 					shopFormat = '套';
 				}
+				switch(list[i].purchaseLimit)
+				{
+					case 0:
+						purchaseLimitName = '通用';
+						purchaseLimitAllName = '所有用户可买';
+						break;
+					case 1:
+						purchaseLimitName = '个人';
+						purchaseLimitAllName = '仅限个人用户';
+						break;
+					case 2:
+						purchaseLimitName = '企业';
+						purchaseLimitAllName = '仅限企业用户';
+						break;
+				}
+				switch(list[i].goodsType)
+				{
+					case 0:
+						goodsTypeName = '离线';
+						goodsTypeAllName = '离线数据源';
+						break;
+					case 1:
+						goodsTypeName = 'API';
+						goodsTypeAllName = 'API数据';
+						break;
+					case 2:
+						goodsTypeName = '模型';
+						goodsTypeAllName = '模型算法';
+						break;
+					case 4:
+						goodsTypeName = '软件';
+						goodsTypeAllName = '独立平台';
+						break;
+					case 5:
+						goodsTypeName = 'SaaS';
+						goodsTypeAllName = 'SaaS应用';
+						break;
+					case 6:
+						goodsTypeName = '软件';
+						goodsTypeAllName = '独立平台';
+						break;
+					case 7:
+						goodsTypeName = 'SaaS';
+						goodsTypeAllName = 'SaaS应用';
+						break;
+				}
 				var shopPrice = null;
 				if(Number(list[i].shopPrice) >= 1000000){
 					shopPrice = (Number(list[i].shopPrice) / 1000000)+'万';
@@ -24,7 +74,7 @@ function loadPageData(data){ //渲染页面数据
                 html += '<a class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
                 html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
                 html += '<p class="goods-name">'+list[i].goodsName+'</p>';
-                html += '<p class="goods-brief">'+(list[i].goodsBrief  ? list[i].goodsBrief : '暂无简介')+'</p>';
+				html += '<p class="goods-tag"><span class="item-tag"><span class="tag-in"><span class="in-nol">'+goodsTypeAllName+'</span></span>'+goodsTypeName+'</span><span class="item-tag"><span class="tag-in"><span class="in-nol">'+purchaseLimitAllName+'</span></span>'+purchaseLimitName+'</span></p>';
                 html += '</a>';
                 html += '<div class="item-down">';
                 // html += '<span class="grid-left goods-price">￥<span>'+shopPrice+'</span>/'+(list[i].shopNumber == 1 ? '':list[i].shopNumber)+shopFormat+'</span>';
