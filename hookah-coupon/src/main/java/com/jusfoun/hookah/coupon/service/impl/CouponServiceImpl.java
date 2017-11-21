@@ -194,6 +194,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 Coupon coupon = couponMapper.selectByPrimaryKey(userCouponVo.getCouponId());
                 CouponVo couponVo = new CouponVo();
                 BeanUtils.copyProperties(coupon,couponVo);
+                couponVo.setUserCouponStatus(userCouponVo.getUserCouponStatus());
                 Date receivedTime = userCouponVo.getReceivedTime();
                 Date expiryEndDate = userCouponVo.getExpiryEndDate();
                 if (DateUtils.isSameDay(receivedTime,new Date())){
