@@ -7,10 +7,14 @@
 
     <!-- 业务具体实现类 -->
     <bean id="jfRecordService" class="com.jusfoun.hookah.integral.service.impl.JfRecordServiceImpl"/>
+    <bean id="jfRuleService" class="com.jusfoun.hookah.integral.service.impl.JfRuleServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.JfRecordService"
                    ref="jfRecordService" export="hookah:5010" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.JfRuleService"
+                   ref="jfRuleService" export="hookah:5010" basicService="serviceBasicConfig">
     </motan:service>
 
 </beans>

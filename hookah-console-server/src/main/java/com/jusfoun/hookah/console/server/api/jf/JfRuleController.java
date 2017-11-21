@@ -1,30 +1,25 @@
 package com.jusfoun.hookah.console.server.api.jf;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
-import com.jusfoun.hookah.core.common.redis.RedisOperate;
-import com.jusfoun.hookah.core.constants.RabbitmqQueue;
-import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
-import com.jusfoun.hookah.rpc.api.MqSenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Random;
 
 /**
- * 积分记录
+ * 积分规则
  */
 
 @RestController
-public class JfBackController extends BaseController{
+public class JfRuleController extends BaseController{
 
-    private Logger logger = LoggerFactory.getLogger(JfBackController.class);
+    private Logger logger = LoggerFactory.getLogger(JfRuleController.class);
 
     @Resource
     JfRecordService jfRecordService;

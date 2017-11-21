@@ -281,16 +281,16 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                         // action  admin的action为3
                         int n = insertAndGetId(
                                 new JfRecord(
-                                        uid,
-                                        Integer.parseInt(optType),
-                                        Integer.parseInt(score),
-                                        note,
-                                        Short.parseShort("0"),
-                                        new Date(),
-                                        operatorId,
-                                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
-                                        Short.parseShort("3"),
-                                        "管理员操作"));
+                                    uid,
+                                    Byte.parseByte(optType),
+                                    Byte.parseByte("3"),
+                                    Integer.parseInt(score),
+                                    note,
+                                    Byte.parseByte("0"),
+                                    new Date(),
+                                    operatorId,
+                                    LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
+                                    "管理员操作"));
 
                         if (n == 1) {
                             logger.info("用户【" + user.getUserName() + "】操作积分成功！");
@@ -319,14 +319,14 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                                 int n = insertAndGetId(
                                         new JfRecord(
                                                 uid,
-                                                Integer.parseInt(optType),
+                                                Byte.parseByte(optType),
+                                                Byte.parseByte("3"),
                                                 0 - Integer.parseInt(score),
                                                 note,
-                                                Short.parseShort("0"),
+                                                Byte.parseByte("0"),
                                                 new Date(),
                                                 operatorId,
                                                 LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
-                                                Short.parseShort("3"),
                                                 "管理员操作"));
 
                                 if (n == 1) {

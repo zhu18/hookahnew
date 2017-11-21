@@ -67,28 +67,17 @@ public class RabbitMQJFHandelListener {
                 return;
             }
 
-//            JfRecord jfRecord = new JfRecord();
-//            jfRecord.setUserId(jfBo.getUserId());
-//            // 对应积分规则的sn
-//            jfRecord.setSourceId(jfBo.getSourceId());
-//            jfRecord.setAction(jfRule.getAction());
-//            jfRecord.setNote(jfRule.getActionDesc());
-//            jfRecord.setScore(jfRule.getScore());
-//            jfRecord.setExpire(Short.parseShort("0"));
-//            jfRecord.setOperator("System");
-//            jfRecord.setAddTime(new Date());
-//            jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
             int n = jfRecordService.insertAndGetId(
                     new JfRecord(
                             jfBo.getUserId(),
-                            jfBo.getSourceId(),
+                            Byte.parseByte(jfBo.getSourceId() + ""),
+                            jfRule.getAction(),
                             jfRule.getScore(),
                             jfRule.getActionDesc(),
-                            Short.parseShort("0"),
+                            Byte.parseByte("0"),
                             new Date(),
                             "System",
                             LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
-                            jfRule.getAction(),
                             jfRule.getActionDesc()));
             if(n == 1){
                 logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理成功>>>>>>>>>>>>>>>>>>>>>>>>>>>>");

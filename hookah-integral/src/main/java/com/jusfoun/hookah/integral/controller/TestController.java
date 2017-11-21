@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
+import com.jusfoun.hookah.rpc.api.JfRuleService;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,9 @@ public class TestController extends BaseController {
 
     @Resource
     RedisOperate redisOperate;
+
+    @Resource
+    JfRuleService jfRuleService;
 
     @Resource
     JfRecordService jfRecordService;
@@ -175,4 +179,29 @@ public class TestController extends BaseController {
 
         return returnData;
     }
+
+    /**
+     * 获取积分设置规则
+     * @return
+     */
+    @RequestMapping("/msg9")
+    public ReturnData Test9() {
+
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+            returnData.setData(jfRuleService.selectList());
+        }catch (Exception e) {
+            logger.error("获取积分规则异常-{}", e);
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("系统繁忙，请稍后再试[8]^_^");
+        }
+
+        return returnData;
+    }
+
+
+
+
 }
