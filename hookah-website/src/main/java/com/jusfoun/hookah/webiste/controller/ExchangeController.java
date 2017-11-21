@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -132,7 +133,10 @@ public class ExchangeController extends BaseController{
             if(Objects.isNull(goodsVo.getApiInfo()) && HookahConstants.GOODS_TYPE.equals(goodsVo.getGoodsType()))
                throw new HookahException("API调用失败");
             model.addAttribute("goodsDetails", goodsVo);
-            model.addAttribute("userType", userService.selectById(getCurrentUser().getUserId()).getUserType());
+            Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
+            if(userMap != null){
+                model.addAttribute("userType", userService.selectById(getCurrentUser().getUserId()).getUserType());
+            }
             model.addAttribute("title", goodsVo.getGoodsName() + "-");
             //推荐商品
             Map<String,GoodsShelvesVo> goodsMap = goodsShelvesService.getShevlesGoodsVoList(new HashMap<String,Object>());

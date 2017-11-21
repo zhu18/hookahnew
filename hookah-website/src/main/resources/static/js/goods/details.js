@@ -250,7 +250,12 @@ function check() {
 				var goodsNumber = $('#J_buyNumber').val();
 				var formatId = $('#J_formatId').val();
 				if (goodsId && goodsNumber && formatId) {
-					$("#J_goodsDetail").submit();
+					if($("#J_userType").val() == '2'){
+						$.alert('此商品仅为企业使用');
+						return false;
+					}else{
+						$("#J_goodsDetail").submit();
+					}
 				} else {
 					$.alert('');
 					return false;

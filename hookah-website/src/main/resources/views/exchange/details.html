@@ -14,6 +14,9 @@ var htmlPart = {
 %>
 <div class="grid-0 goodsDetails bdg-row ">
 	<div class="grid-row" style="position: relative">
+		<%if(has(userType)){%>
+		<input type="hidden" id="J_userType" value="${userType}">
+		<%}%>
 		<%include("/layout/menu.html"){} %>
 		<div class="crumbs-nav padding-top-20 padding-bottom-10" id="J_crimbsNav">
 			分类：
