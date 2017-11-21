@@ -2,6 +2,18 @@ var oldPwd = false;
 $('.order-ext-trigger').click(function () {
 	$('.order-details').slideToggle();
 });
+/*监听li事件*/
+$(".saved-card-list").on('click','li',function () {
+	if(this.id == "offlinePay"){
+		$(this).find(".row-basic").css({"height":"auto"});
+		$(".offline-payInfo").slideDown();
+		$("#J_authSubmit").attr("disabled","disabled").css({'background':'#ccc','cursor':'no-drop'});
+	}else{
+		$("#offlinePay").find(".row-basic").css({"height":"52px"});
+		$(".offline-payInfo").slideUp();
+		$("#J_authSubmit").removeAttr("disabled").css({'background':'#078cfc','cursor':'pointer'});
+	}
+});
 $('.manage-more').click(function () {
 	if($(this).hasClass('manage-colse')){
 		// $('.saved-card-list li').siblings().slideUp();
