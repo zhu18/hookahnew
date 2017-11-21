@@ -194,7 +194,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         Pagination page = getCouponReceivedDetail(userId,couponId,userCouponStatus,orderSn,currentPage,pageSize,couponTag);
         List<UserCouponVo> userCouponVos = page.getList();
         List<CouponVo> list = new ArrayList<>();
-        if (userCouponVos != null && userCouponVos.size() > 0 && userCouponStatus==1){
+        if (userCouponVos != null && userCouponVos.size() > 0){
             for (UserCouponVo userCouponVo : userCouponVos){
                 Coupon coupon = couponMapper.selectByPrimaryKey(userCouponVo.getCouponId());
                 CouponVo couponVo = new CouponVo();
