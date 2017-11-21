@@ -10,6 +10,7 @@ var head = {
     var dataParm = {};
     dataParm.pageNumber = 1;
     dataParm.pageSize = 6;
+    dataParm.userCouponStatus=0;
 
 </script>
 <%};%>
@@ -28,7 +29,7 @@ var htmlPart = {
                 </div>
                 <div class="content">
                     <div class="coupon-header">
-                       <select name="" id="">
+                       <select name="" id="selectId" onchange="selectFn(this)">
                            <option value="0">可用优惠券</option>
                            <option value="1">已用优惠券</option>
                            <option value="2">过期优惠券</option>

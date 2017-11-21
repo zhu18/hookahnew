@@ -33,6 +33,7 @@
 .content .coupon-header ul li{
     float: left;
     margin: 0 15px;
+    cursor: pointer;
     text-align: center;
 }
 .content .coupon-header ul li.active{
@@ -139,12 +140,12 @@
 
 
 
-.content .coupon-list ul li.bg-gray:after{
+.content .coupon-list ul .tag.bg-gray:after{
     background-color: #BFBFBF;
 }
-.content .coupon-list ul li.bg-gray:before{
+.content .coupon-list ul .tag.bg-gray:before{
     color: #707070;
-    content: '已过期';
+    content: attr(data-tip);
 }
 .content .coupon-list ul li.bg-gray .bg-content{
   background-color: #D0D0D0;
@@ -154,7 +155,7 @@
     background-image: -moz-radial-gradient(circle, transparent, transparent 9px, #D0D0D0 9px, #D0D0D0 16px, transparent 10px, transparent);
     background-image: radial-gradient(circle, transparent, transparent 9px, #D0D0D0 9px, #D0D0D0 16px, transparent 10px, transparent);
 }
- .content .coupon-list ul li.bg-gray .message{
+.content .coupon-list ul li.bg-gray .message{
     border-bottom: 1px solid #e5e5e5;
     padding-bottom: 20px;
 }
@@ -164,7 +165,7 @@
 .content .coupon-list ul li.bg-gray .message .message-tag p:first-child {
     background-color: #A4A4A4;
 }
-.content .coupon-list ul li:after{
+.content .coupon-list ul li.tag:after{
     content: '';
     display: block;
     position: absolute;
@@ -175,7 +176,7 @@
     border-radius: 50%;
     background-color: #E10000;
 }
-.content .coupon-list ul li:before{
+.content .coupon-list ul li.tag:before{
     content:  attr(data-tip);
     display: block;
     position: absolute;
