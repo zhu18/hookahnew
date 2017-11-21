@@ -65,7 +65,6 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         User user = userService.selectById(userId);
         coupon.setAddUser(user.getUserId());
         coupon.setUserName(user.getUserName());
-        coupon.setFaceValue(coupon.getFaceValue()*100);
         coupon.setAddTime(date);
         coupon.setCouponSn(createCouponSn(PropertiesManager.getInstance().getProperty("couponCode"), coupon.getCouponType()));
         filter.add(Condition.eq("couponName",coupon.getCouponName().trim()));
