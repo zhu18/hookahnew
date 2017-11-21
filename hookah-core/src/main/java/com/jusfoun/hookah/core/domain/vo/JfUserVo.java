@@ -1,6 +1,9 @@
 package com.jusfoun.hookah.core.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class JfUserVo implements Serializable{
 
@@ -12,6 +15,9 @@ public class JfUserVo implements Serializable{
     private String userTypeShow;
     private Integer useJf;
     private Integer exchangeJf;
+
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date addTime;
 
     public String getUserId() {
         return userId;
@@ -88,5 +94,13 @@ public class JfUserVo implements Serializable{
 
     public void setExchangeJf(Integer exchangeJf) {
         this.exchangeJf = exchangeJf;
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 }

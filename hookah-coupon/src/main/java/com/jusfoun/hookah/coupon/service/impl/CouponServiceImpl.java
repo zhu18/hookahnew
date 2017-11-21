@@ -65,7 +65,6 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         User user = userService.selectById(userId);
         coupon.setAddUser(user.getUserId());
         coupon.setUserName(user.getUserName());
-        coupon.setFaceValue(coupon.getFaceValue()*100);
         coupon.setAddTime(date);
         coupon.setCouponSn(createCouponSn(PropertiesManager.getInstance().getProperty("couponCode"), coupon.getCouponType()));
         filter.add(Condition.eq("couponName",coupon.getCouponName().trim()));
@@ -194,7 +193,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         Pagination page = getCouponReceivedDetail(userId,couponId,userCouponStatus,orderSn,currentPage,pageSize,couponTag);
         List<UserCouponVo> userCouponVos = page.getList();
         List<CouponVo> list = new ArrayList<>();
-        if (userCouponVos != null && userCouponVos.size() > 0 && userCouponStatus==1){
+        if (userCouponVos != null && userCouponVos.size() > 0){
             for (UserCouponVo userCouponVo : userCouponVos){
                 Coupon coupon = couponMapper.selectByPrimaryKey(userCouponVo.getCouponId());
                 CouponVo couponVo = new CouponVo();
@@ -396,6 +395,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         // TODO …… 赠送优惠券之后发送消息给用户
         MessageCode messageCode = new MessageCode();
         messageCode.setCode(HookahConstants.MESSAGE_701);//此处填写相关事件编号
+        messageCode.setBusinessId(userId);
         mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);//将数据添加到队列
     }
 

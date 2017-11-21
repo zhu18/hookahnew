@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.Random;
 
+/**
+ * 积分记录
+ */
+
 @RestController
 public class JfBackController extends BaseController{
 
@@ -37,7 +41,7 @@ public class JfBackController extends BaseController{
      * @return
      */
     @RequestMapping("/api/jf/detail")
-    public ReturnData Test5(String currentPage, String pageSize,
+    public ReturnData Test1(String currentPage, String pageSize,
                             String userId, String action,
                             String sourceId,
                             String startTime, String endTime) {
@@ -53,7 +57,7 @@ public class JfBackController extends BaseController{
         }catch (Exception e) {
             logger.error("获取积分明细异常-{}", e);
             returnData.setCode(ExceptionConst.Error);
-            returnData.setMessage("系统繁忙，请稍后再试[5]^_^");
+            returnData.setMessage("系统繁忙，请稍后再试[jf1]!⊙﹏⊙‖∣°");
         }
 
         return returnData;
@@ -64,7 +68,7 @@ public class JfBackController extends BaseController{
      * @return
      */
     @RequestMapping("/api/jf/outLine")
-    public ReturnData Test6(String userId) {
+    public ReturnData Test2(String userId) {
 
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
@@ -74,11 +78,11 @@ public class JfBackController extends BaseController{
         }catch (HookahException ex) {
             logger.error("获取用户登录信息异常-{}", ex.getMessage());
             returnData.setCode(ExceptionConst.Error);
-            returnData.setMessage("系统繁忙，请稍后再试[6]^_^");
+            returnData.setMessage("系统繁忙，请稍后再试[2]!⊙﹏⊙‖∣°");
         }catch (Exception e) {
             logger.error("获取用户信息积分概要异常-{}", e);
             returnData.setCode(ExceptionConst.Error);
-            returnData.setMessage("系统繁忙，请稍后再试[6]^_^");
+            returnData.setMessage("系统繁忙，请稍后再试[jf2]!⊙﹏⊙‖∣°");
         }
 
         return returnData;
@@ -94,7 +98,7 @@ public class JfBackController extends BaseController{
      * @return
      */
     @RequestMapping("/api/jf/uList")
-    public ReturnData Test7(String currentPage, String pageSize,
+    public ReturnData Test3(String currentPage, String pageSize,
                             String userName,
                             String userType, String mobile) {
 
@@ -106,10 +110,39 @@ public class JfBackController extends BaseController{
         }catch (Exception e) {
             logger.error("获取用户信息积分概要列表异常-{}", e);
             returnData.setCode(ExceptionConst.Error);
-            returnData.setMessage("系统繁忙，请稍后再试[7]^_^");
+            returnData.setMessage("系统繁忙，请稍后再试[jf3]!⊙﹏⊙‖∣°");
         }
 
         return returnData;
     }
+
+    /**
+     * 修改用户积分 支持批量
+     * @param userId
+     * @param optType
+     * @param score
+     * @param note
+     * @return
+     */
+    @RequestMapping("/api/jf/optJf")
+    public ReturnData Test4(String userId, String optType, String score, String note) {
+
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+            returnData = jfRecordService.optJf(userId, optType, score, note, this.getCurrentUser().getUserId());
+        }catch (HookahException ex) {
+            logger.error("用户登录异常-{}", ex);
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage(ex.getMessage());
+        }catch (Exception e) {
+            logger.error("修改用户积分异常-{}", e);
+            returnData.setCode(ExceptionConst.Error);
+            returnData.setMessage("系统繁忙，请稍后再试[jf4]!⊙﹏⊙‖∣°");
+        }
+        return returnData;
+    }
+
 
 }

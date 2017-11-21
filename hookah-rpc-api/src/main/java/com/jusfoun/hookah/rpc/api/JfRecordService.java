@@ -60,5 +60,5 @@ public interface JfRecordService extends GenericService<JfRecord, Long> {
      * @return
      * @throws Exception
      */
-    ReturnData optJf(String userId, String optType, String score, String note) throws Exception;
+    ReturnData optJf(String userId, String optType, String score, String note, String operatorId) throws Exception;
 }
