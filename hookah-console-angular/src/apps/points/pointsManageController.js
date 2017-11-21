@@ -53,14 +53,7 @@ class transactionManageController {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
-    $scope.MultipleCheck = function (status) {
-      if ($scope.choseArr.length > 0) {
-        $scope.settleCheck($scope.choseArr.join(), status)
-        console.log($scope.choseArr.join())
-      } else {
-        alert('请选择多个订单！')
-      }
-    };
+
     $scope.settleCheck = function (orderSn, status) {
       var promise = $http({
         method: 'GET',
