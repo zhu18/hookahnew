@@ -396,6 +396,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         // TODO …… 赠送优惠券之后发送消息给用户
         MessageCode messageCode = new MessageCode();
         messageCode.setCode(HookahConstants.MESSAGE_701);//此处填写相关事件编号
+        messageCode.setBusinessId(userId);
         mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);//将数据添加到队列
     }
 
