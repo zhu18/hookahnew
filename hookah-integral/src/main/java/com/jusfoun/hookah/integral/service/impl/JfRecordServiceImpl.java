@@ -251,7 +251,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
     }
 
     @Override
-    public ReturnData optJf(String userId, String optType, String score, String note) throws Exception {
+    public ReturnData optJf(String userId, String optType, String score, String note, String operatorId) throws Exception {
 
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
@@ -266,7 +266,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
             List<String> list = new ArrayList<>();
 
-            Arrays.asList(userId.split(",")).parallelStream().forEach(uid -> {
+            Arrays.asList(userId.split(",")).parallelStream().forEach((String uid) -> {
 
                 User user = userService.selectById(uid);
                 if (user == null) {
@@ -287,7 +287,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                                         note,
                                         Short.parseShort("0"),
                                         new Date(),
-                                        "admin",
+                                        operatorId,
                                         LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
                                         Short.parseShort("3"),
                                         "管理员操作"));
@@ -324,7 +324,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                                                 note,
                                                 Short.parseShort("0"),
                                                 new Date(),
-                                                "admin",
+                                                operatorId,
                                                 LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
                                                 Short.parseShort("3"),
                                                 "管理员操作"));
