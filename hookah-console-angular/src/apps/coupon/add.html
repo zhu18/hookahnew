@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">优惠券类型</label>
                     <div class="col-sm-4">
-                        <select ng-model="couponType" ng-options="item.id as item.name for item in typeStatus" style="width: 155px;height: 32px">
+                        <select ng-model="couponType" ng-options="item.id as item.name for item in typeStatus" style="width: 210px;height: 32px">
 
                         </select>
                     </div>
@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="couponName">优惠券名称<span class="must">*</span></label>
                     <div class="col-sm-4">
-                        <input type="text" id="couponName" name="couponName"  ng-maxlength="50" class="form-control" ng-model="couponName" style="width: 155px;height: 32px" required/>
+                        <input type="text" id="couponName" name="couponName"  ng-maxlength="50" class="form-control" ng-model="couponName" style="width: 210px;height: 32px" required/>
                     </div>
                     <div class="col-sm-4 control-label" style="text-align: left;">
 
@@ -33,7 +33,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="userName">适用平台<span class="must">*</span></label>
                     <div class="col-sm-4">
-                        <select ng-model="applyPlatform" ng-options="item.id as item.name for item in applyPlatforms" style="width: 155px;height: 32px">
+                        <select ng-model="applyPlatform" ng-options="item.id as item.name for item in applyPlatforms" style="width: 210px;height: 32px">
 
                         </select>
                     </div>
@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="totalCount">总发行量<span class="must">*</span></label>
                     <div class="col-sm-4">
-                        <input type="text" id="totalCount" name="totalCount"  ng-maxlength="50" class="form-control" ng-model="totalCount" placeholder="只能输入正整数，输入0为无限制。" style="width: 155px;height: 32px" required/>
+                        <input type="text" id="totalCount" name="totalCount"  ng-maxlength="50" class="form-control" ng-model="totalCount" placeholder="只能输入正整数，输入0为无限制。" style="width: 210px;height: 32px" required/>
                     </div>
                     <!--<div class="col-sm-4 control-label" style="text-align: left;">-->
                         <!--系统用户名不能为空，且最大长度为50-->
@@ -53,7 +53,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="faceValue">面额<span class="must">*</span></label>
                     <div class="col-sm-4">
-                        <input type="text" id="faceValue" name="faceValue"  ng-maxlength="50" class="form-control" ng-model="faceValue" placeholder="面值只能是数值，0.01-10000，限2位小数。" style="width: 155px;height: 32px" required/>
+                        <input type="text" id="faceValue" name="faceValue"  ng-maxlength="50" class="form-control" ng-model="faceValue" placeholder="面值只能是数值，1-9999，限2位小数。" style="width:210px;height: 32px" required/>
                     </div>
                     <!--<div class="col-sm-4 control-label" style="text-align: left;">-->
                         <!--系统用户名不能为空，且最大长度为50-->
@@ -62,7 +62,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="limitedCount">每人限领<span class="must">*</span></label>
                     <div class="col-sm-4">
-                        <input type="text" id="limitedCount" name="limitedCount"  ng-maxlength="50" class="form-control" ng-model="limitedCount" style="width: 155px;height: 32px" required/>
+                        <input type="text" id="limitedCount" name="limitedCount"  ng-maxlength="50" data-ng-pattern="" class="form-control" ng-model="limitedCount" style="width: 210px;height: 32px" required/>
                     </div>
                     <!--<div class="col-sm-4 control-label" style="text-align: left;">-->
                         <!--系统用户名不能为空，且最大长度为50-->
