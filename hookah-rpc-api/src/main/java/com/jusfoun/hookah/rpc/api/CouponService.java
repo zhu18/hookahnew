@@ -37,5 +37,7 @@ public interface CouponService extends GenericService<Coupon,Long> {
 
     List getUserCoupons(String userId, Long goodsAmount) throws Exception;
 
-    void sendCoupon2User(String userId,Long[] couponIdList) throws Exception;
+    void sendCoupon2User(String userId,List<Long> couponIdList) throws Exception;
+
+    void updateStatusEveryDay() throws Exception;
 }

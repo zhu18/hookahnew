@@ -147,6 +147,9 @@ public class HookahConstants {
     public static final Byte GOODS_CHECK_STATUS_YES = 1;
     public static final Byte GOODS_CHECK_STATUS_NOT = 2;
 
+    /** 标签状态 */
+    public static final Byte GOODS_LABEL_STATUS_DELETE = 0;
+
     //商品类型
     public static final Byte GOODS_TYPE = 1;
 

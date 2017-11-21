@@ -1,0 +1,112 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>赠送优惠券</h5></div>
+            <div class="pull-right">
+                <button class="btn btn-default" data-ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 刷新</button>
+                <!--<a ui-sref="help.add" class="btn btn-primary">新增</a>-->
+            </div>
+        </div>
+        <div class="row margin-top form-inline">
+            <div class="col-sm-12">
+                <div class="screen-list">
+                    <div class="list-item header clearfix">
+                        <div class="title pull-left">筛选查询</div>
+                        <div class="tool pull-right">
+                            <span class="controlScreenBtn" data-ng-click="controlScreenBtn()">收起筛选</span>
+                            <button class="btn btn-primary" data-ng-click="search()">查询结果</button>
+                        </div>
+                    </div>
+                    <div class="list-item content clearfix" data-ng-show="controlScreenShow">
+                        <div class="col-md-4">
+                            <label class="control-label">用户账号：</label>
+                            <input ng-model="userSn" type="text" class="form-control" placeholder="请输入用户ID/账号">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">优惠券名称：</label>
+                            <input ng-model="couponName" type="text" class="form-control" placeholder="请输入优惠券名称">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gridSection" style="margin-top: 20px">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" ng-click="selectAll($event)" ng-checked="isSelectedAll()"/></th>
+                            <th>优惠券名称</th>
+                            <th>面额</th>
+                            <th>剩余张数</th>
+                            <th>使用条件</th>
+                            <th>有效期</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="item in couponList">
+                            <td>
+                                <input type="checkbox" ng-checked="isSelected(item.id)" ng-click="updateSelection($event,item.id)">
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.couponName"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.faceValue"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.unReceivedCount"></span>
+                            </td>
+                            <td>
+                                <span text-length="50" ng-show="item.applyChannel == 0">无限制</span>
+                                <span text-length="50" ng-show="item.applyChannel == 1">满 <span data-ng-bind="item.discountValue"></span>可用</span>
+                                <span text-length="50" ng-show="item.applyChannel == 2">折扣</span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.expiryStartDate"></span>
+                                <span data-ng-show="item.expiryStartDate && item.expiryEndDate">至</span>
+                                <span data-ng-bind="item.expiryEndDate"></span>
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">
+                        <tr>
+                            <td colspan="9">
+                                <div class="pull-right page-box">
+                                    <div class="pagination-info">
+                                        共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                    </div>
+                                    <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                        ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                        max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                        force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                        last-text="末页">
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="margin: auto;display: block;">
+                        <button class="btn btn-primary" data-ng-click="save()" >
+                            提交
+                        </button>
+                        <button class="btn btn-primary" data-ng-click="back()" >
+                            取消
+                        </button>
+                    </div>
+
+                </div>
+                <div class="simple-grid-none-data-wrap">
+                    <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+                        <div class="row-padding row-margin text-center">
+                            <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+                            <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

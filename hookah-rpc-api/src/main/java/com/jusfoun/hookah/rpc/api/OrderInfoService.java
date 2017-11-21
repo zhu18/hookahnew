@@ -23,9 +23,9 @@ import java.util.Map;
  */
 public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
-    public OrderInfo insert(OrderInfo orderInfo, String[] cartIdArray) throws Exception;
+    public OrderInfo insert(OrderInfo orderInfo, String[] cartIdArray, Long userCouponId) throws Exception;
 
-    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId,Long goodsNumber) throws Exception;
+    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber, Long userCouponId) throws Exception;
 
     void checkOrderExist(String userId, String[] cartIdArray) throws Exception;
 

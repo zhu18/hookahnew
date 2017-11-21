@@ -1,22 +1,20 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.domain.vo.JfShowVo;
-import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
+import com.jusfoun.hookah.core.domain.jf.JfRecord;
 import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * 积分业务
@@ -63,5 +61,36 @@ public class JfController extends BaseController {
         }
 
         return returnData;
+    }
+
+    @RequestMapping("/jf/opt")
+    public ReturnData optJfRecord(
+            @RequestParam("userId") String userId,
+            @RequestParam("action") String action,
+            @RequestParam("score") Integer score,
+            @RequestParam("note") String note
+    ){
+
+        ReturnData returnData = new ReturnData<>();
+        returnData.setCode(ExceptionConst.Success);
+
+        try {
+
+            // 参数校验
+
+            int n = jfRecordService.insertAndGetId(new JfRecord(userId, 11, score, note, Short.parseShort("0"),
+                    new Date(), "System", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
+                    Short.parseShort("3"), ""));
+            if(n != 1){
+                returnData.setCode(ExceptionConst.Error);
+            }
+
+        }catch (Exception e){
+            logger.error("管理员操作用户积分异常", e);
+            returnData.setCode(ExceptionConst.Error);
+        }
+
+        return returnData;
+
     }
 }

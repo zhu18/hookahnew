@@ -62,13 +62,53 @@ var htmlPart = {
 								<td>${(list.goodsPrice * list.goodsNumber) / 100}</td>
 							</tr>
 							<%}%>
-							<tr class="tab-pay">
+							<tr>
 								<td colspan="9">
-									<span>付款小计：</span>
-									<span class="color-orange">${orderAmount / 100}</span>
-									<span>元</span>
+									<table class="coupon-list">
+										<tr class="tab-title">
+											<th colspan="9"><h5>使用优惠券</h5></th>
+										</tr>
+										<tr>
+											<td colspan="9">
+												<ul class="clearfix" id="coupon-list">
+													<input type="hidden" name="userCouponId">
+													<%for(list in couponList){%>
+													<li>
+														<div class="list-item active-blue">
+															<input type="hidden" value="${list.userCouponId}" name="couponId">
+															<div class="grid-left list-item-l" >
+																<p >￥<span class="j_faceValue">${list.faceValue / 100}</span></p>
+																<p>
+																	${decode(list.applyChannel,0,"无限制",1,"满元可用",2,"折扣","未知")}
+																</p>
+															</div>
+															<div class="grid-left list-item-r">
+																<span class="font-size-18 margin-bottom-10">${decode(list.applyGoods,0,"全品类通用劵",1,"部分品类通用劵",2,"部分分类通用劵","未知")}</span>
+																<p>适用平台：${decode(list.applyPlatform,0,"全平台","未知")}</p>
+																<p>有效期至：${list.expiryEndTime}</p>
+															</div>
+														</div>
+													</li>
+													<%}%>
+												</ul>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="9">
+												金额抵用：<span class="J_arrived">100</span>元
+											</td>
+										</tr>
+									</table>
 								</td>
+
 							</tr>
+							<!--<tr class="tab-pay">-->
+								<!--<td colspan="9">-->
+									<!--<span>付款小计：</span>-->
+									<!--<span class="color-orange">${orderAmount / 100}</span>-->
+									<!--<span>元</span>-->
+								<!--</td>-->
+							<!--</tr>-->
 							<!--<tr class="tab-agreement">-->
 								<!--<td colspan="9">-->
 									<!--<div>-->
@@ -82,7 +122,8 @@ var htmlPart = {
 									<div>
 										<div class="pay-box display-inline-block">
 											<span>应付总额：</span>
-											<span class="color-orange font-size-20">${orderAmount / 100}</span>
+											<input type="hidden" name="payMoney" value="${orderAmount / 100}">
+											<span class="color-orange font-size-20" id="pay-money">${orderAmount / 100}</span>
 											<span>元</span>
 										</div>
 										<button type="submit" class="btn btn-full-red padding-10 pay-btn">付款</button>
@@ -90,6 +131,7 @@ var htmlPart = {
 								</td>
 							</tr>
 						</table>
+
 					</form>
 				</div>
 			</div>

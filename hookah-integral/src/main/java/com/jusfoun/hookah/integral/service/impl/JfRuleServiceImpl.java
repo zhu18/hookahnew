@@ -32,13 +32,4 @@ public class JfRuleServiceImpl extends GenericServiceImpl<JfRule, Long> implemen
         return jfRuleMapper.insertAndGetId(jfRule);
     }
 
-    @Override
-    public JfRule selectBySn(Integer sn) {
-
-//        List<Condition> filters = new ArrayList<>();
-//        filters.add(Condition.eq("sn"), sn);
-//        jfRuleMapper.select
-
-        return null;
-    }
 }

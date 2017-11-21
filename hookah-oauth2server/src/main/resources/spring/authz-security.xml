@@ -89,6 +89,8 @@
         /druid/** = anon
         /login = anon
         /loginByWeChat = anon
+        /sns = anon
+        /sns/** = anon
         /reg = anon
         /reg/** = anon
         /findPwd = anon

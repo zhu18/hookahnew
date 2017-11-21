@@ -16,6 +16,8 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="operator" property="operator" jdbcType="VARCHAR" />
         <result column="add_date" property="addDate" jdbcType="VARCHAR" />
+        <result column="action" property="action" jdbcType="SMALLINT" />
+        <result column="action_desc" property="actionDesc" jdbcType="VARCHAR" />
     </resultMap>
 
     <insert id="insertAndGetId" useGeneratedKeys="true" keyProperty="id" parameterType="com.jusfoun.hookah.core.domain.jf.JfRecord" >
@@ -23,12 +25,12 @@
         insert into jf_record (user_id, source_id,
           score, note, expire,
           add_time, update_time, operator,
-          add_date)
+          add_date, action, action_desc)
         values (#{userId,jdbcType=VARCHAR}, #{sourceId,jdbcType=INTEGER},
           #{score,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, #{expire,jdbcType=SMALLINT},
           #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR},
-          #{addDate,jdbcType=VARCHAR})
-    </insert>
+          #{addDate,jdbcType=VARCHAR}, #{action,jdbcType=SMALLINT}, #{actionDesc,jdbcType=VARCHAR})
+  </insert>
 
     <select id="selectListByUserId" resultType="com.jusfoun.hookah.core.domain.vo.JfShowVo">
 
@@ -49,9 +51,9 @@
 
         SELECT
             jr.add_time AS addTime,
-            js.action AS action,
+            jr.action AS action,
             js.action_desc as actionDesc,
-            js.score AS score,
+            jr.score AS score,
             jr.note AS note
         FROM
             jf_record jr
@@ -60,7 +62,7 @@
             jr.user_id = #{userId}
 
             <if test="type == 1 or type == 2">
-                and js.action = #{type}
+                and jr.action = #{type}
             </if>
 
             ORDER BY jr.add_time

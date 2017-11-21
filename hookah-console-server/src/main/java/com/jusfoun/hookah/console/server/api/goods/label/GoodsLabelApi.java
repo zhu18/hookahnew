@@ -1,6 +1,8 @@
 package com.jusfoun.hookah.console.server.api.goods.label;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.GoodsLabel;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.GoodsLabelService;
@@ -37,7 +39,10 @@ public class GoodsLabelApi extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            goodsLabelService.delete(id);
+            GoodsLabel goodsLabel = new GoodsLabel();
+            goodsLabel.setLabId(id);
+            goodsLabel.setDeleteStatus(HookahConstants.GOODS_LABEL_STATUS_DELETE);
+            goodsLabelService.updateByIdSelective(goodsLabel);
         } catch (Exception e) {
             logger.error("删除商品标签错误！",e);
             returnData.setCode(ExceptionConst.Failed);

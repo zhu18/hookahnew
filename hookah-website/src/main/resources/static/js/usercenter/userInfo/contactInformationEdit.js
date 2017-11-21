@@ -45,6 +45,7 @@ $(function () {
             },
             semail:{
                 required:true,
+                 maxlength:50,
                 isEmail:true
             },
             szip:{
@@ -64,7 +65,8 @@ $(function () {
             },
             semail:{
                 required:"*请输入电子邮箱",
-                isEmail:"*请输入正确格式的电子邮箱"
+                isEmail:"*请输入正确格式的电子邮箱",
+                maxlength: $.validator.format("请输入一个长度最多是 {0} 的字符串")
             },
             address:{
                 required:"*请输入地址",

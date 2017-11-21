@@ -1,18 +1,20 @@
 package com.jusfoun.hookah.console.server.common.timer;
 
 import com.jusfoun.hookah.console.server.config.MyProps;
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Goods;
 import com.jusfoun.hookah.core.domain.MessageCode;
+import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.rpc.api.GoodsService;
-import com.jusfoun.hookah.rpc.api.MqSenderService;
-import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,7 @@ import java.util.*;
  */
 @Component
 public class TimerTask {
+    protected Logger logger = LoggerFactory.getLogger(TimerTask.class);
     static final String COMMA = ",";
 
     @Resource
@@ -35,6 +38,15 @@ public class TimerTask {
 
     @Resource
     MqSenderService mqSenderService;
+
+    @Resource
+    RedisOperate redisOperate;
+
+    @Resource
+    OrderInfoService orderInfoService;
+
+    @Resource
+    CouponService couponService;
 
     /**
      * 待审核用户（企业）每一小时通知审批人
@@ -58,6 +70,41 @@ public class TimerTask {
             for(String mobileNo : StringUtils.split(myProps.getOperateMobileNo(), COMMA)){
                 messageCode.setMobileNo(mobileNo);
                 mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE,messageCode);
+            }
+        }
+    }
+
+    /**
+     * 1、每天零点清除当天的订单编号
+     * 2、每天零点修改已过期的优惠券的状态
+     * 3、每天零点修改用户超过有效使用时间的优惠券的状态
+     */
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void cleanOrderNum(){
+        redisOperate.del("orderNumPerDay");
+        // TODO …… 修改过期优惠券状态
+        try {
+            couponService.updateStatusEveryDay();
+        } catch (Exception e){
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 每隔十分钟查询一次订单状态，将超过24小时未付款的订单取消掉
+     */
+    @Scheduled(cron = "0 0/10 * * * ?")
+    @Transactional
+    public void deleteOrderByTime(){
+        Date date = new Date();
+        long now = date.getTime();
+        List<OrderInfo> orderInfos = orderInfoService.selectList();
+        for (OrderInfo orderInfo:orderInfos){
+            long addTime = orderInfo.getAddTime().getTime();
+            long time = now - addTime;
+            if (orderInfo.getPayStatus()==0 && time>24*60*60*1000){
+                orderInfoService.deleteByLogic(orderInfo.getOrderId());
             }
         }
     }

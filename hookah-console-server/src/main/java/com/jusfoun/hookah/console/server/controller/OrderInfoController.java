@@ -110,24 +110,24 @@ public class OrderInfoController {
     }
 
 
-    /**
-     * 插入订单
-     *
-     * @param orderinfo
-     * @param cartIds
-     * @return
-     */
-    @RequestMapping(value = "/order/insert", method = RequestMethod.POST)
-    public ReturnData insert(OrderInfo orderinfo, String[] cartIds) {
-        try {
-            init(orderinfo);
-            orderinfo = orderInfoService.insert(orderinfo, cartIds);
-            return ReturnData.success(orderinfo);
-        } catch (Exception e) {
-            logger.error("插入错误", e);
-            return ReturnData.error("系统异常");
-        }
-    }
+//    /**
+//     * 插入订单
+//     *
+//     * @param orderinfo
+//     * @param cartIds
+//     * @return
+//     */
+//    @RequestMapping(value = "/order/insert", method = RequestMethod.POST)
+//    public ReturnData insert(OrderInfo orderinfo, String[] cartIds) {
+//        try {
+//            init(orderinfo);
+//            orderinfo = orderInfoService.insert(orderinfo, cartIds);
+//            return ReturnData.success(orderinfo);
+//        } catch (Exception e) {
+//            logger.error("插入错误", e);
+//            return ReturnData.error("系统异常");
+//        }
+//    }
 
     private OrderInfo init(OrderInfo orderinfo) {
         Date date = new Date();

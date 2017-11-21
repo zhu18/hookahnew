@@ -5,11 +5,12 @@ var head = {
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 
 <script type="text/javascript">
-//    var pagePath = '/goodsFavorite/list';
-//    var pageType = 'get';
-//    var dataParm = {};
-//    dataParm.pageNumber = 1;
-//    dataParm.pageSize = 8;
+    var pagePath = '/coupon/getCouponByUserId';
+    var pageType = 'get';
+    var dataParm = {};
+    dataParm.pageNumber = 1;
+    dataParm.pageSize = 6;
+    dataParm.userCouponStatus=0;
 
 </script>
 <%};%>
@@ -23,65 +24,66 @@ var htmlPart = {
         <div class="grid-right myCoupon info-center-box ">
             <div class="user-center-box grid-right">
                 <div class="header">
-                    <span class="grid-left font-size-18">优惠券</span>
-                    <span class="grid-right explain">优惠券规则说明 <sm>!</sm></span>
+                    <h4 class="center-title">优惠券</h4>
+                    <a href="#" class="ruleLink">优惠券规则说明</a>
                 </div>
                 <div class="content">
                     <div class="coupon-header">
-                       <select name="" id="">
-                           <option value="">可用优惠券</option>
-                           <option value="">已用优惠券</option>
-                           <option value="">过期优惠券</option>
-                           <option value="">回收站优惠券</option>
+                       <select name="" id="selectId" onchange="selectFn(this)">
+                           <option value="0">可用优惠券</option>
+                           <option value="1">已用优惠券</option>
+                           <option value="2">过期优惠券</option>
+                           <!--<option value="">回收站优惠券</option>-->
                        </select>
-                       <ul class="clearfix">
-                           <li class="active">新到账</li>
-                           <li>即将过期</li>
-                           <li>最优惠</li>
+                       <ul class="clearfix" id="tagName">
+                           <li data-coupon-id="0" class="active">新到账</li>
+                           <li data-coupon-id="1">即将过期</li>
+                           <!--<li data-coupon-id="">最优惠</li>-->
                        </ul>
                     </div>
                     <div class="coupon-list">
-                          <ul class="clearfix">
-                              <li data-tip="即将过期">
-                                  <div class="bg-content">
-                                      <div class="message clearfix">
-                                          <div class="grid-left average message-money text-align-right">
-                                              <div class="money">88</div>
-                                          </div>
-                                          <div class="grid-left average message-tag">
-                                              <p>全品类通用券</p>
-                                              <p>满100元可用</p>
-                                          </div>
-                                      </div>
-                                      <a class="btn coupon-btn" href="javascript:void (0)">立即使用</a>
-                                      <div class="info">
-                                          <p><span>适用平台：</span><span>全平台</span></p>
-                                          <p><span>有效期至：</span><span>2017-08-09</span></p>
-                                          <p><span>详细说明：</span><span>全场通用，不限条件，特殊商品除外。</span></p>
-                                      </div>
-                                  </div>
-                                  <div class="bg-wrapper"></div>
-                              </li>
-                              <li class="bg-gray">
-                                  <div class="bg-content">
-                                      <div class="message clearfix">
-                                          <div class="grid-left average message-money text-align-right">
-                                              <div class="money">88</div>
-                                          </div>
-                                          <div class="grid-left average message-tag">
-                                              <p>全品类通用券</p>
-                                              <p>满100元可用</p>
-                                          </div>
-                                      </div>
-                                      <div class="info">
-                                          <p><span>适用平台：</span><span>全平台</span></p>
-                                          <p><span>有效期至：</span><span>2017-08-09</span></p>
-                                          <p><span>详细说明：</span><span>全场通用，不限条件，特殊商品除外。</span></p>
-                                      </div>
-                                  </div>
-                                  <div class="bg-wrapper"></div>
-                              </li>
+                          <ul class="clearfix" id="coupon-list">
+                              <!--<li data-tip="即将过期">-->
+                                  <!--<div class="bg-content">-->
+                                      <!--<div class="message clearfix">-->
+                                          <!--<div class="grid-left average message-money text-align-right">-->
+                                              <!--<div class="money">88</div>-->
+                                          <!--</div>-->
+                                          <!--<div class="grid-left average message-tag">-->
+                                              <!--<p>全品类通用券</p>-->
+                                              <!--<p>满100元可用</p>-->
+                                          <!--</div>-->
+                                      <!--</div>-->
+                                      <!--<a class="btn coupon-btn" href="javascript:void (0)">立即使用</a>-->
+                                      <!--<div class="info">-->
+                                          <!--<p><span>适用平台：</span><span>全平台</span></p>-->
+                                          <!--<p><span>有效期至：</span><span>2017-08-09</span></p>-->
+                                          <!--<p><span>详细说明：</span><span>全场通用，不限条件，特殊商品除外。</span></p>-->
+                                      <!--</div>-->
+                                  <!--</div>-->
+                                  <!--<div class="bg-wrapper"></div>-->
+                              <!--</li>-->
+                              <!--<li class="bg-gray">-->
+                                  <!--<div class="bg-content">-->
+                                      <!--<div class="message clearfix">-->
+                                          <!--<div class="grid-left average message-money text-align-right">-->
+                                              <!--<div class="money">88</div>-->
+                                          <!--</div>-->
+                                          <!--<div class="grid-left average message-tag">-->
+                                              <!--<p>全品类通用券</p>-->
+                                              <!--<p>满100元可用</p>-->
+                                          <!--</div>-->
+                                      <!--</div>-->
+                                      <!--<div class="info">-->
+                                          <!--<p><span>适用平台：</span><span>全平台</span></p>-->
+                                          <!--<p><span>有效期至：</span><span>2017-08-09</span></p>-->
+                                          <!--<p><span>详细说明：</span><span>全场通用，不限条件，特殊商品除外。</span></p>-->
+                                      <!--</div>-->
+                                  <!--</div>-->
+                                  <!--<div class="bg-wrapper"></div>-->
+                              <!--</li>-->
                           </ul>
+                          <%include("/layout/pageaction.html"){} %>
                     </div>
                 </div>
             </div>

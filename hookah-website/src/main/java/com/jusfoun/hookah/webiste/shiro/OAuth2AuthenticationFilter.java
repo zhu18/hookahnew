@@ -79,7 +79,7 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
         Matcher m = p.matcher(loginUrl);
         String lurl = m.replaceAll("redirect_uri="+url.toString());
         this.setLoginUrl(lurl);
-        System.out.println(this.getLoginUrl());
+        //System.out.println(this.getLoginUrl());
         if(this.redirectUrl == null){
             this.redirectUrl = url.toString();
 //            this.redirectUrl = redirectURI;

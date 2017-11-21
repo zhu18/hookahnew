@@ -3,6 +3,7 @@ import queryController from "./queryController";
 import couponDetailController from "./couponDetailController";
 import userDetailController from "./userDetailController";
 import addController from "./addController";
+import giveCouponController from "./giveCouponController";
 
 supplierRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function supplierRouting($stateProvider, $urlRouterProvider) {
@@ -16,30 +17,36 @@ export default function supplierRouting($stateProvider, $urlRouterProvider) {
       url: '/coupon/list',
       template: require('./list.html'),
       controller: couponController,
-      permission: 'list'
+      permission: 'coupon_list'
     })
     .state('coupon.query', { //优惠券用户查询
       url: '/coupon/query',
       template: require('./query.html'),
       controller: queryController,
-      permission: 'query'
+      permission: 'coupon_query'
     })
     .state('coupon.couponDetail', { //优惠券详情
       url: '/coupon/couponDetail/:id',
       template: require('./couponDetail.html'),
       controller: couponDetailController,
-      permission: 'couponDetail'
+      permission: 'coupon_couponDetail'
     })
     .state('coupon.userDetail', { //优惠券用户详情
       url: '/coupon/userDetail/:id',
       template: require('./userDetail.html'),
       controller: userDetailController,
-      permission: 'userDetail'
+      permission: 'coupon_userDetail'
     })
     .state('coupon.add', { //优惠券添加
       url: '/coupon/add/:id',
       template: require('./add.html'),
       controller: addController,
-      permission: 'add'
+      permission: 'coupon_add'
+    })
+    .state('coupon.giveCoupon', { //赠送优惠券
+      url: '/coupon/giveCoupon/:id',
+      template: require('./giveCoupon.html'),
+      controller: giveCouponController,
+      permission: 'coupon_giveCoupon'
     })
 };
