@@ -12,6 +12,8 @@ public class UsernameAndPasswordToken extends UsernamePasswordToken {
     private String email;
 
     private String mobile;
+    //登录方式 用户名密码登录、第三方登录
+    private TokenType tokenType;
 
     public UsernameAndPasswordToken() {
         super();
@@ -21,6 +23,10 @@ public class UsernameAndPasswordToken extends UsernamePasswordToken {
         super(username, password);
         this.mobile = mobile;
         this.email = email;
+    }
+    //用户名密码登录 第三方登录
+    public enum TokenType {
+        USERNAME_PASSWOR, CLIENT
     }
 
     public String getEmail() {
@@ -37,5 +43,13 @@ public class UsernameAndPasswordToken extends UsernamePasswordToken {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public TokenType getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(TokenType tokenType) {
+        this.tokenType = tokenType;
     }
 }

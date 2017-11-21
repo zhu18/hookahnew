@@ -1,15 +1,19 @@
 package com.jusfoun.hookah.oauth2server.security;
 
+import com.jusfoun.hookah.core.Md5Utils;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.WxUserInfo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.WxUserInfoService;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -17,10 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author huang lei
@@ -34,6 +35,8 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
     @Resource
     private UserService userService;
 
+    @Resource
+    private WxUserInfoService wxUserInfoService;
 
     /**
      * 权限认证，为当前登录的Subject授予角色和权限
@@ -85,6 +88,19 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
 
         LOG.info("验证当前Subject时获取到token为：" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));
 
+        if(token.getTokenType()== UsernameAndPasswordToken.TokenType.CLIENT) {
+            return internalClientGetAuthenticationInfo(token);    //第三方登录认证
+        } else {
+            return internalUsernamePasswordGetAuthenticationInfo(token);//用户名密码登录认证
+        }
+    }
+
+    /**
+     * 用户名密码登录认证
+     * @param token
+     * @return
+     */
+    private  AuthenticationInfo internalUsernamePasswordGetAuthenticationInfo(final UsernameAndPasswordToken token){
         //查出是否有此用户
         List<Condition> conditions = new ArrayList<>();
         if(StringUtils.isNotBlank(token.getUsername())){
@@ -109,6 +125,34 @@ public class UsernameAndPasswordShiroRealm extends AuthorizingRealm {
                 session.setAttribute("user",userMap);
             }
             return info;
+        }
+        return null;
+    }
+
+    private AuthenticationInfo internalClientGetAuthenticationInfo(final UsernameAndPasswordToken token) {
+        List<Condition> conditions = new ArrayList<>();
+        String openId = token.getUsername();
+        conditions.add(Condition.eq("openid",openId));
+        WxUserInfo wxUserInfo = wxUserInfoService.selectOne(conditions);
+        if(Objects.nonNull(wxUserInfo)){
+            String userId = wxUserInfo.getUserid();
+            if(null != userId){
+                User user = userService.selectById(userId);
+                if (user != null) {
+                    // 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
+                    AuthenticationInfo info = new SimpleAuthenticationInfo(openId,new Md5Hash(openId).toString(), getName());
+                    if(info !=null){
+                        Session session = SecurityUtils.getSubject().getSession(true);
+                        Map<String, Object> userMap = new HashMap<>();
+                        userMap.put("userId",user.getUserId());
+                        userMap.put("userName",user.getUserName());
+                        userMap.put("userType",user.getUserType());
+                        userMap.put("orgId",user.getOrgId());
+                        session.setAttribute("user",userMap);
+                    }
+                    return info;
+                }
+            }
         }
         return null;
     }

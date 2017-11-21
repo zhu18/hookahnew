@@ -12,6 +12,8 @@ public class UserValidVo extends User {
     //微信用户标识
     private String openid;
 
+    private String state;
+
     private String passwordRepeat;
 
     public String getValidSms() {
@@ -44,5 +46,13 @@ public class UserValidVo extends User {
 
     public void setOpenid(String openid) {
         this.openid = openid;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

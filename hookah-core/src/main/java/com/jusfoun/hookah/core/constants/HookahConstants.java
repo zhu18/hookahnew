@@ -616,4 +616,26 @@ public class HookahConstants {
             return code;
         }
     }
+
+    /**
+     * 微信用户状态
+     * '状态 0 未绑定  1已绑定  2已解绑'
+     */
+    public enum WxUserStatus {
+
+        NO_BIND(Byte.parseByte("0")),
+        BIND(Byte.parseByte("1")),
+        UN_BIND(Byte.parseByte("2"));
+
+        public Byte code;
+
+        WxUserStatus(Byte code) {
+            this.code = code;
+        }
+
+        public Byte getCode() {
+            return code;
+        }
+    }
+
 }
