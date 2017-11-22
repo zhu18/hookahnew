@@ -82,6 +82,9 @@ public class EsGoods implements Serializable {
     @EsField(type = Type.BYTE)
     private Byte purchaseLimit;
 
+    @EsField(type = Type.BYTE)
+    private Byte discountType;
+
     public String getGoodsId() {
         return goodsId;
     }
@@ -98,11 +101,11 @@ public class EsGoods implements Serializable {
         this.goodsName = goodsName;
     }
 
-    public Byte getGoodsTypeName() {
+    public Byte getGoodsType() {
         return goodsType;
     }
 
-    public void setGoodsTypeName(Byte goodsType) {
+    public void setGoodsType(Byte goodsType) {
         this.goodsType = goodsType;
     }
 
@@ -288,5 +291,13 @@ public class EsGoods implements Serializable {
 
     public void setPurchaseLimit(Byte purchaseLimit) {
         this.purchaseLimit = purchaseLimit;
+    }
+
+    public Byte getDiscountType() {
+        return discountType;
+    }
+
+    public void setDiscountType(Byte discountType) {
+        this.discountType = discountType;
     }
 }

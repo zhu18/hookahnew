@@ -131,7 +131,7 @@ public class JfBackController extends BaseController{
         returnData.setCode(ExceptionConst.Success);
 
         try {
-            returnData = jfRecordService.optJf(userId, optType, score, note, this.getCurrentUser().getUserId());
+            returnData = jfRecordService.optJf(userId, optType, score, note, this.getCurrentUser().getUserName());
         }catch (HookahException ex) {
             logger.error("用户登录异常-{}", ex);
             returnData.setCode(ExceptionConst.Error);

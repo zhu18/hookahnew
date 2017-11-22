@@ -1,89 +1,47 @@
-class transactionManageController {
-  constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-    $scope.settleList = [];
-    $scope.choseArr = [];//多选数组
-
+class SettleAPILogsController {
+  constructor($scope, $rootScope, $http, $stateParams, $uibModal, usSpinnerService, growl) {
+    $scope.title = "积分明细";
+    console.log("传过来的数据");
+    $scope.userBasePointsInfo=JSON.parse($stateParams.userBasePointsInfo);
+    console.log($scope.userBasePointsInfo);
+    console.log("传过来的数据");
     $scope.search = function (initCurrentPage) {
       // console.log($scope.levelStar);
       if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
-        //继续
         alert('开始时间必须大于结束时间！请重新选择日期。');
         return;
       }
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/settleOrder/getTradeList",
+        url: $rootScope.site.apiServer + "/api/jf/detail",
         params: {
-          goodsName: $scope.goodsName ? $scope.goodsName : null,
-          orderSn: $scope.orderSn ? $scope.orderSn : null,
-          addUser  : $scope.addUser   ? $scope.addUser : null,
+          userId: $scope.userBasePointsInfo.userId,
+          action: $scope.action ? $scope.action:'',
+          sourceId: $scope.sourceId,
           startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
+          pageNumber:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
-        console.log(res);
-        if (res.data.code == '1') {
-          $scope.tradeList = res.data.data.list;
-          // $rootScope.pagination = res.data.data;
-          $scope.showNoneDataInfoTip = false;
-          if (res.data.data.totalPage > 1) {
-            $scope.showPageHelpInfo = true;
-          }
-        } else {
-          $scope.tradeList = [];
-          $scope.showNoneDataInfoTip = true;
-
-        }
+        console.log( res.data.data.list);
+        $scope.pointsList = res.data.data.list;
         $rootScope.loadingState = false;
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
     };
 
-    $scope.getDetails = function (id) {
-      $state.go('settle.settleDetails', {id: id});
+    //后退
+    $scope.back = function () {
+      history.back();
     };
-
-
 
     $scope.pageChanged = function () {
       $scope.search();
-      console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
 
-    $scope.settleCheck = function (orderSn, status) {
-      var promise = $http({
-        method: 'GET',
-        url: $rootScope.site.apiServer + "/api/settle/checksettles",
-        params: {
-          settleIds: orderSn,
-          status: status
-        }
-      });
-      promise.then(function (res, status, config, headers) {
-        console.log('数据在这里');
-        console.log(res);
-
-        if (res.data.code == '1') {
-          $scope.search();
-
-        } else {
-
-        }
-
-        $rootScope.loadingState = false;
-        growl.addSuccessMessage("订单数据加载完毕。。。");
-      });
-    }
-
-
-
-    $scope.refresh = function () {
-      $scope.search();
-    };
     $scope.search('true');
 
     // 处理日期插件的获取日期的格式
@@ -196,4 +154,4 @@ class transactionManageController {
   }
 }
 
-export default transactionManageController;
+export default SettleAPILogsController;

@@ -2,7 +2,7 @@
  * Created by lss on 2017/11/9 0009
  */
 class couponController {
-    constructor($scope, $rootScope, $http, $state,$stateParams,growl) {
+    constructor($scope, $rootScope, $http, $state,$stateParams,growl,$filter) {
         console.log($stateParams.id);
         var data={};
         $scope.typeStatus = [               //自定定义类型数据
@@ -11,61 +11,53 @@ class couponController {
             {id:2, name:"全场赠券"},
             {id:3, name:"会员赠券"}
         ];
-        $scope.couponType=0;
-
         $scope.applyPlatforms = [            //自定定义类型数据
             {id:0, name:"全平台"}
         ];
-        $scope.applyPlatform=0;
-        $scope.applyChannel="0";
-        $scope.applyGoods="0";
-
         if ($stateParams.id){
-            console.log('修改');
             $scope.title="修改";
-            $scope.getCouponById = function () { //Render page function
-                var promise = $http({
-                    method: 'GET',
-                    url: $rootScope.site.apiServer + "/api/coupon/getCouponById",
-                    params: {
-                        couponId:$stateParams.id
-                    }
-                });
-                promise.then(function (res, status, config, headers) {
-                    console.log('数据在这里');
-                    console.log(res);
-
-                    if (res.data.code == '1') {
-                         var info=res.data.data;
-                            $scope.couponType=info.couponType;
-                            $scope.couponName=info.couponName;
-                            $scope.applyPlatform=info.applyPlatform;
-                            $scope.totalCount=info.totalCount;
-                            $scope.faceValue=(info.faceValue/100);
-                            $scope.limitedCount=info.limitedCount;
-                            $scope.applyChannel=info.applyChannel;
-                            $scope.discountValue=info.discountValue;
-                            $scope.expiryStartTime=new Date(info.expiryStartDate);
-                            $scope.expiryEndTime=new Date(info.expiryEndDate);
-                            $scope.validDays=info.validDays;
-                            $scope.applyGoods=info.applyGoods;
-                    } else {
-
-                    }
-
-                    $rootScope.loadingState = false;
-                    growl.addSuccessMessage("订单数据加载完毕。。。");
-                });
-
-            };
-            $scope.getCouponById();
+            $scope.getCouponById();//调用修改函数
         }else {
-            console.log('添加');
             $scope.title="添加";
-
-
+            $scope.couponType=0;
+            $scope.applyPlatform=0;
+            $scope.applyChannel="0";
+            $scope.applyGoods="0";
         }
-        $scope.save=function () {
+        $scope.getCouponById = function () { //Render page function
+            var promise = $http({
+                method: 'GET',
+                url: $rootScope.site.apiServer + "/api/coupon/getCouponById",
+                params: {
+                    couponId:$stateParams.id
+                }
+            });
+            promise.then(function (res, status, config, headers) {
+                console.log('数据在这里');
+                console.log(res);
+                if (res.data.code == '1') {
+                    var info=res.data.data;
+                    $scope.couponType=info.couponType;
+                    $scope.couponName=info.couponName;
+                    $scope.applyPlatform=info.applyPlatform;
+                    $scope.totalCount=info.totalCount;
+                    $scope.faceValue=(info.faceValue/100);
+                    $scope.limitedCount=info.limitedCount;
+                    $scope.applyChannel=info.applyChannel.toString();
+                    $scope.discountValue=(info.discountValue/100);
+                    $scope.expiryStartTime=new Date(info.expiryStartDate);
+                    $scope.expiryEndTime=new Date(info.expiryEndDate);
+                    $scope.validDays=info.validDays;
+                    $scope.applyGoods=info.applyGoods.toString();
+                } else {
+                    $rootScope.openJustShowDialogModal(res.data.message);
+                }
+
+                $rootScope.loadingState = false;
+                growl.addSuccessMessage("订单数据加载完毕。。。");
+            });
+        };//返现函数
+        $scope.save=function () { //保存按钮
             if ($stateParams.id){
                 var url=$rootScope.site.apiServer + "/api/coupon/modify";
                 data= {
@@ -77,9 +69,9 @@ class couponController {
                     faceValue:($scope.faceValue*100),
                     limitedCount:$scope.limitedCount,
                     applyChannel:$scope.applyChannel,
-                    discountValue:$scope.discountValue,
-                    expiryStartTime:$scope.expiryStartTime,
-                    expiryEndTime:$scope.expiryEndTime,
+                    discountValue:($scope.discountValue*100),
+                    expiryStartTime:$filter('date')($scope.expiryStartTime, "yyyy-MM-dd hh:mm:ss"),
+                    expiryEndTime:$filter('date')($scope.expiryEndTime, "yyyy-MM-dd hh:mm:ss"),
                     validDays:$scope.validDays,
                     applyGoods:$scope.applyGoods
                 };
@@ -93,9 +85,9 @@ class couponController {
                     faceValue:($scope.faceValue*100),
                     limitedCount:$scope.limitedCount,
                     applyChannel:$scope.applyChannel,
-                    discountValue:$scope.discountValue,
-                    expiryStartTime:$scope.expiryStartTime,
-                    expiryEndTime:$scope.expiryEndTime,
+                    discountValue:($scope.discountValue*100),
+                    expiryStartTime:$filter('date')($scope.expiryStartTime, "yyyy-MM-dd hh:mm:ss"),
+                    expiryEndTime:$filter('date')($scope.expiryEndTime, "yyyy-MM-dd hh:mm:ss"),
                     validDays:$scope.validDays,
                     applyGoods:$scope.applyGoods
                 };
@@ -110,35 +102,26 @@ class couponController {
                 console.log(res);
 
                 if (res.data.code == '1') {
-                    var modalInstance =$rootScope.openJustShowDialogModal("添加成功！");
-                    modalInstance.result.then(function () {
-                        $state.go('coupon.list')
-                    }, function () {
-
-                    });
+                    $rootScope.openJustShowDialogModal("添加成功！");
+                    $state.go('coupon.list')
                 } else {
-                    var modalInstance =$rootScope.openJustShowDialogModal(res.data.message);
-                    modalInstance.result.then(function () {
 
-                    }, function () {
-
-                    });
+                    $rootScope.openJustShowDialogModal(res.data.message);
 
                 }
 
                 $rootScope.loadingState = false;
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
-        }
-        $scope.back = function () { //返回按钮
-            $state.go('coupon.list')
         };
-
-// 日历插件开始
+        $scope.back = function () { //返回按钮
+            $state.go('coupon.list');
+        };
+        // 日历插件开始
         $scope.inlineOptions = {
             customClass: getDayClass,
-            minDate: new Date(2000, 5, 22),
-            showWeeks: true
+            minDate: new Date(),
+            showWeeks: false
         };
         $scope.open1 = function () {
             $scope.popup1.opened = true;
@@ -153,9 +136,9 @@ class couponController {
             opened: false
         };
         var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setDate(tomorrow.getDate()+1 );
         var afterTomorrow = new Date();
-        afterTomorrow.setDate(tomorrow.getDate() + 1);
+        afterTomorrow.setDate(tomorrow.getDate() +1 );
         $scope.events = [
             {
                 date: tomorrow,
@@ -171,7 +154,6 @@ class couponController {
                 mode = data.mode;
             if (mode === 'day') {
                 var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-
                 for (var i = 0; i < $scope.events.length; i++) {
                     var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
 
@@ -180,12 +162,9 @@ class couponController {
                     }
                 }
             }
-
             return '';
         }
-
         // 日历插件结束
-
     }
 }
 

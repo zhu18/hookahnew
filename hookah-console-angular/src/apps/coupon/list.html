@@ -70,11 +70,12 @@
                                 </td>
                                 <td>
                                     <span text-length="50" ng-show="item.applyChannel == 0">无限制</span>
-                                    <span text-length="50" ng-show="item.applyChannel == 1">满 <span data-ng-bind="item.discountValue"></span>可用</span>
+                                    <span text-length="50" ng-show="item.applyChannel == 1">满 <span>{{(item.discountValue/100) | currency}}</span>可用</span>
                                     <span text-length="50" ng-show="item.applyChannel == 2">折扣</span>
                                 </td>
-
-                                <td data-ng-bind="item.faceValue"></td>
+                                <td>
+                                    <span>{{(item.faceValue/100) | currency: '￥'}}</span>
+                                </td>
                                 <td data-ng-bind="item.userName"></td>
                                 <td >
                                     <span data-ng-bind="item.expiryStartDate"></span>
@@ -92,7 +93,6 @@
                                     <button class="btn btn-primary"  ng-click="delete(item.id)">删除</button>
                                 </td>
                             </tr>
-
                             </tbody>
                         </table>
                         <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" class="">

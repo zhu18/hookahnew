@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.coupon.common.listener;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.domain.Coupon;
 import com.jusfoun.hookah.core.domain.UserCoupon;
@@ -35,7 +36,7 @@ public class RabbitMQRegCouponListener {
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("couponType",(byte)0));
         filter.add(Condition.eq("isDeleted",(byte)0));
-        filter.add(Condition.eq("couponStatus",(byte)1));
+        filter.add(Condition.eq("couponStatus",HookahConstants.CouponStatus.USED.getCode()));
         List<Coupon> coupons = couponService.selectList(filter);
         try {
             if (coupons!=null&&coupons.size()>0){
@@ -43,7 +44,7 @@ public class RabbitMQRegCouponListener {
                 for (Coupon coupon : coupons){
                     couponList.add(coupon.getId());
                 }
-                couponService.sendCoupon2User(userId,couponList);
+                couponService.sendCoupon2User(userId, couponList, HookahConstants.ReceivedMode.REG_GIFT.getCode());
             }
         }catch (HookahException e){
             e.printStackTrace();

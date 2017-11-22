@@ -230,6 +230,11 @@ public class CouponApi extends BaseController {
         }
     }
 
+    /**
+     * 后台赠送优惠券给用户
+     * @param coupon
+     * @return
+     */
     @RequestMapping(value = "/sendCouponToUser", method = RequestMethod.POST)
     public ReturnData sendCoupon2User(String coupon){
         try {
@@ -240,7 +245,7 @@ public class CouponApi extends BaseController {
             for (Integer couponId:couponIds){
                 couponList.add((long) couponId);
             }
-            couponService.sendCoupon2User(userId,couponList);
+            couponService.sendCoupon2User(userId, couponList, HookahConstants.ReceivedMode.BACKSTAGE_GIFT.getCode());
             return ReturnData.success("优惠券已发送");
         }catch (HookahException e){
             return ReturnData.error(e.getMessage());

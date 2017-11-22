@@ -331,6 +331,8 @@ public class Goods extends GenericModel {
 
     private String purchaseLimitName;
 
+    private Byte discountType; // 0 ：免费， 1 ：积分， 2 ：优惠券
+
     public Byte getIsLocal() {
         return isLocal;
     }

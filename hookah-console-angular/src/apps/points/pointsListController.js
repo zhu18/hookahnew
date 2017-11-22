@@ -1,5 +1,8 @@
 class pointsListController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
+    var flag = '';//是否点击了全选，是为a
+    $scope.x = false;//默认未选中
+
     $scope.commentList = [];
     $scope.choseArr = [];//多选数组
 
@@ -33,6 +36,9 @@ class pointsListController {
           $scope.showNoneDataInfoTip = true;
 
         }
+        $scope.choseArr = [];//重置多选数组
+        $scope.master = false;//重置全选
+
         $rootScope.loadingState = false;
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
@@ -75,14 +81,10 @@ class pointsListController {
         content +=(singleDom+multipleDom)
       }
       content+='</div> ';
-
       var title1 = '修改积分';
-
       var modalInstance = $rootScope.openConfirmDialogModel(title1,content);
 
-
-
-      modalInstance.result.then(function () { //模态点提交
+     modalInstance.result.then(function () { //模态点提交
         console.log('点击确定');
 
          var promise = $http({
@@ -92,7 +94,7 @@ class pointsListController {
              userId:ids,
              optType:$('input[name=pointsCon]:checked').val(),
              score:$('#currentChangePointsInput').val(),
-             note:$('#currentChangePointsInput').val(),
+             note:$('#currentChangePointsInput').val()
            }
          });
          promise.then(function (res, status, config, headers) {
@@ -100,9 +102,7 @@ class pointsListController {
            console.log(res);
            if (res.data.code == '1') {
             $scope.search();
-
            } else {
-
            }
 
            $rootScope.loadingState = false;
@@ -113,12 +113,9 @@ class pointsListController {
         console.log('点击取消')
 
       });
-
-
       $(document).on('change','#currentChangePointsInput',function () {//表单值改变
         chagnePointsFn()
       });
-
       $(document).on('keyup','#currentChangePointsInput',function () {//按下键盘
         chagnePointsFn()
       });
@@ -147,20 +144,21 @@ class pointsListController {
         $('#currentChangePoints').html(tempValType+$('#currentChangePointsInput').val());
         $('#lastPoints').html(tempVal);
       }
-
-
-
-
-
-
     };
 
-    //多选
-    var str = "";
-    var len = $scope.commentList.length;
-    var flag = '';//是否点击了全选，是为a
-    $scope.x = false;//默认未选中
 
+
+    $scope.detail = function (id) {
+      $state.go('points.userDetail', {id: id});
+    };
+
+    $scope.pointsDetail = function (item) {
+      $state.go('points.pointsDetail', {userBasePointsInfo: JSON.stringify(item)});
+    };
+
+
+
+    //多选
     $scope.all = function (c) { //全选
       var commIdArr = [];
 
@@ -181,25 +179,20 @@ class pointsListController {
     };
 
     $scope.chk = function (z, x) { //单选或者多选
-
-
-      if (x == true) {//选中
+      if (x == true) { //选中
         $scope.choseArr.push(z);
-        flag = 'c'
-        if ($scope.choseArr.length == len) {
+        flag = 'c';
+        if ($scope.choseArr.length == $scope.commentList.length) {
           $scope.master = true
         }
       } else {
         $scope.choseArr.splice($scope.choseArr.indexOf(z), 1);//取消选中
       }
-
-      if ($scope.choseArr.length == 0) {
-        $scope.master = false
-      }
       console.log($scope.choseArr);
-
     };
     //多选结束
+
+
 
     $scope.refresh = function () {
       $scope.search();

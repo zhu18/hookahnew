@@ -3,6 +3,7 @@ package com.jusfoun.hookah.webiste.controller;
 import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
@@ -522,7 +523,7 @@ public class OrderInfoController extends BaseController {
             if (userCoupons != null && userCoupons.size() > 0){
                 for (UserCoupon userCoupon : userCoupons){
                     Coupon coupon = couponService.selectById(userCoupon.getCouponId());
-                    if (userCoupon.getUserCouponStatus()==2){
+                    if (userCoupon.getUserCouponStatus()== HookahConstants.UserCouponStatus.EXPIRED.getCode()){
                         throw new HookahException("订单中的优惠券已过期，请重新下单");
                     }else if (userCoupon.getIsDeleted()==1){
                         throw new HookahException("订单中的优惠券已失效，请重新下单");

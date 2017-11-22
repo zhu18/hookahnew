@@ -547,7 +547,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setOrderAmount(goodsAmount);
 
             if (userCouponId!=null){
-                orderInfo = useCoupon(userCouponId,orderInfo);
+                UserCoupon userCoupon = userCouponService.selectById(userCouponId);
+                if (userCoupon.getOrderSn()==null){
+                    orderInfo = useCoupon(userCouponId,orderInfo);
+                }
             }
             insertOrder(ordergoodsList, orderInfoVo, orderInfo ,mgGoodsOrder);
 //            if(goodsAmount.compareTo(0L)==0){
@@ -603,7 +606,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setOrderAmount(goodsAmount);
 
         if (userCouponId!=null){
-            orderInfo = useCoupon(userCouponId,orderInfo);
+            UserCoupon userCoupon = userCouponService.selectById(userCouponId);
+            if (userCoupon.getOrderSn()==null){
+                orderInfo = useCoupon(userCouponId,orderInfo);
+            }
         }
         insertOrder(ordergoodsList, orderInfoVo, orderInfo, mgGoodsOrder);
 //        if(goodsAmount.compareTo(0L)==0){
@@ -621,7 +627,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if (goodsAmount > coupon.getFaceValue()){
             orderInfo.setOrderAmount(goodsAmount-coupon.getFaceValue());
         }else {
-            orderInfo.setOrderAmount(goodsAmount);
+            orderInfo.setOrderAmount(0L);
         }
         userCoupon.setOrderSn(orderInfo.getOrderSn());
         userCouponService.updateByIdSelective(userCoupon);
@@ -755,7 +761,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             for (UserCoupon userCoupon : userCoupons){
                 Coupon coupon = couponService.selectById(userCoupon.getCouponId());
                 coupon.setUsedCount(coupon.getUsedCount()+1);
-                userCoupon.setUserCouponStatus((byte)1);
+                userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.USED.getCode());
                 userCoupon.setUsedTime(new Date());
                 couponService.updateByIdSelective(coupon);
                 userCouponService.updateByIdSelective(userCoupon);

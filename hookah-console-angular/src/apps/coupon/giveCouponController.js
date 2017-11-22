@@ -1,9 +1,6 @@
 /**
  * Created by lss on 2017/11/17 0017.
  */
-/**
- * Created by lss on 2017/11/9 0009
- */
 class giveCouponController {
     constructor($scope, $rootScope, $http, $state,$stateParams,growl,$filter) {
         console.log($stateParams.id);
@@ -114,6 +111,9 @@ class giveCouponController {
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
         }
+        $scope.pageChanged = function () {
+            $scope.search();
+        };
         $scope.back = function () { //返回按钮
             $state.go('coupon.query')
         };

@@ -57,7 +57,7 @@
                     <div class="list-item content clearfix" data-ng-show="controlScreenShow">
                         <div class="col-md-4">
                             <label class="control-label">使用状态：</label>
-                            <select ng-model="userCouponStatus" ng-options="item.id as item.name for item in useStatus" style="width: 155px;height: 32px"></select>
+                            <select ng-model="userCouponStatus" ng-options="item.id as item.name for item in useStatus" ng-change="renderList()" style="width: 155px;height: 32px"></select>
                         </div>
                         <div class="col-md-4">
                             <label class="control-label">订单编号：</label>
@@ -100,7 +100,8 @@
                             </td>
                             <td>
                                 <span text-length="50" ng-show="item.receivedMode == 0">后台赠送</span>
-                                <span text-length="50" ng-show="item.receivedMode == 1">主动领取</span>
+                                <span text-length="50" ng-show="item.receivedMode == 1">注册赠送</span>
+                                <span text-length="50" ng-show="item.receivedMode == 2">主动领取</span>
                             </td>
                             <td>
                                 <span data-ng-bind="item.receivedTime"></span>

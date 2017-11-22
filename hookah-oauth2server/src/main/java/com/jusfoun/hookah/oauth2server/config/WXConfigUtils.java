@@ -1,15 +1,18 @@
-package com.jusfoun.hookah.webiste.util;
+package com.jusfoun.hookah.oauth2server.config;
 
 import com.jusfoun.hookah.core.config.WeChatConfig;
+import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.WeChatAuthInfo;
 import com.jusfoun.hookah.core.domain.WxUserInfo;
+import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.HttpClientUtil;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created by ctp on 2017/11/16.
@@ -93,7 +96,7 @@ public class WXConfigUtils {
     }
 
     /**
-     * 检验授权凭证（access_token）是否有效 true:有效 false:无效
+     * 获取微信用户信息
      */
     public static WxUserInfo getWxUserInfo(String openId, String accessToken){
         String getWxUserInfo = WeChatConfig.getUserInfoUrl;
@@ -114,5 +117,15 @@ public class WXConfigUtils {
         return wxUserInfo;
     }
 
+    public static String generateUserName(String openId){
+        StringBuffer username = new StringBuffer();
+        username.append("weixin_");
+        if(Objects.nonNull(openId) && openId.length() > 10){
+            username.append(openId.substring(openId.length()-10));
+        } else {
+            username.append(openId);
+        }
+        return username.toString();
+    }
 
 }

@@ -1,0 +1,189 @@
+<style>
+    .form-inline .form-control {
+        width: 110px;
+    }
+    .form-inline label {
+        margin-top: 5px;
+    }
+    .input-group a { font-size: 14px; padding-right: 14px; }
+    th,td{ text-align: center;;}
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5 ng-bind="title"></h5></div>
+            <div class="pull-right">
+                <button class="btn btn-default" data-ng-click="back()"><span
+                    class="glyphicon glyphicon-arrow-left"></span> 返回
+                </button>
+            </div>
+        </div>
+        <div class="row margin-top form-inline">
+            <div class="col-sm-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>用户编码</th>
+                    <th>用户名</th>
+                    <th>电话</th>
+                    <th>用户类型</th>
+                    <th>会员等级</th>
+                    <th>可用积分</th>
+                    <th>已兑换积分</th>
+                    <th>过期积分</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td data-ng-bind="userBasePointsInfo.userSn"></td>
+                    <td data-ng-bind="userBasePointsInfo.userName"></td>
+                    <td data-ng-bind="userBasePointsInfo.mobile"></td>
+                    <td >
+                        <div data-ng-show="userBasePointsInfo.userType==2" style="text-align:center;">
+                            个人
+                        </div>
+                        <div data-ng-show="userBasePointsInfo.userType==4" style="text-align:center;">
+                            企业
+                        </div>
+
+                    </td>
+                    <td data-ng-bind="userBasePointsInfo.userLevel"></td>
+                    <td data-ng-bind="userBasePointsInfo.useJf"></td>
+                    <td data-ng-bind="userBasePointsInfo.exchangeJf"></td>
+                    <td >过期积分</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="col-sm-12">
+                积分变化类型：
+                <div class="searchSection  btn-group">
+                    <button class="btn btn-default" data-ng-model="action" uib-btn-radio="" data-ng-click="search()"> 全部 </button>
+                    <button class="btn btn-default" data-ng-model="action" uib-btn-radio="1" data-ng-click="search()"> 获取 </button>
+                    <button class="btn btn-default" data-ng-model="action" uib-btn-radio="2" data-ng-click="search()"> 兑换 </button>
+                    <button class="btn btn-default" data-ng-model="action" uib-btn-radio="3" data-ng-click="search()"> admin </button>
+                </div>
+            </div>
+            <div class="col-sm-12" style="padding-top:15px;">
+                变化来源：
+                <div class="searchSection  btn-group">
+                    <button class="btn btn-default" data-ng-model="sourceId" uib-btn-radio="" data-ng-click="search()"> 全部 </button>
+                    <button class="btn btn-default" data-ng-model="sourceId" uib-btn-radio="1" data-ng-click="search()"> 新用户注册 </button>
+                    <button class="btn btn-default" data-ng-model="sourceId" uib-btn-radio="2" data-ng-click="search()"> 邀请新用户注册认证 </button>
+                    <button class="btn btn-default" data-ng-model="sourceId" uib-btn-radio="3" data-ng-click="search()"> 账号身份认证 </button>
+                    <button class="btn btn-default" data-ng-model="sourceId" uib-btn-radio="4" data-ng-click="search()"> 抽奖 </button>
+                    <button class="btn btn-default" data-ng-model="sourceId" uib-btn-radio="5" data-ng-click="search()"> 抽奖 </button>
+                    <button class="btn btn-default" data-ng-model="sourceId" uib-btn-radio="6" data-ng-click="search()"> VIP月度会员卡 </button>
+                    <button class="btn btn-default" data-ng-model="sourceId" uib-btn-radio="7" data-ng-click="search()"> 优惠券 </button>
+                    <button class="btn btn-default" data-ng-model="sourceId" uib-btn-radio="8" data-ng-click="search()"> 产品免费试用 </button>
+                </div>
+            </div>
+            <div class="col-sm-12">
+
+                <div style="padding:15px 0 0;">
+                    <div class="form-inline"><label class="control-label">时间：</label>
+                        <p class="input-group" style="margin-top: 15px">
+                            <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                                   ng-paste="$event.preventDefault()" type="text" class="form-control"
+                                   uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="startDate"
+                                   is-open="popup1.opened" datepicker-options="startDateOptions" close-text="关闭"
+                                   clear-text="清除"
+                                   current-text="今天" readonly="true"/>
+                            <span class="input-group-btn">
+                                 <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                        <label class="control-label">至</label>
+                        <p class="input-group" style="margin-top: 15px">
+                            <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                                   ng-paste="$event.preventDefault()" type="text" class="form-control"
+                                   uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="endDate"
+                                   is-open="popup2.opened" datepicker-options="endDateOptions"
+                                   close-text="Close" close-text="关闭" clear-text="清除" current-text="今天"
+                                   readonly="true"/>
+                            <span class="input-group-btn">
+                                 <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>&nbsp;&nbsp;
+                        <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">
+                            搜索
+                        </button>
+                    </div>
+                    <div class="gridSection">
+                        <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>积分变化类型</th>
+                                <th>变化来源</th>
+                                <th>积分变化</th>
+                                <th>时间</th>
+                                <th>备注</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in pointsList">
+                                <td>
+                                    <span data-ng-show="item.action == 1">获取</span>
+                                    <span data-ng-show="item.action == 2">兑换</span>
+                                    <span data-ng-show="item.action == 3">admin</span>
+                                </td>
+                                <td data-ng-bind="item.actionDesc">
+<!--
+                                    <span data-ng-show="item.actionDesc == 1">新用户注册</span>
+                                    <span data-ng-show="item.actionDesc == 2">邀请新用户注册认证</span>
+                                    <span data-ng-show="item.actionDesc == 3">账号身份认证</span>
+                                    <span data-ng-show="item.actionDesc == 4">抽奖</span>
+                                    <span data-ng-show="item.actionDesc == 5">抽奖</span>
+                                    <span data-ng-show="item.actionDesc == 6">VIP月度会员卡</span>
+                                    <span data-ng-show="item.actionDesc == 7">优惠券</span>
+                                    <span data-ng-show="item.actionDesc == 8">产品免费试用</span>
+-->
+                                </td>
+                                <td>
+                                    <span data-ng-show="item.action == 1">+</span>
+                                    <span data-ng-show="item.action == 3">
+                                        <span data-ng-show="item.sourceId == 11">+</span>
+                                    </span>
+                                    <span  data-ng-bind="item.score"></span>
+
+                                </td>
+                                <td data-ng-bind="item.addTime"></td>
+                                <td>
+                                    操作人员：<span data-ng-bind="item.operator"></span>  操作备注：<span  data-ng-bind="item.note?'无':item.note"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                        <table data-ng-show="pointsList.length!==0">
+                            <tr>
+                                <td colspan="9">
+                                    <div class="pull-right page-box">
+                                        <div class="pagination-info">
+                                            共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                        </div>
+                                        <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                            ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                            max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                            force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                            last-text="末页">
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="simple-grid-none-data-wrap">
+                        <div class="simple-grid-none-data text-center " ng-if="showNoneDataInfoTip && !loadingState">
+                            <div class="row-padding row-margin text-center">
+                                <span class="text-size-24 blue icon-info-1" style="vertical-align: middle"></span>
+                                <div class="text-size-18 tip-text inline-block">没有查询到符合条件的记录</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
