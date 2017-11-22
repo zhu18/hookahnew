@@ -2,7 +2,7 @@
  * Created by lss on 2017/11/9 0009
  */
 class couponController {
-    constructor($scope, $rootScope, $http, $state,$stateParams,growl) {
+    constructor($scope, $rootScope, $http, $state,$stateParams,growl,$filter) {
         console.log($stateParams.id);
         var data={};
         $scope.typeStatus = [               //自定定义类型数据
@@ -91,8 +91,8 @@ class couponController {
                     limitedCount:$scope.limitedCount,
                     applyChannel:$scope.applyChannel,
                     discountValue:($scope.discountValue*100),
-                    expiryStartTime:$scope.expiryStartTime,
-                    expiryEndTime:$scope.expiryEndTime,
+                    expiryStartTime:$filter('date')($scope.expiryStartTime, "yyyy-MM-dd hh:mm:ss"),
+                    expiryEndTime:$filter('date')($scope.expiryEndTime, "yyyy-MM-dd hh:mm:ss"),
                     validDays:$scope.validDays,
                     applyGoods:$scope.applyGoods
                 };
@@ -125,8 +125,8 @@ class couponController {
         // 日历插件开始
         $scope.inlineOptions = {
             customClass: getDayClass,
-            minDate: new Date(2000, 5, 22),
-            showWeeks: true
+            minDate: new Date(),
+            showWeeks: false
         };
         $scope.open1 = function () {
             $scope.popup1.opened = true;
@@ -141,9 +141,9 @@ class couponController {
             opened: false
         };
         var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setDate(tomorrow.getDate()+1 );
         var afterTomorrow = new Date();
-        afterTomorrow.setDate(tomorrow.getDate() + 1);
+        afterTomorrow.setDate(tomorrow.getDate() +1 );
         $scope.events = [
             {
                 date: tomorrow,
@@ -161,6 +161,7 @@ class couponController {
                 var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
                 for (var i = 0; i < $scope.events.length; i++) {
                     var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
                     if (dayToCheck === currentDay) {
                         return $scope.events[i].status;
                     }
@@ -168,6 +169,7 @@ class couponController {
             }
             return '';
         }
+
         // 日历插件结束
     }
 }
