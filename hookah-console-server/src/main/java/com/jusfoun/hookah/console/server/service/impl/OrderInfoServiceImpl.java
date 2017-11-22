@@ -627,7 +627,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if (goodsAmount > coupon.getFaceValue()){
             orderInfo.setOrderAmount(goodsAmount-coupon.getFaceValue());
         }else {
-            orderInfo.setOrderAmount(goodsAmount);
+            orderInfo.setOrderAmount(0L);
         }
         userCoupon.setOrderSn(orderInfo.getOrderSn());
         userCouponService.updateByIdSelective(userCoupon);
