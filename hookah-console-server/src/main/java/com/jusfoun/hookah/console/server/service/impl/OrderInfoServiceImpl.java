@@ -547,7 +547,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setOrderAmount(goodsAmount);
 
             if (userCouponId!=null){
-                orderInfo = useCoupon(userCouponId,orderInfo);
+                UserCoupon userCoupon = userCouponService.selectById(userCouponId);
+                if (userCoupon.getOrderSn()==null){
+                    orderInfo = useCoupon(userCouponId,orderInfo);
+                }
             }
             insertOrder(ordergoodsList, orderInfoVo, orderInfo ,mgGoodsOrder);
 //            if(goodsAmount.compareTo(0L)==0){
@@ -603,7 +606,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setOrderAmount(goodsAmount);
 
         if (userCouponId!=null){
-            orderInfo = useCoupon(userCouponId,orderInfo);
+            UserCoupon userCoupon = userCouponService.selectById(userCouponId);
+            if (userCoupon.getOrderSn()==null){
+                orderInfo = useCoupon(userCouponId,orderInfo);
+            }
         }
         insertOrder(ordergoodsList, orderInfoVo, orderInfo, mgGoodsOrder);
 //        if(goodsAmount.compareTo(0L)==0){
