@@ -638,4 +638,64 @@ public class HookahConstants {
         }
     }
 
+    /**
+     * 优惠券领取方式
+     * 0 后台赠送 1注册赠送 2主动领取
+     */
+    public enum ReceivedMode {
+        BACKSTAGE_GIFT((byte)0),
+        REG_GIFT((byte)1),
+        ACTIVE_RECEIVE((byte)2);
+
+        public byte code;
+
+        ReceivedMode(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
+
+    /**
+     * 用户优惠券状态
+     * 0未使用 1已使用 2已过期
+     */
+    public enum UserCouponStatus {
+        UN_USED((byte)0),
+        USED((byte)1),
+        EXPIRED((byte)2);
+
+        public byte code;
+
+        UserCouponStatus(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
+
+    /**
+     * 优惠券状态
+     * 0未激活 1已激活 2已过期
+     */
+    public enum CouponStatus {
+        UN_USED((byte)0),
+        USED((byte)1),
+        EXPIRED((byte)2);
+
+        public byte code;
+
+        CouponStatus(byte code) {
+            this.code = code;
+        }
+
+        public byte getCode() {
+            return code;
+        }
+    }
+
 }
