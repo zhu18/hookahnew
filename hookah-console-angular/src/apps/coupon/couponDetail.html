@@ -53,10 +53,10 @@
                             </td>
                             <td>
                                 <span data-ng-show="applyChannel ==0 ">无限制</span>
-                                <span data-ng-show="applyChannel ==1 ">满 <span data-ng-bind="discountValue"></span>可用</span>
+                                <span data-ng-show="applyChannel ==1 ">满 <span>{{(discountValue/100) | currency}}</span>可用</span>
                             </td>
                             <td>
-                                <span data-ng-bind="faceValue"></span>
+                                <span>{{(faceValue/100) | currency: '￥'}}</span>
                             </td>
                             <td>
                                 <span data-ng-show="couponStatus == 0">未激活</span>
@@ -85,14 +85,14 @@
                                 <span data-ng-bind="receivedCount"></span>
                             </td>
                             <td>
-                                <span data-ng-bind="receivedCount"></span>
+                                <span data-ng-bind="unReceivedCount"></span>
 
                             </td>
                             <td>
                                 <span data-ng-bind="usedCount"></span>
                             </td>
                             <td>
-                                <span data-ng-bind="usedCount"></span>
+                                <span data-ng-bind="unUsedCount"></span>
                             </td>
                         </tr>
                     </table>
