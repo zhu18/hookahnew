@@ -500,4 +500,22 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             }
         }
     }
+
+    public void activeCoupons() throws Exception{
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("isDeleted",(byte)0));
+        filter.add(Condition.eq("couponStatus",HookahConstants.CouponStatus.UN_USED.getCode()));
+        List<Coupon> couponList = this.selectList(filter);
+        if (couponList.size() == 0){
+            return ;
+        }
+        for (Coupon coupon : couponList){
+            Date expireStartDate = coupon.getExpiryStartDate();
+            Date now = new Date();
+            if (DateUtils.isSameDay(expireStartDate,now)){
+                coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
+            }
+            this.updateByIdSelective(coupon);
+        }
+    }
 }

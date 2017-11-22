@@ -40,4 +40,6 @@ public interface CouponService extends GenericService<Coupon,Long> {
     void sendCoupon2User(String userId, List<Long> couponIdList, Byte receivedMode) throws Exception;
 
     void updateStatusEveryDay() throws Exception;
+
+    void activeCoupons() throws Exception;
 }
