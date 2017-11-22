@@ -1,5 +1,7 @@
 import pointsListController from "./pointsListController";
 import pointsManageController from './pointsManageController'
+import UserListDetailController from "../user/UserListDetailController";
+
 
 pointsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function pointsRouting($stateProvider, $urlRouterProvider) {
@@ -21,5 +23,11 @@ export default function pointsRouting($stateProvider, $urlRouterProvider) {
       controller: pointsManageController,
       permission: 'pointsManage'
     })
+    .state('points.detail', {
+      url: '/points/detail/:id',
+      template: require('../user/detail.html'),
+      controller: UserListDetailController,
+      permission: 'point_user_detail'
+    })
 
-};
+  };

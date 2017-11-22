@@ -6,9 +6,9 @@ class UserListDetailController {
       var reg=/[^/]*$/;
       var userId=reg.exec(window.location.hash)[0];
       console.log(userId);
-      if(userId && userId!=="search"){ //保证用户刷新页面也以获取userid
+/*      if(userId && (userId!=="search" && userId!=="pointsList")){ //保证用户刷新页面也以获取userid
         $stateParams.id=userId;
-      }
+      }*/
         var promise = $http({
           method: 'GET',
           url: $rootScope.site.apiServer + "/api/user/" + $stateParams.id
@@ -33,6 +33,9 @@ class UserListDetailController {
         $scope.showBigImg=function (imgUrl) {
             var pruDom='<div><img width="100%" src="http://static.bdgstore.cn/'+imgUrl+'" alt=""></div>';
             var modalInstance = $rootScope.openJustShowDialogModal(pruDom);
+        };
+        $scope.back = function () {
+          history.back();
         };
     }
 }

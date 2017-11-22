@@ -2,7 +2,7 @@
     .form-inline .form-control {
         width: 110px;
     }
-    th,td{ text-align: center;}
+    .pointsTable th, .pointsTable td{ text-align: center;}
 </style>
 <div class="row">
     <div class="col-sm-12">
@@ -33,9 +33,9 @@
 
                 <div style="padding:15px 0 0;">
                     <label class="control-label">用户名：</label>
-                    <input ng-model="userName" type="text" class="form-control" placeholder="请输入订单编号">
+                    <input ng-model="userName" type="text" class="form-control" placeholder="请输入用户名">
                     <label class="control-label">电话：</label>
-                    <input ng-model="mobile" type="text" class="form-control" placeholder="请输入商品名称">
+                    <input ng-model="mobile" type="text" class="form-control" placeholder="请输入电话">
                     <button style="margin-top: 5px" type="submit" class="btn btn-primary" data-ng-click="search()">搜索</button>
 
                 </div>
@@ -46,7 +46,7 @@
                 <!--<pre>{{choseArr}}</pre>-->
                 <div class="gridSection">
                     <div us-spinner ng-show="showSpinner" spinner-start-active="true" spinner-key="showSpinner"></div>
-                    <table class="table table-hover">
+                    <table class="table table-hover pointsTable">
                         <thead>
                             <tr>
                                 <th>
@@ -86,7 +86,7 @@
                             <td data-ng-bind="item.exchangeJf"></td>
                             <td>
                                 <a href="javascript:void(0)"  ng-click="commentCheck(item.commId,2)">积分明细</a>
-                                <a href="javascript:void(0)"  ng-click="commentCheck(item.commId,2)">用户信息明细</a>
+                                <a href="javascript:void(0)"  ng-click="detail(item.userId)">用户信息明细</a>
                                 <a href="javascript:void(0)"  ng-click="commentCheck(item.userId,2,item.useJf)">修改数值</a>
                             </td>
                         </tr>
