@@ -88,9 +88,9 @@
                             <label class="col-sm-2 control-label">日期范围</label>
                             <div class="col-sm-10">
                                 <p class="input-group col-sm-4" style="float: left">
-                                    <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                                    <input style="background-color: transparent;" ng-keypress="$event.preventDefault()" datepicker-options="inlineOptions"
                                            ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                           uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="expiryStartTime"
+                                           uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" type="datetime-local" ng-model="expiryStartTime"
                                            is-open="popup1.opened" datepicker-options="startDateOptions" close-text="关闭" clear-text="清除"
                                            current-text="今天" readonly="true"/>
                                     <span class="input-group-btn">
@@ -101,7 +101,7 @@
                                 <p class="input-group col-sm-4" style="float: left">
                                     <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
                                            ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                           uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="expiryEndTime"
+                                           uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" type="datetime-local" ng-model="expiryEndTime"
                                            is-open="popup2.opened" datepicker-options="endDateOptions"
                                            close-text="Close" close-text="关闭" clear-text="清除" current-text="今天" readonly="true"/>
                                     <span class="input-group-btn">
