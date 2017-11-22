@@ -169,7 +169,6 @@ class couponController {
             }
             return '';
         }
-
         // 日历插件结束
     }
 }
