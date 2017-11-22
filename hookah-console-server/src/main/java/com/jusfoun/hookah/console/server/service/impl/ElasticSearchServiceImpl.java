@@ -502,6 +502,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
     }
 
+    @Override
     public void updateEsCatIdInfo(String[] goodsIds, String catId, String catIds) throws Exception{
 
         BulkRequestBuilder bulkRequest = esTransportClient.getObject().prepareBulk();
@@ -517,6 +518,31 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                     .startObject()
                     .field("catId", catId)
                     .field("catIds", catIds)
+                    .endObject());
+            bulkRequest.add(updateRequest);
+        }
+
+        BulkResponse bulkResponse = bulkRequest.get();
+        if (bulkResponse.hasFailures()) {
+            // process failures by iterating through each bulk response item
+        }
+    }
+
+    @Override
+    public void updateEsDiscountTypeInfo(String[] goodsIds, Byte discountType) throws Exception{
+
+        BulkRequestBuilder bulkRequest = esTransportClient.getObject().prepareBulk();
+
+        UpdateRequest updateRequest = null;
+        for(int i=0;i<goodsIds.length;i++){
+
+            updateRequest = new UpdateRequest();
+            updateRequest.index(esProps.getGoods().get("index"));
+            updateRequest.type(esProps.getGoods().get("type"));
+            updateRequest.id(goodsIds[i]);
+            updateRequest.doc(jsonBuilder()
+                    .startObject()
+                    .field("discountType", discountType)
                     .endObject());
             bulkRequest.add(updateRequest);
         }

@@ -21,6 +21,7 @@
         <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
         <result column="onsale_start_date" jdbcType="TIMESTAMP" property="onsaleStartDate" />
         <result column="is_discuss_price" jdbcType="TINYINT" property="isDiscussPrice" />
+        <result column="discount_type" jdbcType="TINYINT" property="discountType" />
     </resultMap>
     <resultMap id="BaseResultMap" type="com.jusfoun.hookah.core.domain.Goods" >
         <id column="goods_id" property="goodsId" jdbcType="VARCHAR" />
@@ -123,7 +124,8 @@
             add_time,
             last_update_time,
             onsale_start_date,
-            is_discuss_price
+            is_discuss_price,
+            discount_type
         from
             goods
         where is_delete = 1
@@ -135,6 +137,8 @@
         SELECT
         goods_id,
         goods_name,
+        goods_type,
+        purchase_limit,
         shop_price,
         shop_number,
         shop_format,
@@ -149,7 +153,8 @@
         add_time,
         last_update_time,
         onsale_start_date,
-        is_discuss_price
+        is_discuss_price,
+        discount_type
         from
         goods
         where is_delete = 1
@@ -162,6 +167,8 @@
         SELECT
         goods_id,
         goods_name,
+        goods_type,
+        purchase_limit,
         shop_price,
         shop_number,
         shop_format,
@@ -175,7 +182,8 @@
         getRegionParentList(goods_area) goods_areas,
         add_time,
         last_update_time,
-        is_discuss_price
+        is_discuss_price,
+        discount_type
         from
         goods
         where goods_id = #{id}
