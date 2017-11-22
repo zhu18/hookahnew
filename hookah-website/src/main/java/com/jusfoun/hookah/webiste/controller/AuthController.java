@@ -358,11 +358,9 @@ public class AuthController extends BaseController {
                 }
             }
         } catch (Exception e) {
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage(e.toString());
-            e.printStackTrace();
+            logger.error("企业认证信息操作失败！^_^", e);
+            return ReturnData.error("企业认证信息操作失败！^_^");
         }
-        return returnData;
     }
 
     // 企业认证

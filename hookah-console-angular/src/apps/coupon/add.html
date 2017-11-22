@@ -12,11 +12,9 @@
     <div class="col-sm-12">
         <form class="form-horizontal" role="form" id="userForm" name="userForm" >
             <div class="form-group">
-                <label class="col-sm-4 control-label">优惠券类型</label>
+                <label class="col-sm-4 control-label">优惠券类型：</label>
                 <div class="col-sm-4">
-                    <select ng-model="couponType" ng-options="item.id as item.name for item in typeStatus"
-                            style="width: 210px;height: 32px">
-
+                    <select ng-model="couponType" ng-options="item.id as item.name for item in typeStatus" style="width: 210px;height: 32px">
                     </select>
                 </div>
                 <div class="col-sm-4 control-label" style="text-align: left;">
@@ -24,7 +22,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="couponName">优惠券名称<span class="must">*</span></label>
+                <label class="col-sm-4 control-label" for="couponName">优惠券名称：<span class="must">*</span></label>
                 <div class="col-sm-4">
                     <input type="text" id="couponName" name="couponName" ng-maxlength="50" class="form-control"
                            ng-model="couponName" style="width: 210px;height: 32px" required/>
@@ -34,7 +32,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label">适用平台<span class="must">*</span></label>
+                <label class="col-sm-4 control-label">适用平台：<span class="must">*</span></label>
                 <div class="col-sm-4">
                     <select ng-model="applyPlatform" ng-options="item.id as item.name for item in applyPlatforms"
                             style="width: 210px;height: 32px">
@@ -46,7 +44,7 @@
                 <!--</div>-->
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="totalCount">总发行量<span class="must">*</span></label>
+                <label class="col-sm-4 control-label" for="totalCount">总发行量：<span class="must">*</span></label>
                 <div class="col-sm-4">
                     <input type="text" id="totalCount" name="totalCount" ng-maxlength="50" class="form-control"
                            ng-model="totalCount" placeholder="只能输入正整数，输入0为无限制。" style="width: 210px;height: 32px"
@@ -57,7 +55,7 @@
                 <!--</div>-->
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="faceValue">面额<span class="must">*</span></label>
+                <label class="col-sm-4 control-label" for="faceValue">面额：<span class="must">*</span></label>
                 <div class="col-sm-4">
                     <input type="text" id="faceValue" name="faceValue" ng-maxlength="50" class="form-control"
                            ng-model="faceValue" placeholder="面值只能是数值，1-9999，限2位小数。" style="width:210px;height: 32px"
@@ -68,7 +66,7 @@
                 <!--</div>-->
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label" for="limitedCount">每人限领<span class="must">*</span></label>
+                <label class="col-sm-4 control-label" for="limitedCount">每人限领：<span class="must">*</span></label>
                 <div class="col-sm-4">
                     <input type="text" id="limitedCount" name="limitedCount" ng-maxlength="50" data-ng-pattern=""
                            class="form-control" ng-model="limitedCount" style="width: 210px;height: 32px" required/>
@@ -78,25 +76,26 @@
                 <!--</div>-->
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label">使用门槛</label>
-                <div class="col-sm-1">
-                    <input type="radio" name="applyChannel" ng-model="applyChannel" value="0"
-                           ng-checked="applyChannel==0" class="margin-right-10"/>无限制
-                </div>
-                <div class="col-sm-2">
-                    <input type="radio" name="applyChannel" ng-model="applyChannel" value="1"
-                           ng-checked="applyChannel==1" class="margin-right-10"/>
-                    <span>满 <input style="width: 40px;" type="text" data-ng-model="discountValue">可用</span>
+                <label class="col-sm-4 control-label">使用门槛：<span class="must">*</span></label>
+                <div class="col-sm-4">
+                    <label  style="margin-right: 10px">
+                        <input type="radio" name="applyChannel" ng-model="applyChannel" value="0" class="margin-right-10"/>无限制
+                    </label>
+                    <label >
+                        <input type="radio" name="applyChannel" ng-model="applyChannel" value="1" class="margin-right-10"/>
+                        <span>满 <input style="width: 40px;" type="text" data-ng-model="discountValue">可用</span>
+                    </label>
+
                 </div>
                 <!--<div class="col-sm-4 control-label" style="text-align: left;">-->
                 <!--系统用户名不能为空，且最大长度为50-->
                 <!--</div>-->
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label">有效期<span class="must">*</span></label>
+                <label class="col-sm-4 control-label">有效期</label>
                 <div class="col-sm-8">
                     <div class="col-sm-12">
-                        <label class="col-sm-2 control-label">日期范围</label>
+                        <label class="col-sm-2 control-label">日期范围：<span class="must">*</span></label>
                         <div class="col-sm-10">
                             <p class="input-group col-sm-4" style="float: left">
                                 <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
@@ -130,7 +129,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12">
-                        <label class="col-sm-2 control-label" for="validDays"> 固定天数</label>
+                        <label class="col-sm-2 control-label" for="validDays"> 固定天数：<span class="must">*</span></label>
                         <div class="col-sm-10 ">
                             <input type="text" id="validDays" name="validDays" ng-maxlength="50" class="form-control"
                                    ng-model="validDays" style="width: 155px;height: 32px" required/>
@@ -149,22 +148,17 @@
             <!--</div>-->
             <!--</div>-->
             <div class="form-group">
-                <label class="col-sm-4 control-label">可使用商品</label>
+                <label class="col-sm-4 control-label">可使用商品：<span class="must">*</span></label>
                 <div class="col-sm-4">
-                    <div class="col-sm-12">
-                        <div class="col-sm-12">
-                            <label>
-                                <input type="radio" name="applyGoods" ng-model="applyGoods" value="0" style="margin-right: 10px"/>全部商品
-                            </label>
-                            <label>
-                                <input type="radio" name="applyGoods" ng-model="applyGoods" value="1" style="margin-right: 10px"/>部分商品
-                            </label>
-                            <label>
-                                <input type="radio" name="applyGoods" ng-model="applyGoods" value="2" style="margin-right: 10px"/>部分分类
-                            </label>
-                        </div>
-                    </div>
-
+                     <label style="margin-right: 10px">
+                         <input type="radio" name="applyGoods" ng-model="applyGoods" value="0" />全部商品
+                     </label>
+                     <label style="margin-right: 10px">
+                         <input type="radio" name="applyGoods" ng-model="applyGoods" value="1" />部分商品
+                     </label>
+                     <label>
+                         <input type="radio" name="applyGoods" ng-model="applyGoods" value="2" />部分分类
+                     </label>
                 </div>
                 <div class="col-sm-4 control-label" style="text-align: left;">
                     <!--系统用户名不能为空，且最大长度为50-->
