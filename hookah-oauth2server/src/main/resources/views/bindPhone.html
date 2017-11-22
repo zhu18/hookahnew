@@ -313,12 +313,12 @@ var htmlPart = {
 			return false;
 		}
 		var self = obj;
+		$(self).off('click');
+		self.style.cssText = "background-color: #ccc;cursor: not-allowed;";
+		self.innerText  =  "重新获取("+count+")";
 		/*请求验证码*/
 		sendReq('${host.auth}/sms/send','post',{mobile:$('#phoneNum').val(),type:3},function (data) {
 			if(data.code == 1){
-				$(self).off('click');
-				self.style.cssText = "background-color: #ccc;cursor: not-allowed;";
-				self.innerText  =  "重新获取("+count+")";
 				tick = setInterval(function () {
 					count--;
 					self.innerText  =  "重新获取("+count+")";
