@@ -123,7 +123,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         BeanUtils.copyProperties(coupon,mgCoupon);
         couponMapper.updateByPrimaryKeySelective(coupon);
         mgCouponService.updateByIdSelective(mgCoupon);
-        return null;
+        return ReturnData.success("修改成功！");
     }
 
     @Override
