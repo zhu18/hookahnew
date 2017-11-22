@@ -11,6 +11,7 @@ class giveCouponController {
                 params: {
                     couponName: $scope.couponName,//审核状态
                     couponType: $scope.couponType,
+                    type: 1,
                     currentPage: $rootScope.pagination.currentPage, //当前页码
                     pageSize: $rootScope.pagination.pageSize,
                 }

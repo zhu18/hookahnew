@@ -29,6 +29,7 @@ class couponController {
         params: {
           couponName: $scope.couponName,//审核状态
           couponType: $scope.couponType,
+          type: 0,
           currentPage: initCurrentPage == 'true' ? 1 :$rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize,
         }
