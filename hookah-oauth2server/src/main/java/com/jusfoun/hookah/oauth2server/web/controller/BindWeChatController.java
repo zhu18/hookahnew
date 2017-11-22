@@ -15,10 +15,7 @@ import com.jusfoun.hookah.core.exception.UserRegExpiredSmsException;
 import com.jusfoun.hookah.core.exception.UserRegInvalidCaptchaException;
 import com.jusfoun.hookah.core.exception.UserRegInvalidSmsException;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.core.utils.GeneratorUtil;
-import com.jusfoun.hookah.core.utils.NetUtils;
-import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.oauth2server.config.WXConfigUtils;
 import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
@@ -32,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
@@ -71,10 +69,12 @@ public class BindWeChatController {
     private  static final  String DEFAULT_PASSWORD = "000000";
 
     @RequestMapping(value = "/reg/bindWeChat", method = RequestMethod.POST)
-    public String bindWeChat(UserValidVo user, RedirectAttributes redirectAttributes, HttpServletRequest request){
-//        boolean isExists = true;
-        List<Condition> filters = new ArrayList();
+    @ResponseBody
+    public ReturnData bindWeChat(UserValidVo user, RedirectAttributes redirectAttributes, HttpServletRequest request){
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
         try {
+            List<Condition> filters = new ArrayList();
             //1、校验图片验证码
             String captcha = user.getCaptcha();
             HttpSession session = request.getSession();
@@ -104,88 +104,101 @@ public class BindWeChatController {
             }
 
             redisOperate.del(user.getMobile());  //删除缓存
-        } catch (UserRegInvalidCaptchaException e){
-//            redirectAttributes.addFlashAttribute("message", "图片验证码验证未通过,验证码错误");
+
+
+       /* catch (UserRegInvalidCaptchaException e){
             request.setAttribute("error", "图片验证码验证未通过,验证码错误");
             return "redirect:/sns/bindWeChat?openid=" + user.getOpenid() + "&state=" + user.getState();  //重定向到绑定微信页面
         } catch (UserRegExpiredSmsException e){
-//            redirectAttributes.addFlashAttribute("message", "短信验证码验证未通过,短信验证码已过期");
             request.setAttribute("error", "短信验证码验证未通过或短信验证码已过期");
             return "redirect:/sns/bindWeChat?openid=" + user.getOpenid() + "&state=" + user.getState();  //重定向到绑定微信页面
         } catch (UserRegInvalidSmsException e){
-//            redirectAttributes.addFlashAttribute("message", "短信验证码验证未通过,短信验证码错误");
             request.setAttribute("error", "短信验证码验证未通过,短信验证码错误");
             return "redirect:/sns/bindWeChat?openid=" + user.getOpenid() + "&state=" + user.getState();  //重定向到绑定微信页面
         }  catch (HookahException e) {
-//            redirectAttributes.addFlashAttribute("message", e.getMessage());
             request.setAttribute("error", e.getMessage());
             return "redirect:/sns/bindWeChat?openid=" + user.getOpenid() + "&state=" + user.getState();  //重定向到绑定微信页面
-        }
+        }*/
 
-        //校验通过，如果该手机号已经注册过则绑定微信信息，若未注册则进行注册
-        filters.clear();
-        filters.add(Condition.eq("mobile", user.getMobile()));
-        User users = userService.selectOne(filters);
-        if (Objects.nonNull(users)) {
-            //绑定微信信息
-            //TODO...绑定微信信息
-            String userId = users.getUserId();
-            WxUserInfo wxUserInfo = new WxUserInfo();
-            wxUserInfo.setUserid(userId);
-            wxUserInfo.setStatus(HookahConstants.WxUserStatus.BIND.getCode());//已绑定
+            //校验通过，如果该手机号已经注册过则绑定微信信息，若未注册则进行注册
             filters.clear();
-            filters.add(Condition.eq("openid" , user.getOpenid()));
-            wxUserInfoService.updateByConditionSelective(wxUserInfo,filters);
+            filters.add(Condition.eq("mobile", user.getMobile()));
+            User users = userService.selectOne(filters);
 
-        }else {
-            //注册并绑定微信信息
-            users = new User();
-            Map<String, String> site = myProps.getSite();
-            users.setAddTime(new Date());
-            users.setRegTime(new Date());
-            users.setIsEnable((byte) 1);
-            users.setHeadImg(site.get("user-default-img"));
-            users.setPassword(DEFAULT_PASSWORD);
-            users.setMobile(user.getMobile());
-            //用户编码
-            users.setUserSn(generateUserSn());
-            //默认用户名
-            users.setUserName(WXConfigUtils.generateUserName(user.getOpenid()));
-
-            User regUser = userService.insert(users);
-            //绑定微信信息
-            WxUserInfo wxUserInfo = new WxUserInfo();
-            wxUserInfo.setUserid(regUser.getUserId());
-            wxUserInfo.setStatus(HookahConstants.WxUserStatus.BIND.getCode());//Byte.valueOf("1") 已绑定
-            filters.clear();
-            filters.add(Condition.eq("openid" , user.getOpenid()));
-            wxUserInfoService.updateByConditionSelective(wxUserInfo,filters);
-
-            payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
-            //完成注册 发消息到MQ送优惠券
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,user.getUserId());
-            logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
-        }
-        //绑定完成 登录
-        if(Objects.nonNull(users)){
-            UsernameAndPasswordToken token = new UsernameAndPasswordToken();
-            token.setTokenType(UsernameAndPasswordToken.TokenType.CLIENT);
-            token.setUsername(user.getOpenid());
-            token.setPassword(user.getOpenid().toCharArray());
-            Subject currentUser = SecurityUtils.getSubject();
-            try {
-                currentUser.login(token);
-                if (currentUser.isAuthenticated()) {
-                    //TODO...登录日志
-                    loginLogService.addLoginLog(users.getUserName(), NetUtils.getIpAddr(request));
-                    logger.info("用户[" + users.getUserName() + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
+            if (Objects.nonNull(users)) {
+                //判断该用户是否已绑定其他微信号
+                //TODO...判断该用户是否已绑定其他微信号
+                String userId = users.getUserId();
+                filters.clear();
+                filters.add(Condition.eq("userid" , userId));
+                WxUserInfo wx = wxUserInfoService.selectOne(filters);
+                if(Objects.nonNull(wx) && !openid.equals(wx.getOpenid())){
+                    throw new HookahException("该手机号已绑定其他微信账号");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+                //绑定微信信息
+                WxUserInfo wxUserInfo = new WxUserInfo();
+                wxUserInfo.setUserid(userId);
+                wxUserInfo.setStatus(HookahConstants.WxUserStatus.BIND.getCode());//已绑定
+                filters.clear();
+                filters.add(Condition.eq("openid" , user.getOpenid()));
+                wxUserInfoService.updateByConditionSelective(wxUserInfo,filters);
+
+            }else {
+                //注册并绑定微信信息
+                users = new User();
+                Map<String, String> site = myProps.getSite();
+                users.setAddTime(new Date());
+                users.setRegTime(new Date());
+                users.setIsEnable((byte) 1);
+                users.setHeadImg(site.get("user-default-img"));
+                users.setPassword(DEFAULT_PASSWORD);
+                users.setMobile(user.getMobile());
+                //用户编码
+                users.setUserSn(generateUserSn());
+                //默认用户名
+                users.setUserName(WXConfigUtils.generateUserName(user.getOpenid()));
+
+                User regUser = userService.insert(users);
+                //绑定微信信息
+                WxUserInfo wxUserInfo = new WxUserInfo();
+                wxUserInfo.setUserid(regUser.getUserId());
+                wxUserInfo.setStatus(HookahConstants.WxUserStatus.BIND.getCode());//Byte.valueOf("1") 已绑定
+                filters.clear();
+                filters.add(Condition.eq("openid" , user.getOpenid()));
+                wxUserInfoService.updateByConditionSelective(wxUserInfo,filters);
+
+                payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
+                //完成注册 发消息到MQ送优惠券
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,user.getUserId());
+                logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
             }
+            //绑定完成 登录
+            if(Objects.nonNull(users)){
+                UsernameAndPasswordToken token = new UsernameAndPasswordToken();
+                token.setTokenType(UsernameAndPasswordToken.TokenType.CLIENT);
+                token.setUsername(user.getOpenid());
+                token.setPassword(user.getOpenid().toCharArray());
+                Subject currentUser = SecurityUtils.getSubject();
+                try {
+                    currentUser.login(token);
+                    if (currentUser.isAuthenticated()) {
+                        //TODO...登录日志
+                        loginLogService.addLoginLog(users.getUserName(), NetUtils.getIpAddr(request));
+                        logger.info("用户[" + users.getUserName() + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            logger.error(e.getMessage());
+            returnData.setMessage(e.getMessage());
+            e.printStackTrace();
         }
-//        return "forward:/login?userName="+users.getUserName()+"&password=" + DEFAULT_PASSWORD;
-        return "redirect:" + myProps.getHost().get("website");
+//        return "redirect:" + myProps.getHost().get("website");
+        return returnData;
     }
 
 
