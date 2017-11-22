@@ -316,6 +316,8 @@
             AND org.org_name like '%${orgName}%'
         </if>
 
+        ORDER BY goodsCheck.check_time DESC
+
     </select>
 
     <select id="getListByCatId" resultMap="BaseResultMap">
