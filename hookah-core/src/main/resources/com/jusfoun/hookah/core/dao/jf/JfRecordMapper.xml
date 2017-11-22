@@ -45,25 +45,24 @@
             jr.user_id = #{userId}
     </select>
 
-    <select id="selectListByUserIdAndType" resultType="com.jusfoun.hookah.core.domain.vo.JfShowVo">
+    <select id="selectListByUserIdAndType" resultType="com.jusfoun.hookah.core.domain.jf.JfRecord">
 
         SELECT
-            jr.add_time AS addTime,
-            jr.action AS action,
-            js.action_desc as actionDesc,
-            jr.score AS score,
-            jr.note AS note
+            *
         FROM
             jf_record jr
-        LEFT JOIN jf_rule js ON jr.source_id = js.id
-        WHERE
+         WHERE
             jr.user_id = #{userId}
 
-            <if test="type == 1 or type == 2">
-                and jr.action = #{type}
+            <if test="type == 1">
+                AND (jr.action = #{type} OR jr.source_id = 11)
             </if>
 
-            ORDER BY jr.add_time
+            <if test="type == 2">
+                AND (jr.action = #{type} OR jr.source_id = 12)
+            </if>
+
+            ORDER BY jr.add_time DESC
 
     </select>
 

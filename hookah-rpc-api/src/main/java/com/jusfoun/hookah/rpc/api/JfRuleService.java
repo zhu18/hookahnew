@@ -4,12 +4,10 @@ import com.jusfoun.hookah.core.domain.jf.JfRule;
 import com.jusfoun.hookah.core.generic.GenericService;
 
 /**
- * @author dx
- * @date 2017/4/13 下午1:46
- * @desc
- */
-public interface JfRuleService extends GenericService<JfRule, Long> {
-
-    int insertAndGetId(JfRule jfRule);
-
+ * ${DESCRIPTION}
+ *
+ * @author : dengxu
+ * @create 2017-11-21 19:28
+ **/
+public interface JfRuleService extends GenericService<JfRule, Integer> {
 }

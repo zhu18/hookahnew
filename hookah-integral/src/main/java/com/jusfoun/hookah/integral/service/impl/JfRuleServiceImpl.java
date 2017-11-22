@@ -7,29 +7,21 @@ import com.jusfoun.hookah.rpc.api.JfRuleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * 积分规则服务
- * @author:jsshao
- * @date: 2017-3-17
- */
-
+ * ${DESCRIPTION}
+ *
+ * @author : dengxu
+ * @create 2017-11-21 19:29
+ **/
 @Service
-public class JfRuleServiceImpl extends GenericServiceImpl<JfRule, Long> implements JfRuleService {
+public class JfRuleServiceImpl extends GenericServiceImpl<JfRule, Integer> implements JfRuleService {
 
     @Resource
-    private JfRuleMapper jfRuleMapper;
+    JfRuleMapper jfRuleMapper;
 
     @Resource
-    public void setDao(JfRuleMapper jfRecordMapper) {
-        super.setDao(jfRecordMapper);
+    public void setDao(JfRuleMapper jfRuleMapper) {
+        super.setDao(jfRuleMapper);
     }
-
-    @Override
-    public int insertAndGetId(JfRule jfRule) {
-        return jfRuleMapper.insertAndGetId(jfRule);
-    }
-
 }

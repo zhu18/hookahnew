@@ -24,7 +24,7 @@ public interface JfRecordMapper extends GenericDao<JfRecord> {
      * @param type
      * @return
      */
-    List<JfShowVo> selectListByUserIdAndType(@Param("userId") String userId, @Param("type") String type);
+    List<JfRecord> selectListByUserIdAndType(@Param("userId") String userId, @Param("type") String type);
 
     /**
      * 根据用户ID获取可用积分总和

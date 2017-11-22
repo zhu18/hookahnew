@@ -24,6 +24,7 @@ import com.jusfoun.hookah.rpc.api.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -71,15 +72,15 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
-        Pagination<JfShowVo> pagination = new Pagination<>();
+        Pagination<JfRecord> pagination = new Pagination<>();
         Pagination<JfOverdueDetails> overPages = new Pagination<>();
 
         if (!type.equals("3")) {
 
             // 根据用户userId 和 请求类型 获取所有积分记录
             PageHelper.startPage(pageNumberNew, pageSizeNew);
-            List<JfShowVo> jfList = jfRecordMapper.selectListByUserIdAndType(userId, type);
-            PageInfo<JfShowVo> page = new PageInfo<JfShowVo>(jfList);
+            List<JfRecord> jfList = jfRecordMapper.selectListByUserIdAndType(userId, type);
+            PageInfo<JfRecord> page = new PageInfo<JfRecord>(jfList);
 
             pagination.setTotalItems(page.getTotal());
             pagination.setPageSize(pageSizeNew);
@@ -168,7 +169,6 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
         jfUserVoPag.setPageSize(pageSizeNew);
         jfUserVoPag.setCurrentPage(pageNumberNew);
         jfUserVoPag.setList(jfUserVoList);
-
 
         returnData.setData(jfUserVoPag);
 
