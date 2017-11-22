@@ -346,13 +346,17 @@ var htmlPart = {
 		}
 		document.querySelector('#overlay').className = "visible";
 		var matchArr = /openid=(.*?)&state=(.*)&?/.exec(window.location.search);
-		sendReq('${host.auth}/reg/bindWeChat','post',{mobile:phoneNum,captcha:picValid,validSms:phoneValid,openid:matchArr[1],state:matchArr[2]},function () {
-			$(".spinner").remove();
-			$("#bind-form").hide();
-			$(".msg-ok").show();
-			setTimeout(function () {
-				window.location.href="http://www.bdgstore.cn";
-			},2000);
+		sendReq('${host.auth}/reg/bindWeChat','post',{mobile:phoneNum,captcha:picValid,validSms:phoneValid,openid:matchArr[1],state:matchArr[2]},function (data) {
+			if(data.code == 1){
+				$(".spinner").remove();
+				$("#bind-form").hide();
+				$(".msg-ok").show();
+				setTimeout(function () {
+					window.location.href="http://www.bdgstore.cn";
+				},2000);
+			}else{
+				$(".error-msg").show().text('*'+data.message+'*');
+			}
 		},function () {
 			console.log("error...")
 		})
