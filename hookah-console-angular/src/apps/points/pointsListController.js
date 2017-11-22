@@ -48,7 +48,7 @@ class pointsListController {
       $scope.search();
       console.log('Page changed to: ' + $rootScope.pagination.currentPage);
     };
-        $scope.MultipleCheck = function (status) {
+    $scope.MultipleCheck = function (status) {
       if ($scope.choseArr.length > 0) {
         $scope.commentCheck($scope.choseArr.join(), status,0);
         console.log($scope.choseArr.join())
@@ -56,7 +56,7 @@ class pointsListController {
         alert('请选择多个用户！');
       }
     };
-     $scope.commentCheck = function (ids,status,currentPoints ) {
+    $scope.commentCheck = function (ids,status,currentPoints ) {
       var content='<div style="padding:0 30px;">';
       var singleDom='<div style="font-size:16px;">\
             当前积分：<span id="currentPoints">'+currentPoints+'</span>&nbsp;&nbsp;\
@@ -145,6 +145,14 @@ class pointsListController {
         $('#lastPoints').html(tempVal);
       }
     };
+
+
+
+    $scope.detail = function (id) {
+      $state.go('points.detail', {id: id});
+    };
+
+
 
     //多选
     $scope.all = function (c) { //全选

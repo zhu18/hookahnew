@@ -34,7 +34,6 @@ class couponController {
                 promise.then(function (res, status, config, headers) {
                     console.log('数据在这里');
                     console.log(res);
-
                     if (res.data.code == '1') {
                          var info=res.data.data;
                             $scope.couponType=info.couponType;
@@ -62,8 +61,6 @@ class couponController {
         }else {
             console.log('添加');
             $scope.title="添加";
-
-
         }
         $scope.save=function () {
             if ($stateParams.id){
@@ -121,12 +118,11 @@ class couponController {
                 $rootScope.loadingState = false;
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
-        }
+        };
         $scope.back = function () { //返回按钮
             $state.go('coupon.list')
         };
-
-// 日历插件开始
+        // 日历插件开始
         $scope.inlineOptions = {
             customClass: getDayClass,
             minDate: new Date(2000, 5, 22),
@@ -163,21 +159,16 @@ class couponController {
                 mode = data.mode;
             if (mode === 'day') {
                 var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-
                 for (var i = 0; i < $scope.events.length; i++) {
                     var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
-
                     if (dayToCheck === currentDay) {
                         return $scope.events[i].status;
                     }
                 }
             }
-
             return '';
         }
-
         // 日历插件结束
-
     }
 }
 

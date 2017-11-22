@@ -39,4 +39,6 @@ public interface ElasticSearchService {
     List searchCategory(String keyword, Integer size) throws Exception;
 
     public void updateEsCatIdInfo(String[] goodsIds, String catId, String catIds) throws Exception;
+
+    public void updateEsDiscountTypeInfo(String[] goodsIds, Byte discountType) throws Exception;
 }

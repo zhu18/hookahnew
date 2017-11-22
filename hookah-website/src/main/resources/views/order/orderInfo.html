@@ -79,9 +79,13 @@ var htmlPart = {
 															<input type="hidden" value="${list.userCouponId}" name="couponId">
 															<div class="grid-left list-item-l" >
 																<p >￥<span class="j_faceValue">${list.faceValue / 100}</span></p>
-																<p>
-																	${decode(list.applyChannel,0,"无限制",1,"满元可用",2,"折扣","未知")}
-																</p>
+																<%if(list.applyChannel == 0){%>
+																<p>无限制</p>
+																<%}else if(list.applyChannel == 1){%>
+																<p>满${list.discountValue / 100}元可用</p>
+																<%}else {%>
+																<p>折扣</p>
+																<%}%>
 															</div>
 															<div class="grid-left list-item-r">
 																<span class="font-size-18 margin-bottom-10">${decode(list.applyGoods,0,"全品类通用劵",1,"部分品类通用劵",2,"部分分类通用劵","未知")}</span>
@@ -96,7 +100,7 @@ var htmlPart = {
 										</tr>
 										<tr class="tab-title">
 											<th colspan="9">
-												金额抵用：<span class="J_arrived">100</span>元
+												金额抵用：<span class="J_arrived">0</span>元
 											</th>
 										</tr>
 									</table>
