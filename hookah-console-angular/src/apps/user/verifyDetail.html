@@ -93,123 +93,123 @@
       <fieldset ng-if="cuser.userType == 1">
         <h5 style="padding: 0px 20px;">企业信息</h5>
         <div class="form-group">
-          <label class="col-sm-2 control-label" >单位名称:</label>
+          <label class="col-sm-2 control-label" >企业名称:</label>
           <div class="col-sm-4">
             <input disabled="disabled" type="text" name="orgName" class="form-control none-edit" value="{{cuserd.orgName}}"/>
           </div>
         </div>
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" >统一社会信用代码:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input disabled="disabled" type="text" name="orgName" class="form-control none-edit" value="{{cuserd.creditCode}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="form-group">
-          <label class="col-sm-2 control-label" >统一社会信用代码:</label>
-          <div class="col-sm-4">
-            <input disabled="disabled" type="text" name="orgName" class="form-control none-edit" value="{{cuserd.creditCode}}"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="email">法人代表:</label>
+          <label class="col-sm-2 control-label" for="email">联系人:</label>
           <div class="col-sm-4">
             <input type="text" disabled="disabled"  name="lawPersonName" value="{{cuserd.lawPersonName}}" class="form-control none-edit" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="email">法定代表人证件类别:</label>
+          <label class="col-sm-2 control-label" for="email">身份证号:</label>
           <div class="col-sm-4">
             <!--<input type="text" disabled="disabled"  name="certificateCode" value="{{cuserd.lawPersonCategory}}" class="form-control none-edit" />-->
             <input type="text" disabled="disabled"  name="certificateCode" value="身份证" class="form-control none-edit" />
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="email">法定代表人证件编号:</label>
-          <div class="col-sm-4">
-            <input type="text" disabled="disabled"  name="certificateCode" value="{{cuserd.lawPersonNum}}" class="form-control none-edit" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="lastLoginTime">法定代表人证件正面照:</label>
-          <div class="col-sm-4">
-            <img ng-click="showBigImg(cuserd.lawPersonPositivePath)" src="http://static.bdgstore.cn/{{cuserd.lawPersonPositivePath}}" style="max-width: 450px; max-height: 600px">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="lastLoginTime">法定代表人证件反面照:</label>
-          <div class="col-sm-4">
-            <img ng-click="showBigImg(cuserd.lawPersonNegativePath)" src="http://static.bdgstore.cn/{{cuserd.lawPersonNegativePath}}" style="max-width: 450px; max-height: 600px">
-          </div>
-        </div>
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="email">法定代表人证件编号:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input type="text" disabled="disabled"  name="certificateCode" value="{{cuserd.lawPersonNum}}" class="form-control none-edit" />-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="lastLoginTime">法定代表人证件正面照:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<img ng-click="showBigImg(cuserd.lawPersonPositivePath)" src="http://static.bdgstore.cn/{{cuserd.lawPersonPositivePath}}" style="max-width: 450px; max-height: 600px">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="lastLoginTime">法定代表人证件反面照:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<img ng-click="showBigImg(cuserd.lawPersonNegativePath)" src="http://static.bdgstore.cn/{{cuserd.lawPersonNegativePath}}" style="max-width: 450px; max-height: 600px">-->
+          <!--</div>-->
+        <!--</div>-->
 
-        <div class="form-group">
-          <label class="col-sm-2 control-label" >经营范围:</label>
-          <div class="col-sm-4">
-            <!--<input type="text" disabled="disabled"  name="industry" value="{{cuserd.industry}}" class="form-control none-edit" />-->
-            <textarea disabled="disabled" value="" style="margin: 0; width: 453px; height: 134px;resize:none">{{cuserd.industry}}</textarea>
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" >经营范围:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--&lt;!&ndash;<input type="text" disabled="disabled"  name="industry" value="{{cuserd.industry}}" class="form-control none-edit" />&ndash;&gt;-->
+            <!--<textarea disabled="disabled" value="" style="margin: 0; width: 453px; height: 134px;resize:none">{{cuserd.industry}}</textarea>-->
 
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" >注册地址:</label>
-          <div class="col-sm-4">
-            <input type="text" disabled="disabled" value="{{addressInfo.regionProvince+addressInfo.region}}" name="region" class="form-control none-edit" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" >注册详细地址:</label>
-          <div class="col-sm-4">
-            <input type="text" disabled="disabled" value="{{cuserd.contactAddress}}" name="contactAddress" class="form-control none-edit" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="cardNum">手机号:</label>
-          <div class="col-sm-4">
-            <input disabled="disabled" type="text" name="orgPhone" class="form-control none-edit" value="{{cuserd.orgPhone}}"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="cardNum">营业执照编号:</label>
-          <div class="col-sm-4">
-            <input disabled="disabled" type="text" name="licenseCode" class="form-control none-edit" value="{{cuserd.licenseCode}}"/>
-          </div>
-        </div>
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" >注册地址:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input type="text" disabled="disabled" value="{{addressInfo.regionProvince+addressInfo.region}}" name="region" class="form-control none-edit" />-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" >注册详细地址:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input type="text" disabled="disabled" value="{{cuserd.contactAddress}}" name="contactAddress" class="form-control none-edit" />-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="cardNum">手机号:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input disabled="disabled" type="text" name="orgPhone" class="form-control none-edit" value="{{cuserd.orgPhone}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="cardNum">营业执照编号:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input disabled="disabled" type="text" name="licenseCode" class="form-control none-edit" value="{{cuserd.licenseCode}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="form-group">
           <label class="col-sm-2 control-label" for="regTime">营业执照扫描件:</label>
           <div class="col-sm-4">
             <img ng-click="showBigImg(cuserd.licensePath)" src="http://static.bdgstore.cn/{{cuserd.licensePath}}" style="max-width: 450px; max-height: 600px">
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="lastLoginIp">税务登记证编号:</label>
-          <div class="col-sm-4">
-            <input type="text" disabled="disabled" value="{{cuserd.taxCode}}" name="taxCode" class="form-control none-edit" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="lastLoginTime">税务登记证扫描件:</label>
-          <div class="col-sm-4">
-            <img ng-click="showBigImg(cuserd.taxPath)" src="http://static.bdgstore.cn/{{cuserd.taxPath}}" style="max-width: 450px; max-height: 600px">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="realName">组织机构编号:</label>
-          <div class="col-sm-4">
-            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.certificateCode}}"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="lastLoginTime">组织机构扫描件:</label>
-          <div class="col-sm-4">
-            <img ng-click="showBigImg(cuserd.certifictePath)" src="http://static.bdgstore.cn/{{cuserd.certifictePath}}" style="max-width: 450px; max-height: 600px">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="realName">办公地址:</label>
-          <div class="col-sm-4">
-            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{addressInfo.officeRegionProvince + addressInfo.officeRegion}}"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="realName">办公详细地址:</label>
-          <div class="col-sm-4">
-            <input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.officeAddress}}"/>
-          </div>
-        </div>
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="lastLoginIp">税务登记证编号:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input type="text" disabled="disabled" value="{{cuserd.taxCode}}" name="taxCode" class="form-control none-edit" />-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="lastLoginTime">税务登记证扫描件:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<img ng-click="showBigImg(cuserd.taxPath)" src="http://static.bdgstore.cn/{{cuserd.taxPath}}" style="max-width: 450px; max-height: 600px">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="realName">组织机构编号:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.certificateCode}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="lastLoginTime">组织机构扫描件:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<img ng-click="showBigImg(cuserd.certifictePath)" src="http://static.bdgstore.cn/{{cuserd.certifictePath}}" style="max-width: 450px; max-height: 600px">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="realName">办公地址:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{addressInfo.officeRegionProvince + addressInfo.officeRegion}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="col-sm-2 control-label" for="realName">办公详细地址:</label>-->
+          <!--<div class="col-sm-4">-->
+            <!--<input disabled="disabled" type="text" name="certificateCode" class="form-control none-edit" value="{{cuserd.officeAddress}}"/>-->
+          <!--</div>-->
+        <!--</div>-->
 
       </fieldset>
 
