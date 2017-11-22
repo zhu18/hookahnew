@@ -42,9 +42,9 @@ class userDetailController {
                     $scope.userId=info.userId; //优惠券类型
                     $scope.userName=info.userName; //名称
                     $scope.userSn=info.userSn; //可使用商品
-                    $scope.unused=info.unused;
-                    $scope.used=info.used;
-                    $scope.expired=info.expired;
+                    $scope.unused=info.unused?info.unused:'0';
+                    $scope.used=info.used?info.used:'0';
+                    $scope.expired=info.expired?info.expired:'0';
                     $scope.mobile=info.mobile;
                     $scope.couponName=info.couponName;
                     $scope.faceValue=info.faceValue;
@@ -167,7 +167,7 @@ class userDetailController {
                             applyChannel='无限制';
                             break;
                         case 1:
-                            applyChannel='满 <span>'+info.discountValue+'</span>可用';
+                            applyChannel='满 <span>'+(info.discountValue/100)+'</span>可用';
                             break;
                         case 2:
                             applyChannel='折扣';
@@ -203,7 +203,7 @@ class userDetailController {
                         '<tr> <th>使用门槛</th> ' +
                         '<td> <span>'+applyChannel+'</span> </td> ' +
                         '<th>面值</th> ' +
-                        '<td> <span>'+info.faceValue+'</span> </td> </tr> ' +
+                        '<td> <span>'+(info.faceValue/100)+'</span> </td> </tr> ' +
                         '<tr> ' +
                         '<th>适用平台</th> ' +
                         '<td> <span data-ng-bind="couponName">'+applyPlatform+'</span> </td> ' +
@@ -218,15 +218,14 @@ class userDetailController {
                         '<th>当前状态</th> ' +
                         '<td> <span data-ng-bind="couponName">'+info.couponName+'</span> </td> ' +
                         '<th>使用时间</th> ' +
-                        '<td> <span data-ng-bind="couponName">'+info.usedTime+'</span> </td> ' +
+                        '<td> <span data-ng-bind="couponName">'+(info.usedTime?info.usedTime:"")+'</span> </td> ' +
                         '</tr> ' +
                         '<tr> ' +
                         '<th>订单编号</th> ' +
-                        '<td colspan="3"> <span data-ng-bind="couponName">'+info.orderSn+'</span> </td> </tr> ' +
+                        '<td colspan="3"> <span data-ng-bind="couponName">'+(info.orderSn?info.orderSn:"")+'</span> </td> </tr> ' +
                         '</table>';
 
                     var modalInstance =$rootScope.openJustShowDialogModal(html);
-
 
                 } else {
 

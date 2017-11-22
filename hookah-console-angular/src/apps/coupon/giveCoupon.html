@@ -50,14 +50,14 @@
                                 <span data-ng-bind="item.couponName"></span>
                             </td>
                             <td>
-                                <span data-ng-bind="item.faceValue"></span>
+                                <span>{{(item.faceValue/100) | currency: '￥'}}</span>
                             </td>
                             <td>
                                 <span data-ng-bind="item.unReceivedCount"></span>
                             </td>
                             <td>
                                 <span text-length="50" ng-show="item.applyChannel == 0">无限制</span>
-                                <span text-length="50" ng-show="item.applyChannel == 1">满 <span data-ng-bind="item.discountValue"></span>可用</span>
+                                <span text-length="50" ng-show="item.applyChannel == 1">满<span>{{(item.discountValue/100) | currency: '￥'}}</span>元可用</span>
                                 <span text-length="50" ng-show="item.applyChannel == 2">折扣</span>
                             </td>
                             <td>
