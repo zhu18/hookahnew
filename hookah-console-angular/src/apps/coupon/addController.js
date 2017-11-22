@@ -44,13 +44,13 @@ class couponController {
                             $scope.faceValue=(info.faceValue/100);
                             $scope.limitedCount=info.limitedCount;
                             $scope.applyChannel=info.applyChannel;
-                            $scope.discountValue=info.discountValue;
+                            $scope.discountValue=(info.discountValue/100);
                             $scope.expiryStartTime=new Date(info.expiryStartDate);
                             $scope.expiryEndTime=new Date(info.expiryEndDate);
                             $scope.validDays=info.validDays;
                             $scope.applyGoods=info.applyGoods;
                     } else {
-
+                            $rootScope.openJustShowDialogModal(res.data.message);
                     }
 
                     $rootScope.loadingState = false;
@@ -77,7 +77,7 @@ class couponController {
                     faceValue:($scope.faceValue*100),
                     limitedCount:$scope.limitedCount,
                     applyChannel:$scope.applyChannel,
-                    discountValue:$scope.discountValue,
+                    discountValue:($scope.discountValue*100),
                     expiryStartTime:$scope.expiryStartTime,
                     expiryEndTime:$scope.expiryEndTime,
                     validDays:$scope.validDays,
@@ -93,7 +93,7 @@ class couponController {
                     faceValue:($scope.faceValue*100),
                     limitedCount:$scope.limitedCount,
                     applyChannel:$scope.applyChannel,
-                    discountValue:$scope.discountValue,
+                    discountValue:($scope.discountValue*100),
                     expiryStartTime:$scope.expiryStartTime,
                     expiryEndTime:$scope.expiryEndTime,
                     validDays:$scope.validDays,
@@ -110,19 +110,11 @@ class couponController {
                 console.log(res);
 
                 if (res.data.code == '1') {
-                    var modalInstance =$rootScope.openJustShowDialogModal("添加成功！");
-                    modalInstance.result.then(function () {
-                        $state.go('coupon.list')
-                    }, function () {
-
-                    });
+                    $rootScope.openJustShowDialogModal("添加成功！");
+                    $state.go('coupon.list')
                 } else {
-                    var modalInstance =$rootScope.openJustShowDialogModal(res.data.message);
-                    modalInstance.result.then(function () {
 
-                    }, function () {
-
-                    });
+                    $rootScope.openJustShowDialogModal(res.data.message);
 
                 }
 
