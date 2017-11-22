@@ -358,6 +358,7 @@ var htmlPart = {
 				},2000);
 			}else{
 				$(".error-msg").show().text('*'+data.message+'*');
+				$("#overlay").hide();
 			}
 		},function () {
 			console.log("error...")
