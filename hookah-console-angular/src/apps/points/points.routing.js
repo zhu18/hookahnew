@@ -1,5 +1,6 @@
 import pointsListController from "./pointsListController";
 import pointsManageController from './pointsManageController'
+import pointsDetailController from "./pointsDetailController";
 import UserListDetailController from "../user/UserListDetailController";
 
 
@@ -17,17 +18,23 @@ export default function pointsRouting($stateProvider, $urlRouterProvider) {
       controller: pointsListController,
       permission: 'pointsList'
     })
+    .state('points.pointsDetail', { //积分明细
+      url: '/points/pointsDetail/:userBasePointsInfo',
+      template: require('./pointsDetail.html'),
+      controller: pointsDetailController,
+      permission: 'pointsDetail'
+    })
     .state('points.pointsManage', { //积分设置
       url: '/points/pointsManage',
       template: require('./pointsManage.html'),
       controller: pointsManageController,
       permission: 'pointsManage'
     })
-    .state('points.detail', {
-      url: '/points/detail/:id',
+    .state('points.userDetail', {
+      url: '/points/userDetail/:id',
       template: require('../user/detail.html'),
       controller: UserListDetailController,
-      permission: 'point_user_detail'
+      permission: 'points_user_detail'
     })
 
   };

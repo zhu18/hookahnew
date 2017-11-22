@@ -149,7 +149,11 @@ class pointsListController {
 
 
     $scope.detail = function (id) {
-      $state.go('points.detail', {id: id});
+      $state.go('points.userDetail', {id: id});
+    };
+
+    $scope.pointsDetail = function (item) {
+      $state.go('points.pointsDetail', {userBasePointsInfo: JSON.stringify(item)});
     };
 
 
