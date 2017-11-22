@@ -64,6 +64,7 @@ $(document).ready(function () {
 		if (pathname.indexOf('/information/details') >= 0) {
 			$('.header-bottom-bar ul li:nth-child(6)').addClass('active');
 		}
+
 	});
 	$('#navList li').each(function () {
 		if (pathname.indexOf('/exchange/index') >= 0) {
@@ -82,6 +83,9 @@ $(document).ready(function () {
 			$('#navList li:nth-child(4)').addClass('active');
 		} else if (pathname.indexOf('/usercenter') >= 0) {
 			$('#navList li:nth-child(4)').addClass('active');
+		}
+		if (path==""){
+			$('#navList li:nth-child(1)').addClass('active');
 		}
 	});
 

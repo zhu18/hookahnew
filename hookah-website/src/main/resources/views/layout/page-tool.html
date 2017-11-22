@@ -84,7 +84,7 @@
 		$("html,body").animate({scrollTop:0}, 600);
 	});
 	var pathname = window.location.pathname;
-	if (pathname.indexOf('/exchange/index') >= 0) {
+	if (pathname == '/' || pathname == '') {
 		$('.showIndex').show();
 	}else{
 		$('.showIndex').hide();
