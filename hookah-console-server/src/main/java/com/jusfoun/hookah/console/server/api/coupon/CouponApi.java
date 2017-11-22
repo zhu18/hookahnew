@@ -121,13 +121,14 @@ public class CouponApi extends BaseController {
      * @param currentPage
      * @param pageSize
      * @param sort
+     * @param type  0为所有优惠券  1为所有已激活未过期优惠券
      * @return
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ReturnData getAllCoupon(String couponName, Byte couponType, String currentPage, String pageSize,String sort){
+    public ReturnData getAllCoupon(String couponName, Byte couponType, String currentPage, String pageSize, String sort, Byte type){
         Pagination page = new Pagination<>();
         try {
-            page = couponService.getCouponList(couponName,couponType,currentPage,pageSize,sort);
+            page = couponService.getCouponList(couponName,couponType,currentPage,pageSize,sort,type);
             return ReturnData.success(page);
         }catch (Exception e){
             e.printStackTrace();

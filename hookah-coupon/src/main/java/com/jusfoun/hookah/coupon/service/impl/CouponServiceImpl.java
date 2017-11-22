@@ -73,7 +73,11 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             throw new HookahException("名称为["+coupon.getCouponName().trim()+"]的优惠券已存在");
         }
         coupon.setCouponName(coupon.getCouponName().trim());
-        coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
+        if (DateUtils.isSameDay(coupon.getExpiryStartDate(),new Date())){
+            coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
+        }else {
+            coupon.setCouponStatus(HookahConstants.CouponStatus.UN_USED.getCode());
+        }
         coupon.setIsDeleted((byte)0);
         coupon.setReceivedCount(0);
         coupon.setUsedCount(0);
@@ -100,8 +104,8 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     public ReturnData modify(Coupon coupon, String goodsList, String userId, String categoriesList) throws Exception {
         Date date = new Date();
         MgCoupon mgCoupon = new MgCoupon();
+        List<Condition>  filter = new ArrayList<>();
         if (coupon.getCouponName().trim()!=null){
-            List<Condition>  filter = new ArrayList<>();
             filter.add(Condition.eq("couponName",coupon.getCouponName().trim()));
             List<Coupon> coupons = this.selectList(filter);
             if (coupons!= null && coupons.size() >0){
@@ -121,6 +125,22 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
 
         }
         BeanUtils.copyProperties(coupon,mgCoupon);
+        filter.clear();
+        filter.add(Condition.eq("couponId",coupon.getId()));
+        List<UserCoupon> userCoupons = userCouponService.selectList(filter);
+        if (userCoupons!=null && userCoupons.size()>0){
+            UserCoupon userCoupon = new UserCoupon();
+            userCoupon.setValidDays(coupon.getValidDays());
+            userCoupon.setExpiryStartDate(coupon.getExpiryStartDate());
+            userCoupon.setExpiryEndDate(coupon.getExpiryEndDate());
+            Long[] ids = new Long[userCoupons.size()];
+            for (int i=0;i<userCoupons.size();i++){
+                ids[i] = userCoupons.get(i).getId();
+            }
+            filter.clear();
+            filter.add(Condition.in("id",ids));
+            userCouponService.updateByConditionSelective(userCoupon,filter);
+        }
         couponMapper.updateByPrimaryKeySelective(coupon);
         mgCouponService.updateByIdSelective(mgCoupon);
         return ReturnData.success("修改成功！");
@@ -273,7 +293,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     }
 
     @Override
-    public Pagination getCouponList(String couponName, Byte couponType, String currentPage, String pageSize, String sort) throws Exception {
+    public Pagination getCouponList(String couponName, Byte couponType, String currentPage, String pageSize, String sort, Byte type) throws Exception {
         Pagination page = new Pagination<>();
         List<Condition> filters = new ArrayList();
         List<OrderBy> orderBys = new ArrayList<>();
@@ -292,6 +312,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             filters.add(Condition.eq("couponType", couponType));
         }
         filters.add(Condition.eq("isDeleted", (byte) 0));
+        if (type==1){
+            filters.add(Condition.eq("couponStatus",HookahConstants.CouponStatus.USED.getCode()));
+        }
         if (StringUtils.isNotBlank(sort)) {
             orderBys.add(OrderBy.desc(sort));
         } else {
@@ -367,7 +390,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     }
 
     public synchronized void sendCoupon2User(String userId, List<Long> couponIdList, Byte receivedMode) throws Exception{
-        for (Long couponId:couponIdList){
+        for (Long couponId : couponIdList){
             Coupon coupon = couponMapper.selectByPrimaryKey(couponId);
             Integer receivedCount = coupon.getReceivedCount();
             Integer totalCount = coupon.getTotalCount();
