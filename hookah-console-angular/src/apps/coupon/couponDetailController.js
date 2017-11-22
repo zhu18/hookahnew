@@ -10,13 +10,13 @@ class couponDetailController {
         ];
         $rootScope.pagination.pageSize="20";
 
-        $scope.useStatus = [               //自定义使用状态数据
-            {id:-1, name:"全部"},
-            {id:0, name:"已使用"},
-            {id:1, name:"未使用"},
+        $scope.useStatus = [               //自定定义类型数据
+            {id:"", name:"全部"},
+            {id:0, name:"未使用"},
+            {id:1, name:"已使用"},
             {id:2, name:"已过期"}
         ];
-        $scope.userCouponStatus=0
+        $scope.userCouponStatus="";
         $scope.controlScreenShow=true;
         $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
             if ($scope.controlScreenShow){
@@ -45,7 +45,7 @@ class couponDetailController {
                     $scope.couponName=info.couponName; //名称
                     $scope.applyGoods=info.applyGoods; //可使用商品
                     $scope.applyChannel=info.applyChannel;
-                    $scope.faceValue=(info.faceValue/100);
+                    $scope.faceValue=info.faceValue;
                     $scope.couponStatus=info.couponStatus;
                     $scope.expiryStartDate=info.expiryStartDate;
                     $scope.expiryEndDate=info.expiryEndDate;
@@ -55,6 +55,8 @@ class couponDetailController {
 
                     $scope.usedCount=info.usedCount;
                     $scope.discountValue=info.discountValue;
+                    $scope.unReceivedCount=info.unReceivedCount;
+                    $scope.unUsedCount=info.unUsedCount;
 
                 } else {
 
