@@ -16,15 +16,20 @@ class userDetailController {
             {id:2, name:"已过期"}
         ];
         $scope.userCouponStatus="";
-        $scope.controlScreenShow=true;
-        $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
-            if ($scope.controlScreenShow){
-                $scope.controlScreenShow=false;
-            }else {
-                $scope.controlScreenShow=true;
-
-            }
-        };
+        $scope.controlScreen=function () { //控制搜索框展示函数
+            $scope.controlScreenShow=true;
+            $scope.screenTitle='收起筛选';
+            $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
+                if ($scope.controlScreenShow){
+                    $scope.controlScreenShow=false;
+                    $scope.screenTitle='展开筛选';
+                }else {
+                    $scope.controlScreenShow=true;
+                    $scope.screenTitle='收起筛选';
+                }
+            };
+        }
+        $scope.controlScreen()
         $scope.renderInfo = function () {
             var promise = $http({
                 method: 'GET',

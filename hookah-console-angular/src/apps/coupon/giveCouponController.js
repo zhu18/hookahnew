@@ -4,6 +4,20 @@
 class giveCouponController {
     constructor($scope, $rootScope, $http, $state,$stateParams,growl,$filter) {
         console.log($stateParams.id);
+        $scope.controlScreen=function () { //控制搜索框展示函数
+            $scope.controlScreenShow=true;
+            $scope.screenTitle='收起筛选';
+            $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
+                if ($scope.controlScreenShow){
+                    $scope.controlScreenShow=false;
+                    $scope.screenTitle='展开筛选';
+                }else {
+                    $scope.controlScreenShow=true;
+                    $scope.screenTitle='收起筛选';
+                }
+            };
+        }
+        $scope.controlScreen();
         $scope.search = function () { //Render page function
             var promise = $http({
                 method: 'GET',
