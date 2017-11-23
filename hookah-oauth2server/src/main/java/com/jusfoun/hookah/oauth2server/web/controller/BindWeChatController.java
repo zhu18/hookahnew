@@ -105,21 +105,6 @@ public class BindWeChatController {
 
             redisOperate.del(user.getMobile());  //删除缓存
 
-
-       /* catch (UserRegInvalidCaptchaException e){
-            request.setAttribute("error", "图片验证码验证未通过,验证码错误");
-            return "redirect:/sns/bindWeChat?openid=" + user.getOpenid() + "&state=" + user.getState();  //重定向到绑定微信页面
-        } catch (UserRegExpiredSmsException e){
-            request.setAttribute("error", "短信验证码验证未通过或短信验证码已过期");
-            return "redirect:/sns/bindWeChat?openid=" + user.getOpenid() + "&state=" + user.getState();  //重定向到绑定微信页面
-        } catch (UserRegInvalidSmsException e){
-            request.setAttribute("error", "短信验证码验证未通过,短信验证码错误");
-            return "redirect:/sns/bindWeChat?openid=" + user.getOpenid() + "&state=" + user.getState();  //重定向到绑定微信页面
-        }  catch (HookahException e) {
-            request.setAttribute("error", e.getMessage());
-            return "redirect:/sns/bindWeChat?openid=" + user.getOpenid() + "&state=" + user.getState();  //重定向到绑定微信页面
-        }*/
-
             //校验通过，如果该手机号已经注册过则绑定微信信息，若未注册则进行注册
             filters.clear();
             filters.add(Condition.eq("mobile", user.getMobile()));
@@ -127,7 +112,6 @@ public class BindWeChatController {
 
             if (Objects.nonNull(users)) {
                 //判断该用户是否已绑定其他微信号
-                //TODO...判断该用户是否已绑定其他微信号
                 String userId = users.getUserId();
                 filters.clear();
                 filters.add(Condition.eq("userid" , userId));
@@ -169,7 +153,7 @@ public class BindWeChatController {
 
                 payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
                 //完成注册 发消息到MQ送优惠券
-                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,user.getUserId());
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,regUser.getUserId());
                 logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
             }
             //绑定完成 登录
@@ -179,25 +163,39 @@ public class BindWeChatController {
                 token.setUsername(user.getOpenid());
                 token.setPassword(user.getOpenid().toCharArray());
                 Subject currentUser = SecurityUtils.getSubject();
-                try {
-                    currentUser.login(token);
-                    if (currentUser.isAuthenticated()) {
-                        //TODO...登录日志
-                        loginLogService.addLoginLog(users.getUserName(), NetUtils.getIpAddr(request));
-                        logger.info("用户[" + users.getUserName() + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                currentUser.login(token);
+                if (currentUser.isAuthenticated()) {
+                    //TODO...登录日志
+                    loginLogService.addLoginLog(users.getUserName(), NetUtils.getIpAddr(request));
+                    logger.info("用户[" + users.getUserName() + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
                 }
             }
 
+        } catch (UserRegInvalidCaptchaException e) {
+//            request.setAttribute("error", "图片验证码验证未通过,验证码错误");
+            returnData.setMessage(e.getMessage());
+            logger.error(e.getMessage());
+            returnData.setCode(ExceptionConst.AssertFailed);
+        } catch (UserRegExpiredSmsException e){
+//            request.setAttribute("error", "短信验证码验证未通过或短信验证码已过期");
+            returnData.setMessage(e.getMessage());
+            logger.error(e.getMessage());
+            returnData.setCode(ExceptionConst.SMS_ERROR_MSG);
+        } catch (UserRegInvalidSmsException e){
+//            request.setAttribute("error", "短信验证码验证未通过,短信验证码错误");
+            returnData.setMessage(e.getMessage());
+            logger.error(e.getMessage());
+            returnData.setCode(ExceptionConst.SMS_ERROR_MSG);
+        } catch (HookahException e) {
+            returnData.setMessage(e.getMessage());
+            logger.error(e.getMessage());
+            returnData.setCode(ExceptionConst.SMS_ERROR_MSG);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             logger.error(e.getMessage());
-            returnData.setMessage(e.getMessage());
+            returnData.setMessage("绑定失败");
             e.printStackTrace();
         }
-//        return "redirect:" + myProps.getHost().get("website");
         return returnData;
     }
 

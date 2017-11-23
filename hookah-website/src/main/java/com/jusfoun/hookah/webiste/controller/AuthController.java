@@ -220,11 +220,16 @@ public class AuthController extends BaseController {
             userDetail.setIsAuth(AUTH_STATUS_CHECKING);
 
             // 判断该身份证是否已绑定
-            List<Condition> filters = new ArrayList();
-            filters.add(Condition.eq("cardNum", userDetail.getCardNum()));
-            boolean exists = userDetailService.exists(filters);
-            if(exists == true){
-                return ReturnData.error("该身份证已绑定信息");
+            User user = userService.selectById(userId);
+            if(user.getUserType() == 1 || user.getUserType() == 2 ||
+                    user.getUserType() == 3 || user.getUserType() == 4 ||
+                    user.getUserType() == 5){
+                List<Condition> filters = new ArrayList();
+                filters.add(Condition.eq("cardNum", userDetail.getCardNum()));
+                boolean exists = userDetailService.exists(filters);
+                if(exists == true){
+                    return ReturnData.error("该身份证已绑定信息");
+                }
             }
 
             // 验证个人身份
@@ -306,11 +311,16 @@ public class AuthController extends BaseController {
             String userId = this.getCurrentUser().getUserId();
 
             // 判断该身份证是否已绑定
-            List<Condition> filters = new ArrayList();
-            filters.add(Condition.eq("lawPersonNum", organization.getLawPersonNum()));
-            boolean exists = organizationService.exists(filters);
-            if(exists == true){
-                return ReturnData.error("该身份证已绑定信息");
+            User user = userService.selectById(userId);
+            if(user.getUserType() == 1 || user.getUserType() == 2 ||
+                    user.getUserType() == 3 || user.getUserType() == 4 ||
+                    user.getUserType() == 5){
+                List<Condition> filters = new ArrayList();
+                filters.add(Condition.eq("lawPersonNum", organization.getLawPersonNum()));
+                boolean exists = organizationService.exists(filters);
+                if(exists == true){
+                    return ReturnData.error("该身份证已绑定信息");
+                }
             }
 
             // 验证企业身份

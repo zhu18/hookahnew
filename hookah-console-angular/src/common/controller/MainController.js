@@ -187,7 +187,38 @@ class MainController {
 			});
 
 		};
-		/**
+    $rootScope.openConfirmDialogModelCanVerify = function (title,content) {
+      return $uibModal.open({
+        animation: true,
+        template: require('../openConfirmDialogModelCanVerify.html'),
+        controller: function ($scope, $sce, $uibModalInstance,title,content) {
+          $scope.title = $sce.trustAsHtml(title);
+          $scope.content = $sce.trustAsHtml(content);
+          $scope.ok = function () {
+            if($rootScope.closeModelPara){
+              $uibModalInstance.close($scope);
+            }
+
+          };
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+          };
+        },
+        // size: 'lg',
+        backdrop: 'static',
+        resolve: {
+          content: function () {
+            return content;
+          },
+          title:function () {
+            return title;
+          }
+        }
+      });
+
+    };
+
+    /**
 		 * 分页设置
 		 */
 		$rootScope.paginationSupport = true;
