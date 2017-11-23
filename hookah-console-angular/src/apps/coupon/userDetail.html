@@ -96,7 +96,7 @@
                                 <span data-ng-bind="item.couponName"></span>
                             </td>
                             <td>
-                                <span data-ng-bind="item.faceValue"></span>
+                                <span >{{(item.faceValue/100) | currency: '￥'}}</span>
                             </td>
                             <td>
                                 <span text-length="50" ng-show="item.receivedMode == 0">后台赠送</span>

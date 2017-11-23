@@ -172,7 +172,7 @@ class userDetailController {
                             applyChannel='无限制';
                             break;
                         case 1:
-                            applyChannel='满 <span>'+(info.discountValue/100)+'</span>可用';
+                            applyChannel='满 <span>￥'+(info.discountValue/100).toFixed(2)+'</span>可用';
                             break;
                         case 2:
                             applyChannel='折扣';
@@ -208,7 +208,7 @@ class userDetailController {
                         '<tr> <th>使用门槛</th> ' +
                         '<td> <span>'+applyChannel+'</span> </td> ' +
                         '<th>面值</th> ' +
-                        '<td> <span>'+(info.faceValue/100)+'</span> </td> </tr> ' +
+                        '<td> <span>￥'+(info.faceValue/100).toFixed(2)+'</span> </td> </tr> ' +
                         '<tr> ' +
                         '<th>适用平台</th> ' +
                         '<td> <span data-ng-bind="couponName">'+applyPlatform+'</span> </td> ' +
