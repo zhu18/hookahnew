@@ -29,7 +29,7 @@ public interface CouponService extends GenericService<Coupon,Long> {
 
     Pagination getUserCouponList(User user, String currentPage, String pageSize) throws Exception;
 
-    Pagination getCouponList(String couponName, Byte couponType, String currentPage, String pageSize,String sort) throws Exception;
+    Pagination getCouponList(String couponName, Byte couponType, String currentPage, String pageSize,String sort, Byte type) throws Exception;
 
     ReturnData getUserCouponById(String userId) throws Exception;
 
@@ -40,4 +40,6 @@ public interface CouponService extends GenericService<Coupon,Long> {
     void sendCoupon2User(String userId, List<Long> couponIdList, Byte receivedMode) throws Exception;
 
     void updateStatusEveryDay() throws Exception;
+
+    void activeCoupons() throws Exception;
 }

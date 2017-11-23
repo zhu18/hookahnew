@@ -14,16 +14,6 @@ class couponController {
         $scope.applyPlatforms = [            //自定定义类型数据
             {id:0, name:"全平台"}
         ];
-        if ($stateParams.id){
-            $scope.title="修改";
-            $scope.getCouponById();//调用修改函数
-        }else {
-            $scope.title="添加";
-            $scope.couponType=0;
-            $scope.applyPlatform=0;
-            $scope.applyChannel="0";
-            $scope.applyGoods="0";
-        }
         $scope.getCouponById = function () { //Render page function
             var promise = $http({
                 method: 'GET',
@@ -57,6 +47,17 @@ class couponController {
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
         };//返现函数
+        if($stateParams.id){
+            $scope.title="修改";
+            $scope.getCouponById();//调用修改函数
+        }else {
+            $scope.title="添加";
+            $scope.couponType=0;
+            $scope.applyPlatform=0;
+            $scope.applyChannel="0";
+            $scope.applyGoods="0";
+        }
+
         $scope.save=function () { //保存按钮
             if ($stateParams.id){
                 var url=$rootScope.site.apiServer + "/api/coupon/modify";

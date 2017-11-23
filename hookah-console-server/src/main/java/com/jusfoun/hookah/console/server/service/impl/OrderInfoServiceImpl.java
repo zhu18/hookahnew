@@ -314,7 +314,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if (userCoupons != null && userCoupons.size() > 0){
             for (UserCoupon userCoupon:userCoupons){
                 userCoupon.setOrderSn(null);
-                userCouponService.updateByIdSelective(userCoupon);
+                userCouponService.updateById(userCoupon);
             }
         }
     }

@@ -13,7 +13,7 @@
                     <div class="list-item header clearfix">
                         <div class="title pull-left">筛选查询</div>
                         <div class="tool pull-right">
-                            <span class="controlScreenBtn" data-ng-click="controlScreenBtn()">收起筛选</span>
+                            <span class="controlScreenBtn" data-ng-click="controlScreenBtn()" data-ng-bind="screenTitle"></span>
                             <button class="btn btn-primary" data-ng-click="search()">查询结果</button>
                         </div>
                     </div>
@@ -81,13 +81,16 @@
                            <!--<span text-length="50" ng-show="item. userType == 0">会员赠券</span>-->
                         <!--</td>-->
                         <td>
-                            <span data-ng-bind=" item.used"></span>
+                            <span data-ng-if="item.used">{{item.used}}</span>
+                            <span data-ng-if="!item.used">0</span>
                         </td>
                         <td>
-                            <span data-ng-bind=" item.unused"></span>
+                            <span data-ng-if="item.unused">{{item.unused}}</span>
+                            <span data-ng-if="!item.unused">0</span>
                         </td>
                         <td>
-                            <span data-ng-bind=" item.expired"></span>
+                            <span data-ng-if="item.expired">{{item.expired}}</span>
+                            <span data-ng-if="!item.expired">0</span>
                         </td>
                         <td>
                             <button class="btn btn-primary"  ng-click="getDetail(item.userId)">查看明细</button>

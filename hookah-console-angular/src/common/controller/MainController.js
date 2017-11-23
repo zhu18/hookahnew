@@ -187,7 +187,48 @@ class MainController {
 			});
 
 		};
-		/**
+    $rootScope.openConfirmDialogModelCanVerify = function (title,content,callback) {
+      return $uibModal.open({
+        animation: true,
+        template: require('../openConfirmDialogModelCanVerify.html'),
+        controller: function ($scope, $sce, $uibModalInstance,title,content,callback) {
+          $scope.title = $sce.trustAsHtml(title);
+          $scope.content = $sce.trustAsHtml(content);
+          $scope.ok = function () {
+          	console.log('在根目录的OK里！');
+            callback($scope.callbackCancel);
+
+
+          };
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+          };
+          $scope.callbackCancel = function () {
+          	$uibModalInstance.close($scope);
+          };
+
+
+
+
+        },
+        // size: 'lg',
+        backdrop: 'static',
+        resolve: {
+          content: function () {
+            return content;
+          },
+          title:function () {
+            return title;
+          },
+          callback:function () {
+            return callback;
+          }
+        }
+      });
+
+    };
+
+    /**
 		 * 分页设置
 		 */
 		$rootScope.paginationSupport = true;

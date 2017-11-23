@@ -16,15 +16,20 @@ class userDetailController {
             {id:2, name:"已过期"}
         ];
         $scope.userCouponStatus="";
-        $scope.controlScreenShow=true;
-        $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
-            if ($scope.controlScreenShow){
-                $scope.controlScreenShow=false;
-            }else {
-                $scope.controlScreenShow=true;
-
-            }
-        };
+        $scope.controlScreen=function () { //控制搜索框展示函数
+            $scope.controlScreenShow=true;
+            $scope.screenTitle='收起筛选';
+            $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
+                if ($scope.controlScreenShow){
+                    $scope.controlScreenShow=false;
+                    $scope.screenTitle='展开筛选';
+                }else {
+                    $scope.controlScreenShow=true;
+                    $scope.screenTitle='收起筛选';
+                }
+            };
+        }
+        $scope.controlScreen()
         $scope.renderInfo = function () {
             var promise = $http({
                 method: 'GET',
@@ -167,7 +172,7 @@ class userDetailController {
                             applyChannel='无限制';
                             break;
                         case 1:
-                            applyChannel='满 <span>'+(info.discountValue/100)+'</span>可用';
+                            applyChannel='满 <span>￥'+(info.discountValue/100).toFixed(2)+'</span>可用';
                             break;
                         case 2:
                             applyChannel='折扣';
@@ -203,7 +208,7 @@ class userDetailController {
                         '<tr> <th>使用门槛</th> ' +
                         '<td> <span>'+applyChannel+'</span> </td> ' +
                         '<th>面值</th> ' +
-                        '<td> <span>'+(info.faceValue/100)+'</span> </td> </tr> ' +
+                        '<td> <span>￥'+(info.faceValue/100).toFixed(2)+'</span> </td> </tr> ' +
                         '<tr> ' +
                         '<th>适用平台</th> ' +
                         '<td> <span data-ng-bind="couponName">'+applyPlatform+'</span> </td> ' +

@@ -1,6 +1,7 @@
 import pointsListController from "./pointsListController";
 import pointsManageController from './pointsManageController'
 import pointsDetailController from "./pointsDetailController";
+import editPointsRulelController from "./editPointsRuleController";
 import UserListDetailController from "../user/UserListDetailController";
 
 
@@ -24,17 +25,23 @@ export default function pointsRouting($stateProvider, $urlRouterProvider) {
       controller: pointsDetailController,
       permission: 'pointsDetail'
     })
+    .state('points.userDetail', {
+      url: '/points/userDetail/:id',
+      template: require('../user/detail.html'),
+      controller: UserListDetailController,
+      permission: 'points_user_detail'
+    })
     .state('points.pointsManage', { //积分设置
       url: '/points/pointsManage',
       template: require('./pointsManage.html'),
       controller: pointsManageController,
       permission: 'pointsManage'
     })
-    .state('points.userDetail', {
-      url: '/points/userDetail/:id',
-      template: require('../user/detail.html'),
-      controller: UserListDetailController,
-      permission: 'points_user_detail'
+    .state('points.editPointsRule', { //修改积分设置
+      url: '/points/editPointsRule/:currentPointData',
+      template: require('./editPointsRule.html'),
+      controller: editPointsRulelController,
+      permission: 'editPointsRule'
     })
 
   };

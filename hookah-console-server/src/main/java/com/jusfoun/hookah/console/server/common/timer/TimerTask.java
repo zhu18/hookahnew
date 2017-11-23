@@ -98,6 +98,19 @@ public class TimerTask {
     }
 
     /**
+     * 激活到使用日期的优惠券
+     */
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void activeCoupons(){
+        try {
+            couponService.activeCoupons();
+        } catch (Exception e){
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+    }
+
+    /**
      * 每隔十分钟查询一次订单状态，将超过24小时未付款的订单取消掉
      */
     @Scheduled(cron = "0 0/10 * * * ?")
