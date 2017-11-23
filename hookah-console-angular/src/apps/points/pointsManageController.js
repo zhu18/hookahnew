@@ -1,199 +1,186 @@
-class transactionManageController {
+class pointsManageController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
+    $rootScope.closeModelPara=false;
+
     $scope.settleList = [];
     $scope.choseArr = [];//多选数组
 
     $scope.search = function (initCurrentPage) {
       // console.log($scope.levelStar);
-      if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
-        //继续
-        alert('开始时间必须大于结束时间！请重新选择日期。');
-        return;
-      }
+
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/settleOrder/getTradeList",
-        params: {
-          goodsName: $scope.goodsName ? $scope.goodsName : null,
-          orderSn: $scope.orderSn ? $scope.orderSn : null,
-          addUser  : $scope.addUser   ? $scope.addUser : null,
-          startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
-          pageSize: $rootScope.pagination.pageSize
-        }
+        url: $rootScope.site.apiServer + "/api/jr/list",
       });
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
         console.log(res);
         if (res.data.code == '1') {
-          $scope.tradeList = res.data.data.list;
-          // $rootScope.pagination = res.data.data;
-          $scope.showNoneDataInfoTip = false;
-          if (res.data.data.totalPage > 1) {
-            $scope.showPageHelpInfo = true;
+          $scope.pointsList = res.data.data.list;
+        } else {
+
+        }
+        $rootScope.loadingState = false;
+        growl.addSuccessMessage("订单数据加载完毕。。。");
+      });
+    };
+
+    $scope.editRule = function (currentPointData) {
+
+
+      var actionDOM=(currentPointData.action == 1)?'获取':((currentPointData.action == 2)?'兑换':'admin');
+      var scoreType=(currentPointData.action == 1)?'+':((currentPointData.action == 3)?(currentPointData.sourceId == 1)?'+':'':'');
+      var upperTimeLimitText=(currentPointData.upperTimeLimit == null)?'永久':(currentPointData.upperTimeLimit+'h');
+      var lowerTimeLimitText=(currentPointData.lowerTimeLimit == null)?'永久':(currentPointData.lowerTimeLimit+'h');
+
+
+
+
+      var content = '<div style="padding:0 30px;">\
+      <table class="table table-hover">\
+        <thead>\
+          <tr>\
+            <th>积分变化类型</th>\
+            <th>变化来源</th>\
+            <th>当前规则</th>\
+            <th>变动后规则</th>\
+            <th>变动积分值</th>\
+            <th>规则规定上线</th>\
+            <th>规则规定下线</th>\
+          </tr>\
+        </thead>\
+        <tbody>\
+          <tr>\
+            <td>'+actionDOM+'</td><!--积分变化类型-->\
+            <td>'+currentPointData.actionDesc+'</td><!--变化来源-->\
+            <td>'+scoreType+currentPointData.score+'</td><!--当前规则-->\
+            <td style="color:red"><!--变动后规则-->\
+              <span id="lastScore">'+scoreType+currentPointData.score+'</span>\
+            </td>\
+            <td style="color:red"><!--变动积分值-->\
+              <span id="changeValue">0</span>\
+            </td>\
+            <td style="color:red">\
+              <span id="upperLimit">'+currentPointData.upperLimit+'</span> /\
+              <span id="upperTimeLimit">'+upperTimeLimitText+'</span>\
+            </td>\
+            <td style="color:red">\
+              <span>'+currentPointData.lowerLimit+'</span> /\
+              <span id="lowerTimeLimit">'+lowerTimeLimitText+'</span>\
+            </td>\
+          </tr>\
+        </tbody>\
+      </table>\
+     <table style="width: 100%;" class="editTable">\
+            <tr>\
+              <th valign="top" style="width: 100px;padding-top: 10px; "><span style="color:red">*</span>积分值变动：</th>\
+              <td style="padding-top: 10px;">\
+                  <label style="margin-right: 20px;"><input type="number" class="form-control" id="currentChangePointsInput" style="width: 182px;" placeholder="请输入积分"></label>\
+                  <label><input type="radio" name="pointsCon" value="11" checked> 增加</label> &nbsp;&nbsp;&nbsp;&nbsp;\
+                  <label><input type="radio" name="pointsCon" value="12"> 减少</label>\
+              </td>\
+            </tr>\
+            <tr>\
+              <th>规则规定上限：</th>\
+              <td style="padding-top: 10px;"> \
+                <label style="margin-right: 15px"><input type="number" id="upper" class="form-control"></label>\
+                上线循环时效：\
+                <select name="upperTimeSelect" id="upperTimeSelect">\
+                  <option value="null" selected>永久</option>\
+                  <option value="12">12h</option>\
+                  <option value="24">24h</option>\
+                </select>\
+              </td>\
+            </tr>\
+            <tr>\
+              <th>规则规定下限：</th>\
+              <td style="padding-top: 10px;">\
+                <label style="margin-right: 15px"><input type="number" id="lower" class="form-control"></label>\
+                下限循环时效：\
+                <select name="lowerTimeSelect" id="lowerTimeTimeSelect">\
+                  <option value="null" selected>永久</option>\
+                  <option value="12">12h</option>\
+                  <option value="24">24h</option>\
+                </select>\
+              </td>\
+            </tr>\
+            <tr>\
+              <th valign="top"  style="padding-top: 10px;">备注信息：</th><td style="padding-top: 10px;"><textarea  style="width:100%;" class="form-control" id="note" maxlength="200" cols="30" rows="10"></textarea></td>\
+            </tr>\
+          </table></div> ';
+      var title1 = '修改积分';
+      var modalInstance = $rootScope.openConfirmDialogModelCanVerify(title1, content);
+
+      modalInstance.result.then(function () { //模态点提交
+        console.log('点击确定');
+
+        var promise = $http({
+          method: 'get',
+          url: $rootScope.site.apiServer + "/api/jf/optJf",
+          params: {
+            userId: ids,
+            optType: $('input[name=pointsCon]:checked').val(),
+            score: $('#currentChangePointsInput').val(),
+            note: $('#currentChangePointsInput').val()
           }
-        } else {
-          $scope.tradeList = [];
-          $scope.showNoneDataInfoTip = true;
+        });
+        promise.then(function (res, status, config, headers) {
+          console.log('数据在这里');
+          console.log(res);
+          if (res.data.code == '1') {
+            $scope.search();
+          } else {
+          }
 
-        }
-        $rootScope.loadingState = false;
-        growl.addSuccessMessage("订单数据加载完毕。。。");
+          $rootScope.loadingState = false;
+          growl.addSuccessMessage("订单数据加载完毕。。。");
+        });
+
+      }, function () {
+        console.log('点击取消')
+
       });
-    };
+      $(document).on('change', '#currentChangePointsInput', function () {//表单值改变
+        chagnePointsFn()
+      });
+      $(document).on('keyup', '#currentChangePointsInput', function () {//按下键盘
+        chagnePointsFn()
+      });
+      $(document).on('click', 'input[name=pointsCon]', function () {//点击增加或者减少
+        chagnePointsFn()
+      });
 
-    $scope.getDetails = function (id) {
-      $state.go('settle.settleDetails', {id: id});
-    };
-
-
-
-    $scope.pageChanged = function () {
-      $scope.search();
-      console.log('Page changed to: ' + $rootScope.pagination.currentPage);
-    };
-
-    $scope.settleCheck = function (orderSn, status) {
-      var promise = $http({
-        method: 'GET',
-        url: $rootScope.site.apiServer + "/api/settle/checksettles",
-        params: {
-          settleIds: orderSn,
-          status: status
+      $(document).on('blur', '#note', function () {//操作备注信息不能为空
+        if ($.trim($("#note").val()).length == 0) {
+          // alert('备注信息不能为空！')
         }
       });
-      promise.then(function (res, status, config, headers) {
-        console.log('数据在这里');
-        console.log(res);
 
-        if (res.data.code == '1') {
-          $scope.search();
+      function chagnePointsFn() {
+        $rootScope.closeModelPara=true;
 
-        } else {
+        console.log($('input[name=pointsCon]:checked').val());
+        var tempVal = null;
+        var tempValType = null;
 
+        if ($('input[name=pointsCon]:checked').val() == 11) {
+          tempVal = Number(currentPoints) + Number($('#currentChangePointsInput').val());
+          tempValType = '+';
+        } else if ($('input[name=pointsCon]:checked').val() == 12) {
+          tempVal = currentPoints - $('#currentChangePointsInput').val();
+          tempValType = '-'
         }
-
-        $rootScope.loadingState = false;
-        growl.addSuccessMessage("订单数据加载完毕。。。");
-      });
-    }
-
-
+        $('#currentChangePoints').html(tempValType + $('#currentChangePointsInput').val());
+        $('#lastPoints').html(tempVal);
+      }
+    };
 
     $scope.refresh = function () {
       $scope.search();
     };
     $scope.search('true');
 
-    // 处理日期插件的获取日期的格式
-    var format = function (time, format) {
-      var t = new Date(time);
-      var tf = function (i) {
-        return (i < 10 ? '0' : "") + i
-      };
-      return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
-        switch (a) {
-          case 'yyyy':
-            return tf(t.getFullYear());
-            break;
-          case 'MM':
-            return tf(t.getMonth() + 1);
-            break;
-          case 'mm':
-            return tf(t.getMinutes());
-            break;
-          case 'dd':
-            return tf(t.getDate());
-            break;
-          case 'HH':
-            return tf(t.getHours());
-            break;
-          case 'ss':
-            return tf(t.getSeconds());
-            break;
-        }
-      })
-    }
-    // 日历插件开始
-    $scope.startDateOptions = {
-      customClass: getDayClass,
-      // minDate: new Date(2000, 5, 22),
-      maxDate: new Date(),
-      // showWeeks: true
-    };
-    $scope.endDateOptions = {
-      // dateDisabled: disabled,
-      // formatYear: 'yy',
-      maxDate: new Date(),
-      // minDate: new Date(),
-      // startingDay: 1
-    };
-    $scope.open1 = function () {
-      $scope.popup1.opened = true;
-    };
-    $scope.open2 = function () {
-      $scope.popup2.opened = true;
-    };
-    $scope.popup1 = {
-      opened: false
-    };
-    $scope.popup2 = {
-      opened: false
-    };
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    var afterTomorrow = new Date();
-    afterTomorrow.setDate(tomorrow.getDate() + 1);
-    $scope.events = [
-      {
-        date: tomorrow,
-        status: 'full'
-      },
-      {
-        date: afterTomorrow,
-        status: 'partially'
-      }
-    ];
-    function getDayClass(data) {
-      var date = data.date,
-        mode = data.mode;
-      if (mode === 'day') {
-        var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-
-        for (var i = 0; i < $scope.events.length; i++) {
-          var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
-
-          if (dayToCheck === currentDay) {
-            return $scope.events[i].status;
-          }
-        }
-      }
-      return '';
-    }
-    $scope.currentIndex=null;//初始化日历插件默认选择项
-    $scope.setDate = function (dataFormat, number,aIndex) {
-
-      var now = new Date();
-      var date = new Date(now.getTime() - 1);
-      var year = date.getFullYear();
-      var month = date.getMonth();
-      var day = date.getDate();
-      if (dataFormat == 'day') {
-        day -= number;
-      } else if (dataFormat == 'week') {
-        day -= number * 7;
-      } else if (dataFormat == 'month') {
-        month -= number;
-      } else if (dataFormat == 'year') {
-        year -= number;
-      }
-      $scope.startDate = new Date(year, month, day);
-      $scope.endDate = new Date();
-      $scope.currentIndex=aIndex;
-    }
-    // 日历插件结束
   }
 }
 
-export default transactionManageController;
+export default pointsManageController;
