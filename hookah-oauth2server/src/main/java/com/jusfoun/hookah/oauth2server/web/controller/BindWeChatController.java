@@ -169,7 +169,7 @@ public class BindWeChatController {
 
                 payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
                 //完成注册 发消息到MQ送优惠券
-                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,regUser.getUserId());
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,user.getUserId());
                 logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
             }
             //绑定完成 登录
