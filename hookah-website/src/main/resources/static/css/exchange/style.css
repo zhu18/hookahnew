@@ -1349,8 +1349,8 @@ dl {
 .goods-left .goods-details .goods-details-right .detail-money div {
 	font-size: 14px;
 	padding-left: 10px;
-	height: 55px;
-	line-height: 55px;
+	height: 45px;
+	line-height: 45px;
 }
 .goods-left .goods-details .goods-details-right .detail-money .convert {
 	display: inline-block;
@@ -1364,29 +1364,32 @@ dl {
 }
 .goods-left .goods-details .goods-details-right .detail-money .money-standard a {
 	display: inline-block;
-	line-height: 22px;
+	line-height: 16px;
 	padding: 0 5px;
-	border: 1px solid #333;
+	border: 1px solid #fff;
+	background: #fff;
 }
 .goods-left .goods-details .goods-details-right .detail-money .money-standard a.active {
 	color: #f5622e;
-	border-color: #ff0000;
+	border-color: #f5622e;
+	background: none;
 }
 .goods-details .goods-details-right .detail-count .purchase-quantity {
 	position: relative;
 	display: inline-block;
 	width: 85px;
-	height: 25px;
-	border: 1px solid #4490F6;
+	height: 40px;
+	border: 1px solid #efefef;
+	vertical-align: bottom;
 }
 .goods-details .goods-details-right .detail-count .purchase-quantity .btn-a {
 	position: absolute;
 	width: 25px;
-	height: 25px;
+	height: 40px;
 	font-size: 25px;
-	line-height: 23px;
-	background-color: #4490F6;
-	color: white;
+	line-height: 40px;
+	background-color: #f6f6f6;
+	color: #000;
 }
 .goods-details .goods-details-right .detail-count .purchase-quantity .btn-sub {
 	top: 0;
@@ -1401,7 +1404,7 @@ dl {
 	top: 0;
 	left: 25px;
 	width: 35px;
-	height: 24px;
+	height: 40px;
 	text-align: center;
 	border: none;
 }
@@ -1429,7 +1432,7 @@ dl {
 }
 .goods-table .table-title {
 	font-size: 16px;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 	height: 40px;
 	border-bottom: 1px solid #efefef;
 }
@@ -1468,9 +1471,19 @@ dl {
 	bottom: 0px;
 }
 .goods-table .table-content {
-	padding: 0 20px;
+	padding: 0 10px;
 }
 .goods-table .table-content .table-item {
+}
+.goods-table .table-content .table-item ol{
+	margin-bottom: 30px;
+}
+.goods-table .table-content .table-item ol li{
+	padding:12px 14px;
+	border-bottom:1px solid #d6d6d6;
+}
+.goods-table .table-content .table-item ol li:hover{
+	background: #f1f9ff;
 }
 .goods-table .table-content .table-item table {
 	width: 100%;
@@ -1484,18 +1497,52 @@ dl {
 	border-bottom: none;
 }
 .goods-table .table-content .table-item table tr {
-	height: 40px;
-	border: 1px solid #E9E9E9;
+	height: 28px;
 }
+.goods-table .table-content .table-item table tr td:first-child{font-weight: bold}
 .goods-table .table-content .table-item .tab-one td:first-child {
-	padding-left: 20px;
+	padding-left: 10px;
 	width: 100px;
 	text-align: right;
+	font-size: 14px;
+}
+.goods-table .table-content .table-item table td .apiInfo-con{
+	padding:0 30px;
+	margin-bottom: 20px;
+}
+.goods-table .table-content .table-item table td .apiInfo-con .reqSample-con{
+	text-align:left;
+	background: #f6f6f6;
+	max-height:310px;
+	padding:20px;
+	font-weight: normal;
+}
+.goods-table .table-content .table-item table td .apiInfo-con table td{
+	border:none;
+	height:41px;
+}
+.goods-table .table-content .table-item table td .apiInfo-con table tr{
+	border:none;
+	border-bottom:1px dashed #b5b5b5;
+	font-weight: normal;
+}
+.goods-table .table-content .table-item table td .apiInfo-con table tr td:first-child{
+	font-weight: normal;
+}
+.goods-table .table-content .table-item table td .apiInfo-con table tr:first-child{
+	background: #f6f6f6;
+	border:none;
+	height:37px;
 }
 .goods-table .table-content .table-item .tab-one table td:first-child {
 	padding-left: 0px;
 	width: auto;
 	text-align: left;
+}
+.goods-table .table-content .table-item table tr td .goodsDescBox{
+	border:1px solid #f4f4f4;
+	padding:5px;
+	font-size: 12px;
 }
 .goods-table .table-content .table-item .tab-one table td {
 	border: 1px solid grey;
@@ -1507,17 +1554,23 @@ dl {
 .goods-table .table-content .table-item table td, th {
 	padding: 0 5px;
 	word-break: break-all;
+	font-size: 14px;
 }
 .goods-table .table-content .table-item table .goodsDescBox p, .goods-table .table-content .table-item.goodsDescBox p {
 	line-height: 1.8;
 	margin: 10px 0;
 }
+.goods-table .table-content .table-item:last-child ol .comment-content{
+	line-height: 28px;
+	color:#4274bb;
+	word-break: break-all;
+}
 .goods-table .table-content .table-item:last-child ol .comment-title {
-	background-color: #F1F1F1;
 	display: inline-block;
 	width: 100%;
-	height: 40px;
-	line-height: 40px;
+	height: 26px;
+	line-height: 26px;
+	color:#696969;
 }
 .goods-table .table-content .table-item.goodsDescBox table td {
 	border: 1px solid grey;
