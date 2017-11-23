@@ -21,7 +21,7 @@ function loadPageData(data) {
                     applyChannel='无限制';
                     break;
                 case 1:
-                    applyChannel='满 <span>'+item.discountValue+'</span>元可用';
+                    applyChannel='满 <span>'+(item.discountValue/100)+'</span>元可用';
                     break;
                 case 2:
                     applyChannel='折扣';
