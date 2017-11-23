@@ -376,22 +376,24 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         filter.add(Condition.eq("userCouponStatus",HookahConstants.UserCouponStatus.UN_USED.getCode()));
         filter.add(Condition.isNull("orderSn"));
         List<UserCoupon> userCoupons = userCouponService.selectList(filter);
-        ArrayList<CouponVo> coupons = null;
-        for (UserCoupon userCoupon : userCoupons){
-            Coupon coupon = couponMapper.selectByPrimaryKey(userCoupon.getCouponId());
-            CouponVo couponVo = new CouponVo();
-            couponVo.setUserCouponId(userCoupon.getId());
-            BeanUtils.copyProperties(coupon,couponVo);
-            couponVo.setExpiryEndTime(DateUtils.toDateText(coupon.getExpiryEndDate()));
-            switch (couponVo.getApplyChannel()){
-                case 0:
-                    coupons.add(couponVo);
-                    break;
-                case 1:
-                    if (goodsAmount >= coupon.getDiscountValue()){
+        List<CouponVo> coupons = new ArrayList<>();
+        if (userCoupons.size()>0){
+            for (UserCoupon userCoupon : userCoupons){
+                Coupon coupon = couponMapper.selectByPrimaryKey(userCoupon.getCouponId());
+                CouponVo couponVo = new CouponVo();
+                couponVo.setUserCouponId(userCoupon.getId());
+                BeanUtils.copyProperties(coupon,couponVo);
+                couponVo.setExpiryEndTime(DateUtils.toDateText(coupon.getExpiryEndDate()));
+                switch (couponVo.getApplyChannel()){
+                    case 0:
                         coupons.add(couponVo);
-                    }
-                    break;
+                        break;
+                    case 1:
+                        if (goodsAmount >= coupon.getDiscountValue()){
+                            coupons.add(couponVo);
+                        }
+                        break;
+                }
             }
         }
         return coupons;

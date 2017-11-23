@@ -91,6 +91,9 @@ public class OrderInfoController extends BaseController {
                 }
             }
             List<Coupon> couponList = couponService.getUserCoupons(userId,goodsAmount);
+            if (couponList.size() == 0){
+                couponList = null;
+            }
             model.addAttribute("couponList",couponList);
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",carts);
@@ -143,6 +146,9 @@ public class OrderInfoController extends BaseController {
             list.add(vo);
             //所有能用的优惠券
             List<Coupon> couponList = couponService.getUserCoupons(userId,goodsAmount);
+            if (couponList.size() == 0){
+                couponList = null;
+            }
             model.addAttribute("couponList",couponList);
             model.addAttribute("orderAmount",goodsAmount);
             model.addAttribute("cartOrder",list);
