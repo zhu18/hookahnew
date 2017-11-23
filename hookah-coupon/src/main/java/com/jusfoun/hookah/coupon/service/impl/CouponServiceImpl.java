@@ -521,8 +521,8 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
                 coupon.setActivatedUser("SYSTEM");
                 coupon.setActivatedTime(now);
+                this.updateByIdSelective(coupon);
             }
-            this.updateByIdSelective(coupon);
         }
     }
 }
