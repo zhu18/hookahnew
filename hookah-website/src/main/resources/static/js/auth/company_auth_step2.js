@@ -141,7 +141,7 @@ $("#companyForm").validate({
     //city: 'required',
     //address: 'required',
       //workAddress: 'required',
-    // licensePath:'required',
+      filename:'required',
     // taxPath:'required',
     // certifictePath:'required',
     //tel: {
@@ -161,7 +161,7 @@ $("#companyForm").validate({
     //address: '详细地址不能为空',
     //workAddress: '办公地址不能为空',
     lawPersonNum:'法定代表人证件编号不能为空',
-    licensePath: '营业执照必须上传',
+      filename: '营业执照必须上传',
     taxPath: '税务登记证必须上传',
     //certifictePath: '企业代码证必须上传',
     //tel: {
