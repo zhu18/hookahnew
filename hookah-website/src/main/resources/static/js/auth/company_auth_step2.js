@@ -72,8 +72,9 @@ $('.unloadBtn').fileupload({
             "height":"200px",
         });
       $(this).siblings(".input_hide").val(obj.filePath);
-      $(this).siblings(".input_op").val(obj.filePath);
-      $(this).siblings(".upLoad_warp").html('点击替换');
+      // $(this).siblings(".input_op").val(obj.filePath);
+      $("input[name='licensePath']").val(obj.filePath);
+      // $(this).siblings(".upLoad_warp").html('点击替换');
       // $('.upLoad').mouseover(function () {
       //     $(this).siblings('.upLoad_warp').show();
       // });
@@ -141,7 +142,7 @@ $("#companyForm").validate({
     //city: 'required',
     //address: 'required',
       //workAddress: 'required',
-      filename:'required',
+      licensePath:'required',
     // taxPath:'required',
     // certifictePath:'required',
     //tel: {
@@ -161,7 +162,7 @@ $("#companyForm").validate({
     //address: '详细地址不能为空',
     //workAddress: '办公地址不能为空',
     lawPersonNum:'法定代表人证件编号不能为空',
-      filename: '营业执照必须上传',
+    licensePath: '营业执照必须上传',
     taxPath: '税务登记证必须上传',
     //certifictePath: '企业代码证必须上传',
     //tel: {
@@ -169,12 +170,12 @@ $("#companyForm").validate({
       //isMobile: '电话格式不正确'
    // }
   },
-  showErrors: function (errorMap, errorList) {
-    if (errorList.length) {
-      errorList[0].element.focus();
-    }
-    this.defaultShowErrors();
-  }
+  // showErrors: function (errorMap, errorList) {
+  //   // if (errorList.length) {
+  //   //   errorList[0].element.focus();
+  //   // }
+  //   this.defaultShowErrors();
+  // }
 });
 // $.validator.addMethod("isMobile", function (value, element) {
 //   /*var reg = /^((0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/;*/
