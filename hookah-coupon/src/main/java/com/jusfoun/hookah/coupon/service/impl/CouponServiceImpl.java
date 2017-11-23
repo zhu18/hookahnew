@@ -75,6 +75,8 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         coupon.setCouponName(coupon.getCouponName().trim());
         if (DateUtils.isSameDay(coupon.getExpiryStartDate(),new Date())){
             coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
+            coupon.setActivatedTime(new Date());
+            coupon.setActivatedUser(userId);
         }else {
             coupon.setCouponStatus(HookahConstants.CouponStatus.UN_USED.getCode());
         }
@@ -97,7 +99,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         coupon.setId(coupon.getId());
         BeanUtils.copyProperties(coupon,mgCoupon);
         mgCouponService.insert(mgCoupon);
-        return ReturnData.success("");
+        return ReturnData.success("添加成功");
     }
 
     @Override
@@ -117,7 +119,6 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             }
         }
         coupon.setUpdateUser(userId);
-        coupon.setUpdateTime(date);
         if (goodsList!=null){
 
         }
@@ -133,6 +134,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             userCoupon.setValidDays(coupon.getValidDays());
             userCoupon.setExpiryStartDate(coupon.getExpiryStartDate());
             userCoupon.setExpiryEndDate(coupon.getExpiryEndDate());
+            userCoupon.setUpdateUser(userId);
             Long[] ids = new Long[userCoupons.size()];
             for (int i=0;i<userCoupons.size();i++){
                 ids[i] = userCoupons.get(i).getId();
@@ -477,6 +479,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 if (userCoupons != null && userCoupons.size() > 0){
                     UserCoupon userCoupon = new UserCoupon();
                     userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.EXPIRED.getCode());
+                    userCoupon.setUpdateUser("SYSTEM");
                     Long[] ids = new Long[userCoupons.size()];
                     for (int i=0;i<userCoupons.size();i++){
                         ids[i] = userCoupons.get(i).getId();
@@ -486,6 +489,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                     userCouponService.updateByConditionSelective(userCoupon,filter);
                 }
                 coupon.setCouponStatus(HookahConstants.CouponStatus.EXPIRED.getCode());
+                coupon.setUpdateUser("SYSTEM");
                 this.updateByIdSelective(coupon);
             }
         }
@@ -496,6 +500,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         for (UserCoupon userCoupon : userCoupons){
             if (DateUtils.isExpired(userCoupon.getReceivedTime(),userCoupon.getValidDays(),new Date())){
                 userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.EXPIRED.getCode());
+                userCoupon.setUpdateUser("SYSTEM");
                 userCouponService.updateByIdSelective(userCoupon);
             }
         }
@@ -514,6 +519,8 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             Date now = new Date();
             if (DateUtils.isSameDay(expireStartDate,now)){
                 coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
+                coupon.setActivatedUser("SYSTEM");
+                coupon.setActivatedTime(now);
             }
             this.updateByIdSelective(coupon);
         }
