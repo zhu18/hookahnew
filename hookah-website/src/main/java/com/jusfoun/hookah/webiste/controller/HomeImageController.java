@@ -29,7 +29,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping(value = "/test/image")
+@RequestMapping(value = "/api/image")
 public class HomeImageController extends BaseController{
     @Resource
     HomeImageService homeImageService;
