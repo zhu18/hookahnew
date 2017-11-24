@@ -23,12 +23,12 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label" for="couponName">优惠券名称：<span class="must">*</span></label>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <input type="text" id="couponName" name="couponName" ng-maxlength="50" class="form-control"
                            ng-model="couponName" style="width: 210px;height: 32px" required/>
                 </div>
-                <div class="col-sm-4 control-label" style="text-align: left;">
-
+                <div class="col-sm-4 control-label" data-ng-show="userForm.couponName.$pristine || userForm.couponName.$invalid" style="text-align: left;">
+                    <p data-ng-show="userForm.couponName.$error.required">优惠券名称不能为空。</p>
                 </div>
             </div>
             <div class="form-group">
@@ -45,35 +45,39 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label" for="totalCount">总发行量：<span class="must">*</span></label>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <input type="text" id="totalCount" name="totalCount" ng-maxlength="50" class="form-control"
-                           ng-model="totalCount" placeholder="只能输入正整数，输入0为无限制。" style="width: 210px;height: 32px"
+                           ng-model="totalCount" data-ng-pattern="/^\d+$/" placeholder="只能输入正整数，输入0为无限制。" style="width: 210px;height: 32px"
                            required/>
                 </div>
-                <!--<div class="col-sm-4 control-label" style="text-align: left;">-->
-                <!--系统用户名不能为空，且最大长度为50-->
-                <!--</div>-->
+                <div class="col-sm-4 control-label" data-ng-show="userForm.totalCount.$pristine || userForm.totalCount.$invalid" style="text-align: left;">
+                    <p data-ng-show="userForm.totalCount.$error.required">总发行量不能为空。</p>
+                    <p data-ng-show="userForm.totalCount.$error.pattern">只能输入正整数，输入0为无限制。</p>
+                </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label" for="faceValue">面额：<span class="must">*</span></label>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <input type="text" id="faceValue" name="faceValue" ng-maxlength="50" class="form-control"
-                           ng-model="faceValue" placeholder="面值只能是数值，1-9999，限2位小数。" style="width:210px;height: 32px"
+                           ng-model="faceValue" data-ng-pattern="/^(?!(0{1,4}(((\\.0{0,2})?))$))([1-9]{1}[0-9]{0,3}|0)(\\.[0-9]{1,2})?$/" placeholder="面值只能是数值，1-9999，限2位小数。" style="width:210px;height: 32px"
                            required/>
                 </div>
-                <!--<div class="col-sm-4 control-label" style="text-align: left;">-->
-                <!--系统用户名不能为空，且最大长度为50-->
-                <!--</div>-->
+                <div class="col-sm-4 control-label" data-ng-show="userForm.faceValue.$pristine && userForm.faceValue.$invalid" style="text-align: left;">
+                    <p data-ng-show="userForm.faceValue.$error.required">面额不能为空。</p>
+                    <p data-ng-show="userForm.faceValue.$error.pattern">面值只能是数值，1-9999，限2位小数。</p>
+                </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label" for="limitedCount">每人限领：<span class="must">*</span></label>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <input type="text" id="limitedCount" name="limitedCount" ng-maxlength="50" data-ng-pattern=""
-                           class="form-control" ng-model="limitedCount" style="width: 210px;height: 32px" required/>
+                           class="form-control" ng-model="limitedCount" data-ng-pattern="/^\d+$/" style="width: 210px;height: 32px" required/>
                 </div>
-                <!--<div class="col-sm-4 control-label" style="text-align: left;">-->
-                <!--系统用户名不能为空，且最大长度为50-->
-                <!--</div>-->
+                <div class="col-sm-4 control-label" data-ng-show="userForm.limitedCount.$pristine || userForm.limitedCount.$invalid" style="text-align: left;">
+                    <p data-ng-show="userForm.limitedCount.$error.required" >每人限领不能为空。</p>
+                    <p data-ng-show="val" onkeyup="val=(totalCount < limitedCount)" >每人限领数量不能大于总发行量</p>
+                    <p data-ng-show="userForm.totalCount.$error.pattern">只能输入正整数。</p>
+                </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">使用门槛：<span class="must">*</span></label>
@@ -130,9 +134,13 @@
                     </div>
                     <div class="col-sm-12">
                         <label class="col-sm-2 control-label" for="validDays"> 固定天数：<span class="must">*</span></label>
-                        <div class="col-sm-10 ">
+                        <div class="col-sm-4 ">
                             <input type="text" id="validDays" name="validDays" ng-maxlength="50" class="form-control"
-                                   ng-model="validDays" style="width: 155px;height: 32px" required/>
+                                   ng-model="validDays" style="width: 155px;height: 32px" data-ng-pattern="/^\d+$/" required/>
+                        </div>
+                        <div class="col-sm-4 control-label" data-ng-show="userForm.validDays.$pristine || userForm.validDays.$invalid" style="text-align: left;">
+                            <p data-ng-show="userForm.validDays.$error.required" >固定天数不能为空。</p>
+                            <p data-ng-show="userForm.validDays.$error.pattern">只能输入正整数。</p>
                         </div>
                     </div>
                 </div>
