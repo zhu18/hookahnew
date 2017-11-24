@@ -72,6 +72,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         if (coupons!=null&&coupons.size()>0){
             throw new HookahException("名称为["+coupon.getCouponName().trim()+"]的优惠券已存在");
         }
+        if (coupon.getTotalCount()<coupon.getLimitedCount()){
+            throw new HookahException("每人限领数量不能大于总发行量");
+        }
         coupon.setCouponName(coupon.getCouponName().trim());
         if (DateUtils.isSameDay(coupon.getExpiryStartDate(),new Date())){
             coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
@@ -117,6 +120,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                     }
                 }
             }
+        }
+        if (coupon.getTotalCount()<coupon.getLimitedCount()){
+            throw new HookahException("每人限领数量不能大于总发行量");
         }
         coupon.setUpdateUser(userId);
         if (goodsList!=null){
@@ -368,24 +374,26 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         filter.add(Condition.eq("isDeleted",(byte)0));
         filter.add(Condition.eq("userId",userId));
         filter.add(Condition.eq("userCouponStatus",HookahConstants.UserCouponStatus.UN_USED.getCode()));
-        filter.add(Condition.eq("orderSn",null));
+        filter.add(Condition.isNull("orderSn"));
         List<UserCoupon> userCoupons = userCouponService.selectList(filter);
         List<CouponVo> coupons = new ArrayList<>();
-        for (UserCoupon userCoupon : userCoupons){
-            Coupon coupon = couponMapper.selectByPrimaryKey(userCoupon.getCouponId());
-            CouponVo couponVo = new CouponVo();
-            couponVo.setUserCouponId(userCoupon.getId());
-            BeanUtils.copyProperties(coupon,couponVo);
-            couponVo.setExpiryEndTime(DateUtils.toDateText(coupon.getExpiryEndDate()));
-            switch (couponVo.getApplyChannel()){
-                case 0:
-                    coupons.add(couponVo);
-                    break;
-                case 1:
-                    if (goodsAmount >= coupon.getDiscountValue()){
+        if (userCoupons.size()>0){
+            for (UserCoupon userCoupon : userCoupons){
+                Coupon coupon = couponMapper.selectByPrimaryKey(userCoupon.getCouponId());
+                CouponVo couponVo = new CouponVo();
+                couponVo.setUserCouponId(userCoupon.getId());
+                BeanUtils.copyProperties(coupon,couponVo);
+                couponVo.setExpiryEndTime(DateUtils.toDateText(coupon.getExpiryEndDate()));
+                switch (couponVo.getApplyChannel()){
+                    case 0:
                         coupons.add(couponVo);
-                    }
-                    break;
+                        break;
+                    case 1:
+                        if (goodsAmount >= coupon.getDiscountValue()){
+                            coupons.add(couponVo);
+                        }
+                        break;
+                }
             }
         }
         return coupons;

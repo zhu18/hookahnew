@@ -36,11 +36,12 @@ public class HomeImageController extends BaseController{
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData list() {
+    public ReturnData list(Byte imgType) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
             List<Condition> filters = new ArrayList();
+            filters.add(Condition.eq("imgType", imgType));
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.asc("imgSort"));
             returnData.setData(homeImageService.selectList(filters,orderBys));

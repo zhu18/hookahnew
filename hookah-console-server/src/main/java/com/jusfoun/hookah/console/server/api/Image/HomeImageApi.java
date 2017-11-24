@@ -43,13 +43,13 @@ public class HomeImageApi extends BaseController{
 
     @RequestMapping("/del")
     @ResponseBody
-    public ReturnData delHomeImageBack(String imgId) {
+    public ReturnData delHomeImageBack(String imgId, Byte imgType) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
 //            HomeImage homeImage = homeImageService.selectById(imgId);
             // 根据该imgId，大于该ID下的imgSort值逐一减1更新数据表的imgSort的值，重新排序
-            homeImageService.updateSortValByImgId(imgId);
+            homeImageService.updateSortValByImgId(imgId, imgType);
             // 删除改imgId
             homeImageService.delete(imgId);
         } catch (Exception e) {

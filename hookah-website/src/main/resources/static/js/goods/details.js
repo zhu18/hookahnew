@@ -3,6 +3,7 @@
  */
 // 列表切换功能
 $(function(){
+	evaluate($.getUrlParam("id"));
     function switchHover() {
         $(".goods-table .table-content .table-item").each(function () {
             if ($(this).hasClass('active')) {
@@ -25,8 +26,8 @@ $(function(){
                     })
                 }
             });
-            if ($(document).scrollTop() >= 570) {
-                $("body").animate({scrollTop: 570}, 300);
+            if ($(document).scrollTop() >= 600) {
+				$("html,body").animate({scrollTop:600}, 300);
             }
         })
     }
@@ -65,7 +66,7 @@ $(function(){
     function suspensionBox() {
         var nav = $(".goods-table .table-title").children('ul'); //得到导航对象
         $(window).scroll(function () {
-            if ($(document).scrollTop() >= 570) {
+			if ($(document).scrollTop() >= 600) {
                 nav.addClass('fiexd');
                 nav.fadeIn();
             } else {
@@ -96,18 +97,20 @@ $(function(){
                         var html = '';
                         for(var i=0;i<list.length;i++){
                             html += '<li>';
-                            html += '<div class="comment-title margin-bottom-10">';
-                            html += '<span class="name padding-left-10">'+list[i].username+'</span>';
-                            html += '<span class="date padding-left-20">'+list[i].addTime+'</span>';
-                            // html += '<a href="javascript:void(0)" class="padding-left-20">回复</a>';
-                            html += '</div>';
-                            html += '<div class="comment-content padding-left-20 margin-bottom-20">'+list[i].commentContent+'</div>';
+                            html += '<div class="comment-content">'+list[i].commentContent+'</div>';
+							html += '<div class="comment-title">';
+							html += '<span class="name">'+list[i].username+'</span>';
+							html += '<span class="date padding-left-20">'+list[i].addTime+'</span>';
+							// html += '<a href="javascript:void(0)" class="padding-left-20">回复</a>';
+							html += '</div>';
                             html += '</li>';
                         }
                         $(".evaluate h1").css('display','block');
                         $('.evaluate ol').html(html);
+                        $('#J_evaluate').html('('+list.length+')');
                     }else{
                         $(".evaluate ol").html('<p style="text-align: center;min-height:100px; font-size: 18px;">暂无评论</p>');
+						$('#J_evaluate').html('(0)');
                     }
                 }else{
                     $.alert(data.message)
@@ -117,12 +120,6 @@ $(function(){
     }
 })
 
-
-// $.getUrlParam = function (key) {
-//     var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-//     var result = window.location.search.substr(1).match(reg);
-//     return result ? decodeURIComponent(result[2]) : null;
-// };
 
 var priceT = (JshopPrice / 100).toFixed(2)
 if(isDiscussPrice == 0){
@@ -142,7 +139,6 @@ if(format == 0){
 	txts = '年';
 }
 $("#J_goodsFommt").html(txts);
-// renderDetails();
 function renderDetails() {
     $.ajax({
         url: '/goods/back/findById',
@@ -151,13 +147,7 @@ function renderDetails() {
             id: id
         },
         success: function (data) {
-            // return JSON.stringify(data);
             if (data.code == "1") {
-                // $('#J_goodsImg').attr('src', data.data.goodsImg);
-                // $('#J_goodsTitle').html(data.data.goodsName);
-                // $('#J_goodsBrief').html(data.data.goodsBrief);
-                // $('#J_goodsPrice').html(Number(data.data.formatList[0].price) / 100).attr('formatid',data.data.formatList[0].formatId);
-
                 function formatType(type) {
                     if (type == 0) {
                         return '次';
@@ -167,8 +157,6 @@ function renderDetails() {
                         return '年';
                     }
                 }
-
-                // $('#J_goodsNumber').html((data.data.shopNumber <= 1 ? '' : data.data.shopNumber)+formatType(data.data.shopFormat));
                 $('#J_goodsDesc').html(data.data.goodsDesc);
                 $('#J_addCart').attr('href', 'javascript:addCart("' + data.data.goodsId + '");')
                 if (data.data.formatList[0].formatId == 0) {
@@ -183,7 +171,6 @@ function renderDetails() {
                         html += '<a href="javascript:;" onclick="editPrice(this, ' + item.price + ', ' + item.formatId + ')" class="margin-right-5 ' + active + '" formatid="' + item.formatId + '" price="' + item.price + '">' + item.number + formatType(item.format) + '</a>';
                     })
                     html += '</div>';
-                    // $("#J_detail-money").append(html)
                 }
             } else {
                 console.log(data.message);
@@ -194,7 +181,6 @@ function renderDetails() {
 }
 // 加入购物车
 function addCart(goodsId,isDiscussPrice) {
-
     var formatname = null;
     $('.money-standard a').each(function(){
         if($(this).hasClass('active')){
@@ -206,7 +192,6 @@ function addCart(goodsId,isDiscussPrice) {
 			return $.alert('数据有误');
 		}
 	}
-
 	$.ajax({
 		url: '/cart/add',
 		type: 'post',
@@ -239,7 +224,6 @@ function editPrice(that,price,formatId){
     $('.J_goodsPrice').html((Number(price) / 100).toFixed(2)).attr('formatid',formatId);
 	$('#J_formatId').val(formatId);
 }
-
 function check() {
 	$.ajax({
 		url: '/islogin',
@@ -250,7 +234,7 @@ function check() {
 				var goodsNumber = $('#J_buyNumber').val();
 				var formatId = $('#J_formatId').val();
 				if (goodsId && goodsNumber && formatId) {
-					if($("#J_userType").val() == '2'){
+					if($("#J_userType").val() == '2' && $("#J_purchaseLimit").val() == '2'){
 						$.alert('此商品仅为企业使用');
 						return false;
 					}else{

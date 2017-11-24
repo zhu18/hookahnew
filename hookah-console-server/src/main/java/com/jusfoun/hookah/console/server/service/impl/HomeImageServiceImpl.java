@@ -36,7 +36,7 @@ public class HomeImageServiceImpl extends GenericServiceImpl<HomeImage, String> 
         if (obj == null)
             throw new HookahException("空数据！");
 
-        Byte maxSortVal = homeImageMapper.findMaxSortVal();
+        Byte maxSortVal = homeImageMapper.findMaxSortVal(obj.getImgType());
         if(maxSortVal != null){
             //每次插入图片，保证当前数据最大排序值+1
             obj.setImgSort(Byte.valueOf(String.valueOf(maxSortVal.intValue() + 1)));
@@ -48,8 +48,8 @@ public class HomeImageServiceImpl extends GenericServiceImpl<HomeImage, String> 
     }
 
     @Override
-    public int updateSortValByImgId(String imgId) {
-        return homeImageMapper.updateSortValByImgId(imgId);
+    public int updateSortValByImgId(String imgId, Byte imgType) {
+        return homeImageMapper.updateSortValByImgId(imgId, imgType);
     }
 
     @Override
