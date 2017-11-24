@@ -81,7 +81,7 @@ function loadPageData(data) {
                     '<div class="money">'+(item.faceValue/100)+'</div> </div> ' +
                     '<div class="grid-left average message-tag"> ' +
                     '<p>'+applyPlatform+'</p> ' +
-                    '<p>'+applyChannel+'<</p> </div> </div> ' +
+                    '<p>'+applyChannel+'</p> </div> </div> ' +
                     '<div class="info"> ' +
                     '<p><span>适用平台：</span><span>'+applyPlatform+'</span></p> ' +
                     '<p><span>有效期至：</span><span>'+item.expiryEndDate+'</span></p> ' +
@@ -96,7 +96,7 @@ function loadPageData(data) {
                     '<div class="money">'+(item.faceValue/100)+'</div> </div> ' +
                     '<div class="grid-left average message-tag"> ' +
                     '<p>'+applyPlatform+'</p> ' +
-                    '<p>'+applyChannel+'<</p> </div> </div> ' +
+                    '<p>'+applyChannel+'</p> </div> </div> ' +
                     '<div class="info"> ' +
                     '<p><span>适用平台：</span><span>'+applyPlatform+'</span></p> ' +
                     '<p><span>有效期至：</span><span>'+item.expiryEndDate+'</span></p> ' +
