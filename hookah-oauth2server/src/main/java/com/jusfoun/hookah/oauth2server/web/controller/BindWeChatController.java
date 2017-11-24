@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.config.WeChatConfig;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
+import com.jusfoun.hookah.core.domain.MessageCode;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.WeChatAuthInfo;
 import com.jusfoun.hookah.core.domain.WxUserInfo;
@@ -99,7 +100,8 @@ public class BindWeChatController {
             }
 
             filters.add(Condition.eq("openid" , openid));
-            if(!wxUserInfoService.exists(filters)){
+            WxUserInfo wxInfo =  wxUserInfoService.selectOne(filters);
+            if(Objects.isNull(wxInfo)){
                 throw new HookahException("绑定微信数据异常");
             }
 
@@ -134,8 +136,9 @@ public class BindWeChatController {
                 users.setAddTime(new Date());
                 users.setRegTime(new Date());
                 users.setIsEnable((byte) 1);
-                users.setHeadImg(site.get("user-default-img"));
-                users.setPassword(DEFAULT_PASSWORD);
+//                users.setHeadImg(site.get("user-default-img"));
+                users.setHeadImg(wxInfo.getHeadimgurl() !=null && !"".equals(wxInfo.getHeadimgurl()) ? wxInfo.getHeadimgurl() : site.get("user-default-img"));
+                users.setPassword(openid.length() > 6 ? openid.substring(openid.length() - 6) : openid);
                 users.setMobile(user.getMobile());
                 //用户编码
                 users.setUserSn(generateUserSn());
@@ -143,6 +146,18 @@ public class BindWeChatController {
                 users.setUserName(WXConfigUtils.generateUserName(user.getOpenid()));
 
                 User regUser = userService.insert(users);
+
+                //发送默认密码到用户手机
+                MessageCode messageCode = new MessageCode();
+                messageCode.setCode(Integer.valueOf(HookahConstants.SmsTypeNew.SMS_USER_REGISTER_DEFAULT_PWD.toString()));
+                messageCode.setMobileNo(user.getMobile());
+                messageCode.setPassword(openid.length() > 6 ? openid.substring(openid.length() - 6) : openid);
+                if(StringUtils.isNotBlank(regUser.getUserId())) {
+                    messageCode.setUserId(regUser.getUserId());
+                }
+                //添加短信记录
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);
+
                 //绑定微信信息
                 WxUserInfo wxUserInfo = new WxUserInfo();
                 wxUserInfo.setUserid(regUser.getUserId());
