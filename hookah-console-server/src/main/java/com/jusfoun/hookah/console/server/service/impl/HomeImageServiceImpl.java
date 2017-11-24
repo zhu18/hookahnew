@@ -99,6 +99,7 @@ public class HomeImageServiceImpl extends GenericServiceImpl<HomeImage, String> 
     @Override
     public List<HomeImage> getImageInfoList() {
         List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("imgType", 1));
         List<OrderBy> orderBys = new ArrayList();
         orderBys.add(OrderBy.asc("imgSort"));
         return this.selectList(filters, orderBys);

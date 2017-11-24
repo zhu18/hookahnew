@@ -1342,6 +1342,10 @@ dl {
 	height: 44px;
 	-webkit-box-orient: vertical;
 }
+.goods-left .goods-details .goods-details-right .detail-info a{
+	color:#ffa800;
+	text-decoration: underline;
+}
 .goods-left .goods-details .goods-details-right .detail-money {
 	/*height: 110px;*/
 	background-color: #F3F3F3;
