@@ -86,14 +86,10 @@
                         <input type="radio" name="applyChannel" ng-model="applyChannel" value="0" class="margin-right-10"/>无限制
                     </label>
                     <label >
-                        <input type="radio" name="applyChannel" ng-model="applyChannel" value="1" class="margin-right-10"/>
-                        <span>满 <input style="width: 40px;" type="text" data-ng-model="discountValue">可用</span>
+                        <input type="radio" name="applyChannel" ng-model="applyChannel" value="1" ng-checked="applyChannel==1" class="margin-right-10"/>
+                        <span>满 <input style="width: 40px;"  ng-focus="applyChannel=1" type="text" data-ng-model="discountValue">可用</span>
                     </label>
-
                 </div>
-                <!--<div class="col-sm-4 control-label" style="text-align: left;">-->
-                <!--系统用户名不能为空，且最大长度为50-->
-                <!--</div>-->
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">有效期</label>
