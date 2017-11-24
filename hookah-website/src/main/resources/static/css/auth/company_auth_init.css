@@ -54,12 +54,12 @@
 }
 .auth-info .typeBox li{
     overflow: hidden;
-    padding-left:130px;
+    padding-left:40px;
 }
 .auth-info .typeBox li>label{
     padding-right:10px;
     float: left;
-    width:150px;
+    width:255px;
     text-align: right;
 }
 .auth-info .typeBox li>label span{
@@ -153,7 +153,7 @@
 .auth-info .upLoad {
     width: 160px;
     height: 40px;
-    margin-left: 160px;
+    margin-left: 265px;
     position: relative;
     margin-bottom: 20px;
 }
