@@ -222,6 +222,13 @@ public class RabbitMQMessageListener {
                 else
                     map.put("mobile", messageCode.getMobileNo());
                 break;
+            case 107:
+                map.put("password", messageCode.getPassword());
+                if(messageCode.getMobileNo().length() > 4)
+                    map.put("mobile", messageCode.getMobileNo().substring(messageCode.getMobileNo().length() - 4));
+                else
+                    map.put("mobile", messageCode.getMobileNo());
+                break;
             case 201:
             case 202:
                 Organization organization = organizationMapper.selectByPrimaryKey(messageCode.getBusinessId());
