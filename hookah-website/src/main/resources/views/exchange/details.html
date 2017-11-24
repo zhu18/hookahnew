@@ -543,6 +543,13 @@ var htmlPart = {
 					<%}%>
 				</ul>
 			</div>
+			<div class="ad-box">
+				<%for(item in advertisingBitsImg){%>
+					<a class="display-block" target="_blank" href="${item.imgLink}">
+						<img src="${item.imgUrl}" alt="">
+					</a>
+				<%}%>
+			</div>
 		</div>
 	</div>
 </div>

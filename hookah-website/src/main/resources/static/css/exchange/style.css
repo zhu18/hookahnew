@@ -1598,6 +1598,18 @@ dl {
 	width: 200px;
 	background-color: white;
 }
+.goodsDetails .goods-right .ad-box{
+	width:222px;
+	margin-bottom: 20px;
+}
+.goodsDetails .goods-right .ad-box a{
+	width:222px;
+	line-height:0;
+	margin-top: 20px;
+}
+.goodsDetails .goods-right .ad-box a img{
+	width:100%;
+}
 .goodsDetails .goods-right .recommend-one .recommend-title {
 	font-size: 16px;
 	border-bottom: 1px solid #EFEFEF;
