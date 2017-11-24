@@ -17,7 +17,7 @@ public interface HomeImageService extends GenericService<HomeImage,String> {
 
     void addImage(HomeImageVo obj, User currentUser) throws HookahException;
 
-    int updateSortValByImgId(String imgId);
+    int updateSortValByImgId(String imgId, Byte imgType);
 
     void sort(String imgId, String flg);
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.jusfoun.hookah.core.dao.HomeImageMapper" >
 
   <select id="findMaxSortVal" resultType="java.lang.Byte">
-    SELECT MAX(img_sort) FROM  home_image
+    SELECT MAX(img_sort) FROM  home_image WHERE img_type = #{imgType}
   </select>
 
   <resultMap id="BaseResultMap" type="com.jusfoun.hookah.core.domain.HomeImage" >
@@ -16,6 +16,7 @@
     <result column="img_desc" property="imgDesc" jdbcType="VARCHAR" />
     <result column="img_link" property="imgLink" jdbcType="VARCHAR" />
     <result column="img_sort" property="imgSort" jdbcType="TINYINT" />
+    <result column="img_type" property="imgType" jdbcType="TINYINT" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -25,6 +26,8 @@
     UPDATE home_image SET img_sort = img_sort - 1
 
     WHERE   img_sort >(SELECT hi.img_sort FROM (SELECT img_sort FROM home_image WHERE img_id = #{imgId}) hi )
+
+    AND img_type = #{imgType}
 
   </update>
 

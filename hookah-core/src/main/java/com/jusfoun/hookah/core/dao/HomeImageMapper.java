@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface HomeImageMapper extends GenericDao<HomeImage> {
 
-    Byte findMaxSortVal();
+    Byte findMaxSortVal(@Param("imgType") Byte imgType);
 
-    int updateSortValByImgId(@Param("imgId") String imgId);
+    int updateSortValByImgId(@Param("imgId") String imgId, @Param("imgType") Byte imgType);
 }
