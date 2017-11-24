@@ -78,7 +78,8 @@ public class HookahConstants {
         SMS_CHANGE_USER_PWD("104"),   //修改登录密码
         SMS_CHANGE_MOBILE("103"),   //修改手机号
         SMS_CHANGE_PAY_PWD("105"),   //修改交易密码
-        SMS_SET_PAY_PWD("106");   //设置交易密码
+        SMS_SET_PAY_PWD("106"),   //设置交易密码
+        SMS_USER_REGISTER_DEFAULT_PWD("107");//第三方注册默认密码
 
         public String code;
 
