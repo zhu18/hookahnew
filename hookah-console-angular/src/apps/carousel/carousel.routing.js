@@ -14,8 +14,14 @@ export default function carouselRouting($stateProvider, $urlRouterProvider) {
 			controller: CarouselController,
 			permission: 'carousel_search'
 		})
+		.state('carousel.ad', {
+			url: '/carousel/ad',
+			template: require('./list.html'),
+			controller: CarouselController,
+			permission: 'carousel_ad'
+		})
 		.state('carousel.edit', {
-			url: '/carousel/edit/:type/:id',
+			url: '/carousel/edit/:type/:imgType/:id',
 			params: {'data': null},
 			template: require('./edit.html'),
 			controller: EditController,

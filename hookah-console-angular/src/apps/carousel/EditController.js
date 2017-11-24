@@ -1,5 +1,12 @@
 class EditController {
 	constructor($scope, $rootScope, $http, $state,$stateParams, $uibModal, usSpinnerService, growl) {
+		console.log( '-----------------------------:'+$stateParams.imgType)
+		$scope.pageName = '';
+		if($stateParams.imgType == '0'){
+			$scope.pageName = '轮播图';
+		}else if($stateParams.imgType == '1'){
+			$scope.pageName = '商详页广告';
+		}
 		var url= '';
 		$scope.add = function () {
 			var promise = $http({
@@ -53,6 +60,7 @@ class EditController {
 				if (res.data.code == 1) {
 					$scope.goodsImgView = res.data.data[0].absPath;
 					$scope.pageData.imgUrl = res.data.data[0].absPath;
+					$scope.pageData.imgType = $stateParams.imgType;
 				} else {
 					growl.addErrorMessage("上传失败");
 				}
