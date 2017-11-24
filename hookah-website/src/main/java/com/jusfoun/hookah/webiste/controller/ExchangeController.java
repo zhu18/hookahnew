@@ -133,6 +133,8 @@ public class ExchangeController extends BaseController{
             if(Objects.isNull(goodsVo.getApiInfo()) && HookahConstants.GOODS_TYPE.equals(goodsVo.getGoodsType()))
                throw new HookahException("API调用失败");
             model.addAttribute("goodsDetails", goodsVo);
+            // 广告位图
+            model.addAttribute("advertisingBitsImg", homeImageService.getImageInfoList());
             Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
             if(userMap != null){
                 model.addAttribute("userType", userService.selectById(getCurrentUser().getUserId()).getUserType());
