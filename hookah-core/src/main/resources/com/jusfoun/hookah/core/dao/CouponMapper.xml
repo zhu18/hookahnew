@@ -51,7 +51,7 @@
     apply_goods, coupon_status, add_time,
     activated_time, update_time, user_name,
     add_user, activated_user, update_user,
-    is_deleted)
+    is_deleted,is_all_released)
     values (#{couponSn,jdbcType=VARCHAR}, #{couponType,jdbcType=TINYINT},
     #{couponName,jdbcType=VARCHAR}, #{applyPlatform,jdbcType=TINYINT}, #{totalCount,jdbcType=INTEGER},
     #{receivedCount,jdbcType=INTEGER}, #{usedCount,jdbcType=INTEGER}, #{faceValue,jdbcType=BIGINT},
@@ -60,7 +60,7 @@
     #{applyGoods,jdbcType=TINYINT}, #{couponStatus,jdbcType=TINYINT}, #{addTime,jdbcType=TIMESTAMP},
     #{activatedTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{userName,jdbcType=VARCHAR},
     #{addUser,jdbcType=VARCHAR}, #{activatedUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR},
-    #{isDeleted,jdbcType=TINYINT})
+    #{isDeleted,jdbcType=TINYINT}, #{isAllReleased,jdbcType=TINYINT})
   </insert>
   <select id="getUserCouponCount" resultType="com.jusfoun.hookah.core.domain.vo.UserCouponVo" parameterType="java.util.HashMap">
     SELECT `user`.user_id AS userId,
