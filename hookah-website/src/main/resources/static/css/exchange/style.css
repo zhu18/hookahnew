@@ -1950,21 +1950,21 @@ dl {
 .storageList .storageBox .storageImg_1:hover .box .y_3 {
 	transform: rotateY(180deg);
 }
-.storageList .storageBox .storageImg_1 .one_img {
-	opacity: 1;
-}
-@keyframes myfirst {
-	0% {
-		opacity: 0.3;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-.storageList .storageBox .storageImg_1:hover .one_img {
-	animation: myfirst 2s;
-	animation-iteration-count: infinite;
-}
+/*.storageList .storageBox .storageImg_1 .one_img {*/
+	/*opacity: 1;*/
+/*}*/
+/*@keyframes myfirst {*/
+	/*0% {*/
+		/*opacity: 0.3;*/
+	/*}*/
+	/*100% {*/
+		/*opacity: 1;*/
+	/*}*/
+/*}*/
+/*.storageList .storageBox .storageImg_1:hover .one_img {*/
+	/*animation: myfirst 2s;*/
+	/*animation-iteration-count: infinite;*/
+/*}*/
 /**********第一个货架结束**********/
 /**********第2个货架开始**********/
 .storageList .storageBox .storageImg_2 .box {
