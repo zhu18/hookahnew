@@ -9,6 +9,7 @@ import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.integral.service.impl.ScheduledServiceImpl;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
 import com.jusfoun.hookah.rpc.api.JfRuleService;
 import com.jusfoun.hookah.rpc.api.MqSenderService;
@@ -293,6 +294,17 @@ public class TestController extends BaseController {
             returnData.setMessage("系统繁忙，请稍后再试[jr1]!⊙﹏⊙‖∣°");
         }
         return returnData;
+    }
+
+    @Resource
+    ScheduledServiceImpl scheduled;
+
+    @RequestMapping("/msg11")
+    public String Test11() {
+
+        scheduled.handleSettle();
+
+        return "jf";
     }
 
 
