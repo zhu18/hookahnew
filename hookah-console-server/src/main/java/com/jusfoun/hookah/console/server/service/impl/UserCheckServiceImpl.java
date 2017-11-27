@@ -95,11 +95,11 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
             }
             userService.updateByIdSelective(user);
 
-            // 用户通过审核发放积分【账号身份认证】
-            if(user.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK)
-                    || user.getUserType().equals(HookahConstants.UserType.PERSON_CHECK_OK)){
-                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(user.getUserId(), 3));
-            }
+            // TODO …… 用户通过审核发放积分【账号身份认证】
+//            if(user.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK)
+//                    || user.getUserType().equals(HookahConstants.UserType.PERSON_CHECK_OK)){
+//                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(user.getUserId(), 3));
+//            }
 
             //更新微信用户推荐表
             wxUserRecommendService.updateWXUserRecommendIsAuthenticate(user.getUserId());
