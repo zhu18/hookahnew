@@ -8,6 +8,7 @@ var head = {
 	var JshopPrice = ${goodsDetails.shopPrice};
 	var isDiscussPrice = ${goodsDetails.isDiscussPrice};
 </script>
+<script type="text/javascript" src="/static/js/plugins/qrcode/qrcode.min.js"></script>
 <%};%>
 <%
 var htmlPart = {
@@ -72,6 +73,13 @@ var htmlPart = {
 							<span></span>
 							<span>${goodsDetails.sales}</span>
 						</p>
+						<p>
+							<i class="fa fa-share-alt"></i>
+							<span>分享：</span>
+							<span></span>
+							<a class="share-btn-d" title="分享到豆瓣" href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='https://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',w=450,h=330,x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width='+w+',height='+h+',left='+(screen.width-w)/2+',top='+(screen.height-h)/2))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><img src="https://img3.doubanio.com/pics/fw2douban_s.png" alt="推荐到豆瓣"/></a>
+							<a class="share-btn-d" href="javascript:void(0)" id="J-share-weixin" title="分享到微信"><i class="fa fa-weixin"></i></a>
+						</p>
 					</div>
 				</div>
 				<!--详细信息-->
@@ -114,7 +122,6 @@ var htmlPart = {
 						<%}%>
 					</div>
 					<div>
-
 					</div>
 					<div class="detail-count padding-left-10 margin-top-10">
 						<div style="margin:24px 0 20px;">
@@ -321,7 +328,7 @@ var htmlPart = {
 								<td colspan="2">
 									<div class="apiInfo-con">
 										<div class="reqSample-con">
-										${goodsDetails.apiInfo.reqSample}
+											${goodsDetails.apiInfo.reqSample}
 										</div>
 									</div>
 								</td>
@@ -349,7 +356,6 @@ var htmlPart = {
 								</td>
 							</tr>
 						</table>
-
 					</div>
 					<%}else{%>
 					<div class="table-item">
@@ -472,7 +478,8 @@ var htmlPart = {
 							<tr>
 								<td>技术优势：</td>
 								<td>
-									<div class="goodsDescBox">${goodsDetails.asAloneSoftware.technologicalSuperiority}</div>
+									<div class="goodsDescBox">${goodsDetails.asAloneSoftware.technologicalSuperiority}
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -506,7 +513,8 @@ var htmlPart = {
 							<tr>
 								<td>技术优势：</td>
 								<td>
-									<div class="goodsDescBox">${goodsDetails.atAloneSoftware.technologicalSuperiority}</div>
+									<div class="goodsDescBox">${goodsDetails.atAloneSoftware.technologicalSuperiority}
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -545,7 +553,8 @@ var htmlPart = {
 					<div class="table-item goodsDescBox">${goodsDetails.afterSaleService}</div>
 					<%}%>
 					<div class="table-item evaluate">
-						<h1 class="font-size-14 margin-bottom-10" style="display: none;background: #f6f6f6;height: 36px;line-height: 36px;text-indent: 11px;">最新评论：</h1>
+						<h1 class="font-size-14 margin-bottom-10" style="display: none;background: #f6f6f6;height: 36px;line-height: 36px;text-indent: 11px;">
+							最新评论：</h1>
 						<ol>
 						</ol>
 					</div>
@@ -581,16 +590,44 @@ var htmlPart = {
 			</div>
 			<div class="ad-box">
 				<%for(item in advertisingBitsImg){%>
-					<a class="display-block" target="_blank" href="${item.imgLink}">
-						<img src="${item.imgUrl}" alt="">
-					</a>
+				<a class="display-block" target="_blank" href="${item.imgLink}">
+					<img src="${item.imgUrl}" alt="">
+				</a>
 				<%}%>
 			</div>
 		</div>
 	</div>
+</div>
+<div class="qrcode-wrap">
+	<span class="fa fa-close close-share-btn"></span>
+	<p>请使用微信扫描</p>
+	<div class="qrcode-box" id="qrcode"></div>
 </div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script src="/static/js/exchange/common.js"></script>
 <script src="/static/js/goods/details.js"></script>
+<script>
+	$(function () {
+
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+			width: 100,
+			height: 100
+		});
+
+		function makeCode() {
+			var elText = 'http://www.bdgstore.cn'
+			qrcode.makeCode(elText);
+		}
+
+		$('#J-share-weixin').click(function () {
+			$('.qrcode-wrap').show()
+			makeCode();
+		});
+		$('.close-share-btn').click(function(){
+			$('.qrcode-wrap').hide()
+		})
+
+	});
+</script>
