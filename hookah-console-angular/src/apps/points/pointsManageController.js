@@ -26,6 +26,10 @@ class pointsManageController {
       });
     };
     function editRuleRequire(callback) {
+      var upperTimeSelectVal=($('#upperTimeSelect').val()=='null')?null:$('#upperTimeSelect').val();
+      var lowerTimeSelectVal=($('#lowerTimeSelect').val()=='null')?null:$('#lowerTimeSelect').val();
+
+
       var promise = $http({
         method: 'get',
         url: $rootScope.site.apiServer + "/api/jr/update",
@@ -34,9 +38,10 @@ class pointsManageController {
           type: $('input[name=pointsCon]:checked').val(),
           score: $('#currentChangePointsInput').val(),
           upperLimitScore: $('#upper').val(),
-          upperLimitTime: $('#upperTimeSelect').val(),
+          upperLimitTime: upperTimeSelectVal,
           lowerLimitScore: $('#lower').val(),
-          lowerLimitTime: $('#lowerTimeSelect').val()
+          lowerLimitTime: lowerTimeSelectVal,
+          note:$('#note').val()
         }
       });
       promise.then(function (res, status, config, headers) {
