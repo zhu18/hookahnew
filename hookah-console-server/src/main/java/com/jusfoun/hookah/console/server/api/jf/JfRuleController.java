@@ -67,12 +67,14 @@ public class JfRuleController extends BaseController{
      * @param upperLimitTime
      * @param lowerLimitScore
      * @param lowerLimitTime
+     * @param note
      * @return
      */
     @RequestMapping("/api/jr/update")
     public ReturnData Test2(String id, String type, String score,
                              String upperLimitScore, String upperLimitTime,
-                             String lowerLimitScore, String lowerLimitTime) {
+                             String lowerLimitScore, String lowerLimitTime,
+                             String note) {
 
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
@@ -89,6 +91,7 @@ public class JfRuleController extends BaseController{
                     && !StringUtils.isNotBlank(upperLimitTime)
                     && !StringUtils.isNotBlank(lowerLimitScore)
                     && !StringUtils.isNotBlank(lowerLimitTime)
+                    && !StringUtils.isNotBlank(note)
                     ){
                 return ReturnData.error("无有效参数!⊙﹏⊙‖∣°");
             }
@@ -104,9 +107,9 @@ public class JfRuleController extends BaseController{
                     && score != null
                     && Integer.parseInt(score) > 0){
 
-                if(type.equals("1")){
+                if(type.equals("11")){
                     jfRule.setScore(jfRule.getScore() + Integer.parseInt(score));
-                } else if(type.equals("2")){
+                } else if(type.equals("12")){
                     jfRule.setScore(jfRule.getScore() - Integer.parseInt(score));
                 } else {
                     return ReturnData.error("请求参数有误[type]!⊙﹏⊙‖∣°");
@@ -125,6 +128,9 @@ public class JfRuleController extends BaseController{
             }
             if(StringUtils.isNotBlank(lowerLimitTime)){
                 jfRule.setLowerTimeLimit(Byte.parseByte(lowerLimitTime));
+            }
+            if(StringUtils.isNotBlank(note)){
+                jfRule.setNote(note);
             }
             jfRule.setUpdateTime(new Date());
 

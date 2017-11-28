@@ -61,4 +61,11 @@ public interface JfRecordService extends GenericService<JfRecord, Long> {
      * @throws Exception
      */
     ReturnData optJf(String userId, String optType, String score, String note, String operator) throws Exception;
+
+    /**
+     * 注册用户 邀请用户送积分
+     * @param userId
+     * @param recommendUserId
+     */
+    void registerHandle(String userId, String recommendUserId);
 }

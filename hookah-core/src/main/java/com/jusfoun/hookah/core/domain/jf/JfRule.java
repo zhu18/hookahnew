@@ -28,6 +28,8 @@ public class JfRule extends GenericModel {
 
     private String operator;
 
+    private String note;
+
     private Date addTime;
 
     private Date updateTime;
@@ -126,5 +128,13 @@ public class JfRule extends GenericModel {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
