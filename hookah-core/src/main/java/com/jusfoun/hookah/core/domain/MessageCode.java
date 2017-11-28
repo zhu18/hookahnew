@@ -14,6 +14,16 @@ public class MessageCode implements Serializable {
     private String mobileVerfCode;//手机验证码
     private String mobileNo;//手机号
     private String userId;
+    //第三方注册初始密码
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Integer getCode() {
         return code;

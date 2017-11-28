@@ -148,7 +148,10 @@ public class CouponApi extends BaseController {
             Coupon coupon = couponService.selectById(couponId);
             CouponVo couponVo = new CouponVo();
             BeanUtils.copyProperties(coupon, couponVo);
-            couponVo.setUnReceivedCount(coupon.getTotalCount() - coupon.getReceivedCount());
+            //发行量有限制的
+            if (coupon.getTotalCount()>0){
+                couponVo.setUnReceivedCount(coupon.getTotalCount() - coupon.getReceivedCount());
+            }
             couponVo.setUnUsedCount(coupon.getReceivedCount() - coupon.getUsedCount());
             return ReturnData.success(couponVo);
         }catch (Exception e){

@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.jf.JfRecordMapper;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.core.domain.jf.JfOverdueDetails;
 import com.jusfoun.hookah.core.domain.jf.JfRecord;
-import com.jusfoun.hookah.core.domain.vo.JfShowVo;
+import com.jusfoun.hookah.core.domain.jf.JfRule;
 import com.jusfoun.hookah.core.domain.vo.JfUserVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -17,14 +19,11 @@ import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
-import com.jusfoun.hookah.rpc.api.CacheService;
-import com.jusfoun.hookah.rpc.api.JfOverdueDetailsService;
-import com.jusfoun.hookah.rpc.api.JfRecordService;
-import com.jusfoun.hookah.rpc.api.UserService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -60,6 +59,12 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
     @Resource
     JfOverdueDetailsService jfOverdueDetailsService;
+
+    @Resource
+    MqSenderService mqSenderService;
+
+    @Resource
+    JfRuleService jfRuleService;
 
     @CacheEvict(value = "personUseJfSum", key = "#jfRecord.getUserId()")
     @Override
@@ -355,13 +360,51 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
         return returnData;
     }
 
+    @Async
+    @Override
+    public void registerHandle(String userId, String recommendUserId) {
 
-    public static void main(String[] args) {
+         // TODO …… 新注册用户赠送积分
+        if(StringUtils.isNotBlank(userId)){
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(userId, 1));
+        }
 
-        String sv = "zs,ls";
-        String[] sp = sv.split(",");
-        Arrays.asList(sp).forEach(c -> System.out.println(c));
-        System.out.println(Arrays.asList(sp).size());
-        System.out.println(Arrays.asList(sp));
+        // TODO …… 邀请者送积分  （是不是和上面的分开写）
+        if(StringUtils.isNotBlank(recommendUserId)){
+
+            List<Condition> jfRuleFilters = new ArrayList<>();
+            jfRuleFilters.add(Condition.eq("sn", Byte.parseByte("2")));
+            JfRule jfRule = jfRuleService.selectOne(jfRuleFilters);
+            if(jfRule != null && jfRule.getAction() != null){
+
+                List<Condition> filters = new ArrayList<>();
+                filters.add(Condition.eq("userId", recommendUserId));
+                filters.add(Condition.eq("sourceId", jfRule.getAction()));
+                if(jfRule.getUpperTimeLimit() == null){
+                    if(jfRule.getUpperLimit() != null){
+                        List<JfRecord> jfRecordList = this.selectList(filters);
+                        if(jfRule.getUpperLimit() > jfRecordList.stream().mapToInt(JfRecord::getScore).sum()){
+                            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(recommendUserId, 2));
+                        } else {
+                            logger.info("该用户邀请赠送积分已达到上限");
+                        }
+                    }
+                } else if(jfRule.getUpperTimeLimit().equals(Byte.parseByte("12"))){
+
+                    // 需要沟通 延迟开发
+
+                } else if(jfRule.getUpperTimeLimit().equals(Byte.parseByte("24"))){
+                    filters.add(Condition.eq("addDate", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"))));
+                    List<JfRecord> jfRecordList = this.selectList(filters);
+                    if(jfRule.getUpperLimit() > jfRecordList.stream().mapToInt(JfRecord::getScore).sum()){
+                        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(recommendUserId, 2));
+                    } else {
+                        logger.info("该用户邀请赠送积分已达到上限");
+                    }
+                } else {
+                    logger.info("该用户邀请赠送积分已达到上限");
+                }
+            }
+        }
     }
 }

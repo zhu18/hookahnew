@@ -34,8 +34,10 @@ public class RabbitMQRegCouponListener {
         logger.info("CONTRACT_REG_COUPON待处理注册送优惠券-->用户ID{}", userId);
 
         List<Condition> filter = new ArrayList<>();
+        //注册赠券，未删除，未发放完，已激活且未过期
         filter.add(Condition.eq("couponType",(byte)0));
         filter.add(Condition.eq("isDeleted",(byte)0));
+        filter.add(Condition.eq("isAllReleased",(byte)0));
         filter.add(Condition.eq("couponStatus",HookahConstants.CouponStatus.USED.getCode()));
         List<Coupon> coupons = couponService.selectList(filter);
         try {

@@ -314,6 +314,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if (userCoupons != null && userCoupons.size() > 0){
             for (UserCoupon userCoupon:userCoupons){
                 userCoupon.setOrderSn(null);
+                //已使用的改成未使用  已过期的就不改了
+                if (userCoupon.getUserCouponStatus()==HookahConstants.UserCouponStatus.USED.getCode()){
+                    userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.UN_USED.getCode());
+                }
                 userCouponService.updateById(userCoupon);
             }
         }
@@ -629,6 +633,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }else {
             orderInfo.setOrderAmount(0L);
         }
+        userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.USED.getCode());
         userCoupon.setOrderSn(orderInfo.getOrderSn());
         userCouponService.updateByIdSelective(userCoupon);
         return orderInfo;

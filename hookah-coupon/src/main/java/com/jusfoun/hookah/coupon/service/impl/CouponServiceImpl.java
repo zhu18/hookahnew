@@ -24,6 +24,7 @@ import com.jusfoun.hookah.coupon.utils.PropertiesManager;
 import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -57,6 +58,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     MqSenderService mqSenderService;
 
     @Override
+    @Transactional
     public ReturnData addCoupon(Coupon coupon, String goodsList, String userId, String categoriesList) throws Exception{
         List<Condition>  filter = new ArrayList<>();
         List<MgCoupon.CouponGoods> couponGoods = new ArrayList<>();
@@ -70,10 +72,13 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         filter.add(Condition.eq("couponName",coupon.getCouponName().trim()));
         List<Coupon> coupons = this.selectList(filter);
         if (coupons!=null&&coupons.size()>0){
-            throw new HookahException("名称为["+coupon.getCouponName().trim()+"]的优惠券已存在");
+            throw new HookahException("名称为["+coupon.getCouponName().trim()+"]的优惠券已存在！");
         }
-        if (coupon.getTotalCount()<coupon.getLimitedCount()){
-            throw new HookahException("每人限领数量不能大于总发行量");
+        if (coupon.getTotalCount()>0 && coupon.getTotalCount() < coupon.getLimitedCount()){
+            throw new HookahException("每人限领数量不能大于总发行量！");
+        }
+        if (coupon.getLimitedCount() <= 0){
+            throw new HookahException("每人限领数量只能是正整数！");
         }
         coupon.setCouponName(coupon.getCouponName().trim());
         if (DateUtils.isSameDay(coupon.getExpiryStartDate(),new Date())){
@@ -84,6 +89,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             coupon.setCouponStatus(HookahConstants.CouponStatus.UN_USED.getCode());
         }
         coupon.setIsDeleted((byte)0);
+        coupon.setIsAllReleased((byte)0);
         coupon.setReceivedCount(0);
         coupon.setUsedCount(0);
         switch (coupon.getApplyGoods()) {
@@ -106,6 +112,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     }
 
     @Override
+    @Transactional
     public ReturnData modify(Coupon coupon, String goodsList, String userId, String categoriesList) throws Exception {
         Date date = new Date();
         MgCoupon mgCoupon = new MgCoupon();
@@ -121,7 +128,10 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 }
             }
         }
-        if (coupon.getTotalCount()<coupon.getLimitedCount()){
+        if (coupon.getLimitedCount() <= 0){
+            throw new HookahException("每人限领数量只能是正整数！");
+        }
+        if (coupon.getTotalCount()>0 && coupon.getTotalCount()<coupon.getLimitedCount()){
             throw new HookahException("每人限领数量不能大于总发行量");
         }
         coupon.setUpdateUser(userId);
@@ -150,7 +160,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             userCouponService.updateByConditionSelective(userCoupon,filter);
         }
         couponMapper.updateByPrimaryKeySelective(coupon);
-        mgCouponService.updateByIdSelective(mgCoupon);
+        filter.clear();
+        filter.add(Condition.eq("id",mgCoupon.getId()));
+        mgCouponService.updateByConditionSelective(mgCoupon,filter);
         return ReturnData.success("修改成功！");
     }
 
@@ -209,10 +221,12 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             if (list!=null && list.size()>0){
                 for (UserCoupon userCoupon:list){
                     User user = userService.selectById(userCoupon.getUserId());
-                    UserCouponVo userCouponVo = new UserCouponVo();
-                    BeanUtils.copyProperties(userCoupon,userCouponVo);
-                    userCouponVo.setUserName(user.getUserName());
-                    page.add(userCouponVo);
+                    if (user!=null){
+                        UserCouponVo userCouponVo = new UserCouponVo();
+                        BeanUtils.copyProperties(userCoupon,userCouponVo);
+                        userCouponVo.setUserName(user.getUserName());
+                        page.add(userCouponVo);
+                    }
                 }
             }
             pagination.setList(page);
@@ -247,6 +261,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     }
 
     @Override
+    @Transactional
     public void logicDelete(Long couponId) throws Exception {
         List<Condition> filter = new ArrayList<>();
         Date date = new Date();
@@ -322,6 +337,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         filters.add(Condition.eq("isDeleted", (byte) 0));
         if (type==1){
             filters.add(Condition.eq("couponStatus",HookahConstants.CouponStatus.USED.getCode()));
+            filters.add(Condition.eq("isAllReleased",(byte)0));
         }
         if (StringUtils.isNotBlank(sort)) {
             orderBys.add(OrderBy.desc(sort));
@@ -335,7 +351,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             for (Coupon coupon : coupons) {
                 CouponVo couponVo = new CouponVo();
                 BeanUtils.copyProperties(coupon, couponVo);
-                couponVo.setUnReceivedCount(coupon.getTotalCount() - coupon.getReceivedCount());
+                if (coupon.getTotalCount()>0){
+                    couponVo.setUnReceivedCount(coupon.getTotalCount() - coupon.getReceivedCount());
+                }
                 couponVo.setUnUsedCount(coupon.getReceivedCount() - coupon.getUsedCount());
                 couponVos.add(couponVo);
             }
@@ -374,7 +392,6 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         filter.add(Condition.eq("isDeleted",(byte)0));
         filter.add(Condition.eq("userId",userId));
         filter.add(Condition.eq("userCouponStatus",HookahConstants.UserCouponStatus.UN_USED.getCode()));
-        filter.add(Condition.isNull("orderSn"));
         List<UserCoupon> userCoupons = userCouponService.selectList(filter);
         List<CouponVo> coupons = new ArrayList<>();
         if (userCoupons.size()>0){
@@ -399,6 +416,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         return coupons;
     }
 
+    @Transactional
     public synchronized void sendCoupon2User(String userId, List<Long> couponIdList, Byte receivedMode) throws Exception{
         for (Long couponId : couponIdList){
             Coupon coupon = couponMapper.selectByPrimaryKey(couponId);
@@ -412,9 +430,6 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             if (limitedCount <= count){
                 throw new HookahException("用户["+userId+"]领取的优惠券["+coupon.getCouponName()+"]已经达到领取上限");
             }
-            if (receivedCount >= totalCount){
-                throw new HookahException("优惠券["+coupon.getCouponName()+"]已经发完");
-            }
             UserCoupon userCoupon = new UserCoupon();
             userCoupon.setUserId(userId);
             userCoupon.setUserCouponSn(createUserCouponSn(coupon.getCouponSn()));
@@ -426,6 +441,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             userCoupon.setExpiryStartDate(coupon.getExpiryStartDate());
             userCoupon.setValidDays(coupon.getValidDays());
             coupon.setReceivedCount(receivedCount+1);
+            if (totalCount>0 && coupon.getReceivedCount()==totalCount){
+                coupon.setIsAllReleased((byte)1);
+            }
             userCouponService.insert(userCoupon);
             this.updateByIdSelective(coupon);
         }
@@ -467,6 +485,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         return userCouponSn;
     }
 
+    @Transactional
     public void updateStatusEveryDay() throws Exception{
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("isDeleted",(byte)0));
@@ -514,6 +533,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         }
     }
 
+    @Transactional
     public void activeCoupons() throws Exception{
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("isDeleted",(byte)0));
