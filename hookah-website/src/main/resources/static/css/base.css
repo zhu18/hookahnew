@@ -422,6 +422,16 @@ html{
 	border-radius:3px;
 	z-index: 9999;
 }
+.float-tool .tool_bg{
+	position: absolute;
+	top: -24px;
+	left: 0;
+	text-align: center;
+	width: 60px;
+}
+.float-tool .tool_bg img{
+	width:35px;
+}
 .float-tool ul{
 	margin:14px 0;
 	position: relative;
