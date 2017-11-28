@@ -39,6 +39,7 @@ $(function () {
                 }
                 $('.authenticationStatus').html(html);
                 if(data.data.organization){
+                    $('.personalInfo').hide();
                     $('#orgName').html(data.data.organization.orgName?data.data.organization.orgName:"无");//单位名称
                     $('#lawPersonName').html( data.data.organization.lawPersonName?data.data.organization.lawPersonName:"无");//法定代表人
                     $('#lawPersonNum').html( data.data.organization.lawPersonNum?data.data.organization.lawPersonNum:"无");//法定代表人证件编号
@@ -66,7 +67,11 @@ $(function () {
                     // $('#taxCode').html( data.data.organization.taxCode?data.data.organization.taxCode:"无");
                     // $('#taxPath').attr({"src":host.static+'/' + data.data.organization.taxPath});
                 }
-
+                if(data.data.userDetail){
+                    $('.enterpriseInfo').hide();
+                    $('#realName').html(data.data.organization.realName?data.data.organization.realName:"无");
+                    $('#cardNum').html(data.data.organization.cardNum?data.data.organization.cardNum:"无");
+                }
             }else {
                 var html="";
                 html +="<li style='position: relative;'><label>认证状态</label><p class='position-relative'><span>未认证</span><a href='/auth/company_auth_init_step2?isAuth=1' class='repeat-revise-btn'>立即认证</a></p><div class='forPoints'>成功认证送积分 <span></span></div></li>"
