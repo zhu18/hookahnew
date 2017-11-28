@@ -80,15 +80,25 @@ var htmlPart = {
 </div>
 
 <script>
+
     function check() {
         $.ajax({
             url: '/islogin',
             type: 'post',
             success: function (data) {
-                if(data){
+                if (data) {
+                    var html = '';
+                    html += '<div class="confirmKey"><h4>提示：</h4>';
+                    html += '<div>';
+                    html += '优惠券已发放至您的账户，请在个人中心查看！';
+                    html += '</div></div>';
+                    $.confirm(html, [{close: '确认'}], function () {
+                        window.location.href = 'www.bdgstore.cn/usercenter/myCoupon'
+                    }, {width: "500"});
+                    $(that).css('color', '#666');
+                } else {
+                    window.location.href = host.loginUrl + encodeURIComponent(host.website + '/activity/coupon');
 
-                }else{
-                    window.location.href = host.loginUrl
                 }
             }
         });
