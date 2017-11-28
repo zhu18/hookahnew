@@ -70,6 +70,7 @@ class UserVerifyController {
         promise.then(function (res, status, config, headers) {
           $rootScope.loadingState = false;
           $rootScope.cuserd = res.data.data;
+          $rootScope.userDetail = res.data.data.userDetail;
           $state.go("user.verify.checkUserDetail");
           growl.addSuccessMessage("数据加载完毕。。。");
         });
