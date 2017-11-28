@@ -5,6 +5,16 @@ class couponController {
     constructor($scope, $rootScope, $http, $state,$stateParams,growl,$filter) {
         console.log($stateParams.id);
         var data={};
+        $scope.val=false;
+        $scope.isTrue=function () {
+            console.log(7);
+            if(parseInt($scope.totalCount) < parseInt($scope.limitedCount)){
+                $scope.val=true;
+            }else {
+                $scope.val=false;
+            }
+        }
+
         $scope.typeStatus = [               //自定定义类型数据
             {id:0, name:"注册赠券"},
             {id:1, name:"购物赠券"},
@@ -119,16 +129,25 @@ class couponController {
             $state.go('coupon.list');
         };
         // 日历插件开始
-        $scope.inlineOptions = {
+        $scope.inlineOptions1 = {
             customClass: getDayClass,
             minDate: new Date(),
             showWeeks: false
         };
+
+
+
         $scope.open1 = function () {
             $scope.popup1.opened = true;
         };
         $scope.open2 = function () {
+            $scope.inlineOptions2 = {
+                customClass: getDayClass,
+                minDate: $scope.expiryStartTime ? $scope.expiryStartTime+1 :new Date(),
+                showWeeks: false
+            };
             $scope.popup2.opened = true;
+
         };
         $scope.popup1 = {
             opened: false

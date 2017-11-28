@@ -59,7 +59,7 @@ class couponDetailController {
 
                     $scope.usedCount=info.usedCount;
                     $scope.discountValue=info.discountValue;
-                    $scope.unReceivedCount=info.unReceivedCount;
+                    $scope.unReceivedCount=info.unReceivedCount?info.unReceivedCount:'-';
                     $scope.unUsedCount=info.unUsedCount;
 
                 } else {

@@ -70,13 +70,13 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label" for="limitedCount">每人限领：<span class="must">*</span></label>
                 <div class="col-sm-3">
-                    <input type="text" id="limitedCount" name="limitedCount" ng-maxlength="50" data-ng-pattern=""
+                    <input type="text" id="limitedCount" ng-blur="isTrue()" name="limitedCount" ng-maxlength="50"
                            class="form-control" ng-model="limitedCount" data-ng-pattern="/^\d+$/" style="width: 210px;height: 32px" required/>
                 </div>
                 <div class="col-sm-4 control-label" data-ng-show="userForm.limitedCount.$pristine || userForm.limitedCount.$invalid" style="text-align: left;">
                     <p data-ng-show="userForm.limitedCount.$error.required" >每人限领不能为空。</p>
-                    <p data-ng-show="val" onkeyup="val=(totalCount < limitedCount)" >每人限领数量不能大于总发行量</p>
-                    <p data-ng-show="userForm.totalCount.$error.pattern">只能输入正整数。</p>
+                    <!--<p data-ng-show="{{val}}">每人限领数量不能大于总发行量</p>-->
+                    <p data-ng-show="userForm.limitedCount.$error.pattern">只能输入正整数。</p>
                 </div>
             </div>
             <div class="form-group">
@@ -99,7 +99,7 @@
                         <div class="col-sm-10">
                             <p class="input-group col-sm-4" style="float: left">
                                 <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
-                                       datepicker-options="inlineOptions"
+                                       datepicker-options="inlineOptions1"
                                        ng-paste="$event.preventDefault()" type="text" class="form-control"
                                        uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" type="datetime-local"
                                        ng-model="expiryStartTime"
@@ -107,14 +107,13 @@
                                        clear-text="清除"
                                        current-text="今天" readonly="true"/>
                                 <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="open1()"><i
-                                                class="glyphicon glyphicon-calendar"></i></button>
-                                    </span>
+                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
                             </p>
                             <label class="control-label col-sm-1" style="float: left">至</label>
                             <p class="input-group col-sm-4" style="float: left">
                                 <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
-                                       datepicker-options="inlineOptions"
+                                       datepicker-options="inlineOptions2"
                                        ng-paste="$event.preventDefault()" type="text" class="form-control"
                                        uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" type="datetime-local"
                                        ng-model="expiryEndTime"
@@ -157,12 +156,12 @@
                      <label style="margin-right: 10px">
                          <input type="radio" name="applyGoods" ng-model="applyGoods" value="0" />全部商品
                      </label>
-                     <label style="margin-right: 10px">
-                         <input type="radio" name="applyGoods" ng-model="applyGoods" value="1" />部分商品
-                     </label>
-                     <label>
-                         <input type="radio" name="applyGoods" ng-model="applyGoods" value="2" />部分分类
-                     </label>
+                     <!--<label style="margin-right: 10px">-->
+                         <!--<input type="radio" name="applyGoods" ng-model="applyGoods" value="1" />部分商品-->
+                     <!--</label>-->
+                     <!--<label>-->
+                         <!--<input type="radio" name="applyGoods" ng-model="applyGoods" value="2" />部分分类-->
+                     <!--</label>-->
                 </div>
                 <div class="col-sm-4 control-label" style="text-align: left;">
                     <!--系统用户名不能为空，且最大长度为50-->
