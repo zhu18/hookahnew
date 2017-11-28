@@ -27,7 +27,7 @@ public class JfController extends BaseController {
     JfRecordService jfRecordService;
 
     @RequestMapping("/jf/getList")
-    public ReturnData getJfList(String pageNum, String pageSize, String type){
+    public ReturnData getJfList(String pageNumber, String pageSize, String type){
 
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
@@ -39,8 +39,8 @@ public class JfController extends BaseController {
             }
 
             int pageNumberNew = HookahConstants.PAGE_NUM;
-            if (StringUtils.isNotBlank(pageNum)) {
-                pageNumberNew = Integer.parseInt(pageNum);
+            if (StringUtils.isNotBlank(pageNumber)) {
+                pageNumberNew = Integer.parseInt(pageNumber);
             }
 
             int pageSizeNew = HookahConstants.PAGE_SIZE;
