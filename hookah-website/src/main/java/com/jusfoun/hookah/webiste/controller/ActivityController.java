@@ -24,4 +24,12 @@ public class ActivityController {
         model.addAttribute("categoryInfo", categoryService.getCatTree());
         return "activity/index";
     }
+    /**
+     * 优惠券活动页
+     */
+    @RequestMapping(value = "/activity/coupon", method = RequestMethod.GET)
+    public String coupon(Model model) {
+
+        return "activity/coupon_activity";
+    }
 }
