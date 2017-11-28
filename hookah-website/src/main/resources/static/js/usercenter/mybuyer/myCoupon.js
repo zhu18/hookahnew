@@ -116,14 +116,15 @@ function loadPageData(data) {
     }
     $('#coupon-list').html(html);
 }
+$(function () {
+    $('#tagName li').click(function () { //按标签排序
+        $(this).addClass('active').siblings().removeClass('active');
+        dataParm.couponTag= $(this).attr('data-coupon-id');
+        goPage("1");
+    });
 
-$('#tagName li').click(function () { //按标签排序
-    $(this).addClass('active').siblings().removeClass('active');
-    dataParm.couponTag= $(this).attr('data-coupon-id');
-    goPage("1");
-});
-
-function selectFn() {//优惠券类型函数
-    dataParm.userCouponStatus= $('#selectId').val();
-    goPage("1");
-}
+    function selectFn() {//优惠券类型函数
+        dataParm.userCouponStatus= $('#selectId').val();
+        goPage("1");
+    }
+})
