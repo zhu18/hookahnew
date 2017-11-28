@@ -128,7 +128,10 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 }
             }
         }
-        if (coupon.getTotalCount()<coupon.getLimitedCount()){
+        if (coupon.getLimitedCount() <= 0){
+            throw new HookahException("每人限领数量只能是正整数！");
+        }
+        if (coupon.getTotalCount()>0 && coupon.getTotalCount()<coupon.getLimitedCount()){
             throw new HookahException("每人限领数量不能大于总发行量");
         }
         coupon.setUpdateUser(userId);
@@ -157,7 +160,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             userCouponService.updateByConditionSelective(userCoupon,filter);
         }
         couponMapper.updateByPrimaryKeySelective(coupon);
-        mgCouponService.updateByIdSelective(mgCoupon);
+        filter.clear();
+        filter.add(Condition.eq("id",mgCoupon.getId()));
+        mgCouponService.updateByConditionSelective(mgCoupon,filter);
         return ReturnData.success("修改成功！");
     }
 
@@ -346,7 +351,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             for (Coupon coupon : coupons) {
                 CouponVo couponVo = new CouponVo();
                 BeanUtils.copyProperties(coupon, couponVo);
-                couponVo.setUnReceivedCount(coupon.getTotalCount() - coupon.getReceivedCount());
+                if (coupon.getTotalCount()>0){
+                    couponVo.setUnReceivedCount(coupon.getTotalCount() - coupon.getReceivedCount());
+                }
                 couponVo.setUnUsedCount(coupon.getReceivedCount() - coupon.getUsedCount());
                 couponVos.add(couponVo);
             }
@@ -385,7 +392,6 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         filter.add(Condition.eq("isDeleted",(byte)0));
         filter.add(Condition.eq("userId",userId));
         filter.add(Condition.eq("userCouponStatus",HookahConstants.UserCouponStatus.UN_USED.getCode()));
-        filter.add(Condition.isNull("orderSn"));
         List<UserCoupon> userCoupons = userCouponService.selectList(filter);
         List<CouponVo> coupons = new ArrayList<>();
         if (userCoupons.size()>0){
