@@ -71,4 +71,9 @@ public class IndexController {
         return "/height";
     }
 
+    @RequestMapping(value = "/MP_verify_1pbvO5erZ0HrZkcn.txt", method = RequestMethod.GET)
+    public String vvv() {
+        return "/MP_verify_1pbvO5erZ0HrZkcn.txt";
+    }
+
 }
