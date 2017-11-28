@@ -59,10 +59,10 @@
                 <label class="col-sm-4 control-label" for="faceValue">面额：<span class="must">*</span></label>
                 <div class="col-sm-3">
                     <input type="text" id="faceValue" name="faceValue" ng-maxlength="50" class="form-control"
-                           ng-model="faceValue" data-ng-pattern="/^(?!(0{1,4}(((\\.0{0,2})?))$))([1-9]{1}[0-9]{0,3}|0)(\\.[0-9]{1,2})?$/" placeholder="面值只能是数值，1-9999，限2位小数。" style="width:210px;height: 32px"
+                           ng-model="faceValue" data-ng-pattern="/(^[1-9]\d{0,3}$)|(^[1-9]\d{0,3}[\.]{1}[0-9]{1,2}$)/" placeholder="面值只能是数值，1-9999，限2位小数。" style="width:210px;height: 32px"
                            required/>
                 </div>
-                <div class="col-sm-4 control-label" data-ng-show="userForm.faceValue.$pristine && userForm.faceValue.$invalid" style="text-align: left;">
+                <div class="col-sm-4 control-label" data-ng-show="userForm.faceValue.$pristine || userForm.faceValue.$invalid" style="text-align: left;">
                     <p data-ng-show="userForm.faceValue.$error.required">面额不能为空。</p>
                     <p data-ng-show="userForm.faceValue.$error.pattern">面值只能是数值，1-9999，限2位小数。</p>
                 </div>

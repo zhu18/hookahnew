@@ -22,6 +22,7 @@ $(function () {
             $('#pay-money').html(val);
             $('.J_arrived').html("0");
             $('.J_couponM').html("￥0");
+            $("input[name='userCouponId']").val("");
 		}else {//选中单个优惠券
             $(this).addClass('active').parent().siblings().find('.list-item').removeClass('active active-blue');
             //把选中的优惠券id传给后台
@@ -29,7 +30,7 @@ $(function () {
             $("input[name='userCouponId']").val(id);
 
             var faceVal=$(this).find('.j_faceValue').html();//选中优惠卷的面值
-            var payVal=parseFloat(val)-parseFloat(faceVal);
+            var payVal=(parseFloat(val)*100-parseFloat(faceVal)*100)/100;
             $('.J_arrived').html(faceVal);
             if(payVal < 0.01){
                 payVal=0;
