@@ -1070,7 +1070,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);
-        logger.info(JsonUtils.toJson(pagination));
         return pagination;
     }
 
