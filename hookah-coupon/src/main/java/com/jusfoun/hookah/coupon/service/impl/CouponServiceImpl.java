@@ -128,10 +128,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 }
             }
         }
-        if (coupon.getLimitedCount() <= 0){
-            throw new HookahException("每人限领数量只能是正整数！");
-        }
-        if (coupon.getTotalCount()>0 && coupon.getTotalCount()<coupon.getLimitedCount()){
+        if (coupon.getTotalCount()<coupon.getLimitedCount()){
             throw new HookahException("每人限领数量不能大于总发行量");
         }
         coupon.setUpdateUser(userId);
