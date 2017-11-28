@@ -15,6 +15,12 @@ function loadPageData(data) {
                 case 0:
                     applyPlatform='全品类通用券';
                     break;
+                case 1:
+                    applyPlatform='限指定商品';
+                    break;
+                case 2:
+                    applyPlatform='限指定品类';
+                    break;
             }
             switch (item.applyChannel){
                 case 0:
