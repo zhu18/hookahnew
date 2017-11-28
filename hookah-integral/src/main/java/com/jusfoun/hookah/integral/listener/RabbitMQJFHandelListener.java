@@ -90,8 +90,4 @@ public class RabbitMQJFHandelListener {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
-    }
-
 }
