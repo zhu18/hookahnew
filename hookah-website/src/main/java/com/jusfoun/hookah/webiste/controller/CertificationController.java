@@ -62,9 +62,17 @@ public class CertificationController extends BaseController{
             map.put("checkContent", userCheck.getCheckContent());
         }
         if(user!=null){
-            if(user.getUserType() == 4 || user.getUserType() == 5|| user.getUserType() == 7){
+            if(user.getUserType() == 2 || user.getUserType() == 3 || user.getUserType() == 6){
+                UserDetail userDetail = userDetailService.selectById(userId);
+                String cardNum = userDetail.getCardNum().replaceAll("(\\d{4})\\d{10}(\\d{4})", "$1****$2");
+                userDetail.setCardNum(cardNum);
+                map.put("userDetail", userDetail);
+                return ReturnData.success(map);
+            } else if(user.getUserType() == 4 || user.getUserType() == 5|| user.getUserType() == 7){
                 if(StringUtils.isNotBlank(user.getOrgId())) {
                     Organization organization = organizationService.selectById(user.getOrgId());//根据用户查询认证信息
+                    String lawPersonNum = organization.getLawPersonNum().replaceAll("(\\d{4})\\d{10}(\\d{4})", "$1****$2");
+                    organization.setLawPersonNum(lawPersonNum);
                     map.put("organization",organization);
                     String region= organizationService.selectRegion(user.getOrgId());
                     String officeRegion = organizationService.selectOfficeRegion(user.getOrgId());
