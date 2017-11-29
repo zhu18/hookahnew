@@ -249,8 +249,7 @@ public class CouponApi extends BaseController {
             for (Integer couponId:couponIds){
                 couponList.add((long) couponId);
             }
-            couponService.sendCoupon2User(userId, couponList, HookahConstants.ReceivedMode.BACKSTAGE_GIFT.getCode());
-            return ReturnData.success("优惠券已发送");
+            return couponService.sendCoupon2User(userId, couponList, HookahConstants.ReceivedMode.BACKSTAGE_GIFT.getCode());
         }catch (HookahException e){
             return ReturnData.error(e.getMessage());
         }catch (Exception e){

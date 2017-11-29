@@ -107,7 +107,7 @@ class giveCouponController {
 
                 if (res.data.code == '1') {
 
-                    var modalInstance =$rootScope.openConfirmDialogModal("赠送成功！");
+                    var modalInstance =$rootScope.openConfirmDialogModal(res.data.message);
                     modalInstance.result.then(function () {
                         $state.go('coupon.query')
                     }, function () {
