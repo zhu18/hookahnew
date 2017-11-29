@@ -1,7 +1,7 @@
 /**
  * Created by lss on 2017/11/7 0007
  * 优惠券分为三种状态：可用（0），已经使用（1），已经过期（2）   根据userCouponStatus字段判断
- * 可用中又有三种状态：新到，即将过期，null（不符合前两个条件）  根据tagName字段判断
+ * 可用中又有三种状态：新到，即将过期，null（不符合前两个条件都未null）  根据tagName字段判断
  */
 function loadPageData(data) {
     console.log(data);
@@ -112,7 +112,7 @@ function loadPageData(data) {
             }
         }
     }else {
-      html='没有数据！';
+      html='<img src="/static/images/noCoupon.png" alt="没有优惠券！">';
     }
     $('#coupon-list').html(html);
 }
@@ -126,6 +126,4 @@ $(function () {
         dataParm.couponTag= $(this).attr('data-coupon-id');
         goPage("1");
     });
-
-
 })
