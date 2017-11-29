@@ -17,10 +17,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -115,11 +112,6 @@ public class ScheduledServiceImpl {
 
                 // todo …… 入库
                 jfOverdueDetailsService.insert(jfOverdueDetails);
-//                if(jfOverdueDetails.getId() != null){
-//                    logger.info(beforeMonthDate + ">>积分结算完成，操作时间>>" + DateUtils.toDefaultNowTime());
-//                } else {
-//                    logger.error(beforeMonthDate + ">>积分结算失败，操作时间>>" + DateUtils.toDefaultNowTime());
-//                }
             }
         } catch (Exception e) {
             logger.error("积分结算异常>>>{}", e);
