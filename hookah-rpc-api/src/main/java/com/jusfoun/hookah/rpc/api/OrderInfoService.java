@@ -105,4 +105,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
     ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber, Integer pageSize,
                                 List<Condition> filters) throws Exception;
+
+    public Long sumOrderAmountByOrderIds(String[] orderId);
 }

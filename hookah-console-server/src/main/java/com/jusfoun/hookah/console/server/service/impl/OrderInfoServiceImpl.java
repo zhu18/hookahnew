@@ -1743,4 +1743,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         Pagination<OrderInfoVo> pagination = mgOrderInfoService.getListInPageFromMongo(pageNum, pageSize, filters,sorts, startTime, endTime, startMoney, endMoney);
         return pagination;
     }
+
+    @Override
+    public Long sumOrderAmountByOrderIds(String[] orderIds){
+        return orderinfoMapper.sumOrderAmountByOrderIds(orderIds);
+    }
 }

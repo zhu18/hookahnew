@@ -6,4 +6,10 @@
       SELECT COUNT(DISTINCT(user_id)) from order_info WHERE pay_status=2
     </select>
 
+    <select id="sumOrderAmountByOrderIds" resultType = "java.lang.Long">
+        SELECT sum(order_amount) FROM order_info WHERE order_id  IN
+        <foreach collection='array' index='index' item='item' open='(' separator=',' close=')'>
+            #{item}
+        </foreach>
+    </select>
 </mapper>

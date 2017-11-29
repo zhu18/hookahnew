@@ -15,9 +15,23 @@
     <motan:referer id="mgOrderInfoService"
                    interface="com.jusfoun.hookah.rpc.api.MgOrderInfoService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
     <motan:referer id="invoiceService"
                    interface="com.jusfoun.hookah.rpc.api.InvoiceService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="orderInvoiceService"
+                   interface="com.jusfoun.hookah.rpc.api.OrderInvoiceService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="userInvoiceTitleService"
+                   interface="com.jusfoun.hookah.rpc.api.UserInvoiceTitleService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="userInvoiceAddressService"
+                   interface="com.jusfoun.hookah.rpc.api.UserInvoiceAddressService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+    <motan:referer id="expressInfoService"
+                   interface="com.jusfoun.hookah.rpc.api.ExpressInfoService"
+                   connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
     <motan:referer id="payCordeService"
                    interface="com.jusfoun.hookah.rpc.api.PayCoreService"
                    connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
