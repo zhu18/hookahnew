@@ -16,7 +16,7 @@
 .nameAuthentication ul li label{
     display: inline-block;
     height: 100%;
-    width: 156px;
+    width: 203px;
     padding-right: 34px;
     text-align: right;
     vertical-align: top;
@@ -25,7 +25,7 @@
 .nameAuthentication ul li p{
     display: inline-block;
     height: 100%;
-    width: calc(100% - 194px);
+    width: calc(100% - 242px);
     text-align: center;
 }
 .nameAuthentication ul li.img-box{
@@ -58,7 +58,6 @@
     border-radius: 5px;
     background-color: #F8A23A;
 }
-
 
 
 /*注册/认证 送积分提示*/

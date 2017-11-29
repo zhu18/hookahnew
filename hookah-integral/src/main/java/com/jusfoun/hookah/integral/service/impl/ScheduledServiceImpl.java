@@ -17,10 +17,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -63,11 +60,21 @@ public class ScheduledServiceImpl {
 
             for (Map.Entry<String, List<JfRecord>> entry : mapGroupByUserId.entrySet()) {
 
-                JfOverdueDetails jfOverdueDetails = new JfOverdueDetails();
+                // todo …… 校验当前用户是否已结算
+                List<Condition> overFilters = new ArrayList<>();
+                overFilters.add(Condition.eq("addDate", beforeMonthDate));
+                overFilters.add(Condition.eq("userId", entry.getKey()));
+                JfOverdueDetails jfOverdueDetails = jfOverdueDetailsService.selectOne(overFilters);
+                if(jfOverdueDetails != null){
+                    logger.info(beforeMonthDate + ">>当前月份积分已结算！");
+                    return;
+                }
 
-                List<JfRecord> listForUserId = entry.getValue();
+                jfOverdueDetails = new JfOverdueDetails();
 
                 jfOverdueDetails.setUserId(entry.getKey());
+
+                List<JfRecord> listForUserId = entry.getValue();
 
                 // todo …… 获取当月获得总量
                 Integer thisMonthGetTotal = listForUserId.stream()
@@ -105,11 +112,6 @@ public class ScheduledServiceImpl {
 
                 // todo …… 入库
                 jfOverdueDetailsService.insert(jfOverdueDetails);
-//                if(jfOverdueDetails.getId() != null){
-//                    logger.info(beforeMonthDate + ">>积分结算完成，操作时间>>" + DateUtils.toDefaultNowTime());
-//                } else {
-//                    logger.error(beforeMonthDate + ">>积分结算失败，操作时间>>" + DateUtils.toDefaultNowTime());
-//                }
             }
         } catch (Exception e) {
             logger.error("积分结算异常>>>{}", e);

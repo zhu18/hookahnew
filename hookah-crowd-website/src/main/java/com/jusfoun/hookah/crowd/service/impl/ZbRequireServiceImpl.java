@@ -293,6 +293,7 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         ZbRecommend zbRecommend = new ZbRecommend();
         zbRecommend.setAddTime(new Date());
         zbRecommend.setRequirementId(id);
+        zbRecommend.setStatus(1);
         zbRecommendService.insert(zbRecommend);
     }
 

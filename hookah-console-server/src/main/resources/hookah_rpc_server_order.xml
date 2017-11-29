@@ -13,7 +13,12 @@
     <bean id="orderInfoService" class="com.jusfoun.hookah.console.server.service.impl.OrderInfoServiceImpl"/>
     <bean id="mgOrderInfoService" class="com.jusfoun.hookah.console.server.service.impl.MgOrderInfoServiceImpl"/>
 
-    <bean id="invoiceService" class="com.jusfoun.hookah.console.server.service.impl.CartServiceImpl"/>
+    <bean id="invoiceService" class="com.jusfoun.hookah.console.server.service.impl.InvoiceServiceImpl"/>
+    <bean id="orderInvoiceService" class="com.jusfoun.hookah.console.server.service.impl.OrderInvoiceServiceImpl"/>
+    <bean id="userInvoiceTitleService" class="com.jusfoun.hookah.console.server.service.impl.UserInvoiceTitleServiceImpl"/>
+    <bean id="userInvoiceAddressService" class="com.jusfoun.hookah.console.server.service.impl.UserInvoiceAddressServiceImpl"/>
+    <bean id="expressInfoService" class="com.jusfoun.hookah.console.server.service.impl.ExpressInfoServiceImpl"/>
+
     <bean id="payCoreService" class="com.jusfoun.hookah.console.server.service.impl.PayCoreServiceImpl"/>
     <bean id="accNoTokenService" class="com.jusfoun.hookah.console.server.service.impl.AccNoTokenServiceImpl"/>
     <bean id="waitSettleRecordService" class="com.jusfoun.hookah.console.server.service.impl.WaitSettleRecordServiceImpl"/>
@@ -33,6 +38,20 @@
     <motan:service interface="com.jusfoun.hookah.rpc.api.InvoiceService"
                    ref="invoiceService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.OrderInvoiceService"
+                   ref="orderInvoiceService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.UserInvoiceTitleService"
+                   ref="userInvoiceTitleService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.UserInvoiceAddressService"
+                   ref="userInvoiceAddressService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+    <motan:service interface="com.jusfoun.hookah.rpc.api.ExpressInfoService"
+                   ref="expressInfoService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+
+
     <motan:service interface="com.jusfoun.hookah.rpc.api.PayCoreService"
                    ref="payCoreService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
