@@ -63,11 +63,21 @@ public class ScheduledServiceImpl {
 
             for (Map.Entry<String, List<JfRecord>> entry : mapGroupByUserId.entrySet()) {
 
-                JfOverdueDetails jfOverdueDetails = new JfOverdueDetails();
+                // todo …… 校验当前用户是否已结算
+                List<Condition> overFilters = new ArrayList<>();
+                overFilters.add(Condition.eq("addDate", beforeMonthDate));
+                overFilters.add(Condition.eq("userId", entry.getKey()));
+                JfOverdueDetails jfOverdueDetails = jfOverdueDetailsService.selectOne(overFilters);
+                if(jfOverdueDetails != null){
+                    logger.info(beforeMonthDate + ">>当前月份积分已结算！");
+                    return;
+                }
 
-                List<JfRecord> listForUserId = entry.getValue();
+                jfOverdueDetails = new JfOverdueDetails();
 
                 jfOverdueDetails.setUserId(entry.getKey());
+
+                List<JfRecord> listForUserId = entry.getValue();
 
                 // todo …… 获取当月获得总量
                 Integer thisMonthGetTotal = listForUserId.stream()

@@ -5,4 +5,6 @@ import com.jusfoun.hookah.core.generic.GenericDao;
 
 public interface OrderInfoMapper extends GenericDao<OrderInfo> {
     int getUserCount();
+
+    Long sumOrderAmountByOrderIds(String[] orderIds);
 }
