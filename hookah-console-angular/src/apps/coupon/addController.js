@@ -141,9 +141,10 @@ class couponController {
             $scope.popup1.opened = true;
         };
         $scope.open2 = function () {
+            console.log($scope.expiryStartTime);
             $scope.inlineOptions2 = {
                 customClass: getDayClass,
-                minDate: $scope.expiryStartTime ? $scope.expiryStartTime+1 :new Date(),
+                minDate: $scope.expiryStartTime ? $scope.expiryStartTime :new Date(),
                 showWeeks: false
             };
             $scope.popup2.opened = true;

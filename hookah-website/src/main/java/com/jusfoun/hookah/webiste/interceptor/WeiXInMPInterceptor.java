@@ -34,10 +34,16 @@ public class WeiXInMPInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         String url = httpServletRequest.getRequestURL().toString();
+        String params = httpServletRequest.getQueryString();
         try{
             if(modelAndView != null){
                 Map<String, Object> model = modelAndView.getModel();
-                model.put("wxConfig", WeiXinConfig.getWXMPConfig(url));
+                if(null != params && !"".equals(params)){
+                    model.put("wxConfig", WeiXinConfig.getWXMPConfig(url + "?" + params ));
+                } else {
+                    model.put("wxConfig", WeiXinConfig.getWXMPConfig(url));
+                }
+
             }
         }catch (Exception e) {
             e.printStackTrace();
