@@ -26,7 +26,7 @@ class couponController {
               }
           };
       }
-      $scope.controlScreen()
+    $scope.controlScreen();
     $scope.search = function (initCurrentPage) { //Render page function
       var promise = $http({
         method: 'GET',
@@ -69,36 +69,31 @@ class couponController {
 
     }; //列表搜索
     $scope.delete=function (id) {
-        var promise = $http({
-            method: 'POST',
-            url: $rootScope.site.apiServer + "/api/coupon/delete",
-            params: {
-                couponId:id
-            }
-        });
-        promise.then(function (res, status, config, headers) {
-            console.log('数据在这里');
-            console.log(res);
-
-            if (res.data.code == '1') {
-                var modalInstance =$rootScope.openConfirmDialogModal("删除成功！");
-                modalInstance.result.then(function () {
+        var modalInstance =$rootScope.openConfirmDialogModal("是否删除该数据？");
+        modalInstance.result.then(function () {
+            var promise = $http({
+                method: 'POST',
+                url: $rootScope.site.apiServer + "/api/coupon/delete",
+                params: {
+                    couponId:id
+                }
+            });
+            promise.then(function (res, status, config, headers) {
+                console.log('数据在这里');
+                console.log(res);
+                if (res.data.code == '1') {
                     $scope.search();
-                }, function () {
+                } else {
 
-                });
-            } else {
-                var modalInstance =$rootScope.openConfirmDialogModal("删除失败！");
-                modalInstance.result.then(function () {
+                }
+                $rootScope.loadingState = false;
+                growl.addSuccessMessage("订单数据加载完毕。。。");
+            });
 
-                }, function () {
+        }, function () {
 
-                });
-            }
-
-            $rootScope.loadingState = false;
-            growl.addSuccessMessage("订单数据加载完毕。。。");
         });
+
     }  //删除功能
 
     $scope.search();
