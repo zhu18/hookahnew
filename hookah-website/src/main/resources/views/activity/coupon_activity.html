@@ -93,9 +93,8 @@ var htmlPart = {
                     html += '优惠券已发放至您的账户，请在个人中心查看！';
                     html += '</div></div>';
                     $.confirm(html, [{close: '确认'}], function () {
-                        window.location.href = 'www.bdgstore.cn/usercenter/myCoupon'
+                        window.location.href = host.website+'/usercenter/myCoupon'
                     }, {width: "500"});
-                    $(that).css('color', '#666');
                 } else {
                     window.location.href = host.loginUrl + encodeURIComponent(host.website + '/activity/coupon');
 
