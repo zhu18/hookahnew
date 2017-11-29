@@ -105,6 +105,7 @@ public class CouponApi extends BaseController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ReturnData deleteCoupon(Long couponId){
         try {
+            logger.info("逻辑删除优惠券：{}", couponId);
             couponService.logicDelete(couponId);
             return ReturnData.success();
         }catch (Exception e){

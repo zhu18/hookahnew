@@ -84,6 +84,12 @@ public class OrderInfoController extends BaseController {
                     if (g.getIsOnsale() == null || g.getIsOnsale() != 1) {
                         throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
                     }
+                    //验证该用户是否能购买该商品
+                    User user = userService.selectById(userId);
+                    if (user.getUserType()==HookahConstants.UserType.PERSON_CHECK_OK.getCode() &&
+                            g.getPurchaseLimit()==Byte.parseByte(HookahConstants.PurchaseLimitName.enterprise.getCode())) {
+                        throw new HookahException("您已认证成为个人用户，只能购买通用商品");
+                    }
 
                     if (cart.getFormat().getPrice() != null && cart.getGoodsNumber() != null) {
                         goodsAmount += cart.getFormat().getPrice() *  cart.getGoodsNumber();  //商品单价 * 套餐内数量 * 购买套餐数量
@@ -128,6 +134,12 @@ public class OrderInfoController extends BaseController {
             GoodsVo g = goodsService.findGoodsById(goodsId);
             if (g.getIsOnsale() == null || !g.getIsOnsale().equals((byte)1)) {
                 throw new HookahException("商品[" + g.getGoodsName() + "]未上架");
+            }
+            //验证该用户是否能购买该商品
+            User user = userService.selectById(userId);
+            if (user.getUserType()==HookahConstants.UserType.PERSON_CHECK_OK.getCode() &&
+                    g.getPurchaseLimit()==Byte.parseByte(HookahConstants.PurchaseLimitName.enterprise.getCode())) {
+                throw new HookahException("您已认证成为个人用户，只能购买通用商品");
             }
             MgGoods.FormatBean format = goodsService.getFormat(goodsId,formatId);
             goodsAmount += format.getPrice() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
@@ -714,6 +726,7 @@ public class OrderInfoController extends BaseController {
     @ResponseBody
     public ReturnData delete(@RequestParam String orderId){
         try{
+            logger.info("取消订单：{}", orderId);
             orderInfoService.deleteByLogic(orderId);
             return ReturnData.success();
         }catch(Exception e){
@@ -731,6 +744,7 @@ public class OrderInfoController extends BaseController {
     @ResponseBody
     public ReturnData forceDelete(@RequestParam String orderId){
         try{
+            logger.info("逻辑删除订单：{}", orderId);
             orderInfoService.deleteOrder(orderId);
             return ReturnData.success("订单已删除");
         }catch(Exception e){
