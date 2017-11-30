@@ -2419,13 +2419,12 @@ dl {
 	display:none;
 }
 .qrcode-wraper .qrcode-wraper-in{
-	width:630px;
+	width:576px;
 	background: #fff;
 	margin:30px auto 0;
 	overflow: hidden;
 }
 .qrcode-wraper .qrcode-title{
-	width:630px;
 	height:80px;
 	background: #000;
 	overflow: hidden;
@@ -2443,7 +2442,7 @@ dl {
 	line-height: 12px;
 }
 .qrcode-wraper .qrcode-content{
-	padding:26px 30px 29px;
+	padding:16px 30px 19px;
 	color:#666;
 }
 .qrcode-wraper .qrcode-content h3{
@@ -2499,6 +2498,7 @@ dl {
 }
 .qrcode-wraper .footer-content li img{
 	border:1px solid #b5b5b5;
+	width:150px;
 }
 .qrcode-wraper .footer-content li img p{
 	line-height: 28px;
@@ -2508,8 +2508,13 @@ dl {
 .qrcode-wraper .footer-content li:nth-child(2),.qrcode-wraper .footer-content li:nth-child(5){
 	margin:0 30px;
 }
+.qrcode-wraper .footer-content li:nth-child(5){
+
+	margin-right: 10px;
+}
 .qrcode-wraper .footer-content li:last-child img{
 	border:none;
+	width: 70px;
 	margin:60px 0 0 0;
 }
 
