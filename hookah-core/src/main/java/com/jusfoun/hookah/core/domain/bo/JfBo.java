@@ -11,6 +11,8 @@ public class JfBo implements Serializable {
 
     private Integer sourceId;
 
+    private String msg;
+
     public String getUserId() {
         return userId;
     }
@@ -27,6 +29,14 @@ public class JfBo implements Serializable {
         this.sourceId = sourceId;
     }
 
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     public JfBo(String userId, Integer sourceId) {
         this.userId = userId;
         this.sourceId = sourceId;
@@ -37,6 +47,7 @@ public class JfBo implements Serializable {
         return "JfBo{" +
                 "userId='" + userId + '\'' +
                 ", sourceId=" + sourceId +
+                ", msg='" + msg + '\'' +
                 '}';
     }
 }
