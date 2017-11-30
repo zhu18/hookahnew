@@ -4,22 +4,29 @@
 
 $(function () {
     // 回显
+    Loading.start();
     $.ajax({
         url:host.website+'/supplier/getContactInfo',
         data:{},
         type:'get',
         cache:false,
         success:function (data) {
-            var contactName=data.data.contactName?data.data.contactName:"";
-            var contactPhone=data.data.contactPhone?data.data.contactPhone:"";
-            var contactAddress=data.data.contactAddress?data.data.contactAddress:"";
-            var postCode=data.data.postCode?data.data.postCode:"";
-            var email=data.data.email?data.data.email:"";
-            $("#contactEmail").val(email);
-            $("#contactName").val(contactName);
-            $("#contactPhone").val(contactPhone);
-            $("#contactAddress").val(contactAddress);
-            $("#postCode").val(postCode);
+            Loading.stop();
+            if(data.code == "1"){
+                var contactName=data.data.contactName?data.data.contactName:"";
+                var contactPhone=data.data.contactPhone?data.data.contactPhone:"";
+                var contactAddress=data.data.contactAddress?data.data.contactAddress:"";
+                var postCode=data.data.postCode?data.data.postCode:"";
+                var email=data.data.email?data.data.email:"";
+                $("#contactEmail").val(email);
+                $("#contactName").val(contactName);
+                $("#contactPhone").val(contactPhone);
+                $("#contactAddress").val(contactAddress);
+                $("#postCode").val(postCode);
+            }else {
+                $.alert(data.message)
+            }
+
         }
     });
     var regex = {  //手机号验证正则
