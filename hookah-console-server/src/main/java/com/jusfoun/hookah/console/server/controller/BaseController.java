@@ -1,3 +1,4 @@
+
 package com.jusfoun.hookah.console.server.controller;
 
 import com.jusfoun.hookah.core.domain.User;

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jusfoun.hookah.core.generic.GenericModel;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 public class UserInvoiceTitle extends GenericModel {
@@ -13,6 +16,8 @@ public class UserInvoiceTitle extends GenericModel {
      *
      * @mbggenerated
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String titleId;
 
     /**

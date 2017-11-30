@@ -271,7 +271,14 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
                     increaseZbRecommend(zbRequirement.getId());
                 }
             }
-
+            //重新发布时，变更推荐信息为有效
+            if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.WAIT_FB.code.shortValue())){
+                updateRecommendStatus(zbRequirement, 0, 1);
+            }
+            //流标时，变更推荐信息为无效
+            if(zbRequirement.getStatus().equals(ZbContants.Zb_Require_Status.FAIL_TO_SOLD.code.shortValue())){
+                updateRecommendStatus(zbRequirement, 1, 0);
+            }
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue())) {
                 //添加资格评选时间
                 mgZbRequireStatusService.setRequireStatusInfo(zbRequirement.getRequireSn(), ZbContants.SELECTTIME, DateUtil.getSimpleDate(zbRequirement.getUpdateTime()));
@@ -295,6 +302,20 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         zbRecommend.setRequirementId(id);
         zbRecommend.setStatus(1);
         zbRecommendService.insert(zbRecommend);
+    }
+
+    //变更推荐任务是否有效
+    public void updateRecommendStatus(ZbRequirement zbRequirement, int status1, int status2){
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("status", status1));
+        filters.add(Condition.eq("requirementId", zbRequirement.getId()));
+        ZbRecommend zbRecommend = zbRecommendService.selectOne(filters);
+        if(zbRecommend != null){
+            zbRecommend.setStatus(status2);
+            zbRecommend.setOrderNum(0);
+            zbRecommend.setUpdateTime(new Date());
+            zbRecommendService.updateByCondition(zbRecommend, filters);
+        }
     }
 
     @Override

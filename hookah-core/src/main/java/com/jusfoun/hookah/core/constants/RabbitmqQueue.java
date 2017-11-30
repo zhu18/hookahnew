@@ -50,5 +50,10 @@ public interface RabbitmqQueue {
      */
     public final String CONTRACT_REG_COUPON ="CONTRACT_REG_COUPON";
 
+    /**
+     *  开发票消息队列
+     */
+    public final String CONTRACT_INVOICE_MESSAGE ="CONTRACT_INVOICE_MESSAGE";
+
 
 }

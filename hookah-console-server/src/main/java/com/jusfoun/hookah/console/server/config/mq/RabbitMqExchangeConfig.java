@@ -121,6 +121,12 @@ public class RabbitMqExchangeConfig {
         return queue;
     }
 
+    @Bean
+    Queue queueInvoice(RabbitAdmin rabbitAdmin) {
+        Queue queue = new Queue(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE, true);
+        rabbitAdmin.declareQueue(queue);
+        return queue;
+    }
 
     /*************   开始  将 queue 绑定到 指定交换机   *******************/
 
@@ -251,4 +257,17 @@ public class RabbitMqExchangeConfig {
         return binding;
     }
 
+    @Bean
+    Binding bindingExchangeInvoice(Queue queueInvoice, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueInvoice).to(exchange).with(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
+
+    @Bean
+    Binding bindingExchangeInvoice(Queue queueInvoice, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
+        Binding binding = BindingBuilder.bind(queueInvoice).to(exchange).with(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE);
+        rabbitAdmin.declareBinding(binding);
+        return binding;
+    }
 }

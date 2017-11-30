@@ -257,6 +257,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
         return ReturnData.success(jfUserVo);
     }
 
+    @CacheEvict(value = "personUseJfSum", key = "#userId")
     @Override
     public ReturnData optJf(String userId, String optType, String score, String note, String operatorId) throws Exception {
 

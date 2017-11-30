@@ -69,10 +69,9 @@
     <select id="getUseScoreByUserId" resultType="java.lang.Integer">
 
         SELECT
-            SUM(js.score)
+            SUM(jr.score)
         FROM
             jf_record jr
-        LEFT JOIN jf_rule js ON jr.source_id = js.id
         WHERE
             jr.expire = 0 AND jr.user_id = #{userId}
     </select>
