@@ -6,9 +6,7 @@
     margin-bottom: 15px;
 }
 .accountInformation .accountInformation-top ul{
-    margin-left: 157px;
-    margin-top: 10px;
-    width: 332px;
+    padding: 20px 180px;
 }
 .accountInformation .accountInformation-top ul li{
     height: 32px;
