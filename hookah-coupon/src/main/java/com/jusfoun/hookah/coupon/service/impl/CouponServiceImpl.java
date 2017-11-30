@@ -135,6 +135,13 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         if (coupon.getTotalCount()>0 && coupon.getTotalCount()<coupon.getLimitedCount()){
             throw new HookahException("每人限领数量不能大于总发行量");
         }
+        if (DateUtils.isSameDay(coupon.getExpiryStartDate(),new Date())){
+            coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
+            coupon.setActivatedTime(new Date());
+            coupon.setActivatedUser(userId);
+        }else {
+            coupon.setCouponStatus(HookahConstants.CouponStatus.UN_USED.getCode());
+        }
         coupon.setUpdateUser(userId);
         if (goodsList!=null){
 
@@ -316,6 +323,8 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         return pagination;
     }
 
+
+
     @Override
     public Pagination getCouponList(String couponName, Byte couponType, String currentPage, String pageSize, String sort, Byte type) throws Exception {
         Pagination page = new Pagination<>();
@@ -364,12 +373,14 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     }
 
     @Override
-    public ReturnData getUserCouponById(String userId) throws Exception {
+    public List getUserCouponById(String[] userId) throws Exception {
         HashMap<String, Object> condition = new HashMap();
         condition.put("isDeleted",(byte)0);
-        condition.put("userId",userId);
+        if (userId!=null){
+            condition.put("userId",userId);
+        }
         List<UserCouponVo> list = couponMapper.getUserCouponCount(condition);
-        return ReturnData.success(list.get(0));
+        return list;
     }
 
     public ReturnData getUserCouponDetail(String userId, Long userCouponId) throws Exception {
