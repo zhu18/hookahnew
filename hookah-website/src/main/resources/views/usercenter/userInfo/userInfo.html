@@ -9,6 +9,9 @@ var head = {
 	var dataParm = {};
 	dataParm.pageNumber = 1;
 	dataParm.pageSize = 8;
+    /**
+     * Created by lss on 2017/7/17 0017.
+     */
     function loadPageData(data) {
         if (data.data.list.length > 0) {
             var list = data.data.list;
@@ -79,19 +82,19 @@ var htmlPart = {
 							<img width="90" src="${user.headImg}" alt="">
 							<div class="icon-box">
 								<%if(isNotEmpty(userCur.mobile)){%>
-								<span class="fa fa-mobile-phone font-size-18 color-blue" title="手机"></span>
+								<span class="fa fa-mobile-phone font-size-18 color-blue"></span>
 								<%}else{%>
-								<span class="fa fa-mobile-phone font-size-18" title="手机"></span>
+								<span class="fa fa-mobile-phone font-size-18"></span>
 								<%}%>
 								<%if(isNotEmpty(userCur.email)){%>
-								<span class="fa fa-envelope-o font-size-18 color-blue" title="邮件"></span>
+								<span class="fa fa-envelope-o font-size-18 color-blue"></span>
 								<%}else{%>
-								<span class="fa fa-envelope-o font-size-18" title="邮件"></span>
+								<span class="fa fa-envelope-o font-size-18"></span>
 								<%}%>
 								<%if(userCur.userType == 4){%>
-								<span class="fa fa-id-card-o font-size-18 color-blue" title="个人信息"></span>
+								<span class="fa fa-id-card-o font-size-18 color-blue"></span>
 								<%}else{%>
-								<span class="fa fa-id-card-o font-size-18 " title="个人信息"></span>
+								<span class="fa fa-id-card-o font-size-18 "></span>
 								<%}%>
 							</div>
 						</div>
