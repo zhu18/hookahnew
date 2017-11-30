@@ -622,8 +622,8 @@ ul li {
     text-decoration: underline !important;
 }
 .noData{
-    line-height: 300px;
     height: 300px !important;
+    padding-top: 90px;
 }
 
 

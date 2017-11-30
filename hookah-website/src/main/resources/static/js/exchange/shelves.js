@@ -90,7 +90,7 @@ function loadPageData(data){ //渲染页面数据
             }
             $('.order-list ul').html(html);
         }else{
-            $('.order-list ul').html('<div class="noData">暂无数据</div>');
+			$('.order-list ul').html('<div class="noData"><p><img src="/static/images/no_data_img.png" alt=""></p><p>商品正在上架中，敬请期待！</p></div>');
         }
 
     }
