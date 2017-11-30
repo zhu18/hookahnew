@@ -18,6 +18,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.coupon.utils.PropertiesManager;
@@ -417,7 +418,14 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
     }
 
     @Transactional
-    public synchronized void sendCoupon2User(String userId, List<Long> couponIdList, Byte receivedMode) throws Exception{
+    public synchronized ReturnData sendCoupon2User(String userId, List<Long> couponIdList, Byte receivedMode) throws Exception{
+        ReturnData returnData = new ReturnData();
+        StringBuffer errorMessage = new StringBuffer("");
+        StringBuffer successMessage = new StringBuffer("");
+        boolean errorFlag = false;
+        boolean sendFlag = false;
+        List<String> errorList = new ArrayList<>();
+        List<String> successList = new ArrayList<>();
         for (Long couponId : couponIdList){
             Coupon coupon = couponMapper.selectByPrimaryKey(couponId);
             Integer receivedCount = coupon.getReceivedCount();
@@ -428,7 +436,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             filter.add(Condition.eq("couponId",coupon.getId()));
             Long count = userCouponService.count(filter);
             if (limitedCount <= count){
-                throw new HookahException("用户["+userId+"]领取的优惠券["+coupon.getCouponName()+"]已经达到领取上限");
+                errorFlag = true;
+                errorList.add(coupon.getCouponName());
+                continue;
             }
             UserCoupon userCoupon = new UserCoupon();
             userCoupon.setUserId(userId);
@@ -446,12 +456,32 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             }
             userCouponService.insert(userCoupon);
             this.updateByIdSelective(coupon);
+            sendFlag = true;
+            successList.add(coupon.getCouponName());
         }
-        // TODO …… 赠送优惠券之后发送消息给用户
-        MessageCode messageCode = new MessageCode();
-        messageCode.setCode(HookahConstants.MESSAGE_701);//此处填写相关事件编号
-        messageCode.setBusinessId(userId);
-        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);//将数据添加到队列
+        if (errorFlag){
+            returnData.setCode(ExceptionConst.Error);
+            String couponNames = "";
+            for (int i = 0;i<errorList.size();i++){
+                couponNames = couponNames + "[" + errorList.get(i) + "]";
+            }
+            errorMessage = errorMessage.append("用户["+userId+"]领取的优惠券"+couponNames+"已经达到领取上限；");
+        }
+        //批量赠送优惠券只要有一个成功就发送消息给用户
+        if (sendFlag){
+            returnData.setCode(ExceptionConst.Success);
+            String couponNames = "";
+            for (int i = 0;i<successList.size();i++){
+                couponNames = couponNames + "[" + successList.get(i) + "]";
+            }
+            successMessage = successMessage.append("优惠券"+couponNames+"已经赠送成功。");
+            MessageCode messageCode = new MessageCode();
+            messageCode.setCode(HookahConstants.MESSAGE_701);//此处填写相关事件编号
+            messageCode.setBusinessId(userId);
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);//将数据添加到队列
+        }
+        returnData.setMessage(errorMessage.append(successMessage).toString());
+        return returnData;
     }
 
     public String createCouponSn(String prefix, Byte type){

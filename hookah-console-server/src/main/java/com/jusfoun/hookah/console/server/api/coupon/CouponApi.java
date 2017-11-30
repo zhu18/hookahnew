@@ -105,6 +105,7 @@ public class CouponApi extends BaseController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ReturnData deleteCoupon(Long couponId){
         try {
+            logger.info("逻辑删除优惠券：{}", couponId);
             couponService.logicDelete(couponId);
             return ReturnData.success();
         }catch (Exception e){
@@ -249,8 +250,7 @@ public class CouponApi extends BaseController {
             for (Integer couponId:couponIds){
                 couponList.add((long) couponId);
             }
-            couponService.sendCoupon2User(userId, couponList, HookahConstants.ReceivedMode.BACKSTAGE_GIFT.getCode());
-            return ReturnData.success("优惠券已发送");
+            return couponService.sendCoupon2User(userId, couponList, HookahConstants.ReceivedMode.BACKSTAGE_GIFT.getCode());
         }catch (HookahException e){
             return ReturnData.error(e.getMessage());
         }catch (Exception e){

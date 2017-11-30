@@ -1,8 +1,6 @@
 function loadPageData(data) {
-  console.log(data);
   console.log(dataParm.type);
 if(dataParm.type==3){
-
   overTimeDetail(data)
 }else{
   var pointsListDOM=' <thead>\
@@ -49,8 +47,6 @@ if(dataParm.type==3){
   }
 }
 
-
-
 }
 
 function overTimeDetail(data) {
@@ -86,16 +82,8 @@ function overTimeDetail(data) {
 
   }
 }
-
-
-
-
-
-
-
-
 //点击查询按钮
-$(".listNav a").on("click", function () {
+$(document).on("click", ".listNav a",function () {
   $(this).addClass('active').siblings().removeClass('active');
   dataParm.type = $(this).attr('typeVal');
   goPage(1);
