@@ -169,7 +169,7 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
     public Pagination<OrderInfoInvoiceVo> getDetailListInPage(Integer pageNum, Integer pageSize, String userId, Byte invoiceStatus) throws HookahException {
         // TODO Auto-generated method stub
         PageHelper.startPage(pageNum, pageSize);
-        Page<OrderInfoInvoiceVo> list =  (Page<OrderInfoInvoiceVo>) invoiceMapper.getOrderInvoiceInfo(userId,invoiceStatus);
+        Page<OrderInfoInvoiceVo> list =  (Page<OrderInfoInvoiceVo>) invoiceMapper.getOrderInvoiceInfoList(userId,invoiceStatus);
         Page<OrderInfoInvoiceVo> page = new Page<OrderInfoInvoiceVo>(pageNum,pageSize);
         for(OrderInfo order:list){
             OrderInfoInvoiceVo orderInfoInvoiceVo = new OrderInfoInvoiceVo();
@@ -236,5 +236,39 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
     public List<InvoiceVo> getInvoiceListInPage(String userName, Byte userType, Byte invoiceStatus, Byte invoiceType)throws HookahException{
 
         return invoiceMapper.getInvoiceInfo(userName, userType, invoiceStatus, invoiceType);
+    }
+
+    public InvoiceDetailVo findOrderInvoiceInfo(String invoiceId) throws HookahException {
+
+        InvoiceDetailVo invoiceDetailVo = new InvoiceDetailVo();
+        List<OrderInfoInvoiceVo> orderInfoInvoiceVoList = invoiceMapper.getOrderInvoiceDetailInfo(invoiceId);
+
+        for(OrderInfo order:orderInfoInvoiceVoList){
+            OrderInfoInvoiceVo orderInfoInvoiceVo = new OrderInfoInvoiceVo();
+            this.copyProperties(order,orderInfoInvoiceVo,null);
+
+            OrderInfoVo mgOrder = mgOrderInfoService.selectById(orderInfoInvoiceVo.getOrderId());
+            List<MgOrderGoods> goodsList = mgOrder.getMgOrderGoodsList();
+            if(goodsList!=null){
+                //未支付订单处理
+                if(order.getPayStatus()!=OrderInfo.PAYSTATUS_PAYED){
+                    for(MgOrderGoods goods:goodsList){
+                        goods.setUploadUrl(null);
+                        try {
+                            Goods curGoods = goodsService.findGoodsById(goods.getGoodsId());
+                            goods.setIsOnsale(curGoods.getIsOnsale());
+                        } catch (HookahException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            orderInfoInvoiceVo.setMgOrderGoodsList(goodsList);
+        }
+        BeanUtils.copyProperties(this.findInvoiceInfo(invoiceId), invoiceDetailVo);
+        invoiceDetailVo.setOrderInfoInvoiceVoList(orderInfoInvoiceVoList);
+        invoiceDetailVo.setUserInvoiceVo(invoiceMapper.getUserInvoiceInfoByInvoiceId(invoiceId));
+        return invoiceDetailVo;
     }
 }
