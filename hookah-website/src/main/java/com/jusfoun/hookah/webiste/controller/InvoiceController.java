@@ -50,7 +50,8 @@ public class InvoiceController extends BaseController{
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            invoiceService.addInvoice(invoiceDTOVo, this.getCurrentUser().getUserId());
+            invoiceDTOVo.setUserId(this.getCurrentUser().getUserId());
+            invoiceService.addInvoice(invoiceDTOVo);
             return ReturnData.success();
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);

@@ -78,9 +78,9 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
      */
     @Override
     @Transactional
-    public void addInvoice(InvoiceDTOVo invoiceDTOVo, String userId) throws HookahException {
+    public void addInvoice(InvoiceDTOVo invoiceDTOVo) throws HookahException {
 
-        Invoice invoice = buildInvoiceInfo(invoiceDTOVo, userId);
+        Invoice invoice = buildInvoiceInfo(invoiceDTOVo);
         if(StringUtils.isNotBlank(invoiceDTOVo.getInvoiceId())){
             // 修改时，更新状态为已申请(待审核)
             invoice.setInvoiceStatus(HookahConstants.INVOICE_STATUS_1);
@@ -113,11 +113,10 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
 
     /**
      * 构建发票信息
-     * @param titleId
-     * @param id
+     * @param invoiceDTOVo
      * @return
      */
-    private Invoice buildInvoiceInfo(InvoiceDTOVo invoiceDTOVo, String userId){
+    private Invoice buildInvoiceInfo(InvoiceDTOVo invoiceDTOVo){
         Invoice invoice = new Invoice();
         if(StringUtils.isNotBlank(invoiceDTOVo.getInvoiceId())){
 
@@ -135,10 +134,10 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
         invoice.setInvoiceStatus(Byte.valueOf("1"));
 
         // 发票编码
-        invoice.setInvoiceSn(generateInvoiceSn(userId));
+        invoice.setInvoiceSn(generateInvoiceSn(invoiceDTOVo.getUserId()));
 
         // 创建人
-        invoice.setAddUser(userId);
+        invoice.setAddUser(invoiceDTOVo.getUserId());
 
         // 发票金额
         if(invoiceDTOVo.getOrderIds() != null && invoiceDTOVo.getOrderIds().contains(HookahConstants.COMMA)){

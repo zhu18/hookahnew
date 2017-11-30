@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface InvoiceService extends GenericService<Invoice,String> {
 
-    public void addInvoice(InvoiceDTOVo invoiceDTOVo, String userId) throws HookahException;
+    public void addInvoice(InvoiceDTOVo invoiceDTOVo) throws HookahException;
 
     public Pagination<OrderInfoInvoiceVo> getDetailListInPage(Integer pageNum, Integer pageSize, String userId, Byte invoiceStatus)throws HookahException;
 

@@ -13,9 +13,10 @@ import java.io.Serializable;
 public class InvoiceDTOVo implements Serializable {
 
     private String invoiceId;// 发票ID
-    private String titleId; //抬头ID
+    private String titleId; // 抬头ID
     private String id; // 收票人ID
-    private String orderIds; //订单IDs
+    private String orderIds; // 订单IDs
+    private String userId; // 用户ID
 
     public String getInvoiceId() {
         return invoiceId;
@@ -47,5 +48,13 @@ public class InvoiceDTOVo implements Serializable {
 
     public void setOrderIds(String orderIds) {
         this.orderIds = orderIds;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
