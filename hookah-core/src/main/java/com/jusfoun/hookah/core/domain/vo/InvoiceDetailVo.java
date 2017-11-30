@@ -21,6 +21,13 @@ public class InvoiceDetailVo extends Invoice implements Serializable {
 
     private ExpressInfo expressInfo;
 
+    /**
+     * 后台发票详情用
+     */
+    private List<OrderInfoInvoiceVo> orderInfoInvoiceVoList;
+
+    private UserInvoiceVo userInvoiceVo;
+
     public String getRelationOrderSn() {
         return relationOrderSn;
     }
@@ -51,5 +58,21 @@ public class InvoiceDetailVo extends Invoice implements Serializable {
 
     public void setExpressInfo(ExpressInfo expressInfo) {
         this.expressInfo = expressInfo;
+    }
+
+    public List<OrderInfoInvoiceVo> getOrderInfoInvoiceVoList() {
+        return orderInfoInvoiceVoList;
+    }
+
+    public void setOrderInfoInvoiceVoList(List<OrderInfoInvoiceVo> orderInfoInvoiceVoList) {
+        this.orderInfoInvoiceVoList = orderInfoInvoiceVoList;
+    }
+
+    public UserInvoiceVo getUserInvoiceVo() {
+        return userInvoiceVo;
+    }
+
+    public void setUserInvoiceVo(UserInvoiceVo userInvoiceVo) {
+        this.userInvoiceVo = userInvoiceVo;
     }
 }

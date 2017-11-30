@@ -193,7 +193,7 @@ public class RegController {
         //完成注册 发消息到MQ送优惠券
         mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,regUser.getUserId());
 
-        // TODO …… 赠送积分
+        // TODO …… 注册赠送积分
         jfRecordService.registerHandle(user.getUserId(), recommendUserId);
 
         //TODO...登录日志

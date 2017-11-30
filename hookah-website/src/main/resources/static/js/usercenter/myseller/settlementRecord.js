@@ -1,7 +1,6 @@
 /**
  * Created by lss on 2017/7/13 0013.
  */
-
 function loadPageData(data){
     if(data.data.list.length > 0){
         var list = data.data.list;
@@ -30,11 +29,7 @@ function loadPageData(data){
     }else{
         $('.settlementRecord-down-list-content').html('<tr class="no"><td colspan="8">暂无数据</td></tr>');
     }
-
-
 }
-
-// goPage(1);
 $(function () {
      // 状态按钮点击事件
     $(".query-condition .btn-box a").on("click",function () {
@@ -46,7 +41,7 @@ $(function () {
     })
     // 月份选择事件
     $(".query-condition .select-month a").on("click",function () {
-        $(this).addClass("active").siblings().removeClass("active")
+        $(this).addClass("active").siblings().removeClass("active");
         var html=$(this).html();
         var now = new Date();
         var date = new Date(now.getTime() - 1);

@@ -36,9 +36,8 @@ function loadPageData(data) {
                 html +='<h4>'+list[i].goodsName+'</h4>';
                 if(list[i].isDiscussPrice==1){
                     html +='<p>价格面议</span></p>';
-
                 }else {
-                    var d=Transformation(list[i].goodsPrice,"10000")
+                    var d=Transformation(list[i].goodsPrice,"10000");
                     html +='<p>价格：<span>￥'+d+'</span></p>';
                 }
                 html +='</div></a></div>';

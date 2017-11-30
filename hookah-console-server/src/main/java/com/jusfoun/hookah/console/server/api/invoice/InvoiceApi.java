@@ -28,7 +28,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = "/api/invoice")
+@RequestMapping(value = "/test/invoice")
 public class InvoiceApi extends BaseController{
 
     @Resource
@@ -116,8 +116,8 @@ public class InvoiceApi extends BaseController{
     }
 
     /**
-     * 发票审核
-     * @param expressInfo json字符串对象 发票
+     * 邮寄
+     * @param expressInfo json字符串对象 邮寄
      * @return
      */
     @RequestMapping(value = "/send", method = RequestMethod.POST)
@@ -149,7 +149,7 @@ public class InvoiceApi extends BaseController{
     public ReturnData findInvoiceInfo(String invoiceId){
         ReturnData returnData = new ReturnData<>();
         try {
-            InvoiceDetailVo invoiceDetailVo = invoiceService.findInvoiceInfo(invoiceId);
+            InvoiceDetailVo invoiceDetailVo = invoiceService.findOrderInvoiceInfo(invoiceId);
             return ReturnData.success(invoiceDetailVo);
         } catch (Exception e) {
             logger.error("修改错误", e);

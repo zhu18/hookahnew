@@ -107,7 +107,9 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
         }
 
-        returnData.setData2(cacheService.getUseScoreByUserId(userId));
+        Integer useJf = cacheService.getUseScoreByUserId(userId);
+
+        returnData.setData2(useJf == null ? 0 : useJf);
 
         return returnData;
     }

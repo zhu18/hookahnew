@@ -15,19 +15,17 @@
     background-color: #F4F4F4;
 }
 .settlementRecordDetails-top table {
-    width: 100%;
-    margin-top: 16px;
-    margin-bottom: 18px;
+    width: calc(100% - 30px);
+    margin: 15px;
 }
 .settlementRecordDetails-top table tr{
     height: 45px;
     line-height: 45px;
 }
 .settlementRecordDetails-top table td{
-    width: calc(20% - 40px);
-    padding: 0 20px;
+    width:25%;
     color: #666666;
-    font-size: 14px;
+    font-size: 12px;
     text-align: left;
 }
 .settlementRecordDetails-top p{
