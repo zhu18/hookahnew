@@ -87,15 +87,8 @@ function overTimeDetail(data) {
   }
 }
 
-
-
-
-
-
-
-
 //点击查询按钮
-$(".listNav a").on("click", function () {
+$(document).on("click", ".listNav a",function () {
   $(this).addClass('active').siblings().removeClass('active');
   dataParm.type = $(this).attr('typeVal');
   goPage(1);
