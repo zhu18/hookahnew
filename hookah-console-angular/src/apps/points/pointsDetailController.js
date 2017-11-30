@@ -18,9 +18,9 @@ class SettleAPILogsController {
           userId: $scope.userBasePointsInfo.userId,
           action: $scope.action ? $scope.action:'',
           sourceId: $scope.sourceId,
-          startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
-          pageNumber:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
+          startTime: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          endTime: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          currentPage:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
         }
       });

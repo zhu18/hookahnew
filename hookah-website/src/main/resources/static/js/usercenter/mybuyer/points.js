@@ -26,10 +26,21 @@ if(dataParm.type==3){
         getOrPay='获取';
         getOrPayClass='red';
         getOrPayStatus='+'
-      }else{
+      }else if(data.data.list[i].action== 2){
         getOrPay='兑换';
         getOrPayClass='gray';
         getOrPayStatus=''
+      }else if(data.data.list[i].action == 3){
+
+        if(data.data.list[i].sourceId == 11){
+          getOrPay='获取';
+          getOrPayClass='red';
+          getOrPayStatus='+'
+        }else{
+          getOrPay='兑换';
+          getOrPayClass='gray';
+          getOrPayStatus=''
+        }
       }
       data.data.list[i].note==null?data.data.list[i].note='无备注':data.data.list[i].note;
       pointsListDOM+='\
