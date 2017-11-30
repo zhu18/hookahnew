@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 积分服务
@@ -152,7 +153,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
         pages = userService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
 
         if (pages.getList() != null && pages.getList().size() > 0) {
-            pages.getList().parallelStream().forEach(x -> {
+            pages.getList().parallelStream().forEachOrdered(x -> {
 
                 List<Condition> jfilters = new ArrayList<>();
                 jfilters.add(Condition.eq("userId", x.getUserId()));
@@ -171,7 +172,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
             });
         }
 
-        jfUserVoList.sort((JfUserVo m, JfUserVo n) -> m.getAddTime().compareTo(n.getAddTime()));
+//        jfUserVoList.stream().sorted((JfUserVo m, JfUserVo n) -> m.getAddTime().compareTo(n.getAddTime()));
         jfUserVoPag.setTotalItems(pages.getTotalItems());
         jfUserVoPag.setPageSize(pageSizeNew);
         jfUserVoPag.setCurrentPage(pageNumberNew);
@@ -266,10 +267,13 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
         ReturnData returnData = new ReturnData();
         returnData.setCode(ExceptionConst.Success);
 
-        if (!StringUtils.isNotBlank(userId) || !StringUtils.isNotBlank(optType)
-                || !StringUtils.isNotBlank(optType) || !StringUtils.isNotBlank(note)
-                || Integer.parseInt(score) <= 0) {
+        if (!StringUtils.isNotBlank(userId)
+                || !StringUtils.isNotBlank(optType)) {
             return ReturnData.error("参数不能为空！^_^");
+        }
+
+        if (Integer.parseInt(score) <= 0) {
+            return ReturnData.error("积分变动值应大于0！^_^");
         }
 
         if (optType.equals("11") || optType.equals("12")) {
