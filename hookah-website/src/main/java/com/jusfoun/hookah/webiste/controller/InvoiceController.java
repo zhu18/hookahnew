@@ -2,13 +2,9 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.Invoice;
-import com.jusfoun.hookah.core.domain.OrderInvoice;
-import com.jusfoun.hookah.core.domain.vo.InvoiceVo;
+import com.jusfoun.hookah.core.domain.vo.InvoiceDTOVo;
+import com.jusfoun.hookah.core.domain.vo.InvoiceDetailVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoInvoiceVo;
-import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
-import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.InvoiceService;
@@ -23,9 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * 发票
@@ -45,18 +38,19 @@ public class InvoiceController extends BaseController{
 
     /**
      *  发票提交
-     * @param invoiceId 发票ID
-     * @param titleId 抬头ID
-     * @param id  收票人ID
-     * @param orderIds 订单IDs
+     * @param invoiceDTOVo 发票传输对象
+     *                   包括 invoiceId 发票ID
+     *                   包括   titleId 抬头ID
+     *                   包括   id  收票人ID
+     *                   包括   orderIds 订单IDs
      * @return
      */
     @RequestMapping(value = "/upsert", method = RequestMethod.POST)
-    public ReturnData insert(String invoiceId, String titleId, String id, String orderIds) {
+    public ReturnData insert(InvoiceDTOVo invoiceDTOVo) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            invoiceService.addInvoice(invoiceId, titleId, id, orderIds);
+            invoiceService.addInvoice(invoiceDTOVo, this.getCurrentUser().getUserId());
             return ReturnData.success();
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
@@ -90,12 +84,17 @@ public class InvoiceController extends BaseController{
         return ReturnData.success();
     }
 
+    /**
+     * 查看发票详情
+     * @param invoiceId
+     * @return
+     */
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
     public ReturnData findInvoiceInfo(String invoiceId){
         ReturnData returnData = new ReturnData<>();
         try {
-            InvoiceVo invoiceVo = invoiceService.findInvoiceInfo(invoiceId);
-            return ReturnData.success();
+            InvoiceDetailVo invoiceDetailVo = invoiceService.findInvoiceInfo(invoiceId);
+            return ReturnData.success(invoiceDetailVo);
         } catch (Exception e) {
             logger.error("修改错误", e);
             ReturnData.error("系统异常:" + e.getMessage());

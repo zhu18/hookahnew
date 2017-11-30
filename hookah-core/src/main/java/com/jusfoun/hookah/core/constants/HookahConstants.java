@@ -14,6 +14,9 @@ public class HookahConstants {
     /*平台用户、产品编码前缀*/
     public static final String platformCode="JF";
 
+    /*平台用户、产品编码前缀*/
+    public static final String platformInvoiceCode="FP";
+
     /*交易中心虚拟账户Id*/
     public static final Long TRADECENTERACCOUNT = 8L;
     /*交易中心userId*/
@@ -156,6 +159,12 @@ public class HookahConstants {
 
     //商品类型
     public static final Byte GOODS_TYPE = 1;
+
+    //发票状态 0：未开发票 1：已申请（待审核）2：待邮寄（审核通过） 3（未通过） 4 已开票
+    public static final Byte INVOICE_STATUS_1 = 1;
+    public static final Byte INVOICE_STATUS_2 = 2;
+    public static final Byte INVOICE_STATUS_3 = 3;
+    public static final Byte INVOICE_STATUS_4 = 4;
 
     public static final Byte GOODS_ON_LINE = 0;//线上支付
     public static final Byte GOODS_OFF_LINE = 1;//线下支付

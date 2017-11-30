@@ -2,23 +2,20 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.InvoiceMapper;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
-import com.jusfoun.hookah.core.domain.vo.InvoiceVo;
-import com.jusfoun.hookah.core.domain.vo.OrderInfoInvoiceVo;
-import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
+import com.jusfoun.hookah.core.domain.vo.*;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
-import com.jusfoun.hookah.rpc.api.ExpressInfoService;
-import com.jusfoun.hookah.rpc.api.UserInvoiceAddressService;
-import com.jusfoun.hookah.rpc.api.UserInvoiceTitleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,6 +64,9 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
     MgOrderInfoService mgOrderInfoService;
 
     @Resource
+    UserService userService;
+
+    @Resource
     RedisOperate redisOperate;
 
     /**
@@ -78,20 +78,22 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
      */
     @Override
     @Transactional
-    public void addInvoice(String invoiceId, String titleId, String id, String orderIds) throws HookahException {
+    public void addInvoice(InvoiceDTOVo invoiceDTOVo, String userId) throws HookahException {
 
-        Invoice invoice = buildInvoiceInfo(titleId, id, orderIds);
-        if(StringUtils.isNotBlank(invoiceId)){
+        Invoice invoice = buildInvoiceInfo(invoiceDTOVo, userId);
+        if(StringUtils.isNotBlank(invoiceDTOVo.getInvoiceId())){
+            // 修改时，更新状态为已申请(待审核)
+            invoice.setInvoiceStatus(HookahConstants.INVOICE_STATUS_1);
             super.updateByIdSelective(invoice);
-            invoice.setInvoiceId(invoiceId);
+            invoice.setInvoiceId(invoiceDTOVo.getInvoiceId());
         }else{
             invoice = super.insert(invoice);
         }
 
         // 插入中间表数据
         // 多个订单可以开具一张发票
-        if(orderIds != null && orderIds.contains(HookahConstants.COMMA)){
-            String[] orderIdArray = orderIds.split(HookahConstants.COMMA);
+        if(invoiceDTOVo.getOrderIds() != null && invoiceDTOVo.getOrderIds().contains(HookahConstants.COMMA)){
+            String[] orderIdArray = invoiceDTOVo.getOrderIds().split(HookahConstants.COMMA);
             List<OrderInvoice> orderInvoiceList  = new ArrayList<>();
             OrderInvoice orderInvoice;
             for(String orderId : orderIdArray){
@@ -103,7 +105,7 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
             orderInvoiceService.insertBatch(orderInvoiceList);
         }else{
             OrderInvoice orderInvoice = new OrderInvoice();
-            orderInvoice.setOrderId(orderIds);
+            orderInvoice.setOrderId(invoiceDTOVo.getOrderIds());
             orderInvoice.setInvoiceId(invoice.getInvoiceId());
             orderInvoiceService.insert(orderInvoice);
         }
@@ -115,11 +117,11 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
      * @param id
      * @return
      */
-    private Invoice buildInvoiceInfo(String titleId, String id, String orderIds){
+    private Invoice buildInvoiceInfo(InvoiceDTOVo invoiceDTOVo, String userId){
         Invoice invoice = new Invoice();
-        if(StringUtils.isNotBlank(titleId)){
+        if(StringUtils.isNotBlank(invoiceDTOVo.getInvoiceId())){
 
-            UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectById(titleId);
+            UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectById(invoiceDTOVo.getInvoiceId());
             BeanUtils.copyProperties(userInvoiceTitle, invoice);
             // 发票类型 0：个人 1：普通发票 2：专用发票
             invoice.setInvoiceType(userInvoiceTitle.getUserInvoiceType());
@@ -128,28 +130,40 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
             invoice.setInvoiceTitle("0");
         }
         // 收票人ID
-        invoice.setInvoiceAddrId(id);
+        invoice.setInvoiceAddrId(invoiceDTOVo.getId());
         // 已申请（待审核）
         invoice.setInvoiceStatus(Byte.valueOf("1"));
 
-        invoice.setInvoiceSn(generateInvoiceSn());
+        // 发票编码
+        invoice.setInvoiceSn(generateInvoiceSn(userId));
+
+        // 创建人
+        invoice.setAddUser(userId);
 
         // 发票金额
-        if(orderIds != null && orderIds.contains(HookahConstants.COMMA)){
-            String[] orderIdArray = orderIds.split(HookahConstants.COMMA);
+        if(invoiceDTOVo.getOrderIds() != null && invoiceDTOVo.getOrderIds().contains(HookahConstants.COMMA)){
+            String[] orderIdArray = invoiceDTOVo.getOrderIds().split(HookahConstants.COMMA);
             invoice.setInvoiceAmount(orderInfoService.sumOrderAmountByOrderIds(orderIdArray));
         }else{
-            invoice.setInvoiceAmount(orderInfoService.sumOrderAmountByOrderIds(new String[]{orderIds}));
+            invoice.setInvoiceAmount(orderInfoService.sumOrderAmountByOrderIds(new String[]{invoiceDTOVo.getOrderIds()}));
         }
         return invoice;
     }
 
     //  生成发票编码
-    private String generateInvoiceSn(){
+    private String generateInvoiceSn(String userId){
 
-        StringBuilder goodsSn = new StringBuilder();
+        StringBuilder invoiceSn = new StringBuilder();
+        User user = userService.selectById(userId);
+        if(user != null){
+            // FP+会员编码+6位顺序号
+            invoiceSn.append(HookahConstants.platformInvoiceCode);
+            invoiceSn.append(StringUtils.isNotBlank(user.getUserSn()) ? user.getUserSn() : "");
+        }
+        // 编号
+        invoiceSn.append(String.format("%06d", Integer.parseInt(redisOperate.incr(PropertiesManager.getInstance().getProperty("platformInvoiceCode")))));
 
-        return goodsSn.toString();
+        return invoiceSn.toString();
     }
 
     @Override
@@ -195,25 +209,33 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
     }
 
     @Override
-    public InvoiceVo findInvoiceInfo(String invoiceId) throws HookahException {
-        InvoiceVo invoiceVo = new InvoiceVo();
+    public InvoiceDetailVo findInvoiceInfo(String invoiceId) throws HookahException {
+        InvoiceDetailVo invoiceDetailVo = new InvoiceDetailVo();
         Invoice invoice = super.selectById(invoiceId);
 
-        BeanUtils.copyProperties(invoice, invoiceVo);
+        BeanUtils.copyProperties(invoice, invoiceDetailVo);
 
         if(!Objects.isNull(invoice)){
 
             UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectById(invoice.getInvoiceTitle());
             // 抬头相关信息
-            invoiceVo.setUserInvoiceTitle(userInvoiceTitle);
+            invoiceDetailVo.setUserInvoiceTitle(userInvoiceTitle);
             UserInvoiceAddress userInvoiceAddress = userInvoiceAddressService.selectById(invoice.getInvoiceAddrId());
             // 收票人相关信息
-            invoiceVo.setUserInvoiceAddress(userInvoiceAddress);
+            invoiceDetailVo.setUserInvoiceAddress(userInvoiceAddress);
 
-            ExpressInfo expressInfo = expressInfoService.selectById(invoiceId);
+            List<Condition> filters = new ArrayList();
+            //只查询商品状态为未删除的商品
+            filters.add(Condition.eq("invoiceId", invoiceId));
+            ExpressInfo expressInfo = expressInfoService.selectOne(filters);
             // 邮寄信息
-            invoiceVo.setExpressInfo(expressInfo);
+            invoiceDetailVo.setExpressInfo(expressInfo);
         }
-        return invoiceVo;
+        return invoiceDetailVo;
+    }
+
+    public List<InvoiceVo> getInvoiceListInPage(String userName, Byte userType, Byte invoiceStatus, Byte invoiceType)throws HookahException{
+
+        return invoiceMapper.getInvoiceInfo(userName, userType, invoiceStatus, invoiceType);
     }
 }
