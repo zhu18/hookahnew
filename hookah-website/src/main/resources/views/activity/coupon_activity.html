@@ -1,0 +1,113 @@
+<%
+var head = {
+%>
+<style>
+    .content {
+        position: relative;
+        background: url(/static/images/activity/coupon/coupon.jpg) no-repeat center 0;
+        height: 2589px;
+    }
+    .content h1{
+        text-align: center;
+        font-size: 40px;
+        color: #f6ff00;
+        position: absolute;
+        top: 536px;
+        width: 100%;
+    }
+    .content .look{
+        position: absolute;
+        top: 1023px;
+        width: 100%;
+    }
+    .content .look a{
+        display: block;
+        margin: auto;
+        width: 181px;
+        height: 174px;
+
+    }
+    .content .info-data{
+        position: absolute;
+        bottom: 250px;
+    }
+    .content .info-data .data-list{
+         padding: 0px 87px;
+        margin-bottom: 20px;
+    }
+    .content .info-data .data-list h2{
+        font-size: 18px;
+        color: #8d6b16;
+        margin-bottom: 20px;
+    }
+    .content .info-data .data-list p{
+        font-size: 16px;
+        padding-left: 35px;
+        line-height: 30px;
+    }
+</style>
+
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="grid-0">
+    <div class="content">
+      <h1>限时抢实惠 注册送200元超值大礼包</h1>
+      <div class="look">
+          <a href="javascript:check()"></a>
+      </div>
+      <div class="info-data grid-0">
+          <div class="grid-row">
+              <div class="data-list">
+                  <h2>一、活动详情</h2>
+                  <p>1、新用户完成注册即可获赠价值200元现金大礼包；</p>
+                  <p>2、礼包包含四个满减优惠券，可用于购买商品；</p>
+                  <p>3、优惠券适用于全网所有在售商品。</p>
+              </div>
+              <div class="data-list">
+                  <h2>二、活动说明</h2>
+                  <p>1、本活动截止到2017年12月20日；</p>
+                  <p>2、注册后需完成个人/企业认证，才能进行交易，结算时可以选择优惠券使用；</p>
+                  <p>3、领取的优惠券可以在“我的BDG-我的优惠券”中查看；</p>
+                  <p>4、每笔订单只能使用一张优惠券；</p>
+                  <p>5、优惠券使用期截止2017年12月31日，过期作废。</p>
+              </div>
+          </div>
+
+      </div>
+    </div>
+</div>
+
+<script>
+
+    function check() {
+        $.ajax({
+            url: '/islogin',
+            type: 'post',
+            success: function (data) {
+                if (data) {
+                    var html = '';
+                    html += '<div class="confirmKey"><h4>提示：</h4>';
+                    html += '<div>';
+                    html += '优惠券已发放至您的账户，请在个人中心查看！';
+                    html += '</div></div>';
+                    $.confirm(html, [{close: '确认'}], function () {
+                        window.location.href = host.website+'/usercenter/myCoupon'
+                    }, {width: "500"});
+                } else {
+                    window.location.href = host.loginUrl + encodeURIComponent(host.website + '/activity/coupon');
+
+                }
+            }
+        });
+        // return false;
+    }
+</script>
+
+
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+
+

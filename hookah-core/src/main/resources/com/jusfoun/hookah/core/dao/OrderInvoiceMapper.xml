@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jusfoun.hookah.core.dao.OrderInvoiceMapper" >
+
+  <sql id="generateKey">
+    select replace(uuid(),'-','')
+  </sql>
+  <!-- 批量插入 -->
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into order_invoice
+    (
+    id, order_id, invoice_id, add_time
+    )
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+      (<include refid="generateKey" />), #{item.orderId,jdbcType=VARCHAR}, #{item.invoiceId,jdbcType=VARCHAR},
+      #{item.addTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+</mapper>

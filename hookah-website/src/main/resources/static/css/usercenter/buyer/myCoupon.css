@@ -43,6 +43,11 @@
 
 
 .content .coupon-list{}
+.content .coupon-list img{
+    margin: 100px 0px 100px 290px;
+    width: 210px;
+    display: block;
+}
 .content .coupon-list ul{
     padding: 37px 60px;
     margin-right: -92px;

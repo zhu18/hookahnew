@@ -8,6 +8,9 @@ import java.util.Map;
  */
 public class HookahConstants {
 
+    /*根据符号拆分*/
+    public static final String COMMA = ",";
+
     /*平台用户、产品编码前缀*/
     public static final String platformCode="JF";
 
@@ -168,6 +171,11 @@ public class HookahConstants {
     /** 此字段用于比较当前时间与onsaleStartDate关系，选出非预约上架的商品 */
     public static final String ONSALE_START_DATE_FILEDNAME = "onsaleStartDate";
     public static final String ONSALE_START_DATE_FILED = "onsaleStartDateField";
+
+    // 收票人默认地址值
+    public static final Byte USER_INVOICE_DEFAULT = 1;
+
+
     /** 符号 */
     public static final String SPACE_SIGN = "&nbsp;&nbsp;";
     public static final Integer ES_SIZE_BIGGER = 99999;
@@ -399,7 +407,7 @@ public class HookahConstants {
     }
 
     /**
-     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核,6个人审核失败,7企业审核失败8供应商,9供应商待审核,10供应商审核失败11企业待审核供应商待审核
+     * 0系统,1未认证,2个人,3个人待审核,4企业,5企业待审核,6个人审核失败,7企业审核失败
      */
     public enum UserType {
 

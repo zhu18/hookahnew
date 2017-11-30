@@ -11,7 +11,7 @@ var categoryHtml = '';
 var ajaxUrl = null;
 var goodsTypeId = null;
 var regex = {  //手机号验证正则
-	mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
+	mobile: /^0?(13[0-9]|14[5-9]|15[012356789]|66|17[0-9]|18[0-9]|19[8-9])[0-9]{8}$/,
 	keyWords: /^[\u4E00-\u9FA5A-Za-z0-9\,]+$/
 };
 var testNewApiUrl = false;

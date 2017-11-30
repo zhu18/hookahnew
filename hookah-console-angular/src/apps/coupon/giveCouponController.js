@@ -106,9 +106,10 @@ class giveCouponController {
                 console.log(res);
 
                 if (res.data.code == '1') {
-                    var modalInstance =$rootScope.openJustShowDialogModal("添加成功！");
+
+                    var modalInstance =$rootScope.openConfirmDialogModal(res.data.message);
                     modalInstance.result.then(function () {
-                        $state.go('coupon.list')
+                        $state.go('coupon.query')
                     }, function () {
 
                     });

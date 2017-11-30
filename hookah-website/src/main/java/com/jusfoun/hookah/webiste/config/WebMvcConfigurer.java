@@ -1,9 +1,6 @@
 package com.jusfoun.hookah.webiste.config;
 
-import com.jusfoun.hookah.webiste.interceptor.CartInterceptor;
-import com.jusfoun.hookah.webiste.interceptor.CategoryInterceptor;
-import com.jusfoun.hookah.webiste.interceptor.CommonInterceptor;
-import com.jusfoun.hookah.webiste.interceptor.UserAuthInterceptor;
+import com.jusfoun.hookah.webiste.interceptor.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,6 +19,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new CategoryInterceptor()).addPathPatterns("/exchange").addPathPatterns("/exchange/**");
         registry.addInterceptor(new CartInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(new UserAuthInterceptor()).addPathPatterns("/order/orderInfo*").addPathPatterns("/order/directInfo*");
+        registry.addInterceptor(new WeiXInMPInterceptor()).addPathPatterns("/exchange/details*");
     }
 
     @Override

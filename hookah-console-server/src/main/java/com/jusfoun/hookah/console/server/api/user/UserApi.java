@@ -140,7 +140,7 @@ public class UserApi {
                 if(user.getUserType() == 1){
                     map.put("user", user);
                     returnData.setData(map);
-                }else if(user.getUserType() == 2){
+                }else if(user.getUserType() == 2 || user.getUserType() == 3){
 
                     List<Condition> filters = new ArrayList();
                     filters.add(Condition.eq("userId", id));

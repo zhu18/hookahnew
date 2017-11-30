@@ -346,7 +346,7 @@
                     <archive>
                         <addMavenDescriptor>true</addMavenDescriptor>
                         <manifest>
-                            <mainClass>com.jusfoun.hookah.pay.PayServerLauncher</mainClass>
+                            <mainClass>com.jusfoun.hookah.integral.IntegralLauncher</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>

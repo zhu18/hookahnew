@@ -2,7 +2,7 @@
 <configuration>
   <!-- 日志文件属性 -->
   <property name="logBase" value="/logs" />
-  <property name="logFileName" value="hookah-coupon" />
+  <property name="logFileName" value="hookah-integral" />
   <!-- 彩色日志 -->
   <!-- 彩色日志依赖的渲染类 -->
   <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />

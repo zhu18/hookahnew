@@ -1,14 +1,22 @@
 <%
 var head = {
 %>
+<meta property="og:type" content="product" />
+<meta property="og:url" content="商品的URL地址" />
+<meta property="og:title" content="商品的显示名称标题" />
+<meta property="og:description" content="商品的文字描述" />
+<meta property="og:image" content="商品的缩略显示图" />
 <link rel="stylesheet" href="/static/css/index/index.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <link rel="stylesheet" href="/static/css/exchange/style.css">
 <script>
 	var JshopPrice = ${goodsDetails.shopPrice};
 	var isDiscussPrice = ${goodsDetails.isDiscussPrice};
+	$('html').attr( "xmlns:wb","http://open.weibo.com/wb")
 </script>
 <script type="text/javascript" src="/static/js/plugins/qrcode/qrcode.min.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 <%};%>
 <%
 var htmlPart = {
@@ -45,7 +53,6 @@ var htmlPart = {
 		<div class="grid-left goods-left bdg-row">
 			<div class="goods-details clearfix">
 				<div class="goods-details-img grid-left bdg-row">
-					${goodsDetails.goodsType}
 					<div class="img-box">
 						<img src="${goodsDetails.goodsImg}" alt="" id="J_goodsImg">
 					</div>
@@ -78,7 +85,9 @@ var htmlPart = {
 							<span>分享：</span>
 							<span></span>
 							<a class="share-btn-d" title="分享到豆瓣" href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='https://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+e(d.title)+'&sel='+e(s)+'&v=1',w=450,h=330,x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width='+w+',height='+h+',left='+(screen.width-w)/2+',top='+(screen.height-h)/2))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><img src="https://img3.doubanio.com/pics/fw2douban_s.png" alt="推荐到豆瓣"/></a>
+							<!--<a class="share-btn-d" title="分享到豆瓣" href="javascript:void(function(){var d=document,tit=document.getElementById('J_goodsTitle').innerHTML,cont=document.getElementById('J_goodsBrief').innerHTML,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='https://www.douban.com/recommend/?url='+e(d.location.href)+'&title='+tit+'&sel='+e(s)+'&v=1',w=450,h=330,x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width='+w+',height='+h+',left='+(screen.width-w)/2+',top='+(screen.height-h)/2))location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><img src="https://img3.doubanio.com/pics/fw2douban_s.png" alt="推荐到豆瓣"/></a>-->
 							<a class="share-btn-d" href="javascript:void(0)" id="J-share-weixin" title="分享到微信"><i class="fa fa-weixin"></i></a>
+							<a class="share-btn-d" title="分享到微博" style="margin-top: -6px;background: none;" href="javascript:void(0)"><wb:share-button appkey="713961305" addition="simple" type="icon" ralateUid="6416875548" default_text="${goodsDetails.goodsName}" pic="${goodsDetails.goodsImg}"></wb:share-button></a>
 						</p>
 					</div>
 				</div>
@@ -156,6 +165,7 @@ var htmlPart = {
 							<!--<a id="J_test" href="javascript:addCart('${goodsDetails.goodsId}','${goodsDetails.isDiscussPrice}');" style="height:40px; line-height:40px; font-size:18px;width:136px;background-color: #faf8ca;border:1px solid #ffa800;color:#ffa800;" class="vertical-align-middle btn btn-full-blue margin-left-10  grid-left">申请试用</a>-->
 						</form>
 					</div>
+					<br>
 				</div>
 			</div>
 			<!--table切换-->
@@ -603,31 +613,124 @@ var htmlPart = {
 	<p>请使用微信扫描</p>
 	<div class="qrcode-box" id="qrcode"></div>
 </div>
+<div class="qrcode-wraper">
+	<div class="qrcode-wraper-in">
+		<div class="qrcode-title">
+			<span class="grid-left"><img src="/static/images/wxshare/share_logo.png" alt=""></span>
+			<a href="javascript:void(0)" class="fa fa-close close-share-btn grid-right"></a>
+		</div>
+		<div class="qrcode-content">
+			<h3 class="content-title">分享到微信</h3>
+			<div class="content-body">
+				<div class="content-body-left">用微信“扫一扫”右侧的二维码，即可把页面分享给您的
+					微信好友或者朋友圈。</div>
+				<div class="content-body-right" id="qrcodeBNA"></div>
+			</div>
+		</div>
+		<div class="qrcode-footer">
+			<span class="footer-line"></span>
+			<div class="footer-title"><span>如何用</span><span class="title-icon"><img src="/static/images/wxshare/share_wx_icon.jpg" alt=""></span><span>微信拍二维码：</span></div>
+			<ul class="footer-content">
+				<li>
+					<img src="/static/images/wxshare/share_img_1.jpg" alt=""><p>点击下方的“发现”图标</p>
+				</li>
+				<li>
+					<img src="/static/images/wxshare/share_img_2.jpg" alt=""><p>选择扫一扫</p>
+				</li>
+				<li>
+					<img src="/static/images/wxshare/share_img_3.jpg" alt=""><p>扫码</p>
+				</li>
+				<li>
+					<img src="/static/images/wxshare/share_img_4.jpg" alt=""><p>点击分享按钮</p>
+				</li>
+				<li>
+					<img src="/static/images/wxshare/share_img_5.jpg" alt=""><p>点击发送给朋友或分享到朋友圈完成分享</p>
+				</li>
+				<li>
+					<img src="/static/images/wxshare/share_img_6.jpg" alt=""><p></p>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>
 <script src="/static/js/exchange/common.js"></script>
 <script src="/static/js/goods/details.js"></script>
 <script>
+	var appId ='${wxConfig.appId}',
+		timestamp ='${wxConfig.timestamp}',
+		nonceStr ='${wxConfig.nonceStr}',
+		signature ='${wxConfig.signature}',
+		shareTitle = '${goodsDetails.goodsName}',
+		shareImg = '${goodsDetails.goodsImg}',
+		shareDesc = $('#J_goodsBrief').text(),
+		shareLink = location.href.split('#')[0];
+	$("meta[property='og:url']").attr('content',shareLink);
+	$("meta[property='og:title']").attr('content',shareTitle);
+	$("meta[property='og:description']").attr('content',shareDesc);
+	$("meta[property='og:image']").attr('content',shareImg);
 	$(function () {
-
-		var qrcode = new QRCode(document.getElementById("qrcode"), {
+		var qrcode = new QRCode(document.getElementById("qrcodeBNA"), {
 			width: 100,
 			height: 100
 		});
-
 		function makeCode() {
-			var elText = 'http://www.bdgstore.cn'
+			var elText = shareLink;
 			qrcode.makeCode(elText);
 		}
-
 		$('#J-share-weixin').click(function () {
-			$('.qrcode-wrap').show()
+			$('.qrcode-wraper').show();
 			makeCode();
 		});
-		$('.close-share-btn').click(function(){
-			$('.qrcode-wrap').hide()
-		})
+		$('.close-share-btn').click(function () {
+			$('.qrcode-wraper').hide()
+		});
+		wx.config({
+			debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			appId: appId, // 必填，公众号的唯一标识
+			timestamp: timestamp, // 必填，生成签名的时间戳
+			nonceStr: nonceStr, // 必填，生成签名的随机串
+			signature: signature,// 必填，签名，见附录1
+			jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+		});
+		wx.ready(function(){
+
+			wx.onMenuShareTimeline({ //分享到朋友圈
+				title: shareTitle, // 分享标题
+				link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+				imgUrl: shareImg, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					$.alert('分享成功');
+					$('.qrcode-wrap').hide()
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					$.alert('取消分享');
+				}
+			});
+			wx.onMenuShareAppMessage({ //分享给好友
+				title: shareTitle, // 分享标题
+				desc: shareDesc, // 分享描述
+				link: shareLink, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+				imgUrl: shareImg, // 分享图标
+				success: function () {
+					// 用户确认分享后执行的回调函数
+					$.alert('分享成功');
+					$('.qrcode-wrap').hide()
+				},
+				cancel: function () {
+					// 用户取消分享后执行的回调函数
+					$.alert('取消分享');
+				}
+			});
+		});
+		wx.error(function(res){
+			$.alert('res');
+		});
+
 
 	});
 </script>

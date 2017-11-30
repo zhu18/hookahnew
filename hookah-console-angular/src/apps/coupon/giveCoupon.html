@@ -53,7 +53,7 @@
                                 <span>{{(item.faceValue/100) | currency: '￥'}}</span>
                             </td>
                             <td>
-                                <span data-ng-bind="item.unReceivedCount"></span>
+                                <span>{{item.unReceivedCount?item.unReceivedCount:"-"}}</span>
                             </td>
                             <td>
                                 <span text-length="50" ng-show="item.applyChannel == 0">无限制</span>
