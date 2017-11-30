@@ -20,7 +20,7 @@ public class RabbitMQInvoiceListener {
     @Resource
     InvoiceService invoiceService;
 
-    @RabbitListener(queues = RabbitmqQueue.CONTRACE_CENTER_CHANNEL)
+    @RabbitListener(queues = RabbitmqQueue.CONTRACT_INVOICE_MESSAGE)
     public void operaPushGoods(InvoiceDTOVo invoiceDTOVo) {
 
         logger.info("开始执行发票申请：" + (invoiceDTOVo == null ? "数据传输对象为空！": JSON.toJSONString(invoiceDTOVo)));
