@@ -1,8 +1,64 @@
 /**
  * Created by lss on 2017/7/18 0018.
  */
+function loadPageData(data){
+    var list = data.data.list;
+    if(list.length > 0){
+        var html = '';
+        for(var i=0; i<list.length; i++){
 
+            switch (list[i].tradeStatus) {
+                case(0):
+                    list[i].tradeStatus = '处理中';
+                    break;
+                case(1):
+                    list[i].tradeStatus = '已成功';
+                    break;
+                case(2):
+                    list[i].tradeStatus = '未成功';
+                    break;
+            }
+            switch (list[i].tradeType) {
+                case(1):
+                    list[i].tradeType = '充值';
+                    break;
+                case(2):
+                    list[i].tradeType = '提现';
+                    break;
+                case(5):
+                    list[i].tradeType = '手动充值';
+                    break;
+                case(4001):
+                    list[i].tradeType = '支付';
+                    break;
+                case(3001):
+                    list[i].tradeType = '收入';
+                    break;
+                case(8):
+                    list[i].tradeType = '冲账';
+                    break;
+                case(10):
+                    list[i].tradeType = '冻结';
+                    break;
+                case(11):
+                    list[i].tradeType = '解冻';
+                    break;
+            }
+            html+="<tr >" ;
+            html+="<td>"+list[i].orderSn+"</td>" ;
+            html+="<td>"+list[i].addTime+"</td>" ;
+            html+="<td>"+list[i].tradeType +"</td>" ;
+            html+="<td>￥"+(list[i].money / 100).toFixed(2)+"</td>" ;
+            html+="<td>"+list[i].tradeStatus +"</td>" ;
+            html+="</tr >" ;
+        }
+        $('.search-list-content').html(html);
+    }else{
+        $('.search-list-content').html('<tr class="no"><td colspan="8">暂无数据</td></tr>');
+    }
+}
 $(function () {
+
     // 交易类型点击事件
     $(".search-criteria .transaction-status li").on("click",function () {
         var status=null;
