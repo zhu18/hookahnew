@@ -106,18 +106,12 @@ public class ExcelUtil {
 
     public static void download(HttpServletResponse response, HSSFWorkbook work, String fileName) throws IOException {
         OutputStream out = null;
-        try {
-            out = response.getOutputStream();
-            response.reset();
-            response.setContentType("application/ms-excel;charset=UTF-8");
-            response.setHeader("Content-Disposition", "attachment;filename="
-                    .concat(String.valueOf(URLEncoder.encode(fileName, "UTF-8"))));
-            work.write(out);
-        } catch (IOException e) {
-            System.out.println("输出流错误");
-            e.printStackTrace();
-        } finally {
-            out.close();
-        }
+        out = response.getOutputStream();
+        response.reset();
+        response.setContentType("application/ms-excel;charset=UTF-8");
+        response.setHeader("Content-Disposition", "attachment;filename="
+                .concat(String.valueOf(URLEncoder.encode(fileName, "UTF-8"))));
+        work.write(out);
+        out.close();
     }
 }

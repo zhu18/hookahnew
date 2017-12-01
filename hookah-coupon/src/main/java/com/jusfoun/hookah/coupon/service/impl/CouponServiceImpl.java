@@ -143,6 +143,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             coupon.setCouponStatus(HookahConstants.CouponStatus.UN_USED.getCode());
         }
         coupon.setUpdateUser(userId);
+        coupon.setUpdateTime(new Date());
         if (goodsList!=null){
 
         }
@@ -159,6 +160,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             userCoupon.setExpiryStartDate(coupon.getExpiryStartDate());
             userCoupon.setExpiryEndDate(coupon.getExpiryEndDate());
             userCoupon.setUpdateUser(userId);
+            userCoupon.setUpdateTime(new Date());
             Long[] ids = new Long[userCoupons.size()];
             for (int i=0;i<userCoupons.size();i++){
                 ids[i] = userCoupons.get(i).getId();
@@ -280,6 +282,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         coupon.setIsDeleted((byte)1);
         coupon.setUpdateTime(date);
         userCoupon.setIsDeleted((byte)1);
+        userCoupon.setUpdateTime(date);
         BeanUtils.copyProperties(coupon,mgCoupon);
         filter.add(Condition.eq("couponId",couponId));
         couponMapper.updateByPrimaryKeySelective(coupon);
@@ -462,6 +465,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             userCoupon.setExpiryStartDate(coupon.getExpiryStartDate());
             userCoupon.setValidDays(coupon.getValidDays());
             coupon.setReceivedCount(receivedCount+1);
+            coupon.setUpdateTime(new Date());
             if (totalCount>0 && coupon.getReceivedCount()==totalCount){
                 coupon.setIsAllReleased((byte)1);
             }
@@ -535,9 +539,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         if (couponList.size() == 0){
             return ;
         }
+        Date now = new Date();
         for (Coupon coupon : couponList){
             Date expireEndDate = coupon.getExpiryEndDate();
-            Date now = new Date();
             if (DateUtils.isExpired(expireEndDate,now)){
                 filter.clear();
                 filter.add(Condition.eq("isDeleted",(byte)0));
@@ -548,6 +552,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                     UserCoupon userCoupon = new UserCoupon();
                     userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.EXPIRED.getCode());
                     userCoupon.setUpdateUser("SYSTEM");
+                    userCoupon.setUpdateTime(now);
                     Long[] ids = new Long[userCoupons.size()];
                     for (int i=0;i<userCoupons.size();i++){
                         ids[i] = userCoupons.get(i).getId();
@@ -558,6 +563,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 }
                 coupon.setCouponStatus(HookahConstants.CouponStatus.EXPIRED.getCode());
                 coupon.setUpdateUser("SYSTEM");
+                coupon.setUpdateTime(now);
                 this.updateByIdSelective(coupon);
             }
         }
@@ -569,6 +575,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             if (DateUtils.isExpired(userCoupon.getReceivedTime(),userCoupon.getValidDays(),new Date())){
                 userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.EXPIRED.getCode());
                 userCoupon.setUpdateUser("SYSTEM");
+                userCoupon.setUpdateTime(now);
                 userCouponService.updateByIdSelective(userCoupon);
             }
         }
@@ -589,7 +596,9 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             if (DateUtils.isSameDay(expireStartDate,now)){
                 coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
                 coupon.setActivatedUser("SYSTEM");
+                coupon.setUpdateUser("SYSTEM");
                 coupon.setActivatedTime(now);
+                coupon.setUpdateTime(now);
                 this.updateByIdSelective(coupon);
             }
         }

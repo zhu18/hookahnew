@@ -117,14 +117,27 @@ public class TimerTask {
     @Transactional
     public void deleteOrderByTime(){
         Date date = new Date();
+        Date start = DateUtils.getTodayStart();
         long now = date.getTime();
-        List<OrderInfo> orderInfos = orderInfoService.selectList();
-        for (OrderInfo orderInfo:orderInfos){
-            long addTime = orderInfo.getAddTime().getTime();
-            long time = now - addTime;
-            if (orderInfo.getPayStatus()==0 && time>24*60*60*1000){
-                orderInfoService.deleteByLogic(orderInfo.getOrderId());
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.ne("payStatus",OrderInfo.PAYSTATUS_PAYED));
+        filter.add(Condition.eq("isDeleted",(byte)0));
+        filter.add(Condition.eq("forceDeleted",(byte)0));
+        filter.add(Condition.le("addTime",start));
+        try {
+            List<OrderInfo> orderInfos = orderInfoService.selectList(filter);
+            if (orderInfos.size()>0){
+                for (OrderInfo orderInfo:orderInfos){
+                    long addTime = orderInfo.getAddTime().getTime();
+                    long time = now - addTime;
+                    if (orderInfo.getPayStatus() == 0 && time > 24 * 60 * 60 * 1000) {
+                        orderInfoService.deleteByLogic(orderInfo.getOrderId());
+                    }
+                }
             }
+        } catch (Exception e) {
+            logger.error("定时取消订单失败："+e.getMessage());
+            e.printStackTrace();
         }
     }
 }
