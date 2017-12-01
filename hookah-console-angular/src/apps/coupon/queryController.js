@@ -1,5 +1,5 @@
 /**
- * Created by Administrator on 2017/11/9 0009.
+ * Created by lss on 2017/11/9 0009.
  */
 class queryController {
     constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
@@ -10,8 +10,8 @@ class queryController {
         $rootScope.pagination.pageSize="20";
         $scope.exports = [               //自定定义类型数据
             {id:"", name:"导出数据"},
-            {id:"", name:"选中用户"},
-            {id:"/api/coupon/exportExcel?userIds=", name:"全部用户"}
+            {id:"1", name:"选中用户"},
+            {id:"2", name:"全部用户"}
         ];
         $scope.export="";
         $scope.pageSize=1;
@@ -29,9 +29,7 @@ class queryController {
             };
         }
         $scope.controlScreen();
-        $scope.getDate=function (href) {
-            window.location.href=$rootScope.site.apiServer +  $scope.export;
-        }
+
         $scope.search = function () { //Render page function
             var promise = $http({
                 method: 'GET',
@@ -101,7 +99,42 @@ class queryController {
                 growl.addSuccessMessage("订单数据加载完毕。。。");
             });
         }
-
+        //全选 多选 功能 开始
+        $scope.selected = [];
+        var updateSelected = function (action, id) {
+            if (action == 'add' && $scope.selected.indexOf(id) == -1) $scope.selected.push(id);
+            if (action == 'remove' && $scope.selected.indexOf(id) != -1) $scope.selected.splice($scope.selected.indexOf(id), 1);
+        };
+        //更新某一列数据的选择
+        $scope.updateSelection = function ($event, id) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            updateSelected(action, id);
+        };
+        //全选操作
+        $scope.selectAll = function ($event) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            for (var i = 0; i < $scope.userList.length; i++) {
+                var contact = $scope.userList[i];
+                updateSelected(action, contact.userId);
+            }
+        };
+        $scope.isSelected = function (id) {
+            return $scope.selected.indexOf(id) >= 0;
+        };
+        $scope.isSelectedAll = function () {
+            return $rootScope.pagination.pageSize == $scope.userList.length;
+        };
+        //全选 多选 功能 结束
+        $scope.getDate=function () {//导出功能
+            if($scope.export=="1"){
+                console.log($scope.selected);
+                window.location.href=$rootScope.site.apiServer + "/api/coupon/exportExcel?userIds="+$scope.selected;
+            }else {
+                window.location.href=$rootScope.site.apiServer + "/api/coupon/exportExcel?userIds=";
+            }
+        }
         $scope.search();
         $scope.refresh = function () {
             $scope.search();

@@ -48,8 +48,6 @@ class giveCouponController {
                         $rootScope.loadingState = false;
                         $scope.showNoneDataInfoTip = true;
                     }
-
-
                 } else {
                     $scope.couponList = [];
                     $scope.showNoneDataInfoTip = true;
@@ -89,13 +87,11 @@ class giveCouponController {
         };
         //全选 多选 功能 结束
         $scope.save=function () {
-
             var url=$rootScope.site.apiServer + "/api/coupon/sendCouponToUser";
             var data= {
                 userId:$stateParams.id,
                 couponIds:$scope.selected,
             };
-
             var promise = $http({
                 method: 'post',
                 url: url ,
@@ -104,23 +100,15 @@ class giveCouponController {
             promise.then(function (res, status, config, headers) {
                 console.log('数据在这里');
                 console.log(res);
-
                 if (res.data.code == '1') {
-
                     var modalInstance =$rootScope.openConfirmDialogModal(res.data.message);
                     modalInstance.result.then(function () {
                         $state.go('coupon.query')
                     }, function () {
-
+                        $scope.search();
                     });
                 } else {
-                    var modalInstance =$rootScope.openJustShowDialogModal(res.data.message);
-                    modalInstance.result.then(function () {
-
-                    }, function () {
-
-                    });
-
+                   $rootScope.openJustShowDialogModal(res.data.message);
                 }
 
                 $rootScope.loadingState = false;
