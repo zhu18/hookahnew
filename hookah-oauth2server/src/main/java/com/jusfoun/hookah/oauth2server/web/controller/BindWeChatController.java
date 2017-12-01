@@ -67,6 +67,9 @@ public class BindWeChatController {
     @Resource
     WxUserInfoService wxUserInfoService;
 
+    @Resource
+    JfRecordService jfRecordService;
+
     private  static final  String DEFAULT_PASSWORD = "000000";
 
     @RequestMapping(value = "/reg/bindWeChat", method = RequestMethod.POST)
@@ -166,9 +169,15 @@ public class BindWeChatController {
                 filters.add(Condition.eq("openid" , user.getOpenid()));
                 wxUserInfoService.updateByConditionSelective(wxUserInfo,filters);
 
+                //初始化账户信息
                 payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
                 //完成注册 发消息到MQ送优惠券
                 mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,regUser.getUserId());
+
+                //注册赠送积分
+                jfRecordService.registerHandle(regUser.getUserId(), null);
+
+
                 logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
             }
             //绑定完成 登录
