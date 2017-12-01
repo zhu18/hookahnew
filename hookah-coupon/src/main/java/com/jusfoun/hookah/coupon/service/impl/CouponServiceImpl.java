@@ -123,7 +123,7 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             List<Coupon> coupons = this.selectList(filter);
             if (coupons!= null && coupons.size() >0){
                 for (Coupon coupon1 : coupons){
-                    if (coupon.getId()!=coupon1.getId()){
+                    if (!coupon.getId().equals(coupon1.getId())){
                         throw new HookahException("名称为["+coupon.getCouponName().trim()+"]的优惠券已存在");
                     }
                 }
