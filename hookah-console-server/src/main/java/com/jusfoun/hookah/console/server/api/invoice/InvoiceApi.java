@@ -24,11 +24,11 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Created by dengxu on 2017/4/24/0024.
+ * Created by guoruibing on 2017/12/01.
  */
 
 @RestController
-@RequestMapping(value = "/test/invoice")
+@RequestMapping(value = "/api/invoice/back")
 public class InvoiceApi extends BaseController{
 
     @Resource

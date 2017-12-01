@@ -13,8 +13,8 @@
     <result column="invoice_medium" jdbcType="TINYINT" property="invoiceMedium" />
     <result column="invoice_content" jdbcType="VARCHAR" property="invoiceContent" />
     <result column="invoice_amount" jdbcType="BIGINT" property="invoiceAmount" />
-    <result column="invoice_title" jdbcType="VARCHAR" property="invoiceTitle" />
-    <result column="taxpayer_identification_no" jdbcType="VARCHAR" property="taxpayerIdentificationNo" />
+    <result column="title_id" jdbcType="VARCHAR" property="titleId" />
+    <result column="taxpayer_identify_no" jdbcType="VARCHAR" property="taxpayerIdentifyNo" />
     <result column="reg_address" jdbcType="VARCHAR" property="regAddress" />
     <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
     <result column="open_bank" jdbcType="VARCHAR" property="openBank" />

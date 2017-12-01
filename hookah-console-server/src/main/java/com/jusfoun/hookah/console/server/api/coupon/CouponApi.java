@@ -281,13 +281,11 @@ public class CouponApi extends BaseController {
             // 将json字符串转换为json对象
             JSONArray jsonArray = new JSONArray(jsonStr);
             String[] headers= sheaders.substring(0,sheaders.length()-1).split(",");
-            System.out.println(sheaders.substring(0,sheaders.length()-1));
             int iSize = jsonArray.length();
             List<List> list = new ArrayList<List>();
             for (int i = 0; i < iSize; i++) {
                 List<Object> line = new ArrayList<Object>();
-                JSONObject jsonObject =  jsonArray.getJSONObject(i);
-                System.out.println(jsonObject.toString()+"-----");
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Object value = null;
                 int j=0;
                 while (j<headers.length) {
@@ -303,17 +301,14 @@ public class CouponApi extends BaseController {
                 }
                 list.add(line);
             }
-
-            HSSFWorkbook workbook = ExcelUtil.exportExcel(title,head, list);
-            ExcelUtil.download(response,workbook,fileName);
+            HSSFWorkbook workbook = ExcelUtil.exportExcel(title, head, list);
+            ExcelUtil.download(response, workbook, fileName);
             logger.info("excel导出成功！");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
+            logger.error("输出流错误，excel导出失败");
             e.printStackTrace();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
     }

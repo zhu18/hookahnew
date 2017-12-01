@@ -1,7 +1,7 @@
 class pointsManageController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
-    var currentPointData=null;
-    $rootScope.closeModelPara=false;
+    var currentPointData = null;
+    $rootScope.closeModelPara = false;
 
     $scope.settleList = [];
     $scope.choseArr = [];//多选数组
@@ -26,8 +26,8 @@ class pointsManageController {
       });
     };
     function editRuleRequire(callback) {
-      var upperTimeSelectVal=($('#upperTimeSelect').val()=='null')?null:$('#upperTimeSelect').val();
-      var lowerTimeSelectVal=($('#lowerTimeSelect').val()=='null')?null:$('#lowerTimeSelect').val();
+      var upperTimeSelectVal = ($('#upperTimeSelect').val() == 'null') ? null : $('#upperTimeSelect').val();
+      var lowerTimeSelectVal = ($('#lowerTimeSelect').val() == 'null') ? null : $('#lowerTimeSelect').val();
 
 
       var promise = $http({
@@ -41,7 +41,7 @@ class pointsManageController {
           upperLimitTime: upperTimeSelectVal,
           lowerLimitScore: $('#lower').val(),
           lowerLimitTime: lowerTimeSelectVal,
-          note:$('#note').val()
+          note: $('#note').val()
         }
       });
       promise.then(function (res, status, config, headers) {
@@ -57,12 +57,13 @@ class pointsManageController {
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
     }
+
     $scope.editRule = function (data) {
-      currentPointData=data;
-      var actionDOM=(currentPointData.action == 1)?'获取':((currentPointData.action == 2)?'兑换':'admin');
-      var scoreType=(currentPointData.action == 1)?'+':((currentPointData.action == 3)?(currentPointData.sourceId == 1)?'+':'':'');
-      var upperTimeLimitText=(currentPointData.upperTimeLimit == null)?'永久':(currentPointData.upperTimeLimit+'h');
-      var lowerTimeLimitText=(currentPointData.lowerTimeLimit == null)?'永久':(currentPointData.lowerTimeLimit+'h');
+      currentPointData = data;
+      var actionDOM = (currentPointData.action == 1) ? '获取' : ((currentPointData.action == 2) ? '兑换' : 'admin');
+      var scoreType = (currentPointData.action == 1) ? '+' : ((currentPointData.action == 3) ? (currentPointData.sourceId == 1) ? '+' : '' : '');
+      var upperTimeLimitText = (currentPointData.upperTimeLimit == null) ? '永久' : (currentPointData.upperTimeLimit + 'h');
+      var lowerTimeLimitText = (currentPointData.lowerTimeLimit == null) ? '永久' : (currentPointData.lowerTimeLimit + 'h');
       var content = '<div style="padding:0 30px;">\
       <table class="table table-hover">\
         <thead>\
@@ -78,22 +79,22 @@ class pointsManageController {
         </thead>\
         <tbody>\
           <tr>\
-            <td>'+actionDOM+'</td><!--积分变化类型-->\
-            <td>'+currentPointData.actionDesc+'</td><!--变化来源-->\
-            <td>'+scoreType+currentPointData.score+'</td><!--当前规则-->\
+            <td>' + actionDOM + '</td><!--积分变化类型-->\
+            <td>' + currentPointData.actionDesc + '</td><!--变化来源-->\
+            <td>' + scoreType + currentPointData.score + '</td><!--当前规则-->\
             <td style="color:red"><!--变动后规则-->\
-              <span id="lastScore">'+scoreType+currentPointData.score+'</span>\
+              <span id="lastScore">' + scoreType + currentPointData.score + '</span>\
             </td>\
             <td style="color:red"><!--变动积分值-->\
               <span id="changeValue">0</span>\
             </td>\
             <td style="color:red">\
-              <span id="upperLimit">'+currentPointData.upperLimit+'</span> /\
-              <span id="upperTimeLimit">'+upperTimeLimitText+'</span>\
+              <span id="upperLimit">' + currentPointData.upperLimit + '</span> /\
+              <span id="upperTimeLimit">' + upperTimeLimitText + '</span>\
             </td>\
             <td style="color:red">\
-              <span id="lowerLimit">'+currentPointData.lowerLimit+'</span> /\
-              <span id="lowerTimeLimit">'+lowerTimeLimitText+'</span>\
+              <span id="lowerLimit">' + currentPointData.lowerLimit + '</span> /\
+              <span id="lowerTimeLimit">' + lowerTimeLimitText + '</span>\
             </td>\
           </tr>\
         </tbody>\
@@ -102,7 +103,7 @@ class pointsManageController {
             <tr>\
               <th valign="top" style="width: 100px;padding-top: 10px; "><span style="color:red">*</span>积分值变动：</th>\
               <td style="padding-top: 10px;">\
-                  <label style="margin-right: 20px;"><input type="number" class="form-control" currentId="'+currentPointData.id+'" id="currentChangePointsInput" style="width: 182px;" placeholder="请输入积分"></label>\
+                  <label style="margin-right: 20px;"><input type="number" class="form-control" currentId="' + currentPointData.id + '" id="currentChangePointsInput" style="width: 182px;" placeholder="请输入积分"></label>\
                   <label><input type="radio" name="pointsCon" value="11" checked> 增加</label> &nbsp;&nbsp;&nbsp;&nbsp;\
                   <label><input type="radio" name="pointsCon" value="12"> 减少</label>\
               </td>\
@@ -138,26 +139,28 @@ class pointsManageController {
       var title1 = '修改积分';
 
       // var modalInstance = $rootScope.openConfirmDialogModelCanVerify(title1, content,editRuleRequire);
-      var modalInstance = $rootScope.openConfirmDialogModelCanVerify(title1, content,editRuleRequire);
+      var modalInstance = $rootScope.openConfirmDialogModelCanVerify(title1, content, editRuleRequire);
+
       function testFn(callback) {
         console.log('在testFn里')
 
       }
+
       modalInstance.result.then(function () { //模态点提交
         console.log('点击确定');
-      },function(){
+      }, function () {
         console.log('点击取消')
 
       });
       $(document).on('change', '#currentChangePointsInput,#upper,select', function () {//表单值改变
-        chagnePointsFn()
+        chagneRulesPointsFn()
       });
       $(document).on('keyup', 'input', function () {//按下键盘
-        chagnePointsFn()
+        chagneRulesPointsFn()
       });
       $(document).on('click', 'input[type=number],input[name=pointsCon]', function () {//点击增加或者减少
-        if($(this).val()){
-          chagnePointsFn()
+        if ($(this).val()) {
+          chagneRulesPointsFn()
         }
       });
 
@@ -167,36 +170,56 @@ class pointsManageController {
         }
       });
 
-      function chagnePointsFn() {
+      function chagneRulesPointsFn() {
 
         console.log($('input[name=pointsCon]:checked').val());
-        var tempVal = null;
-        var tempValType = null;
+        var tempVal = '';
+        var tempValType = '+';
+        var addOrCutType = '';
+        var changeVal = $('#currentChangePointsInput').val();
 
-        if ($('input[name=pointsCon]:checked').val() == 11) {    //选择增加
-          tempVal = Number(currentPointData.score) + Number($('#currentChangePointsInput').val());
-          tempValType = '+';
-        } else if ($('input[name=pointsCon]:checked').val() == 12) {//选择减少
-          tempVal = currentPointData.score - $('#currentChangePointsInput').val();
-          tempValType = '-'
+
+        if (Number(changeVal) == 0) { //输入值为零
+          addOrCutType = ''
+          tempVal = currentPointData.score;
+        } else {
+
+          if ($('input[name=pointsCon]:checked').val() == 11) {    //选择增加
+            addOrCutType = '+';
+            tempVal = Number(currentPointData.score) + Number(changeVal);
+          } else if ($('input[name=pointsCon]:checked').val() == 12) { //选择减少
+            addOrCutType = '-';
+            if (Number(changeVal) > 0) {
+              addOrCutType = '-';
+              if (currentPointData.score < Number(changeVal)) {//输入值大于当前规则
+                $('#currentChangePointsInput').val('');
+                changeVal = 0;
+              } else {
+                tempVal = currentPointData.score - changeVal;
+              }
+            } else {
+
+            }
+          }
         }
 
-        if($('#currentChangePointsInput').val()>=0){ //输入积分需要改变的值才修改最上面的table里的值
-          $('#changeValue').html(tempValType + $('#currentChangePointsInput').val());
-          $('#lastScore').html(tempValType +tempVal);
-        }else{
+
+        if (Number(changeVal) >= 0) { //输入积分需要改变的值才修改最上面的table里的值
+          $('#changeValue').html(addOrCutType + Number(changeVal));
+          $('#lastScore').html(tempValType + tempVal);
+        } else {
           $('#currentChangePointsInput').val('')
         }
-        if($('#upper').val()>=0){ //输入规则规定上限需要改变的值才修改最上面的table里的值
+        if ($('#upper').val() >= 0) { //输入规则规定上限需要改变的值才修改最上面的table里的值
           $('#upperLimit').html($('#upper').val());
-          $('#upperTimeLimit').html(($('#upperTimeSelect').val()=='null')?'永久':(($('#upperTimeSelect').val()=='12')?"12h":"24h"))
-        }else{
+          $('#upperTimeLimit').html(($('#upperTimeSelect').val() == 'null') ? '永久' : (($('#upperTimeSelect').val() == '12') ? "12h" : "24h"))
+        } else {
           $('#upper').val('')
         }
-        if($('#lower').val()>=0){//输入规则规定下限需要改变的值才修改最上面的table里的值
+        if ($('#lower').val() >= 0) {//输入规则规定下限需要改变的值才修改最上面的table里的值
           $('#lowerLimit').html($('#lower').val());
-          $('#lowerTimeLimit').html(($('#lowerTimeSelect').val()=='null')?'永久':(($('#lowerTimeSelect').val()=='12')?"12h":"24h"))
-        }else{
+          $('#lowerTimeLimit').html(($('#lowerTimeSelect').val() == 'null') ? '永久' : (($('#lowerTimeSelect').val() == '12') ? "12h" : "24h"))
+        } else {
           $('#lower').val('')
         }
 

@@ -116,6 +116,12 @@ public abstract class DateUtils {
         return toDate;
     }
 
+    public static Date getTodayStart(){
+        Date now = new Date();
+        Date startDate = getDate((toDateText(now,DATE_FORMAT) + " 00:00:00"), DEFAULT_DATE_TIME_FORMAT);
+        return startDate;
+    }
+
     public static String transferTime(String fromDate){
         String toDate = null;
         if(com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(fromDate)){

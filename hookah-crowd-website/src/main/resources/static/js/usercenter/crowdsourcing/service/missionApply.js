@@ -137,7 +137,7 @@ $(document).on('click', '.j_commentBtn', function () { // 我要报名
       </tr>\
     </table>\
     <div class="applyNotice">\
-    <span>您确认承接该需求？（报名平台不收到任何佣金）</span>\
+    <span>报名平台不收取任何佣金</span>\
     <p>报名成功后，平台将在报名截止后对您的资格进行评选，请耐心等候。</p>\</div>\
   </div>', null, function (type) {
 

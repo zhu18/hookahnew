@@ -50,18 +50,19 @@ class pointsListController {
     };
     $scope.MultipleCheck = function (status) {
       if ($scope.choseArr.length > 0) {
-        $scope.commentCheck($scope.choseArr.join(), status,0);
+        $scope.commentCheck($scope.choseArr.join(), status , 0);
         console.log($scope.choseArr.join())
       } else {
         alert('请选择多个用户！');
       }
     };
-    $scope.commentCheck = function (ids,status,currentPoints ) {
+    $scope.commentCheck = function (ids,status,currentPointData ) {
+      var listCurrentPointData=currentPointData;
       var content='<div style="padding:0 30px;">';
-      var singleDom='<div style="font-size:16px;">\
-            当前积分：<span id="currentPoints">'+currentPoints+'</span>&nbsp;&nbsp;\
-            变动后积分：<span id="lastPoints"></span>&nbsp;&nbsp;\
-            本次变动分值：<span id="currentChangePoints" style="color:red"></span>\
+      var singleDom='<div id="notMul" style="font-size:16px;">\
+            当前积分：<span id="currentPoints">'+listCurrentPointData.useJf+'</span>&nbsp;&nbsp;\
+            变动后积分：<span id="lastScore"></span>&nbsp;&nbsp;\
+            本次变动分值：<span id="changeValue" style="color:red"></span>\
           </div>';
       var multipleDom='<table style="width: 100%;">\
             <tr>\
@@ -94,7 +95,7 @@ class pointsListController {
              userId:ids,
              optType:$('input[name=pointsCon]:checked').val(),
              score:$('#currentChangePointsInput').val(),
-             note:$('#currentChangePointsInput').val()
+             note:$('#note').val()
            }
          });
          promise.then(function (res, status, config, headers) {
@@ -102,7 +103,8 @@ class pointsListController {
            console.log(res);
            if (res.data.code == '1') {
             $scope.search();
-           } else {
+           } else if (res.data.code == '9') {
+             alert(res.data.data.message)
            }
 
            $rootScope.loadingState = false;
@@ -129,7 +131,7 @@ class pointsListController {
         }
 
       });
-      $(document).on('click','input[type=number],input[name=pointsCon]',function () {//点击增加或者减少
+      $(document).on('click','input[type=number],input[name=pointsCon]',function () { //点击增加或者减少
         if($(this).val()>=0) {
           chagnePointsFn()
         }else{
@@ -142,24 +144,54 @@ class pointsListController {
           // alert('备注信息不能为空！');
         }
       });
-
       function chagnePointsFn() {
-        var tempVal= null;
-        var tempValType= null;
 
-        if($('input[name=pointsCon]:checked').val() == 11){
-          tempVal=Number(currentPoints)+ Number($('#currentChangePointsInput').val());
-          tempValType='+';
-        }else if($('input[name=pointsCon]:checked').val() == 12){
-          tempVal=currentPoints- $('#currentChangePointsInput').val();
-          tempValType='-'
+      //  -------------------------------
+        if(!$('#notMul').length){
+         return
+        }
+        console.log($('input[name=pointsCon]:checked').val());
+        var listTempVal = '';
+        var listTempValType = '+';
+        var listAddOrCutType = '';
+        var listChangeVal = $('#currentChangePointsInput').val();
+
+
+        if (Number(listChangeVal) == 0) { //输入值为零
+          listAddOrCutType = '';
+          listTempVal = Number($('#currentPoints').html());
+        } else {
+
+          if ($('input[name=pointsCon]:checked').val() == 11) {    //选择增加
+            listAddOrCutType = '+';
+            listTempVal = Number($('#currentPoints').html()) + Number(listChangeVal);
+
+          } else if ($('input[name=pointsCon]:checked').val() == 12) { //选择减少
+            listAddOrCutType = '-';
+            if (Number(listChangeVal) > 0) {
+              listAddOrCutType = '-';
+              if ($('#currentPoints').html() < Number(listChangeVal)) {//输入值大于当前规则
+                $('#currentChangePointsInput').val('');
+                listChangeVal = 0;
+              } else {
+                listTempVal = Number($('#currentPoints').html()) - listChangeVal;
+              }
+            } else {
+
+            }
+          }
         }
 
 
-
-        $('#currentChangePoints').html(tempValType+$('#currentChangePointsInput').val());
-        $('#lastPoints').html(tempVal);
+        if (Number(listChangeVal) >= 0) { //输入积分需要改变的值才修改最上面的table里的值
+          $('#changeValue').html(listAddOrCutType + Number(listChangeVal));
+          $('#lastScore').html(listTempValType + listTempVal);
+        } else {
+          $('#currentChangePointsInput').val('')
+        }
       }
+
+
     };
 
 

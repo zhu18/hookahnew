@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * Created by lt on 2017/9/26.
  */
 @Controller
-@RequestMapping("/userRecommend")
+@RequestMapping("/recommendReg")
 public class RecommendController extends BaseController{
 
     @Resource

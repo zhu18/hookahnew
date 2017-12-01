@@ -315,7 +315,7 @@ $(document).on('click', '.j_submitResult', function () {
         annex:annexList
 
     };
-      //TODO：上传成功之后 请求过来的 还是之前的内容
+      //上传成功之后 请求过来的 还是之前的内容
       console.log(resultData);
       if(resultData.title && resultData.applyId && resultData.requirementId && resultData.content){
         console.log(resultData);
@@ -338,7 +338,7 @@ $(document).on('click', '.j_submitResult', function () {
               confirmThis.hide();// 隐藏弹出框
               $('.j_submitResult').remove();//上传按钮
               $('.otherDetailBoxNav li').removeClass('active').eq(1).addClass('active').parent().next().children().removeClass('active').eq(1).addClass('active');//选中第二个tab 显示
-
+              location.reload()
             }else{
               $.alert(data.message)
             }
@@ -551,7 +551,7 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
 
               confirmThis.hide();
               $('.j_checkMission').remove();
-
+              location.reload()
             }
           }
         });
