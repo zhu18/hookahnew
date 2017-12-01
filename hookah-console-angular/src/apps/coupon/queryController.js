@@ -124,7 +124,7 @@ class queryController {
             return $scope.selected.indexOf(id) >= 0;
         };
         $scope.isSelectedAll = function () {
-            return $rootScope.pagination.pageSize == $scope.userList.length;
+            return $rootScope.pagination.pageSize == $scope.selected.length;
         };
         //全选 多选 功能 结束
         $scope.getDate=function () {//导出功能
