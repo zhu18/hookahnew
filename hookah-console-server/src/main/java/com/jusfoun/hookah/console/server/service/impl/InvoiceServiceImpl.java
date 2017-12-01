@@ -67,6 +67,9 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
     UserService userService;
 
     @Resource
+    RegionService regionService;
+
+    @Resource
     RedisOperate redisOperate;
 
     /**
@@ -118,20 +121,20 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
      */
     private Invoice buildInvoiceInfo(InvoiceDTOVo invoiceDTOVo){
         Invoice invoice = new Invoice();
-        if(StringUtils.isNotBlank(invoiceDTOVo.getInvoiceId())){
+        if(StringUtils.isNotBlank(invoiceDTOVo.getTitleId())){
 
-            UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectById(invoiceDTOVo.getInvoiceId());
+            UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectById(invoiceDTOVo.getTitleId());
             BeanUtils.copyProperties(userInvoiceTitle, invoice);
-            // 发票类型 0：个人 1：普通发票 2：专用发票
+            // 发票类型 0：普通发票 1：专用发票
             invoice.setInvoiceType(userInvoiceTitle.getUserInvoiceType());
         }else{
             // 抬头为个人
-            invoice.setInvoiceTitle("0");
+            invoice.setTitleId("0");
         }
         // 收票人ID
         invoice.setInvoiceAddrId(invoiceDTOVo.getId());
         // 已申请（待审核）
-        invoice.setInvoiceStatus(Byte.valueOf("1"));
+        invoice.setInvoiceStatus(HookahConstants.INVOICE_STATUS_1);
 
         // 发票编码
         invoice.setInvoiceSn(generateInvoiceSn(invoiceDTOVo.getUserId()));
@@ -216,10 +219,22 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
 
         if(!Objects.isNull(invoice)){
 
-            UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectById(invoice.getInvoiceTitle());
+            UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectById(invoice.getTitleId());
             // 抬头相关信息
             invoiceDetailVo.setUserInvoiceTitle(userInvoiceTitle);
             UserInvoiceAddress userInvoiceAddress = userInvoiceAddressService.selectById(invoice.getInvoiceAddrId());
+
+            if(Objects.nonNull(userInvoiceAddress) && StringUtils.isNotBlank(userInvoiceAddress.getRegion())){
+
+                Region region = regionService.selectById(userInvoiceAddress.getRegion());
+
+                StringBuilder receiveAddress = new StringBuilder();
+                for(String str : region.getMergerName().split(HookahConstants.COMMA)){
+                    receiveAddress.append(str);
+                }
+                receiveAddress.append(userInvoiceAddress.getAddress());
+                userInvoiceAddress.setReceiveAddress(receiveAddress.toString());
+            }
             // 收票人相关信息
             invoiceDetailVo.setUserInvoiceAddress(userInvoiceAddress);
 

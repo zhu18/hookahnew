@@ -1,14 +1,12 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.common.Pagination;
-import com.jusfoun.hookah.core.domain.Invoice;
 import com.jusfoun.hookah.core.domain.vo.InvoiceDTOVo;
 import com.jusfoun.hookah.core.domain.vo.InvoiceDetailVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoInvoiceVo;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.InvoiceService;
-import com.jusfoun.hookah.rpc.api.OrderInvoiceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 /**
  * 发票
@@ -27,17 +24,14 @@ import javax.servlet.http.HttpSession;
  * @created 2016年7月7日
  */
 @RestController
-@RequestMapping("/test/invoice")
+@RequestMapping("/api/invoice")
 public class InvoiceController extends BaseController{
     private static final Logger logger = LoggerFactory.getLogger(InvoiceController.class);
     @Resource
     private InvoiceService invoiceService;
 
-    @Resource
-    OrderInvoiceService orderInvoiceService;
-
     /**
-     *  发票提交
+     *  发票提交,根据invoiceId 是否有值判断是新增还是修改
      * @param invoiceDTOVo 发票传输对象
      *                   包括 invoiceId 发票ID
      *                   包括   titleId 抬头ID
@@ -102,23 +96,4 @@ public class InvoiceController extends BaseController{
         }
         return returnData;
     }
-    /**
-     * 修改发票
-     *
-     * @param invoice
-     * @return
-     */
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ReturnData update(Invoice invoice, HttpSession session) {
-        try {
-//            invoice.setUserId(getUserId(session));
-//            service.updateByIdSelective(invoice);
-            return ReturnData.success();
-        } catch (Exception e) {
-            logger.error("修改错误", e);
-            ReturnData.error("系统异常:" + e.getMessage());
-        }
-        return ReturnData.fail();
-    }
-
 }
