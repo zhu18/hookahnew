@@ -85,7 +85,10 @@
     ON `user`.user_id = cp.id
     <where>
       <if test="userId != '' and userId != null">
-        `user`.user_id = #{userId}
+        `user`.user_id IN
+        <foreach item="item" index="index" collection="userId" open="(" separator="," close=")">
+          #{item}
+        </foreach>
       </if>
       <if test="userName != '' and userName != null">
         AND

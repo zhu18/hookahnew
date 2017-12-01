@@ -10,8 +10,8 @@ class queryController {
         $rootScope.pagination.pageSize="20";
         $scope.exports = [               //自定定义类型数据
             {id:"", name:"导出数据"},
-            {id:0, name:"选中用户",href:"1"},
-            {id:1, name:"全部用户",href:"2"}
+            {id:"", name:"选中用户"},
+            {id:"/api/coupon/exportExcel?userIds=", name:"全部用户"}
         ];
         $scope.export="";
         $scope.pageSize=1;
@@ -28,7 +28,10 @@ class queryController {
                 }
             };
         }
-        $scope.controlScreen()
+        $scope.controlScreen();
+        $scope.getDate=function (href) {
+            window.location.href=$rootScope.site.apiServer +  $scope.export;
+        }
         $scope.search = function () { //Render page function
             var promise = $http({
                 method: 'GET',
@@ -43,7 +46,6 @@ class queryController {
             promise.then(function (res, status, config, headers) {
                 console.log('数据在这里');
                 console.log(res);
-
                 if (res.data.code == '1') {
                     $scope.userList = res.data.data.list;
                     $scope.showNoneDataInfoTip = false;

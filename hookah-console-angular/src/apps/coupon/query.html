@@ -38,9 +38,8 @@
                     <div class="header clearfix">
                         <div class="title pull-left">数据列表</div>
                         <div class="tool pull-right">
-                            <select ng-model="export" style="width: 155px;height: 32px">
-                                <option data-ng-repeat="x in exports" value="{{x.id}}"><a href="{{x.href}}">{{x.name}}</a></option>
-                            </select>
+                            <select ng-model="export" ng-options="export.id as export.name for export in exports" ng-change="getDate({{x.href}})" style="width: 155px;height: 32px"></select>
+
                             <select ng-model="pagination.pageSize" ng-options="pageSize.id as pageSize.name for pageSize in pageSizes" ng-change="search()" style="width: 155px;height: 32px"></select>
 
                         </div>

@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.domain.jf.JfRecord;
 import com.jusfoun.hookah.core.domain.jf.JfRule;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.integral.contants.JfContants;
 import com.jusfoun.hookah.integral.contants.JfEnum;
 import com.jusfoun.hookah.rpc.api.CacheService;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
@@ -67,18 +68,29 @@ public class RabbitMQJFHandelListener {
                 return;
             }
 
-            int n = jfRecordService.insertAndGetId(
-                    new JfRecord(
-                            jfBo.getUserId(),
-                            Byte.parseByte(jfBo.getSourceId() + ""),
-                            jfRule.getAction(),
-                            jfRule.getScore(),
-                            jfRule.getActionDesc(),
-                            Byte.parseByte("0"),
-                            new Date(),
-                            "System",
-                            LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")),
-                            jfRule.getActionDesc()));
+            JfRecord jfRecord = new JfRecord();
+            jfRecord.setUserId(jfBo.getUserId());
+            jfRecord.setSourceId(Byte.parseByte(jfBo.getSourceId() + ""));
+            jfRecord.setAction(jfRule.getAction());
+            jfRecord.setScore(jfRule.getScore());
+            jfRecord.setExpire(Byte.parseByte("0"));
+            jfRecord.setAddTime(new Date());
+            jfRecord.setOperator("System");
+            jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
+            jfRecord.setActionDesc(jfRule.getActionDesc());
+
+            if(jfRule.getSn().equals(Byte.parseByte("1"))
+                    || jfRule.getSn().equals(Byte.parseByte("2"))
+                        || jfRule.getSn().equals(Byte.parseByte("3"))){
+
+                jfRecord.setNote("有效期至" +
+                        LocalDate.now().plusYears(JfContants.JF_EXPIRE_YEAR)
+                                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            } else {
+                jfRecord.setNote(jfBo.getMsg());
+            }
+
+            int n = jfRecordService.insertAndGetId(jfRecord);
             if(n == 1){
                 logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理成功>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }else {

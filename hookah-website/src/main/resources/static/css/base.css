@@ -412,59 +412,63 @@ html{
 	margin-left: 20px;
 }
 .float-tool {
-	width: 60px;
-	min-height: 30px;
 	position: fixed;
-	left: 50%;
+	right: 30px;
 	bottom: 100px;
-	margin-left: 608px;
-	background: #f3f3f3;
-	border-radius:3px;
 	z-index: 9999;
 }
-.float-tool .tool_bg{
-	position: absolute;
-	top: -24px;
-	left: 0;
-	text-align: center;
-	width: 60px;
+.float-tool a{
+	display: block;
 }
-.float-tool .tool_bg img{
-	width:35px;
-}
-.float-tool ul{
-	margin:14px 0;
+.float-tool .tool-item{
+	margin-bottom:3px;
+	overflow: hidden;
 	position: relative;
+	right:0;
 }
-.float-tool ul:after{
-	content: '';
-	width: 54px;
-	height: 1px;
-	background: #bbb;
-	position: absolute;
-	bottom: -8px;
-	left: 3px;
+
+.float-tool .tool-item .btn-title{
+	width:40px;
+	height:40px;
+	display: block;
+	float: right;
+	background: #666;
 }
-.float-tool .gotop-box:after{
+.float-tool .tool-item .btn-title img{
+	width: 100%;
+}
+.float-tool .tool-item .btn-content{
+	float: left;
+	line-height: 40px;
+	font-size: 12px;
+	color: #fff;
+	padding: 0 3px 0 10px;
 	display: none;
 }
-.float-tool ul li{
-	text-align: center;
-	line-height: 22px;
-	padding:0 3px;
-	color:#000;
-	cursor: pointer;
-	margin-bottom:8px;
+.float-tool .tool-item:first-child .btn-content{
+	padding:3px;
+	width:60px;
+	height:60px;
 }
-.float-tool .index-1 li{color:#d04848;}
-.float-tool .index-2 li{color:#ffae01;}
-.float-tool .index-3 li{color:#008aea;}
-.float-tool .index-4 li{color:#00cfc8;}
-.float-tool .index-1 .active{background:#d04848; color:#fff;}
-.float-tool .index-2 .active{background:#d04848; color:#fff;}
-.float-tool .index-3 .active{background:#d04848; color:#fff;}
-.float-tool .index-4 .active{background:#d04848; color:#fff;}
-.float-tool ul li:hover{background:#d04848; color:#fff;}
+.float-tool .tool-item:first-child .btn-content img{
+	width:100%;
+}
+.float-tool .tool-item:first-child:hover .btn-title{
+	padding:13px 0;
+}
+.float-tool .tool-item:hover .btn-title{
+	background: #d04848;
+}
+.float-tool .tool-item:hover .btn-content{
+	background: #d04848;
+}
+.float-tool .tool-item .btn-content.hover{
+	display: block;
+}
+.no-cursor{
+	cursor: default;
+}
+
 
 input:focus, select:focus, textarea:focus {
 	outline: none;

@@ -156,7 +156,9 @@ class pointsManageController {
         chagnePointsFn()
       });
       $(document).on('click', 'input[type=number],input[name=pointsCon]', function () {//点击增加或者减少
-        chagnePointsFn()
+        if($(this).val()){
+          chagnePointsFn()
+        }
       });
 
       $(document).on('blur', '#note', function () {//操作备注信息不能为空
@@ -171,25 +173,31 @@ class pointsManageController {
         var tempVal = null;
         var tempValType = null;
 
-        if ($('input[name=pointsCon]:checked').val() == 11) {//选择增加
+        if ($('input[name=pointsCon]:checked').val() == 11) {    //选择增加
           tempVal = Number(currentPointData.score) + Number($('#currentChangePointsInput').val());
           tempValType = '+';
         } else if ($('input[name=pointsCon]:checked').val() == 12) {//选择减少
           tempVal = currentPointData.score - $('#currentChangePointsInput').val();
           tempValType = '-'
         }
-        if($.trim($('#currentChangePointsInput').val()).length>0){ //输入积分需要改变的值才修改最上面的table里的值
+
+        if($('#currentChangePointsInput').val()>=0){ //输入积分需要改变的值才修改最上面的table里的值
           $('#changeValue').html(tempValType + $('#currentChangePointsInput').val());
           $('#lastScore').html(tempValType +tempVal);
+        }else{
+          $('#currentChangePointsInput').val('')
         }
-        if($.trim($('#upper').val()).length>0){ //输入规则规定上限需要改变的值才修改最上面的table里的值
+        if($('#upper').val()>=0){ //输入规则规定上限需要改变的值才修改最上面的table里的值
           $('#upperLimit').html($('#upper').val());
           $('#upperTimeLimit').html(($('#upperTimeSelect').val()=='null')?'永久':(($('#upperTimeSelect').val()=='12')?"12h":"24h"))
+        }else{
+          $('#upper').val('')
         }
-        if($.trim($('#lower').val()).length>0){//输入规则规定下限需要改变的值才修改最上面的table里的值
+        if($('#lower').val()>=0){//输入规则规定下限需要改变的值才修改最上面的table里的值
           $('#lowerLimit').html($('#lower').val());
           $('#lowerTimeLimit').html(($('#lowerTimeSelect').val()=='null')?'永久':(($('#lowerTimeSelect').val()=='12')?"12h":"24h"))
-
+        }else{
+          $('#lower').val('')
         }
 
 

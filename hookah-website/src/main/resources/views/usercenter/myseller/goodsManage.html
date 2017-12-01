@@ -9,6 +9,42 @@ var head = {
 	var dataParm = {};
 	dataParm.pageNumber = 1;
 	dataParm.pageSize = 10;
+	function loadPageData(data) {
+		if (data.data.list.length > 0) {
+			var list = data.data.list;
+			var html = '';
+			for (var i = 0; i < list.length; i++) {
+				html += '<tr>';
+				html += '<td class="text-center">';
+				html += '<a target="_blank" href="'+host.website+'/exchange/details?id='+list[i].goodsId+'">';
+				html += '<img src="'+list[i].goodsImg+'" alt="">';
+				html += '<p>' + list[i].goodsName + '</p>';
+				html += '</a>';
+				html += '</td>';
+				html += '<td class="text-align-center">' + list[i].catName + '</td>';
+				if(list[i].isDiscussPrice == 1){
+					html += '<td class="text-right" style="color:#F17D17;">面议（参考价' + (list[i].shopPrice / 100).toFixed(2) + '元）</td>';
+				}else{
+					html += '<td class="text-right">' + (list[i].shopPrice / 100).toFixed(2) + '</td>';
+				}
+				html += '<td class="text-center">' + list[i].onsaleStartDate + '</td>';
+				// if (list[i].checkStatus == 0) {
+				// 	html += '<td class="text-center">审核中</td>';
+				// } else if (list[i].checkStatus == 1) {
+				// 	html += '<td class="text-center">通过</td>';
+				// } else if (list[i].checkStatus == 2) {
+				// 	html += '<td class="text-center">不通过</td>';
+				// }
+				html += '<td>';
+				html += '<a href="javascript:offSale(\'' + list[i].goodsId + '\');">下架</a>';
+				html += '</td>';
+				html += '</tr>';
+			}
+			$('.trade-box tbody').html(html);
+		} else {
+			$('.trade-box tbody').html('<tr><td colspan="10"><div class="noData">暂无数据</div></td></tr>');
+		}
+	}
 </script>
 <%};%>
 <%

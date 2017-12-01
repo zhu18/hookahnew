@@ -1,93 +1,60 @@
 <div class="float-tool">
-    <div class="tool_bg"><img src="/static/images/tool_bg.png" alt=""></div>
-    <div class="showIndex">
-        <ul class="index-1">
-            <li>金融</li>
-            <li>行业</li>
-            <li>政府</li>
-        </ul>
-        <ul class="big-btn index-2">
-            <li>活动<br>速递</li>
-        </ul>
-        <ul class="big-btn index-3">
-            <li>平台<br>动态</li>
-        </ul>
-        <ul class="big-btn index-4">
-            <li>解决<br>方案</li>
-        </ul>
-    </div>
-    <ul class="gotop-box">
-        <li>
-            <i class="fa fa-angle-up"></i><br>顶部
-        </li>
-    </ul>
-    <!--<div id="J_gotoTop" style="cursor: pointer;">-->
-        <!--<img style="width: 38px;" src="/static/images/toTop2.jpg">-->
-    <!--</div>-->
+	<div class="tool-item">
+		<a href="javascript:void(0)" class="no-cursor">
+			<span class="btn-content"><img src="/static/images/tool/tool_img_wx.jpg" alt=""></span>
+			<span class="btn-title"><img src="/static/images/tool/tool_img_1.png" alt=""></span>
+		</a>
+	</div>
+	<div class="tool-item">
+		<a href="javascript:void(0)" id="looyu_dom_1">
+			<span class="btn-content">在线咨询</span>
+			<span class="btn-title"><img src="/static/images/tool/tool_img_2.png" alt=""></span>
+		</a>
+	</div>
+	<div class="tool-item">
+		<a href="javascript:void(0)" class="no-cursor">
+			<span class="btn-content">400-819-0919</span>
+			<span class="btn-title"><img src="/static/images/tool/tool_img_3.png" alt=""></span>
+		</a>
+	</div>
+	<div class="tool-item">
+		<a href="http://bdgstore.mikecrm.com/UzZw5NG" target="_blank">
+			<span class="btn-content">用户反馈</span>
+			<span class="btn-title"><img src="/static/images/tool/tool_img_4.png" alt=""></span>
+		</a>
+	</div>
+	<div class="tool-item go_to_top">
+		<a href="javascript:void(0)" class="goToTop">
+			<span class="btn-content">顶部</span>
+			<span class="btn-title"><img src="/static/images/tool/tool_img_5.png" alt=""></span>
+		</a>
+	</div>
+	<!--<div id="J_gotoTop" style="cursor: pointer;">-->
+	<!--<img style="width: 38px;" src="/static/images/toTop2.jpg">-->
+	<!--</div>-->
 </div>
 <script class="text/javascript">
-	$('.float-tool').hide();
-    $(window).scroll(function () {
-        var windowHeight = parseFloat($(window).height())
-        var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
-        if (totalheight - windowHeight >= 500) {
-            $('.float-tool').show();
-        } else {
-            $('.float-tool').hide();
-        }
-        if(totalheight - windowHeight >= 563 && totalheight - windowHeight <= 1030){
-			$('.showIndex li').removeClass('active');
-            $('.index-1 li').eq(0).addClass('active');
-        }else if(totalheight - windowHeight >= 1031 && totalheight - windowHeight <= 1497){
-			$('.showIndex li').removeClass('active');
-			$('.index-1 li').eq(1).addClass('active');
-        }else if(totalheight - windowHeight >= 1498 && totalheight - windowHeight <= 1964){
-			$('.showIndex li').removeClass('active');
-			$('.index-1 li').eq(2).addClass('active');
-		}else if(totalheight - windowHeight >= 1965 && totalheight - windowHeight <= 2287){
-        	$('.showIndex li').removeClass('active');
-			$('.index-2 li').addClass('active');
-		}else if(totalheight - windowHeight >= 2288 && totalheight - windowHeight <= 2670){
-			$('.showIndex li').removeClass('active');
-			$('.index-3 li').addClass('active');
-		}else{
-			$('.showIndex li').removeClass('active');
-        }
-    });
-	$('.index-1 li').eq(0).click(function() {
-        $("html,body").animate({scrollTop:564}, 600);
-		$(this).addClass('active').siblings('li').removeClass('active');
-    });
-	$('.index-1 li').eq(1).click(function() {
-		$("html,body").animate({scrollTop:1032}, 600);
-		$(this).addClass('active').siblings('li').removeClass('active');
+	$('.go_to_top').hide()
+	$(window).scroll(function () {
+		var windowHeight = parseFloat($(window).height())
+		var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+		if (totalheight - windowHeight >= 500) {
+			$('.go_to_top').show();
+		} else {
+			$('.go_to_top').hide()
+		}
+
 	});
-	$('.index-1 li').eq(2).click(function() {
-		$("html,body").animate({scrollTop:1499}, 600);
-		$(this).addClass('active').siblings('li').removeClass('active');
+	$(document).ready(function(){
+		$('#doyoo_panel').hide()
+
+	})
+	$('.float-tool .tool-item a').hover(function () {
+		$(this).children('.btn-content').addClass('hover');
+	}, function () {
+		$(this).children('.btn-content').removeClass('hover');
+	})
+	$('.goToTop').click(function () {
+		$("html,body").animate({scrollTop: 0}, 600);
 	});
-	$('.index-2 li').click(function() {
-		$("html,body").animate({scrollTop:1966}, 600);
-		$('.showIndex li').removeClass('active');
-		$(this).addClass('active')
-	});
-	$('.index-3 li').click(function() {
-		$("html,body").animate({scrollTop:2289}, 600);
-		$('.showIndex li').removeClass('active');
-		$(this).addClass('active')
-	});
-	$('.index-4 li').click(function() {
-		$("html,body").animate({scrollTop:2289}, 600);
-		$('.showIndex li').removeClass('active');
-		$(this).addClass('active')
-	});
-	$('.gotop-box li').click(function() {
-		$("html,body").animate({scrollTop:0}, 600);
-	});
-	var pathname = window.location.pathname;
-	if (pathname == '/' || pathname == '') {
-		$('.showIndex').show();
-	}else{
-		$('.showIndex').hide();
-    }
 </script>
