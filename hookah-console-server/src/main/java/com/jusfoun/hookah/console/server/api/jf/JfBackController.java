@@ -19,6 +19,7 @@ import java.util.Random;
 
 /**
  * 积分记录
+ * @author dengxu
  */
 
 @RestController

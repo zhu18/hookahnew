@@ -7,20 +7,20 @@ import com.jusfoun.hookah.core.domain.Coupon;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.CouponVo;
 import com.jusfoun.hookah.core.exception.HookahException;
-import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.generic.OrderBy;
-import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.core.utils.JsonUtils;
-import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.rpc.api.CouponService;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -144,7 +144,7 @@ public class CouponApi extends BaseController {
      * @return
      */
     @RequestMapping(value = "/getCouponById", method = RequestMethod.GET)
-    public ReturnData getCouponById(Long couponId){
+    public ReturnData getCouponById(@RequestParam Long couponId){
         try {
             Coupon coupon = couponService.selectById(couponId);
             CouponVo couponVo = new CouponVo();
@@ -168,9 +168,11 @@ public class CouponApi extends BaseController {
      * @return
      */
     @RequestMapping(value = "/getUserCouponById", method = RequestMethod.GET)
-    public ReturnData getUserCouponById(String userId){
+    public ReturnData getUserCouponById(@RequestParam(value = "userId") String userId){
         try {
-            return couponService.getUserCouponById(userId);
+            String[] ids = {userId};
+            List list = couponService.getUserCouponById(ids);
+            return ReturnData.success(list.get(0));
         }catch (Exception e){
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -257,6 +259,57 @@ public class CouponApi extends BaseController {
             e.printStackTrace();
             logger.error(e.getMessage());
             return ReturnData.error("优惠券发送失败");
+        }
+    }
+
+    @RequestMapping("/exportExcel")
+    public void export(HttpServletResponse response, HttpServletRequest request, String[] userIds) {
+        try {
+            if (userIds.length==0){
+                userIds = null;
+            }
+            List userCouponVos = couponService.getUserCouponById(userIds);
+            //json字符串
+            String jsonStr = JsonUtils.toJson(userCouponVos);
+            //表格列标题
+            String sheaders = "userId,userSn,userName,used,unused,expired,";
+            String[] head = {"用户ID","用户账号","用户昵称","已使用","未使用","已过期"};
+            //表格名称
+            String title = "Sheet1";
+            //表格文件名
+            String fileName = "用户领取优惠券列表"+".csv";
+            // 将json字符串转换为json对象
+            JSONArray jsonArray = new JSONArray(jsonStr);
+            String[] headers= sheaders.substring(0,sheaders.length()-1).split(",");
+            int iSize = jsonArray.length();
+            List<List> list = new ArrayList<List>();
+            for (int i = 0; i < iSize; i++) {
+                List<Object> line = new ArrayList<Object>();
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Object value = null;
+                int j=0;
+                while (j<headers.length) {
+                    value = jsonObject.get(headers[j]);
+                    String t = value.toString();
+                    if (t.equals("null")){
+                        value=0;
+                    }
+                    //表格内容
+                    line.add(value);
+                    j++;
+                    System.out.println(value);
+                }
+                list.add(line);
+            }
+            HSSFWorkbook workbook = ExcelUtil.exportExcel(title, head, list);
+            ExcelUtil.download(response, workbook, fileName);
+            logger.info("excel导出成功！");
+        } catch (IOException e) {
+            logger.error("输出流错误，excel导出失败");
+            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
         }
     }
 }

@@ -31,7 +31,7 @@ public interface CouponService extends GenericService<Coupon,Long> {
 
     Pagination getCouponList(String couponName, Byte couponType, String currentPage, String pageSize,String sort, Byte type) throws Exception;
 
-    ReturnData getUserCouponById(String userId) throws Exception;
+    List getUserCouponById(String[] userId) throws Exception;
 
     ReturnData getUserCouponDetail(String userId, Long userCouponId) throws Exception;
 

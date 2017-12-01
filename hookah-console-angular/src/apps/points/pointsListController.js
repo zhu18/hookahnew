@@ -113,24 +113,37 @@ class pointsListController {
         console.log('点击取消')
 
       });
-      $(document).on('change','#currentChangePointsInput',function () {//表单值改变
-        chagnePointsFn()
+      $(document).on('change','#currentChangePointsInput',function () { //表单值改变
+        if($(this).val()>=0) {
+          chagnePointsFn()
+        }else{
+          $('#currentChangePointsInput').val('')
+
+        }
       });
-      $(document).on('keyup','#currentChangePointsInput',function () {//按下键盘
-        chagnePointsFn()
+      $(document).on('keyup','#currentChangePointsInput',function () { //按下键盘
+        if($(this).val()>=0) {
+          chagnePointsFn()
+        }else{
+          $('#currentChangePointsInput').val('')
+        }
+
       });
-      $(document).on('click','input[name=pointsCon]',function () {//点击增加或者减少
-        chagnePointsFn()
+      $(document).on('click','input[type=number],input[name=pointsCon]',function () {//点击增加或者减少
+        if($(this).val()>=0) {
+          chagnePointsFn()
+        }else{
+          $('#currentChangePointsInput').val('')
+        }
       });
 
       $(document).on('blur','#note',function () {//操作备注信息不能为空
         if($.trim($("#note").val()).length==0){
-          alert('备注信息不能为空！')
+          // alert('备注信息不能为空！');
         }
       });
 
       function chagnePointsFn() {
-        console.log($('input[name=pointsCon]:checked').val());
         var tempVal= null;
         var tempValType= null;
 
@@ -141,6 +154,9 @@ class pointsListController {
           tempVal=currentPoints- $('#currentChangePointsInput').val();
           tempValType='-'
         }
+
+
+
         $('#currentChangePoints').html(tempValType+$('#currentChangePointsInput').val());
         $('#lastPoints').html(tempVal);
       }

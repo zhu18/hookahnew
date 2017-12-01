@@ -766,8 +766,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             for (UserCoupon userCoupon : userCoupons){
                 Coupon coupon = couponService.selectById(userCoupon.getCouponId());
                 coupon.setUsedCount(coupon.getUsedCount()+1);
+                coupon.setUpdateTime(new Date());
                 userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.USED.getCode());
                 userCoupon.setUsedTime(new Date());
+                userCoupon.setUpdateTime(new Date());
                 couponService.updateByIdSelective(coupon);
                 userCouponService.updateByIdSelective(userCoupon);
             }
