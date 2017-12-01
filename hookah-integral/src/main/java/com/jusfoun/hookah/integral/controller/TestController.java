@@ -52,7 +52,7 @@ public class TestController extends BaseController {
 
     @RequestMapping("/msg")
     public String Test2(String userId, Integer v) {
-        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(userId, v));
+        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(userId, v, "1111"));
         return "jf";
     }
 
@@ -60,25 +60,25 @@ public class TestController extends BaseController {
     @RequestMapping("/msg3")
     public String Test3(String userId) {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int x = 0; x < 10; x++) {
-                    mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG,
-                            new JfBo(userId, new Random().nextInt(7) + 1));
-                }
-            }
-        }) {
-        }.start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (int x = 0; x < 10; x++) {
+//                    mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO,
+//                            new JfBo(userId, new Random().nextInt(7) + 1, null));
+//                }
+//            }
+//        }) {
+//        }.start();
 
         return "jf";
     }
 
     @RequestMapping("/msg4")
     public String Test4(String userId) {
-
-        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG,
-                new JfBo(userId, new Random().nextInt(7) + 1));
+//
+//        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO,
+//                new JfBo(userId, new Random().nextInt(7) + 1, null));
 
         return "jf";
     }
@@ -171,7 +171,7 @@ public class TestController extends BaseController {
         returnData.setCode(ExceptionConst.Success);
 
         try {
-            returnData = jfRecordService.optJf(userId, optType, score, note, this.getCurrentUser().getUserId());
+            returnData = jfRecordService.optJf(userId, optType, score, note, "admin");
         }catch (HookahException ex) {
             logger.error("修改用户积分异常-{}", ex);
             returnData.setCode(ExceptionConst.Error);

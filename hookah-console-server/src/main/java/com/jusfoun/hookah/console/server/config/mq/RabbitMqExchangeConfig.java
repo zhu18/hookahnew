@@ -116,7 +116,7 @@ public class RabbitMqExchangeConfig {
 
     @Bean
     Queue queueJF(RabbitAdmin rabbitAdmin) {
-        Queue queue = new Queue(RabbitmqQueue.CONTRACE_JF_MSG, true);
+        Queue queue = new Queue(RabbitmqQueue.CONTRACE_JF_MSGINFO, true);
         rabbitAdmin.declareQueue(queue);
         return queue;
     }
@@ -245,14 +245,14 @@ public class RabbitMqExchangeConfig {
 
     @Bean
     Binding bindingExchangeJF(Queue queueJF, DirectExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
+        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSGINFO);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }
 
     @Bean
     Binding bindingExchangeJF(Queue queueJF, TopicExchange exchange, RabbitAdmin rabbitAdmin) {
-        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSG);
+        Binding binding = BindingBuilder.bind(queueJF).to(exchange).with(RabbitmqQueue.CONTRACE_JF_MSGINFO);
         rabbitAdmin.declareBinding(binding);
         return binding;
     }

@@ -20,6 +20,7 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
@@ -208,11 +209,11 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
         }
 
         if (StringUtils.isNotBlank(startTime)) {
-            filters.add(Condition.ge("addTime", DateUtils.transferTime(startTime)));
+            filters.add(Condition.ge("addTime", startTime));
         }
 
         if (StringUtils.isNotBlank(endTime)) {
-            filters.add(Condition.le("addTime", DateUtils.transferTime(startTime)));
+            filters.add(Condition.le("addTime", DateUtils.transferTime(endTime)));
         }
 
         int pageNumberNew = HookahConstants.PAGE_NUM;
@@ -293,6 +294,19 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
                         // optType 归到source_id中去 增加为11 减少为12
                         // action  admin的action为3
+
+//                        JfRecord jfRecord = new JfRecord();
+//                        jfRecord.setUserId(uid);
+//                        jfRecord.setSourceId(Byte.parseByte(optType));
+//                        jfRecord.setAction(Byte.parseByte("3"));
+//                        jfRecord.setScore(Integer.parseInt(score));
+//                        jfRecord.setNote(note);
+//                        jfRecord.setExpire(Byte.parseByte("0"));
+//                        jfRecord.setAddTime(new Date());
+//                        jfRecord.setOperator(operatorId);
+//                        jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
+//                        jfRecord.setActionDesc("管理员操作");
+
                         int n = insertAndGetId(
                                 new JfRecord(
                                     uid,
@@ -373,7 +387,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
          // TODO …… 新注册用户赠送积分
         if(StringUtils.isNotBlank(userId)){
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(userId, 1));
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(userId, 1, ""));
         }
 
         // TODO …… 邀请者送积分  （是不是和上面的分开写）
@@ -386,12 +400,12 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
                 List<Condition> filters = new ArrayList<>();
                 filters.add(Condition.eq("userId", recommendUserId));
-                filters.add(Condition.eq("sourceId", jfRule.getAction()));
+                filters.add(Condition.eq("sourceId", jfRule.getSn()));
                 if(jfRule.getUpperTimeLimit() == null){
                     if(jfRule.getUpperLimit() != null){
                         List<JfRecord> jfRecordList = this.selectList(filters);
                         if(jfRule.getUpperLimit() > jfRecordList.stream().mapToInt(JfRecord::getScore).sum()){
-                            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(recommendUserId, 2));
+                            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(recommendUserId, 2, ""));
                         } else {
                             logger.info("该用户邀请赠送积分已达到上限");
                         }
@@ -401,10 +415,11 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                     // 需要沟通 延迟开发
 
                 } else if(jfRule.getUpperTimeLimit().equals(Byte.parseByte("24"))){
-                    filters.add(Condition.eq("addDate", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"))));
+                    filters.add(Condition.ge("addTime", DateUtils.toDateText(new Date(), "yyyy-MM-dd") + " 00:00:00"));
+                    filters.add(Condition.le("addTime", DateUtils.toDateText(new Date(), "yyyy-MM-dd") + " 23:59:59"));
                     List<JfRecord> jfRecordList = this.selectList(filters);
                     if(jfRule.getUpperLimit() > jfRecordList.stream().mapToInt(JfRecord::getScore).sum()){
-                        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(recommendUserId, 2));
+                        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(recommendUserId, 2, ""));
                     } else {
                         logger.info("该用户邀请赠送积分已达到上限");
                     }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 消息传输 bo
+ * @author dengxu
  */
 public class JfBo implements Serializable {
 
@@ -11,7 +12,7 @@ public class JfBo implements Serializable {
 
     private Integer sourceId;
 
-    private String msg;
+    private String notes;
 
     public String getUserId() {
         return userId;
@@ -29,17 +30,18 @@ public class JfBo implements Serializable {
         this.sourceId = sourceId;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
-    public JfBo(String userId, Integer sourceId) {
+    public JfBo(String userId, Integer sourceId, String notes) {
         this.userId = userId;
         this.sourceId = sourceId;
+        this.notes = notes;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class JfBo implements Serializable {
         return "JfBo{" +
                 "userId='" + userId + '\'' +
                 ", sourceId=" + sourceId +
-                ", msg='" + msg + '\'' +
+                ", notes='" + notes + '\'' +
                 '}';
     }
 }

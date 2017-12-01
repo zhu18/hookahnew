@@ -43,7 +43,7 @@ public interface RabbitmqQueue {
     /**
      * 积分队列
      */
-    public final String CONTRACE_JF_MSG ="CONTRACE_JF_MSG";
+    public final String CONTRACE_JF_MSGINFO ="CONTRACE_JF_MSGINFO";
 
     /**
      * 注册赠送优惠券
