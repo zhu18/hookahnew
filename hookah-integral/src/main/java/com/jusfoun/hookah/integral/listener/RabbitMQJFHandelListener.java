@@ -72,7 +72,11 @@ public class RabbitMQJFHandelListener {
             jfRecord.setUserId(jfBo.getUserId());
             jfRecord.setSourceId(Byte.parseByte(jfBo.getSourceId() + ""));
             jfRecord.setAction(jfRule.getAction());
-            jfRecord.setScore(jfRule.getScore());
+
+            if(jfRule.getUpperLimit() != null && jfRule.getScore() != null){
+
+                jfRecord.setScore(jfRule.getScore() > jfRule.getUpperLimit() ? jfRule.getUpperLimit() : jfRule.getScore());
+            }
             jfRecord.setExpire(Byte.parseByte("0"));
             jfRecord.setAddTime(new Date());
             jfRecord.setOperator("System");
@@ -87,7 +91,7 @@ public class RabbitMQJFHandelListener {
                         LocalDate.now().plusYears(JfContants.JF_EXPIRE_YEAR)
                                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             } else {
-                jfRecord.setNote(jfBo.getMsg());
+//                jfRecord.setNote(jfBo.getNotes());
             }
 
             int n = jfRecordService.insertAndGetId(jfRecord);
