@@ -18,16 +18,16 @@ var htmlPart = {
                 </div>
                 <div class="fundmanage-box">
                     <div class="fundmanage-bd">
-                        <div class="account-funds margin-top-10">
+                        <div class="account-funds margin-top-10" style="padding-bottom: 30px;">
                             <div class="account-funds-title">邀请推荐</div>
                             <div class="recommend-data">
-                                <div class="recommend-data-content">
+                                <div class="recommend-data-content"  style="padding-left: 26px; text-align: left">
                                     <h2 class="recommend-data-content-title">推荐人数</h2>
                                     <i class="recommend-data-num">${inviteeInfo.inviteeNum!0}</i>人
                                 </div>
-                                <div class="recommend-data-content">
-                                    <h2 class="recommend-data-content-title">推荐获得积分</h2>
-                                    <i class="recommend-data-num">${inviteeInfo.rewardMoney!0,numberFormat="##.##"}分</i>
+                                <div class="recommend-data-content" style="border-left:none;">
+                                    <h2 class="recommend-data-content-title"  style="display:none;">推荐获得积分</h2>
+                                    <i class="recommend-data-num"  style="display:none;">${inviteeInfo.rewardMoney!0,numberFormat="##.##"}分</i>
                                 </div>
                             </div>
                             <p class="recommend-data-footer">
@@ -58,7 +58,7 @@ var htmlPart = {
                                         <li><a href="javascript:;"><i class="social-logo social-qq"></i>QQ好友</a></li>-->
                                     </div>
                                 </div>
-                                <div class="recommend-operate-content">
+                                <div class="recommend-operate-content" style="    display: none;">
                                     <p class="recommend-tips">
                                         1、邀请好友注册并认证后，邀请人可获得20积分/人，每日获得邀请积分上限为200积分；
                                         <br>

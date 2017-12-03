@@ -62,6 +62,7 @@
 
 /*注册/认证 送积分提示*/
 .forPoints{
+    display: none;
     position: absolute;
     left: 522px;
     top: -21px;

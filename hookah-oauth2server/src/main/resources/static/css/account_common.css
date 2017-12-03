@@ -156,6 +156,7 @@ ul {
 
 /*注册/认证 送积分提示*/
 .forPoints{
+  display: none;
   position: absolute;
   left: 471px;
   top: -21px;
