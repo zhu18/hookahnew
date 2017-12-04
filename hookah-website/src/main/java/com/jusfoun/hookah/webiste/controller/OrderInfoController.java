@@ -568,7 +568,7 @@ public class OrderInfoController extends BaseController {
             return   "redirect:/pay/cash";
         } catch (HookahException e) {
             model.addAttribute("message",e.getMessage());
-            return "/error/couponError";
+            return "/error/limitedGoodsError";
         }catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";
