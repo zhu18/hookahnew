@@ -88,7 +88,7 @@ public class OrderInfoController extends BaseController {
                     User user = userService.selectById(userId);
                     if (user.getUserType()==HookahConstants.UserType.PERSON_CHECK_OK.getCode() &&
                             g.getPurchaseLimit()==Byte.parseByte(HookahConstants.PurchaseLimitName.enterprise.getCode())) {
-                        throw new HookahException("您已认证成为个人用户，只能购买通用商品");
+                        throw new HookahException("["+g.getGoodsName()+"]为企业类型商品，您已认证成为个人用户，不能购买该商品");
                     }
 
                     if (cart.getFormat().getPrice() != null && cart.getGoodsNumber() != null) {
@@ -139,7 +139,7 @@ public class OrderInfoController extends BaseController {
             User user = userService.selectById(userId);
             if (user.getUserType()==HookahConstants.UserType.PERSON_CHECK_OK.getCode() &&
                     g.getPurchaseLimit()==Byte.parseByte(HookahConstants.PurchaseLimitName.enterprise.getCode())) {
-                throw new HookahException("您已认证成为个人用户，只能购买通用商品");
+                throw new HookahException("["+g.getGoodsName()+"]为企业类型商品，您已认证成为个人用户，不能购买该商品");
             }
             MgGoods.FormatBean format = goodsService.getFormat(goodsId,formatId);
             goodsAmount += format.getPrice() * goodsNumber;  //商品单价 * 套餐内数量 * 购买套餐数量
@@ -168,6 +168,9 @@ public class OrderInfoController extends BaseController {
             model.addAttribute("perOrderInfoNum",uuid);
             redisOperate.set("orderConfirm:"+uuid,"1",0);
             return "/order/orderInfo";
+        } catch (HookahException e) {
+            model.addAttribute("message",e.getMessage());
+            return "error/limitedGoodsError";
         }catch (Exception e){
             logger.info(e.getMessage());
             return "/error/500";
@@ -532,7 +535,7 @@ public class OrderInfoController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/payOrder", method = RequestMethod.GET)
-    public String payOrder(String orderSn,HttpServletRequest request) {
+    public String payOrder(String orderSn,HttpServletRequest request, Model model) {
         try {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("orderSn",orderSn));
@@ -564,8 +567,8 @@ public class OrderInfoController extends BaseController {
             //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             return   "redirect:/pay/cash";
         } catch (HookahException e) {
-
-            return "/error/500";
+            model.addAttribute("message",e.getMessage());
+            return "/error/limitedGoodsError";
         }catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";

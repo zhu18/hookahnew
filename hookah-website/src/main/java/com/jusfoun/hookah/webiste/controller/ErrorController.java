@@ -33,5 +33,12 @@ public class ErrorController {
     public String oauth2Failure(HttpServletRequest request){
         return "/error/oauth2Failure";
     }
+    /**
+     * 优惠券过期错误提示页
+     * */
+    @RequestMapping(value = "couponError",method = RequestMethod.GET)
+    public String couponError(HttpServletRequest request){
+        return "/error/couponError";
+    }
 
 }

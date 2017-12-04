@@ -1,5 +1,5 @@
 /**
- * Created by Administrator on 2017/11/9 0009.
+ * Created by lss on 2017/11/9 0009.
  */
 class userDetailController {
     constructor($scope, $rootScope, $http, $state, growl,$stateParams) {
@@ -139,6 +139,7 @@ class userDetailController {
                     var applyChannel='';
                     var receivedMode='';
                     var applyPlatform='';
+                    var userCouponStatus='';
 
                     switch (info.couponType){
                         case 0:
@@ -193,6 +194,19 @@ class userDetailController {
                             applyPlatform='全平台';
                             break;
                     }
+
+                    switch (info.userCouponStatus){
+                        case 0:
+                            userCouponStatus='未激活';
+                            break;
+                        case 1:
+                            userCouponStatus='未过期';
+                            break;
+                        case 2:
+                            userCouponStatus='已过期';
+                            break;
+                    }
+
                     var html='<table class="table">' +
                         '<tr> ' +
                         '<th>优惠码</th> ' +
@@ -211,23 +225,23 @@ class userDetailController {
                         '<td> <span>￥'+(info.faceValue/100).toFixed(2)+'</span> </td> </tr> ' +
                         '<tr> ' +
                         '<th>适用平台</th> ' +
-                        '<td> <span data-ng-bind="couponName">'+applyPlatform+'</span> </td> ' +
+                        '<td> <span>'+applyPlatform+'</span> </td> ' +
                         '<th>有效期</th> ' +
-                        '<td> <span data-ng-bind="couponName">'+info.expiryStartDate+'至'+info.expiryEndDate+'</span> </td> </tr> ' +
+                        '<td> <span>'+info.expiryStartDate+'至'+info.expiryEndDate+'</span> </td> </tr> ' +
                         '<tr> ' +
                         '<th>领取方式</th> ' +
-                        '<td> <span data-ng-bind="couponName">'+receivedMode+'</span> </td> ' +
+                        '<td> <span >'+receivedMode+'</span> </td> ' +
                         '<th>领取时间</th> ' +
-                        '<td> <span data-ng-bind="couponName">'+info.receivedTime+'</span> </td> </tr> ' +
+                        '<td> <span >'+info.receivedTime+'</span> </td> </tr> ' +
                         '<tr> ' +
                         '<th>当前状态</th> ' +
-                        '<td> <span data-ng-bind="couponName">'+info.couponName+'</span> </td> ' +
+                        '<td> <span>'+userCouponStatus+'</span> </td> ' +
                         '<th>使用时间</th> ' +
-                        '<td> <span data-ng-bind="couponName">'+(info.usedTime?info.usedTime:"")+'</span> </td> ' +
+                        '<td> <span>'+(info.usedTime?info.usedTime:"")+'</span> </td> ' +
                         '</tr> ' +
                         '<tr> ' +
                         '<th>订单编号</th> ' +
-                        '<td colspan="3"> <span data-ng-bind="couponName">'+(info.orderSn?info.orderSn:"")+'</span> </td> </tr> ' +
+                        '<td colspan="3"> <span>'+(info.orderSn?info.orderSn:"")+'</span> </td> </tr> ' +
                         '</table>';
 
                     var modalInstance =$rootScope.openJustShowDialogModal(html);
