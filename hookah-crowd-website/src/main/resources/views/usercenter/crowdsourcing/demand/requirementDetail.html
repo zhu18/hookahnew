@@ -10,6 +10,17 @@ var head = {
 
 <link rel="stylesheet" href="/static/css/usercenter/userInfo/common-title.css">
 <link rel="stylesheet" href="/static/css/crowdsourcing/crowdsourcing.css">
+<style type="text/css">
+
+  input:not([type=button])[type=number]{-moz-appearance:textfield}
+  input:not([type=button]):disabled{opacity:.7}
+  input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{-webkit-appearance:none}
+  input::-webkit-input-placeholder{color:#aaa}
+  input::-moz-placeholder{color:#aaa}
+  input:-ms-input-placeholder{color:#aaa}
+  input:-moz-placeholder{color:#aaa}
+
+</style>
 
 <%};%>
 
@@ -112,7 +123,7 @@ var htmlPart = {
           <td>
             <div class="secondPage j_money">---- 元</div>
             <div class="crowdsourcing-user detailMoneyBox">
-              <span class="managedMoneySpan"><i class="managedMoneySpanText">托管比例:</i> <i class="moneyHow" id="trusteePercent1">--</i>% <i class="moneyAdd"></i> <i class="moneySub"></i></span>
+              <span class="managedMoneySpan"><i class="managedMoneySpanText">托管比例:</i> <input type="number" class="moneyHow" id="trusteePercent1" val="" style=" width: 30px; padding: 0; ">% <i class="moneyAdd"></i> <i class="moneySub"></i></span>
               <div class="secondPage tagList ">
                 ￥ <i class="moneyManageMoeny">---</i> 元
               </div>

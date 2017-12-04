@@ -112,7 +112,7 @@ class pointsManageController {
               <th>规则规定上限：</th>\
               <td style="padding-top: 10px;"> \
                 <label style="margin-right: 15px"><input type="number" id="upper" class="form-control" placeholder="请输入规则规定上限"></label>\
-                上线循环时效：\
+                上限循环时效：\
                 <select name="upperTimeSelect" id="upperTimeSelect">\
                   <option value="null" selected>永久</option>\
                   <option value="12">12h</option>\

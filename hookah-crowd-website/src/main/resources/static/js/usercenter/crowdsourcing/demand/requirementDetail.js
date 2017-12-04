@@ -49,7 +49,7 @@ function renderPage(data) {
   $('.j_username').html(insertRequirementsData.zbRequirement.contactName);
   $('.j_phone').html(insertRequirementsData.zbRequirement.contactPhone);
   $('.j_description').html(insertRequirementsData.zbRequirement.description);
-  $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
+  $('.moneyHow').val(insertRequirementsData.zbRequirement.trusteePercent);
   $('.j_date').html(insertRequirementsData.zbRequirement.deliveryDeadline);
   $('.j_money').html('￥ <i>' + insertRequirementsData.zbRequirement.rewardMoney / 100 + '</i> 元');
   var temTagHtml = '';
@@ -129,7 +129,7 @@ function renderPage(data) {
       $('.missionResult').hide().prev().show(); //百分比
       missionApplyInfo(data); //任务报名信息显示
       $('.release-first-btnbox div').append('<a id="J_goPay" requirementId="' + insertRequirementsData.zbRequirement.id + '" href="javascript:void(0)">去托管剩余'+(100-insertRequirementsData.zbRequirement.trusteePercent)+'% 赏金</a>');
-      $('.moneyHow').html(insertRequirementsData.zbRequirement.trusteePercent);
+      $('.moneyHow').val(insertRequirementsData.zbRequirement.trusteePercent);
 
       break;
     case 8: //工作中
@@ -223,7 +223,7 @@ function renderPage(data) {
       break;
   }
   rewardMoney = insertRequirementsData.zbRequirement.rewardMoney;
-  $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').text() / 10000);
+  $('.moneyManageMoeny').html(rewardMoney * $('.moneyHow').val() / 10000);
 
 
   //时间显示
@@ -423,26 +423,44 @@ $('.j_checkAdviceDetail').on('mouseover', function () { //鼠标离开描述显�
 
 
 
+$(document).on('blur', '#trusteePercent1', function () { //托管资金点击增加 托管金额百分比
+  console.log(typeof  $(this).val());
+  var tempVal=Number($(this).val());
+  if(tempVal>100){
+    $(this).val(100);
+    setMoneyFn(100)
+
+  }else if(tempVal<30){
+    $(this).val(30);
+    setMoneyFn(30)
+  }else{
+    setMoneyFn(tempVal)
+  }
+
+  });
+
+
 $(document).on('click', '.moneyAdd', function () { //托管资金点击增加 托管金额百分比
-  var percentage = Number($('.moneyHow').html());
+  var percentage = Number($('.moneyHow').val());
   if (30 <= percentage && percentage < 100) {
     percentage += 1;
-    $('.moneyHow').html(Number(percentage));
-    $('.moneyManageMoeny').html(rewardMoney * percentage / 10000);
-
+    setMoneyFn(percentage)
   }
 });
 
 $(document).on('click', '.moneySub', function () { //托管资金点击增加 托管金额百分比
-  var percentage = Number($('.moneyHow').html());
+  var percentage = Number($('.moneyHow').val());
   if (30 < percentage && percentage <= 100) {
     percentage -= 1;
-    $('.moneyHow').html(Number(percentage));
-    $('.moneyManageMoeny').html(rewardMoney * percentage / 10000);
-
+    setMoneyFn(percentage)
   }
 });
 
+function setMoneyFn(percentage) {
+  $('.moneyHow').val(percentage);
+  $('.moneyManageMoeny').html(rewardMoney * percentage / 10000);
+
+}
 
 $(document).on('mouseenter', '.load-file', function () { //鼠标滑过描述显示工具栏
   $(this).children().find('.crowdsourcing-table-edit').css({'display': 'block'}).stop().animate({
@@ -456,7 +474,7 @@ $(document).on('click', '.otherDetailBoxNav li', function () { //需求详情下
 });
 
 $(document).on('click', '#J_goPay', function () { //
-    location.href= "/api/zbPay/toPayPage?requirementId=" + $(this).attr('requirementId') + "&trusteePercent=" + $("#trusteePercent1").html();
+    location.href= "/api/zbPay/toPayPage?requirementId=" + $(this).attr('requirementId') + "&trusteePercent=" + $("#trusteePercent1").val();
 /*  //
   var goPayData={};
   goPayData.requirementId=$(this).attr('requirementId');
