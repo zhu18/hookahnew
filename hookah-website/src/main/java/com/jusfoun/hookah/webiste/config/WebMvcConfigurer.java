@@ -16,6 +16,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CommonInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new TongJiInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(new CategoryInterceptor()).addPathPatterns("/exchange").addPathPatterns("/exchange/**");
         registry.addInterceptor(new CartInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(new UserAuthInterceptor()).addPathPatterns("/order/orderInfo*").addPathPatterns("/order/directInfo*");
