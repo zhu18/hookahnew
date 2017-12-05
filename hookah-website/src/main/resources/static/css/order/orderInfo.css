@@ -157,7 +157,7 @@
 }
 .order-info .order-info-down .coupon-list ul li .list-item .list-item-l{
     height: calc(100% - 50px);
-    width: 115px;
+    width: 109px;
     padding: 25px 0px;
     position: relative;
     background-color: #e5e5e5;
@@ -213,4 +213,127 @@
 }
 .order-info .order-info-down .coupon-list ul li .list-item.active-blue .list-item-l{
     background-color: #33CFDD;
+}
+.translate-titleTip{
+    background: #f7f7f7;
+    display: inline-block;
+    width: 354px;
+    height:24px;
+    line-height: 24px;
+    position: relative;
+    font-size: 14px;
+    font-weight: normal;
+    color:#a5a5a5;
+    margin-left: 30px;
+}
+.translate-titleTip::after{
+    content: '';
+    width: 0;
+    height:0;
+    border-right: 7px solid #f7f7f7;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    position: absolute;
+    left: -7px;
+    top: 7px;
+}
+.translate-titleTip i{
+    color:#fff000;
+    width:24px;
+    text-align: center;
+    font-size: 16px;
+}
+.translate-bg{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height:100%;
+    background:rgba(0,0,0,0.3);
+    display: none;
+}
+.translate-box{
+    width:620px;
+    padding:20px;
+    background: #fff;
+    margin:50px auto;
+    box-shadow: 0 0 8px rgba(37,37,37,0.36);
+}
+.translate-box h4{
+    height:38px;
+    line-height: 38px;
+    color:#000;
+    font-size: 16px;
+    text-indent: 11px;
+    background: #eee;
+}
+.translate-box h4 span{
+    display: block;
+    width:38px;
+    height:38px;
+    line-height: 38px;
+    font-size: 20px;
+    color:#666666;
+    float: right;
+    cursor: pointer;
+    font-weight: normal;
+}
+.translate-box table{
+    margin-top: 18px;
+    font-size: 14px;
+    color:#666;
+}
+.translate-box table tr{
+    line-height: 40px;
+}
+.translate-box table tr td:first-child{
+    width:145px;
+    text-align: right;
+    vertical-align: sub;
+}
+.translate-box table tr td:first-child table{
+    text-align: left;
+}
+.translate-box table tr td:first-child table tr td:first-child{
+    text-align: right;
+}
+.translate-box .tab-translate{
+    width:138px;
+    height:22px;
+    display: inline-block;
+    border:2px solid #e5e5e5;
+    color:#666;
+    line-height: 22px;
+    text-align: center;
+    font-size: 14px;
+    margin-right:12px;
+}
+.translate-box .tab-translate:hover{
+    border:2px solid #e20000;
+    background: url("/static/images/hover-bg.png") right bottom no-repeat;
+}
+.translate-box .tab-translate.hover{
+    border:2px solid #e20000;
+    background: url("/static/images/hover-bg.png") right bottom no-repeat;
+}
+.translate-box .tab-box table{display: none;margin:0;}
+.translate-box .tab-box table.hover{display: block}
+.tip-exclusive{
+    width:350px;
+    background: #f3fbfe;
+    line-height: 28px;
+    padding:5px 0;
+}
+.tip-exclusive p{
+     padding-left:30px;
+ }
+.tip-exclusive .p1{
+    padding-left:0px;
+}
+.tip-exclusive .p1 span{
+    display: inline-block;
+    width:30px;
+    text-align: center;
+    font-size: 16px;
+    color:#237ee8;
 }

@@ -73,12 +73,12 @@ public class JfRuleServiceImpl extends GenericServiceImpl<JfRule, Integer> imple
         if(StringUtils.isNotBlank(lowerLimitScore)){
             jfRule.setLowerLimit(Integer.parseInt(lowerLimitScore));
         }
-        if(StringUtils.isNotBlank(upperLimitTime)){
-            jfRule.setUpperTimeLimit(Byte.parseByte(upperLimitTime));
-        }
-        if(StringUtils.isNotBlank(lowerLimitTime)){
-            jfRule.setLowerTimeLimit(Byte.parseByte(lowerLimitTime));
-        }
+//        if(StringUtils.isNotBlank(upperLimitTime)){
+//            jfRule.setUpperTimeLimit(Byte.parseByte(upperLimitTime));
+//        }
+//        if(StringUtils.isNotBlank(lowerLimitTime)){
+//            jfRule.setLowerTimeLimit(Byte.parseByte(lowerLimitTime));
+//        }
         if(StringUtils.isNotBlank(note)){
             jfRule.setNote(note);
         }

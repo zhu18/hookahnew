@@ -99,6 +99,7 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
             if(user.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())
                     || user.getUserType().equals(HookahConstants.UserType.PERSON_CHECK_OK.getCode())){
                 mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user.getUserId(), 3, ""));
+                logger.info("用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
             }
 
             //更新微信用户推荐表

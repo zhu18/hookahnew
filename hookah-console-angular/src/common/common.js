@@ -384,7 +384,8 @@ export default angular.module('Common', [
     return function (input) {
       return $sce.trustAsHtml(input);
     }
-  }).filter('format',function () { //标准时间处理
+  })
+  .filter('format',function () { //标准时间处理
         return function (time,format) {
             let t = new Date(time);
             let tf = function(i){return (i < 10 ? '0' : "") + i};

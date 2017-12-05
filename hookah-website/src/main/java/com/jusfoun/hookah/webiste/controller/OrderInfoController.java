@@ -9,6 +9,7 @@ import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
+import com.jusfoun.hookah.core.domain.vo.InvoiceDTOVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -476,17 +477,21 @@ public class OrderInfoController extends BaseController {
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
     public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,
-                              HttpServletRequest request, Model model, Long userCouponId) {
+                              HttpServletRequest request, Model model, Long userCouponId, InvoiceDTOVo invoiceDTOVo) {
         try {
             String perOrderInfoNum = request.getParameter("perOrderInfoNum");
             if (perOrderInfoNum.isEmpty() || redisOperate.get("orderConfirm:"+perOrderInfoNum) == null){
                 return "/error/confirmOrderError";
             }
             init(orderinfo);
+
+            if (invoiceDTOVo.getId() != null && invoiceDTOVo.getTitleId() != null){
+                orderinfo.setInvoiceOrNot((byte)1);
+            }
             if(cartIdArray[0].equals("-1")){
-                orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber, userCouponId);
+                orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber, userCouponId, invoiceDTOVo);
             }else{
-                orderinfo = orderInfoService.insert(orderinfo, cartIdArray, userCouponId);
+                orderinfo = orderInfoService.insert(orderinfo, cartIdArray, userCouponId, invoiceDTOVo);
             }
             HttpSession session = request.getSession();
             List<Map> paymentList = initPaymentList(session);
@@ -594,25 +599,22 @@ public class OrderInfoController extends BaseController {
     /**
      * 直接购买
      * @param orderinfo
-     * @param goodsId
-     * @param formatId
-     * @param goodsNumber
      * @return
      */
-    @RequestMapping(value = "/order/directOrder", method = RequestMethod.POST)
-    public String directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber,
-                               Model model,HttpServletRequest request,Long userCouponId) {
-        try {
-            init(orderinfo);
-            orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber,userCouponId);
-            model.addAttribute("orderInfo",orderinfo);
-            model.addAttribute("payments",initPaymentList(request.getSession()));
-            return  "pay/cash";
-        } catch (Exception e) {
-            logger.error("插入错误", e);
-            return "/error/500";
-        }
-    }
+//    @RequestMapping(value = "/order/directOrder", method = RequestMethod.POST)
+//    public String directCreate(OrderInfo orderinfo, String goodsId, Integer formatId,Long goodsNumber,
+//                               Model model,HttpServletRequest request,Long userCouponId) {
+//        try {
+//            init(orderinfo);
+//            orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber,userCouponId);
+//            model.addAttribute("orderInfo",orderinfo);
+//            model.addAttribute("payments",initPaymentList(request.getSession()));
+//            return  "pay/cash";
+//        } catch (Exception e) {
+//            logger.error("插入错误", e);
+//            return "/error/500";
+//        }
+//    }
 
     private OrderInfo init(OrderInfo orderinfo) throws HookahException{
         String userId = getCurrentUser().getUserId();
@@ -676,6 +678,7 @@ public class OrderInfoController extends BaseController {
         orderinfo.setIsDeleted(new Integer(0).byteValue());
         orderinfo.setForceDeleted((byte)0);
         orderinfo.setCommentFlag(0);
+        orderinfo.setInvoiceOrNot((byte)0);
         return orderinfo;
     }
 
