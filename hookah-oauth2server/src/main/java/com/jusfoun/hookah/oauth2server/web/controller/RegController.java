@@ -12,14 +12,17 @@ import com.jusfoun.hookah.core.exception.*;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
+import com.jusfoun.hookah.core.utils.NetUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
+import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +66,9 @@ public class RegController {
 
     @Resource
     MqSenderService mqSenderService;
+
+    @Resource
+    LoginLogService loginLogService;
 
     @Resource
     JfRecordService jfRecordService;
@@ -197,6 +203,22 @@ public class RegController {
         jfRecordService.registerHandle(user.getUserId(), recommendUserId);
         logger.info("用户【注册赠送积分】>>>>>userId = " + user.getUserId());
 
+        //自动登录
+        UsernameAndPasswordToken token = new UsernameAndPasswordToken();
+        String mobile = user.getMobile();
+        token.setMobile(mobile);
+        token.setPassword(user.getPasswordRepeat().toCharArray());
+        Subject currentUser = SecurityUtils.getSubject();
+        try {
+            currentUser.login(token);
+            if (currentUser.isAuthenticated()) {
+                //TODO...登录日志
+                loginLogService.addLoginLog(regUser.getUserName(), NetUtils.getIpAddr(request));
+                logger.info("用户[" + user.getUserName() + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //TODO...登录日志
         logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");
