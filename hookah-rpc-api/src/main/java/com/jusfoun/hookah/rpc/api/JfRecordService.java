@@ -12,8 +12,6 @@ import com.jusfoun.hookah.core.utils.ReturnData;
  */
 public interface JfRecordService extends GenericService<JfRecord, Long> {
 
-    int insertAndGetId(JfRecord jfRecord);
-
     ReturnData getJfRecord(Integer pageNumberNew, Integer pageSizeNew, String userId, String type) throws Exception;
 
     /**

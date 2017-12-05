@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.jf.JfRule;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.integral.contants.JfContants;
+import com.jusfoun.hookah.rpc.api.CacheService;
 import com.jusfoun.hookah.rpc.api.JfRecordService;
 import com.jusfoun.hookah.rpc.api.JfRuleService;
 import com.jusfoun.hookah.rpc.api.UserService;
@@ -40,6 +41,9 @@ public class RabbitMQJFHandelListener {
 
     @Resource
     JfRuleService jfRuleService;
+
+    @Resource
+    CacheService cacheService;
 
     @RabbitListener(queues = RabbitmqQueue.CONTRACE_JF_MSGINFO)
     public void jfHandle(JfBo jfBo) {
@@ -95,7 +99,7 @@ public class RabbitMQJFHandelListener {
 
             logger.info("积分消息处理BO-{}", jfRecord.toString());
 
-            int n = jfRecordService.insertAndGetId(jfRecord);
+            int n = cacheService.insertAndGetId(jfRecord);
             if(n == 1){
                 logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理成功>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }else {
