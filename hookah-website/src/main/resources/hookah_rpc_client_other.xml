@@ -83,4 +83,7 @@
   <motan:referer id="flowUserService"
                  interface="com.jusfoun.hookah.rpc.api.FlowUserService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="mgTongJiService"
+                 interface="com.jusfoun.hookah.rpc.api.MgTongJiService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>
