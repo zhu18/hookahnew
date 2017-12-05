@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,8 +30,12 @@ public class TongjiController extends BaseController{
 
     @RequestMapping(value = "/reqUser")
     public ReturnData tongjiList(String startTime,String endTime){
+        if(StringUtils.isNotBlank(startTime) && StringUtils.isNotBlank(endTime)){
+            startTime=  LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            endTime=  LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
         ReturnData returnData = flowUserService.tongjiList(startTime, endTime);
-;        return returnData;
+        return returnData;
     }
 
 }
