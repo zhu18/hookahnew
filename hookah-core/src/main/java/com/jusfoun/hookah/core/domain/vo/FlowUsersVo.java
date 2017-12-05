@@ -7,6 +7,9 @@ import java.io.Serializable;
  */
 public class FlowUsersVo  implements Serializable {
     private Long allNewUser;
+    private Short dataSource;
+    private Long allPersonUser;
+    private Long allOrgUser;
 
     public Long getAllNewUser() {
         return allNewUser;
@@ -32,7 +35,11 @@ public class FlowUsersVo  implements Serializable {
         this.allOrgUser = allOrgUser;
     }
 
-    private Long allPersonUser;
+    public Short getDataSource() {
+        return dataSource;
+    }
 
-    private Long allOrgUser;
+    public void setDataSource(Short dataSource) {
+        this.dataSource = dataSource;
+    }
 }

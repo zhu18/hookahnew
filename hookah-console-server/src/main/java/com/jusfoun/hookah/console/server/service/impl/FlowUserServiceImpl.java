@@ -36,19 +36,10 @@ public class FlowUserServiceImpl  extends GenericServiceImpl<FlowUser,Long> impl
     }
 
     public ReturnData tongjiList (String startTime,String endTime){
-        Map<String, Object> map = new HashedMap();
-        FlowUsersVo direct = flowUserMapper.selectBySource(startTime, endTime, Short.parseShort("1"));
-        FlowUsersVo SEM = flowUserMapper.selectBySource(startTime, endTime, Short.parseShort("2"));
-        FlowUsersVo baidu = flowUserMapper.selectBySource(startTime,endTime,Short.parseShort("3"));
-        FlowUsersVo google = flowUserMapper.selectBySource(startTime,endTime,Short.parseShort("4"));
-        FlowUsersVo other = flowUserMapper.selectBySource(startTime,endTime,Short.parseShort("5"));
         FlowUsersVo sum = flowUserMapper.selectSum(startTime ,endTime);
-        map.put("direct", direct);
-        map.put("SEM",SEM);
-        map.put("baidu",baidu);
-        map.put("google",google);
-        map.put("other",other);
-        map.put("sum",sum);
-        return ReturnData.success(map);
+        List<FlowUsersVo> dataSource = flowUserMapper.selectBySourceList(startTime, endTime);
+        sum.setDataSource(Short.parseShort("0"));
+        dataSource.add(sum);
+        return ReturnData.success(dataSource);
     }
 }

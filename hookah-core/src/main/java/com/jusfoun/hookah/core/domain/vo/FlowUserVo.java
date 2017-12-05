@@ -15,6 +15,10 @@ public class FlowUserVo extends FlowUser implements Serializable {
 
     private Long allOrgUser;
 
+    private String startTime;
+
+    private String endTime;
+
     public Long getAllNewUser() {
         return allNewUser;
     }
@@ -39,9 +43,6 @@ public class FlowUserVo extends FlowUser implements Serializable {
         this.allOrgUser = allOrgUser;
     }
 
-    private String startTime;
-
-    private String endTime;
 
     public String getStartTime() {
         return startTime;
@@ -58,4 +59,5 @@ public class FlowUserVo extends FlowUser implements Serializable {
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
+
 }
