@@ -476,13 +476,18 @@ public class OrderInfoController extends BaseController {
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
     public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,
-                              HttpServletRequest request, Model model, Long userCouponId) {
+                              HttpServletRequest request, Model model, Long userCouponId, String invoiceId) {
         try {
             String perOrderInfoNum = request.getParameter("perOrderInfoNum");
             if (perOrderInfoNum.isEmpty() || redisOperate.get("orderConfirm:"+perOrderInfoNum) == null){
                 return "/error/confirmOrderError";
             }
             init(orderinfo);
+            //开发票
+            if (invoiceId != null){
+                orderinfo.setInvoiceOrNot((byte)1);
+                orderinfo.setInvoiceNo(invoiceId);
+            }
             if(cartIdArray[0].equals("-1")){
                 orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber, userCouponId);
             }else{
@@ -676,6 +681,7 @@ public class OrderInfoController extends BaseController {
         orderinfo.setIsDeleted(new Integer(0).byteValue());
         orderinfo.setForceDeleted((byte)0);
         orderinfo.setCommentFlag(0);
+        orderinfo.setInvoiceOrNot((byte)0);
         return orderinfo;
     }
 
