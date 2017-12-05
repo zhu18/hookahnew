@@ -312,7 +312,8 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             if (user.getUserSn().contains(HookahConstants.platformCode)){
                 condition.put("userSn",user.getUserSn());
             }else {
-                condition.put("userId",user.getUserSn());
+                String[] userId = {user.getUserSn()};
+                condition.put("userId",userId);
             }
         }
         condition.put("isDeleted",(byte)0);

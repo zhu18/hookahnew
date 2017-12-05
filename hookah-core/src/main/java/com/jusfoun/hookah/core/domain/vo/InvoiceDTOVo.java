@@ -14,7 +14,7 @@ public class InvoiceDTOVo implements Serializable {
 
     private String invoiceId;// 发票ID
     private String titleId; // 抬头ID
-    private String id; // 收票人ID
+    private String id; // 收票人地址ID
     private String orderIds; // 订单IDs
     private String userId; // 用户ID
 
