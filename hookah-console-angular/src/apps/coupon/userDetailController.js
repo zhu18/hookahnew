@@ -197,10 +197,10 @@ class userDetailController {
 
                     switch (info.userCouponStatus){
                         case 0:
-                            userCouponStatus='未激活';
+                            userCouponStatus='未使用';
                             break;
                         case 1:
-                            userCouponStatus='未过期';
+                            userCouponStatus='已使用';
                             break;
                         case 2:
                             userCouponStatus='已过期';
