@@ -25,6 +25,7 @@
     <bean id="showService" class="com.jusfoun.hookah.console.server.service.impl.ShowServiceImpl"/>
     <bean id="wxUserRecommendService" class="com.jusfoun.hookah.console.server.service.impl.WXUserRecommendServiceImpl"/>
     <bean id="wxUserInfoService" class="com.jusfoun.hookah.console.server.service.impl.WxUserInfoServiceImpl"/>
+    <bean id="flowUserService" class="com.jusfoun.hookah.console.server.service.impl.FlowUserServiceImpl"/>
 
     <!-- 具体rpc服务配置，声明实现的接口类。-->
     <motan:service interface="com.jusfoun.hookah.rpc.api.HomeImageService"
@@ -92,6 +93,10 @@
 
     <motan:service interface="com.jusfoun.hookah.rpc.api.WxUserInfoService"
                    ref="wxUserInfoService" export="hookah:5001" basicService="serviceBasicConfig">
+    </motan:service>
+
+    <motan:service interface="com.jusfoun.hookah.rpc.api.FlowUserService"
+                   ref="flowUserService" export="hookah:5001" basicService="serviceBasicConfig">
     </motan:service>
 
 </beans>
