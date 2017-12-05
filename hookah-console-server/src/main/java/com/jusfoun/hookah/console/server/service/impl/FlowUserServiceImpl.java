@@ -4,14 +4,21 @@ import com.jusfoun.hookah.core.dao.FlowUserMapper;
 import com.jusfoun.hookah.core.domain.FlowUser;
 import com.jusfoun.hookah.core.domain.vo.FlowUserVo;
 import com.jusfoun.hookah.core.domain.vo.FlowUsersVo;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.FlowUserService;
+import org.apache.catalina.LifecycleState;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,12 +36,19 @@ public class FlowUserServiceImpl  extends GenericServiceImpl<FlowUser,Long> impl
     }
 
     public ReturnData tongjiList (String startTime,String endTime){
-        //SimpleDateFormat dft = new SimpleDateFormat( "yyyy-MM-dd" );
-        //String startTime1 = dft.format(startTime);
-        //String endTime1 = dft.format(endTime);
-        FlowUsersVo flowUser = flowUserMapper.selectSum(startTime ,endTime);
-        return ReturnData.success(flowUser);
+        Map<String, Object> map = new HashedMap();
+        FlowUsersVo direct = flowUserMapper.selectBySource(startTime, endTime, Short.parseShort("1"));
+        FlowUsersVo SEM = flowUserMapper.selectBySource(startTime, endTime, Short.parseShort("2"));
+        FlowUsersVo baidu = flowUserMapper.selectBySource(startTime,endTime,Short.parseShort("3"));
+        FlowUsersVo google = flowUserMapper.selectBySource(startTime,endTime,Short.parseShort("4"));
+        FlowUsersVo other = flowUserMapper.selectBySource(startTime,endTime,Short.parseShort("5"));
+        FlowUsersVo sum = flowUserMapper.selectSum(startTime ,endTime);
+        map.put("direct", direct);
+        map.put("SEM",SEM);
+        map.put("baidu",baidu);
+        map.put("google",google);
+        map.put("other",other);
+        map.put("sum",sum);
+        return ReturnData.success(map);
     }
-
-
 }
