@@ -19,8 +19,8 @@ import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.integral.contants.JfContants;
 import com.jusfoun.hookah.rpc.api.*;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 积分服务
@@ -387,7 +386,9 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 
          // TODO …… 新注册用户赠送积分
         if(StringUtils.isNotBlank(userId)){
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(userId, 1, ""));
+//            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(userId, 1, ""));
+            this.handleJfMsg(new JfBo(userId, 1, ""));
+            logger.info("新用户注册送积分，userID = " + userId);
         }
 
         // TODO …… 邀请者送积分  （是不是和上面的分开写）
@@ -405,7 +406,9 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                     if(jfRule.getUpperLimit() != null){
                         List<JfRecord> jfRecordList = this.selectList(filters);
                         if(jfRule.getUpperLimit() > jfRecordList.stream().mapToInt(JfRecord::getScore).sum()){
-                            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(recommendUserId, 2, ""));
+//                            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(recommendUserId, 2, ""));
+                            this.handleJfMsg(new JfBo(recommendUserId, 2, ""));
+                            logger.info("邀请用户送积分，userID = " + recommendUserId);
                         } else {
                             logger.info("该用户邀请赠送积分已达到上限");
                         }
@@ -419,7 +422,9 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                     filters.add(Condition.le("addTime", DateUtils.toDateText(new Date(), "yyyy-MM-dd") + " 23:59:59"));
                     List<JfRecord> jfRecordList = this.selectList(filters);
                     if(jfRule.getUpperLimit() > jfRecordList.stream().mapToInt(JfRecord::getScore).sum()){
-                        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(recommendUserId, 2, ""));
+//                        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(recommendUserId, 2, ""));
+                        this.handleJfMsg(new JfBo(recommendUserId, 2, ""));
+                        logger.info("邀请用户送积分，userID = " + userId);
                     } else {
                         logger.info("该用户邀请赠送积分已达到上限");
                     }
@@ -427,6 +432,71 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                     logger.info("该用户邀请赠送积分已达到上限");
                 }
             }
+        }
+    }
+
+    @Override
+    public void handleJfMsg(JfBo jfBo) {
+
+        logger.info("积分消息处理BO-{}", jfBo.toString());
+
+        try {
+
+            if(jfBo == null || !StringUtils.isNotBlank(jfBo.getUserId()) || jfBo.getSourceId() == null){
+
+                logger.error("<<<<<<<积分消息处理BO为空>>>>>>>>>");
+                return;
+            }
+
+            if(userService.selectById(jfBo.getUserId()) == null){
+                logger.error("<<<<<<<用户不存在>>>>>>>");
+                return;
+            }
+
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("sn", jfBo.getSourceId()));
+            JfRule jfRule = jfRuleService.selectOne(filters);
+            if(jfRule == null){
+                logger.error("<<<<<<<积分规则查询不存在>>>>>>>");
+                return;
+            }
+
+            JfRecord jfRecord = new JfRecord();
+            jfRecord.setUserId(jfBo.getUserId());
+            jfRecord.setSourceId(Byte.parseByte(jfBo.getSourceId() + ""));
+            jfRecord.setAction(jfRule.getAction());
+
+            if(jfRule.getUpperLimit() != null && jfRule.getScore() != null){
+
+                jfRecord.setScore(jfRule.getScore() > jfRule.getUpperLimit() ? jfRule.getUpperLimit() : jfRule.getScore());
+            }
+            jfRecord.setExpire(Byte.parseByte("0"));
+            jfRecord.setAddTime(new Date());
+            jfRecord.setOperator("System");
+            jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
+            jfRecord.setActionDesc(jfRule.getActionDesc());
+
+            if(jfRule.getSn().equals(Byte.parseByte("1"))
+                    || jfRule.getSn().equals(Byte.parseByte("2"))
+                    || jfRule.getSn().equals(Byte.parseByte("3"))){
+
+                jfRecord.setNote("有效期至" +
+                        LocalDate.now().plusYears(JfContants.JF_EXPIRE_YEAR)
+                                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            } else {
+                jfRecord.setNote(jfBo.getNotes());
+            }
+
+            logger.info("积分消息处理BO-{}", jfRecord.toString());
+
+            int n = jfRecordMapper.insertAndGetId(jfRecord);
+            if(n == 1){
+                logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理成功>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            }else {
+                logger.error("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理失败>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            }
+        }catch (Exception e){
+            logger.error("<积分消息处理失败>>>{}", e);
         }
     }
 }

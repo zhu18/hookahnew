@@ -74,6 +74,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     @Resource
     MyProps myProps;
 
+    @Resource
+    OrderInvoiceService orderInvoiceService;
+
     /**
      * 评论接口
      */
@@ -550,13 +553,19 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             orderInfo.setGoodsAmount(goodsAmount);
             orderInfo.setOrderAmount(goodsAmount);
 
+            //使用优惠券
             if (userCouponId!=null){
                 UserCoupon userCoupon = userCouponService.selectById(userCouponId);
                 if (userCoupon.getOrderSn()==null){
                     orderInfo = useCoupon(userCouponId,orderInfo);
                 }
             }
+            //下单
             insertOrder(ordergoodsList, orderInfoVo, orderInfo ,mgGoodsOrder);
+            //开发票
+            if (orderInfo.getInvoiceOrNot() == 1) {
+                orderInvoiceService.insertOrderInvoice(orderInfo.getOrderId(),orderInfo.getInvoiceNo());
+            }
 //            if(goodsAmount.compareTo(0L)==0){
 //                updatePayStatus(orderInfo.getOrderSn(),2);
 //            }
@@ -609,13 +618,20 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         orderInfo.setGoodsAmount(goodsAmount);
         orderInfo.setOrderAmount(goodsAmount);
 
+        //使用优惠券
         if (userCouponId!=null){
             UserCoupon userCoupon = userCouponService.selectById(userCouponId);
             if (userCoupon.getOrderSn()==null){
                 orderInfo = useCoupon(userCouponId,orderInfo);
             }
         }
+        //下单
         insertOrder(ordergoodsList, orderInfoVo, orderInfo, mgGoodsOrder);
+
+        //开发票
+        if (orderInfo.getInvoiceOrNot() == 1) {
+            orderInvoiceService.insertOrderInvoice(orderInfo.getOrderId(),orderInfo.getInvoiceNo());
+        }
 //        if(goodsAmount.compareTo(0L)==0){
 //            updatePayStatus(orderInfo.getOrderSn(),2);
 //        }
@@ -1072,7 +1088,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         pagination.setPageSize(pageSize);
         pagination.setCurrentPage(pageNum);
         pagination.setList(page);
-        logger.info(JsonUtils.toJson(pagination));
+//        logger.info(JsonUtils.toJson(pagination));
         return pagination;
     }
 
