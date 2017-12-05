@@ -62,4 +62,17 @@
     BETWEEN  #{startTime}
     AND DATE_ADD(#{endTime},INTERVAL 1 DAY)
   </select>
+
+  <select id="selectBySource" resultType="com.jusfoun.hookah.core.domain.vo.FlowUsersVo">
+    select
+
+    SUM(new_user_num) AS allNewUser,
+    SUM(person_user) AS allPersonUser,
+    SUM(org_user) AS allOrgUser
+    from flow_user
+    where data_source = #{dataSource}
+    and (add_time
+    BETWEEN   #{startTime}
+    AND DATE_ADD(#{endTime},INTERVAL 1 DAY))
+  </select>
 </mapper>
