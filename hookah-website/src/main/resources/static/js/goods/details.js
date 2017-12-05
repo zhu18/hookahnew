@@ -192,6 +192,10 @@ function addCart(goodsId,isDiscussPrice) {
 			return $.alert('数据有误');
 		}
 	}
+	if($("#J_userType").val() == '2' && $("#J_purchaseLimit").val() == '2'){
+		$.alert('此商品仅为企业使用');
+		return false;
+	}
 	$.ajax({
 		url: '/cart/add',
 		type: 'post',
@@ -234,9 +238,6 @@ function check() {
 				var goodsNumber = $('#J_buyNumber').val();
 				var formatId = $('#J_formatId').val();
 				if (goodsId && goodsNumber && formatId) {
-					// console.log($("#J_userType").val());
-					// console.log($("#J_purchaseLimit").val());
-					// return false;
 					if($("#J_userType").val() == '2' && $("#J_purchaseLimit").val() == '2'){
 						$.alert('此商品仅为企业使用');
 						return false;
