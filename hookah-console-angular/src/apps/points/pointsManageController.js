@@ -115,7 +115,6 @@ class pointsManageController {
                 上限循环时效：\
                 <select name="upperTimeSelect" id="upperTimeSelect">\
                   <option value="null" selected>永久</option>\
-                  <option value="12">12h</option>\
                   <option value="24">24h</option>\
                 </select>\
               </td>\
@@ -127,7 +126,6 @@ class pointsManageController {
                 下限循环时效：\
                 <select name="lowerTimeSelect" id="lowerTimeSelect">\
                   <option value="null" selected>永久</option>\
-                  <option value="12">12h</option>\
                   <option value="24">24h</option>\
                 </select>\
               </td>\
@@ -212,13 +210,13 @@ class pointsManageController {
         }
         if ($('#upper').val() >= 0) { //输入规则规定上限需要改变的值才修改最上面的table里的值
           $('#upperLimit').html($('#upper').val());
-          $('#upperTimeLimit').html(($('#upperTimeSelect').val() == 'null') ? '永久' : (($('#upperTimeSelect').val() == '12') ? "12h" : "24h"))
+          $('#upperTimeLimit').html(($('#upperTimeSelect').val() == 'null') ? '永久' : "24h")
         } else {
           $('#upper').val('')
         }
         if ($('#lower').val() >= 0) {//输入规则规定下限需要改变的值才修改最上面的table里的值
           $('#lowerLimit').html($('#lower').val());
-          $('#lowerTimeLimit').html(($('#lowerTimeSelect').val() == 'null') ? '永久' : (($('#lowerTimeSelect').val() == '12') ? "12h" : "24h"))
+          $('#lowerTimeLimit').html(($('#lowerTimeSelect').val() == 'null') ? '永久' : "24h")
         } else {
           $('#lower').val('')
         }
