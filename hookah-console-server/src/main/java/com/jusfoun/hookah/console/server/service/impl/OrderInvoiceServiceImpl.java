@@ -22,13 +22,4 @@ public class OrderInvoiceServiceImpl extends GenericServiceImpl<OrderInvoice, St
     public void setDao(OrderInvoiceMapper orderInvoiceMapper) {
         super.setDao(orderInvoiceMapper);
     }
-
-    @Override
-    public void insertOrderInvoice(String orderId, String invoiceId) {
-        OrderInvoice orderInvoice = new OrderInvoice();
-        orderInvoice.setAddTime(new Date());
-        orderInvoice.setInvoiceId(invoiceId);
-        orderInvoice.setOrderId(orderId);
-        this.insert(orderInvoice);
-    }
 }

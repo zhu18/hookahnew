@@ -6,15 +6,13 @@ import com.jusfoun.hookah.console.server.config.MyProps;
 import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoodsOrder;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
-import com.jusfoun.hookah.core.domain.vo.CartVo;
-import com.jusfoun.hookah.core.domain.vo.GoodsVo;
-import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
-import com.jusfoun.hookah.core.domain.vo.PayVo;
+import com.jusfoun.hookah.core.domain.vo.*;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -108,7 +106,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     UserCouponService userCouponService;
 
     @Resource
-    private WXUserRecommendService wxUserRecommendService;
+    MqSenderService mqSenderService;
 
     @Resource
     public void setDao(OrderInfoMapper orderinfoMapper) {
@@ -520,7 +518,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      */
     @Transactional(readOnly=false)
     @Override
-    public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray, Long userCouponId) throws Exception {
+    public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray, Long userCouponId, InvoiceDTOVo invoiceDTOVo) throws Exception {
         init(orderInfo);
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.in("recId",cartIdArray));
@@ -562,9 +560,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             }
             //下单
             insertOrder(ordergoodsList, orderInfoVo, orderInfo ,mgGoodsOrder);
-            //开发票
+
+            //生成订单后发送发票信息
             if (orderInfo.getInvoiceOrNot() == 1) {
-                orderInvoiceService.insertOrderInvoice(orderInfo.getOrderId(),orderInfo.getInvoiceNo());
+                invoiceDTOVo.setOrderIds(orderInfo.getOrderId());
+                invoiceDTOVo.setUserId(orderInfo.getUserId());
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE, invoiceDTOVo);
             }
 //            if(goodsAmount.compareTo(0L)==0){
 //                updatePayStatus(orderInfo.getOrderSn(),2);
@@ -587,7 +588,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      */
     @Transactional(readOnly=false)
     @Override
-    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber, Long userCouponId) throws Exception {
+    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber, Long userCouponId,
+                            InvoiceDTOVo invoiceDTOVo) throws Exception {
         init(orderInfo);
 
         List<MgOrderGoods> ordergoodsList = null;
@@ -628,9 +630,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //下单
         insertOrder(ordergoodsList, orderInfoVo, orderInfo, mgGoodsOrder);
 
-        //开发票
+        //生成订单后发送发票信息
         if (orderInfo.getInvoiceOrNot() == 1) {
-            orderInvoiceService.insertOrderInvoice(orderInfo.getOrderId(),orderInfo.getInvoiceNo());
+            invoiceDTOVo.setOrderIds(orderInfo.getOrderId());
+            invoiceDTOVo.setUserId(orderInfo.getUserId());
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE, invoiceDTOVo);
         }
 //        if(goodsAmount.compareTo(0L)==0){
 //            updatePayStatus(orderInfo.getOrderSn(),2);

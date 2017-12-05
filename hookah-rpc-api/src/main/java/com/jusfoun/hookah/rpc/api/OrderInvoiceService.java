@@ -7,6 +7,4 @@ import com.jusfoun.hookah.core.generic.GenericService;
  * Created by wangjl on 2017-3-15.
  */
 public interface OrderInvoiceService extends GenericService<OrderInvoice,String> {
-
-    void insertOrderInvoice(String orderId, String invoiceId);
 }

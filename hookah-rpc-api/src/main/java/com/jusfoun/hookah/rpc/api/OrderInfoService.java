@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.domain.OrderInfo;
 import com.jusfoun.hookah.core.domain.mongo.MgGoodsOrder;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
+import com.jusfoun.hookah.core.domain.vo.InvoiceDTOVo;
 import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
 import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.exception.HookahException;
@@ -23,9 +24,10 @@ import java.util.Map;
  */
 public interface OrderInfoService extends GenericService<OrderInfo,String> {
 
-    public OrderInfo insert(OrderInfo orderInfo, String[] cartIdArray, Long userCouponId) throws Exception;
+    OrderInfo insert(OrderInfo orderInfo, String[] cartIdArray, Long userCouponId, InvoiceDTOVo invoiceDTOVo) throws Exception;
 
-    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber, Long userCouponId) throws Exception;
+    OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber,
+                            Long userCouponId, InvoiceDTOVo invoiceDTOVo) throws Exception;
 
     void checkOrderExist(String userId, String[] cartIdArray) throws Exception;
 
