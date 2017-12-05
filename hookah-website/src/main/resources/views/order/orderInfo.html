@@ -29,7 +29,7 @@ var htmlPart = {
 						<input type="hidden" name="perOrderInfoNum" value="${perOrderInfoNum}">
 						<table>
 							<tr class="tab-title">
-								<th colspan="9"><h5>新订购服务</h5></th>
+								<th colspan="9"><h5 class="font-size-16" style="padding-left: 5px;">新订购服务</h5></th>
 							</tr>
 							<tr class="tab-title-th">
 								<th>序号</th>
@@ -62,12 +62,28 @@ var htmlPart = {
 								<td>${(list.goodsPrice * list.goodsNumber) / 100}</td>
 							</tr>
 							<%}%>
+							<!--<tr>-->
+								<!--<td colspan="9">-->
+									<!--<table class="coupon-list">-->
+										<!--<tr class="tab-title">-->
+											<!--<th colspan="9"><h5 class="font-size-16" style="padding-left: 5px;">发票信息 <span class="translate-titleTip"><i class="fa fa-lightbulb-o"></i>开企业抬头发票须填写纳税人识别号，以免影响报销</span></h5></th>-->
+										<!--</tr>-->
+										<!--<tr>-->
+											<!--<td colspan="9" style="font-size: 16px;line-height: 30px;color:#666; padding:5px 10px">-->
+												<!--<ol>-->
+													<!--<li class="translateInfo"><span>不开发票</span><a id="J-editTranslate" style="margin-left:40px;color:#0041ed" href="javascript:void(0)" class="">修改</a></li>-->
+												<!--</ol>-->
+											<!--</td>-->
+										<!--</tr>-->
+									<!--</table>-->
+								<!--</td>-->
+							<!--</tr>-->
 							<%if(isNotEmpty(couponList)){%>
 							<tr>
 								<td colspan="9">
-									<table class="coupon-list margin-top-20 margin-bottom-10">
+									<table class="coupon-list margin-bottom-10">
 										<tr class="tab-title">
-											<th colspan="9"><h5>使用优惠券</h5></th>
+											<th colspan="9"><h5 class="font-size-16" style="padding-left: 5px;">使用优惠券</h5></th>
 										</tr>
 										<tr>
 											<td colspan="9">
@@ -152,6 +168,98 @@ var htmlPart = {
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="translate-bg">
+	<div class="translate-box">
+		<h4>发票信息<span class="fa fa-close"></span></h4>
+		<table>
+			<tr>
+				<td>申请开票金额：</td>
+				<td>￥1,231,231.00</td>
+			</tr>
+			<tr>
+				<td>当前发票：</td>
+				<td><span>普通发票</span><span>办公用品</span><span>个人</span></td>
+			</tr>
+			<tr>
+				<td>发票类型：</td>
+				<td class="tab-btn"><a class="tab-translate hover" href="javascript:void(0)">增值税普通发票</a><a class="tab-translate" href="javascript:void(0)">增值税专用发票</a></td>
+			</tr>
+			<tr>
+				<td colspan="2" class="tab-box">
+					<table class="hover">
+						<tr>
+							<td>发票介质：</td>
+							<td>纸质</td>
+						</tr>
+						<tr>
+							<td>发票抬头：</td>
+							<td>
+								<div>个人</div>
+								<div>九次方大数据信息集团有限公司</div>
+								<div>贵阳交易所</div>
+								<div><a class="add-title" href="javascript:void(0)">+新增发票抬头</a></div>
+							</td>
+						</tr>
+						<tr>
+							<td>纳税人识别号：</td>
+							<td><input type="text"></td>
+						</tr>
+						<tr>
+							<td>发票内容：</td>
+							<td>明细</td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td></td>
+							<td>
+								<div class="tip-exclusive">
+									<p class="p1"><span class="fa fa-exclamation-circle"></span>我们会在一个工作日内完成审核工作。</p>
+									<p>1）注意有效增值税发票开票资质仅为一个。</p>
+									<p>2）发票常见问题查看增票资质帮助。</p>
+									<p>3）本页面信息仅供增值税专用发票-资质审核使用，切勿进行支付相关业务，谨防上当受骗。</p>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>您的增票资质：</td>
+							<td>纸质</td>
+						</tr>
+						<tr>
+							<td><span class="must-tip">*</span>单位名称：</td>
+							<td>纸质</td>
+						</tr>
+						<tr>
+							<td><span class="must-tip">*</span>纳税人识别号：</td>
+							<td>纸质</td>
+						</tr>
+						<tr>
+							<td><span class="must-tip">*</span>注册地址：</td>
+							<td>纸质</td>
+						</tr>
+						<tr>
+							<td><span class="must-tip">*</span>注册电话：</td>
+							<td>纸质</td>
+						</tr>
+						<tr>
+							<td><span class="must-tip">*</span>开户银行：</td>
+							<td>纸质</td>
+						</tr>
+						<tr>
+							<td><span class="must-tip">*</span>银行账户：</td>
+							<td>纸质</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><label><input type="checkbox">我已阅读并同意<a href="">《增票资质确认书》</a></label></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+
+		</table>
 	</div>
 </div>
 <script src="/static/js/order/orderInfo.js"></script>
