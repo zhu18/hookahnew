@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="/static/css/font/exchange-menu/iconfont.css">
 <link rel="stylesheet" href="/static/css/exchange/exchange-menu.css">
 <div class="exchange-index-menu ">
+    <div class="station-box">
+
+    </div>
     <ul class="menu-list">
         <% for(menuList in categoryInfo){%>
         <li class="menu-item">
@@ -27,12 +30,12 @@
 
 </div>
 <script>
-  $('.menu-item').hover(function(){
-    var len = $(this).children('.menu-son-list').children('ul').children('li').length;
-    if(len <= 9){
-      $('.exchange-index-menu ').css({'width':'240px'});
-      $(this).children('.menu-son-list').css({'width':'240px','overflow':'hidden'});
-      $(this).children('.menu-son-list').children('ul').children('li').css('width','240px');
-    }
-  })
+    $('.menu-item').hover(function(){
+        var len = $(this).children('.menu-son-list').children('ul').children('li').length;
+        if(len <= 9){
+            $('.exchange-index-menu ').css({'width':'180px'});
+            $(this).children('.menu-son-list').css({'width':'240px','overflow':'hidden'});
+            $(this).children('.menu-son-list').children('ul').children('li').css('width','240px');
+        }
+    })
 </script>
