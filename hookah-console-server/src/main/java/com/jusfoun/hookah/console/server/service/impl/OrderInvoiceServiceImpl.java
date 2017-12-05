@@ -6,6 +6,7 @@ import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.OrderInvoiceService;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * 订单发票中间表服务
@@ -22,4 +23,12 @@ public class OrderInvoiceServiceImpl extends GenericServiceImpl<OrderInvoice, St
         super.setDao(orderInvoiceMapper);
     }
 
+    @Override
+    public void insertOrderInvoice(String orderId, String invoiceId) {
+        OrderInvoice orderInvoice = new OrderInvoice();
+        orderInvoice.setAddTime(new Date());
+        orderInvoice.setInvoiceId(invoiceId);
+        orderInvoice.setOrderId(orderId);
+        this.insert(orderInvoice);
+    }
 }

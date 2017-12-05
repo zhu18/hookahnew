@@ -1,6 +1,5 @@
 package com.jusfoun.hookah.rpc.api;
 
-import com.jusfoun.hookah.core.domain.Invoice;
 import com.jusfoun.hookah.core.domain.OrderInvoice;
 import com.jusfoun.hookah.core.generic.GenericService;
 
@@ -9,4 +8,5 @@ import com.jusfoun.hookah.core.generic.GenericService;
  */
 public interface OrderInvoiceService extends GenericService<OrderInvoice,String> {
 
+    void insertOrderInvoice(String orderId, String invoiceId);
 }

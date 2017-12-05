@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * 处理积分消息业务
  * ps:非生产环境下由于有多个消费端，不一定是你的消费端消费消息，收不到消息正常
+ *    费劲，暂时不要了
  */
 @Component
 public class RabbitMQJFHandelListener {
@@ -91,6 +92,8 @@ public class RabbitMQJFHandelListener {
             } else {
                 jfRecord.setNote(jfBo.getNotes());
             }
+
+            logger.info("积分消息处理BO-{}", jfRecord.toString());
 
             int n = jfRecordService.insertAndGetId(jfRecord);
             if(n == 1){

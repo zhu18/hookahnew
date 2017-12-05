@@ -68,7 +68,7 @@
 .moneyAdd:hover{ border-bottom:7px solid #078cfc; }
 .moneySub:hover{ border-top:7px solid #078cfc;}
 
-.crowdsourcing-user span.managedMoneySpan{ position: relative;width: 110px;padding-right: 25px;}
+.crowdsourcing-user span.managedMoneySpan{ position: relative;width: 120px;padding-right: 25px;}
 .detailMoneyBox{ display: none;}
 
 .myRequirement-table tr { text-align: left; }

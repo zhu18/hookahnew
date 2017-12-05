@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.rpc.api;
 
+import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.core.domain.jf.JfRecord;
 import com.jusfoun.hookah.core.generic.GenericService;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -68,4 +69,6 @@ public interface JfRecordService extends GenericService<JfRecord, Long> {
      * @param recommendUserId
      */
     void registerHandle(String userId, String recommendUserId);
+
+    void handleJfMsg(JfBo jfBo);
 }

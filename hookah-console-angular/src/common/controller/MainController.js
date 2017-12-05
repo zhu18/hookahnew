@@ -187,7 +187,7 @@ class MainController {
 			});
 
 		};
-    $rootScope.openConfirmDialogModelCanVerify = function (title,content,callback) {
+        $rootScope.openConfirmDialogModelCanVerify = function (title,content,callback) {
       return $uibModal.open({
         animation: true,
         template: require('../openConfirmDialogModelCanVerify.html'),

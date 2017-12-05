@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.core.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.UUID;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
@@ -65,5 +66,16 @@ public class StringUtils {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * 生成随机32位uuid
+     * @return
+     */
+    public static String getUUID(){
+        UUID uuid=UUID.randomUUID();
+        String str = uuid.toString();
+        String uuidStr=str.replace("-", "");
+        return uuidStr;
     }
 }
