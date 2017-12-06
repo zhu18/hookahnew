@@ -20,5 +20,4 @@ public interface MgTongJiService extends GenericService<MgTongJi, String> {
     MgTongJi getTongJiInfo(String tongJiId);
 
     List<MgTongJi>  getTongJiListInfo(Date startTime, Date endTime);
-
 }
