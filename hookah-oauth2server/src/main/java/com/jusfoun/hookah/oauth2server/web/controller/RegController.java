@@ -144,12 +144,12 @@ public class RegController {
 
             //4，校验重复
             //4.1 用户名
-            filters.clear();
-            filters.add(Condition.eq("userName", user.getUserName()));
-            isExists = userService.exists(filters);
-            if (isExists) {
-                throw new UserRegExistUsernameException("该邮箱已经被注册");
-            }
+//            filters.clear();
+//            filters.add(Condition.eq("userName", user.getUserName()));
+//            isExists = userService.exists(filters);
+//            if (isExists) {
+//                throw new UserRegExistUsernameException("该邮箱已经被注册");
+//            }
             //4.2 手机
             filters.clear();
             filters.add(Condition.eq("mobile", user.getMobile()));
