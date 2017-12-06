@@ -156,8 +156,9 @@
                             </td>
                             <td>
                                 <span text-length="50" ng-show="item.userCouponStatus == 0">未使用</span>
-                                <span text-length="50" ng-show="item.userCouponStatus == 1">已使用</span>
+                                <span text-length="50" ng-show="item.userCouponStatus == 1">已使用已付款</span>
                                 <span text-length="50" ng-show="item.userCouponStatus == 2">已过期</span>
+                                <span text-length="50" ng-show="item.userCouponStatus == 3">已使用未付款</span>
                             </td>
                             <td>
                                 <span data-ng-bind="item.usedTime"></span>
