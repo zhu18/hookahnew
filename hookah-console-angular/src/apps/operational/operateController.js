@@ -16,22 +16,21 @@ class OperateController {
       });
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
-        console.log( res.data.data.list);
-        $scope.operateList = res.data.data.list;
+        console.log( res.data.data);
+        $scope.operateList = res.data.data;
         $rootScope.loadingState = false;
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
     };
 
     //后退
-    $scope.back = function () {
-      history.back();
-    };
 
     $scope.pageChanged = function () {
       $scope.search();
     };
-
+    $scope.refresh = function () {
+      $scope.search();
+    };
     $scope.search('true');
 
     // 处理日期插件的获取日期的格式

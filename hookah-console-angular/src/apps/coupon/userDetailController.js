@@ -12,8 +12,9 @@ class userDetailController {
         $scope.useStatus = [               //自定定义类型数据
             {id:"", name:"全部"},
             {id:0, name:"未使用"},
-            {id:1, name:"已使用"},
-            {id:2, name:"已过期"}
+            {id:1, name:"已使用已付款"},
+            {id:2, name:"已过期"},
+            {id:3, name:"已使用未付款"}
         ];
         $scope.userCouponStatus="";
         $scope.controlScreen=function () { //控制搜索框展示函数
@@ -200,10 +201,13 @@ class userDetailController {
                             userCouponStatus='未使用';
                             break;
                         case 1:
-                            userCouponStatus='已使用';
+                            userCouponStatus='已使用已付款';
                             break;
                         case 2:
                             userCouponStatus='已过期';
+                            break;
+                        case 3:
+                            userCouponStatus='已使用未付款';
                             break;
                     }
 

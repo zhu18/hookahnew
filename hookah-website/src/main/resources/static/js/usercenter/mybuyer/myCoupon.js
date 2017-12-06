@@ -1,6 +1,6 @@
 /**
  * Created by lss on 2017/11/7 0007
- * 优惠券分为三种状态：可用（0），已经使用（1），已经过期（2）   根据userCouponStatus字段判断
+ * 优惠券分为三种状态：可用（0），已经使用（1,3），已经过期（2）   根据userCouponStatus字段判断
  * 可用中又有三种状态：新到，即将过期，null（不符合前两个条件都未null）  根据tagName字段判断
  */
 function loadPageData(data) {
@@ -79,7 +79,7 @@ function loadPageData(data) {
                     html +='</li>';
                 }
 
-            }else if(item.userCouponStatus == 1){ //已经使用过
+            }else if(item.userCouponStatus == 1 || item.userCouponStatus == 3){ //已经使用过
                 html +='<li class="tag bg-gray" data-tip="已使用"> ' +
                     '<div class="bg-content"> ' +
                     '<div class="message clearfix">' +

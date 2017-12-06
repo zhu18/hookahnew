@@ -33,8 +33,8 @@ function loadPageData(data) {
 		}
 		$('.trade-box tbody').html(html);
 	} else {
-		$('.trade-box tbody').html('<tr><td colspan="10"><div class="noData">暂无数据</div></td></tr>');
-	}
+        $('.trade-box tbody').html('<tr><td colspan="5"><div style="padding: 100px 388px;text-align: center;font-size: 16px;color: #666;"><img src="/static/images/noCoupon.png" alt="没有优惠券！">没有符合条件的数据~</div></td></tr>');
+    }
 }
 function deleteGoods(id) {
 	$.confirm('你确定要删除这条消息吗? ',null,function(type){

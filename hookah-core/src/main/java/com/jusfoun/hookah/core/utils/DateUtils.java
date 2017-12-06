@@ -130,6 +130,13 @@ public abstract class DateUtils {
         return toDate;
     }
 
+    public static Date thisTimeNextFewDays(Date time, Integer i){
+        Long date = time.getTime();
+        Long d1 = i*24*60*60*1000L;
+        Date d2 = new Date(date + d1);
+        return d2;
+    }
+
     public static Date thisTimeNextMonth(Date time, Integer i){
         Calendar cld = Calendar.getInstance();
         cld.setTime(time);
