@@ -1,5 +1,6 @@
-package com.jusfoun.hookah.webiste.controller;
+package com.jusfoun.hookah.console.server.api.tongJi;
 
+import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.FlowUserService;
@@ -15,7 +16,7 @@ import java.time.format.DateTimeFormatter;
  */
 @RestController
 @RequestMapping(value = "/tongji")
-public class TongjiController extends BaseController{
+public class TongjiController extends BaseController {
     @Resource
     private FlowUserService flowUserService;
 
