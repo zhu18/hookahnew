@@ -204,12 +204,13 @@ public class RegController {
         }
 
         //统计获取注册地址
+        String userId = regUser.getUserId();
         Map<String, Cookie> cookieMap = ReadCookieMap(request);
         Cookie tongJi = cookieMap.get("TongJi");
         if(tongJi != null){
             MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
             mgTongJiService.setTongJiInfo(TongJiEnum.REG_URL, tongJiInfo.getTongJiId(),
-                    tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), regUser.getUserId());
+                    tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
         }
 
         //完成注册 发消息到MQ送优惠券
