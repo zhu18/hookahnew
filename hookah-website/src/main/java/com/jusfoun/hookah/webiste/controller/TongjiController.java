@@ -30,8 +30,10 @@ public class TongjiController extends BaseController{
 
     @RequestMapping(value = "/reqUser")
     public ReturnData tongjiList(String startTime,String endTime){
-        if(StringUtils.isNotBlank(startTime) && StringUtils.isNotBlank(endTime)){
+        if(!StringUtils.isNotBlank(startTime)){
             startTime=  LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
+        if(!StringUtils.isNotBlank(endTime)){
             endTime=  LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
         ReturnData returnData = flowUserService.tongjiList(startTime, endTime);
