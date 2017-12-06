@@ -67,12 +67,6 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
     @Resource
     JfRuleService jfRuleService;
 
-    @CacheEvict(value = "personUseJfSum", key = "#jfRecord.getUserId()")
-    @Override
-    public int insertAndGetId(JfRecord jfRecord) {
-        return jfRecordMapper.insertAndGetId(jfRecord);
-    }
-
     @Override
     public ReturnData getJfRecord(Integer pageNumberNew, Integer pageSizeNew, String userId, String type) throws Exception {
 
@@ -306,7 +300,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
 //                        jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
 //                        jfRecord.setActionDesc("管理员操作");
 
-                        int n = insertAndGetId(
+                        int n = cacheService.insertAndGetId(
                                 new JfRecord(
                                     uid,
                                     Byte.parseByte(optType),
@@ -343,7 +337,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                             } else {
                                 // optType 归到source_id中去 增加为11 减少为12
                                 // action  admin的action为3
-                                int n = insertAndGetId(
+                                int n = cacheService.insertAndGetId(
                                         new JfRecord(
                                                 uid,
                                                 Byte.parseByte(optType),
@@ -438,7 +432,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
     @Override
     public void handleJfMsg(JfBo jfBo) {
 
-        logger.info("积分消息处理BO-{}", jfBo.toString());
+        logger.info("积分业务处理BO-{}", jfBo.toString());
 
         try {
 
@@ -487,16 +481,16 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                 jfRecord.setNote(jfBo.getNotes());
             }
 
-            logger.info("积分消息处理BO-{}", jfRecord.toString());
+            logger.info("积分业务处理BO-{}", jfRecord.toString());
 
-            int n = jfRecordMapper.insertAndGetId(jfRecord);
+            int n = cacheService.insertAndGetId(jfRecord);
             if(n == 1){
-                logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理成功>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                logger.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分业务处理成功>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }else {
-                logger.error("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分消息处理失败>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                logger.error("<<<<<<<<<<<<<<<<<<<<<<<<<<<积分业务处理失败>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }
         }catch (Exception e){
-            logger.error("<积分消息处理失败>>>{}", e);
+            logger.error("<积分业务处理失败>>>{}", e);
         }
     }
 }

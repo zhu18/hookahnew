@@ -1,5 +1,6 @@
 import websiteController from "./websiteController";
 import transactionController from "./transactionController";
+import operateController from "./operateController";
 
 operationalRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function operationalRouting($stateProvider, $urlRouterProvider) {
@@ -20,5 +21,11 @@ export default function operationalRouting($stateProvider, $urlRouterProvider) {
       template: require('./transaction.html'),
       controller: transactionController,
       permission: 'operationalTransaction'
+    })
+    .state('operational.operate', {
+      url: '/operational/operate',
+      template: require('./operate.html'),
+      controller: operateController,
+      permission: 'operateTransaction'
     })
 };

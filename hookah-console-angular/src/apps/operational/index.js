@@ -41,6 +41,9 @@ app.run(function ($rootScope, $state) {
     },{
       "title":"网站流量统计分析",
       "url":"operational.website"
+    },{
+      "title":"运营流量统计分析",
+      "url":"operational.operate"
     },
     // {
     //   "title":"新增帮助",

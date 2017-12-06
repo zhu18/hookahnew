@@ -831,7 +831,7 @@ var htmlPart = {
 						if (data.code == 1) {
                             $.alert("注册成功，马上跳转登录页面");
 							setTimeout(function() {
-								window.location.href = '${host.auth}/login';
+								window.location.href = '${host.website}';
 							}, 2000);
 						} else {
 							$('.loading_btns').hide();

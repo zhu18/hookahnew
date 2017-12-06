@@ -9,6 +9,9 @@ import com.jusfoun.hookah.rpc.api.JfRuleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -73,22 +76,28 @@ public class JfRuleServiceImpl extends GenericServiceImpl<JfRule, Integer> imple
         if(StringUtils.isNotBlank(lowerLimitScore)){
             jfRule.setLowerLimit(Integer.parseInt(lowerLimitScore));
         }
-//        if(StringUtils.isNotBlank(upperLimitTime)){
-//            jfRule.setUpperTimeLimit(Byte.parseByte(upperLimitTime));
-//        }
-//        if(StringUtils.isNotBlank(lowerLimitTime)){
-//            jfRule.setLowerTimeLimit(Byte.parseByte(lowerLimitTime));
-//        }
+        if(upperLimitTime == null){
+            jfRule.setUpperTimeLimit(null);
+        }else if(StringUtils.isNotBlank(upperLimitTime)){
+            jfRule.setUpperTimeLimit(Byte.parseByte(upperLimitTime));
+        }
+
+        if(lowerLimitTime == null){
+            jfRule.setLowerTimeLimit(null);
+        } else if(StringUtils.isNotBlank(lowerLimitTime)){
+            jfRule.setLowerTimeLimit(Byte.parseByte(lowerLimitTime));
+        }
         if(StringUtils.isNotBlank(note)){
             jfRule.setNote(note);
         }
         jfRule.setUpdateTime(new Date());
 
-        int n = this.updateByIdSelective(jfRule);
+        int n = this.updateById(jfRule);
         if(n == 1){
             return ReturnData.success("积分规则修改成功！^_^");
         } else {
             return ReturnData.error("积分规则修改失败！>_<|||");
         }
     }
+
 }
