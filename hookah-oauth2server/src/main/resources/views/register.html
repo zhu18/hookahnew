@@ -16,38 +16,25 @@ var htmlPart = {
 	<div class="content">
 		<div class="form-list form-main-list">
 			<form id="J_InfoForm" name="user" method="post" action="">
-				<div class="form-group account-set">
-					<div class="form-item">
-						<span class="form-label form-label-b">账户设置</span>
-						<span class="sub-title">请设置你的用户名和密码用于登录</span>
-					</div>
-					<div class="form-item">
-						<span class="form-label"><span class="star">*</span>用户名</span>
-						<input autocomplete="off" class="form-text err-input" id="J_userName" name="userName"
-							   type="text" value="" placeholder="设置用户名">
-						<div class="nick-suggest-container">
-							<div class="nick-suggest" id="J_NickSuggest"></div>
-						</div>
-						<div class="nick-size" id="J_NickSize" style="visibility: visible;">
-							{size}
-							<span class="tsl" data-phase-id="r_ui_nickCountTip">字符</span>
-						</div>
-					</div>
-					<div class="form-item">
-						<span class="form-label tsl" data-phase-id="r_p_password">
-						  <span class="star">*</span>登录密码
-						</span>
-						<input class="form-text err-input" id="J_Password" type="password" placeholder="设置你的登录密码"
-							   name="password" value="" data-inner_placeholder="r_p_input_enterPassword" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
-						<input type="hidden" name="safetyLandScore">
-					</div>
-					<div class="form-item">
-						<span class="form-label tsl" data-phase-id="r_p_confirmPassword"><span class="star">*</span>密码确认</span>
-						<input class="form-text" id="J_RePassword" name="passwordRepeat" type="password"
-							   placeholder="请再次输入你的密码" value="" data-inner_placeholder="r_p_input_reEnterPassword"
-							   data-outer_placeholder="r_p_input_reEnterPwd" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
-					</div>
-				</div>
+				<!--<div class="form-group account-set">-->
+					<!--<div class="form-item">-->
+						<!--<span class="form-label form-label-b">账户设置</span>-->
+						<!--<span class="sub-title">请设置你的用户名和密码用于登录</span>-->
+					<!--</div>-->
+					<!--&lt;!&ndash;<div class="form-item">&ndash;&gt;-->
+						<!--&lt;!&ndash;<span class="form-label"><span class="star">*</span>用户名</span>&ndash;&gt;-->
+						<!--&lt;!&ndash;<input autocomplete="off" class="form-text err-input" id="J_userName" name="userName"&ndash;&gt;-->
+							   <!--&lt;!&ndash;type="text" value="" placeholder="设置用户名">&ndash;&gt;-->
+						<!--&lt;!&ndash;<div class="nick-suggest-container">&ndash;&gt;-->
+							<!--&lt;!&ndash;<div class="nick-suggest" id="J_NickSuggest"></div>&ndash;&gt;-->
+						<!--&lt;!&ndash;</div>&ndash;&gt;-->
+						<!--&lt;!&ndash;<div class="nick-size" id="J_NickSize" style="visibility: visible;">&ndash;&gt;-->
+							<!--&lt;!&ndash;{size}&ndash;&gt;-->
+							<!--&lt;!&ndash;<span class="tsl" data-phase-id="r_ui_nickCountTip">字符</span>&ndash;&gt;-->
+						<!--&lt;!&ndash;</div>&ndash;&gt;-->
+					<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+				<!--</div>-->
 				<div class="form-group basic-info">
 					<div class="form-item">
 						<span class="form-label form-label-b">基本信息</span>
@@ -65,9 +52,7 @@ var htmlPart = {
 					</div>
 
 					<div class="form-item">
-	            <span class="form-label tsl" data-phase-id="r_p_noCaptcha">
-		            <span class="star">*</span>验证码
-              	</span>
+	                   <span class="form-label tsl" data-phase-id="r_p_noCaptcha"><span class="star">*</span>验证码</span>
 						<div id="register_no_captcha" class="nc-container" data-nc-idx="1">
 							<input class="form-text mobile-text-input" maxlength="20" name="captcha" id="J_Capcha"
 								   type="text" value="" placeholder="请输入验证码">
@@ -89,6 +74,20 @@ var htmlPart = {
 								获取验证码
 							</button>
 						</div>
+					</div>
+					<div class="form-item">
+						<span class="form-label tsl" data-phase-id="r_p_password">
+						  <span class="star">*</span>登录密码
+						</span>
+						<input class="form-text err-input" id="J_Password" type="password" placeholder="设置你的登录密码"
+							   name="password" value="" data-inner_placeholder="r_p_input_enterPassword" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+						<input type="hidden" name="safetyLandScore">
+					</div>
+					<div class="form-item">
+						<span class="form-label tsl" data-phase-id="r_p_confirmPassword"><span class="star">*</span>密码确认</span>
+						<input class="form-text" id="J_RePassword" name="passwordRepeat" type="password"
+							   placeholder="请再次输入你的密码" value="" data-inner_placeholder="r_p_input_reEnterPassword"
+							   data-outer_placeholder="r_p_input_reEnterPwd" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
 					</div>
 					<div class="form-item">
 						<input class="form-checkbox" type="checkbox" name="" id="J_Agreement"
@@ -129,12 +128,12 @@ var htmlPart = {
 			<div class="msg-tit"></div>
 			<div class="msg-cnt" aria-live="assertive"></div>
 		</div>
-		<div class="msg msg-type-info" id="J_MsgMobile" style="position: absolute; left: 754px; top: 335px;"><i
+		<div class="msg msg-type-info" id="J_MsgMobile" style="position: absolute; left: 754px; top: 80px;"><i
 			class="iconfont">󰅂</i>
 			<div class="msg-tit"></div>
 			<div class="msg-cnt" aria-live="assertive"></div>
 		</div>
-		<div class="msg msg-type-info" id="J_MsgPassword" style="position: absolute; left: 754px; top: 138px;"><i
+		<div class="msg msg-type-info" id="J_MsgPassword" style="position: absolute; left: 754px; top: 240px;"><i
 			class="iconfont">󰅂</i>
 			<div class="msg-tit"></div>
 			<div class="msg-cnt" aria-live="assertive"></div>
@@ -245,112 +244,6 @@ var htmlPart = {
 		}
 
 	};
-//    // 表格验证开始
-//    var regex = {  //手机号验证正则
-//        mobile: /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/,
-//		userName:,
-//		password:,
-//    };
-//    //让当前表单调用validate方法，实现表单验证功能
-//    $("#form").validate({
-//        debug:true, //调试模式，即使验证成功也不会跳转到目标页面
-//        rules:{     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
-//            userName:{
-//                required:true,  //必填。如果验证方法不需要参数，则配置为true
-//                isUserName:true
-//            },
-//            sphone:{
-//                required:true,
-//                isMobile:true
-//            },
-//            saddress:{
-//                required:true,
-//                maxlength:50
-//            },
-//            bank:{
-//                required:true,
-//                isBank:true
-//            },
-//            bindName:{
-//                required:true
-//            },
-//            verificationCode:{
-//                required:true,
-//                isVerificationCode:true
-//            }
-//        },
-//        messages:{
-//            userName:{
-//                required:"*请输入用户名",
-//                isUserName:"*请输入合法的用户名"
-//            },
-//            sphone:{
-//                required:"*请输入手机号",
-//                isMobile:"*请输入正确格式的手机号"
-//            },
-//            address:{
-//                required:"*请输入地址",
-//                maxlength: $.validator.format("请输入一个长度最多是 {0} 的字符串")
-//            },
-//            szip:{
-//                required:"*请输入邮编",
-//                isMobile:"*请输入正确格式的邮编"
-//            },
-//            bank:{
-//                required:"*请输入银行卡号",
-//                isBank:"*请输入正确的银行卡号"
-//            },
-//            bindName:{
-//                required:"*请选择银行名称"
-//            },
-//            verificationCode:{
-//                required:"*请填写验证码",
-//                isVerificationCode:"*请填写正确的验证码"
-//            }
-//        }
-//    });
-//    $.validator.addMethod("isUserName", function(value, element) {
-//        var mobile = regex.mobile.test(value);
-//
-//        return this.optional(element) || (mobile);
-//    },
-//    $.validator.addMethod("isMobile", function(value, element) {
-//        var mobile = regex.mobile.test(value);
-//        return this.optional(element) || (mobile);
-//    }, "*请填写有效的手机号");
-//    $.validator.addMethod("isBank", function(value, element) {
-//        var mobile = regex.bank.test(value);
-//        return this.optional(element) || (mobile);
-//    }, "*请输入正确的银行卡号");
-//    $.validator.addMethod("isVerificationCode", function(value, element) {
-//        var mo=false;
-//        if(value.length==4){
-//            $.ajax({
-//                url:host.auth+'/sms/check',
-//                type:'post',
-//                async:false,
-//                data:{
-//                    mobile:$('#phoneNumber').val(),
-//                    validSms:value
-//                },
-//                success:function(data){
-//                    if(data.code == 1){
-//                        mo=true;
-//                    }else if(data.code == 0){
-//                        // $('.loading_btns').hide();
-//                        // $('#J_Phone_Checkcode').parents('.ui-form-item').addClass('ui-form-item-error');
-//                        // $('#J_Phone_Checkcode').parents('.checkcode-warp').siblings('.ui-form-explain').show()
-//                        return false;
-//                    }else{
-//                        // $('.loading_btns').hide();
-//                        // $.alert(data.message);
-//                        return false;
-//                    }
-//                }
-//            });
-//        }
-//        return mo;
-//    }, "*请输入正确的手机验证码！");
     // 表格验证结束
 	var nickTest = function (val) { //用户名验证
 		if (testData.allNumber(val)) {
@@ -388,15 +281,15 @@ var htmlPart = {
 	function nickSuccessInfo(info) {
 		$('#J_MsgNick').removeClass('msg-type-error').addClass('msg-type-info').show().children('.msg-cnt').html(info).siblings('.iconfont').html('󰅂');
 	}
-	$('#J_userName').blur(function () {
-		var thisVal = $(this).val();
-		if (strlen(thisVal) > 25 || strlen(thisVal) < 5) {
-			$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅕');
-		} else {
-			$('#J_MsgNick').hide();
-			nickTest(thisVal);
-		}
-	});
+//	$('#J_userName').blur(function () {
+//		var thisVal = $(this).val();
+//		if (strlen(thisVal) > 25 || strlen(thisVal) < 5) {
+//			$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅕');
+//		} else {
+//			$('#J_MsgNick').hide();
+//			nickTest(thisVal);
+//		}
+//	});
 	$('#J_Password').focus(function () {
 		$('#J_PwdTip').show();
 	});
@@ -755,17 +648,17 @@ var htmlPart = {
 
 		$('#J_BtnInfoForm').on("click", function (e) {
 			e.preventDefault();
-			var nick = $('#J_userName').val();
+//			var nick = $('#J_userName').val();
 			var password = $('#J_Password').val();
 			var rePassword = $('#J_RePassword').val();
 			var mobile = $('#J_Mobile').val();
 			var validSms = $('#J_phone_Mobile').val();
-			var a = testData.number(nick),
-				b = testData.upperLetter(nick),
-				c = testData.lowerLetter(nick),
-				d = testData.character(nick);
-			if (strlen(nick) <= 25 && strlen(nick) >= 5 && !testData.allNumber(nick)) {
-				if (!testData.nickIllegal(nick)) {
+//			var a = testData.number(nick),
+//				b = testData.upperLetter(nick),
+//				c = testData.lowerLetter(nick),
+//				d = testData.character(nick);
+//			if (strlen(nick) <= 25 && strlen(nick) >= 5 && !testData.allNumber(nick)) {
+//				if (!testData.nickIllegal(nick)) {
 					if (strlen(password) <= 20 && strlen(password) >= 6 && $("input[name='safetyLandScore']").val() != "0") {
 						if (rePassword == password) {
 							if (testData.mobile(mobile)) {
@@ -789,12 +682,12 @@ var htmlPart = {
 					} else {
 						$('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD).siblings('.iconfont').html('󰅕');
 					}
-				} else {
-					$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅕');
-				}
-			} else {
-				$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅕');
-			}
+//				} else {
+//					$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅕');
+//				}
+//			} else {
+//				$('#J_MsgNick').removeClass('msg-type-info').addClass('msg-type-error').show().children('.msg-cnt').html(TRLang.ERROR_MALFORM_NICK_NAME).siblings('.iconfont').html('󰅕');
+//			}
 		})
 	});
 	function mobileAvailable(mobile){//验证手机号是否可用
