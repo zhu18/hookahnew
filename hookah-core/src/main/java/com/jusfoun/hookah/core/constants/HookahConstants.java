@@ -678,12 +678,13 @@ public class HookahConstants {
 
     /**
      * 用户优惠券状态
-     * 0未使用 1已使用 2已过期
+     * 0未使用 1已使用且已支付 2已过期 3已使用且未支付
      */
     public enum UserCouponStatus {
         UN_USED((byte)0),
-        USED((byte)1),
-        EXPIRED((byte)2);
+        USED_PAYED((byte)1),
+        EXPIRED((byte)2),
+        USED_UN_PAYED((byte)3);
 
         public byte code;
 

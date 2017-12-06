@@ -5,8 +5,10 @@ import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
+import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.WxUserRecommend;
+import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.*;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
@@ -72,6 +75,9 @@ public class RegController {
 
     @Resource
     JfRecordService jfRecordService;
+
+    @Resource
+    MgTongJiService mgTongJiService;
 
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     public String reg(Model model) {
@@ -138,12 +144,12 @@ public class RegController {
 
             //4，校验重复
             //4.1 用户名
-            filters.clear();
-            filters.add(Condition.eq("userName", user.getUserName()));
-            isExists = userService.exists(filters);
-            if (isExists) {
-                throw new UserRegExistUsernameException("该邮箱已经被注册");
-            }
+//            filters.clear();
+//            filters.add(Condition.eq("userName", user.getUserName()));
+//            isExists = userService.exists(filters);
+//            if (isExists) {
+//                throw new UserRegExistUsernameException("该邮箱已经被注册");
+//            }
             //4.2 手机
             filters.clear();
             filters.add(Condition.eq("mobile", user.getMobile()));
@@ -196,6 +202,16 @@ public class RegController {
                 WXUserRecommendService.insert(wxUserRecommend);
             }
         }
+
+        //统计获取注册地址
+        Map<String, Cookie> cookieMap = ReadCookieMap(request);
+        Cookie tongJi = cookieMap.get("TongJi");
+        if(tongJi != null){
+            MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+            mgTongJiService.setTongJiInfo(TongJiEnum.REG_URL, tongJiInfo.getTongJiId(),
+                    tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), regUser.getUserId());
+        }
+
         //完成注册 发消息到MQ送优惠券
         mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,regUser.getUserId());
 
@@ -430,6 +446,17 @@ public class RegController {
             default:
                 return ReturnData.error("wrong step");
         }
+    }
+
+    private static Map<String, Cookie> ReadCookieMap(HttpServletRequest request) {
+        Map<String, Cookie> cookieMap = new HashMap<String, Cookie>();
+        Cookie[] cookies = request.getCookies();
+        if (null != cookies) {
+            for (Cookie cookie : cookies) {
+                cookieMap.put(cookie.getName(), cookie);
+            }
+        }
+        return cookieMap;
     }
 
 }

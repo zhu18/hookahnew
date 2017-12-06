@@ -315,10 +315,8 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if (userCoupons != null && userCoupons.size() > 0){
             for (UserCoupon userCoupon:userCoupons){
                 userCoupon.setOrderSn(null);
-                //已使用的改成未使用  已过期的就不改了
-                if (userCoupon.getUserCouponStatus()==HookahConstants.UserCouponStatus.USED.getCode()){
-                    userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.UN_USED.getCode());
-                }
+                //已使用且未支付的改成未使用  已过期的在每天零点进行更改
+                userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.UN_USED.getCode());
                 userCouponService.updateById(userCoupon);
             }
         }
@@ -653,7 +651,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }else {
             orderInfo.setOrderAmount(0L);
         }
-        userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.USED.getCode());
+        userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.USED_UN_PAYED.getCode());
         userCoupon.setOrderSn(orderInfo.getOrderSn());
         userCouponService.updateByIdSelective(userCoupon);
         return orderInfo;
@@ -761,7 +759,12 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         if(OrderInfo.PAYSTATUS_PAYED == payStatus){
             managePaySuccess(orderInfo);
             countSales(orderInfo.getOrderId());
-            updateUserCoupon(orderInfo.getOrderSn());
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("orderSn",orderSn));
+            List<UserCoupon> userCoupons = userCouponService.selectList(filter);
+            if (userCoupons != null && userCoupons.size() > 0) {
+                updateUserCoupon(userCoupons);
+            }
             //更新微信推荐是否成功交易状态
 //            wxUserRecommendService.updateWXUserRecommendIsDeal(orderInfo.getUserId());
 
@@ -775,24 +778,18 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     /**
-     * 支付完成改优惠券状态
-     * @param orderSn
+     * 支付完成改优惠券状态为 使用且已支付
      */
-    public synchronized void updateUserCoupon(String orderSn){
-        List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("orderSn",orderSn));
-        List<UserCoupon> userCoupons = userCouponService.selectList(filter);
-        if (userCoupons != null && userCoupons.size() > 0){
-            for (UserCoupon userCoupon : userCoupons){
-                Coupon coupon = couponService.selectById(userCoupon.getCouponId());
-                coupon.setUsedCount(coupon.getUsedCount()+1);
-                coupon.setUpdateTime(new Date());
-                userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.USED.getCode());
-                userCoupon.setUsedTime(new Date());
-                userCoupon.setUpdateTime(new Date());
-                couponService.updateByIdSelective(coupon);
-                userCouponService.updateByIdSelective(userCoupon);
-            }
+    public synchronized void updateUserCoupon(List<UserCoupon> userCoupons){
+        for (UserCoupon userCoupon : userCoupons){
+            Coupon coupon = couponService.selectById(userCoupon.getCouponId());
+            coupon.setUsedCount(coupon.getUsedCount()+1);
+            coupon.setUpdateTime(new Date());
+            userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.USED_PAYED.getCode());
+            userCoupon.setUsedTime(new Date());
+            userCoupon.setUpdateTime(new Date());
+            couponService.updateByIdSelective(coupon);
+            userCouponService.updateByIdSelective(userCoupon);
         }
     }
 
