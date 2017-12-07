@@ -19,6 +19,18 @@ public class FlowUserVo extends FlowUser implements Serializable {
 
     private String endTime;
 
+    private String dataSource;
+
+    @Override
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    @Override
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
+    }
+
     public Long getAllNewUser() {
         return allNewUser;
     }
