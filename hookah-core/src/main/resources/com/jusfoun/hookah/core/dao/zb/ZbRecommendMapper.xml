@@ -35,13 +35,12 @@
         LEFT JOIN zb_requirement b
         ON a.requirement_id = b.id
         WHERE b.`status` IN (5)
-        AND a.order_num NOT IN (0)
         AND a.`status` = 1
         AND b.id NOT IN
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
         </foreach>
-        ORDER BY a.order_num DESC, b.apply_deadline ASC
+        ORDER BY a.order_num DESC, b.apply_deadline ASC limit 10
     </select>
 
     <select id="selectRecommendTasksInfoNo" resultType="com.jusfoun.hookah.core.domain.zb.vo.ZbRecommendVo">
@@ -49,8 +48,7 @@
     LEFT JOIN zb_requirement b
     ON a.requirement_id = b.id
     WHERE b.`status` IN (5)
-    AND a.order_num NOT IN (0)
     AND a.`status` = 1
-    ORDER BY a.order_num DESC, b.apply_deadline ASC
+    ORDER BY a.order_num DESC, b.apply_deadline ASC limit 10
   </select>
 </mapper>
