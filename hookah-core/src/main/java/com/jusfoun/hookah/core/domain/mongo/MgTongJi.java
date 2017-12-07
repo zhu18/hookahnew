@@ -31,6 +31,17 @@ public class MgTongJi extends GenericModel {
     //用户id
     private String userId;
 
+    //用户来源（统计来源_统计关键字）
+    private  String source;
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     public String getId() {
         return id;
     }
