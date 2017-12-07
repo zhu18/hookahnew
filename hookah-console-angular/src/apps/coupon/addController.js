@@ -49,6 +49,7 @@ class couponController {
                     $scope.expiryEndTime=new Date(info.expiryEndDate);
                     $scope.validDays=info.validDays;
                     $scope.applyGoods=info.applyGoods.toString();
+                    $scope.couponStatus=info.couponStatus;
                 } else {
                     $rootScope.openJustShowDialogModal(res.data.message);
                 }

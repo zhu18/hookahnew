@@ -5,19 +5,18 @@ package com.jusfoun.hookah.core.constants;
  */
 public class TongJiEnum {
 
-
     /**
      * 统计注册地址
      */
-    public final static String REG_URL = "www.bdgstore.cn/auth.bdgstore.cn/reg";
+    public final static String REG_URL = "auth.bdgstore.cn/reg";
 
     /**
      * 统计个人认证地址
      */
-    public final static String PERSON_URL = "www.bdgstore.cn/auth/user_auth_init_step2";
+    public final static String PERSON_URL = "www.bdgstore.cn/auth/user_auth_init_step4";
 
     /**
      * 统计企业认证地址
      */
-    public final static String ORG_URL = "www.bdgstore.cn/auth/company_auth_init_step2";
+    public final static String ORG_URL = "www.bdgstore.cn/auth/company_auth_init_step4";
 }

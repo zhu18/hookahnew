@@ -629,10 +629,16 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
         filters.add(Condition.eq("requirementId", requirementId));
         ZbRecommend zbRecommend = zbRecommendService.selectOne(filters);
         if(zbRecommend != null){
-            //更改任务推荐表编号
+            //ZbRecommend recommend = new ZbRecommend();
+            //recommend.setId(zbRecommend.getId());
             zbRecommend.setOrderNum(orderNum);
-            zbRecommendService.updateByCondition(zbRecommend, filters);
+            zbRecommend.setUpdateTime(new Date());
+            zbRecommendService.updateByConditionSelective(zbRecommend,filters);
+            //更改任务推荐表编号
+            //zbRecommend.setOrderNum(orderNum);
+//            zbRecommendService.updateByCondition(zbRecommend, filters);
+            return  ReturnData.success("更改推荐编号成功！！！");
         }
-        return  ReturnData.success("更改推荐编号正确！！！");
+        return  ReturnData.success("更改推荐编号失败！！！");
     }
 }

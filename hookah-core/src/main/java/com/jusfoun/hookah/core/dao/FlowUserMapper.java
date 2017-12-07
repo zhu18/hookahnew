@@ -16,7 +16,7 @@ public interface FlowUserMapper extends GenericDao<FlowUser> {
 
     FlowUsersVo selectSum(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
-    FlowUsersVo selectBySource(@Param("startTime") String startTime, @Param("endTime") String endTime ,@Param("dataSource")Short dataSource);
+    FlowUsersVo selectBySource(@Param("startTime") String startTime, @Param("endTime") String endTime ,@Param("dataSource")String dataSource);
 
     List<FlowUsersVo> selectBySourceList(@Param("startTime") String startTime, @Param("endTime") String endTime);
 }

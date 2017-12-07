@@ -1,6 +1,6 @@
 /**
  * Created by lss on 2017/11/7 0007
- * 优惠券分为三种状态：可用（0），已经使用（1），已经过期（2）   根据userCouponStatus字段判断
+ * 优惠券分为三种状态：可用（0），已经使用（1,3），已经过期（2）   根据userCouponStatus字段判断
  * 可用中又有三种状态：新到，即将过期，null（不符合前两个条件都未null）  根据tagName字段判断
  */
 function loadPageData(data) {
@@ -58,7 +58,7 @@ function loadPageData(data) {
                     html +='<p>'+applyChannel+'</p> </div> </div> ' ;
                     html +='<a class="btn coupon-btn" href="'+host.website+'/exchange/list">立即使用</a> ' ;
                     html +='<div class="info"> <p><span>适用平台：</span><span>'+applyPlatform+'</span></p> ' ;
-                    html +='<p><span>有效期至：</span><span>'+item.expiryEndDate+'</span></p> ';
+                    html +='<p><span>有效期至：</span><span>'+item.receivedTime.substring(0,10)+'</span>至<span>'+item.expiryEndDate+'</span></p> ';
                     html +='<p><span>详细说明：</span><span>全场通用，不限条件，特殊商品除外。</span></p> </div> </div> ';
                     html +='<div class="bg-wrapper"></div> ' ;
                     html +='</li>';
@@ -73,13 +73,13 @@ function loadPageData(data) {
                     html +='<p>'+applyChannel+'</p> </div> </div> ' ;
                     html +='<a class="btn coupon-btn" href="'+host.website+'/exchange/list">立即使用</a> ' ;
                     html +='<div class="info"> <p><span>适用平台：</span><span>'+applyPlatform+'</span></p> ' ;
-                    html +='<p><span>有效期至：</span><span>'+item.expiryEndDate+'</span></p> ';
+                    html +='<p><span>有效期至：</span><span>'+item.receivedTime.substring(0,10)+'</span>至<span>'+item.expiryEndDate+'</span></p> ';
                     html +='<p><span>详细说明：</span><span>全场通用，不限条件，特殊商品除外。</span></p> </div> </div> ';
                     html +='<div class="bg-wrapper"></div> ' ;
                     html +='</li>';
                 }
 
-            }else if(item.userCouponStatus == 1){ //已经使用过
+            }else if(item.userCouponStatus == 1 || item.userCouponStatus == 3){ //已经使用过
                 html +='<li class="tag bg-gray" data-tip="已使用"> ' +
                     '<div class="bg-content"> ' +
                     '<div class="message clearfix">' +
@@ -90,7 +90,7 @@ function loadPageData(data) {
                     '<p>'+applyChannel+'</p> </div> </div> ' +
                     '<div class="info"> ' +
                     '<p><span>适用平台：</span><span>'+applyPlatform+'</span></p> ' +
-                    '<p><span>有效期至：</span><span>'+item.expiryEndDate+'</span></p> ' +
+                    '<p><span>有效期至：</span><span>'+item.receivedTime.substring(0,10)+'</span>至<span>'+item.expiryEndDate+'</span></p> ' +
                     '<p><span>详细说明：</span><span>全场通用，不限条件，特殊商品除外。</span></p> </div> </div> ' +
                     '<div class="bg-wrapper"></div> ' +
                     '</li>'
@@ -105,7 +105,7 @@ function loadPageData(data) {
                     '<p>'+applyChannel+'</p> </div> </div> ' +
                     '<div class="info"> ' +
                     '<p><span>适用平台：</span><span>'+applyPlatform+'</span></p> ' +
-                    '<p><span>有效期至：</span><span>'+item.expiryEndDate+'</span></p> ' +
+                    '<p><span>有效期至：</span><span>'+item.receivedTime.substring(0,10)+'</span>至<span>'+item.expiryEndDate+'</span></p> ' +
                     '<p><span>详细说明：</span><span>全场通用，不限条件，特殊商品除外。</span></p> </div> </div> ' +
                     '<div class="bg-wrapper"></div> ' +
                     '</li>'

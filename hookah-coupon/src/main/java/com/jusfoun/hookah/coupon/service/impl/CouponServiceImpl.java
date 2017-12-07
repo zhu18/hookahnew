@@ -203,7 +203,11 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
             filter.add(Condition.eq("orderSn",orderSn));
         }
         if (userCouponStatus != null){
-            filter.add(Condition.eq("userCouponStatus",userCouponStatus));
+            if (userCouponStatus == HookahConstants.UserCouponStatus.USED_PAYED.getCode()){
+                filter.add(Condition.in("userCouponStatus",new Byte[]{userCouponStatus,HookahConstants.UserCouponStatus.USED_UN_PAYED.getCode()}));
+            } else {
+                filter.add(Condition.eq("userCouponStatus", userCouponStatus));
+            }
         }
         filter.add(Condition.eq("isDeleted",(byte)0));
         if (StringUtils.isNotBlank(userId)){
@@ -256,7 +260,13 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 BeanUtils.copyProperties(coupon,couponVo);
                 couponVo.setUserCouponStatus(userCouponVo.getUserCouponStatus());
                 Date receivedTime = userCouponVo.getReceivedTime();
+                couponVo.setReceivedTime(receivedTime);
                 Date expiryEndDate = userCouponVo.getExpiryEndDate();
+                Date validDays = DateUtils.thisTimeNextFewDays(receivedTime,userCouponVo.getValidDays()-1);
+                if (expiryEndDate.getTime() > validDays.getTime()){
+                    expiryEndDate = validDays;
+                    couponVo.setExpiryEndDate(expiryEndDate);
+                }
                 if (DateUtils.isSameDay(receivedTime,new Date())){
                     couponVo.setTagName(CouponVo.NEW_RECEIVED);
                 }

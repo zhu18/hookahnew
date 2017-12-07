@@ -4,6 +4,7 @@ import com.jusfoun.hookah.console.server.controller.BaseController;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.FlowUserService;
+import com.jusfoun.hookah.rpc.api.TongJiInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,9 @@ public class TongjiController extends BaseController {
     @Resource
     private FlowUserService flowUserService;
 
+    @Resource
+    TongJiInfoService   tongJiInfoService;
+
     @RequestMapping(value = "/reqUser")
     public ReturnData tongjiList(String startTime,String endTime){
         if(!StringUtils.isNotBlank(startTime)){
@@ -32,4 +36,8 @@ public class TongjiController extends BaseController {
         return returnData;
     }
 
+    @RequestMapping(value = "/tongJiiii")
+    public void tongJi() {
+        tongJiInfoService.saveTongJiInfoService();
+    }
 }

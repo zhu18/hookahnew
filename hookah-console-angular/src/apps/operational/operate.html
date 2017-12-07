@@ -60,14 +60,7 @@
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="item in operateList">
-                                <td >
-                                    <span data-ng-show="item.dataSource == 0">总计</span>
-                                    <span data-ng-show="item.dataSource == 1">直接访问</span>
-                                    <span data-ng-show="item.dataSource == 2">SEM</span>
-                                    <span data-ng-show="item.dataSource == 3">百度</span>
-                                    <span data-ng-show="item.dataSource == 4">Google</span>
-                                    <span data-ng-show="item.dataSource == 5">其他</span>
-                                </td>
+                                <td data-ng-bind="item.dataSource"> </td>
                                 <td data-ng-bind="item.allNewUser"> </td>
                                 <td data-ng-bind="item.allPersonUser"> </td>
                                 <td data-ng-bind="item.allOrgUser"> </td>

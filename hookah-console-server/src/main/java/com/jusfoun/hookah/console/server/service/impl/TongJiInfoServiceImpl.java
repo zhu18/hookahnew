@@ -1,27 +1,23 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
-import com.ctc.wstx.util.DataUtil;
 import com.jusfoun.hookah.core.constants.TongJiEnum;
+import com.jusfoun.hookah.core.dao.FlowUserMapper;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
+import com.jusfoun.hookah.core.domain.vo.FlowUserVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.rpc.api.*;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import sun.security.pkcs11.wrapper.Constants;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by zhaoshuai on 2017/12/5.
@@ -46,8 +42,14 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
     @Resource
     MongoTemplate mongoTemplate;
 
+    @Resource
+    FlowUserMapper flowUserMapper;
+
+    @Resource
+    FlowUserService flowUserService;
+
     // 每隔凌晨执行一次
-    //@Scheduled(cron="59 59 23 * * ?")
+    @Scheduled(cron="0 59 23 * * ?")
     public void saveTongJiInfoService(){
         logger.info("------------------开始统计当天访问次数----------------------");
         //获取当天访问所有数据
@@ -57,10 +59,23 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
         String date = DateUtils.toDateText(new Date());
         filters.add(Condition.like("addTime", date));
         List<User> users = userService.selectList(filters);
-        List<MgTongJi> list = new ArrayList();
+        List<MgTongJi> regList = new ArrayList();
         for (User user : users){
             MgTongJi mgTongJiInfo = getMgTongJiInfo(user.getUserId(), TongJiEnum.REG_URL);
-            list.add(mgTongJiInfo);
+            regList.add(mgTongJiInfo);
+        }
+
+        Map<String,Integer> regMap = new HashMap<String,Integer>();
+        for (MgTongJi reg : regList){
+            if(reg != null){
+                if(regMap.containsKey(reg.getSource())){
+                    Integer reqNum = regMap.get(reg.getSource());
+                    reqNum++;
+                    regMap.put(reg.getSource(), reqNum);
+                }else{//map中不存在，新建key，用来存放数据
+                    regMap.put(reg.getSource(), 1);
+                }
+            }
         }
 
         //获取当天个人认证数
@@ -74,6 +89,18 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             MgTongJi mgTongJiInfo = getMgTongJiInfo(person.getUserId(), TongJiEnum.PERSON_URL);
             personList.add(mgTongJiInfo);
         }
+        Map<String,Integer> personMap = new HashMap<String,Integer>();
+        for (MgTongJi person : personList){
+            if( person != null){
+                if(personMap.containsKey(person.getSource())){
+                    Integer personNum = personMap.get(person.getSource());
+                    personNum++;
+                    regMap.put(person.getSource(), personNum);
+                }else{//map中不存在，新建key，用来存放数据
+                    personMap.put(person.getSource(), 1);
+                }
+            }
+        }
 
         //获取当天当天企业认证数
         List<Condition> orgFilters = new ArrayList<>();
@@ -86,8 +113,46 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             MgTongJi mgTongJiInfo = getMgTongJiInfo(org.getUserId(), TongJiEnum.ORG_URL);
             orgList.add(mgTongJiInfo);
         }
+        Map<String,Integer> orgMap = new HashMap<String,Integer>();
+        for (MgTongJi org : orgList){
+            if( org != null){
+                if(orgMap.containsKey(org.getSource())){
+                    Integer orgNum = orgMap.get(org.getSource());
+                    orgNum++;
+                    orgMap.put(org.getSource(), orgNum);
+                }else{//map中不存在，新建key，用来存放数据
+                    orgMap.put(org.getSource(), 1);
+                }
+            }
+        }
         logger.info("------------------结束统计当天访问次数----------------------");
-    }
+        FlowUserVo flowUserVo = new FlowUserVo();
+        Date addTime = new Date();
+        String s= DateUtils.toDateText(addTime);
+        List<Condition> filter = new ArrayList<>();
+        filter.add(Condition.eq("insertTime", s));
+        flowUserService.deleteByCondtion(filter);
+        for (String key : regMap.keySet()){
+            flowUserVo.setDataSource(key);
+            flowUserVo.setNewUserNum(regMap.get(key));
+            if (personMap!=null&&personMap.get(key)!=null){
+                Integer integer = personMap.get(key);
+                flowUserVo.setPersonUser(integer);
+            }
+            if (orgMap!=null&&orgMap.get(key)!=null){
+                Integer integer = orgMap.get(key);
+                flowUserVo.setOrgUser(integer);
+            }
+            flowUserVo.setAddTime(addTime);
+
+            flowUserVo.setInsertTime(s);
+            flowUserMapper.insert(flowUserVo);
+        }
+        }
+
+
+
+
 
 
 
@@ -116,6 +181,15 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
         query.addCriteria(Criteria.where("userId").is(userId));
         //query.addCriteria(Criteria.where("addTime").gte(getStartTime()).lte(getEndTime()));
         query.addCriteria(Criteria.where("tongJiUrl").is(tongJiUrl));
-        return mongoTemplate.findOne(query, MgTongJi.class);
+        MgTongJi mgTongJi = mongoTemplate.findOne(query, MgTongJi.class);
+        if(mgTongJi != null){
+            String source = null;
+            if (mgTongJi.getUtmTerm() == null){
+                source = mgTongJi.getUtmSource();
+            }
+            source = mgTongJi.getUtmSource() + "_" + mgTongJi.getUtmTerm() ;
+            mgTongJi.setSource(source);
+        }
+        return mgTongJi;
     }
 }
