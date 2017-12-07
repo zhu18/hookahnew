@@ -415,9 +415,29 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                     filters.add(Condition.ge("addTime", DateUtils.toDateText(new Date(), "yyyy-MM-dd") + " 00:00:00"));
                     filters.add(Condition.le("addTime", DateUtils.toDateText(new Date(), "yyyy-MM-dd") + " 23:59:59"));
                     List<JfRecord> jfRecordList = this.selectList(filters);
-                    if(jfRule.getUpperLimit() > jfRecordList.stream().mapToInt(JfRecord::getScore).sum()){
+
+                    int yqSum = jfRecordList.stream().mapToInt(JfRecord::getScore).sum();
+                    if(jfRule.getUpperLimit() > yqSum){
 //                        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(recommendUserId, 2, ""));
-                        this.handleJfMsg(new JfBo(recommendUserId, 2, ""));
+                        if(jfRule.getUpperLimit() - yqSum >= jfRule.getScore()){
+                            this.handleJfMsg(new JfBo(recommendUserId, 2, ""));
+                        } else {
+                            JfRecord jfRecord = new JfRecord();
+                            jfRecord.setUserId(recommendUserId);
+                            jfRecord.setSourceId(jfRule.getSn());
+                            jfRecord.setAction(jfRule.getAction());
+                            jfRecord.setScore(jfRule.getUpperLimit() - yqSum);
+                            jfRecord.setNote("有效期至" +
+                                    LocalDate.now().plusYears(JfContants.JF_EXPIRE_YEAR)
+                                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                            jfRecord.setExpire(Byte.parseByte("0"));
+                            jfRecord.setAddTime(new Date());
+                            jfRecord.setOperator("System");
+                            jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
+                            jfRecord.setActionDesc(jfRule.getActionDesc());
+                            int n = jfRecordMapper.insert(jfRecord);
+                            logger.info("邀请送积分返回值>>> n = " + n);
+                        }
                         logger.info("邀请用户送积分，userID = " + userId);
                     } else {
                         logger.info("该用户邀请赠送积分已达到上限");
