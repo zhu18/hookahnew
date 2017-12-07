@@ -38,7 +38,7 @@ public class FlowUserServiceImpl  extends GenericServiceImpl<FlowUser,Long> impl
     public ReturnData tongjiList (String startTime,String endTime){
         FlowUsersVo sum = flowUserMapper.selectSum(startTime ,endTime);
         List<FlowUsersVo> dataSource = flowUserMapper.selectBySourceList(startTime, endTime);
-        sum.setDataSource("0");
+        sum.setDataSource("总计");
         dataSource.add(sum);
         return ReturnData.success(dataSource);
     }

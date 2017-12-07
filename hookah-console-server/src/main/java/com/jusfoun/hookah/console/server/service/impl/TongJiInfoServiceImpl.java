@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.domain.vo.FlowUserVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
     // 每隔凌晨执行一次
     @Scheduled(cron="0 59 23 * * ?")
-    public void saveTongJiInfoService(){
+    public ReturnData saveTongJiInfoService(){
         logger.info("------------------开始统计当天访问次数----------------------");
         //获取当天访问所有数据
         //List<MgTongJi> tongJiListInfo = mgTongJiService.getTongJiListInfo(getStartTime(), getEndTime());
@@ -147,8 +148,10 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
             flowUserVo.setInsertTime(s);
             flowUserMapper.insert(flowUserVo);
+            return ReturnData.success("统计成功");
         }
-        }
+        return  ReturnData.error("统计失败");
+    }
 
 
 
