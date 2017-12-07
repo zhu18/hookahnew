@@ -32,6 +32,18 @@ $(function(){
         })
     }
 // 购买数量功能
+	$("#J_buyNumber").keydown(function (event) {
+		var val = $('#J_buyNumber').val();
+		if(event.keyCode == 13){
+			if (isNaN(val)) {
+				$('#J_buyNumber').val(1);
+			} else if (val < 1 || val > 9999999) {
+				$.alert('数量只能在1-9999999之间')
+				$('#J_buyNumber').val(1);
+			}
+			return false
+		}
+	});
     function purchaseQuantity() {
         var conut = '';
         // 对输入框中的数据进行格式化
@@ -39,8 +51,8 @@ $(function(){
             var val = $(this).val();
             if (isNaN(val)) {
                 $(this).val(1);
-            } else if (val < 1 || val > 999) {
-                $.alert('数量只能在1-999之间')
+            } else if (val < 1 || val > 9999999) {
+                $.alert('数量只能在1-9999999之间')
                 $(this).val(1);
             }
         })

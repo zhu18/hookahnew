@@ -71,7 +71,7 @@ html{
 	width: 80px;
 	height: 38px;
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 16px;
 }
 .header-centerbar .search .search-text {
 	line-height: 26px;
@@ -413,73 +413,62 @@ html{
 }
 .float-tool {
 	position: fixed;
-	_position: absolute;
-	bottom: 33%;
-	right: .1%;
+	right: 30px;
+	bottom: 100px;
 	z-index: 9999;
-	margin-bottom: -90px
 }
-.float-tool .btn-tool {
-	margin: 5px 0;
-	width: 22px;
-	height: 22px;
-	font-size: 21px;
-	padding: 8px;
-	cursor: pointer
+.float-tool a{
+	display: block;
 }
-.float-tool .btn-tool a {
-	color: #00a2ca
-}
-.float-tool .btn-tool a:hover {
-	color: #fff !important;
-	text-decoration: none
-}
-.float-tool .gotop-wrap {
-	background: #f1f1f1;
-	line-height: 22px
-}
-.float-tool .gotop-wrap a:hover, .float-tool .gotop-wrap:hover {
-	background: #27b5d7
-}
-.float-tool .gotop-wrap:hover a {
-	color: #fff !important
-}
-.float-tool .top {
-	display: none
-}
-.float-tool .cloud-helper {
+.float-tool .tool-item{
+	margin-bottom:3px;
+	overflow: hidden;
 	position: relative;
-	height: 110px
+	right:0;
 }
-.float-tool .cloud-helper a {
+
+.float-tool .tool-item .btn-title{
+	width:40px;
+	height:40px;
 	display: block;
-	top: 0;
-	left: 0;
-	width: 39px;
-	height: 128px;
-	position: absolute;
-	overflow: hidden
+	float: right;
+	background: #666;
 }
-.float-tool .cloud-helper .cloud-help-icon-top {
+.float-tool .tool-item .btn-title img{
+	width: 100%;
+}
+.float-tool .tool-item .btn-content{
+	float: left;
+	line-height: 40px;
+	font-size: 12px;
+	color: #fff;
+	padding: 0 3px 0 10px;
+	display: none;
+}
+.float-tool .tool-item:first-child .btn-content{
+	padding:3px;
+	width:60px;
+	height:60px;
+}
+.float-tool .tool-item:first-child .btn-content img{
+	width:100%;
+}
+.float-tool .tool-item:first-child:hover .btn-title{
+	padding:13px 0;
+}
+.float-tool .tool-item:hover .btn-title{
+	background: #d04848;
+}
+.float-tool .tool-item:hover .btn-content{
+	background: #d04848;
+}
+.float-tool .tool-item .btn-content.hover{
 	display: block;
-	width: 38px;
-	height: 38px;
-	background-image: url(//gtms02.alicdn.com/tps/i2/TB1axaoHXXXXXcLXpXXK.SYFVXX-30-36.png);
-	background-image: -webkit-image-set(url(//gtms02.alicdn.com/tps/i2/TB1axaoHXXXXXcLXpXXK.SYFVXX-30-36.png) 1x, url(//gtms01.alicdn.com/tps/i1/TB1oDOrHXXXXXbEXpXXeffVHFXX-60-72.png) 2x);
-	background-position: 4px 0;
-	background-repeat: no-repeat
 }
-.float-tool .cloud-helper .cloud-help-icon-bottom {
-	display: block;
-	width: 38px;
-	height: 90px;
-	background-image: url(//gtms01.alicdn.com/tps/i1/TB1.UypHXXXXXbQXpXXhxqzPVXX-38-293.gif);
-	background-image: -webkit-image-set(url(//gtms01.alicdn.com/tps/i1/TB1.UypHXXXXXbQXpXXhxqzPVXX-38-293.gif) 1x, url(//gtms04.alicdn.com/tps/i4/TB1ciqkHXXXXXXIXVXXNi0h6FXX-76-586.gif) 2x);
-	background-position: 0 -202px
+.no-cursor{
+	cursor: default;
 }
-.float-tool .cloud-helper a:hover .cloud-help-icon-bottom {
-	background-position: 0 -101px
-}
+
 input:focus, select:focus, textarea:focus {
 	outline: none;
 	border: 1px solid #69c5dd;
@@ -513,7 +502,7 @@ input:focus, select:focus, textarea:focus {
 	color: rgb(142, 164, 185);
 	white-space: nowrap;
 	overflow: hidden;
-	font-weight: bold;
+	font-weight: normal;
 }
 #exchange_menu{
 	width:180px;
