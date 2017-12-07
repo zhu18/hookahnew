@@ -51,7 +51,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
     // 每隔凌晨执行一次
     @Scheduled(cron="0 59 23 * * ?")
-    public ReturnData saveTongJiInfoService(){
+    public void saveTongJiInfoService(){
         logger.info("------------------开始统计当天访问次数----------------------");
         //获取当天访问所有数据
         //List<MgTongJi> tongJiListInfo = mgTongJiService.getTongJiListInfo(getStartTime(), getEndTime());
@@ -96,7 +96,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 if(personMap.containsKey(person.getSource())){
                     Integer personNum = personMap.get(person.getSource());
                     personNum++;
-                    regMap.put(person.getSource(), personNum);
+                    personMap.put(person.getSource(), personNum);
                 }else{//map中不存在，新建key，用来存放数据
                     personMap.put(person.getSource(), 1);
                 }
@@ -145,12 +145,10 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 flowUserVo.setOrgUser(integer);
             }
             flowUserVo.setAddTime(addTime);
-
             flowUserVo.setInsertTime(s);
             flowUserMapper.insert(flowUserVo);
-            return ReturnData.success("统计成功");
         }
-        return  ReturnData.error("统计失败");
+//        return ReturnData.success("统计完成");
     }
 
 
