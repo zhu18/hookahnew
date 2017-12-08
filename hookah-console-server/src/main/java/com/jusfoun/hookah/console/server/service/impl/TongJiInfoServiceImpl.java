@@ -7,6 +7,7 @@ import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.domain.vo.FlowUserVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,10 +81,9 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天个人认证数
         List<Condition> personFilters = new ArrayList<>();
-        String date1 = DateUtils.toDateText(new Date());
-        personFilters.add(Condition.like("addTime", date1));
+        personFilters.add(Condition.like("addTime", date));
         personFilters.add(Condition.eq("userType", 2));
-        List<User> personUsers = userService.selectList(filters);
+        List<User> personUsers = userService.selectList(personFilters);
         List<MgTongJi> personList = new ArrayList<MgTongJi>();
         for(User person : personUsers){
             MgTongJi mgTongJiInfo = getMgTongJiInfo(person.getUserId(), TongJiEnum.PERSON_URL);
@@ -95,7 +95,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 if(personMap.containsKey(person.getSource())){
                     Integer personNum = personMap.get(person.getSource());
                     personNum++;
-                    regMap.put(person.getSource(), personNum);
+                    personMap.put(person.getSource(), personNum);
                 }else{//map中不存在，新建key，用来存放数据
                     personMap.put(person.getSource(), 1);
                 }
@@ -104,10 +104,9 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天当天企业认证数
         List<Condition> orgFilters = new ArrayList<>();
-        String date2 = DateUtils.toDateText(new Date());
-        orgFilters.add(Condition.like("addTime", date2));
+        orgFilters.add(Condition.like("addTime", date));
         orgFilters.add(Condition.eq("userType", 4));
-        List<User> orgUsers = userService.selectList(filters);
+        List<User> orgUsers = userService.selectList(orgFilters);
         List<MgTongJi> orgList = new ArrayList<MgTongJi>();
         for(User org : orgUsers){
             MgTongJi mgTongJiInfo = getMgTongJiInfo(org.getUserId(), TongJiEnum.ORG_URL);
@@ -144,11 +143,11 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 flowUserVo.setOrgUser(integer);
             }
             flowUserVo.setAddTime(addTime);
-
             flowUserVo.setInsertTime(s);
             flowUserMapper.insert(flowUserVo);
         }
-        }
+//        return ReturnData.success("统计完成");
+    }
 
 
 

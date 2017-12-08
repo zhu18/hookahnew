@@ -13,10 +13,10 @@ public class TongJiEnum {
     /**
      * 统计个人认证地址
      */
-    public final static String PERSON_URL = "www.bdgstore.cn/auth/user_auth_init_step4";
+    public final static String PERSON_URL = "www.bdgstore.cn/auth/user_auth_init_step2";
 
     /**
      * 统计企业认证地址
      */
-    public final static String ORG_URL = "www.bdgstore.cn/auth/company_auth_init_step4";
+    public final static String ORG_URL = "www.bdgstore.cn/auth/company_auth_init_step2";
 }

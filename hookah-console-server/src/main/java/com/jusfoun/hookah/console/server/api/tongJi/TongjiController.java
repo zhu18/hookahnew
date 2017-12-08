@@ -38,6 +38,7 @@ public class TongjiController extends BaseController {
 
     @RequestMapping(value = "/tongJiiii")
     public void tongJi() {
-        tongJiInfoService.saveTongJiInfoService();
+       tongJiInfoService.saveTongJiInfoService();
+//        return returnData;
     }
 }

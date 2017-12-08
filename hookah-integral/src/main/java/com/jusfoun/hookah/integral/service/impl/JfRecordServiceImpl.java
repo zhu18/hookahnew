@@ -435,7 +435,7 @@ public class JfRecordServiceImpl extends GenericServiceImpl<JfRecord, Long> impl
                             jfRecord.setOperator("System");
                             jfRecord.setAddDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
                             jfRecord.setActionDesc(jfRule.getActionDesc());
-                            int n = jfRecordMapper.insert(jfRecord);
+                            int n = cacheService.insertAndGetId(jfRecord);
                             logger.info("邀请送积分返回值>>> n = " + n);
                         }
                         logger.info("邀请用户送积分，userID = " + userId);

@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.FlowUserService;
 import org.apache.catalina.LifecycleState;
 import org.apache.commons.collections.map.HashedMap;
@@ -36,10 +37,19 @@ public class FlowUserServiceImpl  extends GenericServiceImpl<FlowUser,Long> impl
     }
 
     public ReturnData tongjiList (String startTime,String endTime){
-        FlowUsersVo sum = flowUserMapper.selectSum(startTime ,endTime);
-        List<FlowUsersVo> dataSource = flowUserMapper.selectBySourceList(startTime, endTime);
-        sum.setDataSource("0");
-        dataSource.add(sum);
-        return ReturnData.success(dataSource);
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.ge("insertTime", startTime));
+        filters.add(Condition.le("insertTime", endTime));
+        List<FlowUser> flowUsers = this.selectList(filters);
+        if(flowUsers != null && flowUsers.size() > 0){
+            //获取统计总计
+            FlowUsersVo sum = flowUserMapper.selectSum(startTime ,endTime);
+            //分组获取统计数据
+            List<FlowUsersVo> dataSource = flowUserMapper.selectBySourceList(startTime, endTime);
+            sum.setDataSource("总计");
+            dataSource.add(sum);
+            return ReturnData.success(dataSource);
+        }
+        return ReturnData.error("当天没有统计数据");
     }
 }
