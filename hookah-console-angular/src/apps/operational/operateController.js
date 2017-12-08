@@ -23,6 +23,7 @@ class OperateController {
           $scope.operateList = res.data.data;
 
         }else{
+          $scope.operateList=[];
           $rootScope.loadingState = false;
           $rootScope.showNoneDataInfoTip=true;
         }
