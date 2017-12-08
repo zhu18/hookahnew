@@ -38,8 +38,8 @@ public class FlowUserServiceImpl  extends GenericServiceImpl<FlowUser,Long> impl
 
     public ReturnData tongjiList (String startTime,String endTime){
         List<Condition> filters = new ArrayList<>();
-        filters.add(Condition.ge("insertTime", startTime));
-        filters.add(Condition.le("insertTime", endTime));
+        filters.add(Condition.ge("insertTime", startTime.substring(0, 10)));
+        filters.add(Condition.le("insertTime", endTime.substring(0, 10)));
         List<FlowUser> flowUsers = this.selectList(filters);
         if(flowUsers != null && flowUsers.size() > 0){
             //获取统计总计
