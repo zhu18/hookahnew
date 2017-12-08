@@ -518,5 +518,5 @@ input:focus, select:focus, textarea:focus {
 #exchange_menu a span{margin-right:10px;}
 /*新添加最顶部bar*/
 .pageTopBar{ background-color: #f2f2f2; font-size:14px; line-height:30px; border-bottom:1px solid #ffffff; color:#949494; overflow: hidden;}
-.pageTopBar a{ padding: 10px;}
-.pageTopBar a:first-child{color:#000000}
+.pageTopBar a{ padding: 10px;color:#949494;}
+/*.pageTopBar a:first-child{color:#000000}*/
