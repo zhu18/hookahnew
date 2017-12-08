@@ -42,7 +42,9 @@ public class FlowUserServiceImpl  extends GenericServiceImpl<FlowUser,Long> impl
         filters.add(Condition.le("insertTime", endTime));
         List<FlowUser> flowUsers = this.selectList(filters);
         if(flowUsers != null && flowUsers.size() > 0){
+            //获取统计总计
             FlowUsersVo sum = flowUserMapper.selectSum(startTime ,endTime);
+            //分组获取统计数据
             List<FlowUsersVo> dataSource = flowUserMapper.selectBySourceList(startTime, endTime);
             sum.setDataSource("总计");
             dataSource.add(sum);

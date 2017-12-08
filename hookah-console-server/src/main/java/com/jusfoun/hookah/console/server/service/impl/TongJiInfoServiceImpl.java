@@ -81,10 +81,9 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天个人认证数
         List<Condition> personFilters = new ArrayList<>();
-        String date1 = DateUtils.toDateText(new Date());
-        personFilters.add(Condition.like("addTime", date1));
+        personFilters.add(Condition.like("addTime", date));
         personFilters.add(Condition.eq("userType", 2));
-        List<User> personUsers = userService.selectList(filters);
+        List<User> personUsers = userService.selectList(personFilters);
         List<MgTongJi> personList = new ArrayList<MgTongJi>();
         for(User person : personUsers){
             MgTongJi mgTongJiInfo = getMgTongJiInfo(person.getUserId(), TongJiEnum.PERSON_URL);
@@ -105,10 +104,9 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天当天企业认证数
         List<Condition> orgFilters = new ArrayList<>();
-        String date2 = DateUtils.toDateText(new Date());
-        orgFilters.add(Condition.like("addTime", date2));
+        orgFilters.add(Condition.like("addTime", date));
         orgFilters.add(Condition.eq("userType", 4));
-        List<User> orgUsers = userService.selectList(filters);
+        List<User> orgUsers = userService.selectList(orgFilters);
         List<MgTongJi> orgList = new ArrayList<MgTongJi>();
         for(User org : orgUsers){
             MgTongJi mgTongJiInfo = getMgTongJiInfo(org.getUserId(), TongJiEnum.ORG_URL);
