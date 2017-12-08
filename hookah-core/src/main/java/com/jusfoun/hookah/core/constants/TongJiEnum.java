@@ -19,4 +19,14 @@ public class TongJiEnum {
      * 统计企业认证地址
      */
     public final static String ORG_URL = "www.bdgstore.cn/auth/company_auth_init_step2";
+
+    /**
+     * 统计支付成功订单情况地址
+     */
+    public final static String  ORDER_SUCCESS_URL = "www.bdgstore.cn/pay/cash";
+
+    /**
+     * 统计取消订单情况地址
+     */
+    public final static String  CANCEL_ORDER_URL = "www.bdgstore.cn/usercenter/buyer/orderStay";
 }
