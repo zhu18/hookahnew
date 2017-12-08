@@ -17,11 +17,13 @@ class OperateController {
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
         console.log(res.data.data);
-        if (res.data.data.length > 0) {
-          $rootScope.showNoneDataInfoTip=false;
-          $rootScope.loadingState = false;
-          $scope.operateList = res.data.data;
+        if(res.data.data !== null){
+          if (res.data.data.length > 0) {
+            $rootScope.showNoneDataInfoTip=false;
+            $rootScope.loadingState = false;
+            $scope.operateList = res.data.data;
 
+          }
         }else{
           $scope.operateList=[];
           $rootScope.loadingState = false;
