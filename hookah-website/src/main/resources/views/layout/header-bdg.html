@@ -22,12 +22,13 @@
 					</ul>
 				</div>
 			</div>
-			<ul class="text-align-right topbar-user grid-right margin-left-30" style="margin-top:28px;" >
+			<ul class="text-align-right topbar-user grid-right margin-left-30" style="margin-top:28px;position: relative" >
 				<%if(isEmpty(user)){%>
 				<li class="display-inline-block">
 					<a href="${oauth2.loginUrl}" style="padding:7px 14px;">登录</a>
 				</li>
-				<li class="display-inline-block margin-left-10"><a href="${oauth2.regUrl}">免费注册</a></li>
+				<li class="display-inline-block margin-left-10"><a class="reg" href="${oauth2.regUrl}">免费注册</a></li>
+				<p class="show-ad">注册送200元大礼<i class="fa fa-close"></i></p>
 				<%}else{%>
 				<li class="display-inline-block margin-left-10"><a href="${host.auth}/logout">退出</a></li>
 				<%}%>

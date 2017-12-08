@@ -95,6 +95,9 @@ var htmlPart = {
 				<div class="goods-details-right grid-left bdg-row">
 					<div class="detail-title margin-bottom-10">
 						<span class="font-weight-bold vertical-align-middle" id="J_goodsTitle">${goodsDetails.goodsName}</span>
+						<%if(isNotEmpty(goodsDetails.dataSample)){%>
+							<a class="tag-link" href="${host.static+'/'+goodsDetails.dataSample}" target="_blank">下载数据样例</a>
+						<%}%>
 					</div>
 					<div class="margin-bottom-10">
 						<%if(isNotEmpty(goodsDetails.keywordsNames)){%>
@@ -175,9 +178,6 @@ var htmlPart = {
 						<li class="grid-left active">详情介绍</li>
 						<%if(goodsDetails.goodsType == 0){%>
 						<li class="grid-left">商品优势</li>
-						<%if(isNotEmpty(goodsDetails.dataSample)){%>
-						<li class="grid-left">数据样例</li>
-						<%}%>
 						<li class="grid-left">售后服务</li>
 						<%}else if(goodsDetails.goodsType == 1){%>
 						<li class="grid-left">API详情</li>
@@ -283,11 +283,6 @@ var htmlPart = {
 					<div class="table-item goodsDescBox">
 						${goodsDetails.goodsAdvantage}
 					</div>
-					<%if(isNotEmpty(goodsDetails.dataSample)){%>
-					<div class="table-item">
-						<a href="${host.static+'/'+goodsDetails.dataSample}" target="_blank">下载数据样例</a>
-					</div>
-					<%}%>
 					<div class="table-item goodsDescBox">
 						${goodsDetails.afterSaleService}
 					</div>

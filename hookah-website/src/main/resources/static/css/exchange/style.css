@@ -1335,6 +1335,32 @@ dl {
 	font-size: 22px;
 	color: black;
 }
+.goods-left .goods-details .goods-details-right .detail-title .tag-link{
+	padding:2px 6px;
+	background: #ffa800;
+	border-radius:3px;
+	font-size: 14px;
+	color:#fff;
+	position: relative;
+	margin: 0 5px;
+}
+.goods-left .goods-details .goods-details-right .detail-title .tag-link::after{
+	position: absolute;
+	left: -6px;
+	top: 5px;
+	width: 0;
+	height: 0;
+	content: '';
+	border-right: 6px solid #ffa800;
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+}
+.goods-left .goods-details .goods-details-right .detail-title .tag-link:hover{
+	background: #ff0000;
+}
+.goods-left .goods-details .goods-details-right .detail-title .tag-link:hover::after{
+	border-right: 6px solid #ff0000;
+}
 .goods-left .goods-details .goods-details-right .detail-title .icon {
 	color: white;
 	display: inline-block;

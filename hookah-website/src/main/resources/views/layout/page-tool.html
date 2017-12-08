@@ -33,6 +33,11 @@
 	<!--<img style="width: 38px;" src="/static/images/toTop2.jpg">-->
 	<!--</div>-->
 </div>
+<div class="ad-box">
+	<img src="/static/images/ad/ad-img.png" alt="">
+	<a href="http://www.bdgstore.cn/activity/coupon" target="_blank" class="link-btn"></a>
+	<a href="javascript:void(0)" class="close-btn"></a>
+</div>
 <script class="text/javascript">
 	$('.go_to_top').hide()
 	$(window).scroll(function () {
@@ -47,7 +52,7 @@
 	});
 	$(document).ready(function(){
 		$('#doyoo_panel').hide()
-
+		$('.show-ad').addClass('show');
 	})
 	$('.float-tool .tool-item a').hover(function () {
 		$(this).children('.btn-content').addClass('hover');
@@ -57,4 +62,10 @@
 	$('.goToTop').click(function () {
 		$("html,body").animate({scrollTop: 0}, 600);
 	});
+	$('.close-btn').click(function(){
+		$('.ad-box').hide();
+	})
+	$('.show-ad i').click(function(){
+		$('.show-ad').hide();
+	})
 </script>
