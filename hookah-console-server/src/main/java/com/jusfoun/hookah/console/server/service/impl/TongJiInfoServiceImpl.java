@@ -7,7 +7,6 @@ import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.domain.vo.FlowUserVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,7 @@ import javax.annotation.Resource;
 import java.util.*;
 
 /**
- * Created by zhaoshuai on 2017/12/5.
+ * Created by crs on 2017/12/5.
  */
 @Service
 public class TongJiInfoServiceImpl implements TongJiInfoService {
@@ -33,12 +32,6 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
     @Resource
     UserService userService;
-
-    @Resource
-    UserDetailService userDetailService;
-
-    @Resource
-    OrganizationService organizationService;
 
     @Resource
     MongoTemplate mongoTemplate;
@@ -53,8 +46,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
     @Scheduled(cron="0 59 23 * * ?")
     public void saveTongJiInfoService(){
         logger.info("------------------开始统计当天访问次数----------------------");
-        //获取当天访问所有数据
-        //List<MgTongJi> tongJiListInfo = mgTongJiService.getTongJiListInfo(getStartTime(), getEndTime());
+
         //获取当天的新注册用户数
         List<Condition> filters = new ArrayList<>();
         String date = DateUtils.toDateText(new Date());
@@ -66,6 +58,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             regList.add(mgTongJiInfo);
         }
 
+        //计算当天时间内按来源的注册数量
         Map<String,Integer> regMap = new HashMap<String,Integer>();
         for (MgTongJi reg : regList){
             if(reg != null){
@@ -89,6 +82,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             MgTongJi mgTongJiInfo = getMgTongJiInfo(person.getUserId(), TongJiEnum.PERSON_URL);
             personList.add(mgTongJiInfo);
         }
+        //计算当天时间内按来源的个人认证数量
         Map<String,Integer> personMap = new HashMap<String,Integer>();
         for (MgTongJi person : personList){
             if( person != null){
@@ -112,6 +106,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             MgTongJi mgTongJiInfo = getMgTongJiInfo(org.getUserId(), TongJiEnum.ORG_URL);
             orgList.add(mgTongJiInfo);
         }
+        //计算当天时间内按来源的企业认证数量
         Map<String,Integer> orgMap = new HashMap<String,Integer>();
         for (MgTongJi org : orgList){
             if( org != null){
@@ -124,21 +119,24 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 }
             }
         }
-        logger.info("------------------结束统计当天访问次数----------------------");
+
         FlowUserVo flowUserVo = new FlowUserVo();
         Date addTime = new Date();
         String s= DateUtils.toDateText(addTime);
+        //当重复执行同天时间的统计数据时， 删除之前的统计数据
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("insertTime", s));
         flowUserService.deleteByCondtion(filter);
+
+        //把统计计算的各来源数据量存库
         for (String key : regMap.keySet()){
             flowUserVo.setDataSource(key);
             flowUserVo.setNewUserNum(regMap.get(key));
-            if (personMap!=null&&personMap.get(key)!=null){
+            if (personMap != null && personMap.get(key) != null){
                 Integer integer = personMap.get(key);
                 flowUserVo.setPersonUser(integer);
             }
-            if (orgMap!=null&&orgMap.get(key)!=null){
+            if (orgMap != null && orgMap.get(key) != null){
                 Integer integer = orgMap.get(key);
                 flowUserVo.setOrgUser(integer);
             }
@@ -146,6 +144,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             flowUserVo.setInsertTime(s);
             flowUserMapper.insert(flowUserVo);
         }
+        logger.info("------------------结束统计当天访问次数----------------------");
 //        return ReturnData.success("统计完成");
     }
 

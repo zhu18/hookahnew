@@ -185,6 +185,7 @@ public class RegController {
 //        String userSn = HookahConstants.platformCode + date + String.format("%06d",count);
         user.setUserSn(generateUserSn());
 
+        user.setUserName(user.getUserName() == null ? user.getMobile() : user.getUserName());
         User regUser = userService.insert((User) user);
         //redirectAttributes.addAttribute(regUser);
         payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());

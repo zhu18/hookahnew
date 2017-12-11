@@ -230,7 +230,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                 BeanUtils.copyProperties(vo, mzp);
                 String userId = this.getCurrentUser().getUserId();
                 User user = userService.selectById(userId);
-                if (this.getCurrentUser().getUserType().equals(4)) {
+                if (user.getUserType().equals(4)) {
                     Organization organization = organizationService.findOrgByUserId(this.getCurrentUser().getUserId());
                     mzp.setAuthType(ZbContants.ProviderAuthType.COMPANY.code);
                     mzp.setUpname(organization.getOrgName());
@@ -243,7 +243,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     mzp.setCreditCode(organization.getCreditCode());
                     mzp.setScopeOfBuss(organization.getIndustry());
                     mzp.setAuthType(4);//企业
-                } else if (this.getCurrentUser().getUserType().equals(2)) {
+                } else if (user.getUserType().equals(2)) {
                     UserDetail userDetail = userDetailService.selectById(user.getUserId());
                     mzp.setAuthType(ZbContants.ProviderAuthType.PERSON.code);
                     mzp.setRegisterTime(DateUtil.getSimpleDate(new Date()));

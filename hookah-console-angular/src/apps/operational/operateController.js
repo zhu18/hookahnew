@@ -16,9 +16,21 @@ class OperateController {
       });
       promise.then(function (res, status, config, headers) {
         console.log('数据在这里');
-        console.log( res.data.data);
-        $scope.operateList = res.data.data;
-        $rootScope.loadingState = false;
+        console.log(res.data.data);
+        if(res.data.data !== null){
+          if (res.data.data.length > 0) {
+            $rootScope.showNoneDataInfoTip=false;
+            $rootScope.loadingState = false;
+            $scope.operateList = res.data.data;
+
+          }
+        }else{
+          $scope.operateList=[];
+          $rootScope.loadingState = false;
+          $rootScope.showNoneDataInfoTip=true;
+        }
+
+
         growl.addSuccessMessage("订单数据加载完毕。。。");
       });
     };
@@ -118,8 +130,9 @@ class OperateController {
       }
       return '';
     }
-    $scope.currentIndex=null;//初始化日历插件默认选择项
-    $scope.setDate = function (dataFormat, number,aIndex) {
+
+    $scope.currentIndex = null;//初始化日历插件默认选择项
+    $scope.setDate = function (dataFormat, number, aIndex) {
 
       var now = new Date();
       var date = new Date(now.getTime() - 1);
@@ -137,7 +150,7 @@ class OperateController {
       }
       $scope.startDate = new Date(year, month, day);
       $scope.endDate = new Date();
-      $scope.currentIndex=aIndex;
+      $scope.currentIndex = aIndex;
     }
     // 日历插件结束
   }
