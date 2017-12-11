@@ -37,11 +37,5 @@ export default function pointsRouting($stateProvider, $urlRouterProvider) {
       controller: pointsManageController,
       permission: 'pointsManage'
     })
-    .state('points.editPointsRule', { //修改积分设置
-      url: '/points/editPointsRule/:currentPointData',
-      template: require('./editPointsRule.html'),
-      controller: editPointsRulelController,
-      permission: 'editPointsRule'
-    })
 
   };
