@@ -1,9 +1,7 @@
 import pointsListController from "./pointsListController";
 import pointsManageController from './pointsManageController'
 import pointsDetailController from "./pointsDetailController";
-import editPointsRulelController from "./editPointsRuleController";
 import UserListDetailController from "../user/UserListDetailController";
-
 
 pointsRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function pointsRouting($stateProvider, $urlRouterProvider) {
