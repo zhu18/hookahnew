@@ -108,9 +108,11 @@
             var display=$(this).siblings().css("display");
             $(this).addClass('active').parent().siblings().find(".title").removeClass('active');
             if(display=="block" ){
+                $(this).children('span').removeClass('fa-caret-down').addClass('fa-caret-right');
                 $(this).siblings().hide()
             }else {
-                $(this).siblings().show()
+              $(this).children('span').removeClass('fa-caret-right').addClass('fa-caret-down');
+              $(this).siblings().show();
             }
         });
 

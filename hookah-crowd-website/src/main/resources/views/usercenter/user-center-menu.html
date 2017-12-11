@@ -101,27 +101,29 @@
   var userType =${user.userType};
 
   $(function(){
-        var url=window.location.pathname;
-        $('.status ul li').each(function () {
-            var href = $(this).children('a').attr('href');
-            if (url.indexOf(href) >= 0) {
-                $(this).addClass('active').siblings().removeClass("active");
-                $(this).siblings().addClass('item-active');
-                $(this).parent().siblings().addClass('active')
-            }
+    var url=window.location.pathname;
+    $('.status ul li').each(function () {
+      var href = $(this).children('a').attr('href');
+      if (url.indexOf(href) >= 0) {
+        $(this).addClass('active').siblings().removeClass("active");
+        $(this).siblings().addClass('item-active');
+        $(this).parent().siblings().addClass('active')
+      }
 
-        });
+    });
 //        控制菜单下拉
-        $('.title').on('click',function () {
-            var display=$(this).siblings().css("display");
-            $(this).addClass('active').parent().siblings().find(".title").removeClass('active');
-            if(display=="block" ){
-                $(this).siblings().hide()
-            }else {
-                $(this).siblings().show()
-            }
-        });
+    $('.title').on('click',function () {
+      var display=$(this).siblings().css("display");
+      $(this).addClass('active').parent().siblings().find(".title").removeClass('active');
+      if(display=="block" ){
+        $(this).children('span').removeClass('fa-caret-down').addClass('fa-caret-right');
+        $(this).siblings().hide()
+      }else {
+        $(this).children('span').removeClass('fa-caret-right').addClass('fa-caret-down');
+        $(this).siblings().show();
+      }
+    });
 
-    })
+  })
 </script>
 
