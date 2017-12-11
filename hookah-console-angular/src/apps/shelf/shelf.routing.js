@@ -1,47 +1,47 @@
-import ShelfController from './ShelfController'
-import ManageGoodsController from './ManageGoodsController'
+import ShelfOldController from './ShelfOldController'
+import ManageGoodsOldController from './ManageGoodsOldController'
 shelfRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function shelfRouting($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/shelf/search');
+  $urlRouterProvider.otherwise('/shelfold/search');
   $stateProvider
-    .state('shelf', {
+    .state('shelfold', {
       template: '<div ui-view></div>',
       showSubMenu: true
     })
-    .state('shelf.search', {
-      url: '/shelf/search',
+    .state('shelfold.search', {
+      url: '/shelfold/search',
       template: require('./list.html'),
-      controller: ShelfController,
+      controller: ShelfOldController,
     })
-    .state('shelf.add', {
-      url: '/shelf/add',
+    .state('shelfold.add', {
+      url: '/shelfold/add',
       template: require('./add.html'),
-      controller: ShelfController,
+      controller: ShelfOldController,
     })
-    .state('shelf.update', {
-      url: '/shelf/update',
+    .state('shelfold.update', {
+      url: '/shelfold/update',
       template: require('./update.html'),
-      controller: ShelfController,
+      controller: ShelfOldController,
       permission: 'updateShelf'
 
     })
-    .state('shelf.manageGoods', {
+    .state('shelfold.manageGoods', {
       params:{'data':null},
-      url: '/shelf/manageGoods',
+      url: '/shelfold/manageGoods',
       template: require('./manageGoods.html'),
-      controller: ManageGoodsController,
-      permission: 'shelf_manageGoods'
+      controller: ManageGoodsOldController,
+      permission: 'shelfold_manageGoods'
 
 
     })
-    .state('shelf.category', {
-      url: '/shelf/category',
+    .state('shelfold.category', {
+      url: '/shelfold/category',
       template: require('./list.html'),
-      controller: ShelfController,
+      controller: ShelfOldController,
     })
-    .state('shelf.detail', {
+    .state('shelfold.detail', {
       url: '/innerMsg/read/{categoryId:[0-9]{1,4}}',
       templateUrl: '/msc/list',
-      controller: ShelfController,
+      controller: ShelfOldController,
     })
 };

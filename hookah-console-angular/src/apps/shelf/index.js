@@ -11,7 +11,7 @@ let app = angular.module(MODULE_NAME, [
 app.config(shelfRouting);
 
 app.run(function ($rootScope, $state) {
-  $rootScope.currentProductId = 'shelf';
+  $rootScope.currentProductId = 'shelfold';
   $rootScope.config = {
     "navScene": 'main',
     "isSidebarFold": false,
@@ -38,11 +38,11 @@ app.run(function ($rootScope, $state) {
   $rootScope.config.mainNav = [
     {
       "title": "货架查询",
-      "url": "shelf.search"
+      "url": "shelfold.search"
     },
     {
       "title": "新增货架",
-      "url": "shelf.add"
+      "url": "shelfold.add"
     }
   ];
 

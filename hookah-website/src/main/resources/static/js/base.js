@@ -291,7 +291,7 @@ Attention.add = function (goodsId) {
 					},
 					success: function (data) {
 						if (data.code == "1") {
-							$('.attention .iconfont').css('color', '#e34f4f');
+							$('#J_attenBtn').css('color', '#e34f4f');
 							$('.attention .eval').html('已关注:');
 							var nums = parseInt($('#J_atonNum').html());
 							$('#J_atonNum').html(nums + 1);
@@ -353,3 +353,9 @@ function Transformation(price, quotaPrice) {
 		return (price / 100 ).toFixed(2);
 	}
 }
+$('#doyoo_mon_refuse').click(function(){
+	setTimeout(function(){
+		$('#doyoo_panel').hide()
+	},500)
+
+})
