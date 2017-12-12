@@ -88,18 +88,15 @@ var htmlPart = {
             <dd>
 
 
-              <div class="toBeServiceTitle">成为服务商
               <%if(user==null){%>
-                 <a href="${host.crowd}/usercenter/authentication">点击这里</a>
+                 <a class="toBeServiceTitle" href="${host.crowd}/usercenter/authentication">成为服务商 <img src="/static/images/crowdsourcing/index/tobeservice04.png" alt=""></a>
               <%}else{%>
                 <%if(user.userType == 2){%>
-                  <a href="/usercenter/pspAuthentication ">点击这里</a>
+                  <a class="toBeServiceTitle" href="/usercenter/pspAuthentication ">成为服务商 <img src="/static/images/crowdsourcing/index/tobeservice04.png" alt=""></a>
                   <%}else if(user.userType == 4){%>
-                  <a href="/usercenter/epAuthentication">点击这里</a>
+                  <a class="toBeServiceTitle" href="/usercenter/epAuthentication">成为服务商 <img src="/static/images/crowdsourcing/index/tobeservice04.png" alt=""></a>
                   <%}%>
                 <%}%>
-              </div>
-
               <div class="toBeServiceContent">如您具备相关技能与专业知识，可成为服务商为需求方提供数据采集、数据加工、数据分析、数据模型、数据应用等服务获得报酬。</div>
             </dd>
           </dl>

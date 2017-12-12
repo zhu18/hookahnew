@@ -30,12 +30,14 @@
 .toBeServiceUl dt{ float: left; width:110px;}
 .toBeServiceUl dt img{ margin:58px 0 0 27px; }
 .toBeServiceUl dd{ float: left; width:456px;}
-.toBeServiceTitle{margin:42px 0 12px 0; font-size:18px; font-weight: bold; }
+.toBeServiceTitle{ display: inline-block; margin: 42px 0 12px 0; font-size: 18px; font-weight: normal; background: #fff; border-radius: 13px; color: #48c8e3; }
+a.toBeServiceTitle{padding: 0 8px;}
+a.toBeServiceTitle:hover{ background-color: #00728a;}
 .toBeServiceContent{ line-height: 24px;font-size: 14px;}
 .toBeServiceTitle a{ font-size:14px; font-style: italic;  color:#fff; font-weight:normal;margin-left: 20px;}
 .toBeServiceTitle a:active{ text-decoration: underline}
 .toBeServiceTopBoxRight{ float: left; width: 595px; background-color: #fff;}
-.toBeServiceNotice{ overflow: hidden;}
+.toBeServiceNotice{overflow: hidden;}
 .toBeServiceNotice li{ float: left; width: 168px; line-height: 23px;}
 .toBeServiceNotice li span{ display: inline-block; height: 18px; width: 18px; border-radius:9px; color:#fff;font-size: 14px; background-color: #48c8e3;text-align: center; line-height: 19px;}
 .toBeServiceNotice li a{ color:#48c8e3; margin-left:9px;}
