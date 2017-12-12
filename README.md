@@ -22,6 +22,7 @@
  * hookah-website 前端网站，消费端，通过rpc调用console发布的服务
  * hookah-core 基础共享，包括实体类和一些工具类等。
  * hookah-rpc-api 接口，服务端实现此接口，消费端通过rpc调用。
+ * hookah-coupon 优惠卷
  * doc 文档目录，原型太大，不上传了。
  
 ### 开发准备

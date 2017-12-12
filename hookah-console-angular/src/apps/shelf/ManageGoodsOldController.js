@@ -1,4 +1,4 @@
-class ManageGoodsController {
+class ManageGoodsOldController {
   constructor($scope, $rootScope, $stateParams, $http, $state, $uibModal, usSpinnerService, growl) {
 
     $scope.searchSection = function(){
@@ -143,4 +143,4 @@ class ManageGoodsController {
   }
 }
 
-export default ManageGoodsController;
+export default ManageGoodsOldController;

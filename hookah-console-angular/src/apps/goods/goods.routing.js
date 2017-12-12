@@ -1,3 +1,5 @@
+import ShelfOldController from "../shelf/ShelfOldController";
+import ManageGoodsOldController from "../Shelf/ManageGoodsOldController";
 import ShelfController from "../newShelf/ShelfController";
 import ManageGoodsController from "../newShelf/ManageGoodsController";
 import EditTagsController from "../newShelf/EditTagsController";
@@ -18,6 +20,10 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			showSubMenu: true
 		})
 		.state('shelf', {
+			template: '<div ui-view></div>',
+			showSubMenu: true
+		})
+		.state('shelfold', {
 			template: '<div ui-view></div>',
 			showSubMenu: true
 		})
@@ -192,4 +198,30 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			controller: EditTagsController,
 			permission: 'shelf_editTags'
 		})
+		.state('shelfold.search', {
+			url: '/shelfold/search',
+			template: require('../shelf/list.html'),
+			controller: ShelfOldController,
+			permission: 'shelfold_search'
+		})
+		.state('shelfold.add', {
+			url: '/shelfold/add',
+			template: require('../shelf/add.html'),
+			controller: ShelfOldController,
+			permission: 'shelfold_add'
+		})
+		.state('shelfold.update', {
+			url: '/shelfold/update',
+			template: require('../shelf/update.html'),
+			controller: ShelfOldController,
+			permission: 'shelfold_update'
+		})
+		.state('shelfold.manageGoods', {
+			params: {'data': null},
+			url: '/shelfold/manageGoods',
+			template: require('../shelf/manageGoods.html'),
+			controller: ManageGoodsOldController,
+			permission: 'goodsGOshelfManageGoods'
+		})
+
 };

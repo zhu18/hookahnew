@@ -1631,6 +1631,7 @@ dl {
 }
 /*推荐信息 */
 .goodsDetails .goods-right {
+	width:222px;
 }
 .goodsDetails .goods-right .recommend-one {
 	border: 1px solid #EFEFEF;
@@ -1638,16 +1639,16 @@ dl {
 	width: 200px;
 	background-color: white;
 }
-.goodsDetails .goods-right .ad-box {
+.goodsDetails .goods-right .ad-box-c {
 	width: 222px;
 	margin-bottom: 20px;
 }
-.goodsDetails .goods-right .ad-box a {
+.goodsDetails .goods-right .ad-box-c a {
 	width: 222px;
 	line-height: 0;
 	margin-top: 20px;
 }
-.goodsDetails .goods-right .ad-box a img {
+.goodsDetails .goods-right .ad-box-c a img {
 	width: 100%;
 }
 .goodsDetails .goods-right .recommend-one .recommend-title {

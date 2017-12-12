@@ -1,4 +1,4 @@
-class ShelfController {
+class ShelfOldController {
   constructor($scope, $rootScope, $http, $state, $uibModal, usSpinnerService, growl) {
     $scope.search = function (initCurrentPage) {
       console.log("货架查询。。。。");
@@ -26,7 +26,7 @@ class ShelfController {
             console.log(res.data)
             if(res.data.code == "1"){
                 growl.addSuccessMessage("数据添加完毕。。。");
-                $state.go('shelf.search');
+                $state.go('shelfold.search');
             }
         });
     };
@@ -41,7 +41,7 @@ class ShelfController {
             console.log(res.data)
             if(res.data.code == "1"){
                 growl.addSuccessMessage("数据修改完毕。。。");
-                $state.go('shelf.search');
+                $state.go('shelfold.search');
             }
         });
     };
@@ -69,14 +69,14 @@ class ShelfController {
 
     $scope.manageGoods = function (event, item) {
         console.log(item);
-        $state.go('shelf.manageGoods', {data: item});
+        $state.go('shelfold.manageGoods', {data: item});
         console.log("即将进货架管理……");
     };
 
     $scope.updateShelf = function (event, item) {
         console.log(item);
         $rootScope.editData = item;
-        $state.go('shelf.update', {data: item});
+        $state.go('shelfold.update', {data: item});
     };
 
     $scope.backImgClick = function (object) {
@@ -167,4 +167,4 @@ class ShelfController {
   }
 }
 
-export default ShelfController;
+export default ShelfOldController;

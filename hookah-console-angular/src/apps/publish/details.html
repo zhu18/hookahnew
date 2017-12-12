@@ -216,11 +216,11 @@
                                        <span data-ng-bind="item.applyContent"></span>
                                    </td>
                                    <td>
-                                       <div class="roundedTwo" data-ng-if="status == 6">
+                                       <div class="roundedTwo" data-ng-if="status == 6 || status == 5">
                                            <input type="radio" value="{{item.id}}" id="{{item.id}}" name="applyId" ng-model="apply.id">
                                            <label for="{{item.id}}"></label>
                                        </div>
-                                       <div data-ng-if="status != 6">
+                                       <div data-ng-if="!(status == 6 || status == 5) ">
                                            <span class="label label-primary" disabled data-ng-show="item.status!=0 && item.status!=2">已被选中</span>
                                            <button class="btn btn-primary"  disabled  data-ng-show="item.status==0 ">选中</button>
                                        </div>
@@ -229,7 +229,7 @@
                                </tbody>
                            </table>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
-                            <div style="margin: auto;width: 58px;" data-ng-show="status == 6">
+                            <div style="margin: auto;width: 58px;" data-ng-show="status == 6 || status == 5">
                                 <button class="btn btn-primary" data-ng-click="submit()">提交</button>
                             </div>
                         </div>
