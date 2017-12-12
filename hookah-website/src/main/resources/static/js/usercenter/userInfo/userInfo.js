@@ -88,3 +88,23 @@ function splitK(num) {
 $(".account-balance").html(splitK($(".account-balance").html()));
 $(".available-balance").html(splitK($(".available-balance").html()));
 $(".frozen-balance").html(splitK($(".frozen-balance").html()));
+$('.nickName .edit-btn').click(function(){
+    $('.nickName .nickName_text').hide()
+    $('.nickName .edit-btn').hide()
+    $('.nickName .input-text').show()
+    $('.nickName .submit-btn').show()
+    $('.nickName .cancel-btn').show()
+    $('.nickName-tip').show()
+})
+$('.nickName .cancel-btn').click(function(){
+	$('.nickName .nickName_text').show()
+	$('.nickName .edit-btn').show()
+	$('.nickName .input-text').hide()
+	$('.nickName .submit-btn').hide()
+	$('.nickName .cancel-btn').hide()
+	$('.nickName-tip').hide()
+})
+$('.tip-noType i').click(function(){
+	$('.tip-noType').hide()
+})
+
