@@ -38,6 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -89,15 +90,17 @@ public class RegController {
      * @return
      */
     @RequestMapping(value = "/reg/recommendReg", method = RequestMethod.GET)
-    public String recommendReg(HttpServletRequest request, String recommendToken) {
+    public String recommendReg(String recommendToken, HttpServletResponse response) {
         try {
             String unSecret = URLDecoder.decode(recommendToken,"UTF-8");
             String recommendUserId = unSecret.split("&")[0].split(":")[1];
-            request.setAttribute("recommendUserId",recommendUserId);
+            Cookie cookie = new Cookie("recommendUser", recommendUserId);
+            cookie.setDomain("bdgstore.cn");
+            response.addCookie(cookie);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return "recommendRegister";
+        return "register";
     }
 
     @Log(platform = "front",logType = "f0001",optType = "insert")
@@ -190,7 +193,18 @@ public class RegController {
         //redirectAttributes.addAttribute(regUser);
         payAccountService.insertPayAccountByUserIdAndName(regUser.getUserId(),regUser.getUserName());
 
-        String recommendUserId = request.getParameter("recommendUserId");
+        //统计获取注册地址
+        String userId = regUser.getUserId();
+        Map<String, Cookie> cookieMap = ReadCookieMap(request);
+        Cookie tongJi = cookieMap.get("TongJi");
+        if(tongJi != null){
+            MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+            mgTongJiService.setTongJiInfo(TongJiEnum.REG_URL, tongJiInfo.getTongJiId(),
+                    tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
+        }
+
+        //推荐人ID
+        String recommendUserId = cookieMap.get("recommendUser").getValue();
         if (StringUtils.isNotBlank(recommendUserId)){
             User recommendUser = userService.selectById(recommendUserId);
             if (recommendUser != null){
@@ -202,16 +216,6 @@ public class RegController {
 //                wxUserRecommend.setRewardMoney();
                 WXUserRecommendService.insert(wxUserRecommend);
             }
-        }
-
-        //统计获取注册地址
-        String userId = regUser.getUserId();
-        Map<String, Cookie> cookieMap = ReadCookieMap(request);
-        Cookie tongJi = cookieMap.get("TongJi");
-        if(tongJi != null){
-            MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
-            mgTongJiService.setTongJiInfo(TongJiEnum.REG_URL, tongJiInfo.getTongJiId(),
-                    tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
         }
 
         //完成注册 发消息到MQ送优惠券
