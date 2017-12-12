@@ -765,6 +765,10 @@ public class OrderInfoController extends BaseController {
         Map map = new HashMap();
         try {
             if (StringUtils.isNotBlank(mgOrderGoods.getOrderId()) && StringUtils.isNotBlank(mgOrderGoods.getGoodsId())){
+                OrderInfo orderInfo = orderInfoService.selectById(mgOrderGoods.getOrderId());
+                if (!OrderInfo.PAYSTATUS_PAYED.equals(orderInfo.getPayStatus())){
+                    throw new HookahException("订单尚未支付!");
+                }
                 map = orderInfoService.getRemark(mgOrderGoods);
             }
         }catch (Exception e){
