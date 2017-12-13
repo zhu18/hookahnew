@@ -104,7 +104,42 @@ $('.nickName .cancel-btn').click(function(){
 	$('.nickName .cancel-btn').hide()
 	$('.nickName-tip').hide()
 })
+$('.nickName .submit-btn').click(function(){
+	var oldVal = $('.nickName .nickName_text').html();
+	var val = $('.nickName .input-text').val();
+	var regex = /^(?!_)(?!.*?_$)[a-zA-Z0-9_]+$/;
+	if(val == oldVal){
+	    return;
+    }else{
+		if(regex.test(val)){
+			Loading.start();
+			$.ajax({
+				url: host.website + '/usercenter/updateNickName',
+				type: 'get',
+				data: {
+					nickName: val
+				},
+				success: function (data) {
+					Loading.stop();
+					if (data.code == 1) {
+						$('.nickName .nickName_text').html(val).show()
+						$('.nickName .edit-btn').show()
+						$('.nickName .input-text').hide()
+						$('.nickName .submit-btn').hide()
+						$('.nickName .cancel-btn').hide()
+						$('.nickName-tip').hide()
+					} else {
+						$.alert(data.message);
+					}
+				}
+			})
+		}else{
+			$('昵称不符合规则')
+		}
+    }
+})
 $('.tip-noType i').click(function(){
 	$('.tip-noType').hide()
 })
+
 
