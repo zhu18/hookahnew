@@ -318,7 +318,6 @@ $(document).on('click', '.j_submitResult', function () {
       //上传成功之后 请求过来的 还是之前的内容
       console.log(resultData);
       if(resultData.title && resultData.applyId && resultData.requirementId && resultData.content){
-        console.log(resultData);
         $.ajax({
           type: 'post',
           url: "/api/program/save",
@@ -326,7 +325,6 @@ $(document).on('click', '.j_submitResult', function () {
           contentType: 'application/json',
           data: JSON.stringify(resultData),
           success: function (data) {
-
             console.log(data);
             if(data.code==1){
               $('.missionTitle').html(resultData.title);
@@ -449,7 +447,6 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
       console.log(commentData);
 
       if(commentData.level && commentData.programId && commentData.content){
-        console.log(1);
         $.ajax({
           type: 'post',
           url: "/api/program/addComment",
@@ -528,7 +525,6 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
       console.log(acceptanceAdvice);
 
       if(acceptanceAdvice.status && acceptanceAdvice.id && acceptanceAdvice.checkAdvice){
-        console.log(1);
         $.ajax({
           type: 'post',
           url: "/api/release/insertAcceptanceAdvice",
