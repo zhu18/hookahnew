@@ -1,10 +1,12 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author huang lei
@@ -24,6 +26,7 @@ public class ErrorController {
     public String error500() {
         return "/error/500";
     }
+
     @RequestMapping(value = "confirmOrderError", method = RequestMethod.GET)
     public String errorConfirmOrderError() {
         return "/error/confirmOrderError";
@@ -32,6 +35,13 @@ public class ErrorController {
     @RequestMapping(value = "oauth2Failure",method = RequestMethod.GET)
     public String oauth2Failure(HttpServletRequest request){
         return "/error/oauth2Failure";
+    }
+
+    @RequestMapping(value = "limitedGoodsError",method = RequestMethod.GET)
+    public String limitedGoodsError(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        model.addAttribute("message", session.getAttribute("limitedGoodsErrorMessage"));
+        return "/error/limitedGoodsError";
     }
 
 
