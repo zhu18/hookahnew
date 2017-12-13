@@ -255,7 +255,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("goodsId", obj.getGoodsId()));
             MgGoods mgGoods2 = mgGoodsService.selectOne(filters);
-            mgGoods.setClickRate(mgGoods2.getClickRate() == null ? (long)0 : mgGoods2.getClickRate());
+            mgGoods.setClickRate(mgGoods2.getClickRate() == null ? (long)0 : mgGoods2.getClickRate());//点击量
+            mgGoods.setSales(mgGoods2.getSales());//销量
 
             if(HookahConstants.GOODS_TYPE_1.equals(obj.getGoodsType())){
                 MgGoods.PackageApiInfoBean packageApiInfoBean = mgGoods2.getPackageApiInfo()==null?new MgGoods.PackageApiInfoBean():mgGoods2.getPackageApiInfo();
@@ -825,6 +826,8 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         apiInfoBean.setVersion(api.getVersion());
         // 请求示例
         apiInfoBean.setReqSample(api.getRequestSample());
+        //返回示例
+        apiInfoBean.setRespSample(api.getResponseSample());
 
         // 请求参数
         List<MgGoods.FiledBean> reqFiledBeanList = returnList(api.getRequestParameter());
@@ -845,6 +848,32 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
             filedBean.setFieldName(apiParameter.getApiParaName());
             // 参数描述
             filedBean.setDescrible(apiParameter.getDesc());
+            //是否必须：0 否；1 是
+            filedBean.setIsMust(apiParameter.getIsMust() != null && apiParameter.getIsMust().equals(new Integer(1)) ? "1" : "0");
+            //字段类型
+            String fileType = "";
+            //"apiParaType": 参数类型(1 String 2 number 3 boolean 4 array 5 object),
+            switch (apiParameter.getApiParaType()) {
+                case 1:
+                    fileType = "String";
+                    break;
+                case 2:
+                    fileType = "Number";
+                    break;
+                case 3:
+                    fileType = "Boolean";
+                    break;
+                case 4:
+                    fileType = "Array";
+                    break;
+                case 5:
+                    fileType = "Object";
+                    break;
+                default:
+                    fileType = "String";
+
+            }
+            filedBean.setFieldType(fileType);
             filedBeanList.add(filedBean);
         }
         return filedBeanList;
