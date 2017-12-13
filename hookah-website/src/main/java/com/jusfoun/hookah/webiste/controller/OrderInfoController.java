@@ -478,6 +478,7 @@ public class OrderInfoController extends BaseController {
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
     public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,
                               HttpServletRequest request, Model model, Long userCouponId, InvoiceDTOVo invoiceDTOVo) {
+        HttpSession session = request.getSession();
         try {
             String perOrderInfoNum = request.getParameter("perOrderInfoNum");
             if (perOrderInfoNum.isEmpty() || redisOperate.get("orderConfirm:"+perOrderInfoNum) == null){
@@ -493,7 +494,6 @@ public class OrderInfoController extends BaseController {
             }else{
                 orderinfo = orderInfoService.insert(orderinfo, cartIdArray, userCouponId, invoiceDTOVo);
             }
-            HttpSession session = request.getSession();
             List<Map> paymentList = initPaymentList(session);
 
             //余额
@@ -505,11 +505,11 @@ public class OrderInfoController extends BaseController {
             //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
             //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             redisOperate.del("orderConfirm:"+perOrderInfoNum);
-            return   "redirect:/pay/cash";
+            return "redirect:/pay/cash";
         }catch (HookahException e){
-            logger.error("生成订单失败", e);
-            model.addAttribute("message",e.getMessage());
-            return "/error/limitedGoodsError";
+            logger.error("生成订单失败", e.getMessage());
+            session.setAttribute("limitedGoodsErrorMessage",e.getMessage());
+            return "redirect:/error/limitedGoodsError";
         }catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";
@@ -541,6 +541,7 @@ public class OrderInfoController extends BaseController {
      */
     @RequestMapping(value = "/order/payOrder", method = RequestMethod.GET)
     public String payOrder(String orderSn,HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
         try {
             List<Condition> filters = new ArrayList<>();
             filters.add(Condition.eq("orderSn",orderSn));
@@ -559,7 +560,6 @@ public class OrderInfoController extends BaseController {
                 }
             }
 
-            HttpSession session = request.getSession();
             List<Map> paymentList = initPaymentList(session);
 
             //余额
@@ -572,8 +572,8 @@ public class OrderInfoController extends BaseController {
             //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             return   "redirect:/pay/cash";
         } catch (HookahException e) {
-            model.addAttribute("message",e.getMessage());
-            return "/error/limitedGoodsError";
+            session.setAttribute("limitedGoodsErrorMessage", e.getMessage());
+            return "redirect:/error/limitedGoodsError";
         }catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";

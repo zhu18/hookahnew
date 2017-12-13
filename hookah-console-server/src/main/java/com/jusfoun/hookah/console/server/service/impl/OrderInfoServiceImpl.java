@@ -311,9 +311,10 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         }
         //取消订单时查看该订单是否使用了优惠券 如果使用了优惠券则把优惠券还原回去
         filter.add(Condition.eq("userId",order.getUserId()));
+        filter.add(Condition.eq("userCouponStatus",HookahConstants.UserCouponStatus.USED_UN_PAYED.getCode()));
         List<UserCoupon> userCoupons = userCouponService.selectList(filter);
         if (userCoupons != null && userCoupons.size() > 0){
-            for (UserCoupon userCoupon:userCoupons){
+            for (UserCoupon userCoupon : userCoupons){
                 userCoupon.setOrderSn(null);
                 //已使用且未支付的改成未使用  已过期的在每天零点进行更改
                 userCoupon.setUserCouponStatus(HookahConstants.UserCouponStatus.UN_USED.getCode());
