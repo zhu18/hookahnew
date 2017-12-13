@@ -108,8 +108,8 @@ $('.nickName .submit-btn').click(function(){
 	var oldVal = $('.nickName .nickName_text').html();
 	var val = $('.nickName .input-text').val();
 	var regex = /^(?!_)(?!.*?_$)[a-zA-Z0-9_]+$/;
-	if(val == oldVal){
-	    return;
+	if(val === oldVal){
+		$.alert('没有察觉到有修改的痕迹');
     }else{
 		if(regex.test(val)){
 			Loading.start();
@@ -128,13 +128,14 @@ $('.nickName .submit-btn').click(function(){
 						$('.nickName .submit-btn').hide()
 						$('.nickName .cancel-btn').hide()
 						$('.nickName-tip').hide()
+						$.alert(data.message);
 					} else {
 						$.alert(data.message);
 					}
 				}
 			})
 		}else{
-			$('昵称不符合规则')
+			$.alert('昵称不符合规则')
 		}
     }
 })

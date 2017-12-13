@@ -203,7 +203,7 @@ position: relative;
 .basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit{
 }
 .basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit p{
-    height: 40px;
+    /*height: 40px;*/
 }
 .basic-information-top  .basic-information-top-content .user-status  .auth-introduce .auth-introduce-unit p.status{
     height: 80px;
