@@ -32,6 +32,7 @@
 							<th>描述</th>
 							<th>图片</th>
 							<th>链接</th>
+							<th>新页面打开</th>
 							<th>操作</th>
 							<th>排序</th>
 						</tr>
@@ -52,6 +53,10 @@
 							</td>
 							<td>
 								<span class="column-text" ng-bind="item.imgLink"></span>
+							</td>
+							<td>
+								<span class="column-text" ng-if="item.isNewTab == 0">否</span>
+								<span class="column-text" ng-if="item.isNewTab == 1">是</span>
 							</td>
 							<td>
 								<a ui-sref="carousel.edit({type:'modify',imgType:imgType,id:item.imgId})">编辑</a>

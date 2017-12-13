@@ -298,7 +298,12 @@ var htmlPart = {
 					var html = '';
 					var html2 = '';
 					for (var j = 0; j < data.data.length; j++) {
-						html += '<li><a href="' + data.data[j].imgLink + '" class="imgFloat_' + j + '" style="background:url(' + data.data[j].imgUrl + ') center center no-repeat"></a></li>';
+						if(data.data[j].isNewTab == 1){
+							html += '<li><a href="' + data.data[j].imgLink + '" target="_blank" class="imgFloat_' + j + '" style="background:url(' + data.data[j].imgUrl + ') center center no-repeat"></a></li>';
+						}else{
+							html += '<li><a href="' + data.data[j].imgLink + '" class="imgFloat_' + j + '" style="background:url(' + data.data[j].imgUrl + ') center center no-repeat"></a></li>';
+						}
+
 						if (j == 0) {
 							html2 += '<span class="on" index="' + (j + 1) + '"></span>';
 						} else {

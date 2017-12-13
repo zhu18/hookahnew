@@ -1,6 +1,5 @@
 class EditController {
 	constructor($scope, $rootScope, $http, $state,$stateParams, $uibModal, usSpinnerService, growl) {
-		console.log( '-----------------------------:'+$stateParams.imgType)
 		$scope.pageName = '';
 		if($stateParams.imgType == '0'){
 			$scope.pageName = '轮播图';
@@ -23,7 +22,6 @@ class EditController {
 			});
 			promise.then(function (res, status, config, headers) {
 				if (res.data.code == "1") {
-					alert($scope.pageTitle+"成功");
 					$state.go('carousel.search');
 				}
 			});
@@ -71,6 +69,9 @@ class EditController {
 
 		if($stateParams.type == 'add'){
 			$scope.pageTitle = '添加'
+			$scope.pageData ={
+				isNewTab: 0
+			};
 			url = $rootScope.site.apiServer + "/api/image/add";
 		}else{
 			$scope.pageTitle = '修改'

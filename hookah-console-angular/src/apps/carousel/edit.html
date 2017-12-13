@@ -120,6 +120,13 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-sm-2 control-label">新页面打开：<span class="must">*</span></label>
+					<div class="col-sm-4">
+						<label class="col-sm-2 control-label"><input type="radio" name="isNewTab" value="0" data-ng-model="pageData.isNewTab" ng-checked="pageData.isNewTab == 0"/>否</label>
+						<label class="col-sm-2 control-label"><input type="radio" name="isNewTab" value="1" data-ng-model="pageData.isNewTab" ng-checked="pageData.isNewTab == 1"/>是</label>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-2 control-label">图片：<span class="must">*</span></label>
 					<div class="col-sm-4">
 						<div class="goodsImg-box">
@@ -131,6 +138,7 @@
 						</div>
 					</div>
 				</div>
+
 			</fieldset>
 			<div class="form-group">
 				<div class="col-sm-2"></div>
