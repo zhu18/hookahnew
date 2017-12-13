@@ -2,6 +2,15 @@
 	<div class="grid-row">
 		欢迎您访问数据星河！
 		<div class="grid-right">
+			<%if(isEmpty(user)){%>
+
+			<%}else{%>
+			<a href="javascript:void(0)" class="login">
+				欢迎，
+				<!--<span class="fa fa-user-o margin-right-5"></span>-->
+				${user.nickName!}
+			</a>
+			<%}%>
 			<a href="${host.website}/usercenter/index">我的BDG</a> | <a href="/cart"><i class="fa fa-shopping-cart" style="color:#d20003;margin-right:5px;"></i>购物车<span style="color:#000;">${cartSize!"0"}</span>件</a> |
 			<a href="http://cms.bdgstore.cn/gysjxh/index.jhtml">关于数据星河</a>
 		</div>
