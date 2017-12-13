@@ -1436,13 +1436,25 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     }
 
     @Override
-    public ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber,
-                                Integer pageSize, List<Condition> filters) throws Exception{
+    public ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber, Integer pageSize,
+                                       String startDate, String endDate, String ip, String status) throws Exception{
         Map resultMap = new HashMap();
         String apiRestUrl = myProps.getApi().get("apiRestUrl");
         StringBuilder apiRestUri = new StringBuilder();
         apiRestUri.append(apiRestUrl).append("?pageNum=").append(pageNumber).append("&pageSize=").append(pageSize)
                 .append("&orderSn=").append(orderSn).append("&goodsSn=").append(goodsSn);
+        if (null != startDate) {
+            apiRestUri.append("&startTime=").append(startDate);
+        }
+        if (null != endDate) {
+            apiRestUri.append("&endTime=").append(endDate);
+        }
+        if (null != ip) {
+            apiRestUri.append("&ip=").append(ip);
+        }
+        if (null != status) {
+            apiRestUri.append("&status=").append(status);
+        }
         apiRestUrl = apiRestUri.toString();
 
         Pagination pagination = new Pagination();

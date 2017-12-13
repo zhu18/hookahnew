@@ -106,7 +106,7 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
     Map reCreateToken(MgOrderGoods mgOrderGoods);
 
     ReturnData findInvokeStatus(String orderSn, String goodsSn, Integer pageNumber, Integer pageSize,
-                                List<Condition> filters) throws Exception;
+                                String startDate, String endDate, String ip, String status) throws Exception;
 
     public Long sumOrderAmountByOrderIds(String[] orderId);
 }
