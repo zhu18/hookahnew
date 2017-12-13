@@ -12,10 +12,7 @@ import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.exception.*;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.core.utils.FormatCheckUtil;
-import com.jusfoun.hookah.core.utils.NetUtils;
-import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.rpc.api.*;
@@ -191,7 +188,7 @@ public class RegController {
 //        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
 //        String userSn = HookahConstants.platformCode + date + String.format("%06d",count);
         user.setUserSn(generateUserSn());
-
+        user.setNickName(HookahConstants.BDGStore + (int)(new Random().nextDouble() * (99999 - 10000 + 1)) + 10000 + Thread.currentThread().getId());
         user.setUserName(user.getUserName() == null ? user.getMobile() : user.getUserName());
         User regUser = userService.insert((User) user);
         //redirectAttributes.addAttribute(regUser);

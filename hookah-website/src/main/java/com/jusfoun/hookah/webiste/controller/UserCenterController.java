@@ -349,7 +349,7 @@ public class UserCenterController {
             returnData.setMessage("请重新登录！");
             return returnData;
         }
-        if(StringUtils.isBlank(nickName) || ! Pattern.matches("^[\\w\\u4e00-\\u9fa5]{1,20}$",nickName)){
+        if(StringUtils.isBlank(nickName) || ! Pattern.matches("^[\\w]{1,20}$",nickName)){
             returnData.setCode(ExceptionConst.AssertFailed);
             returnData.setMessage("昵称格式有误！");
             return returnData;
