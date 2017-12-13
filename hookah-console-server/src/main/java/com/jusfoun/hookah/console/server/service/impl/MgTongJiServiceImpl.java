@@ -49,7 +49,6 @@ public class MgTongJiServiceImpl extends GenericMongoServiceImpl<MgTongJi, Strin
         query.addCriteria(Criteria.where("tongJiId").is(tongJiId));
         query.with(new Sort(Sort.Direction.DESC, "addTime"));
         List<MgTongJi> mgTongJis = mongoTemplate.find(query, MgTongJi.class);
-        System.out.println(mgTongJis);
         for (MgTongJi mg : mgTongJis){
             return mg;
         }
