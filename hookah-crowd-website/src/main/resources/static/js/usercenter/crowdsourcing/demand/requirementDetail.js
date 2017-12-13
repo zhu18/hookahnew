@@ -267,7 +267,6 @@ $(document).on('click', '.j_commentBtn', function () { // 评价
       console.log(commentData);
 
       if(commentData.level && commentData.programId && commentData.content){
-        console.log(1);
         $.ajax({
           type: 'post',
           url: "/api/release/insertEvaluation",
@@ -346,7 +345,6 @@ $(document).on('click', '.j_checkMission', function () { // 成果验收
       console.log(acceptanceAdvice);
 
       if(acceptanceAdvice.status && acceptanceAdvice.id && acceptanceAdvice.checkAdvice){
-        console.log(1);
         $.ajax({
           type: 'post',
           url: "/api/release/insertAcceptanceAdvice",
@@ -424,7 +422,6 @@ $('.j_checkAdviceDetail').on('mouseover', function () { //鼠标离开描述显�
 
 
 $(document).on('blur', '#trusteePercent1', function () { //托管资金点击增加 托管金额百分比
-  console.log(typeof  $(this).val());
   var tempVal=Number($(this).val());
   if(tempVal>100){
     $(this).val(100);
@@ -475,20 +472,6 @@ $(document).on('click', '.otherDetailBoxNav li', function () { //需求详情下
 
 $(document).on('click', '#J_goPay', function () { //
     location.href= "/api/zbPay/toPayPage?requirementId=" + $(this).attr('requirementId') + "&trusteePercent=" + $("#trusteePercent1").val();
-/*  //
-  var goPayData={};
-  goPayData.requirementId=$(this).attr('requirementId');
-  goPayData.trusteePercent =$("#trusteePercent1").html();
-
-  $.ajax({
-    type: 'post',
-    url: "/api/zbPay/toPayPage",
-    cache: false,
-    data:goPayData,
-    success: function (data) {
-      console.log(data);
-    }
-  })*/
 });
 
 

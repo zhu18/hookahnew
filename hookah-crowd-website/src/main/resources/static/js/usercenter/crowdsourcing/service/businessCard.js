@@ -2,7 +2,6 @@
  * Created by lss on 2017/10/18 0018.
  */
 function loadPageData(data){
-    console.log(222222);
     console.log(data.data.list);
     var list=data.data.list;
     if(pagePath==(host.crowd + '/api/getCommentRecord')){//评价
@@ -18,7 +17,6 @@ function loadPageData(data){
         }
         $('.tab-comment-list').html(html);
         $('.tab-comment-list tr').each(function (index) {
-            console.log($(this).attr("data-level"));
             $('.function-'+index).raty({
                 score: $(this).attr("data-level"),
                 number: 5, //多少个星星设置
@@ -144,9 +142,7 @@ $(function () {
                    if(educationsExpList){
                        for (var i=0,len=educationsExpList.length;i<len;i++){
                            var item=educationsExpList[i];
-                           console.log(item);
                            $('.education .school').html(item.schoolName);
-
                            $('.education .major').html(item.major);
                            $('.education .edu').html(item.edu);
                        }

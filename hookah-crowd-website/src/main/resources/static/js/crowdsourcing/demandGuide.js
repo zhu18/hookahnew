@@ -43,11 +43,10 @@ function demandDetail() { //需求详情
     success: function (data) {
       console.log(data);
       if(data.data.zbRequirementSPVo.status==6){
-        console.log($('.demandStatus').addClass('bgc-a7a7a7').children('span').eq(0).html('报名结束'));
+        $('.demandStatus').addClass('bgc-a7a7a7').children('span').eq(0).html('报名结束');
         $('.signUp').removeClass('j_signUp').addClass('bgc-a7a7a7');
       }
       userType=data.data.userType;
-      console.log(data.data.zbRequirementSPVo.status);
       $('.demandTitle').html(data.data.zbRequirementSPVo.title);
       $('.demandDes').html(data.data.zbRequirementSPVo.description.substring(0,45)+'...').attr({'shotStr':(data.data.zbRequirementSPVo.description.substring(0,45)+'...'),'allStr':data.data.zbRequirementSPVo.description});
       $('.j_deliveryDeadline').html(data.data.zbRequirementSPVo.deliveryDeadline);

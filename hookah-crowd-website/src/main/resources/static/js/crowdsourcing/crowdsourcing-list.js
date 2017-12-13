@@ -69,7 +69,6 @@ function searchFn() {
   dataParm.status = $('#status').attr('value');
   dataParm.type = $('#type').attr('value');
   dataParm.timeType = $('#timeType').attr('value');
-  console.log(dataParm);
   goPage("1");
 }
 
