@@ -314,8 +314,8 @@ var htmlPart = {
 												<th>名称</th>
 												<th>类型</th>
 												<th>必填</th>
-												<th>示例值</th>
-												<th>默认值</th>
+												<!--<th>示例值</th>-->
+												<!--<th>默认值</th>-->
 												<th>描述</th>
 											</tr>
 											<%for(items in goodsDetails.apiInfo.reqParamList){%>
@@ -323,8 +323,8 @@ var htmlPart = {
 												<td>${items.fieldName}</td>
 												<td>${items.fieldType}</td>
 												<td>${decode(items.isMust,"0","否","1","是","未知")}</td>
-												<td>${items.fieldSample}</td>
-												<td>${items.fieldDefault}</td>
+												<!--<td>${items.fieldSample}</td>-->
+												<!--<td>${items.fieldDefault}</td>-->
 												<td>${items.describle}</td>
 											</tr>
 											<%}%>
@@ -341,6 +341,19 @@ var htmlPart = {
 									<div class="apiInfo-con">
 										<div class="reqSample-con">
 											${goodsDetails.apiInfo.reqSample}
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>返回示例：</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="apiInfo-con">
+										<div class="reqSample-con">
+											${goodsDetails.apiInfo.respSample }
 										</div>
 									</div>
 								</td>
@@ -400,8 +413,8 @@ var htmlPart = {
 												<th>名称</th>
 												<th>类型</th>
 												<th>必填</th>
-												<th>示例值</th>
-												<th>默认值</th>
+												<!--<th>示例值</th>-->
+												<!--<th>默认值</th>-->
 												<th>描述</th>
 											</tr>
 											<%for(items in goodsDetails.apiInfo.reqParamList){%>
@@ -409,8 +422,8 @@ var htmlPart = {
 												<td>${items.fieldName}</td>
 												<td>${items.fieldType}</td>
 												<td>${decode(items.isMust,"0","否","1","是","未知")}</td>
-												<td>${items.fieldSample}</td>
-												<td>${items.fieldDefault}</td>
+												<!--<td>${items.fieldSample}</td>-->
+												<!--<td>${items.fieldDefault}</td>-->
 												<td>${items.describle}</td>
 											</tr>
 											<%}%>
