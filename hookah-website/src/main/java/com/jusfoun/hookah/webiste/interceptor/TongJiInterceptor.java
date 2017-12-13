@@ -39,7 +39,8 @@ public class TongJiInterceptor implements HandlerInterceptor {
         // TODO Auto-generated method stub
         String utmSource = request.getParameter("utm_source");
         String utmTerm = request.getParameter("utm_term");
-        saveCookie(request, response, utmSource, utmTerm);
+        if(!"XMLHttpRequest".equals(request.getHeader("X-Requested-With")))
+            saveCookie(request, response, utmSource, utmTerm);
         return true;
     }
 

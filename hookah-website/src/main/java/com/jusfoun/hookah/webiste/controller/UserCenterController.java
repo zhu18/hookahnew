@@ -332,7 +332,7 @@ public class UserCenterController {
         userService.updateByIdSelective(user);
         return ReturnData.success();
     }
-    
+
     /**
      * 个人中心-修改昵称（全局唯一，字母数字汉字下划线）
      * @param nickName
