@@ -83,12 +83,12 @@ var htmlPart = {
 							   name="password" value="" data-inner_placeholder="r_p_input_enterPassword" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
 						<input type="hidden" name="safetyLandScore">
 					</div>
-					<div class="form-item">
-						<span class="form-label tsl" data-phase-id="r_p_confirmPassword"><span class="star">*</span>密码确认</span>
-						<input class="form-text" id="J_RePassword" name="passwordRepeat" type="password"
-							   placeholder="请再次输入你的密码" value="" data-inner_placeholder="r_p_input_reEnterPassword"
-							   data-outer_placeholder="r_p_input_reEnterPwd" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
-					</div>
+					<!--<div class="form-item">-->
+						<!--<span class="form-label tsl" data-phase-id="r_p_confirmPassword"><span class="star">*</span>密码确认</span>-->
+						<!--<input class="form-text" id="J_RePassword" name="passwordRepeat" type="password"-->
+							   <!--placeholder="请再次输入你的密码" value="" data-inner_placeholder="r_p_input_reEnterPassword"-->
+							   <!--data-outer_placeholder="r_p_input_reEnterPwd" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">-->
+					<!--</div>-->
 					<div class="form-item">
 						<input class="form-checkbox" type="checkbox" name="" id="J_Agreement"
 							   style="float: left">
@@ -138,11 +138,11 @@ var htmlPart = {
 			<div class="msg-tit"></div>
 			<div class="msg-cnt" aria-live="assertive"></div>
 		</div>
-		<div class="msg msg-type-info" id="J_MsgRePassword" style="position: absolute; left: 754px; top: 190px;"><i
-			class="iconfont">󰅂</i>
-			<div class="msg-tit"></div>
-			<div class="msg-cnt" aria-live="assertive">请再次输入你的密码</div>
-		</div>
+		<!--<div class="msg msg-type-info" id="J_MsgRePassword" style="position: absolute; left: 754px; top: 190px;"><i-->
+			<!--class="iconfont">󰅂</i>-->
+			<!--<div class="msg-tit"></div>-->
+			<!--<div class="msg-cnt" aria-live="assertive">请再次输入你的密码</div>-->
+		<!--</div>-->
 		<div class="msg msg-type-info" style="position: absolute; left: 754px; top: 78px;"><i class="iconfont">󰅂</i>
 			<div class="msg-tit"></div>
 			<div class="msg-cnt" aria-live="assertive">5-25个字符，一个汉字为两个字符</div>
@@ -386,16 +386,16 @@ var htmlPart = {
 			})
 		}
 	});
-	$('#J_RePassword').focus(function () {
-		$('#J_MsgRePassword').show().removeClass('msg-type-error').addClass('msg-type-info').children('.msg-cnt').html('请再次输入你的密码').siblings('.iconfont').html('󰅂');
-	});
-	$('#J_RePassword').blur(function () {
-		if ($(this).val() == $('#J_Password').val()) {
-			$('#J_MsgRePassword').hide();
-		} else {
-			$('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH).siblings('.iconfont').html('󰅕');
-		}
-	});
+//	$('#J_RePassword').focus(function () {
+//		$('#J_MsgRePassword').show().removeClass('msg-type-error').addClass('msg-type-info').children('.msg-cnt').html('请再次输入你的密码').siblings('.iconfont').html('󰅂');
+//	});
+//	$('#J_RePassword').blur(function () {
+//		if ($(this).val() == $('#J_Password').val()) {
+//			$('#J_MsgRePassword').hide();
+//		} else {
+//			$('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH).siblings('.iconfont').html('󰅕');
+//		}
+//	});
 	$('#J_Mobile').on('focus',function () {
 		$('#J_captchaImg').attr("disabled", true).addClass('mobile-btn-disabled');
 	})
@@ -650,7 +650,7 @@ var htmlPart = {
 			e.preventDefault();
 //			var nick = $('#J_userName').val();
 			var password = $('#J_Password').val();
-			var rePassword = $('#J_RePassword').val();
+//			var rePassword = $('#J_RePassword').val();
 			var mobile = $('#J_Mobile').val();
 			var validSms = $('#J_phone_Mobile').val();
 //			var a = testData.number(nick),
@@ -660,7 +660,7 @@ var htmlPart = {
 //			if (strlen(nick) <= 25 && strlen(nick) >= 5 && !testData.allNumber(nick)) {
 //				if (!testData.nickIllegal(nick)) {
 					if (strlen(password) <= 20 && strlen(password) >= 6 && $("input[name='safetyLandScore']").val() != "0") {
-						if (rePassword == password) {
+//						if (rePassword == password) {
 							if (testData.mobile(mobile)) {
 								if(validSms){
 									if(isTrue){
@@ -676,9 +676,9 @@ var htmlPart = {
 							} else {
 								$('#J_MsgMobile').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_MOBILE_MALFORM).siblings('.iconfont').html('󰅕');
 							}
-						} else {
-							$('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH).siblings('.iconfont').html('󰅕');
-						}
+//						} else {
+//							$('#J_MsgRePassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_GENERAL_CONFIRM_PASSWORD_NOT_MATCH).siblings('.iconfont').html('󰅕');
+//						}
 					} else {
 						$('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD).siblings('.iconfont').html('󰅕');
 					}
