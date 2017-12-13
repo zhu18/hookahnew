@@ -108,6 +108,7 @@ public class RegController {
     @ResponseBody
     public ReturnData pReg(UserValidVo user, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
         boolean isExists = true;
+        String initPassword = user.getPassword();
         List<Condition> filters = new ArrayList();
         //1、校验图片验证码 ,=======>可以跳过这步，我觉得不校验问题也不大
         try {
@@ -132,16 +133,19 @@ public class RegController {
             }
             redisOperate.del(user.getMobile());  //删除缓存
 
+            if (StringUtils.isBlank(initPassword)) {
+               throw new UserRegEmptyPwdException("密码或者确认密码不能为空");
+            }
+
             //3、校验密码一致
-            String password = user.getPassword().trim();
-            String passwordRepeat = user.getPasswordRepeat().trim();
-            if (StringUtils.isBlank(password) || StringUtils.isBlank(passwordRepeat)) {
-                throw new UserRegEmptyPwdException("密码或者确认密码不能为空");
-            }
-            if (!password.equals(passwordRepeat)) {
-                throw new UserRegConfirmPwdException("密码与确认密码不一致");
-            }
-            if (password.length() < 6) {
+//            String passwordRepeat = user.getPasswordRepeat().trim();
+//            if (StringUtils.isBlank(initPassword) || StringUtils.isBlank(passwordRepeat)) {
+//                throw new UserRegEmptyPwdException("密码或者确认密码不能为空");
+//            }
+//            if (!password.equals(passwordRepeat)) {
+//                throw new UserRegConfirmPwdException("密码与确认密码不一致");
+//            }
+            if (initPassword.length() < 6) {
                 throw new UserRegSimplePwdException("密码过于简单");
             }
 
@@ -204,7 +208,7 @@ public class RegController {
         }
 
         //推荐人ID
-        String recommendUserId = cookieMap.get("recommendUser").getValue();
+        String recommendUserId = cookieMap.get("recommendUser") == null ? "" : cookieMap.get("recommendUser").getValue();
         if (StringUtils.isNotBlank(recommendUserId)){
             User recommendUser = userService.selectById(recommendUserId);
             if (recommendUser != null){
@@ -229,7 +233,7 @@ public class RegController {
         UsernameAndPasswordToken token = new UsernameAndPasswordToken();
         String mobile = user.getMobile();
         token.setMobile(mobile);
-        token.setPassword(user.getPasswordRepeat().toCharArray());
+        token.setPassword((initPassword == null ? "" : initPassword).toCharArray());
         Subject currentUser = SecurityUtils.getSubject();
         try {
             currentUser.login(token);
