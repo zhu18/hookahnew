@@ -1,6 +1,9 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.domain.Organization;
+import com.jusfoun.hookah.core.domain.PayAccount;
+import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.UserDetail;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
@@ -19,14 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @author huang lei
- * @datex 2017/3/7 下午6:05
+ * @date 2017/3/7 下午6:05
  * @desc
  */
 @Controller
@@ -212,11 +212,6 @@ public class UserCenterController {
     public String capitalRecord() {
         return "/usercenter/userInfo/capitalRecord";
     }
-    //  api日志页面
-    @RequestMapping(value = "/apiLogs", method = RequestMethod.GET)
-    public String apiLogs() {
-        return "/usercenter/buyer/apiLogs";
-    }
 
     /**
      * 安全设置
@@ -331,47 +326,6 @@ public class UserCenterController {
         }
         userService.updateByIdSelective(user);
         return ReturnData.success();
-    }
-
-    /**
-     * 个人中心-修改昵称（全局唯一，字母数字汉字下划线）
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/updateNickName", method = RequestMethod.GET)
-    @ResponseBody
-    public ReturnData updateNickName(String nickName,Model model) {
-        ReturnData returnData = new ReturnData();
-        Session session = SecurityUtils.getSubject().getSession();
-        HashMap<String, String> userMap = (HashMap<String, String>) session.getAttribute("user");
-        if (null == userMap) {
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("请重新登录！");
-            return returnData;
-        }
-        if(StringUtils.isBlank(nickName) || ! Pattern.matches("^[\\w\\u4e00-\\u9fa5]{1,20}$",nickName)){
-            returnData.setCode(ExceptionConst.AssertFailed);
-            returnData.setMessage("昵称格式有误！");
-            return returnData;
-        }
-        List<Condition> filters = new ArrayList();
-        filters.add(Condition.eq("nickName", nickName));
-        if (userService.exists(filters)) {
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("此昵称已被占用！");
-            return  returnData;
-        }
-        User user = new User();
-        user.setNickName(nickName);
-        user.setUserId(userMap.get("userId"));
-        if (userService.updateByIdSelective(user) > 0) {
-            returnData.setCode(ExceptionConst.Success);
-            returnData.setMessage("修改成功！");
-        } else {
-            returnData.setCode(ExceptionConst.Failed);
-            returnData.setMessage("昵称修改失败！");
-        }
-        return  returnData;
     }
 
 }
