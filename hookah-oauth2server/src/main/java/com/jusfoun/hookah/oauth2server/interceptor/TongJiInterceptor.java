@@ -101,6 +101,7 @@ public class TongJiInterceptor implements HandlerInterceptor {
                     String uuid = StringUtils.getUUID();
                     Cookie cookie = new Cookie("TongJi", uuid);
                     cookie.setDomain("bdgstore.cn");
+                    cookie.setPath("/");
                     response.addCookie(cookie);
                     mgTongJiService.setTongJiInfo("www.bdgstore.cn" + uri, uuid,
                             utmSource1 == null ? "直接访问" : utmSource1, utmTerm1 == null ? "无" : utmTerm1, userId);
