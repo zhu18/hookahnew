@@ -3,6 +3,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.dao.FlowUserMapper;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.UserCheck;
 import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.domain.vo.FlowUserVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -32,6 +33,9 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
     @Resource
     UserService userService;
+
+    @Resource
+    UserCheckService userCheckService;
 
     @Resource
     MongoTemplate mongoTemplate;
@@ -74,11 +78,12 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天个人认证数
         List<Condition> personFilters = new ArrayList<>();
-        personFilters.add(Condition.like("addTime", date));
-        personFilters.add(Condition.eq("userType", 2));
-        List<User> personUsers = userService.selectList(personFilters);
+        personFilters.add(Condition.like("checkTime", date));
+        personFilters.add(Condition.eq("userType", 0));
+        personFilters.add(Condition.eq("checkStatus", 1));
+        List<UserCheck> personUsers = userCheckService.selectList(personFilters);
         List<MgTongJi> personList = new ArrayList<MgTongJi>();
-        for(User person : personUsers){
+        for(UserCheck person : personUsers){
             MgTongJi mgTongJiInfo = getMgTongJiInfo(person.getUserId(), TongJiEnum.PERSON_URL);
             personList.add(mgTongJiInfo);
         }
@@ -98,11 +103,12 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天当天企业认证数
         List<Condition> orgFilters = new ArrayList<>();
-        orgFilters.add(Condition.like("addTime", date));
-        orgFilters.add(Condition.eq("userType", 4));
-        List<User> orgUsers = userService.selectList(orgFilters);
+        orgFilters.add(Condition.like("checkTime", date));
+        orgFilters.add(Condition.eq("userType", 1));
+        orgFilters.add(Condition.eq("checkStatus", 1));
+        List<UserCheck> orgUsers = userCheckService.selectList(orgFilters);
         List<MgTongJi> orgList = new ArrayList<MgTongJi>();
-        for(User org : orgUsers){
+        for(UserCheck org : orgUsers){
             MgTongJi mgTongJiInfo = getMgTongJiInfo(org.getUserId(), TongJiEnum.ORG_URL);
             orgList.add(mgTongJiInfo);
         }
