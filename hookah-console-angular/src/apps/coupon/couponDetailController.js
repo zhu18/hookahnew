@@ -121,7 +121,7 @@ class couponDetailController {
             $scope.renderList();
         };
         $scope.pageChanged = function () { //翻页按钮
-            $scope.search();
+            $scope.renderList();
         };
         $scope.back = function () { //返回按钮
             $state.go('coupon.list')
