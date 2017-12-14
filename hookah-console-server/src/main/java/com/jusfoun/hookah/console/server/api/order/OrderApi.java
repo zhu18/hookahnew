@@ -266,6 +266,7 @@ public class OrderApi extends BaseController{
             if (pageNumber==null) pageNumber = Integer.parseInt(PAGE_NUM);
             if (pageSize==null) pageSize = Integer.parseInt(PAGE_SIZE);
             List<Condition> filters = new ArrayList<>();
+            endDate = DateUtils.transferDate(endDate);
             String status = null;
             return orderInfoService.findInvokeStatus(orderSn,goodsSn,pageNumber,pageSize,startDate,endDate,ip,status);
         }catch (Exception e){
