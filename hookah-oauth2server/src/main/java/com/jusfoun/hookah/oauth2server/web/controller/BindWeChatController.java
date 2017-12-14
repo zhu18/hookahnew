@@ -19,10 +19,12 @@ import com.jusfoun.hookah.core.exception.UserRegInvalidCaptchaException;
 import com.jusfoun.hookah.core.exception.UserRegInvalidSmsException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.*;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.oauth2server.config.WXConfigUtils;
 import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.rpc.api.*;
+import org.apache.commons.lang3.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -153,7 +155,7 @@ public class BindWeChatController {
                 users.setUserSn(generateUserSn());
                 //默认用户名
                 users.setUserName(WXConfigUtils.generateUserName(user.getOpenid()));
-                users.setNickName(HookahConstants.BDGStore + (int)(new Random().nextDouble() * (99999 - 10000 + 1)) + 10000 + Thread.currentThread().getId());
+                users.setNickName(HookahConstants.BDGStore + (StringUtils.isNotBlank(user.getUserSn()) ? user.getUserSn().substring(2) : System.currentTimeMillis()));
                 User regUser = userService.insert(users);
 
                 //发送默认密码到用户手机
