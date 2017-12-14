@@ -97,7 +97,7 @@ myconf:
     tokenUrl: http://192.168.15.206:5555/gateway/getToken
     changeUrl: http://192.168.15.206:5555/gateway/changeToken
     apiRestUrl: http://192.168.15.206:8070/apirest/findInvokeStatus
-    wrapperUrl: http:// 202.106.10.250:5555
+    wrapperUrl: http://192.168.15.206:5555
     apiDetailsUrl: http://192.168.15.206:8070/apirest/findByUrl?url=
   redis:
     ipPort: 192.168.15.203:7000,192.168.15.203:7001,192.168.15.203:7002

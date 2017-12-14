@@ -39,12 +39,29 @@ var end = {
 };
 $.jeDate("#startDate", start);
 $.jeDate("#endDate", end);
+$("#ip").blur(function () {
+    if(this.value){
+        if(/^((25[0-5]|2[0-4]\d|[01]?\d\d?)($|(?!\.$)\.)){4}$/.test(this.value)){
+            $("#ip").css("border","1px solid #ccc");
+        }else{
+            $("#ip").css("border","1px solid red");
+        }
+    }else{
+        $("#ip").css("border","1px solid #ccc");
+    }
+});
 $("#search-btn").on('click',function () {
     var startDate = $("#startDate").val();
     var endDate = $("#endDate").val();
     //var options=$("#status option:selected").val();
     dataParm.startDate = startDate ? startDate : null;
     dataParm.endDate = endDate ? endDate : null;
+    dataParm.ip = $("#ip").val() ? $("#ip").val() : null;
+    if(dataParm.ip && !/^((25[0-5]|2[0-4]\d|[01]?\d\d?)($|(?!\.$)\.)){4}$/.test(dataParm.ip)){
+        $("#ip").css("border","1px solid red");
+        return;
+    }
+    dataParm.status = $("#status option:selected").val() ? $("#status option:selected").val() : null;
     //dataParm.goodsType = options ? options : null;
     goPage(1);
 });

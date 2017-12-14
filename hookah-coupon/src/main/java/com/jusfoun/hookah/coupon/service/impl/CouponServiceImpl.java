@@ -135,13 +135,6 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         if (coupon.getTotalCount()>0 && coupon.getTotalCount()<coupon.getLimitedCount()){
             throw new HookahException("每人限领数量不能大于总发行量");
         }
-        if (DateUtils.isSameDay(coupon.getExpiryStartDate(),new Date())){
-            coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
-            coupon.setActivatedTime(new Date());
-            coupon.setActivatedUser(userId);
-        }else {
-            coupon.setCouponStatus(HookahConstants.CouponStatus.UN_USED.getCode());
-        }
         coupon.setUpdateUser(userId);
         coupon.setUpdateTime(new Date());
         if (goodsList!=null){
