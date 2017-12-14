@@ -127,17 +127,17 @@
                             </td>
                             <th>报名截止日期</th>
                             <td>
-                                <p data-ng-if="status==6 && isZbRequirementAppliesShow" class="input-group">
+                                <p class="input-group " data-ng-if="status==6 && isZbRequirementAppliesShow">
                                     <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                                           datepicker-options="inlineOptions"
                                            ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                           uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="applyDeadline"
-                                           is-open="popup1.opened" datepicker-options="inlineOptions" close-text="关闭" clear-text="清除"
-                                           current-text="今天" readonly="true"/>
+                                           uib-datepicker-popup="yyyy-MM-dd HH:mm:ss" type="datetime-local"
+                                           ng-model="date.applyDeadline"
+                                           is-open="popup1.opened"
+                                           close-text="关闭" clear-text="清除" current-text="今天" readonly="true"/>
                                     <span class="input-group-btn">
-                                      <button type="button" class="btn btn-default" ng-click="open1()">
-                                          重新设置日期
-                                      </button>
-                                 </span>
+                                        <button type="button" class="btn btn-default" ng-click="open1()" >重新设置日期</button>
+                                    </span>
                                 </p>
                                 <span data-ng-if="!(status==6 && isZbRequirementAppliesShow)" data-ng-bind="applyDeadline"></span>
                             </td>
