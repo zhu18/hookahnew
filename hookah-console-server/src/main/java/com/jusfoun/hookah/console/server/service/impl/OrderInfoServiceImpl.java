@@ -1448,7 +1448,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             apiRestUri.append("&startTime=").append(startDate);
         }
         if (null != endDate) {
-            endDate = startDate.replace(" ","%20");
+            endDate = endDate.replace(" ","%20");
             apiRestUri.append("&endTime=").append(endDate);
         }
         if (null != ip) {
