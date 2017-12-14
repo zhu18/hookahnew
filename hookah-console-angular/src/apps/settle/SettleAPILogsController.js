@@ -13,7 +13,8 @@ class SettleAPILogsController {
         params: {
           goodsSn: $stateParams.goodsSn,
           orderSn: $stateParams.orderSn,
-          startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
+          ip: $scope.ip?$scope.ip:null,
+          startDate: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:s') : null,
           endDate: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
           pageNumber:initCurrentPage == 'true' ? 1 : $rootScope.pagination.currentPage, //当前页码
           pageSize: $rootScope.pagination.pageSize
