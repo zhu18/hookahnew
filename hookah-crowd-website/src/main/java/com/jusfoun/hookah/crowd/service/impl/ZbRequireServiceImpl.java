@@ -217,7 +217,8 @@ public class ZbRequireServiceImpl extends GenericServiceImpl<ZbRequirement, Long
             }
             zbRequirement.setPressTime(new Date());
             if (applyDeadline != null) {
-                zbRequirement.setApplyDeadline(DateUtils.getDate(applyDeadline));
+
+                zbRequirement.setApplyDeadline(DateUtils.getDate(DateUtils.transferDate(applyDeadline),"yyyy-MM-dd HH:mm:ss"));
             }
             ZbRequirementApply zbRequirementApply = zbRequirementApplyMapper.selectByPrimaryKey(applyId);
             if (Short.valueOf(status).equals(ZbContants.Zb_Require_Status.WAIT_TWO_TG.getCode().shortValue()) && zbRequirementApply.getStatus() != null) {
