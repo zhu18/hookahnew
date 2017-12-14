@@ -1444,9 +1444,11 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         apiRestUri.append(apiRestUrl).append("?pageNum=").append(pageNumber).append("&pageSize=").append(pageSize)
                 .append("&orderSn=").append(orderSn).append("&goodsSn=").append(goodsSn);
         if (null != startDate) {
+            startDate = startDate.replace(" ","%20");
             apiRestUri.append("&startTime=").append(startDate);
         }
         if (null != endDate) {
+            endDate = endDate.replace(" ","%20");
             apiRestUri.append("&endTime=").append(endDate);
         }
         if (null != ip) {
