@@ -1476,7 +1476,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
                 return ReturnData.error((String) resultMap.get("message"));
             }
         }
-        logger.info("获取API调用日志！{} {}", orderSn, goodsSn, JsonUtils.toJson(resultMap));
+        logger.info("获取API调用日志！{} {}", orderSn, goodsSn);
         return ReturnData.success(pagination);
     }
 
