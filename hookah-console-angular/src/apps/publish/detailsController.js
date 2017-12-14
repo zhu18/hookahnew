@@ -1,11 +1,24 @@
 /**
  * Created by LSS on 2017/9/19 0019.
+ * 关于日历插件问题：
+ * 后台获取数据是 2017-11-14 00:00:00
+ * 日历插件设置日期的格式是 Tue Nov 14 2017 00:00:00 GMT+0800 (中国标准时间)
+ * 所以不能直接把数据赋值给日历插件得做处理：
+ *
+ * 2017-11-14 00:00:00 -->Tue Nov 14 2017 00:00:00 GMT+0800 (中国标准时间)
+ *  $scope.date.applyDeadline=new Date(zbRequirement.applyDeadline);
+ * Tue Nov 14 2017 00:00:00 GMT+0800 (中国标准时间)-->  2017-11-14 00:00:00
+ *  $filter('format')(applyDeadline, 'yyyy-MM-dd HH:mm:ss')
+ *
  */
 
 class detailsController {
     constructor($scope, $rootScope, $http, $state,$stateParams,growl,$filter) {
         console.log($stateParams.id);
         $scope.apply={
+        };
+        $scope.date={
+            applyDeadline:""
         };
         $scope.currDate=$filter('format')(new Date(), 'yyyy-MM-dd HH:mm:ss');
         $scope.screen = function () {
@@ -33,12 +46,13 @@ class detailsController {
                     $scope.tag=zbRequirement.tag?zbRequirement.tag.split(','):null;
                     $scope.type=zbRequirement.type;
                     $scope.description=zbRequirement.description;
-                    $scope.deliveryDeadline=zbRequirement.deliveryDeadline;
                     $scope.status=zbRequirement.status;
+                    $scope.deliveryDeadline=zbRequirement.deliveryDeadline;//交付截止日期
+                    //报名截止日期
                     if(!(zbRequirementApplies && zbRequirementApplies.length>0) && $scope.status==6){
-                        $scope.applyDeadline= new Date(zbRequirement.applyDeadline);
+                        $scope.date.applyDeadline=new Date(zbRequirement.applyDeadline);
                     }else {
-                        $scope.applyDeadline= zbRequirement.applyDeadline;
+                        $scope.date.applyDeadline=zbRequirement.applyDeadline;
                     }
                     $scope.rewardMoney=zbRequirement.rewardMoney;
                     $scope.managedMoney=res.data.data.managedMoney;
@@ -179,59 +193,12 @@ class detailsController {
             });
         }
 
-        $scope.public=function () {
-                $scope.applyDeadline.setDate(tomorrow.getDate() + 5);
-            if($filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')>$scope.deliveryDeadline){
-                var modalInstance =$rootScope.openConfirmDialogModal("报名截止日期不得超过交付日期前五天，请重新选择日期！");
-                modalInstance.result.then(function () {
 
-                }, function () {
-
-                });
-
-            } else {
-                var promise = $http({
-                    method: 'GET',
-                    url: $rootScope.site.crowdServer + "/api/require/updateStatus",
-                    params: {
-                        id:$scope.id,
-                        status:5,
-                        applyDeadline:$filter('format')($scope.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
-                    }
-                });
-                promise.then(function (res) {
-                    console.log('数据在这里');
-                    console.log(res);
-                    if (res.data.code == '1') {
-                        var modalInstance =$rootScope.openConfirmDialogModal("发布成功！");
-                        modalInstance.result.then(function () {
-                            $state.go('publish.list');
-                        }, function () {
-                            $state.go('publish.list');
-                        });
-                    } else {
-
-                        var modalInstance =$rootScope.openConfirmDialogModal("发布失败！");
-                        modalInstance.result.then(function () {
-                            $state.go('publish.list');
-                        }, function () {
-                            $state.go('publish.list');
-                        });
-                    }
-                    $rootScope.loadingState = false;
-                    growl.addSuccessMessage("订单数据加载完毕。。。");
-                });
-            }
-
-        };
 
 
         // 日历插件开始
-
         $scope.inlineOptions = {
-            customClass: getDayClass,
             minDate: new Date(),
-            // maxDate: new Date(data),
             showWeeks: true
         };
         $scope.open1 = function () {
@@ -254,22 +221,6 @@ class detailsController {
                 status: 'partially'
             }
         ];
-        function getDayClass(data) {
-            var date = data.date,
-                mode = data.mode;
-            if (mode === 'day') {
-                var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-
-                for (var i = 0; i < $scope.events.length; i++) {
-                    var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
-
-                    if (dayToCheck === currentDay) {
-                        return $scope.events[i].status;
-                    }
-                }
-            }
-            return '';
-        }
 
         // 日历插件结束
 
@@ -282,37 +233,97 @@ class detailsController {
         $scope.refund=function (id,userId) {
             $state.go('publish.refund', {id: id,userId:userId,status:status});
         };
-        $scope.giveUp=function (id) {
-            var promise = $http({
-                method: 'GET',
-                url: $rootScope.site.crowdServer + "/api/require/updateStatus",
-                params: {
-                    id:id,
-                    status:16
-                }
-            });
-            promise.then(function (res, status, config, headers) {
-                console.log('数据在这里');
-                console.log(res);
-                if (res.data.code == '1') {
-                    var modalInstance =$rootScope.openConfirmDialogModal("确认流标成功！");
-                    modalInstance.result.then(function () {
-                        $state.go('publish.list');
-                    }, function () {
-                        $state.go('publish.list');
-                    });
-                } else {
+        $scope.giveUp=function (id) { //确认流标
+            var modalInstance =$rootScope.openConfirmDialogModal("确认流标吗？");
+            modalInstance.result.then(function () {
+                var promise = $http({
+                    method: 'GET',
+                    url: $rootScope.site.crowdServer + "/api/require/updateStatus",
+                    params: {
+                        id:id,
+                        status:16
+                    }
+                });
+                promise.then(function (res, status, config, headers) {
+                    console.log('数据在这里');
+                    console.log(res);
+                    if (res.data.code == '1') {
+                        var modalInstance =$rootScope.openConfirmDialogModal("确认流标成功！");
+                        modalInstance.result.then(function () {
+                            $state.go('publish.list');
+                        }, function () {
+                            $state.go('publish.list');
+                        });
+                    } else {
 
-                    var modalInstance =$rootScope.openConfirmDialogModal("确认流标失败！");
+                        var modalInstance =$rootScope.openConfirmDialogModal("确认流标失败！");
+                        modalInstance.result.then(function () {
+                            $state.go('publish.list');
+                        }, function () {
+                            $state.go('publish.list');
+                        });
+                    }
+                    $rootScope.loadingState = false;
+                    growl.addSuccessMessage("订单数据加载完毕。。。");
+                });
+            }, function () {
+               
+            });
+            
+        };
+
+        $scope.public=function () {
+            var modalInstance =$rootScope.openConfirmDialogModal("确认重新发布！");
+            modalInstance.result.then(function () {
+                var applyDeadline=$scope.date.applyDeadline; //报名截止日期
+                var deliveryDeadline=new Date($scope.deliveryDeadline); //交付截止日期
+                deliveryDeadline.setDate(deliveryDeadline.getDate() - 5);
+                if($filter('format')(applyDeadline, 'yyyy-MM-dd HH:mm:ss')>$filter('format')(deliveryDeadline, 'yyyy-MM-dd HH:mm:ss')){
+                    var modalInstance =$rootScope.openConfirmDialogModal("报名截止日期不得超过交付日期前五天，请重新选择日期！");
                     modalInstance.result.then(function () {
-                        $state.go('publish.list');
+
                     }, function () {
-                        $state.go('publish.list');
+
+                    });
+
+                } else {
+                    var promise = $http({
+                        method: 'GET',
+                        url: $rootScope.site.crowdServer + "/api/require/updateStatus",
+                        params: {
+                            id:$scope.id,
+                            status:5,
+                            applyDeadline:$filter('format')($scope.date.applyDeadline, 'yyyy-MM-dd HH:mm:ss')
+                        }
+                    });
+                    promise.then(function (res) {
+                        console.log('数据在这里');
+                        console.log(res);
+                        if (res.data.code == '1') {
+                            var modalInstance =$rootScope.openConfirmDialogModal("发布成功！");
+                            modalInstance.result.then(function () {
+                                $state.go('publish.list');
+                            }, function () {
+                                $state.go('publish.list');
+                            });
+                        } else {
+
+                            var modalInstance =$rootScope.openConfirmDialogModal("发布失败！");
+                            modalInstance.result.then(function () {
+                                $state.go('publish.list');
+                            }, function () {
+                                $state.go('publish.list');
+                            });
+                        }
+                        $rootScope.loadingState = false;
+                        growl.addSuccessMessage("订单数据加载完毕。。。");
                     });
                 }
-                $rootScope.loadingState = false;
-                growl.addSuccessMessage("订单数据加载完毕。。。");
+            }, function () {
+
             });
+
+
         };
     }
 }
