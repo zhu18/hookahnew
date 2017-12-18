@@ -542,18 +542,15 @@ input:focus, select:focus, textarea:focus {
 	position: fixed;
 	width: 109px;
 	height: 145px;
-	top: 250px;
+	bottom: 15px;
 	left: 25px;
 	z-index: 1000;
 }
 .ad-box .link-btn {
 	display: block;
-	width: 88px;
-	height: 18px;
-	position: absolute;
-	bottom: 0;
-	opacity: 0.3;
-	left: 16px;
+	width: 100%;
+	height: 100%;
+
 }
 .ad-box .close-btn {
 	display: block;
