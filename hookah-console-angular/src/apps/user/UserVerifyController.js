@@ -146,7 +146,7 @@ class UserVerifyController {
       }
 
       if ($state.$current.name == "user.verify.resultAll") {
-        $scope.searchCheckResult('true');
+        $scope.searchCheckResult();
       }
     };
 
