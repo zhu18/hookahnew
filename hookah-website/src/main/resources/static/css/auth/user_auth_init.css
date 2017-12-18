@@ -40,14 +40,54 @@
     margin:0 auto;
 }
 .steps .txt li{
-    width: 226px;
-    line-height:30px;
+    position: relative;
+    float: left;
+    width: 33.33%;
+    line-height:60px;
     font-size:14px;
     color: #ccc;
+    text-align: center;
 }
-.steps .txt .last{
-    width: 40px;
-    margin-left:23px;
+.steps .txt li:before{
+    content: attr(data-tip);
+    display: block;
+    position: absolute;
+    top: -9px;
+    left: 46%;
+    z-index: 10;
+    width: 19px;
+    height: 19px;
+    color: #ffffff;
+    text-align: center;
+    line-height: 19px;
+    border-radius: 50%;
+    background-color: #ccc;
+}
+.steps .txt li:after{
+    position: absolute;
+    top: 0;
+    right: 50%;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+}
+.steps .txt li:first-child:after{
+    display: none;
+}
+.steps .txt li.active:before{
+    background-color: #00A1CB;
+}
+.steps .txt li.active:after{
+    background-color: #00A1CB;
+}
+.steps .txt li.curActive:before{
+    background-color: #00A1CB;
+    line-height: 12px;
+}
+.steps .txt li.curActive:after{
+    background-color: #00A1CB;
 }
 .agreement-tips{
     background: #fffbee;
@@ -312,7 +352,7 @@
 .auth-finished .auth-finished-info{
     border:1px solid #eee;
     text-align: center;
-    padding:10px 0;
+    padding:150px 0;
     font-size:20px;
     color: #666;
 }
@@ -333,3 +373,5 @@
     color: dodgerblue;
 }
 /*认证完成结束*/
+
+
