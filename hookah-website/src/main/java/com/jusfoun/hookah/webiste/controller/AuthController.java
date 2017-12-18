@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.rpc.api.*;
 import com.jusfoun.hookah.webiste.config.MyProps;
 import com.jusfoun.hookah.webiste.util.PropertiesManager;
+import com.jusfoun.hookah.webiste.util.ReadCookieUtil;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 import org.apache.shiro.SecurityUtils;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -66,6 +70,9 @@ public class AuthController extends BaseController {
 
     @Resource
     SupplierService supplierService;
+
+    @Resource
+    MgTongJiService mgTongJiService;
 
 
     //认证状态(0.未认证 1.认证中 2.已认证 3.认证失败)
@@ -147,7 +154,19 @@ public class AuthController extends BaseController {
     }
 
     @RequestMapping(value = "/auth/user_auth_init_step2", method = RequestMethod.GET)
-    public String userAuth2(Model model) throws Exception {
+    public String userAuth2(Model model, HttpServletRequest request) throws Exception {
+        String userId = this.getCurrentUser().getUserId();
+        try {
+            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
+            Cookie tongJi = cookieMap.get("TongJi");
+            if(tongJi != null){
+                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+                mgTongJiService.setTongJiInfo(TongJiEnum.PERSON_URL, tongJiInfo.getTongJiId(),
+                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
+            }
+        }catch (Exception e){
+            logger.error("插入个人认证统计信息失败{}{}",userId,e.getMessage());
+        }
         return "/auth/user_auth_init_step2";
     }
 
@@ -182,7 +201,7 @@ public class AuthController extends BaseController {
     }
 
     @RequestMapping(value = "/auth/company_auth_init_step2", method = RequestMethod.GET)
-    public String companyAuth2(Model model) throws Exception {
+    public String companyAuth2(Model model, HttpServletRequest request) throws Exception {
         String address = PropertiesManager.getInstance().getProperty("protocol.address");
         model.addAttribute("address", new String(address.getBytes("ISO-8859-1"),"UTF-8"));
         model.addAttribute("email",PropertiesManager.getInstance().getProperty("protocol.email"));
@@ -190,6 +209,18 @@ public class AuthController extends BaseController {
         model.addAttribute("name",new String(name.getBytes("ISO-8859-1"),"UTF-8"));
         model.addAttribute("phone",PropertiesManager.getInstance().getProperty("protocol.phone"));
         model.addAttribute("mobile",PropertiesManager.getInstance().getProperty("protocol.mobile"));
+        String userId = this.getCurrentUser().getUserId();
+        try {
+            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
+            Cookie tongJi = cookieMap.get("TongJi");
+            if(tongJi != null){
+                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+                mgTongJiService.setTongJiInfo(TongJiEnum.ORG_URL, tongJiInfo.getTongJiId(),
+                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
+            }
+        }catch (Exception e){
+            logger.error("插入单位认证统计信息失败{}{}",userId,e.getMessage());
+        }
         return "/auth/company_auth_init_step2";
     }
 

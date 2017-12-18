@@ -10,6 +10,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.MgTongJiService;
+import com.jusfoun.hookah.webiste.util.ReadCookieUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -88,7 +89,7 @@ public class TongJiInterceptor implements HandlerInterceptor {
             }
             userId = userId == null ? "无" : userId;
             //获取cookie中TongJi
-            Map<String, Cookie> cookieMap = ReadCookieMap(request);
+            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
             Cookie tongJi = cookieMap.get("TongJi");
             String utmSource1 = utmSource;
             String utmTerm1 = utmTerm;
@@ -106,33 +107,11 @@ public class TongJiInterceptor implements HandlerInterceptor {
                     response.addCookie(cookie);
                     mgTongJiService.setTongJiInfo("www.bdgstore.cn" + uri, uuid,
                             utmSource1 == null ? "直接访问" : utmSource1, utmTerm1 == null ? "无" : utmTerm1, userId);
-                }else {
-                    //获取最近登录的信息来源
-                    if(utmSource == null || utmTerm == null){
-                        MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
-                        if(tongJiInfo != null){
-                            utmSource1 = tongJiInfo.getUtmSource();
-                            utmTerm1 = tongJiInfo.getUtmTerm();
-                        }
-                    }
-                    mgTongJiService.setTongJiInfo("www.bdgstore.cn" + uri, tongJi.getValue(),
-                            utmSource1 == null ? "直接访问" : utmSource1, utmTerm1 == null ? "无" : utmTerm1, userId);
                 }
             }
         }catch (Exception e){
             //e.printStackTrace();
             logger.info("未获取统计信息");
         }
-    }
-
-    private static Map<String, Cookie> ReadCookieMap(HttpServletRequest request) {
-        Map<String, Cookie> cookieMap = new HashMap<String, Cookie>();
-        Cookie[] cookies = request.getCookies();
-        if (null != cookies) {
-            for (Cookie cookie : cookies) {
-                cookieMap.put(cookie.getName(), cookie);
-            }
-        }
-        return cookieMap;
     }
 }
