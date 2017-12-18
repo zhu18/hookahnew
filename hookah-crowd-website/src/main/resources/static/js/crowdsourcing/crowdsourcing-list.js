@@ -58,7 +58,7 @@ function loadPageData(data) { //渲染页面数据
 
 }
 
-$('.j_searchLi li').on('click', function () {
+$(document).on('click', '.j_searchLi li',function () {
   $(this).addClass('active').siblings().removeClass('active').parent().attr('value', $(this).attr('value'));
   searchFn();
 });
