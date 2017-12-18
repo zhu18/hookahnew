@@ -21,12 +21,10 @@ var htmlPart = {
                 <!--认证信息开始-->
                 <div class="auth-info" >
                     <div class="steps">
-                        <div class="img-show step2"></div>
                         <ul class="txt clearfix">
-                            <li class="grid-left blue">阅读购买协议</li>
-                            <li class="grid-left blue">提交认证信息</li>
-                            <li class="grid-left">等待审核</li>
-                            <li class="grid-left last">完成</li>
+                            <li data-tip="√" class="blue active">阅读交易规则</li>
+                            <li data-tip="..." class="blue curActive">提交认证信息</li>
+                            <li>完成</li>
                         </ul>
                     </div>
                     <form action="" id="authForm" enctype="multipart/form-data">
@@ -34,12 +32,12 @@ var htmlPart = {
                             <h3>个人认证信息</h3>
                             <ul class="clearfix">
                                 <li>
-                                    <label for="userName" class="tit">姓名：</span><span class="gs">*</span></label>
+                                    <label for="userName" class="tit">姓名：</span><span class="gs color-red">*</span></label>
                                     <input type="text" id="userName" class="txt" placeholder="务必填写本人真实姓名，便于我们提供技术支持">
                                     <p class="error_tip name_error_tip"></p>
                                 </li>
                                 <li>
-                                    <label for="userCode" class="tit">身份证号：</span><span class="gs">*</span></label>
+                                    <label for="userCode" class="tit">身份证号：</span><span class="gs color-red">*</span></label>
                                     <input type="text" id="userCode" class="txt" placeholder="请正确填写本人身份证号码">
                                     <p class="error_tip code_error_tip"></p>
                                 </li>

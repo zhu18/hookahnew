@@ -11,8 +11,8 @@ $(function(){
         $('.name_error_tip').hide();
 	});
     $("#userName").on("blur",checkName);
-    $("#zform").on("click", upPhoto);
-    $("#fform").on("click", upPhoto);
+    // $("#zform").on("click", upPhoto);
+    // $("#fform").on("click", upPhoto);
     $('.submit-file .file_item').mouseover(function(){
         $(this).children('.warp').show();
     })
@@ -60,7 +60,7 @@ function userAuth(){
             type:"post",
             success : function(data) {
                 if (data.code == 1) {
-                    window.location.href = './user_auth_init_step3.html';
+                    window.location.href = './user_auth_init_step4.html';
                 } else {
                     alert(data.message);
                 }
