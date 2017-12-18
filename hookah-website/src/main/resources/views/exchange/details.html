@@ -9,12 +9,14 @@ var head = {
 <link rel="stylesheet" href="/static/css/index/index.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <link rel="stylesheet" href="/static/css/exchange/style.css">
+<link rel="stylesheet" href="/static/js/plugins/json/jquery.json-viewer.css">
 <script>
 	var JshopPrice = ${goodsDetails.shopPrice};
 	var isDiscussPrice = ${goodsDetails.isDiscussPrice};
 	$('html').attr( "xmlns:wb","http://open.weibo.com/wb")
 </script>
 <script type="text/javascript" src="/static/js/plugins/qrcode/qrcode.min.js"></script>
+<script type="text/javascript" src="/static/js/plugins/json/jquery.json-viewer.js"></script>
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 <%};%>
@@ -339,7 +341,7 @@ var htmlPart = {
 							<tr>
 								<td colspan="2">
 									<div class="apiInfo-con">
-										<div class="reqSample-con">
+										<div class="reqSample-con" >
 											${goodsDetails.apiInfo.reqSample}
 										</div>
 									</div>
@@ -352,9 +354,9 @@ var htmlPart = {
 							<tr>
 								<td colspan="2">
 									<div class="apiInfo-con">
-										<div class="reqSample-con">
-											${goodsDetails.apiInfo.respSample }
-										</div>
+										<pre class="reqSample-con"  id="json-respSample-2">
+											${goodsDetails.apiInfo.respSample}
+										</pre>
 									</div>
 								</td>
 							</tr>
@@ -438,7 +440,7 @@ var htmlPart = {
 							<tr>
 								<td colspan="2">
 									<div class="apiInfo-con">
-										<div class="reqSample-con">
+										<div class="reqSample-con" >
 											${goodsDetails.apiInfo.reqSample}
 										</div>
 									</div>
@@ -451,9 +453,9 @@ var htmlPart = {
 							<tr>
 								<td colspan="2">
 									<div class="apiInfo-con">
-										<div class="reqSample-con">
-											${goodsDetails.apiInfo.respSample }
-										</div>
+										<pre class="reqSample-con"  id="json-respSample">
+											${goodsDetails.apiInfo.respSample}
+										</pre>
 									</div>
 								</td>
 							</tr>
@@ -696,6 +698,7 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 		shareImg = '${goodsDetails.goodsImg}',
 		shareDesc = $('#J_goodsBrief').text(),
 		shareLink = location.href.split('#')[0];
+	    respSample = '${goodsDetails.apiInfo.respSample}';
 	$("meta[property='og:url']").attr('content',shareLink);
 	$("meta[property='og:title']").attr('content',shareTitle);
 	$("meta[property='og:description']").attr('content',shareDesc);
@@ -760,6 +763,11 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 			$.alert('res');
 		});
 
+        //美化json格式展示
+        var dataRespSample=JSON.parse(respSample);
+        $("#json-respSample").jsonViewer(dataRespSample);
+        $("#json-respSample-2").jsonViewer(dataRespSample);
 
 	});
+
 </script>
