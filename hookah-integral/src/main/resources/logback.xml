@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <!-- 日志文件属性 -->
-  <property name="logBase" value="/logs" />
+  <property name="logBase" value="/data/logs" />
   <property name="logFileName" value="hookah-integral" />
   <!-- 彩色日志 -->
   <!-- 彩色日志依赖的渲染类 -->
@@ -45,7 +45,7 @@
       </encoder>
   </appender> -->
 
-  <logger name="com.jusfoun.hookah.core.dao" level="DEBUG" />
+  <logger name="com.jusfoun.hookah.core.dao" level="INFO" />
 
   <!-- 日志输出级别 -->
   <root level="INFO">
