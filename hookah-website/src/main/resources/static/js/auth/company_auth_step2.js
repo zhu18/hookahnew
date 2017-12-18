@@ -100,9 +100,9 @@ $.ajax({
    "orgName":$("input[name='governmentName']").val(),//单位名称
    // "creditCode":$("input[name='creditCode']").val(),//统一社会信用代码
    // "industry":$("input[name='mainBusiness']").val(),//经营范围
-   "lawPersonName":$("input[name='companyLegal']").val(),//法定代表人
+   // "lawPersonName":$("input[name='companyLegal']").val(),//法定代表人
    // "lawPersonCategory":"0",//类别
-   "lawPersonNum":$("input[name='lawPersonNum']").val(),//企业法人代表证件编号
+   // "lawPersonNum":$("input[name='lawPersonNum']").val(),//企业法人代表证件编号
    // "lawPersonPositivePath":$("input[name='lawPersonPositivePath']").val(),//身份证正面
    // "lawPersonNegativePath":$("input[name='lawPersonNegativePath']").val(),//身份证反面
    // "region":$('select[name="registerCity"] option:selected').val(),//所在地
@@ -113,7 +113,7 @@ $.ajax({
    // "taxCode":$("input[name='taxRegCertificate']").val(),//税务登记编号
    // "taxPath":$("#taxPathSrc").val(),//税务登记存放路径
    // "licenseCode":$("input[name='businessLicence']").val(),//营业执照编号
-   "licensePath": $("#licensePathSrc").val(),//营业执照存放路径
+   // "licensePath": $("#licensePathSrc").val(),//营业执照存放路径
    // "certificateCode":$("input[name='certificateCode']").val(),//信用代码
    // "certifictePath":$("#certifictePathSrc").val(),//企业代码存放路径
    // "isSupplier":$("input[name='fruit']:checked").val()?$("input[name='fruit']:checked").val():"0"//是否成功供应商
@@ -135,9 +135,9 @@ $("#companyForm").validate({
     // creditCode:'required',
     // businessLicence:'required',
     // taxRegCertificate:'required',
-    companyLegal: 'required',
+    // companyLegal: 'required',
     //mainBusiness: 'required',
-    lawPersonNum:'required',
+    // lawPersonNum:'required',
     // province:'required',
     //city: 'required',
     //address: 'required',
@@ -155,13 +155,13 @@ $("#companyForm").validate({
     //creditCode: '信用代码不能为空',
     //businessLicence: '营业执照不能为空',
     //taxRegCertificate: '不能为空',
-    companyLegal: '法定代表人不能为空',
+    // companyLegal: '法定代表人不能为空',
     //mainBusiness: '经营范围不能为空',
     // province:'所在地区不能为空',
     //city: '所在地区不能为空',
     //address: '详细地址不能为空',
     //workAddress: '办公地址不能为空',
-    lawPersonNum:'法定代表人证件编号不能为空',
+    // lawPersonNum:'法定代表人证件编号不能为空',
     licensePath: '营业执照必须上传',
     taxPath: '税务登记证必须上传',
     //certifictePath: '企业代码证必须上传',
@@ -231,8 +231,8 @@ if ($.getUrlParam("isAuth") == "3") {
         $("input[name='governmentName']").val(data.data.organization.orgName?data.data.organization.orgName:"");//单位名称
         //$("input[name='creditCode']").val(data.data.organization.creditCode?data.data.organization.creditCode:"");//统一社会信用代码
         //$("input[name='mainBusiness']").val(data.data.organization.industry?data.data.organization.industry:"")//主营业务
-        $("input[name='companyLegal']").val(data.data.organization.lawPersonName?data.data.organization.lawPersonName:"")//企业法人代表
-        $("input[name='lawPersonNum']").val(data.data.organization.lawPersonNum?data.data.organization.lawPersonNum:"")//法定代表人证件编号
+        // $("input[name='companyLegal']").val(data.data.organization.lawPersonName?data.data.organization.lawPersonName:"")//企业法人代表
+        // $("input[name='lawPersonNum']").val(data.data.organization.lawPersonNum?data.data.organization.lawPersonNum:"")//法定代表人证件编号
         // if(data.data.organization.lawPersonPositivePath){
         //     $('#lawPersonPositivePath').attr({"src":host.static+'/' + data.data.organization.lawPersonPositivePath});//法定代表人证件照正
         //     $("input[name='lawPersonPositivePath']").val(data.data.organization.lawPersonPositivePath);//法定代表人证件照正
@@ -253,10 +253,10 @@ if ($.getUrlParam("isAuth") == "3") {
 
         //营业执照编号
         // $("input[name='businessLicence']").val(data.data.organization.licenseCode?data.data.organization.licenseCode:"");
-        if(data.data.organization.licensePath){
-            $("#licensePath").attr({"src":host.static+'/' +data.data.organization.licensePath});//企业代码存放路径
-            $("#licensePathSrc").val(data.data.organization.licensePath);//企业代码存放路径
-        }
+        // if(data.data.organization.licensePath){
+        //     $("#licensePath").attr({"src":host.static+'/' +data.data.organization.licensePath});//企业代码存放路径
+        //     $("#licensePathSrc").val(data.data.organization.licensePath);//企业代码存放路径
+        // }
 
         //税务
         // $("input[name='taxRegCertificate']").val(data.data.organization.taxCode?data.data.organization.taxCode:"");

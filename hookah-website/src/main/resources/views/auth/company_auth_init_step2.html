@@ -41,23 +41,25 @@ var htmlPart = {
 											<p class="p_title p-info">需与营业执照或组织机构代码证上的名称完全一致。信息审核后，若想更名，只能重新审核</p>
 										</div>
 									</li>
-									<!--<li>
-										<label><span>统一社会信用代码：</span></label>
+									<li>
+										<label><span>社会信用代码：</span><span class="gs">*</span></label>
 										<div class="inputBoxs">
-											<input name="creditCode" placeholder="请输入统一社会信用代码" type="text"/>
+											<input name="creditCode" placeholder="请输入社会信用代码" type="text"/>
+											<p class="p_title p-info">统一社会信用代码是一组长度为18位的用于法人和其他组织身份识别的代码。统一社会信用代码由国家标准委发布</p>
+
 										</div>
 									</li>
-									<li>
+									<!--<li>
 										<label><span>经营范围：</span><span class="gs">*</span></label>
 										<div class="inputBoxs">
 											<input type="text" name="mainBusiness" placeholder="请输入经营范围"/>
 										</div>
 									</li>-->
-									<li>
-										<label><span>联系人：</span><span class="gs">*</span></label>
-										<div class="inputBoxs">
-											<input type="text" name="companyLegal" placeholder="请输入单位的联系人"/></div>
-									</li>
+									<!--<li>-->
+										<!--<label><span>联系人：</span><span class="gs">*</span></label>-->
+										<!--<div class="inputBoxs">-->
+											<!--<input type="text" name="companyLegal" placeholder="请输入单位的联系人"/></div>-->
+									<!--</li>-->
 									<!--<li>
 										<label><span>法定代表人证件类别：</span></label>
 										<div class="inputBoxs">
@@ -66,13 +68,13 @@ var htmlPart = {
 											</select>
 										</div>
 									</li>-->
-									<li>
-										<label><span>身份证号：</span><span class="gs">*</span></label>
-										<div class="inputBoxs">
-											<input type="text" name="lawPersonNum" placeholder="请输入身份证号"/>
-											<p class="p_title p-info">联系人姓名必须与身份证上人员姓名一致</p>
-										</div>
-									</li>
+									<!--<li>-->
+										<!--<label><span>身份证号：</span><span class="gs">*</span></label>-->
+										<!--<div class="inputBoxs">-->
+											<!--<input type="text" name="lawPersonNum" placeholder="请输入身份证号"/>-->
+											<!--<p class="p_title p-info">联系人姓名必须与身份证上人员姓名一致</p>-->
+										<!--</div>-->
+									<!--</li>-->
 									<!--<li>
 										<label><span>法定代表人证件照：</span></label>
 										<span style="line-height: 32px;">请上传在有效期之内的身份证照片或扫描件</span>
@@ -130,20 +132,20 @@ var htmlPart = {
 										<!--<div class="inputBoxs">-->
 											<!--<input type="text" name="businessLicence" placeholder="请输入营业执照编号"/></div>-->
 									<!--</li>-->
-									<li>
-										<label><span>营业执照或组织机构代码证扫描件：</span><span class="gs">*</span></label>
-										<p class="p_title p-info">需与营业执照或组织机构代码证上的名称完全一致，信息审核后，若想更名，只能重新审核；营业执照或者组织机构代码证必须在有效期范围内，格式要求：原件照片、扫描件、或加盖公章的复印件，支持jpg\jpeg\bmp\gif\png格式照片，大小不超过5M，确保照片上的内容清晰可见，我们会在工作日24小时内进行审核验证</p>
-									</li>
-									<li>
-										<div class="upLoad">
-											<span class="unload_title">点击上传图片</span>
-											<img src="/static/images/auth/bk.jpg" alt="" id="licensePath"/>
-											<span class="upLoad_warp">点击上传图片</span>
-											<input type="file"  name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>
-											<input type="hidden" class="input_hide" id="licensePathSrc">
-											<input type="text" name="licensePath" class="input_op">
-										</div>
-									</li>
+									<!--<li>-->
+										<!--<label><span>营业执照或组织机构代码证扫描件：</span><span class="gs">*</span></label>-->
+										<!--<p class="p_title p-info">需与营业执照或组织机构代码证上的名称完全一致，信息审核后，若想更名，只能重新审核；营业执照或者组织机构代码证必须在有效期范围内，格式要求：原件照片、扫描件、或加盖公章的复印件，支持jpg\jpeg\bmp\gif\png格式照片，大小不超过5M，确保照片上的内容清晰可见，我们会在工作日24小时内进行审核验证</p>-->
+									<!--</li>-->
+									<!--<li>-->
+										<!--<div class="upLoad">-->
+											<!--<span class="unload_title">点击上传图片</span>-->
+											<!--<img src="/static/images/auth/bk.jpg" alt="" id="licensePath"/>-->
+											<!--<span class="upLoad_warp">点击上传图片</span>-->
+											<!--<input type="file"  name="filename" multiple="multiple" class="unloadBtn" accept="image/gif,image/jpeg,image/jpg,image/png"/>-->
+											<!--<input type="hidden" class="input_hide" id="licensePathSrc">-->
+											<!--<input type="text" name="licensePath" class="input_op">-->
+										<!--</div>-->
+									<!--</li>-->
 									<!--<li>
 										<label><span>税务登记证编号：</span></label>
 										<div class="inputBoxs">
