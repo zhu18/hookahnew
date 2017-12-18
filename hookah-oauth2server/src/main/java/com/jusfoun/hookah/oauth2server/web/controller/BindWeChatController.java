@@ -21,6 +21,7 @@ import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.*;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
+import com.jusfoun.hookah.oauth2server.config.ReadCookieUtil;
 import com.jusfoun.hookah.oauth2server.config.WXConfigUtils;
 import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.rpc.api.*;
@@ -182,7 +183,7 @@ public class BindWeChatController {
 
                 //统计获取注册地址
                 String userId = regUser.getUserId();
-                Map<String, Cookie> cookieMap = ReadCookieMap(request);
+                Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
                 Cookie tongJi = cookieMap.get("TongJi");
                 if(tongJi != null){
                     MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
@@ -253,17 +254,6 @@ public class BindWeChatController {
             generateUserSn();
         }
         return userSn;
-    }
-
-    private static Map<String, Cookie> ReadCookieMap(HttpServletRequest request) {
-        Map<String, Cookie> cookieMap = new HashMap<String, Cookie>();
-        Cookie[] cookies = request.getCookies();
-        if (null != cookies) {
-            for (Cookie cookie : cookies) {
-                cookieMap.put(cookie.getName(), cookie);
-            }
-        }
-        return cookieMap;
     }
 
     /**
