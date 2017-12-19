@@ -292,7 +292,7 @@ var htmlPart = {
 	$(function () {
 		$.ajax({
 			type: "get",
-			url: host.website + '/api/image/list',
+			url: host.website + '/api/image/list?imgType=0',
 			success: function (data) {
 				if (data.code == 1) {
 					var html = '';
