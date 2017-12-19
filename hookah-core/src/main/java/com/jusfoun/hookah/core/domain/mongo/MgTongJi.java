@@ -28,7 +28,7 @@ public class MgTongJi extends GenericModel {
     //统计当前地址
     private String tongJiUrl;
 
-    //用户id
+    //用户注册认证信息此字段为用户id  订单信息此字段为订单号
     private String userId;
 
     //用户来源（统计来源_统计关键字）

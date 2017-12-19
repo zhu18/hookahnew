@@ -2,6 +2,8 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.dao.FlowUserMapper;
+import com.jusfoun.hookah.core.domain.OrderInfo;
+import com.jusfoun.hookah.core.domain.TransactionAnalysis;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCheck;
 import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
@@ -45,6 +47,12 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
     @Resource
     FlowUserService flowUserService;
+
+    @Resource
+    OrderInfoService orderInfoService;
+
+    @Resource
+    TransactionAnalysisService transactionAnalysisService;
 
     // 每隔凌晨执行一次
     @Scheduled(cron="0 59 23 * * ?")
@@ -154,10 +162,95 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 //        return ReturnData.success("统计完成");
     }
 
+    @Override
+    public void countOrderData() {
+        logger.info("------------------开始统计当天订单数据----------------------");
 
+        //获取当天的所有订单数据  包括所有的已付款，未付款，已取消，已删除的订单
+        List<Condition> filter = new ArrayList<>();
+        Date now = new Date();
+        String date = DateUtils.toDateText(now);
+        filter.add(Condition.like("addTime", date));
+        List<OrderInfo> orderInfos = orderInfoService.selectList(filter);
+        if (orderInfos.size() == 0){
+            logger.info("------------------当天无订单交易数据---------------------");
+            return;
+        }
+        List<OrderInfoTongJi> OrderInfoTongJi = new ArrayList<>();
+        for (OrderInfo orderInfo : orderInfos){
+            MgTongJi mgTongJi = getMgTongJiInfo(orderInfo.getOrderSn(),TongJiEnum.ORDER_CREATE_URL);
+            if (mgTongJi != null){
+                OrderInfoTongJi orderInfoTongJi = new OrderInfoTongJi();
+                orderInfoTongJi.setMgTongJi(mgTongJi);
+                orderInfoTongJi.setOrderInfo(orderInfo);
+                OrderInfoTongJi.add(orderInfoTongJi);
+            }
+        }
 
+        //各来源订单数
+        Map<String,Integer> orderNumMap = new HashMap<String,Integer>();
+        Map<String,Integer> payedOrderNumMap = new HashMap<String,Integer>();
+        Map<String,Long> payedOrderMoneyMap = new HashMap<String,Long>();
+        Map<String,Integer> unPayedOrderNumMap = new HashMap<String,Integer>();
+        for (OrderInfoTongJi orderInfoTongJi : OrderInfoTongJi){
+            MgTongJi mgTongJi = orderInfoTongJi.getMgTongJi();
+            OrderInfo orderInfo = orderInfoTongJi.getOrderInfo();
+            if(orderNumMap.containsKey(mgTongJi.getSource())){
+                Integer orderNum = orderNumMap.get(mgTongJi.getSource());
+                orderNum++;
+                orderNumMap.put(mgTongJi.getSource(), orderNum);
+                if (orderInfo.getPayStatus() == OrderInfo.PAYSTATUS_PAYED){
+                    Integer payedOrderNum = (payedOrderNumMap.get(mgTongJi.getSource()) == null) ? 0 : payedOrderNumMap.get(mgTongJi.getSource());
+                    payedOrderNum++;
+                    payedOrderNumMap.put(mgTongJi.getSource(), payedOrderNum);
 
+                    Long payedOrderMoney = (payedOrderMoneyMap.get(mgTongJi.getSource()) == null) ? 0L : payedOrderMoneyMap.get(mgTongJi.getSource());
+                    payedOrderMoney = payedOrderMoney + orderInfo.getOrderAmount();
+                    payedOrderMoneyMap.put(mgTongJi.getSource(), payedOrderMoney);
+                }else if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
+                    Integer unPayedOrderNum = (unPayedOrderNumMap.get(mgTongJi.getSource()) == null) ? 0 : unPayedOrderNumMap.get(mgTongJi.getSource());
+                    unPayedOrderNum++;
+                    unPayedOrderNumMap.put(mgTongJi.getSource(), unPayedOrderNum);
+                }
+            }else{
+                //所有订单数
+                orderNumMap.put(mgTongJi.getSource(), 1);
+                if (orderInfo.getPayStatus() == OrderInfo.PAYSTATUS_PAYED){
+                    Integer payedOrderNum = 0;
+                    payedOrderNum++;
+                    payedOrderNumMap.put(mgTongJi.getSource(), payedOrderNum);
 
+                    Long payedOrderMoney = 0L;
+                    payedOrderMoney = payedOrderMoney + orderInfo.getOrderAmount();
+                    payedOrderMoneyMap.put(mgTongJi.getSource(), payedOrderMoney);
+                }else if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
+                    Integer unPayedOrderNum = 0;
+                    unPayedOrderNum++;
+                    unPayedOrderNumMap.put(mgTongJi.getSource(), unPayedOrderNum);
+                }
+            }
+        }
+
+        TransactionAnalysis transactionAnalysis = new TransactionAnalysis();
+        for (String key : orderNumMap.keySet()){
+            transactionAnalysis.setDataSource(key);
+            transactionAnalysis.setOrderNum(orderNumMap.get(key));
+            if (payedOrderNumMap != null && payedOrderNumMap.get(key) != null){
+                transactionAnalysis.setEffecticeOrderNum(payedOrderNumMap.get(key));
+            }
+            if (payedOrderMoneyMap != null && payedOrderMoneyMap.get(key) != null){
+                transactionAnalysis.setEffectiveOrderAmount(payedOrderMoneyMap.get(key));
+            }
+            if (unPayedOrderNumMap != null && unPayedOrderNumMap.get(key) != null){
+                transactionAnalysis.setPayingOrderNum(unPayedOrderNumMap.get(key));
+            }
+            transactionAnalysis.setAddTime(now);
+            transactionAnalysis.setInsertTime(date);
+            transactionAnalysis.setAddOperator("SYSTEM");
+            transactionAnalysisService.insert(transactionAnalysis);
+        }
+        logger.info("------------------当天订单数据统计结束----------------------");
+    }
 
 
     //获取当天起始时间
@@ -195,5 +288,26 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             mgTongJi.setSource(source);
         }
         return mgTongJi;
+    }
+
+    class OrderInfoTongJi{
+        private OrderInfo orderInfo;
+        private MgTongJi mgTongJi;
+
+        public OrderInfo getOrderInfo() {
+            return orderInfo;
+        }
+
+        public void setOrderInfo(OrderInfo orderInfo) {
+            this.orderInfo = orderInfo;
+        }
+
+        public MgTongJi getMgTongJi() {
+            return mgTongJi;
+        }
+
+        public void setMgTongJi(MgTongJi mgTongJi) {
+            this.mgTongJi = mgTongJi;
+        }
     }
 }

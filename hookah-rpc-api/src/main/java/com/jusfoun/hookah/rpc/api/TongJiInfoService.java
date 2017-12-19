@@ -5,4 +5,6 @@ import com.jusfoun.hookah.core.utils.ReturnData;
 public interface TongJiInfoService {
 
     void saveTongJiInfoService();
+
+    void countOrderData();
 }

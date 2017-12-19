@@ -48,6 +48,9 @@ public class TimerTask {
     @Resource
     CouponService couponService;
 
+    @Resource
+    TongJiInfoService tongJiInfoService;
+
     /**
      * 待审核用户（企业）每一小时通知审批人
      */
@@ -138,6 +141,18 @@ public class TimerTask {
         } catch (Exception e) {
             logger.error("定时取消订单失败："+e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 交易运营统计
+     */
+    @Scheduled(cron="30 59 23 * * ?")
+    public void countOrderData(){
+        try {
+            tongJiInfoService.countOrderData();
+        } catch (Exception e) {
+            logger.error("交易运营统计失败："+e.getMessage());
         }
     }
 }

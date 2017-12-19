@@ -78,16 +78,7 @@ public class TongJiInterceptor implements HandlerInterceptor {
         try {
             BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
             MgTongJiService mgTongJiService = (MgTongJiService) factory.getBean("mgTongJiService");
-            Subject subject = SecurityUtils.getSubject();
-            //获取userId
-            String userId = null;
-            if (subject != null && subject.isAuthenticated()) {
-                Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
-                User user = new User();
-                BeanUtils.populate(user,userMap);
-                userId = user.getUserId();
-            }
-            userId = userId == null ? "无" : userId;
+
             //获取cookie中TongJi
             Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
             Cookie tongJi = cookieMap.get("TongJi");
@@ -100,6 +91,16 @@ public class TongJiInterceptor implements HandlerInterceptor {
                 return;
             }else {
                 if (tongJi == null) {
+                    Subject subject = SecurityUtils.getSubject();
+                    //获取userId
+                    String userId = null;
+                    if (subject != null && subject.isAuthenticated()) {
+                        Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
+                        User user = new User();
+                        BeanUtils.populate(user,userMap);
+                        userId = user.getUserId();
+                    }
+                    userId = userId == null ? "无" : userId;
                     String uuid = StringUtils.getUUID();
                     Cookie cookie = new Cookie("TongJi", uuid);
                     cookie.setDomain("bdgstore.cn");
@@ -110,7 +111,7 @@ public class TongJiInterceptor implements HandlerInterceptor {
                 }
             }
         }catch (Exception e){
-            //e.printStackTrace();
+            e.printStackTrace();
             logger.info("未获取统计信息");
         }
     }
