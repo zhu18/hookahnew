@@ -8,34 +8,37 @@ $(document).ready(function () {
 		$('#exchange_menu').show();
 		$(".exchange-index-menu").show();
 	} else if (pathname.indexOf('/exchange/list') >= 0) {
-		$('#exchange_menu').show();
-		$(".exchange-index-menu").hide();
-		showMenu()
+        $('#exchange_menu').show();
+        $(".exchange-index-menu").show();
+        $(".exchange-index-menu .menu-list").hide();
+        showMenu()
 	} else if (pathname.indexOf('/exchange/details') >= 0) {
-		$('#exchange_menu').show();
-		$(".exchange-index-menu").hide();
-		showMenu()
+        $('#exchange_menu').show();
+        $(".exchange-index-menu").show();
+        $(".exchange-index-menu .menu-list").hide();
+        showMenu()
 	} else if (pathname.indexOf('/exchange/label') >= 0) {
-		$('#exchange_menu').show();
-		$(".exchange-index-menu").hide();
-		showMenu()
+        $('#exchange_menu').show();
+        $(".exchange-index-menu").show();
+        $(".exchange-index-menu .menu-list").hide();
+        showMenu()
 	} else if (pathname.indexOf('/activity/superCost') >= 0) {
-		$('#exchange_menu').show();
-		$(".exchange-index-menu").hide();
-		showMenu()
+        $('#exchange_menu').show();
+        $(".exchange-index-menu").show();
+        $(".exchange-index-menu .menu-list").hide();
+        showMenu()
 	} else {
 		$('#exchange_menu').hide();
 		$(".exchange-index-menu").hide();
 	}
-	function showMenu() {
-		$('#exchange_menu').mouseover(function () {
-			$(".exchange-index-menu").show();
-		});
-		$('.exchange-index-menu').mouseleave(function () {
-			$(".exchange-index-menu").hide();
-		});
-
-	}
+    function showMenu(){
+        $('.exchange-index-menu').hover(function(){
+            $(".exchange-index-menu .menu-list").show();
+        });
+        $('.exchange-index-menu').mouseleave(function(){
+            $(".exchange-index-menu .menu-list").hide();
+        });
+    }
 
 	$(".exchange-index-menu .menu-list .menu-item").hover(function () {
 		$(this).children('.menu-son-list').show().end().siblings().children('.menu-son-list').hide();
