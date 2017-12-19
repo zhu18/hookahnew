@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <!-- 日志文件属性 -->
-  <property name="logBase" value="/logs" />
+  <property name="logBase" value="/data/logs" />
   <property name="logFileName" value="hookah-crowd" />
   <!-- 彩色日志 -->
   <!-- 彩色日志依赖的渲染类 -->

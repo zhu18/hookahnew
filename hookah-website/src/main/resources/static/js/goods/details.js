@@ -52,7 +52,10 @@ $(function(){
             if (isNaN(val)) {
                 $(this).val(1);
             } else if (val < 1 || val > 9999999) {
-                $.alert('数量只能在1-9999999之间')
+                $.alert('数量只能在1-9999999之间');
+                $(this).val(1);
+            } else if(!(/^[0-9]+$/.test(val))){
+                $.alert('数字只能是整数');
                 $(this).val(1);
             }
         })
