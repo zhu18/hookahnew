@@ -5,10 +5,11 @@
 
 .exchange-index-menu {
     position: absolute;
+    top: -40px;
     z-index: 10;
     width: 180px;
-    height:400px;
-    top: -40px;
+    height:440px;
+    overflow: hidden;
 }
 .exchange-index-menu .station-box{
     height: 40px;
