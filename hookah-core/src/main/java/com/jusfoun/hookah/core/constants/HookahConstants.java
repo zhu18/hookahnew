@@ -146,6 +146,15 @@ public class HookahConstants {
     public static final String CACHE_GOODS_ATTR = "goodsAttrInfo";//商品属性
     public static final String CACHE_GOODS_AREA = "regionInfo";//地域信息
 
+
+    /** 个人认证时调用接口的url、token   PERSON */
+    public static final String PERSON_AUTH_URL = "http://202.106.10.250:5555/aw/xa/idname";
+    public static final String PERSON_AUTH_TOKEN = "dd4525298f5f8f19f21f349d6a4cb087";
+
+    /** 企业认证时调用接口的url、token ORGANIZATION */
+    public static final String ORGANIZATION_AUTH_URL = "http://202.106.10.250:5555/aw/dc/entBaseInfo";
+    public static final String ORGANIZATION_AUTH_TOKEN =  "62b8d10be44a7d73d0fd786c9f982b8e";
+
     /** 商品状态 */
     public static final Byte GOODS_STATUS_DELETE = 0;
     public static final Byte GOODS_STATUS_UNDELETE = 1;

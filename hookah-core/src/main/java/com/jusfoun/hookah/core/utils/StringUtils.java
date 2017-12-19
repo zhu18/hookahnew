@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.core.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -77,5 +78,26 @@ public class StringUtils {
         String str = uuid.toString();
         String uuidStr=str.replace("-", "");
         return uuidStr;
+    }
+
+    /**
+     * 将map转换成url
+     * @param map
+     * @return
+     */
+    public static String getUrlParamsByMap(Map<String, Object> map) {
+        if (map == null) {
+            return "";
+        }
+        StringBuffer sb = new StringBuffer();
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            sb.append(entry.getKey() + "=" + entry.getValue());
+            sb.append("&");
+        }
+        String s = sb.toString();
+        if (s.endsWith("&")) {
+            s = org.apache.commons.lang.StringUtils.substringBeforeLast(s, "&");
+        }
+        return s;
     }
 }

@@ -272,6 +272,21 @@ public class HttpClientUtil {
 	}
 
 	/**
+	 * 发送 post请求
+	 * @param httpUrl 地址
+	 * @param params 参数(格式:key1=value1&key2=value2)
+	 */
+	public static String sendHttpFormPost(String httpUrl, String params,Header headers) throws Exception{
+		HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
+		httpPost.setHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded");
+		httpPost.addHeader(headers);
+		StringEntity stringEntity = new StringEntity(params,"UTF-8");
+		stringEntity.setContentType("application/x-www-form-urlencoded");
+		httpPost.setEntity(stringEntity);
+		return sendHttpMethod(httpPost);
+	}
+
+	/**
 	 * 发送Post请求
 	 * @param httpReq
 	 * @return
