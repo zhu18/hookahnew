@@ -1,39 +1,40 @@
 $(document).ready(function () {
+	//控制全部分类菜单显隐
     var pathname = window.location.pathname;
     if (pathname.indexOf('/exchange/index') >= 0) {
         $('#exchange_menu').show();
-        $(".exchange-index-menu").show();
+        $(".exchange-index-menu .menu-list").hide();
     } else if(pathname.indexOf('/exchange/list') >= 0) {
         $('#exchange_menu').show();
-        $(".exchange-index-menu").hide();
+        $(".exchange-index-menu .menu-list").hide();
         showMenu()
     } else if(pathname.indexOf('/exchange/details') >= 0) {
         $('#exchange_menu').show();
-        $(".exchange-index-menu").hide();
+        $(".exchange-index-menu .menu-list").hide();
         showMenu()
     } else if(pathname.indexOf('/crowdsourcing') >= 0) {
-      $('#exchange_menu').show();
-        $(".exchange-index-menu").hide();
+        $('.exchange-index-menu').show();
+        $(".exchange-index-menu .menu-list").hide();
         showMenu()
     }else if(pathname.indexOf('/exchange/label') >= 0) {
         $('#exchange_menu').show();
-        $(".exchange-index-menu").hide();
+        $(".exchange-index-menu .menu-list").hide();
         showMenu()
     }else{
         $('#exchange_menu').hide();
-        $(".exchange-index-menu").hide();
+        $(".exchange-index-menu .menu-list").hide();
     }
 
   function showMenu(){
-    $('#exchange_menu').mouseover(function(){
-      $(".exchange-index-menu").show();
+    $('.exchange-index-menu').hover(function(){
+      $(".exchange-index-menu .menu-list").show();
     });
     $('.exchange-index-menu').mouseleave(function(){
-      $(".exchange-index-menu").hide();
+      $(".exchange-index-menu .menu-list").hide();
     });
 
   }
-
+    //控制全部分类菜单显隐
 
 
 	$('.header-bottom-bar ul li').each(function () {
