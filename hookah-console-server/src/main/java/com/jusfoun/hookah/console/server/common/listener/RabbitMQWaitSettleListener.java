@@ -61,7 +61,6 @@ public class RabbitMQWaitSettleListener {
                     }
 
                     int n = waitSettleRecordService.insertBatch(waitSettleRecords);
-                    System.out.println(n);
                 }
             }
         }

@@ -297,7 +297,6 @@ public class CouponApi extends BaseController {
                     //表格内容
                     line.add(value);
                     j++;
-                    System.out.println(value);
                 }
                 list.add(line);
             }
