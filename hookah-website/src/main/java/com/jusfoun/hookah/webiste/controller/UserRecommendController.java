@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.WXUserRecommendCountVo;
 import com.jusfoun.hookah.rpc.api.WXUserRecommendService;
 import com.jusfoun.hookah.webiste.util.PropertiesManager;
 import com.jusfoun.hookah.webiste.util.SecretUtil;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ndf on 2017/9/22.
@@ -36,7 +38,7 @@ public class UserRecommendController extends BaseController{
             String userId = getCurrentUser().getUserId();
             String secret = URLEncoder.encode(SecretUtil.getSecret(userId), "UTF-8");
             String url=PropertiesManager.getInstance().getProperty("recommend.url");
-            HashMap<String , Integer> map=wxUserRecommendService.countInviteeAndReward(userId);
+            WXUserRecommendCountVo map=wxUserRecommendService.countInviteeAndReward(userId);
             //将推荐人数（inviteeNum），推荐获得奖金（rewardMoney）返回页面
             request.setAttribute("inviteeInfo",map);
             //将我的专属推广链接返回页面
