@@ -74,7 +74,7 @@
             <!--</if>-->
         <!--</trim>-->
     <!--</insert>-->
-  <select id="countInviteeAndReward" resultType="WXUserRecommendCountVo" parameterType="java.lang.String">
+  <select id="countInviteeAndReward" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendCountVo" parameterType="java.lang.String">
 
     SELECT count(id) AS inviteeNum,sum(reward_money) AS rewardMoney ,
 
