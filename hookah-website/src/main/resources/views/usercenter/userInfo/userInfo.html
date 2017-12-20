@@ -52,11 +52,11 @@ var htmlPart = {
 							<p class="usertype color-orange">
 								未认证<span class="tip-noType">认证后才能下单哦 <i class="fa fa-close"></i></span></p>
 							<%}else if(userCur.userType == 2){%>
-							<p class="usertype color-green">个人用户</p>
+							<p class="usertype color-green"><span class="label-blue">个人用户</span></p>
 							<%}else if(userCur.userType == 3){%>
 							<p class="usertype color-orange">个人认证审核中</p>
 							<%}else if(userCur.userType == 4){%>
-							<p class="usertype color-green info">单位用户：<span title="${orgName}"> ${orgName}</span></p>
+							<p class="usertype color-green info"><span class="label-blue margin-right-5">单位用户</span><span title="${orgName}" class="font-weight-bold"> ${orgName}</span></p>
 							<%}else if(userCur.userType == 5){%>
 							<p class="usertype color-orange">单位认证审核中</p>
 							<%}else if(userCur.userType == 6){%>
