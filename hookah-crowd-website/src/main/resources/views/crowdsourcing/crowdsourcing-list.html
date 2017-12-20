@@ -104,7 +104,11 @@ var htmlPart = {
   </div>
 </div>
 
+<script>
+  var reqTypeId = GetUrlValue('typeId');
+  $('#type li').removeClass('active').eq(reqTypeId).addClass('active');
 
+</script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 %>

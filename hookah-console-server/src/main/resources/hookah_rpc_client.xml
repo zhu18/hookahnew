@@ -75,4 +75,8 @@
   <motan:referer id="jfRuleService"
                  interface="com.jusfoun.hookah.rpc.api.JfRuleService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+
+  <motan:referer id="cacheService"
+                 interface="com.jusfoun.hookah.rpc.api.CacheService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>

@@ -68,7 +68,7 @@
 .moneyAdd:hover{ border-bottom:7px solid #078cfc; }
 .moneySub:hover{ border-top:7px solid #078cfc;}
 
-.crowdsourcing-user span.managedMoneySpan{ position: relative;width: 120px;padding-right: 25px;}
+.crowdsourcing-user span.managedMoneySpan{ position: relative;width: 130px;padding-right: 25px;}
 .detailMoneyBox{ display: none;}
 
 .myRequirement-table tr { text-align: left; }
@@ -156,10 +156,15 @@
 .myRequirement-table tr td .crowdsourcing-user input.tag{  width: 230px;}
 .myRequirement-table tr td .crowdsourcing-user .tagNotice{position: absolute; font-style: normal; width: 21px; display: block; text-align: center; cursor: pointer; height: 21px; line-height: 21px; background: #c34f4f;
   color: #fff; border-radius: 21px; right: 2px; top: 14px;}
+
+.myRequirement-table tr td .crowdsourcing-user .tagNotice:hover:after{content: ''; height:0; width:0; border:7px solid transparent; border-left:7px solid #d4d4d4; position: absolute; right: 9px; top: 3px;}
+
+
+
 .myRequirement-table tr td .crowdsourcing-user .tagNoticeContent{  display: none;position: absolute; top: 1px; background: #d4d4d4; width: 335px; height: 35px; line-height: 17px; padding: 5px; right: 25px; color:#c34f4f;}
-.myRequirement-table tr td .crowdsourcing-user .tagNoticeContent:after{
+/*.myRequirement-table tr td .crowdsourcing-user .tagNoticeContent:after{
   content: ''; height:0; width:0; border:7px solid transparent; border-left:7px solid #d4d4d4; position: absolute; right: -14px; top: 16px;
-}
+}*/
 
 .load-file-list{ overflow: hidden;background: #e4e4e4; }
 

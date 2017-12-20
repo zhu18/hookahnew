@@ -1,8 +1,6 @@
 /**
  * Created by Dajun on 2017-9-19.
  */
-var reqTypeId = GetUrlValue('typeId');
-$('#type li').removeClass('active').eq(reqTypeId).addClass('active');
 var userType=null;
 function loadPageData(data) { //渲染页面数据
   userType=data.data.userType;
