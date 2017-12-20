@@ -25,5 +25,7 @@ public interface WXUserRecommendMapper extends GenericDao<WxUserRecommend> {
 
     int countRecommendDetailsByRecommenderId(HashMap<String, Object> paramMap);
 
+    int selectSumRewardJfByRecommenderId(String recommendId);
+
 //    WxUserRecommend insertAndGetEntry(WxUserRecommend wxUserRecommend);
 }
