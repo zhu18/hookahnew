@@ -349,15 +349,17 @@ public class AuthController extends BaseController {
             String result = HttpClientUtil.sendHttpFormPost(HookahConstants.ORGANIZATION_AUTH_URL,
                     com.jusfoun.hookah.core.utils.StringUtils.getUrlParamsByMap(map),  header);
             JsonNode data = JsonUtils.toObject(result.toString(), JsonNode.class);
+            //判断企业认证信息是否正确
             if(data.get("ReturnCode").toString().equals("1")){
                 String societyCode = data.get("Result").get("societyCode").textValue();
                 String name = data.get("Result").get("name").textValue();
                 if(!societyCode.equals(organization.getCreditCode()) ||
                         !name.equals(organization.getOrgName())){
                     return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
+                }else {
+                    orgAuthInfo(organization, userId);
+                    return ReturnData.success("恭喜您！验证成功！");
                 }
-                orgAuthInfo(organization, userId);
-                return ReturnData.success("恭喜您！验证成功！");
             }else {
                 return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
             }
