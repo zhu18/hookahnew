@@ -210,7 +210,7 @@
 
     <select id="selectSumRewardJfByRecommenderId" resultType="java.lang.Integer" parameterType="java.lang.String">
 
-        SELECT sum(wr.reward_jf) FROM wx_user_recommend wr WHERE wr.recommenderId =#{}
+        SELECT sum(wr.reward_jf) FROM wx_user_recommend wr WHERE wr.recommenderId =#{recommenderId}
 
             AND TO_DAYS(wr.add_time) = TO_DAYS(NOW())
 
