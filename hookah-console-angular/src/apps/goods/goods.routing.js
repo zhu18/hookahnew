@@ -221,7 +221,7 @@ export default function goodsRouting($stateProvider, $urlRouterProvider) {
 			url: '/shelfold/manageGoods',
 			template: require('../shelf/manageGoods.html'),
 			controller: ManageGoodsOldController,
-			permission: 'goodsGOshelfManageGoods'
+			permission: 'shelfold_manageGoods'
 		})
 
 };
