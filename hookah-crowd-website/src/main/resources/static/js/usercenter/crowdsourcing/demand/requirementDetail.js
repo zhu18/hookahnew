@@ -422,7 +422,7 @@ $('.j_checkAdviceDetail').on('mouseover', function () { //鼠标离开描述显�
 
 
 $(document).on('blur', '#trusteePercent1', function () { //托管资金点击增加 托管金额百分比
-  var tempVal=Number($(this).val());
+  var tempVal=parseInt($(this).val());
   if(tempVal>100){
     $(this).val(100);
     setMoneyFn(100)
