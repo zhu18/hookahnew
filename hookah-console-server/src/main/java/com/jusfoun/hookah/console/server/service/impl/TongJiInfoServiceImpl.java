@@ -231,8 +231,13 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             }
         }
 
-        TransactionAnalysis transactionAnalysis = new TransactionAnalysis();
+        //当重复执行同天时间的统计数据时， 删除之前的统计数据
+        filter.clear();
+        filter.add(Condition.eq("insertTime", date));
+        transactionAnalysisService.deleteByCondtion(filter);
+
         for (String key : orderNumMap.keySet()){
+            TransactionAnalysis transactionAnalysis = new TransactionAnalysis();
             transactionAnalysis.setDataSource(key);
             transactionAnalysis.setOrderNum(orderNumMap.get(key));
             if (payedOrderNumMap != null && payedOrderNumMap.get(key) != null){

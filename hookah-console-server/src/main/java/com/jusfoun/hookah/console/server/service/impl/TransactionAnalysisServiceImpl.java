@@ -9,6 +9,7 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCheck;
 import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.domain.vo.FlowUserVo;
+import com.jusfoun.hookah.core.domain.vo.TransactionAnalysisVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.utils.DateUtils;
@@ -41,6 +42,25 @@ public class TransactionAnalysisServiceImpl extends GenericServiceImpl<Transacti
 
     @Override
     public ReturnData countOrderList(String startTime, String endTime) {
-        return null;
+        try {
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.ge("insertTime", startTime.substring(0, 10)));
+            filters.add(Condition.le("insertTime", endTime.substring(0, 10)));
+            List<TransactionAnalysis> transactionAnalyses = this.selectList(filters);
+            if(transactionAnalyses != null && transactionAnalyses.size() > 0){
+                //获取统计总计
+                TransactionAnalysisVo sum = transactionAnalysisMapper.selectSum(startTime ,endTime);
+                //分组获取统计数据
+                List<TransactionAnalysisVo> dataSource = transactionAnalysisMapper.selectBySourceList(startTime, endTime);
+                sum.setDataSource("总计");
+                dataSource.add(sum);
+                return ReturnData.success(dataSource);
+            }
+            return ReturnData.error("所选时间段内没有交易统计数据");
+        } catch (Exception e) {
+            logger.error("获取统计信息出错{}",e);
+            return ReturnData.error("获取统计信息出错，请联系开发人员");
+        }
+
     }
 }
