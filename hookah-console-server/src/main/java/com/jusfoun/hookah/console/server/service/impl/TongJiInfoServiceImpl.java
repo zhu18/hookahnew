@@ -166,16 +166,23 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
     public void countOrderData() {
         logger.info("------------------开始统计当天订单数据----------------------");
 
-        //获取当天的所有订单数据  包括所有的已付款，未付款，已取消，已删除的订单
+        //获取当天的所有新订单数据  包括所有的已付款，未付款，已取消，已删除的订单
         List<Condition> filter = new ArrayList<>();
         Date now = new Date();
         String date = DateUtils.toDateText(now);
         filter.add(Condition.like("addTime", date));
         List<OrderInfo> orderInfos = orderInfoService.selectList(filter);
-        if (orderInfos.size() == 0){
+
+        //获取当天所有的新支付订单数据  因为有些订单是前一天下单今天支付
+        filter.clear();
+        filter.add(Condition.like("payTime", date));
+        filter.add(Condition.eq("payStatus", OrderInfo.PAYSTATUS_PAYED));
+        List<OrderInfo> payedOrders = orderInfoService.selectList(filter);
+        if (orderInfos.size() == 0 && payedOrders.size() == 0){
             logger.info("------------------当天无订单交易数据---------------------");
             return;
         }
+
         List<OrderInfoTongJi> OrderInfoTongJi = new ArrayList<>();
         for (OrderInfo orderInfo : orderInfos){
             MgTongJi mgTongJi = getMgTongJiInfo(orderInfo.getOrderSn(),TongJiEnum.ORDER_CREATE_URL);
@@ -184,6 +191,17 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 orderInfoTongJi.setMgTongJi(mgTongJi);
                 orderInfoTongJi.setOrderInfo(orderInfo);
                 OrderInfoTongJi.add(orderInfoTongJi);
+            }
+        }
+
+        List<OrderInfoTongJi> payedOrderTongJi = new ArrayList<>();
+        for (OrderInfo orderInfo : payedOrders){
+            MgTongJi mgTongJi = getMgTongJiInfo(orderInfo.getOrderSn(),TongJiEnum.ORDER_PAY_URL);
+            if (mgTongJi != null){
+                OrderInfoTongJi orderInfoTongJi = new OrderInfoTongJi();
+                orderInfoTongJi.setMgTongJi(mgTongJi);
+                orderInfoTongJi.setOrderInfo(orderInfo);
+                payedOrderTongJi.add(orderInfoTongJi);
             }
         }
 
@@ -199,15 +217,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 Integer orderNum = orderNumMap.get(mgTongJi.getSource());
                 orderNum++;
                 orderNumMap.put(mgTongJi.getSource(), orderNum);
-                if (orderInfo.getPayStatus() == OrderInfo.PAYSTATUS_PAYED){
-                    Integer payedOrderNum = (payedOrderNumMap.get(mgTongJi.getSource()) == null) ? 0 : payedOrderNumMap.get(mgTongJi.getSource());
-                    payedOrderNum++;
-                    payedOrderNumMap.put(mgTongJi.getSource(), payedOrderNum);
-
-                    Long payedOrderMoney = (payedOrderMoneyMap.get(mgTongJi.getSource()) == null) ? 0L : payedOrderMoneyMap.get(mgTongJi.getSource());
-                    payedOrderMoney = payedOrderMoney + orderInfo.getOrderAmount();
-                    payedOrderMoneyMap.put(mgTongJi.getSource(), payedOrderMoney);
-                }else if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
+                if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
                     Integer unPayedOrderNum = (unPayedOrderNumMap.get(mgTongJi.getSource()) == null) ? 0 : unPayedOrderNumMap.get(mgTongJi.getSource());
                     unPayedOrderNum++;
                     unPayedOrderNumMap.put(mgTongJi.getSource(), unPayedOrderNum);
@@ -215,15 +225,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             }else{
                 //所有订单数
                 orderNumMap.put(mgTongJi.getSource(), 1);
-                if (orderInfo.getPayStatus() == OrderInfo.PAYSTATUS_PAYED){
-                    Integer payedOrderNum = 0;
-                    payedOrderNum++;
-                    payedOrderNumMap.put(mgTongJi.getSource(), payedOrderNum);
-
-                    Long payedOrderMoney = 0L;
-                    payedOrderMoney = payedOrderMoney + orderInfo.getOrderAmount();
-                    payedOrderMoneyMap.put(mgTongJi.getSource(), payedOrderMoney);
-                }else if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
+                if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
                     Integer unPayedOrderNum = 0;
                     unPayedOrderNum++;
                     unPayedOrderNumMap.put(mgTongJi.getSource(), unPayedOrderNum);
@@ -231,6 +233,22 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             }
         }
 
+        for (OrderInfoTongJi orderInfoTongJi : payedOrderTongJi) {
+            MgTongJi mgTongJi = orderInfoTongJi.getMgTongJi();
+            OrderInfo orderInfo = orderInfoTongJi.getOrderInfo();
+            if (payedOrderNumMap.containsKey(mgTongJi.getSource())) {
+                Integer payedOrderNum = (payedOrderNumMap.get(mgTongJi.getSource()) == null) ? 0 : payedOrderNumMap.get(mgTongJi.getSource());
+                payedOrderNum++;
+                payedOrderNumMap.put(mgTongJi.getSource(), payedOrderNum);
+
+                Long payedOrderMoney = (payedOrderMoneyMap.get(mgTongJi.getSource()) == null) ? 0L : payedOrderMoneyMap.get(mgTongJi.getSource());
+                payedOrderMoney = payedOrderMoney + orderInfo.getOrderAmount();
+                payedOrderMoneyMap.put(mgTongJi.getSource(), payedOrderMoney);
+            } else {
+                payedOrderNumMap.put(mgTongJi.getSource(), 1);
+                payedOrderMoneyMap.put(mgTongJi.getSource(), orderInfo.getOrderAmount());
+            }
+        }
         //当重复执行同天时间的统计数据时， 删除之前的统计数据
         filter.clear();
         filter.add(Condition.eq("insertTime", date));
@@ -240,19 +258,33 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             TransactionAnalysis transactionAnalysis = new TransactionAnalysis();
             transactionAnalysis.setDataSource(key);
             transactionAnalysis.setOrderNum(orderNumMap.get(key));
-            if (payedOrderNumMap != null && payedOrderNumMap.get(key) != null){
+            if (payedOrderNumMap != null && payedOrderNumMap.containsKey(key)){
                 transactionAnalysis.setEffecticeOrderNum(payedOrderNumMap.get(key));
             }
-            if (payedOrderMoneyMap != null && payedOrderMoneyMap.get(key) != null){
+            if (payedOrderMoneyMap != null && payedOrderMoneyMap.containsKey(key)){
                 transactionAnalysis.setEffectiveOrderAmount(payedOrderMoneyMap.get(key));
             }
-            if (unPayedOrderNumMap != null && unPayedOrderNumMap.get(key) != null){
+            if (unPayedOrderNumMap != null && unPayedOrderNumMap.containsKey(key)){
                 transactionAnalysis.setPayingOrderNum(unPayedOrderNumMap.get(key));
             }
             transactionAnalysis.setAddTime(now);
             transactionAnalysis.setInsertTime(date);
             transactionAnalysis.setAddOperator("SYSTEM");
             transactionAnalysisService.insert(transactionAnalysis);
+        }
+        //订单有前一天下单今天支付的情况  所以今天下单的来源不一定包括所有支付订单的来源
+        for (String key : payedOrderNumMap.keySet()) {
+            if (!orderNumMap.containsKey(key)) {
+                TransactionAnalysis transactionAnalysis = new TransactionAnalysis();
+                transactionAnalysis.setDataSource(key);
+                transactionAnalysis.setOrderNum(orderNumMap.get(key));
+                transactionAnalysis.setEffecticeOrderNum(payedOrderNumMap.get(key));
+                transactionAnalysis.setEffectiveOrderAmount(payedOrderMoneyMap.get(key));
+                transactionAnalysis.setAddTime(now);
+                transactionAnalysis.setInsertTime(date);
+                transactionAnalysis.setAddOperator("SYSTEM");
+                transactionAnalysisService.insert(transactionAnalysis);
+            }
         }
         logger.info("------------------当天订单数据统计结束----------------------");
     }

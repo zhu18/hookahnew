@@ -144,7 +144,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
 //		orderinfo.setReferer("管理员添加");
         orderinfo.setAddTime(date);
         orderinfo.setConfirmTime(date);
-        orderinfo.setPayTime(date);
         orderinfo.setShippingTime(date);
         orderinfo.setPackId("");
         orderinfo.setCardId("");
@@ -297,6 +296,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     public void deleteByLogic(String id) {
         OrderInfo order = selectById(id);
         order.setIsDeleted(new Byte("1"));
+        order.setLastmodify(new Date());
         updateByIdSelective(order);
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrderId(id);
@@ -333,6 +333,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         OrderInfo order = selectById(id);
         order.setOrderId(id);
         order.setForceDeleted(new Byte("1"));
+        order.setLastmodify(new Date());
         updateByIdSelective(order);
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrderId(id);

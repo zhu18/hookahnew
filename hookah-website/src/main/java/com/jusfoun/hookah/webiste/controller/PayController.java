@@ -1,28 +1,27 @@
 package com.jusfoun.hookah.webiste.controller;
 
-import com.github.miemiedev.mybatis.paginator.domain.Order;
-import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.ExceptionConst;
-import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.rpc.api.*;
+import com.jusfoun.hookah.webiste.util.ReadCookieUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -56,6 +55,9 @@ public class PayController extends BaseController{
 
     @Resource
     PayAccountRecordService payAccountRecordService;
+
+    @Resource
+    MgTongJiService mgTongJiService;
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.GET)
     public String createOrder() {
@@ -213,10 +215,28 @@ public class PayController extends BaseController{
             model.addAttribute("moneyBalance", payAccount.getUseBalance());
             model.addAttribute("payments", session.getAttribute("payments"));
             model.addAttribute("orderInfo",session.getAttribute("orderInfo"));
+            OrderInfo orderInfo = (OrderInfo) session.getAttribute("orderInfo");
 //            session.removeAttribute("payments");
 //            session.removeAttribute("orderInfo");
 //            session.removeAttribute("moneyBalance");
+        countPayOrder(request, orderInfo.getOrderSn());
         return "pay/cash";
+    }
+
+    @Async
+    private void countPayOrder(HttpServletRequest request, String orderSn){
+        try {
+            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
+            Cookie tongJi = cookieMap.get("TongJi");
+            if(tongJi != null) {
+                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+                //支付
+                mgTongJiService.setTongJiInfo(TongJiEnum.ORDER_PAY_URL, tongJiInfo.getTongJiId(),
+                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), orderSn);
+            }
+        } catch (Exception e) {
+            logger.error("插入订单统计信息失败：{}", e);
+        }
     }
 
     @RequestMapping(value = "/pay2", method = RequestMethod.GET)
