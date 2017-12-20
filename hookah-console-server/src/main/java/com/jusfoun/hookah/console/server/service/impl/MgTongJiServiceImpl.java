@@ -42,7 +42,6 @@ public class MgTongJiServiceImpl extends GenericMongoServiceImpl<MgTongJi, Strin
     }
 
     //查询统计信息
-    @Async
     public MgTongJi getTongJiInfo(String tongJiId){
         //根据时间查询最近一条的关键字和来源
         Query query = new Query();

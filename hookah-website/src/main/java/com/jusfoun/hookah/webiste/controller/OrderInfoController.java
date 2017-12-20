@@ -4,9 +4,11 @@ import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
+import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.domain.vo.GoodsVo;
 import com.jusfoun.hookah.core.domain.vo.InvoiceDTOVo;
@@ -18,14 +20,17 @@ import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
+import com.jusfoun.hookah.webiste.util.ReadCookieUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -60,6 +65,9 @@ public class OrderInfoController extends BaseController {
 
     @Resource
     UserCouponService userCouponService;
+
+    @Resource
+    MgTongJiService mgTongJiService;
 
 
     /**
@@ -296,7 +304,6 @@ public class OrderInfoController extends BaseController {
             map.put("unpaidCount",unpaid);
             map.put("totalCount",total);
 
-            logger.info(JsonUtils.toJson(map));
             return ReturnData.success(map);
         } catch (Exception e) {
             logger.error("分页查询订单错误", e);
@@ -505,6 +512,10 @@ public class OrderInfoController extends BaseController {
             //logger.info("订单信息:{}", JsonUtils.toJson(orderinfo));
             //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             redisOperate.del("orderConfirm:"+perOrderInfoNum);
+
+            //订单创建成功  异步添加统计信息
+            countOrder(request, orderinfo.getOrderSn());
+            
             return "redirect:/pay/cash";
         }catch (HookahException e){
             logger.error("生成订单失败", e.getMessage());
@@ -513,6 +524,22 @@ public class OrderInfoController extends BaseController {
         }catch (Exception e) {
             logger.error("插入错误", e);
             return "/error/500";
+        }
+    }
+
+    @Async
+    private void countOrder(HttpServletRequest request, String orderSn){
+        try {
+            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
+            Cookie tongJi = cookieMap.get("TongJi");
+            if(tongJi != null) {
+                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+                //下单
+                mgTongJiService.setTongJiInfo(TongJiEnum.ORDER_CREATE_URL, tongJiInfo.getTongJiId(),
+                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), orderSn);
+            }
+        } catch (Exception e) {
+            logger.error("插入订单统计信息失败：{}", e);
         }
     }
 
