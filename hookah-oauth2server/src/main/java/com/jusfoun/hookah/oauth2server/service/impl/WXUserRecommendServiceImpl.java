@@ -3,6 +3,7 @@ package com.jusfoun.hookah.oauth2server.service.impl;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.dao.WXUserRecommendMapper;
 import com.jusfoun.hookah.core.domain.WxUserRecommend;
+import com.jusfoun.hookah.core.domain.vo.WXUserRecommendCountVo;
 import com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.WXUserRecommendService;
@@ -25,7 +26,7 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WxUserRecomme
     }
 
     @Override
-    public HashMap<String, Integer> countInviteeAndReward(String userId) {
+    public WXUserRecommendCountVo countInviteeAndReward(String userId) {
         return null;
     }
 
