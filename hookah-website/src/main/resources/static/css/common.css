@@ -629,4 +629,14 @@ ul li {
     padding-top: 90px;
 }
 
+.label-blue{
+    display: inline-block;
+    width: 57px;
+    height: 18px;
+    font-size: 14px;
+    text-align: center;
+    background-color: #b7d5f6;
+    color: #066fbb !important;
+    line-height: 18px;
+}
 
