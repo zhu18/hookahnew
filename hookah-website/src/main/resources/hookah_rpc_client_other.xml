@@ -86,4 +86,7 @@
   <motan:referer id="mgTongJiService"
                  interface="com.jusfoun.hookah.rpc.api.MgTongJiService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
+  <motan:referer id="wXUserRecommendService"
+                 interface="com.jusfoun.hookah.rpc.api.WXUserRecommendService"
+                 connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 </beans>
