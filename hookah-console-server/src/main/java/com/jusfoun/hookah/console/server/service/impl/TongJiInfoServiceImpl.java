@@ -2,10 +2,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.dao.FlowUserMapper;
-import com.jusfoun.hookah.core.domain.OrderInfo;
-import com.jusfoun.hookah.core.domain.TransactionAnalysis;
-import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.domain.UserCheck;
+import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.domain.vo.FlowUserVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -37,7 +34,10 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
     UserService userService;
 
     @Resource
-    UserCheckService userCheckService;
+    UserDetailService userDetailService;
+
+    @Resource
+    OrganizationService organizationService;
 
     @Resource
     MongoTemplate mongoTemplate;
@@ -58,7 +58,8 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
     @Scheduled(cron="0 59 23 * * ?")
     public void saveTongJiInfoService(){
         logger.info("------------------开始统计当天访问次数----------------------");
-
+        Date addTime = new Date();
+        String sameDay= DateUtils.toDateText(addTime);
         //获取当天的新注册用户数
         List<Condition> filters = new ArrayList<>();
         String date = DateUtils.toDateText(new Date());
@@ -86,12 +87,10 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天个人认证数
         List<Condition> personFilters = new ArrayList<>();
-        personFilters.add(Condition.like("checkTime", date));
-        personFilters.add(Condition.eq("userType", 0));
-        personFilters.add(Condition.eq("checkStatus", 1));
-        List<UserCheck> personUsers = userCheckService.selectList(personFilters);
+        personFilters.add(Condition.like("addTime", date));
+        List<UserDetail> personUsers = userDetailService.selectList(personFilters);
         List<MgTongJi> personList = new ArrayList<MgTongJi>();
-        for(UserCheck person : personUsers){
+        for(UserDetail person : personUsers){
             MgTongJi mgTongJiInfo = getMgTongJiInfo(person.getUserId(), TongJiEnum.PERSON_URL);
             personList.add(mgTongJiInfo);
         }
@@ -111,14 +110,17 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天当天企业认证数
         List<Condition> orgFilters = new ArrayList<>();
-        orgFilters.add(Condition.like("checkTime", date));
-        orgFilters.add(Condition.eq("userType", 1));
-        orgFilters.add(Condition.eq("checkStatus", 1));
-        List<UserCheck> orgUsers = userCheckService.selectList(orgFilters);
+        orgFilters.add(Condition.like("addTime", date));
+        List<Organization> orgUsers = organizationService.selectList(orgFilters);
         List<MgTongJi> orgList = new ArrayList<MgTongJi>();
-        for(UserCheck org : orgUsers){
-            MgTongJi mgTongJiInfo = getMgTongJiInfo(org.getUserId(), TongJiEnum.ORG_URL);
-            orgList.add(mgTongJiInfo);
+        for(Organization org : orgUsers){
+            if (org!=null){
+                orgFilters.clear();
+                orgFilters.add(Condition.eq("orgId", org.getOrgId()));
+                User user = userService.selectOne(orgFilters);
+                MgTongJi mgTongJiInfo = getMgTongJiInfo(user.getUserId(), TongJiEnum.ORG_URL);
+                orgList.add(mgTongJiInfo);
+            }
         }
         //计算当天时间内按来源的企业认证数量
         Map<String,Integer> orgMap = new HashMap<String,Integer>();
@@ -135,14 +137,14 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
         }
 
         FlowUserVo flowUserVo = new FlowUserVo();
-        Date addTime = new Date();
-        String s= DateUtils.toDateText(addTime);
         //当重复执行同天时间的统计数据时， 删除之前的统计数据
         List<Condition> filter = new ArrayList<>();
-        filter.add(Condition.eq("insertTime", s));
+        filter.add(Condition.eq("insertTime", sameDay));
         flowUserService.deleteByCondtion(filter);
 
         //把统计计算的各来源数据量存库
+        flowUserVo.setAddTime(addTime);
+        flowUserVo.setInsertTime(sameDay);
         for (String key : regMap.keySet()){
             flowUserVo.setDataSource(key);
             flowUserVo.setNewUserNum(regMap.get(key));
@@ -154,10 +156,9 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 Integer integer = orgMap.get(key);
                 flowUserVo.setOrgUser(integer);
             }
-            flowUserVo.setAddTime(addTime);
-            flowUserVo.setInsertTime(s);
             flowUserMapper.insert(flowUserVo);
         }
+
         logger.info("------------------结束统计当天访问次数----------------------");
 //        return ReturnData.success("统计完成");
     }
