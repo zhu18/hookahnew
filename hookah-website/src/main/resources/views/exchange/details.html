@@ -182,7 +182,6 @@ var htmlPart = {
 						<li class="grid-left">商品优势</li>
 						<li class="grid-left">售后服务</li>
 						<%}else if(goodsDetails.goodsType == 1){%>
-						<li class="grid-left">商品优势</li>
 						<li class="grid-left">API详情</li>
 						<li class="grid-left">服务相关</li>
 						<%}else if(goodsDetails.goodsType == 2){%>
@@ -248,6 +247,14 @@ var htmlPart = {
 								</td>
 								<%}%>
 							</tr>
+							<%if(goodsDetails.goodsType == 1){%>
+							<tr>
+								<td>商品优势：</td>
+								<td>
+									<div class="goodsDescBox">${goodsDetails.goodsAdvantage}</div>
+								</td>
+							</tr>
+							<%}%>
 							<%if(goodsDetails.goodsType == 4){%>
 							<tr>
 								<td>核心功能：</td>
@@ -306,9 +313,6 @@ var htmlPart = {
 						${goodsDetails.afterSaleService}
 					</div>
 					<%}else if(goodsDetails.goodsType == 1){%>
-					<div class="table-item goodsDescBox">
-						${goodsDetails.goodsAdvantage}
-					</div>
 					<%if(isNotEmpty(goodsDetails.apiUrl)){%>
 					<div class="table-item">
 						<table class="tab-one">
