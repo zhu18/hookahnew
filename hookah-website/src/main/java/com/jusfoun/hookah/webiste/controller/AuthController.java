@@ -449,13 +449,13 @@ public class AuthController extends BaseController {
 
         userService.updateByIdSelective(user1);
 
-        if(user.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user.getUserId(), 3, ""));
+        if(user1.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user1.getUserId(), 3, ""));
             logger.info("企业用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
         }
 
         //更新微信用户推荐表
-        wXUserRecommendService.updateWXUserRecommendIsAuthenticate(user.getUserId());
+        wXUserRecommendService.updateWXUserRecommendIsAuthenticate(user1.getUserId());
 
         try {
             Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
