@@ -515,7 +515,7 @@ public class OrderInfoController extends BaseController {
 
             //订单创建成功  异步添加统计信息
             countOrder(request, orderinfo.getOrderSn());
-            
+
             return "redirect:/pay/cash";
         }catch (HookahException e){
             logger.error("生成订单失败", e.getMessage());
@@ -684,7 +684,6 @@ public class OrderInfoController extends BaseController {
 //		orderinfo.setReferer("管理员添加");
         orderinfo.setAddTime(date);
         orderinfo.setConfirmTime(date);
-        orderinfo.setPayTime(date);
         orderinfo.setShippingTime(date);
         orderinfo.setPackId("");
         orderinfo.setCardId("");

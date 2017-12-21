@@ -16,6 +16,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="reward_jf" property="rewardJf" jdbcType="INTEGER" />
   </resultMap>
+
   <sql id="Base_Column_List" >
     <!--
       WARNING - @mbggenerated
@@ -73,9 +74,11 @@
             <!--</if>-->
         <!--</trim>-->
     <!--</insert>-->
-  <select id="countInviteeAndReward" resultType="java.util.HashMap" parameterType="java.lang.String">
+  <select id="countInviteeAndReward" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendCountVo" parameterType="java.lang.String">
 
-    SELECT count(id) AS inviteeNum,SUM(reward_money) AS rewardMoney , SUM (reward_jf) AS rewardJf FROM wx_user_recommend WHERE  recommenderId=#{userId}
+    SELECT count(id) AS inviteeNum,sum(reward_money) AS rewardMoney ,
+
+    sum(reward_jf) AS rewardJf FROM wx_user_recommend WHERE  recommenderId=#{userId}
   </select>
 
    <sql id="sqlRecommendListByCondition">

@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.dao.WXUserRecommendMapper;
 import com.jusfoun.hookah.core.domain.WxUserRecommend;
 import com.jusfoun.hookah.core.domain.jf.JfRecord;
 import com.jusfoun.hookah.core.domain.jf.JfRule;
+import com.jusfoun.hookah.core.domain.vo.WXUserRecommendCountVo;
 import com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo;
 import com.jusfoun.hookah.core.domain.vo.WithdrawVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -48,7 +49,7 @@ public class WXUserRecommendServiceImpl extends GenericServiceImpl<WxUserRecomme
     CacheService cacheService;
 
     @Override
-    public HashMap<String, Integer> countInviteeAndReward(String userId) {
+    public WXUserRecommendCountVo countInviteeAndReward(String userId) {
         return wxUserRecommendMapper.countInviteeAndReward(userId);
     }
 
