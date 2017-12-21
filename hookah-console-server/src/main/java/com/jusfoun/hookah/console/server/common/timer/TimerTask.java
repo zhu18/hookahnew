@@ -147,7 +147,7 @@ public class TimerTask {
     /**
      * 交易运营统计
      */
-    @Scheduled(cron="30 59 23 * * ?")
+//    @Scheduled(cron="30 59 23 * * ?")
     public void countOrderData(){
         try {
             tongJiInfoService.countOrderData();
