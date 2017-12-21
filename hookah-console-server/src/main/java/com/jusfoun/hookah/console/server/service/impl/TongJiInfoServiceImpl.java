@@ -150,63 +150,67 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
         for (String key : regMap.keySet()){
             flowUserVo.setDataSource(key);
             flowUserVo.setNewUserNum(regMap.get(key));
-            if (personMap != null && personMap.get(key) != null){
-                Integer integer = personMap.get(key);
-                flowUserVo.setPersonUser(integer);
-            }
-            if (orgMap != null && orgMap.get(key) != null){
-                Integer integer = orgMap.get(key);
-                flowUserVo.setOrgUser(integer);
-            }
+//            if (personMap != null && personMap.get(key) != null){
+//                Integer integer = personMap.get(key);
+//                flowUserVo.setPersonUser(integer);
+//            }
+//            if (orgMap != null && orgMap.get(key) != null){
+//                Integer integer = orgMap.get(key);
+//                flowUserVo.setOrgUser(integer);
+//            }
             flowUserMapper.insert(flowUserVo);
         }
         //获取个人认证信息并存库
-//        FlowUserVo flowUserVoByPerson = new FlowUserVo();
-//        for (String personKey : personMap.keySet()) {
-//            // 查询当前来源数据库是否存在
-//            filter.clear();
-//            filter.add(Condition.eq("insertTime", sameDay));
-//            filter.add(Condition.eq("dataSource", personKey));
-//            FlowUser flowUser = flowUserService.selectOne(filter);
-//            if(flowUser != null){
-//                // 如果当天来源存在，进行更新操作
-//                if(flowUser.getDataSource() == personKey){
-//                    flowUserVoByPerson.setId(flowUser.getId());
-//                    flowUserVoByPerson.setPersonUser(personMap.get(personKey));
-//                    flowUserService.updateByIdSelective(flowUserVoByPerson);
-//                }
-//            }else {// 如果当天来源不存在，进行添加操作
-//                flowUserVoByPerson.setDataSource(personKey);
-//                flowUserVoByPerson.setPersonUser(personMap.get(personKey));
-//                flowUserVoByPerson.setAddTime(addTime);
-//                flowUserVoByPerson.setInsertTime(sameDay);
-//                flowUserService.insert(flowUserVoByPerson);
-//            }
-//        }
-//
-//        //获取企业认证信息并存库
-//        FlowUserVo flowUserVoByOrg = new FlowUserVo();
-//        for (String orgKey : orgMap.keySet()) {
-//            // 查询当前来源数据库是否存在
-//            filter.clear();
-//            filter.add(Condition.eq("insertTime", sameDay));
-//            filter.add(Condition.eq("dataSource", orgKey));
-//            FlowUser flowUser = flowUserService.selectOne(filter);
-//            if(flowUser != null){
-//                // 如果当天来源存在，进行更新操作
-//                if(flowUser.getDataSource() == orgKey){
-//                    flowUserVoByOrg.setId(flowUser.getId());
-//                    flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
-//                    flowUserService.updateByIdSelective(flowUserVoByOrg);
-//                }
-//            }else {  // 如果当天来源不存在，进行添加操作
-//                flowUserVoByOrg.setDataSource(orgKey);
-//                flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
-//                flowUserVoByOrg.setAddTime(addTime);
-//                flowUserVoByOrg.setInsertTime(sameDay);
-//                flowUserService.insert(flowUserVoByOrg);
-//            }
-//        }
+        FlowUserVo flowUserVoByPerson = new FlowUserVo();
+        for (String personKey : personMap.keySet()) {
+            // 查询当前来源数据库是否存在
+            filter.clear();
+            filter.add(Condition.eq("insertTime", sameDay));
+            filter.add(Condition.eq("dataSource", personKey));
+            FlowUser flowUser = flowUserService.selectOne(filter);
+            if(flowUser != null){
+                // 如果当天来源存在，进行更新操作
+                if(personKey.equals(flowUser.getDataSource())){
+                    filter.clear();
+                    filter.add(Condition.eq("id", flowUser.getId()));
+                    filter.add(Condition.eq("dataSource", flowUser.getDataSource()));
+                    flowUserVoByPerson.setPersonUser(personMap.get(personKey));
+                    flowUserService.updateByConditionSelective(flowUserVoByPerson,filter);
+                }
+            }else {// 如果当天来源不存在，进行添加操作
+                flowUserVoByPerson.setDataSource(personKey);
+                flowUserVoByPerson.setPersonUser(personMap.get(personKey));
+                flowUserVoByPerson.setAddTime(addTime);
+                flowUserVoByPerson.setInsertTime(sameDay);
+                flowUserService.insert(flowUserVoByPerson);
+            }
+        }
+
+        //获取企业认证信息并存库
+        FlowUserVo flowUserVoByOrg = new FlowUserVo();
+        for (String orgKey : orgMap.keySet()) {
+            // 查询当前来源数据库是否存在
+            filter.clear();
+            filter.add(Condition.eq("insertTime", sameDay));
+            filter.add(Condition.eq("dataSource", orgKey));
+            FlowUser flowUser = flowUserService.selectOne(filter);
+            if(flowUser != null){
+                // 如果当天来源存在，进行更新操作
+                if(flowUser.getDataSource() == orgKey){
+                    filter.clear();
+                    filter.add(Condition.eq("id", flowUser.getId()));
+                    filter.add(Condition.eq("dataSource", flowUser.getDataSource()));
+                    flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
+                    flowUserService.updateByConditionSelective(flowUserVoByOrg,filter);
+                }
+            }else {  // 如果当天来源不存在，进行添加操作
+                flowUserVoByOrg.setDataSource(orgKey);
+                flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
+                flowUserVoByOrg.setAddTime(addTime);
+                flowUserVoByOrg.setInsertTime(sameDay);
+                flowUserService.insert(flowUserVoByOrg);
+            }
+        }
         logger.info("------------------结束统计当天访问次数----------------------");
 //        return ReturnData.success("统计完成");
     }
@@ -266,7 +270,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 Integer orderNum = orderNumMap.get(mgTongJi.getSource());
                 orderNum++;
                 orderNumMap.put(mgTongJi.getSource(), orderNum);
-                if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
+                if (orderInfo.getPayStatus() != OrderInfo.PAYSTATUS_PAYED && orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
                     Integer unPayedOrderNum = (unPayedOrderNumMap.get(mgTongJi.getSource()) == null) ? 0 : unPayedOrderNumMap.get(mgTongJi.getSource());
                     unPayedOrderNum++;
                     unPayedOrderNumMap.put(mgTongJi.getSource(), unPayedOrderNum);
@@ -274,10 +278,8 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             }else{
                 //所有订单数
                 orderNumMap.put(mgTongJi.getSource(), 1);
-                if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
-                    Integer unPayedOrderNum = 0;
-                    unPayedOrderNum++;
-                    unPayedOrderNumMap.put(mgTongJi.getSource(), unPayedOrderNum);
+                if (orderInfo.getPayStatus() != OrderInfo.PAYSTATUS_PAYED && orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
+                    unPayedOrderNumMap.put(mgTongJi.getSource(), 1);
                 }
             }
         }
