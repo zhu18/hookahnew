@@ -326,7 +326,7 @@ public class AuthController extends BaseController {
 
         if(user.getUserType().equals(HookahConstants.UserType.PERSON_CHECK_OK.getCode())){
             mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user.getUserId(), 3, ""));
-            logger.info("用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
+            logger.info("个人用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
         }
 
         // 个人认证之后插入统计地址
@@ -445,7 +445,7 @@ public class AuthController extends BaseController {
 
         if(user.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
             mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user.getUserId(), 3, ""));
-            logger.info("用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
+            logger.info("企业用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
         }
 
         try {
