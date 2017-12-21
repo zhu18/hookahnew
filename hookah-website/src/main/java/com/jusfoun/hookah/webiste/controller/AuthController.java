@@ -268,18 +268,29 @@ public class AuthController extends BaseController {
             Header header = new BasicHeader("token", HookahConstants.PERSON_AUTH_TOKEN);
             String result = HttpClientUtil.sendHttpPost(HookahConstants.PERSON_AUTH_URL,
                     JSON.toJSONString(map), header);
-            Map mapTypes = JSON.parseObject(result);
+            JsonNode data = JsonUtils.toObject(result.toString(), JsonNode.class);
             // 验证个人认证超限-超过3次认证失败，24小时后重新认证
             String personAuth = redisOperate.get("personAuth:" + userId);
+            String code = data.get("code").textValue();
+
             if(personAuth != null){
                 String  errNum = redisOperate.get("person:" + userId);
                 if(errNum != null && Integer.parseInt(errNum) < 3){
-                    if(mapTypes.get("code").equals("2000")){ // 成功
-                        redisOperate.del("personAuth:" + userId);
-                        redisOperate.del("person:" + userId);
-                        personAuthInfo(userDetail, userId);
-                        logger.info("恭喜您！验证成功！");
-                        return ReturnData.success("恭喜您！验证成功！");
+                    // 验证个人认证信息返回是否正确
+                    if(code.equals("2000")){
+                        String checkResult = data.get("payload").get("checkResult").textValue();
+                        // 判断姓名与身份证号是否一致  1： 一致 2：不一致 3：无此记录
+                        if(checkResult.equals("1")){
+                            redisOperate.del("personAuth:" + userId);
+                            redisOperate.del("person:" + userId);
+                            personAuthInfo(userDetail, userId);
+                            logger.info("恭喜您！验证成功！");
+                            return ReturnData.success("恭喜您！验证成功！");
+                        }else {
+                            redisOperate.incr("person:" + userId);
+                            logger.info("姓名与身份证号码不匹配，请重新录入!");
+                            return ReturnData.error("姓名与身份证号码不匹配，请重新录入!");
+                        }
                     }else { // 验证失败
                         redisOperate.incr("person:" + userId);
                         logger.info("验证失败！请重新验证！");
@@ -291,10 +302,17 @@ public class AuthController extends BaseController {
             }else {
                 redisOperate.del("personAuth:" + userId);
                 redisOperate.del("person:" + userId);
-                if(mapTypes.get("code").equals("2000")) { // 成功
-                    personAuthInfo(userDetail, userId);
-                    logger.info("恭喜您！验证成功！");
-                    return ReturnData.success("恭喜您！验证成功！");
+                if(code.equals("2000")) { // 成功
+                    String checkResult = data.get("payload").get("checkResult").textValue();
+                    if(checkResult.equals("1")){
+                        personAuthInfo(userDetail, userId);
+                        logger.info("恭喜您！验证成功！");
+                        return ReturnData.success("恭喜您！验证成功！");
+                    }else {
+                        redisOperate.incr("person:" + userId);
+                        logger.info("姓名与身份证号码不匹配，请重新录入!");
+                        return ReturnData.error("姓名与身份证号码不匹配，请重新录入!");
+                    }
                 }else { // 验证失败
                     redisOperate.set("personAuth:" + userId, "1", 60 * 60 * 24);
                     redisOperate.incr("person:" + userId);
@@ -316,7 +334,6 @@ public class AuthController extends BaseController {
         } else {
             userDetail = userDetailService.insert(userDetail);
         }
-
         User user = new User();
         user.setUserId(userId);
         // 个人认证成功状态
