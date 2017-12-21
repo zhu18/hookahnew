@@ -175,6 +175,9 @@ public class HookahConstants {
     public static final Byte INVOICE_STATUS_3 = 3;
     public static final Byte INVOICE_STATUS_4 = 4;
 
+    //发票类型 用户发票类型 0：普通发票 1：专用发票
+    public static final Byte INVOICE_TYPE_1 = 1;
+
     public static final Byte GOODS_ON_LINE = 0;//线上支付
     public static final Byte GOODS_OFF_LINE = 1;//线下支付
 

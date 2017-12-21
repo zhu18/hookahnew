@@ -160,7 +160,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             }
             flowUserMapper.insert(flowUserVo);
         }
-        //获取个人认证信息并存库
+//        //获取个人认证信息并存库
 //        FlowUserVo flowUserVoByPerson = new FlowUserVo();
 //        for (String personKey : personMap.keySet()) {
 //            // 查询当前来源数据库是否存在
@@ -170,10 +170,12 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 //            FlowUser flowUser = flowUserService.selectOne(filter);
 //            if(flowUser != null){
 //                // 如果当天来源存在，进行更新操作
-//                if(flowUser.getDataSource() == personKey){
-//                    flowUserVoByPerson.setId(flowUser.getId());
+//                if(personKey.equals(flowUser.getDataSource())){
+//                    filter.clear();
+//                    filter.add(Condition.eq("id", flowUser.getId()));
+////                    filter.add(Condition.eq("dataSource", flowUser.getDataSource()));
 //                    flowUserVoByPerson.setPersonUser(personMap.get(personKey));
-//                    flowUserService.updateByIdSelective(flowUserVoByPerson);
+//                    flowUserService.updateByConditionSelective(flowUserVoByPerson,filter);
 //                }
 //            }else {// 如果当天来源不存在，进行添加操作
 //                flowUserVoByPerson.setDataSource(personKey);
@@ -194,10 +196,12 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 //            FlowUser flowUser = flowUserService.selectOne(filter);
 //            if(flowUser != null){
 //                // 如果当天来源存在，进行更新操作
-//                if(flowUser.getDataSource() == orgKey){
-//                    flowUserVoByOrg.setId(flowUser.getId());
+//                if(orgKey.equals(flowUser.getDataSource())){
+//                    filter.clear();
+//                    filter.add(Condition.eq("id", flowUser.getId()));
+////                    filter.add(Condition.eq("dataSource", flowUser.getDataSource()));
 //                    flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
-//                    flowUserService.updateByIdSelective(flowUserVoByOrg);
+//                    flowUserService.updateByConditionSelective(flowUserVoByOrg,filter);
 //                }
 //            }else {  // 如果当天来源不存在，进行添加操作
 //                flowUserVoByOrg.setDataSource(orgKey);

@@ -83,6 +83,9 @@ public class AuthController extends BaseController {
     @Resource
     MqSenderService mqSenderService;
 
+    @Resource
+    private WXUserRecommendService wXUserRecommendService;
+
 
     //认证状态(0.未认证 1.认证中 2.已认证 3.认证失败)
     public static final Byte AUTH_STATUS_SUCCESS = 2;
@@ -326,8 +329,11 @@ public class AuthController extends BaseController {
 
         if(user.getUserType().equals(HookahConstants.UserType.PERSON_CHECK_OK.getCode())){
             mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user.getUserId(), 3, ""));
-            logger.info("用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
+            logger.info("个人用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
         }
+
+        //更新微信用户推荐表
+        wXUserRecommendService.updateWXUserRecommendIsAuthenticate(user.getUserId());
 
         // 个人认证之后插入统计地址
         try {
@@ -443,10 +449,13 @@ public class AuthController extends BaseController {
 
         userService.updateByIdSelective(user1);
 
-        if(user.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user.getUserId(), 3, ""));
-            logger.info("用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
+        if(user1.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user1.getUserId(), 3, ""));
+            logger.info("企业用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
         }
+
+        //更新微信用户推荐表
+        wXUserRecommendService.updateWXUserRecommendIsAuthenticate(user1.getUserId());
 
         try {
             Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
