@@ -226,14 +226,13 @@ public class PayController extends BaseController{
     @Async
     private void countPayOrder(HttpServletRequest request, String orderSn){
         try {
-            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
-            Cookie tongJi = cookieMap.get("TongJi");
-            if(tongJi != null) {
-                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
-                //支付
-                mgTongJiService.setTongJiInfo(TongJiEnum.ORDER_PAY_URL, tongJiInfo.getTongJiId(),
-                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), orderSn);
-            }
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("userId", orderSn));
+            filter.add(Condition.eq("tongJiUrl",TongJiEnum.ORDER_CREATE_URL));
+            MgTongJi tongJiInfo = mgTongJiService.selectOne(filter);
+            //支付
+            mgTongJiService.setTongJiInfo(TongJiEnum.ORDER_PAY_URL, tongJiInfo.getTongJiId(),
+                    tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), orderSn);
         } catch (Exception e) {
             logger.error("插入订单统计信息失败：{}", e);
         }
