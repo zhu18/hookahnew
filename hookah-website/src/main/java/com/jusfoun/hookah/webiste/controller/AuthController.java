@@ -5,11 +5,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.*;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.HttpClientUtil;
+import com.jusfoun.hookah.core.utils.JsonUtils;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
 import com.jusfoun.hookah.webiste.config.MyProps;
 import com.jusfoun.hookah.webiste.util.PropertiesManager;
@@ -74,6 +79,9 @@ public class AuthController extends BaseController {
 
     @Resource
     MgTongJiService mgTongJiService;
+
+    @Resource
+    MqSenderService mqSenderService;
 
 
     //认证状态(0.未认证 1.认证中 2.已认证 3.认证失败)
@@ -316,6 +324,11 @@ public class AuthController extends BaseController {
         user.setUserType(HookahConstants.UserType.PERSON_CHECK_OK.getCode());
         userService.updateByIdSelective(user);
 
+        if(user.getUserType().equals(HookahConstants.UserType.PERSON_CHECK_OK.getCode())){
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user.getUserId(), 3, ""));
+            logger.info("用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
+        }
+
         // 个人认证之后插入统计地址
         try {
             Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
@@ -429,6 +442,12 @@ public class AuthController extends BaseController {
         user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
 
         userService.updateByIdSelective(user1);
+
+        if(user.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user.getUserId(), 3, ""));
+            logger.info("用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
+        }
+
         try {
             Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
             Cookie tongJi = cookieMap.get("TongJi");
