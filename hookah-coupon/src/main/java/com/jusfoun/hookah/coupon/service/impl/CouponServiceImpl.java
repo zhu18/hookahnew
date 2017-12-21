@@ -419,7 +419,15 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 CouponVo couponVo = new CouponVo();
                 couponVo.setUserCouponId(userCoupon.getId());
                 BeanUtils.copyProperties(coupon,couponVo);
+                Date receivedTime = userCoupon.getReceivedTime();
+                couponVo.setReceivedTime(receivedTime);
+                Date expiryEndDate = userCoupon.getExpiryEndDate();
+                Date validDays = DateUtils.thisTimeNextFewDays(receivedTime,userCoupon.getValidDays()-1);
                 couponVo.setExpiryEndTime(DateUtils.toDateText(coupon.getExpiryEndDate()));
+                if (expiryEndDate.getTime() > validDays.getTime()){
+                    expiryEndDate = validDays;
+                    couponVo.setExpiryEndTime(DateUtils.toDateText(expiryEndDate, DateUtils.DATE_FORMAT));
+                }
                 switch (couponVo.getApplyChannel()){
                     case 0:
                         coupons.add(couponVo);
