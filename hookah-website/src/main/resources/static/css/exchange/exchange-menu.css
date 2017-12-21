@@ -8,15 +8,13 @@
     top: -40px;
     z-index: 10;
     width: 180px;
-    height:440px;
-    overflow: hidden;
 }
 .exchange-index-menu .station-box{
     height: 40px;
 }
 .exchange-index-menu .menu-list {
     font-size:0;
-    padding-top: 15px;
+    padding: 15px 0;
     background: rgba(64,64,64,0.8);
 }
 .exchange-index-menu .menu-list>li {
