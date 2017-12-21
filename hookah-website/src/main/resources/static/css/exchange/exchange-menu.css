@@ -78,9 +78,7 @@
     /*border-left: 5px solid #000;*/
     /*z-index: 999;*/
 }
-.exchange-index-menu .menu-list > li:last-child {
-    border-bottom: 2px solid #3E557B;
-}
+
 .menu-son-list a:hover {
     color: #e10000;
     text-decoration: underline;
