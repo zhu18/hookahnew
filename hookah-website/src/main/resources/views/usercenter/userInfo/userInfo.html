@@ -37,7 +37,7 @@ var htmlPart = {
 								<%}else{%>
 								<span class="fa fa-envelope-o font-size-18" title="邮件"></span>
 								<%}%>
-								<%if(userCur.userType == 4){%>
+								<%if(userCur.userType == 4 || userCur.userType == 2){%>
 								<span class="fa fa-id-card-o font-size-18 color-blue" title="个人信息"></span>
 								<%}else{%>
 								<span class="fa fa-id-card-o font-size-18 " title="个人信息"></span>
@@ -87,7 +87,7 @@ var htmlPart = {
 					<div class="user-money">
 						<div>
 							<p class="margin-top-20">账户余额:</p>
-							<%if(userCur.userType == 4){%>
+							<%if(userCur.userType == 4 || userCur.userType == 2){%>
 							<p>
 								￥<span class="account-balance font-size-18 color-red">${payAccount.balance / 100}</span><a href="/usercenter/recharge" class="btn btn-full-orange margin-left-40">充值</a>
 							</p>

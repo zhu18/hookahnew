@@ -15,6 +15,7 @@ function companyAuth() {
    data : {
        "orgName":$("input[name='governmentName']").val(),//单位名称
        "creditCode":$("input[name='creditCode']").val(),//统一社会信用代码
+       "isSupplier":$("input[name='fruit']:checked").val()?$("input[name='fruit']:checked").val():"0"//是否成功供应商
    },
    type:"post",
    success : function(data) {
