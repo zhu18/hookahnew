@@ -270,7 +270,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 Integer orderNum = orderNumMap.get(mgTongJi.getSource());
                 orderNum++;
                 orderNumMap.put(mgTongJi.getSource(), orderNum);
-                if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
+                if (orderInfo.getPayStatus() != OrderInfo.PAYSTATUS_PAYED && orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
                     Integer unPayedOrderNum = (unPayedOrderNumMap.get(mgTongJi.getSource()) == null) ? 0 : unPayedOrderNumMap.get(mgTongJi.getSource());
                     unPayedOrderNum++;
                     unPayedOrderNumMap.put(mgTongJi.getSource(), unPayedOrderNum);
@@ -278,10 +278,8 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             }else{
                 //所有订单数
                 orderNumMap.put(mgTongJi.getSource(), 1);
-                if (orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
-                    Integer unPayedOrderNum = 0;
-                    unPayedOrderNum++;
-                    unPayedOrderNumMap.put(mgTongJi.getSource(), unPayedOrderNum);
+                if (orderInfo.getPayStatus() != OrderInfo.PAYSTATUS_PAYED && orderInfo.getIsDeleted() != 1 && orderInfo.getForceDeleted() != 1){
+                    unPayedOrderNumMap.put(mgTongJi.getSource(), 1);
                 }
             }
         }
