@@ -43,7 +43,7 @@ public class TongjiController extends BaseController {
     }
 
     @RequestMapping(value = "/countOrderInfo")
-    public ReturnData countOrderInfo(@RequestParam(value = "startTime") String startTime, @RequestParam(value = "endTime") String endTime){
+    public ReturnData countOrderInfo(String startTime, String endTime){
         if(!StringUtils.isNotBlank(startTime)){
             startTime=  LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }

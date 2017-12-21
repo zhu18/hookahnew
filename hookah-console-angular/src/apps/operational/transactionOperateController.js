@@ -8,7 +8,7 @@ class OperateController {
       }
       var promise = $http({
         method: 'GET',
-        url: $rootScope.site.apiServer + "/api/tongji/reqUser",
+        url: $rootScope.site.apiServer + "/api/tongji/countOrderInfo",
         params: {
           startTime: $scope.startDate ? format($scope.startDate, 'yyyy-MM-dd HH:mm:ss') : null,
           endTime: $scope.endDate ? format($scope.endDate, 'yyyy-MM-dd HH:mm:ss') : null,
