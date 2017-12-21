@@ -358,6 +358,10 @@ public class AuthController extends BaseController {
             if(data.get("ReturnCode").toString().equals("1")){
                 String societyCode = data.get("Result").get("societyCode").textValue();
                 String name = data.get("Result").get("name").textValue();
+                if(societyCode == null && name.equals(organization.getOrgName())){
+                    orgAuthInfo(organization, userId, request);
+                    return ReturnData.success("恭喜您！验证成功！");
+                }
                 if(!societyCode.equals(organization.getCreditCode()) ||
                         !name.equals(organization.getOrgName())){
                     return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
