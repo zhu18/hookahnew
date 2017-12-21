@@ -1,11 +1,15 @@
 package com.jusfoun.hookah.webiste.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.UserInvoiceTitle;
+import com.jusfoun.hookah.core.domain.vo.UserInvoiceTitleVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.rpc.api.InvoiceService;
 import com.jusfoun.hookah.rpc.api.UserInvoiceTitleService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +28,9 @@ public class UserInvoiceTitleController extends BaseController {
 
     @Resource
     UserInvoiceTitleService userInvoiceTitleService;
+
+    @Resource
+    InvoiceService invoiceService;
     /**
      * 根据userId获取单位抬头的完整信息
      * @return
@@ -37,7 +44,20 @@ public class UserInvoiceTitleController extends BaseController {
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("userInvoiceType", userInvoiceType));
-            returnData.setData(userInvoiceTitleService.selectList(filters));
+            if(HookahConstants.INVOICE_TYPE_1 == userInvoiceType){
+                UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectOne(filters);
+                UserInvoiceTitleVo userInvoiceTitleVo = new UserInvoiceTitleVo();
+
+                BeanUtils.copyProperties(userInvoiceTitle, userInvoiceTitleVo);
+                List<Condition> filter = new ArrayList();
+                filter.add(Condition.eq("addUser", userId));
+                filter.add(Condition.eq("invoiceType", userInvoiceType));
+                userInvoiceTitleVo.setInvoiceStatus(invoiceService.selectOne(filter).getInvoiceStatus());
+                returnData.setData(userInvoiceTitleVo);
+            }else{
+
+                returnData.setData(userInvoiceTitleService.selectList(filters));
+            }
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.getMessage());
