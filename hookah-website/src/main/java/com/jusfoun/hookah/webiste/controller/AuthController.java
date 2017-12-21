@@ -155,19 +155,7 @@ public class AuthController extends BaseController {
     }
 
     @RequestMapping(value = "/auth/user_auth_init_step2", method = RequestMethod.GET)
-    public String userAuth2(Model model, HttpServletRequest request) throws Exception {
-        String userId = this.getCurrentUser().getUserId();
-        try {
-            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
-            Cookie tongJi = cookieMap.get("TongJi");
-            if(tongJi != null){
-                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
-                mgTongJiService.setTongJiInfo(TongJiEnum.PERSON_URL, tongJiInfo.getTongJiId(),
-                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
-            }
-        }catch (Exception e){
-            logger.error("插入个人认证统计信息失败{}{}",userId,e.getMessage());
-        }
+    public String userAuth2(Model model) throws Exception {
         return "/auth/user_auth_init_step2";
     }
 
@@ -202,7 +190,7 @@ public class AuthController extends BaseController {
     }
 
     @RequestMapping(value = "/auth/company_auth_init_step2", method = RequestMethod.GET)
-    public String companyAuth2(Model model, HttpServletRequest request) throws Exception {
+    public String companyAuth2(Model model) throws Exception {
         String address = PropertiesManager.getInstance().getProperty("protocol.address");
         model.addAttribute("address", new String(address.getBytes("ISO-8859-1"),"UTF-8"));
         model.addAttribute("email",PropertiesManager.getInstance().getProperty("protocol.email"));
@@ -210,18 +198,6 @@ public class AuthController extends BaseController {
         model.addAttribute("name",new String(name.getBytes("ISO-8859-1"),"UTF-8"));
         model.addAttribute("phone",PropertiesManager.getInstance().getProperty("protocol.phone"));
         model.addAttribute("mobile",PropertiesManager.getInstance().getProperty("protocol.mobile"));
-        String userId = this.getCurrentUser().getUserId();
-        try {
-            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
-            Cookie tongJi = cookieMap.get("TongJi");
-            if(tongJi != null){
-                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
-                mgTongJiService.setTongJiInfo(TongJiEnum.ORG_URL, tongJiInfo.getTongJiId(),
-                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
-            }
-        }catch (Exception e){
-            logger.error("插入单位认证统计信息失败{}{}",userId,e.getMessage());
-        }
         return "/auth/company_auth_init_step2";
     }
 
@@ -245,7 +221,7 @@ public class AuthController extends BaseController {
 
     @RequestMapping(value = "/auth/personAuth", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData personAuth(Model model, UserDetail userDetail) {
+    public ReturnData personAuth(Model model, UserDetail userDetail, HttpServletRequest request) {
         try {
             String userId = this.getCurrentUser().getUserId();
             userDetail.setUserId(userId);
@@ -283,7 +259,7 @@ public class AuthController extends BaseController {
                         if(checkResult.equals("1")){
                             redisOperate.del("personAuth:" + userId);
                             redisOperate.del("person:" + userId);
-                            personAuthInfo(userDetail, userId);
+                            personAuthInfo(userDetail, userId, request);
                             logger.info("恭喜您！验证成功！");
                             return ReturnData.success("恭喜您！验证成功！");
                         }else {
@@ -305,7 +281,7 @@ public class AuthController extends BaseController {
                 if(code.equals("2000")) { // 成功
                     String checkResult = data.get("payload").get("checkResult").textValue();
                     if(checkResult.equals("1")){
-                        personAuthInfo(userDetail, userId);
+                        personAuthInfo(userDetail, userId, request);
                         logger.info("恭喜您！验证成功！");
                         return ReturnData.success("恭喜您！验证成功！");
                     }else {
@@ -327,7 +303,7 @@ public class AuthController extends BaseController {
     }
 
     // 个人认证
-    public UserDetail personAuthInfo(UserDetail userDetail, String userId){
+    public void personAuthInfo(UserDetail userDetail, String userId, HttpServletRequest request){
         UserDetail userDetail1 = userDetailService.selectById(userId);
         if (userDetail1 != null) {
             int count = userDetailService.updateByIdSelective(userDetail);
@@ -339,13 +315,25 @@ public class AuthController extends BaseController {
         // 个人认证成功状态
         user.setUserType(HookahConstants.UserType.PERSON_CHECK_OK.getCode());
         userService.updateByIdSelective(user);
-        return  userDetail;
+
+        // 个人认证之后插入统计地址
+        try {
+            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
+            Cookie tongJi = cookieMap.get("TongJi");
+            if(tongJi != null){
+                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+                mgTongJiService.setTongJiInfo(TongJiEnum.PERSON_URL, tongJiInfo.getTongJiId(),
+                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
+            }
+        }catch (Exception e){
+            logger.error("插入个人认证统计信息失败{}{}",userId,e.getMessage());
+        }
     }
 
     @Log(platform = "front",logType = "f0007",optType = "insert")
     @RequestMapping(value = "/auth/orgAuth", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData orgAuth(Model model, Organization organization) {
+    public ReturnData orgAuth(Model model, Organization organization, HttpServletRequest request) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
@@ -374,7 +362,7 @@ public class AuthController extends BaseController {
                         !name.equals(organization.getOrgName())){
                     return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
                 }else {
-                    orgAuthInfo(organization, userId);
+                    orgAuthInfo(organization, userId, request);
                     return ReturnData.success("恭喜您！验证成功！");
                 }
             }else {
@@ -387,7 +375,7 @@ public class AuthController extends BaseController {
     }
 
     // 企业认证
-    public void orgAuthInfo(Organization organization, String userId){
+    public void orgAuthInfo(Organization organization, String userId, HttpServletRequest request){
         User user = userService.selectById(userId);
         String orgId = user.getOrgId();
 
@@ -437,5 +425,16 @@ public class AuthController extends BaseController {
         user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
 
         userService.updateByIdSelective(user1);
+        try {
+            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
+            Cookie tongJi = cookieMap.get("TongJi");
+            if(tongJi != null){
+                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+                mgTongJiService.setTongJiInfo(TongJiEnum.ORG_URL, tongJiInfo.getTongJiId(),
+                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
+            }
+        }catch (Exception e){
+            logger.error("插入单位认证统计信息失败{}{}",userId,e.getMessage());
+        }
     }
 }
