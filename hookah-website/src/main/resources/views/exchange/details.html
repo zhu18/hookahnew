@@ -264,6 +264,22 @@ var htmlPart = {
 							</tr>
 							<%}%>
 							<%}%>
+							<%if(goodsDetails.goodsType == 5){%>
+							<tr>
+								<td>核心功能：</td>
+								<td>
+									<div class="goodsDescBox">${goodsDetails.atSaaS.coreFunction}</div>
+								</td>
+							</tr>
+							<%if(isNotEmpty(goodsDetails.appCase)){%>
+							<tr>
+								<td>应用案例：</td>
+								<td>
+									<div class="goodsDescBox">${goodsDetails.appCase}</div>
+								</td>
+							</tr>
+							<%}%>
+							<%}%>
 							<%if(goodsDetails.goodsType == 6){%>
 							<tr>
 								<td>核心功能：</td>
@@ -587,13 +603,39 @@ var htmlPart = {
 					</div>
 					<div class="table-item">${goodsDetails.afterSaleService}</div>
 					<%}else if(goodsDetails.goodsType ==5){%>
-					<div class="table-item goodsDescBox">${goodsDetails.atSaaS.coreFunction}</div>
-					<div class="table-item goodsDescBox">${goodsDetails.atSaaS.teamAdvantage}</div>
-					<div class="table-item goodsDescBox">${goodsDetails.atSaaS.desiredEnvironment}</div>
-					<div class="table-item goodsDescBox">${goodsDetails.atSaaS.dataNeeded}</div>
-					<%if(isNotEmpty(goodsDetails.appCase)){%>
-					<div class="table-item goodsDescBox">${goodsDetails.appCase}</div>
-					<%}%>
+					<div class="table-item">
+						<table class="tab-one margin-bottom-10">
+							<tr>
+								<td>技术优势：</td>
+								<td>
+									<div class="goodsDescBox">${goodsDetails.atSaaS.technologicalSuperiority}
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>团队优势：</td>
+								<td>
+									<div class="goodsDescBox">${goodsDetails.atSaaS.teamAdvantage}</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="table-item">
+						<table class="tab-one margin-bottom-10">
+							<tr>
+								<td>所需环境：</td>
+								<td>
+									<div class="goodsDescBox">${goodsDetails.atSaaS.desiredEnvironment}</div>
+								</td>
+							</tr>
+							<tr>
+								<td>所需数据：</td>
+								<td>
+									<div class="goodsDescBox">${goodsDetails.atSaaS.dataNeeded}</div>
+								</td>
+							</tr>
+						</table>
+					</div>
 					<div class="table-item goodsDescBox">${goodsDetails.afterSaleService}</div>
 					<%}%>
 					<div class="table-item evaluate">
