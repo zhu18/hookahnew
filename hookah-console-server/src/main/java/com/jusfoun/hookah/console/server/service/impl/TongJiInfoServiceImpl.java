@@ -118,8 +118,10 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 orgFilters.clear();
                 orgFilters.add(Condition.eq("orgId", org.getOrgId()));
                 User user = userService.selectOne(orgFilters);
-                MgTongJi mgTongJiInfo = getMgTongJiInfo(user.getUserId(), TongJiEnum.ORG_URL);
-                orgList.add(mgTongJiInfo);
+                if (user!=null){
+                    MgTongJi mgTongJiInfo = getMgTongJiInfo(user.getUserId(), TongJiEnum.ORG_URL);
+                    orgList.add(mgTongJiInfo);
+                }
             }
         }
         //计算当天时间内按来源的企业认证数量
@@ -158,7 +160,53 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             }
             flowUserMapper.insert(flowUserVo);
         }
-
+        //获取个人认证信息并存库
+//        FlowUserVo flowUserVoByPerson = new FlowUserVo();
+//        for (String personKey : personMap.keySet()) {
+//            // 查询当前来源数据库是否存在
+//            filter.clear();
+//            filter.add(Condition.eq("insertTime", sameDay));
+//            filter.add(Condition.eq("dataSource", personKey));
+//            FlowUser flowUser = flowUserService.selectOne(filter);
+//            if(flowUser != null){
+//                // 如果当天来源存在，进行更新操作
+//                if(flowUser.getDataSource() == personKey){
+//                    flowUserVoByPerson.setId(flowUser.getId());
+//                    flowUserVoByPerson.setPersonUser(personMap.get(personKey));
+//                    flowUserService.updateByIdSelective(flowUserVoByPerson);
+//                }
+//            }else {// 如果当天来源不存在，进行添加操作
+//                flowUserVoByPerson.setDataSource(personKey);
+//                flowUserVoByPerson.setPersonUser(personMap.get(personKey));
+//                flowUserVoByPerson.setAddTime(addTime);
+//                flowUserVoByPerson.setInsertTime(sameDay);
+//                flowUserService.insert(flowUserVoByPerson);
+//            }
+//        }
+//
+//        //获取企业认证信息并存库
+//        FlowUserVo flowUserVoByOrg = new FlowUserVo();
+//        for (String orgKey : orgMap.keySet()) {
+//            // 查询当前来源数据库是否存在
+//            filter.clear();
+//            filter.add(Condition.eq("insertTime", sameDay));
+//            filter.add(Condition.eq("dataSource", orgKey));
+//            FlowUser flowUser = flowUserService.selectOne(filter);
+//            if(flowUser != null){
+//                // 如果当天来源存在，进行更新操作
+//                if(flowUser.getDataSource() == orgKey){
+//                    flowUserVoByOrg.setId(flowUser.getId());
+//                    flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
+//                    flowUserService.updateByIdSelective(flowUserVoByOrg);
+//                }
+//            }else {  // 如果当天来源不存在，进行添加操作
+//                flowUserVoByOrg.setDataSource(orgKey);
+//                flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
+//                flowUserVoByOrg.setAddTime(addTime);
+//                flowUserVoByOrg.setInsertTime(sameDay);
+//                flowUserService.insert(flowUserVoByOrg);
+//            }
+//        }
         logger.info("------------------结束统计当天访问次数----------------------");
 //        return ReturnData.success("统计完成");
     }
