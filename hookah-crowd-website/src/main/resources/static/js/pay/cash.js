@@ -137,7 +137,7 @@ function check() {
                 }
             } else if(this.value == 2){//支付宝方式
                 Loading.start();
-                window.location.href= host.website+'/pay/aliPay?'+'orderSn='+$("#orderSn").html();
+                window.location.href= host.crowd+'/api/zbPay/aliPay?'+'tradeNo='+$("#orderSn").html();
                 return false;
             }else{
                 $.alert('暂不支持该支付方式');

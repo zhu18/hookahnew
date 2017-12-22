@@ -1,3 +1,54 @@
+server:
+  port: 9000
+  http:
+    protocal: http://
+  session:
+    cookie:
+      domain: bdgstore.cn
+      name: hookah_sid
+myconf:
+  beetl:
+    templatesPath: views/
+    contentType: text/html;charset:UTF-8
+    prefix: /
+    suffix: .html
+    cache: false
+
+  host:
+    domain: bdgstore.cn
+    website: ${server.http.protocal}www.bdgstore.cn
+    static: ${server.http.protocal}static.bdgstore.cn
+    auth: ${server.http.protocal}auth.bdgstore.cn
+    console: ${server.http.protocal}console.bdgstore.cn
+    admin: ${server.http.protocal}admin.bdgstore.cn
+    crowd: ${server.http.protocal}crowd.bdgstore.cn
+  oauth2:
+    clientId: website
+    clientSecret: Yqn2ht4DYkMHlDvTY7CV
+    regUrl: http://auth.bdgstore.cn/reg
+    loginUrl: http://auth.bdgstore.cn/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    logoutUrl: http://auth.bdgstore.cn/logout?redirect_uri=http://www.bdgstore.cn/login
+    accessTokenUrl: http://auth.bdgstore.cn/oauth/accessToken
+    userInfoUrl: http://auth.bdgstore.cn/userInfo
+    redirectUrl: http://auth.bdgstore.cn/login
+  redis:
+    ipPort: 192.168.15.203:7000,192.168.15.203:7001,192.168.15.203:7002
+  consul:
+    ipPort: 127.0.0.1:8500
+debug: true
 spring:
-  profiles:
-    active: dev
+  data:
+    mongodb:
+      uri:  mongodb://192.168.15.203:27017/bdgStore
+  mvc:
+      static-path-pattern: /static/**
+  rabbitmq:
+      addresses: 192.168.200.116:5672
+      username: root
+      password: password
+      publisher-confirms: true
+      virtual-host: /
+      listener:
+        retry:
+        enabled: true
+        max-attempts: 2
