@@ -8,7 +8,7 @@
         <% for(var i=0;i<9;i++){%>
         <li class="menu-item">
             <a class="oneA" href="/exchange/list?catId=${categoryInfo[i].catId}&prId=${categoryInfo[i].catId}&prNm=${categoryInfo[i].catName}">
-                <i class="qian"><img src="/static/images/exchange/category-six-0${i}.png" alt="" ></i>
+                <i class="qian"><img src="/static/images/exchange/category-six-0${i+1}.png" alt="" ></i>
                 <span>${categoryInfo[i].catName}</span>
                 <i class="hou fa fa-angle-right"></i>
             </a>
