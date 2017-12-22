@@ -37,7 +37,7 @@ var htmlPart = {
 								<%}else{%>
 								<span class="fa fa-envelope-o font-size-18" title="邮件"></span>
 								<%}%>
-								<%if(userCur.userType == 4){%>
+								<%if(userCur.userType == 4 || userCur.userType == 2){%>
 								<span class="fa fa-id-card-o font-size-18 color-blue" title="个人信息"></span>
 								<%}else{%>
 								<span class="fa fa-id-card-o font-size-18 " title="个人信息"></span>
@@ -52,11 +52,11 @@ var htmlPart = {
 							<p class="usertype color-orange">
 								未认证<span class="tip-noType">认证后才能下单哦 <i class="fa fa-close"></i></span></p>
 							<%}else if(userCur.userType == 2){%>
-							<p class="usertype color-green">个人用户</p>
+							<p class="usertype color-green"><span class="label-blue">个人用户</span></p>
 							<%}else if(userCur.userType == 3){%>
 							<p class="usertype color-orange">个人认证审核中</p>
 							<%}else if(userCur.userType == 4){%>
-							<p class="usertype color-green info">单位用户：<span title="${orgName}"> ${orgName}</span></p>
+							<p class="usertype color-green info"><span class="label-blue margin-right-5">单位用户</span><span title="${orgName}" class="font-weight-bold"> ${orgName}</span></p>
 							<%}else if(userCur.userType == 5){%>
 							<p class="usertype color-orange">单位认证审核中</p>
 							<%}else if(userCur.userType == 6){%>
@@ -87,7 +87,7 @@ var htmlPart = {
 					<div class="user-money">
 						<div>
 							<p class="margin-top-20">账户余额:</p>
-							<%if(userCur.userType == 4){%>
+							<%if(userCur.userType == 4 || userCur.userType == 2){%>
 							<p>
 								￥<span class="account-balance font-size-18 color-red">${payAccount.balance / 100}</span><a href="/usercenter/recharge" class="btn btn-full-orange margin-left-40">充值</a>
 							</p>

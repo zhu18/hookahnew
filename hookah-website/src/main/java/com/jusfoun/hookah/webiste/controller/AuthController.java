@@ -5,11 +5,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.domain.*;
+import com.jusfoun.hookah.core.domain.bo.JfBo;
 import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.generic.Condition;
-import com.jusfoun.hookah.core.utils.*;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
+import com.jusfoun.hookah.core.utils.HttpClientUtil;
+import com.jusfoun.hookah.core.utils.JsonUtils;
+import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.*;
 import com.jusfoun.hookah.webiste.config.MyProps;
 import com.jusfoun.hookah.webiste.util.PropertiesManager;
@@ -74,6 +79,12 @@ public class AuthController extends BaseController {
 
     @Resource
     MgTongJiService mgTongJiService;
+
+    @Resource
+    MqSenderService mqSenderService;
+
+    @Resource
+    private WXUserRecommendService wXUserRecommendService;
 
 
     //认证状态(0.未认证 1.认证中 2.已认证 3.认证失败)
@@ -155,19 +166,7 @@ public class AuthController extends BaseController {
     }
 
     @RequestMapping(value = "/auth/user_auth_init_step2", method = RequestMethod.GET)
-    public String userAuth2(Model model, HttpServletRequest request) throws Exception {
-        String userId = this.getCurrentUser().getUserId();
-        try {
-            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
-            Cookie tongJi = cookieMap.get("TongJi");
-            if(tongJi != null){
-                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
-                mgTongJiService.setTongJiInfo(TongJiEnum.PERSON_URL, tongJiInfo.getTongJiId(),
-                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
-            }
-        }catch (Exception e){
-            logger.error("插入个人认证统计信息失败{}{}",userId,e.getMessage());
-        }
+    public String userAuth2(Model model) throws Exception {
         return "/auth/user_auth_init_step2";
     }
 
@@ -202,7 +201,7 @@ public class AuthController extends BaseController {
     }
 
     @RequestMapping(value = "/auth/company_auth_init_step2", method = RequestMethod.GET)
-    public String companyAuth2(Model model, HttpServletRequest request) throws Exception {
+    public String companyAuth2(Model model) throws Exception {
         String address = PropertiesManager.getInstance().getProperty("protocol.address");
         model.addAttribute("address", new String(address.getBytes("ISO-8859-1"),"UTF-8"));
         model.addAttribute("email",PropertiesManager.getInstance().getProperty("protocol.email"));
@@ -210,18 +209,6 @@ public class AuthController extends BaseController {
         model.addAttribute("name",new String(name.getBytes("ISO-8859-1"),"UTF-8"));
         model.addAttribute("phone",PropertiesManager.getInstance().getProperty("protocol.phone"));
         model.addAttribute("mobile",PropertiesManager.getInstance().getProperty("protocol.mobile"));
-        String userId = this.getCurrentUser().getUserId();
-        try {
-            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
-            Cookie tongJi = cookieMap.get("TongJi");
-            if(tongJi != null){
-                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
-                mgTongJiService.setTongJiInfo(TongJiEnum.ORG_URL, tongJiInfo.getTongJiId(),
-                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
-            }
-        }catch (Exception e){
-            logger.error("插入单位认证统计信息失败{}{}",userId,e.getMessage());
-        }
         return "/auth/company_auth_init_step2";
     }
 
@@ -245,7 +232,7 @@ public class AuthController extends BaseController {
 
     @RequestMapping(value = "/auth/personAuth", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData personAuth(Model model, UserDetail userDetail) {
+    public ReturnData personAuth(Model model, UserDetail userDetail, HttpServletRequest request) {
         try {
             String userId = this.getCurrentUser().getUserId();
             userDetail.setUserId(userId);
@@ -268,18 +255,29 @@ public class AuthController extends BaseController {
             Header header = new BasicHeader("token", HookahConstants.PERSON_AUTH_TOKEN);
             String result = HttpClientUtil.sendHttpPost(HookahConstants.PERSON_AUTH_URL,
                     JSON.toJSONString(map), header);
-            Map mapTypes = JSON.parseObject(result);
+            JsonNode data = JsonUtils.toObject(result.toString(), JsonNode.class);
             // 验证个人认证超限-超过3次认证失败，24小时后重新认证
             String personAuth = redisOperate.get("personAuth:" + userId);
+            String code = data.get("code").textValue();
+
             if(personAuth != null){
                 String  errNum = redisOperate.get("person:" + userId);
                 if(errNum != null && Integer.parseInt(errNum) < 3){
-                    if(mapTypes.get("code").equals("2000")){ // 成功
-                        redisOperate.del("personAuth:" + userId);
-                        redisOperate.del("person:" + userId);
-                        personAuthInfo(userDetail, userId);
-                        logger.info("恭喜您！验证成功！");
-                        return ReturnData.success("恭喜您！验证成功！");
+                    // 验证个人认证信息返回是否正确
+                    if(code.equals("2000")){
+                        String checkResult = data.get("payload").get("checkResult").textValue();
+                        // 判断姓名与身份证号是否一致  1： 一致 2：不一致 3：无此记录
+                        if(checkResult.equals("1")){
+                            redisOperate.del("personAuth:" + userId);
+                            redisOperate.del("person:" + userId);
+                            personAuthInfo(userDetail, userId, request);
+                            logger.info("恭喜您！验证成功！");
+                            return ReturnData.success("恭喜您！验证成功！");
+                        }else {
+                            redisOperate.incr("person:" + userId);
+                            logger.info("姓名与身份证号码不匹配，请重新录入!");
+                            return ReturnData.error("姓名与身份证号码不匹配，请重新录入!");
+                        }
                     }else { // 验证失败
                         redisOperate.incr("person:" + userId);
                         logger.info("验证失败！请重新验证！");
@@ -291,10 +289,17 @@ public class AuthController extends BaseController {
             }else {
                 redisOperate.del("personAuth:" + userId);
                 redisOperate.del("person:" + userId);
-                if(mapTypes.get("code").equals("2000")) { // 成功
-                    personAuthInfo(userDetail, userId);
-                    logger.info("恭喜您！验证成功！");
-                    return ReturnData.success("恭喜您！验证成功！");
+                if(code.equals("2000")) { // 成功
+                    String checkResult = data.get("payload").get("checkResult").textValue();
+                    if(checkResult.equals("1")){
+                        personAuthInfo(userDetail, userId, request);
+                        logger.info("恭喜您！验证成功！");
+                        return ReturnData.success("恭喜您！验证成功！");
+                    }else {
+                        redisOperate.incr("person:" + userId);
+                        logger.info("姓名与身份证号码不匹配，请重新录入!");
+                        return ReturnData.error("姓名与身份证号码不匹配，请重新录入!");
+                    }
                 }else { // 验证失败
                     redisOperate.set("personAuth:" + userId, "1", 60 * 60 * 24);
                     redisOperate.incr("person:" + userId);
@@ -309,26 +314,45 @@ public class AuthController extends BaseController {
     }
 
     // 个人认证
-    public UserDetail personAuthInfo(UserDetail userDetail, String userId){
+    public void personAuthInfo(UserDetail userDetail, String userId, HttpServletRequest request){
         UserDetail userDetail1 = userDetailService.selectById(userId);
         if (userDetail1 != null) {
             int count = userDetailService.updateByIdSelective(userDetail);
         } else {
             userDetail = userDetailService.insert(userDetail);
         }
-
         User user = new User();
         user.setUserId(userId);
         // 个人认证成功状态
         user.setUserType(HookahConstants.UserType.PERSON_CHECK_OK.getCode());
         userService.updateByIdSelective(user);
-        return  userDetail;
+
+        if(user.getUserType().equals(HookahConstants.UserType.PERSON_CHECK_OK.getCode())){
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user.getUserId(), 3, ""));
+            logger.info("个人用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
+        }
+
+        //更新微信用户推荐表
+        wXUserRecommendService.updateWXUserRecommendIsAuthenticate(user.getUserId());
+
+        // 个人认证之后插入统计地址
+        try {
+            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
+            Cookie tongJi = cookieMap.get("TongJi");
+            if(tongJi != null){
+                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+                mgTongJiService.setTongJiInfo(TongJiEnum.PERSON_URL, tongJiInfo.getTongJiId(),
+                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
+            }
+        }catch (Exception e){
+            logger.error("插入个人认证统计信息失败{}{}",userId,e.getMessage());
+        }
     }
 
     @Log(platform = "front",logType = "f0007",optType = "insert")
     @RequestMapping(value = "/auth/orgAuth", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnData orgAuth(Model model, Organization organization) {
+    public ReturnData orgAuth(Model model, Organization organization, HttpServletRequest request) {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
@@ -353,11 +377,15 @@ public class AuthController extends BaseController {
             if(data.get("ReturnCode").toString().equals("1")){
                 String societyCode = data.get("Result").get("societyCode").textValue();
                 String name = data.get("Result").get("name").textValue();
+                if(societyCode == null && name.equals(organization.getOrgName())){
+                    orgAuthInfo(organization, userId, request);
+                    return ReturnData.success("恭喜您！验证成功！");
+                }
                 if(!societyCode.equals(organization.getCreditCode()) ||
                         !name.equals(organization.getOrgName())){
                     return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
                 }else {
-                    orgAuthInfo(organization, userId);
+                    orgAuthInfo(organization, userId, request);
                     return ReturnData.success("恭喜您！验证成功！");
                 }
             }else {
@@ -370,7 +398,7 @@ public class AuthController extends BaseController {
     }
 
     // 企业认证
-    public void orgAuthInfo(Organization organization, String userId){
+    public void orgAuthInfo(Organization organization, String userId, HttpServletRequest request){
         User user = userService.selectById(userId);
         String orgId = user.getOrgId();
 
@@ -420,5 +448,25 @@ public class AuthController extends BaseController {
         user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
 
         userService.updateByIdSelective(user1);
+
+        if(user1.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
+            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user1.getUserId(), 3, ""));
+            logger.info("企业用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
+        }
+
+        //更新微信用户推荐表
+        wXUserRecommendService.updateWXUserRecommendIsAuthenticate(user1.getUserId());
+
+        try {
+            Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
+            Cookie tongJi = cookieMap.get("TongJi");
+            if(tongJi != null){
+                MgTongJi tongJiInfo = mgTongJiService.getTongJiInfo(tongJi.getValue());
+                mgTongJiService.setTongJiInfo(TongJiEnum.ORG_URL, tongJiInfo.getTongJiId(),
+                        tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), userId);
+            }
+        }catch (Exception e){
+            logger.error("插入单位认证统计信息失败{}{}",userId,e.getMessage());
+        }
     }
 }

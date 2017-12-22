@@ -1557,8 +1557,10 @@ dl {
 	text-align: left;
 	background: #f6f6f6;
 	max-height: 310px;
+	max-width: 827px;
 	padding: 20px;
 	overflow-y: auto;
+	overflow-x: auto;
 	font-weight: normal;
 }
 .goods-table .table-content .table-item table td .apiInfo-con table td {

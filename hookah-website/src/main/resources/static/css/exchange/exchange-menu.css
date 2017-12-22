@@ -8,15 +8,13 @@
     top: -40px;
     z-index: 10;
     width: 180px;
-    height:440px;
-    overflow: hidden;
 }
 .exchange-index-menu .station-box{
     height: 40px;
 }
 .exchange-index-menu .menu-list {
     font-size:0;
-    padding-top: 15px;
+    padding: 15px 0;
     background: rgba(64,64,64,0.8);
 }
 .exchange-index-menu .menu-list>li {
@@ -80,9 +78,7 @@
     /*border-left: 5px solid #000;*/
     /*z-index: 999;*/
 }
-.exchange-index-menu .menu-list > li:last-child {
-    border-bottom: 2px solid #3E557B;
-}
+
 .menu-son-list a:hover {
     color: #e10000;
     text-decoration: underline;

@@ -135,6 +135,12 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
         if (coupon.getTotalCount()>0 && coupon.getTotalCount()<coupon.getLimitedCount()){
             throw new HookahException("每人限领数量不能大于总发行量");
         }
+        Coupon oldData = this.selectById(coupon.getId());
+        if (oldData.getCouponStatus().equals(HookahConstants.CouponStatus.UN_USED.getCode()) && DateUtils.isSameDay(coupon.getExpiryStartDate(),new Date())) {
+            coupon.setCouponStatus(HookahConstants.CouponStatus.USED.getCode());
+            coupon.setActivatedTime(new Date());
+            coupon.setActivatedUser(userId);
+        }
         coupon.setUpdateUser(userId);
         coupon.setUpdateTime(new Date());
         if (goodsList!=null){
@@ -419,7 +425,15 @@ public class CouponServiceImpl extends GenericServiceImpl<Coupon, Long> implemen
                 CouponVo couponVo = new CouponVo();
                 couponVo.setUserCouponId(userCoupon.getId());
                 BeanUtils.copyProperties(coupon,couponVo);
+                Date receivedTime = userCoupon.getReceivedTime();
+                couponVo.setReceivedTime(receivedTime);
+                Date expiryEndDate = userCoupon.getExpiryEndDate();
+                Date validDays = DateUtils.thisTimeNextFewDays(receivedTime,userCoupon.getValidDays()-1);
                 couponVo.setExpiryEndTime(DateUtils.toDateText(coupon.getExpiryEndDate()));
+                if (expiryEndDate.getTime() > validDays.getTime()){
+                    expiryEndDate = validDays;
+                    couponVo.setExpiryEndTime(DateUtils.toDateText(expiryEndDate, DateUtils.DATE_FORMAT));
+                }
                 switch (couponVo.getApplyChannel()){
                     case 0:
                         coupons.add(couponVo);

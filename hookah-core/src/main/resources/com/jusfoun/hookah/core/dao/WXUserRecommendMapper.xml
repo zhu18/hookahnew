@@ -14,7 +14,9 @@
     <result column="reward_money" property="rewardMoney" jdbcType="BIGINT" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="reward_jf" property="rewardJf" jdbcType="INTEGER" />
   </resultMap>
+
   <sql id="Base_Column_List" >
     <!--
       WARNING - @mbggenerated
@@ -72,9 +74,11 @@
             <!--</if>-->
         <!--</trim>-->
     <!--</insert>-->
-  <select id="countInviteeAndReward" resultType="java.util.HashMap" parameterType="java.lang.String">
+  <select id="countInviteeAndReward" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendCountVo" parameterType="java.lang.String">
 
-    SELECT count(id) AS inviteeNum,SUM(reward_money) AS rewardMoney FROM wx_user_recommend WHERE  recommenderId=#{userId}
+    SELECT count(id) AS inviteeNum,sum(reward_money) AS rewardMoney ,
+
+    sum(reward_jf) AS rewardJf FROM wx_user_recommend WHERE  recommenderId=#{userId}
   </select>
 
    <sql id="sqlRecommendListByCondition">
@@ -97,6 +101,9 @@
        SELECT
            count(DISTINCT(wxu.recommenderId)) <include refid="sqlRecommendListByCondition"/>
   </select>
+
+
+
   <select id="getRecommendList" resultType="com.jusfoun.hookah.core.domain.vo.WXUserRecommendVo" parameterType="java.util.HashMap">
         SELECT
             u.user_id AS userId,
@@ -145,6 +152,9 @@
             </if>
             <if test="updateTime != null" >
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="rewardJf != null" >
+                reward_jf =  #{rewardJf,jdbcType=INTEGER},
             </if>
         </set>
         where inviteeId = #{inviteeid}
@@ -198,6 +208,14 @@
               <include refid="sqlRecommendDetailsByRecommenderId"/>
 
         ORDER BY ${order} ${sort}
+
+    </select>
+
+    <select id="selectSumRewardJfByRecommenderId" resultType="java.lang.Integer" parameterType="java.lang.String">
+
+        SELECT sum(wr.reward_jf) FROM wx_user_recommend wr WHERE wr.recommenderId =#{recommenderId}
+
+            AND TO_DAYS(wr.add_time) = TO_DAYS(NOW())
 
     </select>
 

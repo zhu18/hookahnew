@@ -33,4 +33,33 @@
     average_pay_time, pay_user_num, order_user_num, cancel_order_num, goods_sold_num, 
     paying_order_num, add_time, update_time, add_operator, update_operator, insert_time
   </sql>
+
+  <select id="selectSum" resultType="com.jusfoun.hookah.core.domain.vo.TransactionAnalysisVo">
+    select
+    SUM(order_num) AS allOrderNum,
+    SUM(effective_order_amount) AS payedMoney,
+    SUM(effectice_order_num) AS payedOrderNum,
+    SUM(paying_order_num) AS unPayedOrderNum
+    from transaction_analysis
+    where add_time
+    BETWEEN  #{startTime}
+    AND DATE_ADD(#{endTime},INTERVAL 1 DAY)
+  </select>
+
+  <select id="selectBySourceList" resultType="com.jusfoun.hookah.core.domain.vo.TransactionAnalysisVo">
+    select
+    data_source AS dataSource,
+    SUM(order_num) AS allOrderNum,
+    SUM(effective_order_amount) AS payedMoney,
+    SUM(effectice_order_num) AS payedOrderNum,
+    SUM(paying_order_num) AS unPayedOrderNum
+    FROM
+    transaction_analysis
+    where
+    add_time
+    BETWEEN   #{startTime}
+    AND DATE_ADD(#{endTime},INTERVAL 1 DAY)
+    GROUP BY
+    data_source
+  </select>
 </mapper>

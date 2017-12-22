@@ -102,8 +102,10 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
                 logger.info("用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
             }
 
-            //更新微信用户推荐表
-            wxUserRecommendService.updateWXUserRecommendIsAuthenticate(user.getUserId());
+           /* if (userCheck.getCheckStatus()==2){
+                //更新微信用户推荐表
+                wxUserRecommendService.updateWXUserRecommendIsAuthenticate(user.getUserId());
+            }*/
 
             returnData.setData(userCheck);
 

@@ -8,17 +8,14 @@
     top: -40px;
     z-index: 10;
     width: 180px;
-    height:440px;
-    overflow: hidden;
 }
-.exchange-index-menu .station-box {
+.exchange-index-menu .station-box{
     height: 40px;
 }
 .exchange-index-menu .menu-list {
     font-size:0;
-    padding-top: 15px;
+    padding: 15px 0;
     background: rgba(64,64,64,0.8);
-
 }
 .exchange-index-menu .menu-list>li {
     display: inline-block;
@@ -35,12 +32,19 @@
     width:100%;
     position: relative;
 }
-.exchange-index-menu .menu-list li .oneA i{
+.exchange-index-menu .menu-list li .oneA .qian{
     display: block;
     float: left;
     width: 16px;
     margin: 13px 16px 0 22px;
 }
+.exchange-index-menu .menu-list li .oneA .hou{
+    display: block;
+    float: right;
+    width: 16px;
+    margin: 13px 20px 0 0px;
+}
+
 .exchange-index-menu .menu-list li .oneA img{
     display: block;
     width:100%;
@@ -62,20 +66,19 @@
     color: #7791bd;
 }
 .exchange-index-menu>.menu-list>li.menu-item.active>a:before {
-    position: absolute;
-    top: 16px;
-    right: 10px;
-    content: '';
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 5px solid #000;
-    z-index: 999;
+    /*position: absolute;*/
+    /*top: 16px;*/
+    /*right: 10px;*/
+    /*content: "\f105";*/
+    /*content: '';*/
+    /*width: 0;*/
+    /*height: 0;*/
+    /*border-top: 5px solid transparent;*/
+    /*border-bottom: 5px solid transparent;*/
+    /*border-left: 5px solid #000;*/
+    /*z-index: 999;*/
 }
-.exchange-index-menu .menu-list > li:last-child {
-    border-bottom: 2px solid #3E557B;
-}
+
 .menu-son-list a:hover {
     color: #e10000;
     text-decoration: underline;
