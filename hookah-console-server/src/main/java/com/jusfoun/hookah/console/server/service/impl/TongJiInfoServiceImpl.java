@@ -55,7 +55,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
     TransactionAnalysisService transactionAnalysisService;
 
     // 每隔凌晨执行一次
-    @Scheduled(cron="0 59 23 * * ?")
+    @Scheduled(cron="0 50 23 * * ?")
     public void saveTongJiInfoService(){
         logger.info("------------------开始统计当天访问次数----------------------");
         Date addTime = new Date();
