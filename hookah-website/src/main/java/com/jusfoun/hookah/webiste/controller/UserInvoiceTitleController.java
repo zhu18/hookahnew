@@ -2,6 +2,7 @@ package com.jusfoun.hookah.webiste.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.domain.Invoice;
 import com.jusfoun.hookah.core.domain.UserInvoiceTitle;
 import com.jusfoun.hookah.core.domain.vo.UserInvoiceTitleVo;
 import com.jusfoun.hookah.core.generic.Condition;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Gring on 2017/11/27.
@@ -48,11 +50,14 @@ public class UserInvoiceTitleController extends BaseController {
                 UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectOne(filters);
                 UserInvoiceTitleVo userInvoiceTitleVo = new UserInvoiceTitleVo();
 
+                if(Objects.nonNull(userInvoiceTitle))
                 BeanUtils.copyProperties(userInvoiceTitle, userInvoiceTitleVo);
                 List<Condition> filter = new ArrayList();
                 filter.add(Condition.eq("addUser", userId));
                 filter.add(Condition.eq("invoiceType", userInvoiceType));
-                userInvoiceTitleVo.setInvoiceStatus(invoiceService.selectOne(filter).getInvoiceStatus());
+                Invoice invoice = invoiceService.selectOne(filter);
+                if (Objects.nonNull(invoice))
+                userInvoiceTitleVo.setInvoiceStatus(invoice.getInvoiceStatus());
                 returnData.setData(userInvoiceTitleVo);
             }else{
 

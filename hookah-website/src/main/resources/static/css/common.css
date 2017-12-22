@@ -628,7 +628,9 @@ ul li {
     height: 300px !important;
     padding-top: 90px;
 }
-
+.must-tip {
+    color: #ff0000;
+}
 .label-blue{
     display: inline-block;
     width: 57px;

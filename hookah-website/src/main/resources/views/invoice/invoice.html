@@ -56,51 +56,53 @@
 							<td>明细</td>
 						</tr>
 					</table>
-					<table>
-						<tr>
-							<td></td>
-							<td>
-								<div class="tip-exclusive">
-									<p class="p1"><span class="fa fa-exclamation-circle"></span>我们会在一个工作日内完成审核工作。</p>
-									<p>1）注意有效增值税发票开票资质仅为一个。</p>
-									<p>2）发票常见问题查看增票资质帮助。</p>
-									<p>3）本页面信息仅供增值税专用发票-资质审核使用，切勿进行支付相关业务，谨防上当受骗。</p>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>您的增票资质：</td>
-							<td>未添加</td>
-						</tr>
-						<tr>
-							<td><span class="must-tip">*</span>单位名称：</td>
-							<td><div class="input-exclusive"><input type="text" name="Z_titleName"></div></td>
-						</tr>
-						<tr>
-							<td><span class="must-tip">*</span>纳税人识别号：</td>
-							<td><div class="input-exclusive"><input type="text" name="Z_taxpayerIdentifyNo"></div></td>
-						</tr>
-						<tr>
-							<td><span class="must-tip">*</span>注册地址：</td>
-							<td><div class="input-exclusive"><input type="text" name="Z_regAddress"></div></td>
-						</tr>
-						<tr>
-							<td><span class="must-tip">*</span>注册电话：</td>
-							<td><div class="input-exclusive"><input type="text" name="Z_"></div></td>
-						</tr>
-						<tr>
-							<td><span class="must-tip">*</span>开户银行：</td>
-							<td><div class="input-exclusive"><input type="text" name="Z_openBank"></div></td>
-						</tr>
-						<tr>
-							<td><span class="must-tip">*</span>银行账户：</td>
-							<td><div class="input-exclusive"><input type="text" name="Z_bankAccount"></div></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><label><input type="checkbox">我已阅读并同意<a href="javascript:void(0)" style="color:#0041ed;">《增票资质确认书》</a></label></td>
-						</tr>
-					</table>
+					<form>
+						<table class="Z_ssac">
+							<tr>
+								<td></td>
+								<td>
+									<div class="tip-exclusive">
+										<p class="p1"><span class="fa fa-exclamation-circle"></span>我们会在一个工作日内完成审核工作。</p>
+										<p>1）注意有效增值税发票开票资质仅为一个。</p>
+										<p>2）发票常见问题查看增票资质帮助。</p>
+										<p>3）本页面信息仅供增值税专用发票-资质审核使用，切勿进行支付相关业务，谨防上当受骗。</p>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>您的增票资质：</td>
+								<td class="invoiceStatus">未添加aa</td>
+							</tr>
+							<tr class="Z_invoice_item">
+								<td><span class="must-tip">*</span>单位名称：</td>
+								<td><div class="input-exclusive"><input type="text" class="text-input" name="Z_titleName"></div></td>
+							</tr>
+							<tr class="Z_invoice_item">
+								<td><span class="must-tip">*</span>纳税人识别号：</td>
+								<td><div class="input-exclusive"><input type="text" class="text-input" name="Z_taxpayerIdentifyNo"></div></td>
+							</tr>
+							<tr class="Z_invoice_item">
+								<td><span class="must-tip">*</span>注册地址：</td>
+								<td><div class="input-exclusive"><input type="text" class="text-input" name="Z_regAddress"></div></td>
+							</tr>
+							<tr class="Z_invoice_item">
+								<td><span class="must-tip">*</span>注册电话：</td>
+								<td><div class="input-exclusive"><input type="text" class="text-input" name="Z_regTel"></div></td>
+							</tr>
+							<tr class="Z_invoice_item">
+								<td><span class="must-tip">*</span>开户银行：</td>
+								<td><div class="input-exclusive"><input type="text" class="text-input" name="Z_openBank"></div></td>
+							</tr>
+							<tr class="Z_invoice_item">
+								<td><span class="must-tip">*</span>银行账户：</td>
+								<td><div class="input-exclusive"><input type="text" class="text-input" name="Z_bankAccount"></div></td>
+							</tr>
+							<tr class="Z_invoice_item Z_invoice_item_bot">
+								<td></td>
+								<td><label><input type="checkbox" checked="checked">我已阅读并同意<a href="javascript:void(0)" style="color:#0041ed;">《增票资质确认书》</a></label></td>
+							</tr>
+						</table>
+					</form>
 				</td>
 			</tr>
 			<tr>

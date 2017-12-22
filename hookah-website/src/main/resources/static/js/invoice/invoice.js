@@ -151,6 +151,23 @@ function getExpert(){
 		success:function(data){
 			if(data.code==1){
 				isLoadZ = true;
+				var invoiceStatus = '';
+				switch(data.data.invoiceStatus)
+				{
+					case 0:
+						invoiceStatus = '未添加';
+						break;
+					case 1:
+						invoiceStatus = '审核中';
+						break;
+					case 2:
+						invoiceStatus = '已添加';
+						break;
+					case 3:
+						invoiceStatus = '未通过';
+						break;
+				}
+				$('.Z_ssac .invoiceStatus').html(invoiceStatus)
 			}else{
 				$.alert(data.message)
 				isLoadZ = false;
