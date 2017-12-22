@@ -55,7 +55,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
     TransactionAnalysisService transactionAnalysisService;
 
     // 每隔凌晨执行一次
-    @Scheduled(cron="0 59 23 * * ?")
+    @Scheduled(cron="0 50 23 * * ?")
     public void saveTongJiInfoService(){
         logger.info("------------------开始统计当天访问次数----------------------");
         Date addTime = new Date();
@@ -150,67 +150,63 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
         for (String key : regMap.keySet()){
             flowUserVo.setDataSource(key);
             flowUserVo.setNewUserNum(regMap.get(key));
-            if (personMap != null && personMap.get(key) != null){
-                Integer integer = personMap.get(key);
-                flowUserVo.setPersonUser(integer);
-            }
-            if (orgMap != null && orgMap.get(key) != null){
-                Integer integer = orgMap.get(key);
-                flowUserVo.setOrgUser(integer);
-            }
-            flowUserMapper.insert(flowUserVo);
+//            if (personMap != null && personMap.get(key) != null){
+//                Integer integer = personMap.get(key);
+//                flowUserVo.setPersonUser(integer);
+//            }
+//            if (orgMap != null && orgMap.get(key) != null){
+//                Integer integer = orgMap.get(key);
+//                flowUserVo.setOrgUser(integer);
+//            }
+            flowUserService.insert(flowUserVo);
         }
-//        //获取个人认证信息并存库
-//        FlowUserVo flowUserVoByPerson = new FlowUserVo();
-//        for (String personKey : personMap.keySet()) {
-//            // 查询当前来源数据库是否存在
-//            filter.clear();
-//            filter.add(Condition.eq("insertTime", sameDay));
-//            filter.add(Condition.eq("dataSource", personKey));
-//            FlowUser flowUser = flowUserService.selectOne(filter);
-//            if(flowUser != null){
-//                // 如果当天来源存在，进行更新操作
-//                if(personKey.equals(flowUser.getDataSource())){
-//                    filter.clear();
-//                    filter.add(Condition.eq("id", flowUser.getId()));
-////                    filter.add(Condition.eq("dataSource", flowUser.getDataSource()));
-//                    flowUserVoByPerson.setPersonUser(personMap.get(personKey));
-//                    flowUserService.updateByConditionSelective(flowUserVoByPerson,filter);
-//                }
-//            }else {// 如果当天来源不存在，进行添加操作
-//                flowUserVoByPerson.setDataSource(personKey);
-//                flowUserVoByPerson.setPersonUser(personMap.get(personKey));
-//                flowUserVoByPerson.setAddTime(addTime);
-//                flowUserVoByPerson.setInsertTime(sameDay);
-//                flowUserService.insert(flowUserVoByPerson);
-//            }
-//        }
-//
-//        //获取企业认证信息并存库
-//        FlowUserVo flowUserVoByOrg = new FlowUserVo();
-//        for (String orgKey : orgMap.keySet()) {
-//            // 查询当前来源数据库是否存在
-//            filter.clear();
-//            filter.add(Condition.eq("insertTime", sameDay));
-//            filter.add(Condition.eq("dataSource", orgKey));
-//            FlowUser flowUser = flowUserService.selectOne(filter);
-//            if(flowUser != null){
-//                // 如果当天来源存在，进行更新操作
-//                if(orgKey.equals(flowUser.getDataSource())){
-//                    filter.clear();
-//                    filter.add(Condition.eq("id", flowUser.getId()));
-////                    filter.add(Condition.eq("dataSource", flowUser.getDataSource()));
-//                    flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
-//                    flowUserService.updateByConditionSelective(flowUserVoByOrg,filter);
-//                }
-//            }else {  // 如果当天来源不存在，进行添加操作
-//                flowUserVoByOrg.setDataSource(orgKey);
-//                flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
-//                flowUserVoByOrg.setAddTime(addTime);
-//                flowUserVoByOrg.setInsertTime(sameDay);
-//                flowUserService.insert(flowUserVoByOrg);
-//            }
-//        }
+        //获取个人认证信息并存库
+        for (String personKey : personMap.keySet()) {
+            FlowUserVo flowUserVoByPerson = new FlowUserVo();
+            // 查询当前来源数据库是否存在
+            filter.clear();
+            filter.add(Condition.eq("insertTime", sameDay));
+            filter.add(Condition.eq("dataSource", personKey));
+            FlowUser flowUser = flowUserService.selectOne(filter);
+            if(flowUser != null && personKey.equals(flowUser.getDataSource())){
+                // 如果当天来源存在，进行更新操作
+                    filter.clear();
+                    filter.add(Condition.eq("id", flowUser.getId()));
+//                    filter.add(Condition.eq("dataSource", flowUser.getDataSource()));
+                    flowUserVoByPerson.setPersonUser(personMap.get(personKey));
+                    flowUserService.updateByConditionSelective(flowUserVoByPerson,filter);
+            }else {// 如果当天来源不存在，进行添加操作
+                flowUserVoByPerson.setDataSource(personKey);
+                flowUserVoByPerson.setPersonUser(personMap.get(personKey));
+                flowUserVoByPerson.setAddTime(addTime);
+                flowUserVoByPerson.setInsertTime(sameDay);
+                flowUserService.insert(flowUserVoByPerson);
+            }
+        }
+
+        //获取企业认证信息并存库
+        for (String orgKey : orgMap.keySet()) {
+            FlowUserVo flowUserVoByOrg = new FlowUserVo();
+            // 查询当前来源数据库是否存在
+            filter.clear();
+            filter.add(Condition.eq("insertTime", sameDay));
+            filter.add(Condition.eq("dataSource", orgKey));
+            FlowUser flowUser = flowUserService.selectOne(filter);
+            if(flowUser != null && orgKey.equals(flowUser.getDataSource())){
+                // 如果当天来源存在，进行更新操作
+                    filter.clear();
+                    filter.add(Condition.eq("id", flowUser.getId()));
+//                    filter.add(Condition.eq("dataSource", flowUser.getDataSource()));
+                    flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
+                    flowUserService.updateByConditionSelective(flowUserVoByOrg,filter);
+            }else {  // 如果当天来源不存在，进行添加操作
+                flowUserVoByOrg.setDataSource(orgKey);
+                flowUserVoByOrg.setOrgUser(orgMap.get(orgKey));
+                flowUserVoByOrg.setAddTime(addTime);
+                flowUserVoByOrg.setInsertTime(sameDay);
+                flowUserService.insert(flowUserVoByOrg);
+            }
+        }
         logger.info("------------------结束统计当天访问次数----------------------");
 //        return ReturnData.success("统计完成");
     }
