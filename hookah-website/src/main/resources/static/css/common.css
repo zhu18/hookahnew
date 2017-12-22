@@ -628,5 +628,7 @@ ul li {
     height: 300px !important;
     padding-top: 90px;
 }
-
+.must-tip{
+    color:#ff0000;
+}
 
