@@ -56,8 +56,11 @@ public class UserInvoiceTitleController extends BaseController {
                 filter.add(Condition.eq("addUser", userId));
                 filter.add(Condition.eq("invoiceType", userInvoiceType));
                 Invoice invoice = invoiceService.selectOne(filter);
-                if (Objects.nonNull(invoice))
-                userInvoiceTitleVo.setInvoiceStatus(invoice.getInvoiceStatus());
+                if (Objects.nonNull(invoice)){
+
+                    userInvoiceTitleVo.setInvoiceStatus(invoice.getInvoiceStatus());
+                    userInvoiceTitleVo.setAuditOpinion(invoice.getAuditOpinion());
+                }
                 returnData.setData(userInvoiceTitleVo);
             }else{
 
