@@ -40,6 +40,12 @@ class facilitatorController {
         };
 
         $scope.search();
+        $scope.refresh = function () {
+            $scope.search();
+        };
+        $scope.pageChanged = function () {
+            $scope.search();
+        };
         $scope.getDetails=function (id) {
             $state.go('facilitator.details', {id: id});
 
