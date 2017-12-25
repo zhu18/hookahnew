@@ -5,6 +5,9 @@ supplier();
 
 $('#verifyBtn').click(function () {
     if ($("#companyForm").valid()) {
+        $('#verifyBtn').attr("disabled",true);
+        $('#verifyBtn').addClass("disabled-gray");
+
         companyAuth();
     }
 });
@@ -20,9 +23,14 @@ function companyAuth() {
    type:"post",
    success : function(data) {
        if (data.code == 1) {
-          window.location.href = './company_auth_init_step4.html';
+           $('#verifyBtn').attr("disabled",false);
+           $('#verifyBtn').removeClass("disabled-gray");
+           window.location.href = './company_auth_init_step4.html';
        } else {
           alert(data.message);
+           $('#verifyBtn').attr("disabled",false);
+           $('#verifyBtn').removeClass("disabled-gray");
+
        }
    }
    });

@@ -49,6 +49,8 @@ function userAuth(){
 		// $('.f_error_tip').html("请上传身份证正背面照片或扫描件").show();
 		// return;
     // }
+    $('#verifyBtn').attr("disabled",true);
+    $('#verifyBtn').addClass("disabled-gray");
     $.ajax({
             url : "/auth/personAuth",
             data : {
@@ -60,9 +62,13 @@ function userAuth(){
             type:"post",
             success : function(data) {
                 if (data.code == 1) {
+                    $('#verifyBtn').attr("disabled",false);
+                    $('#verifyBtn').removeClass("disabled-gray");
                     window.location.href = './user_auth_init_step4.html';
                 } else {
                     alert(data.message);
+                    $('#verifyBtn').attr("disabled",false);
+                    $('#verifyBtn').removeClass("disabled-gray");
                 }
             }
         });
