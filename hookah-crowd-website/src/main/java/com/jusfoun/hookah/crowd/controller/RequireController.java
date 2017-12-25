@@ -123,8 +123,19 @@ public class RequireController extends BaseController {
         try {
             if (helper.getPageNumber() == null) helper.setPageNumber(Integer.parseInt(PAGE_NUM));
             if (helper.getPageSize() == null) helper.setPageSize(Integer.parseInt(PAGE_SIZE));
-            if (!StringUtils.isNotBlank(helper.getOrder())) helper.setOrder("apply_deadline");
-            if (StringUtils.isNotBlank(helper.getSort())) helper.setSort("asc");
+            String order = helper.getOrder();
+            //防止SQL注入
+            if(!("add_time".equalsIgnoreCase(order) || "update_time".equalsIgnoreCase(order)
+                    || "press_time".equalsIgnoreCase(order) || "apply_deadline".equalsIgnoreCase(order)
+                    || "delivery_deadline".equalsIgnoreCase(order))){
+                order=null;
+            }
+            String sort = helper.getSort();
+            if(!(("desc".equalsIgnoreCase(sort)) || ("asc".equalsIgnoreCase(sort)))){
+                sort=null;
+            }
+            if (!StringUtils.isNotBlank(order)) helper.setOrder("apply_deadline");
+            if (!StringUtils.isNotBlank(sort)) helper.setSort("asc");
             String timeType = helper.getTimeType();
             if (StringUtils.isNotBlank(timeType)) {
                 String pressTime = "";
