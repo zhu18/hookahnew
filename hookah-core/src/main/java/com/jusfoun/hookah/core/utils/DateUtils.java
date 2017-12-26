@@ -108,6 +108,17 @@ public abstract class DateUtils {
         return new SimpleDateFormat("yyyyMMddHHmmss").format(date).toString();
     }
 
+    /**
+     * 返回传入时间的前一天
+     * @return
+     */
+    public static String getYesterday(Date date, String pattern ) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -1);
+        return new SimpleDateFormat(pattern).format(cal.getTime()).toString();
+    }
+
     public static String transferDate(String fromDate){
         String toDate = null;
         if(com.jusfoun.hookah.core.utils.StringUtils.isNotBlank(fromDate)){

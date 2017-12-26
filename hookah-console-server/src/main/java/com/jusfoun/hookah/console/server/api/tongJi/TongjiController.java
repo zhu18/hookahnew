@@ -62,7 +62,7 @@ public class TongjiController extends BaseController {
 
     @RequestMapping(value = "/countOrderRightNow")
     public ReturnData tongJiOrder() {
-       tongJiInfoService.countOrderData();
+//       tongJiInfoService.countOrderData();
         return ReturnData.success();
     }
 

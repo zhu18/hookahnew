@@ -232,6 +232,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             return;
         }
 
+        //今日下单订单统计列表
         List<OrderInfoTongJi> OrderInfoTongJi = new ArrayList<>();
         for (OrderInfo orderInfo : orderInfos){
             MgTongJi mgTongJi = getMgTongJiInfo(orderInfo.getOrderSn(),TongJiEnum.ORDER_CREATE_URL);
@@ -243,7 +244,10 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             }
         }
 
+        //今日支付的订单统计列表
         List<OrderInfoTongJi> payedOrderTongJi = new ArrayList<>();
+        //昨日未支付 今日支付的订单统计列表 用于更新昨日的统计信息
+        List<OrderInfoTongJi> yesterdayUnPayedOrder = new ArrayList<>();
         for (OrderInfo orderInfo : payedOrders){
             MgTongJi mgTongJi = getMgTongJiInfo(orderInfo.getOrderSn(),TongJiEnum.ORDER_PAY_URL);
             if (mgTongJi != null){
@@ -251,6 +255,9 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 orderInfoTongJi.setMgTongJi(mgTongJi);
                 orderInfoTongJi.setOrderInfo(orderInfo);
                 payedOrderTongJi.add(orderInfoTongJi);
+                if (!orderInfo.getAddTime().toString().contains(date)) {
+                    yesterdayUnPayedOrder.add(orderInfoTongJi);
+                }
             }
         }
 
@@ -296,7 +303,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 payedOrderMoneyMap.put(mgTongJi.getSource(), orderInfo.getOrderAmount());
             }
         }
-        //当重复执行同天时间的统计数据时， 删除之前的统计数据
+        //当重复执行同天时间的统计数据时， 删除之前的统计数据  并更新前一天未支付数据
         filter.clear();
         filter.add(Condition.eq("insertTime", date));
         transactionAnalysisService.deleteByCondtion(filter);
@@ -332,6 +339,27 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 transactionAnalysis.setAddOperator("SYSTEM");
                 transactionAnalysisService.insert(transactionAnalysis);
             }
+        }
+        //更新昨日统计信息
+        Map<String,Integer> yesterdayOrderNumMap = new HashMap<String,Integer>();
+        for (OrderInfoTongJi orderInfoTongJi : yesterdayUnPayedOrder) {
+            MgTongJi mgTongJi = orderInfoTongJi.getMgTongJi();
+            if (yesterdayOrderNumMap.containsKey(mgTongJi.getSource())) {
+                Integer Num = yesterdayOrderNumMap.get(mgTongJi.getSource());
+                yesterdayOrderNumMap.put(mgTongJi.getSource(), Num++);
+            } else {
+                yesterdayOrderNumMap.put(mgTongJi.getSource(), 1);
+            }
+        }
+        for (String dataSource : yesterdayOrderNumMap.keySet()) {
+            String yesterday = DateUtils.getYesterday(now, DateUtils.DATE_FORMAT);
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("insertTime", yesterday));
+            filters.add(Condition.eq("dataSource", dataSource));
+            TransactionAnalysis transactionAnalysis = transactionAnalysisService.selectOne(filters);
+            transactionAnalysis.setPayingOrderNum(transactionAnalysis.getPayingOrderNum() - yesterdayOrderNumMap.get(dataSource));
+            transactionAnalysis.setUpdateTime(now);
+            transactionAnalysisService.updateByIdSelective(transactionAnalysis);
         }
         logger.info("------------------当天订单数据统计结束----------------------");
     }
