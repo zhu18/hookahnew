@@ -63,8 +63,11 @@ public class TongjiController extends BaseController {
     }
 
     @RequestMapping(value = "/countOrderRightNow")
-    public ReturnData tongJiOrder(@RequestParam(value = "key") String date) {
-        Date now = DateUtils.getDate(date, DateUtils.DEFAULT_DATE_TIME_FORMAT);
+    public ReturnData tongJiOrder(String date) {
+        Date now = new Date();
+        if (date!=null){
+            now = DateUtils.getDate(date, DateUtils.DEFAULT_DATE_TIME_FORMAT);
+        }
        tongJiInfoService.countOrderData(now);
         return ReturnData.success();
     }
