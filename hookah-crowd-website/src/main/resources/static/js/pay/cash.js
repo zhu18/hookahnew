@@ -45,7 +45,7 @@ $('.saved-card-list>.row-container').click(function () {
 getPayPwdStatus();
 function getPayPwdStatus() {
     $.ajax({
-        url: host.website + '/usercenter/payPassSta',
+        url: host.crowd + '/api/zbPay/payPassSta',
         type: 'get',
         success: function (data) {
             if (data.code == 1) {
