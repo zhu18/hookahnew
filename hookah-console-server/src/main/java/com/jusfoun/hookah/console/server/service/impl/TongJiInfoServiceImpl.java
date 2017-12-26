@@ -62,8 +62,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
         String sameDay= DateUtils.toDateText(addTime);
         //获取当天的新注册用户数
         List<Condition> filters = new ArrayList<>();
-        String date = DateUtils.toDateText(new Date());
-        filters.add(Condition.like("addTime", date));
+        filters.add(Condition.like("addTime", sameDay));
         List<User> users = userService.selectList(filters);
         List<MgTongJi> regList = new ArrayList();
         for (User user : users){
@@ -87,7 +86,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天个人认证数
         List<Condition> personFilters = new ArrayList<>();
-        personFilters.add(Condition.like("addTime", date));
+        personFilters.add(Condition.like("addTime", sameDay));
         List<UserDetail> personUsers = userDetailService.selectList(personFilters);
         List<MgTongJi> personList = new ArrayList<MgTongJi>();
         for(UserDetail person : personUsers){
@@ -110,7 +109,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天当天企业认证数
         List<Condition> orgFilters = new ArrayList<>();
-        orgFilters.add(Condition.like("addTime", date));
+        orgFilters.add(Condition.like("addTime", sameDay));
         List<Organization> orgUsers = organizationService.selectList(orgFilters);
         List<MgTongJi> orgList = new ArrayList<MgTongJi>();
         for(Organization org : orgUsers){
