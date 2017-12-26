@@ -2,10 +2,10 @@
 var head = {
 %>
 <meta property="og:type" content="product" />
-<meta property="og:url" content="商品的URL地址" />
-<meta property="og:title" content="商品的显示名称标题" />
-<meta property="og:description" content="商品的文字描述" />
-<meta property="og:image" content="商品的缩略显示图" />
+<meta property="og:url" content="" />
+<meta property="og:title" content="" />
+<meta property="og:description" content="" />
+<meta property="og:image" content="" />
 <link rel="stylesheet" href="/static/css/index/index.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <link rel="stylesheet" href="/static/css/exchange/style.css">
@@ -749,10 +749,12 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 		shareDesc = $('#J_goodsBrief').text(),
 		shareLink = location.href.split('#')[0];
 	    respSample = '${goodsDetails.apiInfo.respSample}';
-	$("meta[property='og:url']").attr('content',shareLink);
-	$("meta[property='og:title']").attr('content',shareTitle);
-	$("meta[property='og:description']").attr('content',shareDesc);
-	$("meta[property='og:image']").attr('content',shareImg);
+	$(document).ready(function(){
+        $("meta[property='og:url']").attr('content',shareLink);
+        $("meta[property='og:title']").attr('content',shareTitle);
+        $("meta[property='og:description']").attr('content',shareDesc);
+        $("meta[property='og:image']").attr('content',shareImg);
+	})
 	$(function () {
 		var qrcode = new QRCode(document.getElementById("qrcodeBNA"), {
 			width: 100,
