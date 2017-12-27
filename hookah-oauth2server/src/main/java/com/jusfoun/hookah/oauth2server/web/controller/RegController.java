@@ -14,10 +14,7 @@ import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
-import com.jusfoun.hookah.rpc.api.MqSenderService;
-import com.jusfoun.hookah.rpc.api.PayAccountService;
-import com.jusfoun.hookah.rpc.api.UserService;
-import com.jusfoun.hookah.rpc.api.WXUserRecommendService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -66,6 +63,9 @@ public class RegController {
 
     @Resource
     MqSenderService mqSenderService;
+
+    @Resource
+    JfRecordService jfRecordService;
 
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     public String reg(Model model) {
@@ -193,11 +193,8 @@ public class RegController {
         //完成注册 发消息到MQ送优惠券
         mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_REG_COUPON,regUser.getUserId());
 
-//        // TODO …… 新注册用户赠送积分
-//        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(user.getUserId(), 1));
-//
-//        // TODO …… 邀请者送积分
-//        mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSG, new JfBo(recommendUserId, 1));
+        // TODO …… 赠送积分
+        jfRecordService.registerHandle(user.getUserId(), recommendUserId);
 
         //TODO...登录日志
         logger.info("用户[" + user.getUserName() + "]注册成功(这里可以进行一些注册通过后的一些系统参数初始化操作)");

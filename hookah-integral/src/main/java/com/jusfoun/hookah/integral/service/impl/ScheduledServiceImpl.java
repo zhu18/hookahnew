@@ -117,29 +117,4 @@ public class ScheduledServiceImpl {
         }
     }
 
-    public static void main(String[] args) {
-//        System.out.println(LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM")));
-//        System.out.println(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM")));
-//        System.out.println(LocalDate.now().plusYears(5).format(DateTimeFormatter.ofPattern("yyyyMM")));
-
-//        LocalDate date1 = LocalDate.now();
-//        System.out.println("Today : " + date1);
-//        LocalDate date2 = LocalDate.parse("2012-12-27");
-//
-//        Period p = Period.between(date2, LocalDate.);
-//
-//        System.out.printf("年龄 : %d 年 %d 月 %d 日", p.getYears(), p.getMonths(), p.getDays());
-
-//        Period.between(date2, LocalDate.now())
-
-
-//        LocalDate today = LocalDate.now();
-//        System.out.println("Today : " + today);
-//        LocalDate birthDate = LocalDate.of(1993, Month.OCTOBER, 19);
-//        System.out.println("BirthDate : " + birthDate);
-//        Period p = Period.between(birthDate, today);
-//        System.out.printf("年龄 : %d 年 %d 月 %d 日", p.getYears(), p.getMonths(), p.getDays());
-    }
-
-
 }

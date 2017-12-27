@@ -307,5 +307,13 @@ public class TestController extends BaseController {
         return "jf";
     }
 
+    @RequestMapping("/msg12")
+    public String Test12(String u1, String u2) {
+
+        jfRecordService.registerHandle(u1, u2);
+
+        return "jf";
+    }
+
 
 }
