@@ -147,17 +147,17 @@ public class TimerTask {
     /**
      * 交易运营统计
      */
-    @Scheduled(cron="30 59 23 * * ?")
-    public void countOrderData(){
-        try {
-            Date date = new Date();
-            tongJiInfoService.countOrderData(date);
-        } catch (Exception e) {
-            logger.error("交易运营统计失败："+e.getMessage());
-        }
-    }
+//    @Scheduled(cron="30 59 23 * * ?")
+//    public void countOrderData(){
+//        try {
+//            Date date = new Date();
+//            tongJiInfoService.countOrderData(date);
+//        } catch (Exception e) {
+//            logger.error("交易运营统计失败："+e.getMessage());
+//        }
+//    }
 
-    @Scheduled(cron="0 15 11 * * ?")
+    @Scheduled(cron="0 59 23 * * ?")
     public void saveTongJiInfoService(){
         try {
             Date date = new Date();
