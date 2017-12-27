@@ -67,6 +67,7 @@ public class JfRuleController extends BaseController{
      * @param upperLimitTime
      * @param lowerLimitScore
      * @param lowerLimitTime
+     * @param note
      * @return
      */
     @RequestMapping("/api/jr/update")

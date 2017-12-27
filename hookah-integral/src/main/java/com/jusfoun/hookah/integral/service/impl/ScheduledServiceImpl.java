@@ -71,13 +71,13 @@ public class ScheduledServiceImpl {
 
                 // todo …… 获取当月获得总量
                 Integer thisMonthGetTotal = listForUserId.stream()
-                        .filter(jfRecord -> (jfRecord.getAction().equals(JfContants.get) || jfRecord.getSourceId().equals(JfContants.JF_11)))
+                        .filter(jfRecord -> (jfRecord.getAction().equals(JfContants.GET) || jfRecord.getSourceId().equals(JfContants.JF_11)))
                         .mapToInt(JfRecord::getScore).sum();
                 jfOverdueDetails.setThisMonthGetTotal(thisMonthGetTotal);
 
                 // todo …… 获取当月兑换总量
                 Integer thisMonthExchangeTotal = listForUserId.stream()
-                        .filter(jfRecord -> (jfRecord.getAction().equals(JfContants.take) || jfRecord.getSourceId().equals(JfContants.JF_12)))
+                        .filter(jfRecord -> (jfRecord.getAction().equals(JfContants.TAKE) || jfRecord.getSourceId().equals(JfContants.JF_12)))
                         .mapToInt(JfRecord::getScore).sum();
 
                 // todo …… 获取当月兑换总量
@@ -105,11 +105,11 @@ public class ScheduledServiceImpl {
 
                 // todo …… 入库
                 jfOverdueDetailsService.insert(jfOverdueDetails);
-                if(jfOverdueDetails.getId() != null){
-                    logger.info(beforeMonthDate + ">>积分结算完成，操作时间>>" + DateUtils.toDefaultNowTime());
-                } else {
-                    logger.error(beforeMonthDate + ">>积分结算失败，操作时间>>" + DateUtils.toDefaultNowTime());
-                }
+//                if(jfOverdueDetails.getId() != null){
+//                    logger.info(beforeMonthDate + ">>积分结算完成，操作时间>>" + DateUtils.toDefaultNowTime());
+//                } else {
+//                    logger.error(beforeMonthDate + ">>积分结算失败，操作时间>>" + DateUtils.toDefaultNowTime());
+//                }
             }
         } catch (Exception e) {
             logger.error("积分结算异常>>>{}", e);
