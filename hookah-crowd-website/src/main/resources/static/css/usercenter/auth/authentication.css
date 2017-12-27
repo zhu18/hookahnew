@@ -137,13 +137,13 @@
 }
 .from td input{
     height: 25px;
-    width: 160px;
+    width: 135px;
     border: 1px solid #e5e5e5;
     padding-left: 5px;
 }
 .from td textarea{
     border: 1px solid #e0e0e0;
-    width: 790px;
+    width: 780px;
     padding: 4px;
 }
 .from td input[type="checkbox"]{
