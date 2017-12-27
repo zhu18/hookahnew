@@ -21,7 +21,7 @@ import java.util.Date;
  * Created by crs on 2017/12/1.
  */
 @RestController
-@RequestMapping(value = "/tongji")
+@RequestMapping(value = "/api/tongji")
 public class TongjiController extends BaseController {
     @Resource
     private FlowUserService flowUserService;
