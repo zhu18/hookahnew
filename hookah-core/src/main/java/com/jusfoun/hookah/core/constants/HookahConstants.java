@@ -26,6 +26,7 @@ public class HookahConstants {
     /** 第几页 */
     public static final int PAGE_NUM = 1;
     /** 每页记录数 */
+    public static final int PAGE_SIZE_5 = 3;
     public static final int PAGE_SIZE = 10;
     public static final int PAGE_SIZE_20 = 20;
 

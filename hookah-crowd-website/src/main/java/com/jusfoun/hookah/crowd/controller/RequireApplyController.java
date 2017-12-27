@@ -27,9 +27,9 @@ public class RequireApplyController extends BaseController{
      */
     @RequestMapping(value = "/requireApply/viewApply",method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData viewApplyByRequire(Long id){
+    public ReturnData viewApplyByRequire(String currentPage, String pageSize, Long id){
         try {
-            return zbRequireApplyService.viewApplyByRequire(id);
+            return zbRequireApplyService.viewApplyByRequire(currentPage,pageSize,id);
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnData.error("");

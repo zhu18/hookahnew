@@ -1,5 +1,7 @@
 package com.jusfoun.hookah.crowd.service.impl;
 
+import com.jusfoun.hookah.core.common.Pagination;
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.zb.ZbCommentMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbProgramMapper;
 import com.jusfoun.hookah.core.dao.zb.ZbRequirementApplyMapper;
@@ -10,7 +12,9 @@ import com.jusfoun.hookah.core.domain.zb.mongo.MgZbProvider;
 import com.jusfoun.hookah.core.domain.zb.mongo.MgZbRequireStatus;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.crowd.constants.ZbContants;
 import com.jusfoun.hookah.crowd.service.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -63,7 +67,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
     }
 
     @Override
-    public ReturnData viewApplyByRequire(Long requirementId) throws Exception {
+    public ReturnData viewApplyByRequire(String currentPage, String pageSize, Long requirementId ) throws Exception {
         if (requirementId == null) {
             return ReturnData.error();
         }
@@ -78,12 +82,33 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
         }
 
         MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn()) == null ? new MgZbRequireStatus() : mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
-        List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
+
+
+
+
+            List<Condition> filter1 = new ArrayList();
+            List<OrderBy> orderBys = new ArrayList();
+            orderBys.add(OrderBy.desc("addTime"));
+
+            int pageNumberNew = HookahConstants.PAGE_NUM;
+            if (StringUtils.isNotBlank(currentPage)) {
+                pageNumberNew = Integer.parseInt(currentPage);
+            }
+
+            int pageSizeNew = HookahConstants.PAGE_SIZE_5;
+            if (StringUtils.isNotBlank(pageSize)) {
+                pageSizeNew = Integer.parseInt(pageSize);
+            }
+        Pagination<ZbRequirementApply> zbRequirementApplie = zbRequireApplyService.getListInPage(pageNumberNew, pageSizeNew, filter1, orderBys);
+        List<ZbRequirementApply> zbRequirementApplies = zbRequirementApplie.getList();
+
+
+//        List<ZbRequirementApply> zbRequirementApplies = zbRequireApplyService.selectList(filters);
         ZbProgram zbProgram = null;
         List<ZbAnnex> reqProgram = new ArrayList<>();
         List<ZbComment> zbComments = zbCommentService.selectList(filters);
         List<Condition> filter = new ArrayList<>();
-        for (ZbRequirementApply zbRequirementApply : zbRequirementApplies) {
+        for (ZbRequirementApply zbRequirementApply :zbRequirementApplies) {
             User user = userService.selectById(zbRequirementApply.getUserId());
 
             MgZbProvider mgZbProvider = mongoTemplate.findById(zbRequirementApply.getUserId(), MgZbProvider.class);
