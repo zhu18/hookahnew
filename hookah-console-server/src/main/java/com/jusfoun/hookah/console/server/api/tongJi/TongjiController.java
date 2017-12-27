@@ -21,7 +21,7 @@ import java.util.Date;
  * Created by crs on 2017/12/1.
  */
 @RestController
-@RequestMapping(value = "/api/tongji")
+@RequestMapping(value = "/tongji")
 public class TongjiController extends BaseController {
     @Resource
     private FlowUserService flowUserService;
@@ -57,9 +57,13 @@ public class TongjiController extends BaseController {
     }
 
     @RequestMapping(value = "/tongJiiii")
-    public void tongJi() {
-       tongJiInfoService.saveTongJiInfoService();
-//        return returnData;
+    public ReturnData tongJi(String date) {
+        Date now = new Date();
+        if (date!=null){
+            now = DateUtils.getDate(date, DateUtils.DEFAULT_DATE_TIME_FORMAT);
+        }
+       tongJiInfoService.saveTongJiInfoService(now);
+        return ReturnData.success();
     }
 
     @RequestMapping(value = "/countOrderRightNow")

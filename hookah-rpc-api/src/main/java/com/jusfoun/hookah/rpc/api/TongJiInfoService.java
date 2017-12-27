@@ -6,7 +6,7 @@ import java.util.Date;
 
 public interface TongJiInfoService {
 
-    void saveTongJiInfoService();
+    void saveTongJiInfoService(Date date);
 
     void countOrderData(Date date);
 }
