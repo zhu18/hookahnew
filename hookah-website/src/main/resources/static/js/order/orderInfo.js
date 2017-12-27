@@ -46,7 +46,8 @@ $(function () {
         $('.tab-box table').eq(index).addClass('hover').siblings().removeClass('hover');
 	})
     $('#J-editTranslate').click(function(){//点击修改发票按钮
-        $('.translate-bg').show()
+        $('.translate-bg').show();
+        $('.invoiceInfo').show();
 		getInvoiceInfo()
     });
 
