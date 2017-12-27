@@ -46,8 +46,8 @@ public class UserInvoiceTitleController extends BaseController {
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("userInvoiceType", userInvoiceType));
-           /* if(HookahConstants.INVOICE_TYPE_1 == userInvoiceType){
-                UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectOne(filters);
+            if(HookahConstants.INVOICE_TYPE_1 == userInvoiceType){
+               /* UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectOne(filters);
                 UserInvoiceTitleVo userInvoiceTitleVo = new UserInvoiceTitleVo();
 
                 if(Objects.nonNull(userInvoiceTitle))
@@ -60,13 +60,12 @@ public class UserInvoiceTitleController extends BaseController {
 
                     userInvoiceTitleVo.setInvoiceStatus(invoice.getInvoiceStatus());
                     userInvoiceTitleVo.setAuditOpinion(invoice.getAuditOpinion());
-                }
-                returnData.setData(userInvoiceTitleVo);
+                }*/
+                returnData.setData(userInvoiceTitleService.selectOne(filters));
             }else{
 
                 returnData.setData(userInvoiceTitleService.selectList(filters));
-            }*/
-            returnData.setData(userInvoiceTitleService.selectList(filters));
+            }
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.getMessage());
