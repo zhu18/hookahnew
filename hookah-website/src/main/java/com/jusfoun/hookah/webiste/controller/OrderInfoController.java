@@ -539,7 +539,7 @@ public class OrderInfoController extends BaseController {
                         tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), orderSn);
             }
         } catch (Exception e) {
-            logger.error("插入订单统计信息失败：{}", e);
+            logger.error("插入订单统计信息失败{}", e);
         }
     }
 

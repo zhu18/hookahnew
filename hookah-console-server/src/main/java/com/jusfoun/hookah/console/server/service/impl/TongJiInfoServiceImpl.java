@@ -55,15 +55,12 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
     TransactionAnalysisService transactionAnalysisService;
 
     // 每隔凌晨执行一次
-    @Scheduled(cron="0 50 23 * * ?")
-    public void saveTongJiInfoService(){
+    public void saveTongJiInfoService(Date addTime){
         logger.info("------------------开始统计当天访问次数----------------------");
-        Date addTime = new Date();
         String sameDay= DateUtils.toDateText(addTime);
         //获取当天的新注册用户数
         List<Condition> filters = new ArrayList<>();
-        String date = DateUtils.toDateText(new Date());
-        filters.add(Condition.like("addTime", date));
+        filters.add(Condition.like("addTime", sameDay));
         List<User> users = userService.selectList(filters);
         List<MgTongJi> regList = new ArrayList();
         for (User user : users){
@@ -87,7 +84,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天个人认证数
         List<Condition> personFilters = new ArrayList<>();
-        personFilters.add(Condition.like("addTime", date));
+        personFilters.add(Condition.like("addTime", sameDay));
         List<UserDetail> personUsers = userDetailService.selectList(personFilters);
         List<MgTongJi> personList = new ArrayList<MgTongJi>();
         for(UserDetail person : personUsers){
@@ -110,7 +107,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
 
         //获取当天当天企业认证数
         List<Condition> orgFilters = new ArrayList<>();
-        orgFilters.add(Condition.like("addTime", date));
+        orgFilters.add(Condition.like("addTime", sameDay));
         List<Organization> orgUsers = organizationService.selectList(orgFilters);
         List<MgTongJi> orgList = new ArrayList<MgTongJi>();
         for(Organization org : orgUsers){
@@ -212,12 +209,11 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
     }
 
     @Override
-    public void countOrderData() {
+    public void countOrderData(Date now) {
         logger.info("------------------开始统计当天订单数据----------------------");
 
         //获取当天的所有新订单数据  包括所有的已付款，未付款，已取消，已删除的订单
         List<Condition> filter = new ArrayList<>();
-        Date now = new Date();
         String date = DateUtils.toDateText(now);
         filter.add(Condition.like("addTime", date));
         List<OrderInfo> orderInfos = orderInfoService.selectList(filter);
@@ -232,6 +228,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             return;
         }
 
+        //今日下单订单统计列表
         List<OrderInfoTongJi> OrderInfoTongJi = new ArrayList<>();
         for (OrderInfo orderInfo : orderInfos){
             MgTongJi mgTongJi = getMgTongJiInfo(orderInfo.getOrderSn(),TongJiEnum.ORDER_CREATE_URL);
@@ -243,7 +240,10 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
             }
         }
 
+        //今日支付的订单统计列表
         List<OrderInfoTongJi> payedOrderTongJi = new ArrayList<>();
+        //昨日未支付 今日支付的订单统计列表 用于更新昨日的统计信息
+//        List<OrderInfoTongJi> yesterdayUnPayedOrder = new ArrayList<>();
         for (OrderInfo orderInfo : payedOrders){
             MgTongJi mgTongJi = getMgTongJiInfo(orderInfo.getOrderSn(),TongJiEnum.ORDER_PAY_URL);
             if (mgTongJi != null){
@@ -251,6 +251,9 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 orderInfoTongJi.setMgTongJi(mgTongJi);
                 orderInfoTongJi.setOrderInfo(orderInfo);
                 payedOrderTongJi.add(orderInfoTongJi);
+//                if (!orderInfo.getAddTime().toString().contains(date)) {
+//                    yesterdayUnPayedOrder.add(orderInfoTongJi);
+//                }
             }
         }
 
@@ -333,6 +336,27 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
                 transactionAnalysisService.insert(transactionAnalysis);
             }
         }
+        //更新昨日统计信息
+//        Map<String,Integer> yesterdayOrderNumMap = new HashMap<String,Integer>();
+//        for (OrderInfoTongJi orderInfoTongJi : yesterdayUnPayedOrder) {
+//            MgTongJi mgTongJi = orderInfoTongJi.getMgTongJi();
+//            if (yesterdayOrderNumMap.containsKey(mgTongJi.getSource())) {
+//                Integer Num = yesterdayOrderNumMap.get(mgTongJi.getSource());
+//                yesterdayOrderNumMap.put(mgTongJi.getSource(), Num++);
+//            } else {
+//                yesterdayOrderNumMap.put(mgTongJi.getSource(), 1);
+//            }
+//        }
+//        for (String dataSource : yesterdayOrderNumMap.keySet()) {
+//            String yesterday = DateUtils.getYesterday(now, DateUtils.DATE_FORMAT);
+//            List<Condition> filters = new ArrayList<>();
+//            filters.add(Condition.eq("insertTime", yesterday));
+//            filters.add(Condition.eq("dataSource", dataSource));
+//            TransactionAnalysis transactionAnalysis = transactionAnalysisService.selectOne(filters);
+//            transactionAnalysis.setPayingOrderNum(transactionAnalysis.getPayingOrderNum() - yesterdayOrderNumMap.get(dataSource));
+//            transactionAnalysis.setUpdateTime(now);
+//            transactionAnalysisService.updateByIdSelective(transactionAnalysis);
+//        }
         logger.info("------------------当天订单数据统计结束----------------------");
     }
 

@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.console.server.api.tongJi;
 
 import com.jusfoun.hookah.console.server.controller.BaseController;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.FlowUserService;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Created by crs on 2017/12/1.
  */
 @RestController
-@RequestMapping(value = "/api/tongji")
+@RequestMapping(value = "/tongji")
 public class TongjiController extends BaseController {
     @Resource
     private FlowUserService flowUserService;
@@ -55,14 +57,22 @@ public class TongjiController extends BaseController {
     }
 
     @RequestMapping(value = "/tongJiiii")
-    public void tongJi() {
-       tongJiInfoService.saveTongJiInfoService();
-//        return returnData;
+    public ReturnData tongJi(String date) {
+        Date now = new Date();
+        if (date!=null){
+            now = DateUtils.getDate(date, DateUtils.DEFAULT_DATE_TIME_FORMAT);
+        }
+       tongJiInfoService.saveTongJiInfoService(now);
+        return ReturnData.success();
     }
 
     @RequestMapping(value = "/countOrderRightNow")
-    public ReturnData tongJiOrder() {
-       tongJiInfoService.countOrderData();
+    public ReturnData tongJiOrder(String date) {
+        Date now = new Date();
+        if (date!=null){
+            now = DateUtils.getDate(date, DateUtils.DEFAULT_DATE_TIME_FORMAT);
+        }
+       tongJiInfoService.countOrderData(now);
         return ReturnData.success();
     }
 
