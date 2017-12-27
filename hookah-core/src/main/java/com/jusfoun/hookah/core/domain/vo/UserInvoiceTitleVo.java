@@ -13,14 +13,6 @@ public class UserInvoiceTitleVo extends UserInvoiceTitle implements Serializable
 
     private String auditOpinion;
 
-    public byte getInvoiceStatus() {
-        return invoiceStatus;
-    }
-
-    public void setInvoiceStatus(byte invoiceStatus) {
-        this.invoiceStatus = invoiceStatus;
-    }
-
     public String getAuditOpinion() {
         return auditOpinion;
     }
