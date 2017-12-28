@@ -45,7 +45,7 @@ $('.saved-card-list>.row-container').click(function () {
 getPayPwdStatus();
 function getPayPwdStatus() {
     $.ajax({
-        url: host.crowd +'/api/zbPay/payPassSta',
+        url: host.crowd + '/api/zbPay/payPassSta',
         type: 'get',
         success: function (data) {
             if (data.code == 1) {
@@ -149,7 +149,7 @@ function check() {
 // 验证密码
 function testPayPassword(pwd){
     $.ajax({
-        url:host.website+'/usercenter/verifyPayPassword',
+        url:host.crowd + '/api/zbPay/verifyPayPassword',
         data:{
             passWord:$.md5(pwd)
         },
