@@ -21,6 +21,8 @@ public class TransactionAnalysisVo extends GenericModel{
 
     private Integer isDeletedOrderNum;
 
+    private Integer cancelOrderNum;
+
     public String getDataSource() {
         return dataSource;
     }
@@ -67,5 +69,13 @@ public class TransactionAnalysisVo extends GenericModel{
 
     public void setIsDeletedOrderNum(Integer isDeletedOrderNum) {
         this.isDeletedOrderNum = isDeletedOrderNum;
+    }
+
+    public Integer getCancelOrderNum() {
+        return cancelOrderNum;
+    }
+
+    public void setCancelOrderNum(Integer cancelOrderNum) {
+        this.cancelOrderNum = cancelOrderNum;
     }
 }

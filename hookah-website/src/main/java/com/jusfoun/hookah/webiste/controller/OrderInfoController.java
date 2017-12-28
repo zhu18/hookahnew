@@ -513,7 +513,7 @@ public class OrderInfoController extends BaseController {
             //logger.info("支付列表:{}", JsonUtils.toJson(paymentList));
             redisOperate.del("orderConfirm:"+perOrderInfoNum);
 
-            //订单创建成功  异步添加统计信息
+            //订单创建成功  异步添加统计信息  或者发送MQ消息处理
             countOrder(request, orderinfo.getOrderSn());
 
             return "redirect:/pay/cash";
@@ -529,6 +529,7 @@ public class OrderInfoController extends BaseController {
 
     @Async
     private void countOrder(HttpServletRequest request, String orderSn){
+        logger.info("--------------------插入订单统计信息--------------------");
         try {
             Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
             Cookie tongJi = cookieMap.get("TongJi");
@@ -756,14 +757,34 @@ public class OrderInfoController extends BaseController {
      */
     @RequestMapping(value = "/order/delete", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnData delete(@RequestParam String orderId){
+    public ReturnData delete(@RequestParam String orderId, HttpServletRequest request){
         try{
             logger.info("取消订单：{}", orderId);
             orderInfoService.deleteByLogic(orderId);
+            OrderInfo orderInfo = orderInfoService.selectById(orderId);
+            if (orderInfo.getIsDeleted()==1) {
+                countDeletedOrder(request, orderInfo.getOrderSn());
+            }
             return ReturnData.success();
         }catch(Exception e){
             logger.error("取消错误",e);
             return ReturnData.error("取消错误");
+        }
+    }
+
+    @Async
+    private void countDeletedOrder(HttpServletRequest request, String orderSn){
+        logger.info("--------------------插入订单删除统计信息--------------------");
+        try {
+            List<Condition> filter = new ArrayList<>();
+            filter.add(Condition.eq("userId", orderSn));
+            filter.add(Condition.eq("tongJiUrl",TongJiEnum.ORDER_CREATE_URL));
+            MgTongJi tongJiInfo = mgTongJiService.selectOne(filter);
+            //支付
+            mgTongJiService.setTongJiInfo(TongJiEnum.ORDER_CANCEL_URL, tongJiInfo.getTongJiId(),
+                    tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), orderSn);
+        } catch (Exception e) {
+            logger.error("插入订单删除统计信息失败{}", e);
         }
     }
 

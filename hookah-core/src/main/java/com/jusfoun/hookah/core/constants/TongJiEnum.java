@@ -33,5 +33,5 @@ public class TongJiEnum {
     /**
      * 统计取消订单情况地址
      */
-    public final static String  ORDER_CANCEL_URL = "www.bdgstore.cn/usercenter/buyer/orderStay";
+    public final static String  ORDER_CANCEL_URL = "www.bdgstore.cn/order/delete";
 }
