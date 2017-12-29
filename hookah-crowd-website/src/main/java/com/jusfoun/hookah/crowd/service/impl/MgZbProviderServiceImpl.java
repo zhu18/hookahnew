@@ -238,7 +238,6 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     mzp.setLawPersonName(organization.getLawPersonName());
                     mzp.setPhoneNum((organization.getOrgPhone() == null ||
                             organization.getOrgPhone().equals("")) ? user.getMobile() : organization.getOrgPhone());
-                    mzp.setRegisterTime(DateUtil.getSimpleDate(new Date()));
                     mzp.setRegisterAddr((organization.getRegion() == null || "".equals(organization.getRegion())) ? "" : DictionaryUtil.getRegionById(organization.getRegion()).getMergerName());
                     mzp.setCreditCode(organization.getCreditCode());
                     mzp.setScopeOfBuss(organization.getIndustry());
@@ -246,7 +245,6 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                 } else if (user.getUserType().equals(2)) {
                     UserDetail userDetail = userDetailService.selectById(user.getUserId());
                     mzp.setAuthType(ZbContants.ProviderAuthType.PERSON.code);
-                    mzp.setRegisterTime(DateUtil.getSimpleDate(new Date()));
                     mzp.setPhoneNum(user.getMobile());
                     mzp.setUpname((userDetail.getRealName() == null ||
                             userDetail.getRealName().equals("")) ? user.getUserName() : userDetail.getRealName());
@@ -255,6 +253,7 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                 } else {
                     return ReturnData.error("请先认证！");
                 }
+                mzp.setRegisterTime(DateUtil.getSimpleDate(user.getAddTime()));
                 mzp.setAddTime(new Date());
                 mzp.setUpdateTime(new Date());
                 mzp.setStatus(ZbContants.Provider_Auth_Status.AUTH_CHECKING.code);
