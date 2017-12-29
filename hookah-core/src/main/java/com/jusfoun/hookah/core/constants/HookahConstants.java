@@ -171,6 +171,7 @@ public class HookahConstants {
     public static final Byte GOODS_TYPE = 1;
 
     //发票状态 0：未开发票 1：已申请（待审核）2：待邮寄（审核通过） 3（未通过） 4 已开票
+    public static final Byte INVOICE_STATUS_0 = 0;
     public static final Byte INVOICE_STATUS_1 = 1;
     public static final Byte INVOICE_STATUS_2 = 2;
     public static final Byte INVOICE_STATUS_3 = 3;

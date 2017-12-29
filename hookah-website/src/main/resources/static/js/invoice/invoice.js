@@ -1,7 +1,9 @@
 var subType = null;//定义发票添加或修改类型
 var editTitleId = null;
-var isLoadZ = false;
+var isLoadZ = false; //
+var isLoadAddress = false;
 var invoiceStatus = ''; //专用发票状态
+var regionParam = 100000;
 $('.translate-close-btn').click(function(){ //关闭浮层
 	$('.translate-bg').hide();
 });
@@ -16,6 +18,12 @@ var regex = {
 	regTel:/[0-9]{1,15}/,    //发票--注册电话
 	openBank:/[\u4e00-\u9fa5]{1,50}/,    //开户银行
 	bankAccount:/[0-9]{1,50}/,    //银行账号
+	invoiceName:/[\u4e00-\u9fa5a-zA-Z]{1,15}/,    //收票姓名
+	mobile:/^0?(13[0-9]|14[5-9]|15[012356789]|66|17[0-9]|18[0-9]|19[8-9])[0-9]{8}$/,    //收票手机
+	address:/[\u4e00-\u9fa5a-zA-Z0-9]{1,150}/,    //收票地址
+	fixedLine1:/[0-9]{1,4}/,    //固话一
+	fixedLine2:/[0-9]{1,10}/,    //固话二
+	postCode:/[0-9]{1,6}/,    //邮编
 };
 function getInvoiceInfo(){
 	$.ajax({
@@ -140,12 +148,12 @@ function EditInvoice(){ //修改发票抬头
 	})
 
 }
-$('#J_expertBtn').click(function(){ //关闭浮层
+$('#J_expertBtn').click(function(){ //切换到专用发票
 	if(!isLoadZ){
 		getExpert()
 	}
 });
-function getExpert(){
+function getExpert(){//获取专用发票信息
 	$.ajax({
 		url:host.website+'/api/userInvoiceTitle/findAll',
 		type:'get',
@@ -163,12 +171,25 @@ function getExpert(){
 						break;
 					case 1:
 						invoiceStatus = '审核中';
+						$('.z_invoice a').hide();
+						setInvoiceVal(data)
+						$('.Z_invoice_item_bot').hide();  //增票资质确认书
+						$('.Z_set_btn').hide();//设置按钮
+						$('.add-go-address').show();//跳转到地址管理页面
+						$('.Z_ssac .text-input').css({'border':'none'}).attr('readonly','readonly');
 						break;
 					case 2:
 						invoiceStatus = '已添加';
+						setInvoiceVal(data)
+						$('.z_invoice a').hide();
+						$('.Z_invoice_item_bot').hide();  //增票资质确认书
+						$('.add-go-address').show();//跳转到地址管理页面
+						$('.Z_set_btn.J_reset_invoice').hide();
 						break;
 					case 3:
 						invoiceStatus = '未通过';
+						$('.Z_set_btn').hide();
+						$('.Z_set_btn.J_reset_invoice').show();
 						break;
 				}
 				$('.Z_ssac .invoiceStatus').html(invoiceStatus)
@@ -178,6 +199,14 @@ function getExpert(){
 			}
 		}
 	})
+}
+function setInvoiceVal(data) {
+	$('.tab-box input[name=Z_titleName]').val(data.data.titleName);
+	$('.tab-box input[name=Z_taxpayerIdentifyNo]').val(data.data.taxpayerIdentifyNo);
+	$('.tab-box input[name=Z_regAddress]').val(data.data.regAddress);
+	$('.tab-box input[name=Z_regTel]').val(data.data.regTel);
+	$('.tab-box input[name=Z_openBank]').val(data.data.openBank);
+	$('.tab-box input[name=Z_bankAccount]').val(data.data.bankAccount);
 }
 function testInvoiceInfo(titleName,taxpayerIdentifyNo,regAddress,regTel,openBank,bankAccount){ //验证专用发票
 	if(regex.titleName.test(titleName)){
@@ -235,8 +264,9 @@ $('.submit-invoice').click(function () {
 					regAddress:regAddress,
 					regTel:regTel,
 					openBank:openBank,
-					bankAccount:bankAccount
-				}
+					bankAccount:bankAccount,
+					invoiceStatus:1
+				};
 				$.ajax({
 					url:host.website+'/api/userInvoiceTitle/save',
 					type:'get',
@@ -245,9 +275,8 @@ $('.submit-invoice').click(function () {
 					},
 					success:function(data){
 						if(data.code==1){
-							$('.invoiceInfo').hide();
-							$('.invoiceAddress').show();
 							$.alert('提交成功，请选择售票地址')
+							getExpert()
 						}else{
 							$.alert(data.message);
 						}
@@ -277,5 +306,122 @@ $('.submit-invoice').click(function () {
 			$.alert('请添加抬头信息');
 		}
 	}
-})
+});
+$('.add-go-address').click(function(){
+	$('.invoiceInfo').hide();
+	$('.invoiceAddress').show();
+	if(!isLoadAddress){
+		getInvoiceAddress()
+	}
 
+});
+$('.J_gotoInvoiceInfo').click(function(){
+	$('.invoiceInfo').show();
+	$('.invoiceAddress').hide();
+});
+function loadRegion(id, regionParam) {//加载地区
+	var parentId = '';
+	if (regionParam == 100000) {
+		parentId = 100000;
+	} else {
+		parentId = $(regionParam).val();
+	}
+	if (parentId == '-1') {
+		$('#city').html('<option value="-1">全部</option>')
+	}
+	$(regionParam).nextAll().html('<option value="-1">全部</option>')
+	$.ajax({
+		type: "get",
+		url: host.website + '/region/getRegionCodeByPid',
+		data: {
+			parentId: parentId
+		},
+		success: function (data) {
+			if (data.code == 1) {
+				if (data.data.length > 0) {
+					renderRegion(id, data.data)
+				}
+			} else {
+				$.alert(data.message)
+			}
+		}
+	});
+}
+function renderRegion(id, data) {
+	var html = '<option value="-1">全部</option>';
+	data.forEach(function (e) {
+		html += '<option value="' + e.id + '">' + e.name + '</option>';
+	});
+	$('#' + id).html(html);
+}
+loadRegion('province', regionParam); //加载地区
+function getInvoiceAddress(){
+	$.ajax({
+		type: "get",
+		url: host.website + '/api/userInvoiceAddress/findAll',
+		success: function (data) {
+			if (data.code == 1) {
+				if (data.data.length > 0) {
+					isLoadAddress = true;
+
+				}else{
+					$('.addAddress').show();
+				}
+			} else {
+				$.alert(data.message)
+			}
+		}
+	});
+}
+$('.addAddressBtn').click(function(){
+	$('.editAddress').show();
+	$('.addAddress').hide()
+});
+$('.cancel-add').click(function(){
+	$('.editAddress').hide();
+	$('.addAddress').show()
+});
+$('.submit-add').click(function(){
+	var invoiceName=$('.editAddress input[name=invoiceName]').val(),    //收票姓名
+		mobile=$('.editAddress input[name=mobile]').val(),    //收票手机
+		address=$('.editAddress input[name=address]').val(),    //收票地址
+		fixedLine1=$('.editAddress input[name=fixedLine1]').val(),    //固话一
+		fixedLine2=$('.editAddress input[name=fixedLine2]').val(),    //固话二
+		postCode=$('.editAddress input[name=invoiceName]').val();
+
+
+
+
+
+	if(regex.invoiceName.test(invoiceName)){
+		$('.editAddress input[name=invoiceName]').siblings('.must-tip').hide();
+		if(regex.mobile.test(mobile)){
+			$('.editAddress input[name=mobile]').siblings('.must-tip').hide();
+			if(regex.invoiceName.test(invoiceName)){
+				$('.editAddress input[name=invoiceName]').siblings('.must-tip').hide();
+				if(regex.invoiceName.test(invoiceName)){
+					$('.editAddress input[name=invoiceName]').siblings('.must-tip').hide();
+					if(regex.invoiceName.test(invoiceName)){
+						$('.editAddress input[name=invoiceName]').siblings('.must-tip').hide();
+						return true;
+					}else{
+						$('.editAddress input[name=Z_bankAccount]').siblings('.must-tip').show();
+						return false;
+					}
+				}else{
+					$('.editAddress input[name=Z_bankAccount]').siblings('.must-tip').show();
+					return false;
+				}
+			}else{
+				$('.editAddress input[name=Z_bankAccount]').siblings('.must-tip').show();
+				return false;
+			}
+		}else{
+			$('.editAddress input[name=Z_bankAccount]').siblings('.must-tip').show();
+			return false;
+		}
+	}else{
+		$('.editAddress input[name=Z_bankAccount]').siblings('.must-tip').show();
+		return false;
+	}
+});

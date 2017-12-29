@@ -158,68 +158,91 @@
 			<tr>
 				<td></td>
 				<td>
-					<div class="form-btn" style="margin-top: 20px;"><a href="javascript:void(0)" class="submit-invoice">提交</a><a href="javascript:void(0)" class="cancel-invoice translate-close-btn">取消</a>
+					<div class="form-btn z_invoice" style="margin-top: 20px;">
+						<a href="javascript:void(0)" class="submit-invoice">提交</a>
+						<a href="javascript:void(0)" class="cancel-invoice translate-close-btn">取消</a>
+						<a href="javascript:void(0)" class="add-go-address" style="display: none">添加收票地址</a>
 					</div>
 				</td>
 			</tr>
 		</table>
 	</div>
 	<div class="translate-box invoiceAddress">
-		<h4>收票地址<span class="fa fa-close translate-close-btn"></span></h4>
-		<table>
-			<tr class="Z_invoice_item">
-				<td><span class="must-tip">*</span>姓名：</td>
-				<td>
-					<div class="input-exclusive">
-						<input type="text" class="text-input" name="invoiceName">
-						<p class="must-tip">纳税人识别号是15-20位以内数字或字母组合，字母自动识别为大写，不能为空</p>
-					</div>
-				</td>
-			</tr>
-			<tr class="Z_invoice_item">
-				<td><span class="must-tip">*</span>手机：</td>
-				<td>
-					<div class="input-exclusive">
-						<input type="text" class="text-input" name="mobile">
-						<p class="must-tip">纳税人识别号是15-20位以内数字或字母组合，字母自动识别为大写，不能为空</p>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td><span class="must-tip">*</span>地区：</td>
-				<td>
-					<div class="input-exclusive">
-						<input type="text" class="text-input" name="region">
-						<p class="must-tip">注册地址可为数字、汉字、英文，50个字以内</p>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td><span class="must-tip">*</span>地址：</td>
-				<td>
-					<div class="input-exclusive">
-						<input type="text" class="text-input" name="address">
-						<p class="must-tip">注册电话为15位以内的数字</p>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>固话：</td>
-				<td>
-					<div class="input-exclusive">
-						<input type="text" class="text-input" name="fixedLine">
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>邮箱：</td>
-				<td>
-					<div class="input-exclusive">
-						<input type="email" class="text-input" name="email">
-					</div>
-				</td>
-			</tr>
-		</table>
+		<h4>收票地址<a href="javascript:void(0)" class="J_gotoInvoiceInfo" style="font-size: 12px;font-weight: normal;color: #0000ff;margin-left: 20px;">返回发票信息页</a><span class="fa fa-close translate-close-btn"></span></h4>
+		<div class="addAddress" style="display: none">
+			<a href="javascript:void(0)" class="addAddressBtn">添加收票地址</a>
+		</div>
+		<div class="editAddress" style="display: none">
+			<table>
+				<tr class="Z_invoice_item">
+					<td><span class="must-tip">*</span>姓名：</td>
+					<td>
+						<div class="input-exclusive">
+							<input type="text" class="text-input" name="invoiceName">
+							<p class="must-tip">15个字以内，支持中文、字母</p>
+						</div>
+					</td>
+				</tr>
+				<tr class="Z_invoice_item">
+					<td><span class="must-tip">*</span>手机：</td>
+					<td>
+						<div class="input-exclusive">
+							<input type="text" class="text-input" name="mobile">
+							<p class="must-tip">请填写有效的手机号</p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td><span class="must-tip">*</span>地区：</td>
+					<td>
+						<div class="input-exclusive">
+							<select name="province" id="province" onchange="loadRegion('city', this)">
+								<option value="-1">全部</option>
+							</select>
+							<select name="city" id="city" onchange="loadRegion('region', this)">
+								<option value="-1">全部</option>
+							</select>
+							<select name="region" id="region">
+								<option value="-1">全部</option>
+							</select>
+							<p class="must-tip">请选择地区</p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td><span class="must-tip">*</span>地址：</td>
+					<td>
+						<div class="input-exclusive">
+							<input type="text" class="text-input" name="address">
+							<p class="must-tip">150字内字符，支持中文、数字、字母</p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>固话：</td>
+					<td>
+						<div class="input-exclusive">
+							<input type="text" class="text-input quhao" style="width: 50px;" name="fixedLine1">
+							<input type="text" class="text-input dianhua" style="width: 328px;" name="fixedLine2">
+							<p class="must-tip">最多四位数字</p>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>邮编：</td>
+					<td>
+						<div class="input-exclusive">
+							<input type="number" class="text-input" name="postCode">
+							<p class="must-tip">邮编填写不符合规则</p>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div class="form-btn" style="margin: 20px 0;text-align: center">
+				<a href="javascript:void(0)" style="background: #237ee8;color:#fff;display: inline-block;float: none;" class="submit-add">提交</a>
+				<a href="javascript:void(0)" style="display: inline-block;float: none;" class="cancel-add">取消</a>
+			</div>
+		</div>
 	</div>
 </div>
 <script src="/static/js/invoice/invoice.js"></script>

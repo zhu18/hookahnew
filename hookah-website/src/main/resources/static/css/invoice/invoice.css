@@ -51,6 +51,11 @@
 	text-align: right;
 	vertical-align: sub;
 }
+.translate-box.invoiceAddress table tr td:first-child{
+	width:80px;
+	text-align: right;
+	vertical-align: sub;
+}
 .translate-box table tr td:first-child table{
 	text-align: left;
 }
@@ -161,6 +166,11 @@
 	font-size: 14px;
 	text-indent: 3px;
 }
+.input-exclusive select{
+	height: 26px;
+	font-size: 12px;
+	border: 1px solid #d8d8d8;
+}
 .form-btn a{
 	width:144px;
 	height:40px;
@@ -175,6 +185,10 @@
 	border-radius:3px;
 }
 .form-btn .submit-invoice{
+	background: #237ee8;
+	color:#fff;
+}
+.form-btn .add-go-address{
 	background: #237ee8;
 	color:#fff;
 }
@@ -222,4 +236,23 @@
 	line-height: 20px;
 	font-size: 12px;
 	display: none;
+}
+.invoiceAddress .addAddress{
+	overflow: hidden;
+}
+.invoiceAddress .addAddress a{
+	width:144px;
+	height:40px;
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	line-height: 40px;
+	font-size: 16px;
+	border-radius:3px;
+	background: #237ee8;
+	color:#fff;
+}
+.invoiceAddress .editAddress{
+	border: 1px solid #d5d5d5;
+	margin-bottom: 18px;
 }
