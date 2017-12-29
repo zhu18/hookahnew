@@ -39,7 +39,8 @@
     SUM(order_num) AS allOrderNum,
     SUM(effective_order_amount) AS payedMoney,
     SUM(effectice_order_num) AS payedOrderNum,
-    SUM(paying_order_num) AS unPayedOrderNum
+    SUM(paying_order_num) AS unPayedOrderNum,
+    SUM(cancel_order_num) AS cancelOrderNum
     from transaction_analysis
     where add_time
     BETWEEN  #{startTime}
@@ -52,7 +53,8 @@
     SUM(order_num) AS allOrderNum,
     SUM(effective_order_amount) AS payedMoney,
     SUM(effectice_order_num) AS payedOrderNum,
-    SUM(paying_order_num) AS unPayedOrderNum
+    SUM(paying_order_num) AS unPayedOrderNum,
+    SUM(cancel_order_num) AS cancelOrderNum
     FROM
     transaction_analysis
     where

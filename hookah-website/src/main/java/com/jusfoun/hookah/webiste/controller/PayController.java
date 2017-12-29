@@ -225,6 +225,7 @@ public class PayController extends BaseController{
 
     @Async
     private void countPayOrder(HttpServletRequest request, String orderSn){
+        logger.info("--------------------插入订单支付统计信息--------------------");
         try {
             List<Condition> filter = new ArrayList<>();
             filter.add(Condition.eq("userId", orderSn));
@@ -234,7 +235,7 @@ public class PayController extends BaseController{
             mgTongJiService.setTongJiInfo(TongJiEnum.ORDER_PAY_URL, tongJiInfo.getTongJiId(),
                     tongJiInfo.getUtmSource(), tongJiInfo.getUtmTerm(), orderSn);
         } catch (Exception e) {
-            logger.error("插入订单统计信息失败{}", e);
+            logger.error("插入订单支付统计信息失败{}", e);
         }
     }
 

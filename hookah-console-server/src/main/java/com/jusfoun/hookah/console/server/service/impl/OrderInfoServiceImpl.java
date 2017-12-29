@@ -294,13 +294,19 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     @Override
     @Transactional
     public void deleteByLogic(String id) {
+        Date date = new Date();
         OrderInfo order = selectById(id);
+        if (order.getPayStatus() == OrderInfo.PAYSTATUS_PAYED){
+            return;
+        }
         order.setIsDeleted(new Byte("1"));
-        order.setLastmodify(new Date());
+        order.setLastmodify(date);
+        order.setDeletedTime(date);
         updateByIdSelective(order);
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrderId(id);
         orderInfoVo.setIsDeleted((byte)1);
+        orderInfoVo.setDeletedTime(date);
         mgOrderInfoService.updateByIdSelective(orderInfoVo);
         List<Condition> filter = new ArrayList<>();
         filter.add(Condition.eq("orderSn",order.getOrderSn()));

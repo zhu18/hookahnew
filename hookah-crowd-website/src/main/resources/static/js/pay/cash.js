@@ -149,7 +149,7 @@ function check() {
 // 验证密码
 function testPayPassword(pwd){
     $.ajax({
-        url:host.website+'/usercenter/verifyPayPassword',
+        url:host.crowd + '/api/zbPay/verifyPayPassword',
         data:{
             passWord:$.md5(pwd)
         },
