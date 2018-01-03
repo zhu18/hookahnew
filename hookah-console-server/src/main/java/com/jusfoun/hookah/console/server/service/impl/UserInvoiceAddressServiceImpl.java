@@ -2,6 +2,7 @@ package com.jusfoun.hookah.console.server.service.impl;
 
 import com.jusfoun.hookah.core.dao.UserInvoiceAddressMapper;
 import com.jusfoun.hookah.core.domain.UserInvoiceAddress;
+import com.jusfoun.hookah.core.domain.vo.UserInvoiceAddressVo;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.rpc.api.UserInvoiceAddressService;
 
@@ -17,5 +18,10 @@ public class UserInvoiceAddressServiceImpl extends GenericServiceImpl<UserInvoic
     @Resource
     public void setDao(UserInvoiceAddressMapper userInvoiceAddressMapper) {
         super.setDao(userInvoiceAddressMapper);
+    }
+
+    public UserInvoiceAddressVo findUserInvoiceAddressInfoById(String id){
+
+        return null;
     }
 }

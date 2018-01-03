@@ -54,7 +54,7 @@ public class TimerTask {
     /**
      * 待审核用户（企业）每一小时通知审批人
      */
-    @Scheduled(cron = "0 0 0 * * ?") //每一小时执行一次
+    @Scheduled(cron = "0 0 0/1 * * ?") //每一小时执行一次
 //    @Scheduled(cron = "0 0/2 * * * ?")
     public void sendMessage() {
 
