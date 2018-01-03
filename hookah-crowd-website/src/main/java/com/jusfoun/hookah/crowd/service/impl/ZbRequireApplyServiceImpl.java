@@ -83,10 +83,6 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
 
         MgZbRequireStatus mgZbRequireStatus = mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn()) == null ? new MgZbRequireStatus() : mgZbRequireStatusService.getByRequirementSn(zbRequirement.getRequireSn());
 
-
-
-
-            List<Condition> filter1 = new ArrayList();
             List<OrderBy> orderBys = new ArrayList();
             orderBys.add(OrderBy.desc("addTime"));
 
@@ -99,7 +95,7 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
             if (StringUtils.isNotBlank(pageSize)) {
                 pageSizeNew = Integer.parseInt(pageSize);
             }
-        Pagination<ZbRequirementApply> zbRequirementApplie = zbRequireApplyService.getListInPage(pageNumberNew, pageSizeNew, filter1, orderBys);
+        Pagination<ZbRequirementApply> zbRequirementApplie = zbRequireApplyService.getListInPage(pageNumberNew, pageSizeNew, filters, orderBys);
         List<ZbRequirementApply> zbRequirementApplies = zbRequirementApplie.getList();
 
 
@@ -132,13 +128,14 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
                 }
             }
         }
+        zbRequirementApplie.setList(zbRequirementApplies);
         //0为需求附件
         filter.add(Condition.eq("correlationId", zbRequirement.getId()));
         filter.add(Condition.eq("type", 0));
         List<ZbAnnex> zbAnnexes = zbAnnexService.selectList(filter);
 
         map.put("zbRequirement", zbRequirement);
-        map.put("zbRequirementApplies", zbRequirementApplies);
+        map.put("zbRequirementApplie", zbRequirementApplie);
         map.put("zbProgram", zbProgram);
         map.put("zbAnnexes", zbAnnexes != null ? zbAnnexes : "");
         map.put("zbComments", zbComments);
