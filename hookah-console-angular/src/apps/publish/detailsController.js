@@ -20,19 +20,22 @@ class detailsController {
         $scope.date={
             applyDeadline:""
         };
+        $rootScope.pagination.pageSize=3;
         $scope.currDate=$filter('format')(new Date(), 'yyyy-MM-dd HH:mm:ss');
         $scope.screen = function () {
             let promise = $http({
                 method: 'GET',
                 url: $rootScope.site.crowdServer + "/requireApply/viewApply",
                 params: {
-                   id:$stateParams.id
+                   id:$stateParams.id,
+                   currentPage:$rootScope.pagination.currentPage, //当前页码
+                   pageSize: $rootScope.pagination.pageSize
                 }
             });
             promise.then(function (res, status, config, headers) {
                 if (res.data.code == '1') {
                     var zbRequirement= res.data.data.zbRequirement || null; //基本信息
-                    var zbRequirementApplies= res.data.data.zbRequirementApplies || null; //报名的人
+                    var zbRequirementApplies= res.data.data.zbRequirementApplie || null; //报名的人
                     var zbProgram= res.data.data.zbProgram || null;//成果
                     var zbComments= res.data.data.zbComments || null;//评价
                     $scope.zbAnnexes= res.data.data.zbAnnexes || null;//需求材料
@@ -74,8 +77,10 @@ class detailsController {
                         $scope.toBeRefundedTime =mgZbRequireStatus.toBeRefundedTime ;//待退款
                     }
                     //报名tab
-                    if(zbRequirementApplies && zbRequirementApplies.length>0){
-                        $scope.zbRequirementApplies=zbRequirementApplies;
+                    if(zbRequirementApplies.list && zbRequirementApplies.list.length>0){
+                        $scope.zbRequirementApplies=zbRequirementApplies.list;
+                        $rootScope.pagination.currentPage = zbRequirementApplies.currentPage;
+                        $rootScope.pagination.totalItems = zbRequirementApplies.totalItems;
                         $scope.isZbRequirementAppliesShow=false;
                         console.log(1);
                     }else {
@@ -150,7 +155,7 @@ class detailsController {
                     });
                     $state.go('publish.list');
                 }, function () {
-                    $state.go('publish.list');
+
                 });
             }else {
                 var modalInstance =$rootScope.openConfirmDialogModal("还未资格筛选，请选择中标的服务商！");
@@ -195,7 +200,6 @@ class detailsController {
 
 
 
-
         // 日历插件开始
         $scope.inlineOptions = {
             minDate: new Date(),
@@ -223,7 +227,9 @@ class detailsController {
         ];
 
         // 日历插件结束
-
+        $scope.pageChanged=function () {
+            $scope.screen();
+        };
         $scope.back=function (id) {
             $state.go('publish.list', {id: id});
         };

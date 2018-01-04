@@ -228,6 +228,23 @@
                                </tr>
                                </tbody>
                            </table>
+                            <table ng-if="!showNoneDataInfoTip && showPageHelpInfo" style="margin-top: 10px; width: 100%;">
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="pull-right page-box">
+                                            <div class="pagination-info">
+                                                共有{{pagination.totalItems}}条，每页显示：{{pagination.pageSize}}条
+                                            </div>
+                                            <ul uib-pagination ng-change="pageChanged()" total-items="pagination.totalItems"
+                                                ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                                                max-size="pagination.maxSize" class="pagination-sm" boundary-links="true"
+                                                force-ellipses="true" previous-text="上一页" next-text="下一页" first-text="首页"
+                                                last-text="末页">
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                             <p class="margin-top-10 "> <span class="glyphicon glyphicon-volume-up"></span>温馨提示:报名结束后，请在上述报名用户名单尽快进行资格审查，筛选确认中标用户。</p>
                             <div style="margin: auto;width: 58px;" data-ng-show="status == 6 || status == 5">
                                 <button class="btn btn-primary" data-ng-click="submit()">提交</button>
