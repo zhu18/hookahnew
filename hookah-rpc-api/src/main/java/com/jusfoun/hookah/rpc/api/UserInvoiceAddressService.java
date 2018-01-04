@@ -2,6 +2,7 @@ package com.jusfoun.hookah.rpc.api;
 
 import com.jusfoun.hookah.core.domain.UserInvoiceAddress;
 import com.jusfoun.hookah.core.domain.vo.UserInvoiceAddressVo;
+import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.GenericService;
 
 /**
@@ -9,5 +10,5 @@ import com.jusfoun.hookah.core.generic.GenericService;
  */
 public interface UserInvoiceAddressService extends GenericService<UserInvoiceAddress,String> {
 
-    UserInvoiceAddressVo findUserInvoiceAddressInfoById(String id);
+    UserInvoiceAddressVo findUserInvoiceAddressInfoById(String id) throws HookahException;
 }
