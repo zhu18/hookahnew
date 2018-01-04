@@ -47,7 +47,7 @@ function offSale(id) {
 				},
 				success: function (data) {
 					if (data.code == 1) {
-						$.alert('操作成功', true, function () {
+						$.alert('操作成功', null, function () {
 							location.reload();
 						});
 					} else {
