@@ -20,7 +20,7 @@ class detailsController {
         $scope.date={
             applyDeadline:""
         };
-        $rootScope.pagination.pageSize=3;
+
         $scope.currDate=$filter('format')(new Date(), 'yyyy-MM-dd HH:mm:ss');
         $scope.screen = function () {
             let promise = $http({
@@ -79,8 +79,9 @@ class detailsController {
                     //报名tab
                     if(zbRequirementApplies.list && zbRequirementApplies.list.length>0){
                         $scope.zbRequirementApplies=zbRequirementApplies.list;
-                        $rootScope.pagination.currentPage = zbRequirementApplies.currentPage;
-                        $rootScope.pagination.totalItems = zbRequirementApplies.totalItems;
+                        $rootScope.pagination.pageSize1=3;
+                        $rootScope.pagination.currentPage1 = zbRequirementApplies.currentPage;
+                        $rootScope.pagination.totalItems1 = zbRequirementApplies.totalItems;
                         $scope.isZbRequirementAppliesShow=false;
                         console.log(1);
                     }else {
