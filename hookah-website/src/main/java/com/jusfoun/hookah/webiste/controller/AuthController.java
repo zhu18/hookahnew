@@ -374,27 +374,21 @@ public class AuthController extends BaseController {
                     com.jusfoun.hookah.core.utils.StringUtils.getUrlParamsByMap(map),  header);
             JsonNode data = JsonUtils.toObject(result.toString(), JsonNode.class);
             //判断企业认证信息是否正确
-            String isCheck = "0";
             if(data.get("ReturnCode").toString().equals("1")){
                 String societyCode = data.get("Result").get("societyCode").textValue();
                 String name = data.get("Result").get("name").textValue();
                 if(societyCode == null && name.equals(organization.getOrgName())){
-                    orgAuthInfo(organization, userId, request, isCheck);
+                    orgAuthInfo(organization, userId, request);
                     return ReturnData.success("恭喜您！验证成功！");
                 }
                 if(!societyCode.equals(organization.getCreditCode()) ||
                         !name.equals(organization.getOrgName())){
                     return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
                 }else {
-                    orgAuthInfo(organization, userId, request, isCheck);
+                    orgAuthInfo(organization, userId, request);
                     return ReturnData.success("恭喜您！验证成功！");
                 }
-            }else if(data.get("ReturnCode").toString().equals("5")){
-                Map<String, String> mapCheck = new HashMap<>(6);
-                mapCheck.put("isCheck", "1");
-                orgAuthInfo(organization, userId, request, "1");
-                return ReturnData.success(mapCheck);
-            } else {
+            }else {
                 return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
             }
         } catch (Exception e) {
@@ -404,7 +398,7 @@ public class AuthController extends BaseController {
     }
 
     // 企业认证
-    public void orgAuthInfo(Organization organization, String userId, HttpServletRequest request, String isCheck){
+    public void orgAuthInfo(Organization organization, String userId, HttpServletRequest request){
         User user = userService.selectById(userId);
         String orgId = user.getOrgId();
 
@@ -451,12 +445,8 @@ public class AuthController extends BaseController {
             user1.setSupplierStatus(HookahConstants.SupplierStatus.CHECK_STATUS.getCode());
         }
         // 企业认证成功状态
-        //当isCheck为0时，直接认证通过,否则变为待审核状态
-        if(isCheck.equals("0")){
-            user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
-        }else {
-            user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
-        }
+        user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
+
         userService.updateByIdSelective(user1);
 
         if(user1.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
