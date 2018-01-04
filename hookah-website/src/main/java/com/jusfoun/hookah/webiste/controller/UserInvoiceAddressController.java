@@ -106,7 +106,7 @@ public class UserInvoiceAddressController extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            returnData.setData(userInvoiceAddressService.selectById(id));
+            returnData.setData(userInvoiceAddressService.findUserInvoiceAddressInfoById(id));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());
