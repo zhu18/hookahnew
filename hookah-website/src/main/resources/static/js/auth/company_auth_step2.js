@@ -1,5 +1,8 @@
 /**
  * Created by lss on 2017/5/8.
+ * 认证接口： /auth/orgAuth
+ * 由于各种原因，企业需要人工审核，
+ * 所以在接口加了一个isCheck（0：自定完成，1：人工审核）字段 来判断是人工审核还是自定完成
  */
 supplier();
 
@@ -23,9 +26,14 @@ function companyAuth() {
    type:"post",
    success : function(data) {
        if (data.code == 1) {
+           console.log(data);
            $('#verifyBtn').attr("disabled",false);
            $('#verifyBtn').removeClass("disabled-gray");
-           window.location.href = './company_auth_init_step4.html';
+           if(data.data.isCheck == "1"){
+               window.location.href = './company_auth_init_step3.html';
+           }else {
+               window.location.href = './company_auth_init_step4.html';
+           }
        } else {
           alert(data.message);
            $('#verifyBtn').attr("disabled",false);
@@ -66,14 +74,30 @@ if ($.getUrlParam("isAuth") == "3") {
     }
   });
 }
-// 验证插件开始
+// 表格验证开始
+var regex = {  //手机号验证正则
+    mobile: /^0?(13[0-9]|14[5-9]|15[012356789]|66|17[0-9]|18[0-9]|19[8-9])[0-9]{8}$/,
+    zip:/^[1-9][0-9]{5}$/,
+    num:/^[0-9]*$/
+};
 $("#companyForm").validate({
     rules: {
-        governmentName: 'required',
+        governmentName: {
+            required:true,
+            isNum:true
+        },
         creditCode:'required',
     },
     messages: {
-        governmentName: '单位名称不能为空',
+        governmentName:{
+            required:"单位名称不能为空",
+            isMobile:"*请输入正确格式的单位名称"
+        },
         creditCode: '信用代码不能为空',
     }
 });
+$.validator.addMethod("isNum", function(value, element) {
+    var mobile = regex.num.test(value);
+    return this.optional(element) || (!mobile);
+}, "*请填写有效的单位名称");
+// 表格验证结束
