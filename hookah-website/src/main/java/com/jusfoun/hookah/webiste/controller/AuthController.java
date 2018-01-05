@@ -378,10 +378,6 @@ public class AuthController extends BaseController {
             if(data.get("ReturnCode").toString().equals("1")){
                 String societyCode = data.get("Result").get("societyCode").textValue();
                 String name = data.get("Result").get("name").textValue();
-                if(societyCode == null && name.equals(organization.getOrgName())){
-                    orgAuthInfo(organization, userId, request, isCheck);
-                    return ReturnData.success("恭喜您！验证成功！");
-                }
                 if(!societyCode.equals(organization.getCreditCode()) ||
                         !name.equals(organization.getOrgName())){
                     return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
@@ -389,13 +385,11 @@ public class AuthController extends BaseController {
                     orgAuthInfo(organization, userId, request, isCheck);
                     return ReturnData.success("恭喜您！验证成功！");
                 }
-            }else if(data.get("ReturnCode").toString().equals("5")){
+            }else {
                 Map<String, String> mapCheck = new HashMap<>(6);
                 mapCheck.put("isCheck", "1");
                 orgAuthInfo(organization, userId, request, "1");
                 return ReturnData.success(mapCheck);
-            } else {
-                return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
             }
         } catch (Exception e) {
             logger.error("企业认证信息操作失败！^_^", e);
