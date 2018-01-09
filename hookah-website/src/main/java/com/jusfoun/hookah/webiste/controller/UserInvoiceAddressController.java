@@ -6,6 +6,8 @@ import com.jusfoun.hookah.core.domain.UserInvoiceAddress;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
+import com.jusfoun.hookah.core.utils.StringUtils;
+import com.jusfoun.hookah.rpc.api.RegionService;
 import com.jusfoun.hookah.rpc.api.UserInvoiceAddressService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Gring on 2017/11/27.
@@ -25,6 +28,9 @@ public class UserInvoiceAddressController extends BaseController {
 
     @Resource
     UserInvoiceAddressService userInvoiceAddressService;
+
+    @Resource
+    RegionService regionService;
     /**
      * 根据userId获取收票人的完整信息
      * @return
@@ -37,9 +43,14 @@ public class UserInvoiceAddressController extends BaseController {
             String userId = this.getCurrentUser().getUserId();
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", userId));
-            returnData.setData(userInvoiceAddressService.selectList(filters));
-        } catch (Exception e) {
+            List<UserInvoiceAddress> userInvoiceAddressList = new ArrayList<>();
+            userInvoiceAddressList = userInvoiceAddressService.selectList(filters);
+            userInvoiceAddressList.stream().forEach(userInvoiceAddress -> {
+                userInvoiceAddress.setReceiveAddress(StringUtils.isNotBlank(userInvoiceAddress.getRegion()) ? (Objects.nonNull(regionService.selectById(userInvoiceAddress.getRegion())) ? regionService.selectById(userInvoiceAddress.getRegion()).getMergerName() : null) : null);
+            });
             returnData.setCode(ExceptionConst.Failed);
+            returnData.setData(userInvoiceAddressList);
+        } catch (Exception e) {
             returnData.setMessage(e.getMessage());
             e.printStackTrace();
         }
