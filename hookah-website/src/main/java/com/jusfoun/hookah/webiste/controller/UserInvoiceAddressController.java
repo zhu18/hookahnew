@@ -46,11 +46,22 @@ public class UserInvoiceAddressController extends BaseController {
             List<UserInvoiceAddress> userInvoiceAddressList = new ArrayList<>();
             userInvoiceAddressList = userInvoiceAddressService.selectList(filters);
             userInvoiceAddressList.stream().forEach(userInvoiceAddress -> {
-                userInvoiceAddress.setReceiveAddress(StringUtils.isNotBlank(userInvoiceAddress.getRegion()) ? (Objects.nonNull(regionService.selectById(userInvoiceAddress.getRegion())) ? regionService.selectById(userInvoiceAddress.getRegion()).getMergerName() : null) : null);
+                if(StringUtils.isNotBlank(userInvoiceAddress.getRegion())){
+                    if(Objects.nonNull(regionService.selectById(userInvoiceAddress.getRegion()))){
+                        if(StringUtils.isNotBlank(regionService.selectById(userInvoiceAddress.getRegion()).getMergerName())){
+                            String[] strings = regionService.selectById(userInvoiceAddress.getRegion()).getMergerName().split(",");
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for(int i=1;i<strings.length;i++){
+                                stringBuilder.append(strings[i]).append(" ");
+                                userInvoiceAddress.setReceiveAddress(stringBuilder.toString());
+                            }
+                        }
+                    }
+                }
             });
-            returnData.setCode(ExceptionConst.Failed);
             returnData.setData(userInvoiceAddressList);
         } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.getMessage());
             e.printStackTrace();
         }
