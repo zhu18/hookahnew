@@ -5,6 +5,7 @@ import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.UserCheckMapper;
 import com.jusfoun.hookah.core.domain.MessageCode;
+import com.jusfoun.hookah.core.domain.Organization;
 import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.UserCheck;
 import com.jusfoun.hookah.core.domain.bo.JfBo;
@@ -15,10 +16,7 @@ import com.jusfoun.hookah.core.generic.GenericServiceImpl;
 import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
-import com.jusfoun.hookah.rpc.api.MqSenderService;
-import com.jusfoun.hookah.rpc.api.UserCheckService;
-import com.jusfoun.hookah.rpc.api.UserService;
-import com.jusfoun.hookah.rpc.api.WXUserRecommendService;
+import com.jusfoun.hookah.rpc.api.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,6 +37,9 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
 
     @Resource
     MqSenderService mqSenderService;
+
+    @Resource
+    OrganizationService organizationService;
 
     @Resource
     private WXUserRecommendService wxUserRecommendService;
@@ -73,8 +74,16 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
                     user.setUserType(HookahConstants.UserType.PERSON_CHECK_FAIL.getCode());
                 }
             }else if(USER_TYPE_ORG.equals(userCheck.getUserType())){
+                User user1 = userService.selectById(userCheck.getUserId());
+                Organization organization = organizationService.selectById(user1.getOrgId());
+
                 if(userCheck.getCheckStatus().equals((byte)1)){
                     user.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
+
+                    // 企业审核通过，企业表status, 状态变为已认证2
+                    organization.setStatus("2");
+                    organizationService.updateByIdSelective(organization);
+
                     //发送消息，下发短信/站内信/邮件
                     MessageCode messageCode = new MessageCode();
                     messageCode.setCode(HookahConstants.MESSAGE_201);//此处填写相关事件编号
@@ -82,6 +91,11 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
                     mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_NEW_MESSAGE, messageCode);//将数据添加到队列
                 }else if(userCheck.getCheckStatus().equals((byte)2)){
                     user.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_FAIL.getCode());
+
+                    // 企业审核通过，企业表status, 状态变为已认证2
+                    organization.setStatus("3");
+                    organizationService.updateByIdSelective(organization);
+
                     //发送消息，下发短信/站内信/邮件
                     MessageCode messageCode = new MessageCode();
                     messageCode.setCode(HookahConstants.MESSAGE_202);//此处填写相关事件编号
@@ -102,10 +116,10 @@ public class UserCheckServiceImpl extends GenericServiceImpl<UserCheck, String> 
                 logger.info("用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
             }
 
-           /* if (userCheck.getCheckStatus()==2){
+            if (userCheck.getCheckStatus()==2){
                 //更新微信用户推荐表
                 wxUserRecommendService.updateWXUserRecommendIsAuthenticate(user.getUserId());
-            }*/
+            }
 
             returnData.setData(userCheck);
 
