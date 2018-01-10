@@ -9,7 +9,10 @@
 			</tr>
 			<tr>
 				<td>当前发票：</td>
-				<td><span>普通发票</span><span>办公用品</span><span>个人</span></td>
+				<td class="info-t">
+					<div class="hover"><span>普通发票</span><span>办公用品</span><span>个人</span></div>
+					<div><span>专用发票</span><span>办公用品</span><span>单位</span></div>
+				</td>
 			</tr>
 			<tr>
 				<td>发票类型：</td>
@@ -66,6 +69,14 @@
 						<tr>
 							<td>发票内容：</td>
 							<td>明细</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<div class="form-btn z_invoice" style="margin-top: 20px;">
+									<a href="javascript:void(0)" class="add-go-address add-go-address-common">添加收票地址</a>
+								</div>
+							</td>
 						</tr>
 					</table>
 					<table class="Z_ssac">
@@ -152,19 +163,19 @@
 								<label><input type="checkbox" checked="checked">我已阅读并同意<a href="javascript:void(0)" style="color:#0041ed;">《增票资质确认书》</a></label>
 							</td>
 						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<div class="form-btn z_invoice" style="margin-top: 20px;">
+									<a href="javascript:void(0)" class="submit-invoice">提交</a>
+									<a href="javascript:void(0)" class="add-go-address add-go-address-special" style="display: none">添加收票地址</a>
+								</div>
+							</td>
+						</tr>
 					</table>
 				</td>
 			</tr>
-			<tr>
-				<td></td>
-				<td>
-					<div class="form-btn z_invoice" style="margin-top: 20px;">
-						<a href="javascript:void(0)" class="submit-invoice">提交</a>
-						<a href="javascript:void(0)" class="cancel-invoice translate-close-btn">取消</a>
-						<a href="javascript:void(0)" class="add-go-address" style="display: none">添加收票地址</a>
-					</div>
-				</td>
-			</tr>
+
 		</table>
 	</div>
 	<div class="translate-box invoiceAddress">
@@ -242,6 +253,10 @@
 				<a href="javascript:void(0)" style="background: #237ee8;color:#fff;display: inline-block;float: none;" class="submit-add">提交</a>
 				<a href="javascript:void(0)" style="display: inline-block;float: none;" class="cancel-add">取消</a>
 			</div>
+		</div>
+		<div class="addressInfo">
+
+
 		</div>
 	</div>
 </div>

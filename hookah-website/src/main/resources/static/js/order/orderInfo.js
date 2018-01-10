@@ -40,11 +40,6 @@ $(function () {
 		}
 
     });
-    $('.tab-btn a').click(function () {
-        var index = $(this).index();
-        $(this).addClass('hover').siblings().removeClass('hover');
-        $('.tab-box table').eq(index).addClass('hover').siblings().removeClass('hover');
-	})
     $('#J-editTranslate').click(function(){//点击修改发票按钮
         $('.translate-bg').show();
         $('.invoiceInfo').show();
