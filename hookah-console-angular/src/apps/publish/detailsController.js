@@ -20,7 +20,6 @@ class detailsController {
         $scope.date={
             applyDeadline:""
         };
-
         $scope.currDate=$filter('format')(new Date(), 'yyyy-MM-dd HH:mm:ss');
         $scope.screen = function () {
             let promise = $http({
