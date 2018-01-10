@@ -22,13 +22,14 @@ class detailsController {
         };
         $scope.currDate=$filter('format')(new Date(), 'yyyy-MM-dd HH:mm:ss');
         $scope.screen = function () {
+            $rootScope.pagination.pageSize1=3;
             let promise = $http({
                 method: 'GET',
                 url: $rootScope.site.crowdServer + "/requireApply/viewApply",
                 params: {
                    id:$stateParams.id,
-                   currentPage:$rootScope.pagination.currentPage, //当前页码
-                   pageSize: $rootScope.pagination.pageSize
+                   currentPage:$rootScope.pagination.currentPage1, //当前页码
+                   pageSize: $rootScope.pagination.pageSize1
                 }
             });
             promise.then(function (res, status, config, headers) {
@@ -78,7 +79,7 @@ class detailsController {
                     //报名tab
                     if(zbRequirementApplies.list && zbRequirementApplies.list.length>0){
                         $scope.zbRequirementApplies=zbRequirementApplies.list;
-                        $rootScope.pagination.pageSize1=3;
+
                         $rootScope.pagination.currentPage1 = zbRequirementApplies.currentPage;
                         $rootScope.pagination.totalItems1 = zbRequirementApplies.totalItems;
                         $scope.isZbRequirementAppliesShow=false;

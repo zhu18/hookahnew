@@ -78,7 +78,16 @@ class invoiceListController {
             });
 
         }; //列表搜索
-        $scope.search()
+        $scope.search();
+        $scope.getDetails=function (id) {
+            $state.go('invoice.list', {id: id});
+        };
+        $scope.refresh = function () {
+            $scope.search();
+        };
+        $scope.pageChanged = function () {
+            $scope.search();
+        };
     }
 }
 

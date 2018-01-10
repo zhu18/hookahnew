@@ -1,5 +1,5 @@
 import invoiceListController from "./invoiceListController";
-// import invoiceListDetailsController from './invoiceListDetailsController';
+import invoiceListDetailsController from './invoiceListDetailsController';
 
 
 
@@ -17,12 +17,12 @@ export default function invoiceRouting($stateProvider, $urlRouterProvider) {
       controller: invoiceListController,
       permission: 'invoice_list'
     })
-    // .state('invoiceList.details', {// 发票详情
-    //   url: '/invoiceList/details/:id',
-    //   template: require('./invoiceListDetails.html'),
-    //   controller: invoiceListDetailsController,
-    //   permission: 'invoiceList_details'
-    // })
+    .state('invoiceList.details', {// 发票详情
+      url: '/invoiceList/details/:id',
+      template: require('./invoiceListDetails.html'),
+      controller: invoiceListDetailsController,
+      permission: 'invoiceList_details'
+    })
     // .state('invoice.auditing', {  //增票资质审核
     //   url: '/invoice/auditing/:id',
     //   template: require('./auditing.html'),
