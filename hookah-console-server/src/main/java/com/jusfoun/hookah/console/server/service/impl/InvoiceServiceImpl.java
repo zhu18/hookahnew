@@ -132,7 +132,7 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
             invoice.setTitleId("0");
         }
         // 收票人ID
-        invoice.setInvoiceAddrId(invoiceDTOVo.getId());
+        invoice.setInvoiceAddrId(invoiceDTOVo.getAddressId());
         // 已申请（待审核）
         invoice.setInvoiceStatus(HookahConstants.INVOICE_STATUS_1);
 

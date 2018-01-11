@@ -14,7 +14,7 @@ public class InvoiceDTOVo implements Serializable {
 
     private String invoiceId;// 发票ID
     private String titleId; // 抬头ID
-    private String id; // 收票人地址ID
+    private String addressId; // 收票人地址ID
     private String orderIds; // 订单IDs
     private String userId; // 用户ID
 
@@ -34,12 +34,12 @@ public class InvoiceDTOVo implements Serializable {
         this.titleId = titleId;
     }
 
-    public String getId() {
-        return id;
+    public String getAddressId() {
+        return addressId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAddressId(String id) {
+        this.addressId = addressId;
     }
 
     public String getOrderIds() {
