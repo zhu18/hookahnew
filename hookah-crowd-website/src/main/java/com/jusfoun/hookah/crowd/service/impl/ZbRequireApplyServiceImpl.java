@@ -67,7 +67,8 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
     }
 
     @Override
-    public ReturnData viewApplyByRequire(String currentPage, String pageSize, Long requirementId ) throws Exception {
+    public ReturnData
+    viewApplyByRequire(String currentPage, String pageSize, Long requirementId ) throws Exception {
         if (requirementId == null) {
             return ReturnData.error();
         }
@@ -115,20 +116,32 @@ public class ZbRequireApplyServiceImpl extends GenericServiceImpl<ZbRequirementA
 
             zbRequirementApply.setUserName(user.getUserName());
             zbRequirementApply.setMobile(user.getMobile());
-            if (!Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.APPLY_SUCCESS.getCode().shortValue()) && !Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.getCode().shortValue())) {
-                filters.clear();
-                filters.add(Condition.eq("applyId", zbRequirementApply.getId()));
-                zbProgram = zbProgramService.selectOne(filters);
-                //1为方案附件
-                if (zbProgram != null) {
-                    filter.clear();
-                    filter.add(Condition.eq("correlationId", zbProgram.getId()));
-                    filter.add(Condition.eq("type", 1));
-                    reqProgram = zbAnnexService.selectList(filter);
-                }
+//            if (!Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.APPLY_SUCCESS.getCode().shortValue())
+//                    && !Short.valueOf(zbRequirementApply.getStatus()).equals(ZbContants.ZbRequireMentApplyStatus.LOSE_BID.getCode().shortValue())) {
+//                filters.clear();
+//                filters.add(Condition.eq("applyId", zbRequirementApply.getId()));
+//                zbProgram = zbProgramService.selectOne(filters);
+//                //1为方案附件
+//                if (zbProgram != null) {
+//                    filter.clear();
+//                    filter.add(Condition.eq("correlationId", zbProgram.getId()));
+//                    filter.add(Condition.eq("type", 1));
+//                    reqProgram = zbAnnexService.selectList(filter);
+//                }
+//            }
+        }
+        if(zbRequirement.getStatus()>=9){
+            filters.clear();
+            filters.add(Condition.eq("requirementId", requirementId));
+            zbProgram = zbProgramService.selectOne(filters);
+            //1为方案附件
+            if (zbProgram != null) {
+                filter.clear();
+                filter.add(Condition.eq("correlationId", zbProgram.getId()));
+                filter.add(Condition.eq("type", 1));
+                reqProgram = zbAnnexService.selectList(filter);
             }
         }
-        zbRequirementApplie.setList(zbRequirementApplies);
         //0为需求附件
         filter.add(Condition.eq("correlationId", zbRequirement.getId()));
         filter.add(Condition.eq("type", 0));
