@@ -488,7 +488,7 @@ public class OrderInfoController extends BaseController {
      */
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
     public String createOrder(OrderInfo orderinfo, String[] cartIdArray,String goodsId, Integer formatId,Long goodsNumber,
-                              HttpServletRequest request, Model model, Long userCouponId, InvoiceDTOVo invoiceDTOVo) {
+                              HttpServletRequest request, Model model, Long userCouponId, String titleId, String addressId) {
         HttpSession session = request.getSession();
         try {
             String perOrderInfoNum = request.getParameter("perOrderInfoNum");
@@ -497,7 +497,7 @@ public class OrderInfoController extends BaseController {
             }
             init(orderinfo);
 
-            if (invoiceDTOVo.getAddressId() != null && invoiceDTOVo.getTitleId() != null){
+            if (titleId != null && addressId != null){
                 orderinfo.setInvoiceOrNot((byte)1);
             }
             if(cartIdArray[0].equals("-1")){
@@ -521,6 +521,9 @@ public class OrderInfoController extends BaseController {
             countOrder(request, orderinfo.getOrderSn());
             //生成订单后发送发票信息
             if (orderinfo.getInvoiceOrNot() == 1) {
+                InvoiceDTOVo invoiceDTOVo = new InvoiceDTOVo();
+                invoiceDTOVo.setTitleId(titleId);
+                invoiceDTOVo.setAddressId(addressId);
                 invoiceDTOVo.setOrderIds(orderinfo.getOrderId());
                 invoiceDTOVo.setUserId(orderinfo.getUserId());
                 mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE, invoiceDTOVo);
