@@ -524,7 +524,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      */
     @Transactional(readOnly=false)
     @Override
-    public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray, Long userCouponId, InvoiceDTOVo invoiceDTOVo) throws Exception {
+    public OrderInfo insert(OrderInfo orderInfo,String[] cartIdArray, Long userCouponId) throws Exception {
         init(orderInfo);
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.in("recId",cartIdArray));
@@ -567,12 +567,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
             //下单
             insertOrder(ordergoodsList, orderInfoVo, orderInfo ,mgGoodsOrder);
 
-            //生成订单后发送发票信息
-            if (orderInfo.getInvoiceOrNot() == 1) {
-                invoiceDTOVo.setOrderIds(orderInfo.getOrderId());
-                invoiceDTOVo.setUserId(orderInfo.getUserId());
-                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE, invoiceDTOVo);
-            }
 //            if(goodsAmount.compareTo(0L)==0){
 //                updatePayStatus(orderInfo.getOrderSn(),2);
 //            }
@@ -594,8 +588,7 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
      */
     @Transactional(readOnly=false)
     @Override
-    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber, Long userCouponId,
-                            InvoiceDTOVo invoiceDTOVo) throws Exception {
+    public OrderInfo insert(OrderInfo orderInfo, String goodsId, Integer formatId, Long goodsNumber, Long userCouponId) throws Exception {
         init(orderInfo);
 
         List<MgOrderGoods> ordergoodsList = null;
@@ -636,12 +629,6 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         //下单
         insertOrder(ordergoodsList, orderInfoVo, orderInfo, mgGoodsOrder);
 
-        //生成订单后发送发票信息
-        if (orderInfo.getInvoiceOrNot() == 1) {
-            invoiceDTOVo.setOrderIds(orderInfo.getOrderId());
-            invoiceDTOVo.setUserId(orderInfo.getUserId());
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE, invoiceDTOVo);
-        }
 //        if(goodsAmount.compareTo(0L)==0){
 //            updatePayStatus(orderInfo.getOrderSn(),2);
 //        }

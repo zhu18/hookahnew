@@ -4,6 +4,7 @@ import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
+import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
@@ -68,6 +69,9 @@ public class OrderInfoController extends BaseController {
 
     @Resource
     MgTongJiService mgTongJiService;
+
+    @Resource
+    MqSenderService mqSenderService;
 
 
     /**
@@ -497,9 +501,9 @@ public class OrderInfoController extends BaseController {
                 orderinfo.setInvoiceOrNot((byte)1);
             }
             if(cartIdArray[0].equals("-1")){
-                orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber, userCouponId, invoiceDTOVo);
+                orderinfo = orderInfoService.insert(orderinfo, goodsId, formatId,goodsNumber, userCouponId);
             }else{
-                orderinfo = orderInfoService.insert(orderinfo, cartIdArray, userCouponId, invoiceDTOVo);
+                orderinfo = orderInfoService.insert(orderinfo, cartIdArray, userCouponId);
             }
             List<Map> paymentList = initPaymentList(session);
 
@@ -515,7 +519,12 @@ public class OrderInfoController extends BaseController {
 
             //订单创建成功  异步添加统计信息  或者发送MQ消息处理
             countOrder(request, orderinfo.getOrderSn());
-
+            //生成订单后发送发票信息
+            if (orderinfo.getInvoiceOrNot() == 1) {
+                invoiceDTOVo.setOrderIds(orderinfo.getOrderId());
+                invoiceDTOVo.setUserId(orderinfo.getUserId());
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE, invoiceDTOVo);
+            }
 
             return "redirect:/pay/cash";
         }catch (HookahException e){
