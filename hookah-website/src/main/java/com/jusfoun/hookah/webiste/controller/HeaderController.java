@@ -51,7 +51,7 @@ public class HeaderController extends BaseController {
                 html.append("document.getElementById('userStatus').innerHTML = str;");
 
             }
-            response.setContentType("application/x-javascript; charset=utf-8");
+            response.setHeader("Content-Type", "application/x-javascript; charset=utf-8");
             response.getWriter().write(html.toString());
         } catch (Exception e) {
             e.printStackTrace();
