@@ -108,6 +108,7 @@ public class TongJiInfoServiceImpl implements TongJiInfoService {
         //获取当天当天企业认证数
         List<Condition> orgFilters = new ArrayList<>();
         orgFilters.add(Condition.like("addTime", sameDay));
+        orgFilters.add(Condition.like("status", 2));
         List<Organization> orgUsers = organizationService.selectList(orgFilters);
         List<MgTongJi> orgList = new ArrayList<MgTongJi>();
         for(Organization org : orgUsers){

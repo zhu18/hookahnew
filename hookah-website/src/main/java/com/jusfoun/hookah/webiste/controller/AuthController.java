@@ -412,6 +412,11 @@ public class AuthController extends BaseController {
             //给注册的供应商orgId赋值
             user1.setOrgId(orgId);
         }else {
+            if(isCheck.equals("0")){ // 自动认证通过  企业状态为2 否则为0
+                organization.setStatus("2");
+            }else {
+                organization.setStatus("0");
+            }
             organization = organizationService.insert(organization);
             user1.setOrgId(organization.getOrgId());
         }
@@ -446,20 +451,21 @@ public class AuthController extends BaseController {
         }
         // 企业认证成功状态
         //当isCheck为0时，直接认证通过,否则变为待审核状态
-        if(isCheck.equals("0")){
+        if(isCheck.equals("0")){ // 自动认证通过
             user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode());
-        }else {
+            userService.updateByIdSelective(user1);
+
+            if(user1.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
+                mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user1.getUserId(), 3, ""));
+                logger.info("企业用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
+            }
+
+            //更新微信用户推荐表
+            wXUserRecommendService.updateWXUserRecommendIsAuthenticate(user1.getUserId());
+        }else {  // 企业待审核
             user1.setUserType(HookahConstants.UserType.ORGANIZATION_CHECK_NO.getCode());
+            userService.updateByIdSelective(user1);
         }
-        userService.updateByIdSelective(user1);
-
-        if(user1.getUserType().equals(HookahConstants.UserType.ORGANIZATION_CHECK_OK.getCode())){
-            mqSenderService.sendDirect(RabbitmqQueue.CONTRACE_JF_MSGINFO, new JfBo(user1.getUserId(), 3, ""));
-            logger.info("企业用户通过审核发放积分【账号身份认证】>>>>>userId = " + user.getUserId());
-        }
-
-        //更新微信用户推荐表
-        wXUserRecommendService.updateWXUserRecommendIsAuthenticate(user1.getUserId());
 
         try {
             Map<String, Cookie> cookieMap = ReadCookieUtil.ReadCookieMap(request);
