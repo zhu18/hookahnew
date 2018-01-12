@@ -14,6 +14,7 @@ import com.jusfoun.hookah.rpc.api.CategoryService;
 import com.jusfoun.hookah.rpc.api.GoodsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,42 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category, String> im
     @Override
     public Category selectById(String id) {
         return categoryMapper.selectByPrimaryKey(id);
+    }
+
+
+    @Value("${myconf.host.website}")
+    private String  hostWebsite;
+
+    @Value("${myconf.host.static}")
+    private String  hostStatic;
+
+    @Value("${myconf.host.auth}")
+    private String  hostAuth;
+
+    @Value("${myconf.host.console}")
+    private String  hostConsole;
+
+    @Value("${myconf.host.crowd}")
+    private String  hostCrowd;
+
+    //  获取yml文件中host
+    @Override
+    public String getHostUrl(int i) {
+        /*String website = this.hostWebsite;
+        System.out.print(website);*/
+        String hostUrl = null;
+        if(i == 1){
+            hostUrl = this.hostWebsite;
+        }else if(i == 2){
+            hostUrl = this.hostStatic;
+        }else if(i == 3){
+            hostUrl = this.hostAuth;
+        }else if(i == 4){
+            hostUrl = this.hostConsole;
+        }else if(i == 5){
+            hostUrl = this.hostCrowd;
+        }
+        return hostUrl;
     }
 
     @Cacheable(value = "CategoryVo")
