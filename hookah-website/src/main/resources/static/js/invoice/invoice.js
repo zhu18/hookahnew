@@ -6,6 +6,12 @@ var invoiceStatus = ''; //专用发票状态
 var regionParam = 100000;
 var isAddAddress = 'add';
 var eidtAId = '';
+var oTitleId = '';
+var oAddressId = '';
+var oInvoiceInfo = '';
+var oInfo = '';
+var isEditSpecial = 'add';
+var editSpecialTitleId = '';
 $('.translate-close-btn').click(function () { //关闭浮层
 	$('.translate-bg').hide();
 });
@@ -18,7 +24,7 @@ $('.tab-btn a').click(function () {
 	$(this).addClass('hover').siblings().removeClass('hover');
 	$('.tab-box table').eq(index).addClass('hover').siblings().removeClass('hover');
 	$('.info-t div').eq(index).addClass('hover').siblings().removeClass('hover');
-})
+});
 var regex = {
 	titleName: /[\u4e00-\u9fa5]{1,50}/,    //发票抬头
 	taxpayerIdentifyNo: /^[0-9A-Z]{15,20}$/,     //纳税人识别号
@@ -42,7 +48,8 @@ function getInvoiceInfo() {
 		},
 		success: function (data) {
 			if (data.code == 1) {
-				var html = ''
+				var html = '';
+				html += '<div class="input-invoice hover" invoiceid="" titleids=""><input type="text" readonly="readonly" value="个人"></div>';
 				if (data.data.length > 0) {
 					for (var i = 0; i < data.data.length; i++) {
 						html += '<div class="input-invoice" invoiceid="' + data.data[i].taxpayerIdentifyNo + '" titleids="' + data.data[i].titleId + '"><input type="text" readonly="readonly" value="' + data.data[i].titleName + '"><a href="javascript:void(0)" class="editTitle" titleid="' + data.data[i].titleId + '" titleName="' + data.data[i].titleName + '" taxpayerIdentifyNo="' + data.data[i].taxpayerIdentifyNo + '">编辑</a><a href="javascript:void(0);" class="delTitle" titleid="' + data.data[i].titleId + '">删除</a></div>';
@@ -108,6 +115,9 @@ function selectThisTitle(event) { //选择发票信息
 	$('.input-invoice').click(function (event) {
 		$(this).addClass('hover').siblings().removeClass('hover');
 		var invoiceid = $(this).attr('invoiceid');
+
+		$('.invoceVal').html($(this).children('input').val());
+		// console.log($(this).children('input').val());
 		$('.p_input-exclusive').val(invoiceid);
 		event.stopPropagation()
 	})
@@ -159,6 +169,8 @@ $('#J_expertBtn').click(function () { //切换到专用发票
 		getExpert()
 	}
 });
+var resetEditSpecialTitle = null;
+
 function getExpert() {//获取专用发票信息
 	$.ajax({
 		url: host.website + '/api/userInvoiceTitle/findAll',
@@ -169,6 +181,8 @@ function getExpert() {//获取专用发票信息
 		success: function (data) {
 			if (data.code == 1) {
 				isLoadZ = true;
+				resetEditSpecialTitle = data;
+				$('.J_edit_invoice').attr('tid',data.data.tid);
 				switch (data.data.invoiceStatus) {
 					case 0:
 						invoiceStatus = '未添加';
@@ -176,27 +190,38 @@ function getExpert() {//获取专用发票信息
 						$('.add-go-address-special').hide();//跳转到地址管理页面
 						break;
 					case 1:
-						invoiceStatus = '审核中';
-						$('.z_invoice a').hide();
-						setInvoiceVal(data)
+						invoiceStatus = '<span style="color:#fff000">审核中</span>';
+						$('.submit-invoice').hide();
+						$('.cancel-edit').hide();
+						setInvoiceVal(data);
+						$('.add-go-address-special').attr('tid',data.data.titleId);
 						$('.Z_invoice_item_bot').hide();  //增票资质确认书
 						$('.Z_set_btn').hide();//设置按钮
 						$('.add-go-address-special').show();//跳转到地址管理页面
 						$('.Z_ssac .text-input').css({'border': 'none'}).attr('readonly', 'readonly');
 						break;
 					case 2:
-						invoiceStatus = '已添加';
-						setInvoiceVal(data)
-						$('.z_invoice a').hide();
+						invoiceStatus = '<span style="color:#0f0">已添加</span>';
+						setInvoiceVal(data);
+						$('.J_edit_invoice').attr('tid',data.data.titleId);
+						$('.submit-invoice').hide();
 						$('.Z_invoice_item_bot').hide();  //增票资质确认书
 						$('.add-go-address-special').show();//跳转到地址管理页面
+						$('.Z_ssac .text-input').css({'border': 'none'}).attr('readonly', 'readonly');
 						$('.Z_set_btn.J_reset_invoice').hide();
 						break;
 					case 3:
-						invoiceStatus = '未通过';
+						invoiceStatus = '<span style="color:#f00">未通过</span>';
 						$('.Z_set_btn').hide();
+						setInvoiceVal(data);
+						$('.J_edit_invoice').attr('tid',data.data.titleId);
+						$('.Z_ssac .text-input').css({'border': 'none'}).attr('readonly', 'readonly');
 						$('.Z_set_btn.J_reset_invoice').show();
+						$('.Z_set_btn.J_edit_invoice').show();
+						$('.Z_invoice_item_bot').hide();  //增票资质确认书
 						$('.add-go-address-special').hide();//跳转到地址管理页面
+						$('.submit-invoice').hide();
+						$('.cancel-edit').hide();
 						break;
 				}
 				$('.Z_ssac .invoiceStatus').html(invoiceStatus)
@@ -207,6 +232,35 @@ function getExpert() {//获取专用发票信息
 		}
 	})
 }
+$('.J_edit_invoice').click(function(){
+	setInvoiceVal(resetEditSpecialTitle);
+	$('.add-go-address-special').hide();
+	$('.submit-invoice').show();
+	$('.cancel-edit').show();
+	isEditSpecial = 'modify';
+	editSpecialTitleId = $(this).attr('tid');
+	$('.Z_invoice_item_bot').show();  //增票资质确认书
+	$('.Z_ssac .text-input').css({'border': '1px solid #e5e5e5'}).removeAttr('readonly');
+});
+$('.J_reset_invoice').click(function(){
+	removeInvoiceVal();
+	$('.add-go-address-special').hide();
+	$('.submit-invoice').show();
+	$('.cancel-edit').show();
+	isEditSpecial = 'modify';
+	editSpecialTitleId = $(this).attr('tid');
+	$('.Z_invoice_item_bot').show();  //增票资质确认书
+	$('.Z_ssac .text-input').css({'border': '1px solid #e5e5e5'}).removeAttr('readonly');
+});
+$('.cancel-edit').click(function(){
+	setInvoiceVal(resetEditSpecialTitle);
+	$('.add-go-address-special').show();
+	$('.submit-invoice').hide();
+	$('.cancel-edit').hide();
+	$('.Z_invoice_item_bot').hide();  //增票资质确认书
+	isEditSpecial = 'add';
+	$('.Z_ssac .text-input').css({'border': 'none'}).attr('readonly', 'readonly');
+});
 function setInvoiceVal(data) {
 	$('.tab-box input[name=Z_titleName]').val(data.data.titleName);
 	$('.tab-box input[name=Z_taxpayerIdentifyNo]').val(data.data.taxpayerIdentifyNo);
@@ -214,6 +268,14 @@ function setInvoiceVal(data) {
 	$('.tab-box input[name=Z_regTel]').val(data.data.regTel);
 	$('.tab-box input[name=Z_openBank]').val(data.data.openBank);
 	$('.tab-box input[name=Z_bankAccount]').val(data.data.bankAccount);
+}
+function removeInvoiceVal(data) {
+	$('.tab-box input[name=Z_titleName]').val('');
+	$('.tab-box input[name=Z_taxpayerIdentifyNo]').val('');
+	$('.tab-box input[name=Z_regAddress]').val('');
+	$('.tab-box input[name=Z_regTel]').val('');
+	$('.tab-box input[name=Z_openBank]').val('');
+	$('.tab-box input[name=Z_bankAccount]').val('');
 }
 function testInvoiceInfo(titleName, taxpayerIdentifyNo, regAddress, regTel, openBank, bankAccount) { //验证专用发票
 	if (regex.titleName.test(titleName)) {
@@ -255,6 +317,10 @@ function testInvoiceInfo(titleName, taxpayerIdentifyNo, regAddress, regTel, open
 	}
 }
 $('.submit-invoice').click(function () {
+	if(!$(".J-invoiceZZ").is(':checked')){
+		$.alert('请阅读并同意《增票资质确认书》');
+		return;
+	}
 	var titleName = $('input[name=Z_titleName]').val();
 	var taxpayerIdentifyNo = $('input[name=Z_taxpayerIdentifyNo]').val();
 	var regAddress = $('input[name=Z_regAddress]').val();
@@ -262,7 +328,7 @@ $('.submit-invoice').click(function () {
 	var openBank = $('input[name=Z_openBank]').val();
 	var bankAccount = $('input[name=Z_bankAccount]').val();
 	if ($('.Z_ssac').hasClass('hover')) {
-		if (invoiceStatus == '未添加') {
+		// if (invoiceStatus == '未添加') {
 			if (testInvoiceInfo(titleName, taxpayerIdentifyNo, regAddress, regTel, openBank, bankAccount)) {
 				var data = {
 					userInvoiceType: 1,
@@ -274,15 +340,23 @@ $('.submit-invoice').click(function () {
 					bankAccount: bankAccount,
 					invoiceStatus: 1
 				};
+				var url = '';
+				if(isEditSpecial == 'add'){
+					url = '/api/userInvoiceTitle/save';
+				}else if(isEditSpecial == 'modify'){
+					url = '/api/userInvoiceTitle/edit';
+					data.titleId = editSpecialTitleId;
+					console.log(editSpecialTitleId)
+				}
 				$.ajax({
-					url: host.website + '/api/userInvoiceTitle/save',
-					type: 'get',
+					url: host.website + url,
+					type: 'post',
 					data: {
 						userInvoiceTitle: JSON.stringify(data)
 					},
 					success: function (data) {
 						if (data.code == 1) {
-							$.alert('提交成功，请选择售票地址')
+							$.alert('提交成功，请选择售票地址');
 							getExpert()
 						} else {
 							$.alert(data.message);
@@ -290,9 +364,9 @@ $('.submit-invoice').click(function () {
 					}
 				})
 			}
-		} else {
-			console.log('已添加');
-		}
+		// } else {
+		// 	console.log('已添加');
+		// }
 	} else {
 		//普通发票
 
@@ -310,8 +384,10 @@ $('.add-go-address-common').click(function(){
 		});
 		if (nums > 0) {//判断是否选择抬头  //true     --------------------------------------待做赋值处理
 			console.log(titleIds);
+			oTitleId = titleIds;
 			$('.invoiceInfo').hide();
 			$('.invoiceAddress').show();
+			// oInvoiceInfo='普通发票 办公用品 个人';
 			if (!isLoadAddress) {
 				getInvoiceAddress()
 			}
@@ -321,10 +397,13 @@ $('.add-go-address-common').click(function(){
 	} else {
 		$.alert('请添加抬头信息');
 	}
-})
+});
 $('.add-go-address-special').click(function () {
 	$('.invoiceInfo').hide();
 	$('.invoiceAddress').show();
+	// console.log($(this).attr('tid'));
+	// oInvoiceInfo = '专用发票 办公用品 单位';
+	oTitleId = $(this).attr('tid');
 	if (!isLoadAddress) {
 		getInvoiceAddress()
 	}
@@ -419,7 +498,7 @@ function getInvoiceAddress() {
 					isLoadAddress = true;
 					var html = '';
 					for (var i = 0; i < data.data.length; i++) {
-						html += '<div class="addressInfo-item" aid="' + data.data[i].id + '">';
+						html += '<div class="addressInfo-item" aid="' + data.data[i].id + '" ainfo="'+ data.data[i].receiveAddress + data.data[i].address + '，'+ data.data[i].invoiceName + '，'+ data.data[i].mobile +'">';
 						html += '<div class="info-t">';
 						html += '<span>收票人：' + data.data[i].invoiceName + '</span>';
 						html += '<span>手机号：' + data.data[i].mobile + '</span>';
@@ -625,11 +704,52 @@ function endSetting(){
 				if ($(this).hasClass('hover')) {
 					nums += 1;
 					addressIds = $(this).attr('aid');
+					oInfo = $(this).attr('ainfo');
 				}
 			});
 			if (nums > 0) {//判断是否选择抬头  //true     --------------------------------------待做赋值处理
 				console.log(addressIds);
-
+				oAddressId = addressIds;
+				oInvoiceInfo = $('.info-t div.hover').html();
+				if(window.location.pathname == '/order/directInfo'){
+					$('.editAddress input[name=titleId]').val(oTitleId);
+					$('.editAddress input[name=addressId]').val(oAddressId);
+					$('.translateInfo span').html('开发票');
+					$('.translateInfo-g').html('<p>'+oInvoiceInfo+'</p><p>'+oInfo+'</p>');
+					$('#J-noTranslate').show();
+					$('.translate-bg').hide();
+				}else if(window.location.pathname == '/usercenter/myInvoice'){
+					if(orderIds){
+						var datas = null;
+						if(editType == 'add'){
+							datas={
+								orderIds:orderIds,
+								titleId:oTitleId,
+								id:oAddressId
+							};
+						}else if(editType == 'modify'){
+							datas={
+								orderIds:orderIds,
+								titleId:oTitleId,
+								id:oAddressId,
+								invoiceId:invoiceId
+							};
+						}
+						$.ajax({
+							type: "post",
+							url: host.website + '/api/invoice/upsert',
+							data:datas,
+							success: function (data) {
+								if (data.code == 1) {
+									$('.translate-bg').hide();
+									$.alert('保存成功')
+								} else {
+									$.alert(data.message)
+								}
+							}
+						});
+					}
+				}
 			} else {
 				$.alert('请选择收票地址');
 			}

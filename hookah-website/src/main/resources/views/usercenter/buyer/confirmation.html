@@ -1,0 +1,34 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/plugins/jedate/jedate.css">
+<link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+    <div class="grid-row clearfix">
+        <%include("/usercenter/user-center-menu.html"){} %>
+        <div class="orderManagement margin-top-10 grid-right padding-bottom-20 margin-bottom-30">
+            <div class="myInvoice">
+                <div class="atten">
+                    <h3 class="myeval"><a href="/usercenter/myInvoice" style="color: #247de8;">我的发票</a> > 增票资质确认书</h3>
+                </div>
+                <div class="confirmation-info">
+                    <h3>申请开具增值税专用发票确认书</h3>
+                    <p>根据国家税法及发票管理相关规定，任何单位和个人不得要求他人为自己开具与实际经营业务情况不符的增值税专用发票【包括并不限于</p>
+                    <p>（1）在没有货物采购或者没有接受应税劳务的情况下要求他人为自己开具增值税专用发票；</p>
+                    <p>（2）虽有货物采购或者接受应税劳务但要求他人为自己开具数量或金额与实际情况不符的增值税专用发票】，否则属于“虚开增值税专用发票”。</p>
+                    <p>我已充分了解上述各项相关国家税法和发票管理规定，并确认仅就我司实际购买商品或服务索取发票。</p>
+                    <p>如我司未按国家相关规定申请开具或使用增值税专用发票，由我司自行承担相应法律后果。</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
