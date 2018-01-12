@@ -493,7 +493,7 @@ public class OrderInfoController extends BaseController {
             }
             init(orderinfo);
 
-            if (invoiceDTOVo.getId() != null && invoiceDTOVo.getTitleId() != null){
+            if (invoiceDTOVo.getAddressId() != null && invoiceDTOVo.getTitleId() != null){
                 orderinfo.setInvoiceOrNot((byte)1);
             }
             if(cartIdArray[0].equals("-1")){
@@ -515,6 +515,7 @@ public class OrderInfoController extends BaseController {
 
             //订单创建成功  异步添加统计信息  或者发送MQ消息处理
             countOrder(request, orderinfo.getOrderSn());
+
 
             return "redirect:/pay/cash";
         }catch (HookahException e){
