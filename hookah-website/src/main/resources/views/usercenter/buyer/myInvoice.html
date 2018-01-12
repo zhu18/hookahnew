@@ -1,0 +1,60 @@
+<%
+var head = {
+%>
+<link rel="stylesheet" href="/static/css/usercenter/buyer/buyer.css">
+<link rel="stylesheet" href="/static/css/order/orderInfo.css">
+<script type="text/javascript">
+	var pagePath = '/api/invoice/list';
+	var pageType = 'get';
+	var dataParm = {};
+	dataParm.pageNumber = 1;
+	dataParm.pageSize = 5;
+	dataParm.invocieStatus = -1;  // -1:全部 ； 0、1、2、3:未开发票，传任意一个值均可；4:已开票
+</script>
+<%};%>
+<%
+var htmlPart = {
+%>
+<div class="grid-0 backgorund-gray">
+	<div class="grid-row clearfix">
+		<%include("/usercenter/user-center-menu.html"){} %>
+		<div class="orderManagement margin-top-10 grid-right padding-bottom-20 margin-bottom-30">
+			<div class="myInvoice">
+				<div class="atten">
+					<h3 class="myeval">我的发票</h3>
+				</div>
+				<div class="infos">
+					<p>1.增值税普通发票和专用发票，订单完成后90天内可以补开发票；</p>
+					<p>2.企业用户可以集中开票，多个订单可以累积开一张发票，发票内容为商品明细；</p>
+					<p>3.增值税专用发票资质维护入口：我的BDG--订单管理--增票资质；</p>
+					<p>4.发票开出后30天内，仅可支持换开发票一次；换开申请提交后，需将纸质发票邮寄回BDGstore；</p>
+					<p>5.30个自然日未收到您寄回的发票，申请单将自动驳回，换开纸质发票往返运费需客户自行承担；</p>
+					<p>6.增值税专用发票和增值税普通发票相互可换开；发票内容可由大类换开明细；发票抬头支持单位抬头换开个人抬头；</p>
+					<p>7.普通用户的发票金额不小于500元时，可免费邮寄，小于500元时由用户承担邮寄费用；VIP会员的发票金额不小于200元时可免费邮寄，小于200元时由该会员承担邮寄费用。</p>
+				</div>
+			</div>
+			<div class="searchQuery padding-top-10">
+				<div class="grid-left">
+					开票状态：
+					<select name="invoiceStatus" id="" style="min-width: 120px;height: 30px;border: 1px solid #ccc;">
+						<option value="-1">全部</option>
+						<option value="0">未开</option>
+						<option value="4">已开</option>
+					</select>
+				</div>
+			</div>
+			<div class="list">
+				<div class="order"></div>
+				<%include("/layout/pageaction.html"){} %>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/static/js/usercenter/mybuyer/myInvoice.js"></script>
+<%
+include("/invoice/invoice.html"){}
+%>
+<%};
+include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
+%>
+

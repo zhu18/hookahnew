@@ -10,8 +10,8 @@
 			<tr>
 				<td>当前发票：</td>
 				<td class="info-t">
-					<div class="hover"><span>普通发票</span><span>办公用品</span><span>个人</span></div>
-					<div><span>专用发票</span><span>办公用品</span><span>单位</span></div>
+					<div class="hover"><span>普通发票</span><span>明细</span><span class="invoceVal">个人</span></div>
+					<div><span>增值税发票</span></div>
 				</td>
 			</tr>
 			<tr>
@@ -74,7 +74,7 @@
 							<td></td>
 							<td>
 								<div class="form-btn z_invoice" style="margin-top: 20px;">
-									<a href="javascript:void(0)" class="add-go-address add-go-address-common">添加收票地址</a>
+									<a href="javascript:void(0)" class="add-go-address add-go-address-common">选择收票地址</a>
 								</div>
 							</td>
 						</tr>
@@ -98,8 +98,8 @@
 						<tr class="Z_invoice_btn">
 							<td></td>
 							<td>
-								<a href="javascript:void(0)" class="Z_set_btn J_add_invoice" style="background: #237ee8;color: #fff;">修改</a>
-								<a href="javascript:void(0)" class="Z_set_btn J_edit_invoice" style="background: #e34f4f;color: #fff;">删除</a>
+								<a href="javascript:void(0)" class="Z_set_btn J_edit_invoice" style="background: #237ee8;color: #fff;">修改</a>
+								<a href="javascript:void(0)" class="Z_set_btn J_del_invoice" style="background: #e34f4f;color: #fff;">删除</a>
 								<a href="javascript:void(0)" class="Z_set_btn J_reset_invoice" style="background: #237ee8;color: #fff;">重新增加增票资质</a>
 							</td>
 						</tr>
@@ -160,7 +160,7 @@
 						<tr class="Z_invoice_item Z_invoice_item_bot">
 							<td></td>
 							<td>
-								<label><input type="checkbox" checked="checked">我已阅读并同意<a href="javascript:void(0)" style="color:#0041ed;">《增票资质确认书》</a></label>
+								<label><input type="checkbox" checked="checked" class="J-invoiceZZ">我已阅读并同意<a href="javascript:void(0)" style="color:#0041ed;">《增票资质确认书》</a></label>
 							</td>
 						</tr>
 						<tr>
@@ -168,7 +168,8 @@
 							<td>
 								<div class="form-btn z_invoice" style="margin-top: 20px;">
 									<a href="javascript:void(0)" class="submit-invoice">提交</a>
-									<a href="javascript:void(0)" class="add-go-address add-go-address-special" style="display: none">添加收票地址</a>
+									<a href="javascript:void(0)" class="add-go-address add-go-address-special" style="display: none">选择收票地址</a>
+									<a href="javascript:void(0)" class="cancel-edit" style="display: none">取消</a>
 								</div>
 							</td>
 						</tr>
@@ -181,7 +182,7 @@
 	<div class="translate-box invoiceAddress">
 		<h4>收票地址<a href="javascript:void(0)" class="J_gotoInvoiceInfo" style="font-size: 12px;font-weight: normal;color: #0000ff;margin-left: 20px;">返回发票信息页</a><span class="fa fa-close translate-close-btn"></span></h4>
 		<div class="addAddress" style="display: none">
-			<a href="javascript:void(0)" class="addAddressBtn">添加收票地址</a>
+			<a href="javascript:void(0)" class="addAddressBtn"><i class="fa fa-plus"></i>添加收票地址</a>
 		</div>
 		<div class="editAddress" style="display: none">
 			<table>

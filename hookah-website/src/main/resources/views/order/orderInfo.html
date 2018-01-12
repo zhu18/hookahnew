@@ -40,6 +40,8 @@ var htmlPart = {
 								<!--<th>优惠(元)</th>-->
 								<th>总价(元)</th>
 							</tr>
+							<input type="hidden" name="titleId" value="">
+							<input type="hidden" name="addressId" value="">
 							<%for(list in cartOrder){%>
 							<input type="hidden" name="cartIdArray" value="${list.recId}">
 							<input type="hidden" name="goodsId" value="${list.goodsId}">
@@ -62,22 +64,23 @@ var htmlPart = {
 								<td>${(list.goodsPrice * list.goodsNumber) / 100}</td>
 							</tr>
 							<%}%>
-							<!--<tr>-->
-								<!--<td colspan="9">-->
-									<!--<table class="coupon-list">-->
-										<!--<tr class="tab-title">-->
-											<!--<th colspan="9"><h5 class="font-size-16" style="padding-left: 5px;">发票信息 <span class="translate-titleTip"><i class="fa fa-lightbulb-o"></i>开企业抬头发票须填写纳税人识别号，以免影响报销</span></h5></th>-->
-										<!--</tr>-->
-										<!--<tr>-->
-											<!--<td colspan="9" style="font-size: 16px;line-height: 30px;color:#666; padding:5px 10px">-->
-												<!--<ol>-->
-													<!--<li class="translateInfo"><span>不开发票</span><a id="J-editTranslate" style="margin-left:40px;color:#0041ed" href="javascript:void(0)" class="">修改</a></li>-->
-												<!--</ol>-->
-											<!--</td>-->
-										<!--</tr>-->
-									<!--</table>-->
-								<!--</td>-->
-							<!--</tr>-->
+							<tr>
+								<td colspan="9">
+									<table class="coupon-list">
+										<tr class="tab-title">
+											<th colspan="9"><h5 class="font-size-16" style="padding-left: 5px;">发票信息 <span class="translate-titleTip"><i class="fa fa-lightbulb-o"></i>开企业抬头发票须填写纳税人识别号，以免影响报销</span></h5></th>
+										</tr>
+										<tr>
+											<td colspan="9" style="font-size: 16px;line-height: 30px;color:#666; padding:5px 10px">
+												<ol>
+													<li class="translateInfo"><span>不开发票</span><a id="J-editTranslate" style="margin-left:40px;color:#0041ed" href="javascript:void(0)" class="">修改</a><a id="J-noTranslate" style="margin-left:40px;color:#0041ed;display: none;" href="javascript:void(0)" class="">不开发票</a></li>
+													<li class="translateInfo-g"></li>
+												</ol>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
 							<%if(isNotEmpty(couponList)){%>
 							<tr>
 								<td colspan="9">

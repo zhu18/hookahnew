@@ -580,4 +580,59 @@
 .order-manage .cart-box .order-items .isOffLine .money{
     color: #ccc;
 }
-
+.myInvoice .atten {
+    height: 30px;
+    padding-top: 10px;
+    border-bottom: 1px solid #EDEDED;
+}
+.myInvoice .atten .myeval{
+    font:15px/20px "microsoft yahei";
+    padding-left:10px;
+    border-left:2px solid #237DE7;
+}
+.myInvoice .infos{
+    padding: 10px 5px;
+    background: #f3f3f3;
+    margin: 10px 0;
+    line-height: 26px;
+}
+.invoice-page-btn{
+    width: 100px;
+    height: 30px;
+    display: inline-block;
+    background: #237ee8;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+.invoice-page-btn-d{
+    display: block;
+    color: #247de8;
+}
+.confirmation-info h3{
+    text-align: center;
+    font-size: 16px;
+    line-height: 50px;
+}
+.confirmation-info p{
+    line-height: 30px;
+    font-size: 13px;
+    color:#000;
+}
+.invoiceTetails{
+    font-size: 14px;
+    line-height: 30px;
+    padding-left:100px;
+}
+.invoiceTetails dl{
+    margin-top:20px;
+}
+.invoiceTetails dt{
+    background: #d4d4d4;
+    margin-bottom: 10px;
+}
+.invoiceTetails li,.invoiceTetails dt,.invoiceTetails dd{
+    padding-left:10px;
+}

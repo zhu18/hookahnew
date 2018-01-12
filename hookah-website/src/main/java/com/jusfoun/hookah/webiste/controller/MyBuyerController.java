@@ -73,6 +73,22 @@ public class MyBuyerController {
         return "usercenter/buyer/points";
     }
 
+    //发票
+    @RequestMapping(value = "/myInvoice", method = RequestMethod.GET)
+    public String myInvoice() {
+        return "usercenter/buyer/myInvoice";
+    }
+    //发票详情
+    @RequestMapping(value = "/invoiceDetails", method = RequestMethod.GET)
+    public String invoiceDetails() {
+        return "usercenter/buyer/invoiceDetails";
+    }
+    //增票资质确认书
+    @RequestMapping(value = "/confirmation", method = RequestMethod.GET)
+    public String confirmation() {
+        return "usercenter/buyer/confirmation";
+    }
+
 //    @RequestMapping(value = "/viewDetails", method = RequestMethod.GET)
 //    public String viewDetails() {  return "usercenter/buyer/viewDetails"; }
 
