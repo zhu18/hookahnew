@@ -31,4 +31,6 @@ public interface CategoryService extends GenericService<Category,String> {
     public List<CategoryVo> getAdminCatTree();
 
     public ReturnData findOneLevelGoodsType();
+
+    public String getHostUrl(int i);
 }
