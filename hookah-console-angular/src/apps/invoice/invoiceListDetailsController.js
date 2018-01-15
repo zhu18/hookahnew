@@ -4,91 +4,166 @@
 class invoiceListDetailsController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
-        // $scope.buyerAccountType=[
-        //     {id:-1, name:"全部"},
-        //     {id:2, name:"个人"},
-        //     {id:4, name:"企业"}
-        // ];
-        // $scope.userType=-1;
-        // $scope.invoiceStates=[
-        //     {id:-1, name:"全部"},
-        //     {id:4, name:"已开票"},
-        //     {id:1, name:"待审核"},
-        //     {id:2, name:"待邮寄"}
-        // ];
-        // $scope.invoiceStatus=-1;
-        // $scope.invoiceType=[
-        //     {id:-1, name:"全部"},
-        //     {id:0, name:"普通发票"},
-        //     {id:1, name:"增值税专用发票"}
-        // ];
-        // $scope.invoiceType=-1;
-        // $scope.controlScreen=function () { //控制搜索框展示函数
-        //     $scope.controlScreenShow=true;
-        //     $scope.screenTitle='收起筛选';
-        //     $scope.controlScreenBtn=function () { //控制筛选盒子显隐的函数
-        //         if ($scope.controlScreenShow){
-        //             $scope.controlScreenShow=false;
-        //             $scope.screenTitle='展开筛选';
-        //         }else {
-        //             $scope.controlScreenShow=true;
-        //             $scope.screenTitle='收起筛选';
-        //         }
-        //     };
-        // }
-        // $scope.controlScreen();
-        // $scope.search = function () { //Render page function
-        //     var promise = $http({
-        //         method: 'GET',
-        //         url: $rootScope.site.apiServer + "/api/invoice/back/all",
-        //         params: {
-        //             userName: $scope.userName,//审核状态
-        //             userType: $scope.userType,
-        //             invoiceStatus: $scope.invoiceStatus,
-        //             invoiceType: $scope.invoiceType,
-        //             currentPage: $rootScope.pagination.currentPage, //当前页码
-        //             pageSize: $rootScope.pagination.pageSize,
-        //         }
-        //     });
-        //     promise.then(function (res) {
-        //         console.log('数据在这里');
-        //         console.log(res);
-        //         if (res.data.code == '1') {
-        //             $scope.invoiceList = res.data.data.list;
-        //             $scope.showNoneDataInfoTip = false;
-        //             if (res.data.data.list.length > 0) {
-        //
-        //                 if (res.data.data.totalPage > 1) {
-        //                     $scope.showPageHelpInfo = true;
-        //                 } else {
-        //                     $scope.showPageHelpInfo = false;
-        //
-        //                 }
-        //             } else {
-        //                 $rootScope.loadingState = false;
-        //                 $scope.showNoneDataInfoTip = true;
-        //             }
-        //
-        //
-        //         } else {
-        //             $scope.invoiceList = [];
-        //             $scope.showNoneDataInfoTip = true;
-        //         }
-        //         $rootScope.loadingState = false;
-        //         growl.addSuccessMessage("订单数据加载完毕。。。");
-        //     });
-        //
-        // }; //列表搜索
-        // $scope.search();
-        // $scope.getDetails=function (id) {
-        //     $state.go('invoice.list', {id: id});
-        // };
-        // $scope.refresh = function () {
-        //     $scope.search();
-        // };
-        // $scope.pageChanged = function () {
-        //     $scope.search();
-        // };
+        $scope.invoiceStatu="2"
+        $scope.reader=function () {
+            let promise = $http({
+                method: 'GET',
+                url: $rootScope.site.apiServer + "/api/invoice/back/findById",
+                params: {
+                    invoiceId:$stateParams.id
+                }
+            });
+            promise.then(function (res, status, config, headers) {
+                if (res.data.code == '1') {
+                    console.log(res.data.data);
+                    var info=res.data.data;
+                    $scope.invoiceStatus=info.invoiceStatus;//发票状态
+                    $scope.invoiceSn=info.invoiceSn;
+                    $scope.invoiceType=info.invoiceType;
+                    var userInvoiceVo=info.userInvoiceVo;//增票资质
+                    if(userInvoiceVo){
+                        $scope.userName=userInvoiceVo.userName;
+                        $scope.realName=userInvoiceVo.realName;
+                        $scope.userType=userInvoiceVo.userType;
+                    }
+                    $scope.addTime=info.addTime;
+                    $scope.invoiceAmount=info.invoiceAmount;
+                    $scope.orderInfoInvoiceVoList=info.orderInfoInvoiceVoList;//关联订单列表
+                    var userInvoiceTitle=info.userInvoiceTitle;//增票资质
+                    if(userInvoiceTitle){
+                        $scope.titleName=userInvoiceTitle.titleName;
+                        $scope.taxpayerIdentifyNo=userInvoiceTitle.taxpayerIdentifyNo;
+                        $scope.regTel=userInvoiceTitle.regTel;
+                        $scope.regAddress=userInvoiceTitle.regAddress;
+                        $scope.bankAccount=userInvoiceTitle.bankAccount;
+                    }
+                    var userInvoiceAddress=info.userInvoiceAddress;//收票信息
+                    if(userInvoiceAddress){
+                        $scope.invoiceName=userInvoiceAddress.invoiceName;
+                        $scope.mobile=userInvoiceAddress.mobile;
+                        $scope.receiveAddress=userInvoiceAddress.receiveAddress;
+                    }
+                    var expressInfo=info.expressInfo;//邮寄信息
+                    if(expressInfo){
+                        $scope.expressName=expressInfo.expressName;
+                        $scope.expressNo=expressInfo.expressNo;
+                        $scope.addTime=expressInfo.addTime;
+                    }
+                } else {
+
+                }
+                $rootScope.loadingState = false;
+                growl.addSuccessMessage("订单数据加载完毕。。。");
+            });
+        };
+        $scope.reader();
+        $scope.readerData=function (data) {
+            // 日历插件开始
+            $scope.inlineOptions = {
+                customClass: getDayClass,
+                minDate: new Date(),
+                maxDate: new Date(data),
+                showWeeks: true
+            };
+            $scope.open1 = function () {
+                $scope.popup1.opened = true;
+            };
+            $scope.popup1 = {
+                opened: false
+            };
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            var afterTomorrow = new Date();
+            afterTomorrow.setDate(tomorrow.getDate() + 1);
+            $scope.events = [
+                {
+                    date: tomorrow,
+                    status: 'full'
+                },
+                {
+                    date: afterTomorrow,
+                    status: 'partially'
+                }
+            ];
+            function getDayClass(data) {
+                var date = data.date,
+                    mode = data.mode;
+                if (mode === 'day') {
+                    var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+                    for (var i = 0; i < $scope.events.length; i++) {
+                        var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                        if (dayToCheck === currentDay) {
+                            return $scope.events[i].status;
+                        }
+                    }
+                }
+                return '';
+            }
+
+            // 日历插件结束
+        }
+        $scope.readerData()
+        $scope.auditing=function () {
+            var modalInstance =$rootScope.openConfirmDialogModal("确认审核通过？");
+            modalInstance.result.then(function () {
+                let data={
+                    invoiceId:$stateParams.id,
+                    invoiceStatus:$scope.invoiceStatu,
+                    auditOpinion:$scope.auditOpinion
+                }
+                let promise = $http({
+                    method: 'post',
+                    url: $rootScope.site.apiServer + "/api/invoice/back/check",
+                    params: {invoice:JSON.stringify(data)}
+                });
+                promise.then(function (res, status, config, headers) {
+                    if (res.data.code == '1') {
+                        console.log(res.data.data);
+                        $state.go('invoice.list');
+                    } else {
+
+                    }
+                    $rootScope.loadingState = false;
+                    growl.addSuccessMessage("订单数据加载完毕。。。");
+                });
+            }, function () {
+                $state.go('invoice.listDetails');
+            });
+
+        }
+        $scope.save=function () {
+            var modalInstance =$rootScope.openConfirmDialogModal("确认提交信息吗？");
+            modalInstance.result.then(function () {
+                console.log($scope.saveExpressName);
+                let data={
+                    invoiceId:$stateParams.id,
+                    expressName:$scope.saveExpressName,
+                    expressNo:$scope.saveExpressNo
+                };
+                console.log($scope.saveExpressName);
+
+                let promise = $http({
+                    method: 'post',
+                    url: $rootScope.site.apiServer + "/api/invoice/back/send",
+                    params: {expressInfo:JSON.stringify(data)}
+                });
+                promise.then(function (res, status, config, headers) {
+                    if (res.data.code == '1') {
+                        console.log(res.data.data);
+                        $state.go('invoice.list');
+                    } else {
+
+                    }
+                    $rootScope.loadingState = false;
+                    growl.addSuccessMessage("订单数据加载完毕。。。");
+                });
+            }, function () {
+                $state.go('invoice.listDetails');
+            });
+
+        }
     }
 }
 

@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-sm-3">
                         <label class="control-label">发票类型：</label>
-                        <select ng-model="invoiceType" ng-options="x.id as x.name for x in invoiceType" style="width: 155px;height: 32px"></select>
+                        <select ng-model="invoiceType" ng-options="x.id as x.name for x in invoiceTypes" style="width: 155px;height: 32px"></select>
                         </div>
                     </div>
                 </div>
@@ -59,8 +59,8 @@
                             <tr data-ng-repeat="item in invoiceList">
                                 <td data-ng-bind="$index+1"></td>
                                 <td >
-                                    <a href="getDetails(item.id)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus==4"></a>
-                                    <a href="getDetails(item.id)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus!=4"></a>
+                                    <a ng-href="getDetails(item.invoiceId)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus==4"></a>
+                                    <a ng-href="getDetails(item.invoiceId)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus!=4"></a>
                                 </td>
                                 <td data-ng-bind="item.userName"></td>
                                 <td data-ng-bind="item.realName"></td>
@@ -73,6 +73,7 @@
                                 <td>
                                     <span data-ng-show="item.invoiceStatus==1" >待审核</span>
                                     <span data-ng-show="item.invoiceStatus==2" >待邮寄</span>
+                                    <span data-ng-show="item.invoiceStatus==3" >审核未通过</span>
                                     <span data-ng-show="item.invoiceStatus==4" >已开票</span>
 
                                 </td>
@@ -82,8 +83,8 @@
                                 </td>
                                 <td data-ng-bind="item.addTime"></td>
                                 <td >
-                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus!=4"  data-ng-click="public(item.id)">处理</button>
-                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus==4" data-ng-click="getDetails(item.id)">查看</button>
+                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus!=4"  data-ng-click="getDetails(item.invoiceId)">处理</button>
+                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus==4" data-ng-click="getDetails(item.invoiceId)">查看</button>
                                 </td>
                             </tr>
 

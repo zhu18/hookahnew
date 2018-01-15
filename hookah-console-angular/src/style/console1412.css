@@ -9673,3 +9673,32 @@ table .roundedTwo{
 .cursor-pointer{
   cursor: pointer !important;
 }
+
+
+.padding-10{
+  padding: 10px !important;
+}
+.border-bottom{
+  border-bottom: 1px solid #ddd !important;
+}
+.font-weight-bold{
+  font-weight: bold!important;
+}
+.background-color-gary{
+  background-color: #ddd !important;
+}
+/*发票*/
+.invoice-box{
+
+}
+.invoice-box h5{
+  padding: 8px 2px ;
+}
+
+.info-tab{
+
+}
+.info-tab th,.info-tab td{
+  padding: 8px 0px ;
+}
+
