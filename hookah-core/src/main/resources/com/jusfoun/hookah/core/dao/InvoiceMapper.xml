@@ -181,7 +181,7 @@
       and ie.invoice_status != 4 or ie.invoice_status is null
     </if>
 
-    <if test="invoiceStatus != -1 and invoiceStatus = 4">
+    <if test="invoiceStatus == 4">
       and ie.invoice_status = 4
     </if>
 
