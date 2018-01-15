@@ -12,11 +12,12 @@ class invoiceListController {
         $scope.invoiceStates=[
             {id:-1, name:"全部"},
             {id:4, name:"已开票"},
+            {id:3, name:"审核未通过"},
             {id:1, name:"待审核"},
             {id:2, name:"待邮寄"}
         ];
         $scope.invoiceStatus=-1;
-        $scope.invoiceType=[
+        $scope.invoiceTypes=[
             {id:-1, name:"全部"},
             {id:0, name:"普通发票"},
             {id:1, name:"增值税专用发票"}
@@ -56,19 +57,15 @@ class invoiceListController {
                     $scope.invoiceList = res.data.data.list;
                     $scope.showNoneDataInfoTip = false;
                     if (res.data.data.list.length > 0) {
-
                         if (res.data.data.totalPage > 1) {
                             $scope.showPageHelpInfo = true;
                         } else {
                             $scope.showPageHelpInfo = false;
-
                         }
                     } else {
                         $rootScope.loadingState = false;
                         $scope.showNoneDataInfoTip = true;
                     }
-
-
                 } else {
                     $scope.invoiceList = [];
                     $scope.showNoneDataInfoTip = true;
@@ -80,7 +77,7 @@ class invoiceListController {
         }; //列表搜索
         $scope.search();
         $scope.getDetails=function (id) {
-            $state.go('invoice.list', {id: id});
+            $state.go('invoice.listDetails', {id: id});
         };
         $scope.refresh = function () {
             $scope.search();
