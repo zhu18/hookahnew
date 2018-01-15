@@ -40,8 +40,8 @@ var htmlPart = {
 								<!--<th>优惠(元)</th>-->
 								<th>总价(元)</th>
 							</tr>
-							<input type="hidden" name="titleId" value="">
-							<input type="hidden" name="addressId" value="">
+							<input type="hidden" name="titleId" class="titleIdO" value="">
+							<input type="hidden" name="addressId" class="addressIdO" value="">
 							<%for(list in cartOrder){%>
 							<input type="hidden" name="cartIdArray" value="${list.recId}">
 							<input type="hidden" name="goodsId" value="${list.goodsId}">

@@ -36,7 +36,7 @@ var htmlPart = {
 			<div class="searchQuery padding-top-10">
 				<div class="grid-left">
 					开票状态：
-					<select name="invoiceStatus" id="" style="min-width: 120px;height: 30px;border: 1px solid #ccc;">
+					<select name="invoiceStatus" onchange="filterInvoice(this)" style="min-width: 120px;height: 30px;border: 1px solid #ccc;">
 						<option value="-1">全部</option>
 						<option value="0">未开</option>
 						<option value="4">已开</option>

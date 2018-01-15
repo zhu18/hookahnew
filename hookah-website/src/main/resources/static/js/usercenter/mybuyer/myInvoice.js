@@ -13,6 +13,7 @@ function loadPageData(data) {
 			html += '<table>';
 			html += '<thead>';
 			html += '<tr>';
+			html += '<th></th>';
 			html += '<th class="" style="width: 280px;">' + '订单号:' + list[i].orderSn + '</th>';
 			html += '<th class="text-align-left"  colspan=2 style="position: relative;">创建时间:' + list[i].addTime + '</th>';
 			html += '<th colspan="2" style="width:190px;">总额:￥' + (list[i].orderAmount / 100).toFixed(2) + '</th>';
@@ -60,12 +61,12 @@ function loadPageData(data) {
 					isOfflineInfo = "交付方式：线上"
 				}
 				html += '<tr class="content border-bottom">';
-				if(list[i].invoiceStatus == 0){
-					html += '<td><input type="checkbox" name="selectInvoice" value="'+list[i].orderId+'"></td>';
-				}else{
+				if (list[i].invoiceStatus == 0) {
+					html += '<td><input type="checkbox" name="selectInvoice" value="' + list[i].orderId + '"></td>';
+				} else {
 					html += '<td></td>';
 				}
-				
+
 				html += '<td class="text-align-center" style="width: 280px;">';
 				html += '<div class="p-img">';
 				html += '<a href="/exchange/details?id=' + goods[ii].goodsId + '" target="_blank">';
@@ -99,7 +100,7 @@ function loadPageData(data) {
 						invoiceStatus = '<span style="color: #0eca33;">已开票</span>';
 						break;
 				}
-				html += '<td>'+invoiceStatus+'</td>';
+				html += '<td>' + invoiceStatus + '</td>';
 				var invoiceType = null;
 				switch (list[i].invoiceType) {
 					case 0:
@@ -109,32 +110,31 @@ function loadPageData(data) {
 						invoiceType = '专用发票';
 						break;
 				}
-				html += '<td style="width:190px;" class="">'+invoiceType+'</td>';//发票类型
+				html += '<td style="width:190px;" class="">' + invoiceType + '</td>';//发票类型
 				html += '<td rowspan="' + goods.length + '" class="border-left" style="width:190px;">';
 
 				switch (list[i].invoiceStatus) {
 					case 0:
 						// invoiceStatus = '未开发票';
-						html+='<a href="javascript:void(0)" class="btn invoice-page-btn J_editInvoice" invoiceid="'+list[i].invoiceId+'" orderId="'+list[i].orderId+'" type="add">开发票</a>';
+						html += '<a href="javascript:void(0)" class="btn invoice-page-btn J_editInvoice" invoiceid="' + list[i].invoiceId + '" orderId="' + list[i].orderId + '" type="add">开发票</a>';
 						break;
 					case 1:
 						// invoiceStatus = '已申请（待审核）';
-						html+='<a href="javascript:void(0)" class="btn invoice-page-btn J_editInvoice" invoiceid="'+list[i].invoiceId+'" orderId="'+list[i].orderId+'" type="add">开发票</a>';
-						html+='<a href="/usercenter/invoiceDetails?id='+list[i].invoiceId+'" class="invoice-page-btn-d">发票详情</a>';
+						html += '<a href="/usercenter/invoiceDetails?id=' + list[i].invoiceId + '" class="invoice-page-btn-d">发票详情</a>';
 						break;
 					case 2:
 						// invoiceStatus = '待邮寄（审核通过）';
-						html+='<a href="/usercenter/invoiceDetails?id='+list[i].invoiceId+'" class="invoice-page-btn-d">发票详情</a>';
+						html += '<a href="/usercenter/invoiceDetails?id=' + list[i].invoiceId + '" class="invoice-page-btn-d">发票详情</a>';
 						break;
 					case 3:
 						// invoiceStatus = '未通过';
-						html+='<a href="javascript:void(0)" class="btn invoice-page-btn J_editInvoice" invoiceid="'+list[i].invoiceId+'" orderId="'+list[i].orderId+'" type="modify">修改</a>';
-						html+='<a href="/usercenter/invoiceDetails?id='+list[i].invoiceId+'" class="invoice-page-btn-d">发票详情</a>';
+						html += '<a href="javascript:void(0)" class="btn invoice-page-btn J_editInvoice" invoiceid="' + list[i].invoiceId + '" orderId="' + list[i].orderId + '" type="modify">修改</a>';
+						html += '<a href="/usercenter/invoiceDetails?id=' + list[i].invoiceId + '" class="invoice-page-btn-d">发票详情</a>';
 						break;
 					case 4:
 						// invoiceStatus = '已开票';
-						html+='<a href="javascript:void(0)" class="btn invoice-page-btn J_editInvoice" invoiceid="'+list[i].invoiceId+'" orderId="'+list[i].orderId+'" type="modify">换开发票</a>';
-						html+='<a href="/usercenter/invoiceDetails?id='+list[i].invoiceId+'" class="invoice-page-btn-d">发票详情</a>';
+						html += '<a href="javascript:void(0)" class="btn invoice-page-btn J_editInvoice" invoiceid="' + list[i].invoiceId + '" orderId="' + list[i].orderId + '" type="modify">换开发票</a>';
+						html += '<a href="/usercenter/invoiceDetails?id=' + list[i].invoiceId + '" class="invoice-page-btn-d">发票详情</a>';
 						break;
 				}
 				html += '</td>';
@@ -145,14 +145,13 @@ function loadPageData(data) {
 			html += '</table>';
 		}
 		$('.order').html(html);
-		$('.J_editInvoice').click(function(){//点击添加发票按钮
+		$('.J_editInvoice').click(function () {//点击添加发票按钮
 			orderIds = $(this).attr('orderid');
 			editType = $(this).attr('type');
 			invoiceId = $(this).attr('invoiceid');
 			$('.translate-bg').show();
 			$('.invoiceInfo').show();
 			getInvoiceInfo()
-
 		});
 	} else {
 		$('.order').html('<tr class="noData"><td colspan="5">暂时无订单！</td></tr>');
@@ -160,6 +159,11 @@ function loadPageData(data) {
 
 }
 
+function filterInvoice(that){
+	// console.log($(that).val());
+	dataParm.invocieStatus = $(that).val();
+	goPage(1);
+}
 
 
 

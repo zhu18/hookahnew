@@ -1,10 +1,5 @@
 package com.jusfoun.hookah.core.domain.vo;
 
-import com.jusfoun.hookah.core.domain.ExpressInfo;
-import com.jusfoun.hookah.core.domain.Invoice;
-import com.jusfoun.hookah.core.domain.UserInvoiceAddress;
-import com.jusfoun.hookah.core.domain.UserInvoiceTitle;
-
 import java.io.Serializable;
 
 /**
@@ -38,7 +33,7 @@ public class InvoiceDTOVo implements Serializable {
         return addressId;
     }
 
-    public void setAddressId(String id) {
+    public void setAddressId(String addressId) {
         this.addressId = addressId;
     }
 

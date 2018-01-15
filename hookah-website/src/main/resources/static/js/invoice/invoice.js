@@ -712,8 +712,8 @@ function endSetting(){
 				oAddressId = addressIds;
 				oInvoiceInfo = $('.info-t div.hover').html();
 				if(window.location.pathname == '/order/directInfo'){
-					$('.editAddress input[name=titleId]').val(oTitleId);
-					$('.editAddress input[name=addressId]').val(oAddressId);
+					$('.titleIdO').val(oTitleId);
+					$('.addressIdO').val(oAddressId);
 					$('.translateInfo span').html('开发票');
 					$('.translateInfo-g').html('<p>'+oInvoiceInfo+'</p><p>'+oInfo+'</p>');
 					$('#J-noTranslate').show();
