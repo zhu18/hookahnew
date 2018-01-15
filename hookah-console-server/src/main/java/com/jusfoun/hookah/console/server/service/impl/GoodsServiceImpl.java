@@ -878,4 +878,13 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
         }
         return filedBeanList;
     }
+
+    @Override
+    public int count(Byte goodsType){
+
+        List<Condition> filters = new ArrayList();
+        filters.add(Condition.eq("goodsType", goodsType));
+
+        return Integer.parseInt(String.valueOf(super.count(filters)));
+    }
 }

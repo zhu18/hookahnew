@@ -70,4 +70,6 @@ public interface GoodsService extends GenericService<Goods,String> {
      * @return
      */
     List<Goods> findGoodsByIds(String[] goodsIds);
+
+    int count(Byte goodsType);
 }
