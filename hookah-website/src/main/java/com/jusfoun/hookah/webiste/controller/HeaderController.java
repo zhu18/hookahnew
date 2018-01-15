@@ -35,7 +35,7 @@ public class HeaderController extends BaseController {
     CartService cartService;
 
     @RequestMapping(value = "/getHeader", method = RequestMethod.GET)
-    public String getHeader(HttpServletRequest request, HttpServletResponse response) {
+    public void getHeader(HttpServletRequest request, HttpServletResponse response) {
         try {
             Subject subject = SecurityUtils.getSubject();
             StringBuffer html = new StringBuffer("");
@@ -51,16 +51,16 @@ public class HeaderController extends BaseController {
                 html.append("document.getElementById('userStatus').innerHTML = str;");
 
             }
-            response.setContentType("application/x-javascript; charset=utf-8");
-            return html.toString();
+            response.setHeader("Content-Type", "application/x-javascript; charset=utf-8");
+            response.getWriter().write(html.toString());
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
-            return "redirect:/error/500";
+//            return "redirect:/error/500";
         }
     }
     @RequestMapping(value = "/getCartNum", method = RequestMethod.GET)
-    public String getCart(HttpServletRequest request, HttpServletResponse response) {
+    public void getCart(HttpServletRequest request, HttpServletResponse response) {
         try {
             Subject subject = SecurityUtils.getSubject();
             StringBuffer html = new StringBuffer("");
@@ -83,11 +83,10 @@ public class HeaderController extends BaseController {
                 html.append("document.getElementById('cartNum').innerHTML = "+size+";");
             }
             response.setHeader("Content-Type", "application/x-javascript; charset=utf-8");
-            return html.toString();
+            response.getWriter().write(html.toString());
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
-            return "redirect:/error/500";
         }
     }
 }
