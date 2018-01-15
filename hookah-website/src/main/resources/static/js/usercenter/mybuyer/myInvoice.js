@@ -82,25 +82,25 @@ function loadPageData(data) {
 				} else {
 					html += '<td class="text-align-left">x' + goods[ii].goodsNumber + '<br/>' + '规格:' + (goods[ii].goodsPrice / 100).toFixed(2) + '/' + mMat + '<br />' + goodsTypeInfo + '<br />' + isOfflineInfo + '</td>';
 				}
-				var invoiceStatus = null;
-				switch (list[i].invoiceStatus) {
+				var invoiceStatusS = null;
+				switch (list[i].invoiceStatusS) {
 					case 0:
-						invoiceStatus = '未开发票';
+						invoiceStatusS = '未开发票';
 						break;
 					case 1:
-						invoiceStatus = '<span style="color:#eb9c03;">已申请</span>（待审核）';
+						invoiceStatusS = '<span style="color:#eb9c03;">已申请</span>（待审核）';
 						break;
 					case 2:
-						invoiceStatus = '<span style="color:#eb9c03;">待邮寄</span>（审核通过）';
+						invoiceStatusS = '<span style="color:#eb9c03;">待邮寄</span>（审核通过）';
 						break;
 					case 3:
-						invoiceStatus = '<span style="color: #E34F4F;">未通过</span>';
+						invoiceStatusS = '<span style="color: #E34F4F;">未通过</span>';
 						break;
 					case 4:
-						invoiceStatus = '<span style="color: #0eca33;">已开票</span>';
+						invoiceStatusS = '<span style="color: #0eca33;">已开票</span>';
 						break;
 				}
-				html += '<td>' + invoiceStatus + '</td>';
+				html += '<td>' + invoiceStatusS + '</td>';
 				var invoiceType = null;
 				switch (list[i].invoiceType) {
 					case 0:
@@ -161,7 +161,7 @@ function loadPageData(data) {
 
 function filterInvoice(that){
 	// console.log($(that).val());
-	dataParm.invocieStatus = $(that).val();
+	dataParm.invoiceStatus = $(that).val();
 	goPage(1);
 }
 
