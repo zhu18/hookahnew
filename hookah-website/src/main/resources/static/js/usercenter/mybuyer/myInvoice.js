@@ -83,7 +83,7 @@ function loadPageData(data) {
 					html += '<td class="text-align-left">x' + goods[ii].goodsNumber + '<br/>' + '规格:' + (goods[ii].goodsPrice / 100).toFixed(2) + '/' + mMat + '<br />' + goodsTypeInfo + '<br />' + isOfflineInfo + '</td>';
 				}
 				var invoiceStatusS = null;
-				switch (list[i].invoiceStatusS) {
+				switch (list[i].invoiceStatus) {
 					case 0:
 						invoiceStatusS = '未开发票';
 						break;
@@ -109,6 +109,8 @@ function loadPageData(data) {
 					case 1:
 						invoiceType = '专用发票';
 						break;
+					default:
+						invoiceType = '-';
 				}
 				html += '<td style="width:190px;" class="">' + invoiceType + '</td>';//发票类型
 				html += '<td rowspan="' + goods.length + '" class="border-left" style="width:190px;">';
