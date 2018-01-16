@@ -4,8 +4,8 @@
 class invoiceListDetailsController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
-        $scope.invoiceStatu="2"
-        $scope.reader=function () {
+        $scope.invoiceStatu="2";
+        $scope.reader=function () {//渲染页面
             let promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/invoice/back/findById",
@@ -20,6 +20,8 @@ class invoiceListDetailsController {
                     $scope.invoiceStatus=info.invoiceStatus;//发票状态
                     $scope.invoiceSn=info.invoiceSn;
                     $scope.invoiceType=info.invoiceType;
+                    $scope.auditOpinion=info.auditOpinion;
+                    $scope.invoiceChange=info.invoiceChange;
                     var userInvoiceVo=info.userInvoiceVo;//增票资质
                     if(userInvoiceVo){
                         $scope.userName=userInvoiceVo.userName;
@@ -28,7 +30,8 @@ class invoiceListDetailsController {
                     }
                     $scope.addTime=info.addTime;
                     $scope.invoiceAmount=info.invoiceAmount;
-                    $scope.orderInfoInvoiceVoList=info.orderInfoInvoiceVoList;//关联订单列表
+                    var orderInfoInvoiceVoList=info.orderInfoInvoiceVoList;
+                    $scope.mgOrderGoodsList=orderInfoInvoiceVoList.mgOrderGoodsList;//关联订单列表
                     var userInvoiceTitle=info.userInvoiceTitle;//增票资质
                     if(userInvoiceTitle){
                         $scope.titleName=userInvoiceTitle.titleName;
@@ -48,6 +51,10 @@ class invoiceListDetailsController {
                         $scope.expressName=expressInfo.expressName;
                         $scope.expressNo=expressInfo.expressNo;
                         $scope.addTime=expressInfo.addTime;
+                    }else {
+                        $scope.expressName="";
+                        $scope.expressNo="";
+                        $scope.addTime="";
                     }
                 } else {
 
@@ -105,7 +112,7 @@ class invoiceListDetailsController {
             // 日历插件结束
         }
         $scope.readerData()
-        $scope.auditing=function () {
+        $scope.auditing=function () {//审核函数
             var modalInstance =$rootScope.openConfirmDialogModal("确认审核通过？");
             modalInstance.result.then(function () {
                 let data={
@@ -133,17 +140,20 @@ class invoiceListDetailsController {
             });
 
         }
-        $scope.save=function () {
+        $scope.expressInfo={ //获取不到前台的值
+            expressName:"",
+            expressNo:"",
+            addTime:""
+        }
+        $scope.save=function () {//邮寄函数
             var modalInstance =$rootScope.openConfirmDialogModal("确认提交信息吗？");
             modalInstance.result.then(function () {
-                console.log($scope.saveExpressName);
                 let data={
                     invoiceId:$stateParams.id,
-                    expressName:$scope.saveExpressName,
-                    expressNo:$scope.saveExpressNo
+                    expressName:$scope.expressInfo.expressName,
+                    expressNo:$scope.expressInfo.expressNo,
+                    addTime:$scope.expressInfo.addTime
                 };
-                console.log($scope.saveExpressName);
-
                 let promise = $http({
                     method: 'post',
                     url: $rootScope.site.apiServer + "/api/invoice/back/send",
