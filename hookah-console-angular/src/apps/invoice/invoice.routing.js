@@ -24,7 +24,7 @@ export default function invoiceRouting($stateProvider, $urlRouterProvider) {
       permission: 'invoiceList_listDetails'
     })
     .state('invoice.auditing', {  //增票资质审核
-      url: '/invoice/auditing/:id',
+      url: '/invoice/auditing',
       template: require('./auditing.html'),
       controller: invoiceAuditingController,
       permission: 'invoice_auditing'

@@ -11,18 +11,12 @@ class invoiceAuditingController {
         $scope.userType=-1;
         $scope.invoiceStates=[
             {id:-1, name:"全部"},
-            {id:4, name:"已开票"},
             {id:3, name:"审核未通过"},
             {id:1, name:"待审核"},
-            {id:2, name:"待邮寄"}
+            {id:2, name:"审核通过"}
         ];
         $scope.invoiceStatus=-1;
-        $scope.invoiceTypes=[
-            {id:-1, name:"全部"},
-            {id:0, name:"普通发票"},
-            {id:1, name:"增值税专用发票"}
-        ];
-        $scope.invoiceType=-1;
+        $scope.invoiceType=1;
         $scope.controlScreen=function () { //控制搜索框展示函数
             $scope.controlScreenShow=true;
             $scope.screenTitle='收起筛选';
