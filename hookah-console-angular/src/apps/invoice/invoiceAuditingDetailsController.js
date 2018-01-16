@@ -1,7 +1,7 @@
 /**
  * Created by lss on 2017/9/19 0019.
  */
-class invoiceListDetailsController {
+class invoiceAuditingDetailsController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
         $scope.invoiceStatu="2";
@@ -177,4 +177,4 @@ class invoiceListDetailsController {
     }
 }
 
-export default invoiceListDetailsController;
+export default invoiceAuditingDetailsController;

@@ -37,11 +37,11 @@ app.run(function ($rootScope, $state) {
     {
       "title":"发票查询",
       "url":"invoice.list"
+    },
+    {
+      "title":"增票资质审核",
+      "url":"invoice.auditing"
     }
-    // {
-    //   "title":"增票资质审核",
-    //   "url":"invoice.examine"
-    // }
   ];
 
 });

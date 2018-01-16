@@ -1,7 +1,7 @@
 import invoiceListController from "./invoiceListController";
 import invoiceListDetailsController from './invoiceListDetailsController';
-
-
+import invoiceAuditingController from './invoiceAuditingController';
+import invoiceAuditingDetailsController from './invoiceAuditingDetailsController';
 
 invoiceRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 export default function invoiceRouting($stateProvider, $urlRouterProvider) {
@@ -21,20 +21,20 @@ export default function invoiceRouting($stateProvider, $urlRouterProvider) {
       url: '/invoice/listDetails/:id',
       template: require('./invoiceListDetails.html'),
       controller: invoiceListDetailsController,
-      permission: 'invoiceList_details'
+      permission: 'invoiceList_listDetails'
     })
-    // .state('invoice.auditing', {  //增票资质审核
-    //   url: '/invoice/auditing/:id',
-    //   template: require('./auditing.html'),
-    //   controller: invoiceAuditingController,
-    //   permission: 'invoice_auditing'
-    //
-    // })
-    // .state('invoiceAuditing.details', {  //增票资质审核详情页面
-    //   url: '/invoiceAuditing/details/:id',
-    //   template: require('./invoiceAuditingDetails.html'),
-    //   controller: invoiceAuditingDetailsController,
-    //   permission: 'invoiceAuditing_details'
-    //
-    // })
+    .state('invoice.auditing', {  //增票资质审核
+      url: '/invoice/auditing',
+      template: require('./auditing.html'),
+      controller: invoiceAuditingController,
+      permission: 'invoice_auditing'
+
+    })
+    .state('invoice.auditingDetails', {  //增票资质审核详情页面
+      url: '/invoice/auditingDetails/:id',
+      template: require('./invoiceAuditingDetails.html'),
+      controller: invoiceAuditingDetailsController,
+      permission: 'invoice_auditingDetails'
+
+    })
 };
