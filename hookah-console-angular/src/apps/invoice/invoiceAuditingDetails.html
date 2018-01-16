@@ -1,0 +1,318 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="console-title console-title-border clearfix">
+            <div class="pull-left"><h5>发票查询</h5></div>
+        </div>
+        <div class="invoice-box padding-10">
+            <div>
+                <h4>发票详情</h4>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <div class="border-bottom clearfix">
+                        <div class="col-sm-4">
+                            <label for="">发票编号：</label>
+                            <span data-ng-bind="invoiceSn"></span>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">开票类型：</label>
+                            <span data-ng-show="invoiceType==0" >普通发票</span>
+                            <span data-ng-show="invoiceType==1" >增值税专用发票</span>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">当前开票次数：</label>
+                            <span data-ng-show="invoiceChange==0" >首次</span>
+                            <span data-ng-show="invoiceChange==1" >换开发票</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 ">
+                    <div><h5 class="font-weight-bold">关联订单详情：</h5></div>
+                    <div  class="border-bottom clearfix">
+                        <div class="col-sm-3">
+                            <label for="">买家账号:</label>
+                            <span data-ng-bind="userName"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="">实名认证:</label>
+                            <span data-ng-bind="realName"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="">账号类型:</label>
+                            <span data-ng-show="userType==2" >个人</span>
+                            <span data-ng-show="userType==4" >企业</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="">申请时间:</label>
+                            <span data-ng-bind="addTime"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="">开票总额：</label>
+                            <span>{{(invoiceAmount/100) | currency: '￥'}}</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table" data-ng-repeat="item in mgOrderGoodsList">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <span>订单号：</span>
+                                        <span data-ng-bind="item.orderSn"></span>
+                                    </th>
+                                    <th>
+                                        <span>创建时间：</span>
+                                        <span data-ng-bind="item.addTime"></span>
+                                    </th>
+                                    <th>
+                                        <span>订单总额：</span>
+                                        <span>{{(item.orderAmount/100) | currency: '￥'}}</span>
+                                    </th>
+                                    <th>
+                                        收起
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <img src="{{item.goodsImg}}" alt="">
+                                        <p>
+                                            <span data-ng-bind="item.goodsName"></span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                          <p>
+                                            <span>*</span>
+                                            <span data-ng-show="item.goodsNumber"></span>
+                                          </p>
+                                          <p>
+                                              <span>规格：</span>
+                                              <span>{{(item.goodsPrice/100) | currency: '￥'}}</span>
+                                              <span data-ng-show="item.goodsFormat == 0">次</span>
+                                              <span data-ng-show="item.goodsFormat == 1">天</span>
+                                              <span data-ng-show="item.goodsFormat == 2">年</span>
+                                              <span data-ng-show="item.goodsFormat == 3">套</span>
+                                          </p>
+                                          <p>
+                                              <span data-ng-show="item.goodsType == 0">数据源-离线数据</span>
+                                              <span data-ng-show="item.goodsType == 1">数据源-API</span>
+                                              <span data-ng-show="item.goodsType == 2">模型</span>
+                                              <span data-ng-show="item.goodsType == 3">分析工具-独立部署软件</span>
+                                              <span data-ng-show="item.goodsType == 4">分析工具-SaaS</span>
+                                              <span data-ng-show="item.goodsType == 5">应用场景-独立部署软件</span>
+                                              <span data-ng-show="item.goodsType == 6">应用场景-SaaS</span>
+                                          </p>
+                                          <p>
+                                              <span>交付方式：</span>
+                                              <span data-ng-show="item.isOffline == 0">线上</span>
+                                              <span data-ng-show="item.isOffline == 1">线下</span>
+
+                                          </p>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12">
+                    <div><h5 class="font-weight-bold">增票资质：</h5></div>
+                    <div class="border-bottom clearfix">
+                        <table class="info-tab">
+                            <tbody>
+                            <tr >
+                                <th>发票抬头：</th>
+                                <td>
+                                    <span data-ng-bind="titleName"></span>
+                                </td>
+                            </tr>
+                            <tr >
+                                <th>纳税人识别号：</th>
+                                <td>
+                                    <span data-ng-bind="taxpayerIdentifyNo"></span>
+                                </td>
+                            </tr>
+                            <tr data-ng-show="invoiceType == 1">
+                                <th>注册地址：</th>
+                                <td>
+                                    <span data-ng-bind="regAddress"></span>
+                                </td>
+                            </tr>
+                            <tr data-ng-show="invoiceType == 1">
+                                <th>注册电话：</th>
+                                <td>
+                                    <span data-ng-bind="regTel"></span>
+                                </td>
+                            </tr>
+                            <tr data-ng-show="invoiceType == 1">
+                                <th>银行账户：</th>
+                                <td>
+                                    <span data-ng-bind="bankAccount"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 ">
+                    <div><h5 class="font-weight-bold">收票信息：</h5></div>
+                    <div class="clearfix border-bottom">
+                        <table class="info-tab">
+                            <tbody>
+                            <tr >
+                                <th>收票人姓名：</th>
+                                <td>
+                                    <span data-ng-bind="invoiceName"></span>
+                                </td>
+                            </tr>
+                            <tr >
+                                <th>收票人手机号：</th>
+                                <td>
+                                    <span data-ng-bind="mobile"></span>
+                                </td>
+                            </tr>
+                            <tr >
+                                <th>收票地址：</th>
+                                <td>
+                                    <span data-ng-bind="receiveAddress"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-12 " >
+                    <div class="clearfix ">
+                        <table class="info-tab" data-ng-show="invoiceStatus == 1">
+                            <tbody>
+                            <tr>
+                                <th>审核状态：</th>
+                                <td>
+                                    <label  style="margin-right: 10px">
+                                        <input type="radio" name="invoiceStatus" ng-model="invoiceStatu" value="2" class="margin-right-10"/>通过
+                                    </label>
+                                    <label  style="margin-right: 10px">
+                                        <input type="radio" name="invoiceStatus" ng-model="invoiceStatu" value="3" class="margin-right-10"/>不通过
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>审核意见：</th>
+                                <td>
+                                    <textarea name="" id="" cols="30" rows="10" ng-disabled="invoiceStatu == 2" data-ng-model="auditOpinion"></textarea>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="info-tab" data-ng-show="invoiceStatus == 2">
+                            <tbody>
+                            <tr >
+                                <th>审核状态：</th>
+                                <td>
+                                    通过
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="info-tab" data-ng-show="invoiceStatus == 3">
+                            <tbody>
+                            <tr >
+                                <th>审核状态：</th>
+                                <td>
+                                   不通过
+                                </td>
+                            </tr>
+                            <tr >
+                                <th>审核意见：</th>
+                                <td>
+                                    <span data-ng-bind="auditOpinion"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-12 "  data-ng-if="invoiceStatus == 2 || invoiceStatus == 4">
+                    <div><h5 class="font-weight-bold background-color-gary">邮寄信息：</h5></div>
+                    <div class="clearfix">
+                        <table class="info-tab" data-ng-if="invoiceStatus == 2">
+                            <tbody>
+                            <tr >
+                                <th>快递公司：</th>
+                                <td>
+                                    <input type="text" data-ng-model="expressInfo.expressName">
+                                </td>
+                            </tr>
+                            <tr >
+                                <th>快递单号：</th>
+                                <td>
+                                    <input type="text" data-ng-model="expressInfo.expressNo">
+                                </td>
+                            </tr>
+                            <tr >
+                                <th>寄出日期：</th>
+                                <td>
+                                    <p class="input-group">
+                                        <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                                               ng-paste="$event.preventDefault()" type="text" class="form-control"
+                                               uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="expressInfo.addTime"
+                                               is-open="popup1.opened" datepicker-options="inlineOptions" close-text="关闭" clear-text="清除"
+                                               current-text="今天" readonly="true"/>
+                                        <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                 </span>
+                                    </p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="info-tab" data-ng-if="invoiceStatus == 4">
+                            <tbody>
+                            <tr >
+                                <th>快递公司：</th>
+                                <td>
+                                    <span data-ng-bind="expressName"></span>
+                                </td>
+                            </tr>
+                            <tr >
+                                <th>快递单号：</th>
+                                <td>
+                                    <span data-ng-bind="expressNo"></span>
+                                </td>
+                            </tr>
+                            <tr >
+                                <th>寄出日期：</th>
+                                <td>
+                                    <span data-ng-bind="addTime"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary" data-ng-if="invoiceStatus == 1" data-ng-click="auditing()" style="margin: auto;display: block;">
+                        提交
+                    </button>
+                    <button class="btn btn-primary" data-ng-if="invoiceStatus == 2" data-ng-click="save()" style="margin: auto;display: block;">
+                        提交
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
