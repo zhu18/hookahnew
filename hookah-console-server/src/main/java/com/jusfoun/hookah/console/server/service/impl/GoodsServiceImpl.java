@@ -887,4 +887,12 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
 
         return Integer.parseInt(String.valueOf(super.count(filters)));
     }
+
+    @Override
+    public List<Goods> getGoodsListByGoodsType(Byte goodsType){
+        List<Condition> filters = new ArrayList<>();
+        filters.add(Condition.eq("goodsType", goodsType));
+        filters.add(Condition.eq("isDelete", 1));
+        return this.selectList(filters);
+    }
 }
