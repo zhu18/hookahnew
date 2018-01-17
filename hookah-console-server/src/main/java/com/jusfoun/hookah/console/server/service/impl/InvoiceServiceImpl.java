@@ -85,10 +85,15 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
 
         Invoice invoice = buildInvoiceInfo(invoiceDTOVo);
         if(StringUtils.isNotBlank(invoiceDTOVo.getInvoiceId())){
+            List<Condition> filters = new ArrayList<Condition>();
+            filters.add(Condition.eq("invoiceId", invoiceDTOVo.getInvoiceId()));
+            if(orderInvoiceService.exists(filters)){
+                orderInvoiceService.deleteByCondtion(filters);
+            }
             // 修改时，更新状态为已申请(待审核)
             invoice.setInvoiceStatus(HookahConstants.INVOICE_STATUS_1);
-            super.updateByIdSelective(invoice);
             invoice.setInvoiceId(invoiceDTOVo.getInvoiceId());
+            super.updateByIdSelective(invoice);
         }else{
             invoice = super.insert(invoice);
         }
