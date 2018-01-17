@@ -725,13 +725,13 @@ function endSetting(){
 							datas={
 								orderIds:orderIds,
 								titleId:oTitleId,
-								id:oAddressId
+								addressId:oAddressId
 							};
 						}else if(editType == 'modify'){
 							datas={
 								orderIds:orderIds,
 								titleId:oTitleId,
-								id:oAddressId,
+								addressId:oAddressId,
 								invoiceId:invoiceId
 							};
 						}
@@ -742,6 +742,7 @@ function endSetting(){
 							success: function (data) {
 								if (data.code == 1) {
 									$('.translate-bg').hide();
+									goPage(1);
 									$.alert('保存成功')
 								} else {
 									$.alert(data.message)
