@@ -12,6 +12,8 @@ var oInvoiceInfo = '';
 var oInfo = '';
 var isEditSpecial = 'add';
 var editSpecialTitleId = '';
+
+
 $('.translate-close-btn').click(function () { //关闭浮层
 	$('.translate-bg').hide();
 });
@@ -59,6 +61,13 @@ function getInvoiceInfo() {
 				selectThisTitle();
 				deleteInvoice();
 				EditInvoice();
+				var invoicePriceAA = null;
+				if(window.location.pathname == '/order/directInfo'){
+					invoicePriceAA = $('.order-amount span').html();
+				}else if(window.location.pathname == '/usercenter/myInvoice'){
+					invoicePriceAA = invoicePriceAB;
+				}
+				$('.J_invoicePriceBox').html(invoicePriceAA);
 			} else {
 				$.alert(data.message)
 			}

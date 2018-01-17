@@ -636,3 +636,14 @@
 .invoiceTetails li,.invoiceTetails dt,.invoiceTetails dd{
     padding-left:10px;
 }
+.select-invoice-btn{
+    width: 100px;
+    height: 36px;
+    display: inline-block;
+    background: #237ee8;
+    color: #fff;
+    text-align: center;
+    line-height: 36px;
+    border-radius: 3px;
+    font-size: 14px;
+}

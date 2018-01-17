@@ -38,14 +38,14 @@ function getInvoiceDetails(id){
 				html+='<li>收票人手机号：'+invoiceData.userInvoiceAddress.mobile+'</li>';
 				html+='<li>收票地址：'+invoiceData.userInvoiceAddress.receiveAddress+'</li>';
 				html+='</ul>';
-				// if(invoiceData.invoiceStatus == 4){
+				if(invoiceData.invoiceStatus == 4){
 					html+='<dl>';
 					html+='<dt>邮寄信息：</dt>';
 					html+='<dd>快递公司：'+invoiceData.expressInfo.expressName+'</dd>';
 					html+='<dd>快递单号：'+invoiceData.expressInfo.expressNo+'</dd>';
 					html+='<dd>寄出日期：'+invoiceData.expressInfo.addTime+'</dd>';
 					html+='</dl>';
-				// }
+				}
 				$('.invoiceTetails').html(html)
 
 			} else {

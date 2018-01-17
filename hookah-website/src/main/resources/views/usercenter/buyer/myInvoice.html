@@ -33,7 +33,7 @@ var htmlPart = {
 					<p>7.普通用户的发票金额不小于500元时，可免费邮寄，小于500元时由用户承担邮寄费用；VIP会员的发票金额不小于200元时可免费邮寄，小于200元时由该会员承担邮寄费用。</p>
 				</div>
 			</div>
-			<div class="searchQuery padding-top-10">
+			<div class="searchQuery padding-top-10" style="padding-left: 0; height:30px;">
 				<div class="grid-left">
 					开票状态：
 					<select name="invoiceStatus" onchange="filterInvoice(this)" style="min-width: 120px;height: 30px;border: 1px solid #ccc;">
@@ -41,6 +41,12 @@ var htmlPart = {
 						<option value="0">未开</option>
 						<option value="4">已开</option>
 					</select>
+				</div>
+			</div>
+			<div class="padding-top-10 padding-bottom-10 clearfix select-invoice">
+				<div class="grid-left" style="line-height: 36px;">已开票金额：￥<span class="J_selectInvoicePrice">0</span>元</div>
+				<div class="grid-right">
+					<a href="javascript:void(0)" class="select-invoice-btn btn" type="add">确定开票</a>
 				</div>
 			</div>
 			<div class="list">
