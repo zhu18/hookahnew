@@ -108,4 +108,6 @@ public interface OrderInfoService extends GenericService<OrderInfo,String> {
                                 String startDate, String endDate, String ip, String status) throws Exception;
 
     public Long sumOrderAmountByOrderIds(String[] orderId);
+
+    List<OrderInfo> getOrderInfoByInvoiceId(String invoiceId);
 }

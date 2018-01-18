@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jusfoun.hookah.core.dao.OrderInfoMapper">
 
+
+    <resultMap id="OrderInfoResult" type="com.jusfoun.hookah.core.domain.OrderInfo" >
+        <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+        <result column="order_amount" property="orderAmount" jdbcType="BIGINT" />
+    </resultMap>
+
     <select id="getUserCount" resultType="java.lang.Integer">
       SELECT COUNT(DISTINCT(user_id)) from order_info WHERE pay_status=2
     </select>
@@ -12,4 +19,22 @@
             #{item}
         </foreach>
     </select>
+
+    <select id="getOrderInfoByInvoiceId" resultMap="OrderInfoResult">
+        SELECT
+        o.order_sn,
+        o.order_amount
+        FROM
+        order_info o
+        WHERE
+        order_id IN (
+            SELECT
+            order_id
+            FROM
+            order_invoice
+            WHERE
+            invoice_id = #{invoiceId}
+        )
+    </select>
+
 </mapper>

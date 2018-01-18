@@ -1776,4 +1776,9 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
     public Long sumOrderAmountByOrderIds(String[] orderIds){
         return orderinfoMapper.sumOrderAmountByOrderIds(orderIds);
     }
+
+    @Override
+    public List<OrderInfo> getOrderInfoByInvoiceId(String invoiceId){
+        return orderinfoMapper.getOrderInfoByInvoiceId(invoiceId);
+    }
 }
