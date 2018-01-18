@@ -1,5 +1,5 @@
 import ShelfOldController from "../shelf/ShelfOldController";
-import ManageGoodsOldController from "../Shelf/ManageGoodsOldController";
+import ManageGoodsOldController from "../shelf/ManageGoodsOldController";
 import ShelfController from "../newShelf/ShelfController";
 import ManageGoodsController from "../newShelf/ManageGoodsController";
 import EditTagsController from "../newShelf/EditTagsController";
