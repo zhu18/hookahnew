@@ -21,6 +21,10 @@ public class EsGoods implements Serializable {
     @EsField(analyzeOpt= AnalyzeOpt.ANALYZED, analyzer= Analyzer.LC_INDEX,
             termVector= TermVector.OFFSETS, isStore = true, searchAnalyzer = Analyzer.LC_SEARCH)
     private String goodsName;
+
+    @EsField
+    private String goodsSn;
+
     @EsField(type = Type.BYTE)
     private Byte goodsType;
     @EsField
@@ -99,6 +103,14 @@ public class EsGoods implements Serializable {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public String getGoodsSn() {
+        return goodsSn;
+    }
+
+    public void setGoodsSn(String goodsSn) {
+        this.goodsSn = goodsSn;
     }
 
     public Byte getGoodsType() {
