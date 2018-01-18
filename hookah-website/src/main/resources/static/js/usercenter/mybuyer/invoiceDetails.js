@@ -21,7 +21,21 @@ function getInvoiceDetails(id){
 				var html='';
 				html+='<ul>';
 				html+='<li>申请开票金额：￥'+invoiceData.invoiceAmount+'</li>';
-				html+='<li>关联订单号：'+invoiceData.relationOrderSn+'</li>';
+				if(invoiceData.invoiceOrderList.length == 1){
+					html+='<li>关联订单号：'+invoiceData.invoiceOrderList[0].orderSn+'</li>';
+				}else{
+					html+='<li>';
+					html+='<table class="invoiceDetailsTable">';
+					html+='<tr><td>关联订单号</td><td>申请金额（￥）</td></tr>';
+					for(var i=0;i<invoiceData.invoiceOrderList.length;i++){
+						html+='<tr><td>'+invoiceData.invoiceOrderList[i].orderSn+'</td><td>'+(invoiceData.invoiceOrderList[i].orderAmount/ 100).toFixed(2)+'</td></tr>';
+					}
+
+					html+='</table>';
+
+					html+='</li>';
+				}
+
 				var invoiceType = null;
 				if(invoiceData.invoiceType == 0){
 					invoiceType = '普通发票';

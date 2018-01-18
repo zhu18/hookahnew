@@ -647,3 +647,13 @@
     border-radius: 3px;
     font-size: 14px;
 }
+.invoiceDetailsTable{
+
+}
+.invoiceDetailsTable tr{
+
+}
+.invoiceDetailsTable td{
+    border: 1px solid #d4d4d4;
+    padding: 5px 10px;
+}
