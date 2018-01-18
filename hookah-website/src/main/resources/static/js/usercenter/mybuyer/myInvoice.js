@@ -106,7 +106,7 @@ function loadPageData(data) {
 						break;
 				}
 				if(ii == 0){
-					html += '<td rowspan="' + goods.length + '">' + invoiceStatusS + '</td>';
+					html += '<td rowspan="' + goods.length + '" class="border-left" style="width:120px;">' + invoiceStatusS + '</td>';
 				}
 				var invoiceType = null;
 				switch (list[i].invoiceType) {
@@ -120,7 +120,7 @@ function loadPageData(data) {
 						invoiceType = '-';
 				}
 				if(ii == 0){
-					html += '<td style="width:190px;" rowspan="' + goods.length + '">' + invoiceType + '</td>';//发票类型
+					html += '<td style="width:190px;" class="border-left" rowspan="' + goods.length + '">' + invoiceType + '</td>';//发票类型
 				}
 				if(ii == 0) {
 					html += '<td class="border-left" style="width:190px;" rowspan="' + goods.length + '">';
