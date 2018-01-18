@@ -15,6 +15,8 @@ public class InvoiceDetailVo extends Invoice implements Serializable {
 
     private String relationOrderSn;
 
+    private List<InvoiceOrder> invoiceOrderList;
+
     private UserInvoiceTitle userInvoiceTitle;
 
     private UserInvoiceAddress userInvoiceAddress;
@@ -34,6 +36,14 @@ public class InvoiceDetailVo extends Invoice implements Serializable {
 
     public void setRelationOrderSn(String relationOrderSn) {
         this.relationOrderSn = relationOrderSn;
+    }
+
+    public List<InvoiceOrder> getInvoiceOrderList() {
+        return invoiceOrderList;
+    }
+
+    public void setInvoiceOrderList(List<InvoiceOrder> invoiceOrderList) {
+        this.invoiceOrderList = invoiceOrderList;
     }
 
     public UserInvoiceTitle getUserInvoiceTitle() {
@@ -74,5 +84,26 @@ public class InvoiceDetailVo extends Invoice implements Serializable {
 
     public void setUserInvoiceVo(UserInvoiceVo userInvoiceVo) {
         this.userInvoiceVo = userInvoiceVo;
+    }
+
+    public static class InvoiceOrder implements Serializable {
+        private String orderSn; // 关联订单号
+        private Long orderAmount; // 订单金额
+
+        public String getOrderSn() {
+            return orderSn;
+        }
+
+        public void setOrderSn(String orderSn) {
+            this.orderSn = orderSn;
+        }
+
+        public Long getOrderAmount() {
+            return orderAmount;
+        }
+
+        public void setOrderAmount(Long orderAmount) {
+            this.orderAmount = orderAmount;
+        }
     }
 }

@@ -222,6 +222,14 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
 
         BeanUtils.copyProperties(invoice, invoiceDetailVo);
 
+        List<InvoiceDetailVo.InvoiceOrder>  invoiceOrderList = new ArrayList<>();
+        for(OrderInfo orderInfo :orderInfoService.getOrderInfoByInvoiceId(invoiceId)){
+            InvoiceDetailVo.InvoiceOrder invoiceOrder = new InvoiceDetailVo.InvoiceOrder();
+            BeanUtils.copyProperties(orderInfo, invoiceOrder);
+            invoiceOrderList.add(invoiceOrder);
+        }
+        invoiceDetailVo.setInvoiceOrderList(invoiceOrderList);
+
         if(!Objects.isNull(invoice)){
 
             UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectById(invoice.getTitleId());
