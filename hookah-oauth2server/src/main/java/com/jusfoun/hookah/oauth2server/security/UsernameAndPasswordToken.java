@@ -12,8 +12,16 @@ public class UsernameAndPasswordToken extends UsernamePasswordToken {
     private String email;
 
     private String mobile;
+
+    //验证码
+    private String picValid;
+
     //登录方式 用户名密码登录、第三方登录
     private TokenType tokenType;
+    //是否需要验证码 true:需要
+    private Boolean isValid = Boolean.FALSE;
+    //是否锁定用户
+    private Boolean locked = Boolean.FALSE;
 
     public UsernameAndPasswordToken() {
         super();
@@ -27,6 +35,30 @@ public class UsernameAndPasswordToken extends UsernamePasswordToken {
     //用户名密码登录 第三方登录
     public enum TokenType {
         USERNAME_PASSWOR, CLIENT
+    }
+
+    public String getPicValid() {
+        return picValid;
+    }
+
+    public void setPicValid(String picValid) {
+        this.picValid = picValid;
+    }
+
+    public Boolean getValid() {
+        return isValid;
+    }
+
+    public void setValid(Boolean valid) {
+        isValid = valid;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
     }
 
     public String getEmail() {

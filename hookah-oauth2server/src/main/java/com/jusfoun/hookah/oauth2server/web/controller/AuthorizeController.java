@@ -1,7 +1,10 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 
+import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.domain.OauthClient;
+import com.jusfoun.hookah.core.exception.UserRegInvalidCaptchaException;
+import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.NetUtils;
 import com.jusfoun.hookah.oauth2server.config.Constants;
@@ -25,6 +28,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author huang lei
@@ -58,6 +63,9 @@ public class AuthorizeController {
 
     @Resource
     private OAuthClientService clientService;
+
+    @Autowired
+    RedisOperate redisOperate;
 
     @Resource
     LoginLogService loginLogService;
@@ -169,6 +177,8 @@ public class AuthorizeController {
         }
         String username = request.getParameter("userName");
         String password = request.getParameter("password");
+        String picValid = request.getParameter("picValid");
+
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return false;
@@ -183,8 +193,30 @@ public class AuthorizeController {
             token.setUsername(username);
         }
         token.setPassword(password.toCharArray());
+        token.setPicValid(picValid);
 
         try {
+
+            //判断是否需要校验验证码
+            AtomicInteger retryCount = (AtomicInteger) redisOperate.getObject("retry:" + username);
+            if(null != retryCount && retryCount.get() >= 3){
+
+                //显示验证码
+                request.setAttribute("isValid", true);
+
+                //判断验证码是否
+                try{
+                    picValid = picValid.toUpperCase();
+                }catch (NullPointerException e){
+                    picValid=null;
+                }
+                //判断验证码输入是否正确
+                if(picValid!=null && !picValid.equalsIgnoreCase((String)request.getSession().getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY))){
+                    //拒绝访问，不再校验账号和密码
+                    throw new UserRegInvalidCaptchaException("");
+                }
+            }
+
             subject.login(token);
 
             if (subject.isAuthenticated()) {
@@ -194,13 +226,17 @@ public class AuthorizeController {
             }
 
             return true;
-        } catch (UnknownAccountException uae) {
+        } catch (UserRegInvalidCaptchaException e) {
+            request.setAttribute("error", "验证码错误");
+            logger.error(e.getMessage());
+            return false;
+        }catch (UnknownAccountException uae) {
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");
-            request.setAttribute("error", "未知账户");
+            request.setAttribute("error", "用户名或密码不正确");
             return false;
         } catch (IncorrectCredentialsException ice) {
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误的凭证");
-            request.setAttribute("error", "密码不正确");
+            request.setAttribute("error", "用户名或密码不正确");
             return false;
         } catch (LockedAccountException lae) {
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,账户已锁定");
@@ -208,7 +244,9 @@ public class AuthorizeController {
             return false;
         } catch (ExcessiveAttemptsException eae) {
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误次数过多");
-            request.setAttribute("error", "用户名或密码错误次数过多");
+            //显示验证码
+            request.setAttribute("isValid", true);
+            request.setAttribute("error", "用户名或密码错误,次数过多(5次锁定)");
             return false;
         } catch (AuthenticationException ae) {
             //通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景
@@ -220,6 +258,10 @@ public class AuthorizeController {
             request.setAttribute("error", "登录失败:" + e.getClass().getName());
             return false;
         }
+    }
+
+    public static void main(String[] a){
+
     }
 
 }
