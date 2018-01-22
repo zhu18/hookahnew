@@ -159,14 +159,14 @@ var htmlPart = {
 					<dl class="fm-login-checkcode-nc">
 
 						<%if(!isEmpty(isValid) && isValid){%>
-						<dt id="fm-login-checkcode-title" class="about-checkcode fm-label">
+						<dt id="fm-login-checkcode-title">
 							<label>验证码:</label>
 						</dt>
 
-						<dt class="tbl-info-right">
-							<input name="picValid" type="text" placeholder="请输入验证码" maxlength="4">
+						<dd class="tbl-info-right">
+							<input name="picValid" class="fm-text" type="text" placeholder="请输入验证码" maxlength="4">
 							<img id="validCode" src="http://auth.bdgstore.cn/captcha" alt="验证码">
-						</dt>
+						</dd>
 						<%}%>
 
 
@@ -275,6 +275,20 @@ var htmlPart = {
 			return
 		}
 	})
+
+	/*图片校验码*/
+    function changeImg(obj) {
+        $("#validCode").off("click");
+        obj.src = "${host.auth}/captcha?_"+new Date().getTime();
+    }
+
+    $("#validCode").on('click', function () {
+        changeImg(this);
+    }).on('load', function () {
+        $("#validCode").click(function () {
+            changeImg(this);
+        });
+    });
 
 	function check(form) {
 
