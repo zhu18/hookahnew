@@ -180,6 +180,9 @@ public class HookahConstants {
     //发票类型 用户发票类型 0：普通发票 1：专用发票
     public static final Byte INVOICE_TYPE_1 = 1;
 
+    // 通用删除状态
+    public static final Byte DELETE_STATUS_0 = 0;
+
     public static final Byte GOODS_ON_LINE = 0;//线上支付
     public static final Byte GOODS_OFF_LINE = 1;//线下支付
 

@@ -89,7 +89,10 @@ public class UserInvoiceAddressController extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            userInvoiceAddressService.delete(id);
+            UserInvoiceAddress userInvoiceAddress = new UserInvoiceAddress();
+            userInvoiceAddress.setId(id);
+            userInvoiceAddress.setDeleteStatus(HookahConstants.DELETE_STATUS_0);
+            userInvoiceAddressService.updateByIdSelective(userInvoiceAddress);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.getMessage());
