@@ -122,5 +122,5 @@ myconf:
       type: category
       shards: 2
       replicas: 1
-  operateMobileNo: 13621268780,13810168006
+  operateMobileNo: 13290603059,13810168006
 debug: true
