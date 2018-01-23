@@ -100,7 +100,10 @@ public class UserInvoiceTitleController extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            userInvoiceTitleService.delete(titleId);
+            UserInvoiceTitle userInvoiceTitle = new UserInvoiceTitle();
+            userInvoiceTitle.setTitleId(titleId);
+            userInvoiceTitle.setDeleteStatus(HookahConstants.DELETE_STATUS_0);
+            userInvoiceTitleService.updateByIdSelective(userInvoiceTitle);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.getMessage());
