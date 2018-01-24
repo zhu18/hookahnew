@@ -246,11 +246,11 @@
        <!--打完包把注释放开！！！！-->
        <!--打完包把注释放开！！！！-->
 
-     <resource>
+     <!--<resource>
         <targetPath>${project.build.directory}/classes</targetPath>
         <directory>src/main/resources</directory>
         <filtering>false</filtering>
-     </resource>
+     </resource>-->
 
     </resources>
     <pluginManagement>
