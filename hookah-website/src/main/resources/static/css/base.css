@@ -419,7 +419,7 @@ html {
 .float-tool {
 	position: fixed;
 	right: 30px;
-	bottom: 100px;
+	bottom: 50px;
 	z-index: 9999;
 }
 .float-tool a {
@@ -432,40 +432,59 @@ html {
 	right: 0;
 }
 .float-tool .tool-item .btn-title {
-	width: 40px;
-	height: 40px;
+	width: 60px;
+	height: 60px;
 	display: block;
 	float: right;
 	background: #666;
+	text-align: center;
 }
 .float-tool .tool-item .btn-title img {
-	width: 100%;
+	width: 30px;
+	margin: 10px auto 0;
+	display: block;
+}
+.float-tool .tool-item .btn-title p{
+	font-size: 12px;
+	color: #fff;
 }
 .float-tool .tool-item .btn-content {
 	float: left;
-	line-height: 40px;
+	line-height: 60px;
 	font-size: 12px;
 	color: #fff;
 	padding: 0 3px 0 10px;
 	display: none;
 }
-.float-tool .tool-item:first-child .btn-content {
+.float-tool .tool-item:nth-child(3) .btn-content {
 	padding: 3px;
-	width: 60px;
-	height: 60px;
+	width: 54px;
+	height: 54px;
 }
-.float-tool .tool-item:first-child .btn-content img {
+.float-tool .tool-item:nth-child(3) .btn-content img {
 	width: 100%;
 }
-.float-tool .tool-item:first-child:hover .btn-title {
-	padding: 13px 0;
-}
-.float-tool .tool-item:hover .btn-title {
+
+.float-tool .tool-item:nth-child(1) .btn-title,.float-tool .tool-item:nth-child(1):hover .btn-title,.float-tool .tool-item:nth-child(1):hover .btn-content {
 	background: #d04848;
 }
-.float-tool .tool-item:hover .btn-content {
-	background: #d04848;
+.float-tool .tool-item:nth-child(2) .btn-title,.float-tool .tool-item:nth-child(2):hover .btn-title,.float-tool .tool-item:nth-child(2):hover .btn-content {
+	background: #78c440;
 }
+.float-tool .tool-item:nth-child(3) .btn-title,.float-tool .tool-item:nth-child(3):hover .btn-title,.float-tool .tool-item:nth-child(3):hover .btn-content {
+	background: #6da9df;
+}
+.float-tool .tool-item:nth-child(4) .btn-title,.float-tool .tool-item:nth-child(4):hover .btn-title,.float-tool .tool-item:nth-child(4):hover .btn-content {
+	background: #096fc1;
+}
+.float-tool .tool-item:nth-child(5) .btn-title,.float-tool .tool-item:nth-child(5):hover .btn-title,.float-tool .tool-item:nth-child(5):hover .btn-content {
+	background: #666666;
+}
+.float-tool .tool-item:hover .btn-title p{display: none}
+.float-tool .tool-item:hover .btn-title img{margin-top: 16px;}
+.float-tool .tool-item:nth-child(5) .btn-title img{margin-top: 16px;}
+
+
 .float-tool .tool-item .btn-content.hover {
 	display: block;
 }
@@ -542,7 +561,7 @@ input:focus, select:focus, textarea:focus {
 	position: fixed;
 	width: 109px;
 	height: 145px;
-	bottom: 15px;
+	bottom: 50px;
 	left: 25px;
 	z-index: 1000;
 }

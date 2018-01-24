@@ -20,7 +20,13 @@ function getInvoiceDetails(id){
 				var invoiceData = data.data;
 				var html='';
 				html+='<ul>';
-				html+='<li>申请开票金额：￥'+invoiceData.invoiceAmount+'</li>';
+				var html11 =null;
+				if(invoiceData.invoiceOrderList.length == 1){
+					html11='（独立）'
+				}else{
+					html11='（合并）'
+				}
+				html+='<li>申请开票金额：￥'+(invoiceData.invoiceAmount / 100).toFixed(2)+html11+'</li>';
 				if(invoiceData.invoiceOrderList.length == 1){
 					html+='<li>关联订单号：'+invoiceData.invoiceOrderList[0].orderSn+'</li>';
 				}else{
