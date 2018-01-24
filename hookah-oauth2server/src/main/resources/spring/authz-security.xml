@@ -13,7 +13,7 @@
   <!--
       使用MD5 进行密码的加密
   -->
-  <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+  <bean id="credentialsMatcher" class="com.jusfoun.hookah.oauth2server.security.RetryLimitHashedCredentialsMatcher">
     <property name="hashAlgorithmName" value="MD5"/>
     <!--<property name="storedCredentialsHexEncoded" value="false"/>-->
   </bean>
@@ -117,4 +117,13 @@
       </value>
     </property>
   </bean>
+
+  <!--自定义的from认证过滤器-->
+  <!--<bean id="formAuthenticationFilter" class="com.jusfoun.hookah.oauth2server.web.filter.CustomFromAuthenticationFilter">
+    &lt;!&ndash; 表单中账号的input名称 &ndash;&gt;
+    <property name="usernameParam" value="username"/>
+    &lt;!&ndash; 表单中密码的input名称 &ndash;&gt;
+    <property name="passwordParam" value="password"/>
+  </bean>-->
+
 </beans>

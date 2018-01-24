@@ -4,6 +4,7 @@
     <resultMap id="EsResultMap" type="com.jusfoun.hookah.core.domain.es.EsGoods">
         <id column="goods_id" jdbcType="VARCHAR" property="goodsId" />
         <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+        <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
         <result column="goods_type" jdbcType="TINYINT" property="goodsType" />
         <result column="purchase_limit" jdbcType="TINYINT" property="purchaseLimit" />
         <result column="shop_price" jdbcType="BIGINT" property="shopPrice" />
@@ -108,6 +109,7 @@
         SELECT
             goods_id,
             goods_name,
+            goods_sn,
             goods_type,
             purchase_limit,
             shop_price,
@@ -137,6 +139,7 @@
         SELECT
         goods_id,
         goods_name,
+        goods_sn,
         goods_type,
         purchase_limit,
         shop_price,

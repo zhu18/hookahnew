@@ -357,12 +357,17 @@ public class AuthController extends BaseController {
         returnData.setCode(ExceptionConst.Success);
         try {
             String userId = this.getCurrentUser().getUserId();
+            User user = userService.selectById(userId);
+
             // 判断该身份证是否已绑定
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("orgName", organization.getOrgName()));
             boolean exists = organizationService.exists(filters);
-            if(exists == true){
-                return ReturnData.error("该企业已进行单位认证，无法重复认证!");
+            // 验证当前是否为已认证和待审核状态
+            if(user.getUserType() == 1 || user.getUserType() == 4 || user.getUserType() == 5){
+                if(exists == true){
+                    return ReturnData.error("该企业已进行单位认证，无法重复认证!");
+                }
             }
 
             // 验证企业身份
@@ -408,6 +413,11 @@ public class AuthController extends BaseController {
             //            organization.setUserId(userId);
             organization.setIsAuth(AUTH_STATUS_SUCCESS);
             organization.setOrgId(orgId);
+            if(isCheck.equals("0")){ // 自动认证通过  企业状态为2 否则为0
+                organization.setStatus("2");
+            }else {
+                organization.setStatus("0");
+            }
             organizationService.updateByIdSelective(organization);
             //给注册的供应商orgId赋值
             user1.setOrgId(orgId);

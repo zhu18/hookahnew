@@ -2,6 +2,7 @@ package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.domain.User;
+import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.NetUtils;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
@@ -24,6 +25,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author huang lei
@@ -49,17 +51,17 @@ public class LoginController {
         return "login";
     }
 
-    @Log(platform = "front",logType = "f0002",optType = "insert")
+    @Log(platform = "front", logType = "f0002", optType = "insert")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String postLogin(User user, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
+    public String postLogin(UserValidVo user, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
 
         String username = user.getUserName();
         UsernameAndPasswordToken token = new UsernameAndPasswordToken();
-        if(FormatCheckUtil.checkMobile(username)){
-             token.setMobile(username);
-        }else if(FormatCheckUtil.checkEmail(username)){
+        if (FormatCheckUtil.checkMobile(username)) {
+            token.setMobile(username);
+        } else if (FormatCheckUtil.checkEmail(username)) {
             token.setEmail(username);
-        }else{
+        } else {
             token.setUsername(username);
         }
         token.setPassword(user.getPassword().toCharArray());
@@ -74,32 +76,34 @@ public class LoginController {
             logger.info("对用户[" + username + "]进行登录验证..验证通过");
         } catch (UnknownAccountException uae) {
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");
-            redirectAttributes.addFlashAttribute("message", "未知账户");
+            redirectAttributes.addFlashAttribute("message", "用户名或密码不正确");
         } catch (IncorrectCredentialsException ice) {
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误的凭证");
-            redirectAttributes.addFlashAttribute("message", "密码不正确");
+            redirectAttributes.addFlashAttribute("message", "用户名或密码不正确");
         } catch (LockedAccountException lae) {
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,账户已锁定");
             redirectAttributes.addFlashAttribute("message", "账户已锁定");
         } catch (ExcessiveAttemptsException eae) {
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误次数过多");
-            redirectAttributes.addFlashAttribute("message", "用户名或密码错误次数过多");
+            //显示验证码
+            request.setAttribute("isValid", true);
+            redirectAttributes.addFlashAttribute("message", "用户名或密码错误,次数过多(5次锁定)");
         } catch (AuthenticationException ae) {
             //通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景
             logger.info("对用户[" + username + "]进行登录验证..验证未通过,堆栈轨迹如下");
             ae.printStackTrace();
             redirectAttributes.addFlashAttribute("message", "用户名或密码不正确");
         }
-        Map<String,String> host = myProps.getHost();
+        Map<String, String> host = myProps.getHost();
         //验证是否登录成功
         if (currentUser.isAuthenticated()) {
             //TODO...登录日志
             loginLogService.addLoginLog(username, NetUtils.getIpAddr(request));
             logger.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
-            return "redirect:"+host.get("website")+"/login";
+            return "redirect:" + host.get("website") + "/login";
         } else {
             token.clear();
-            return "redirect:"+host.get("website")+"/login";
+            return "redirect:" + host.get("website") + "/login";
         }
     }
 
