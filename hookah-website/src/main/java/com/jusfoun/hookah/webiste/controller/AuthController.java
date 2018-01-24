@@ -364,7 +364,7 @@ public class AuthController extends BaseController {
             filters.add(Condition.eq("orgName", organization.getOrgName()));
             boolean exists = organizationService.exists(filters);
             // 验证当前是否为已认证和待审核状态
-            if(user.getUserType() == 4 || user.getUserType() == 5){
+            if(user.getUserType() == 1 || user.getUserType() == 4 || user.getUserType() == 5){
                 if(exists == true){
                     return ReturnData.error("该企业已进行单位认证，无法重复认证!");
                 }
