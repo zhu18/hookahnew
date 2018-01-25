@@ -183,6 +183,9 @@ public class HookahConstants {
     // 通用删除状态
     public static final Byte DELETE_STATUS_0 = 0;
 
+    // 通用未删除状态
+    public static final Byte DELETE_STATUS_1 = 1;
+
     public static final Byte GOODS_ON_LINE = 0;//线上支付
     public static final Byte GOODS_OFF_LINE = 1;//线下支付
 
