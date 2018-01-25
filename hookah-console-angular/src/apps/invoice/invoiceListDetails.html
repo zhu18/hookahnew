@@ -1,7 +1,13 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="console-title console-title-border clearfix">
-            <div class="pull-left"><h5>发票查询</h5></div>
+            <div class="pull-left"><h5>发票查询 <span>-</span>
+                <span data-ng-show="invoiceStatus == 1">待审核</span>
+                <span data-ng-show="invoiceStatus == 2">待邮寄</span>
+                <span data-ng-show="invoiceStatus == 3">审核未通过</span>
+                <span data-ng-show="invoiceStatus == 4">已开票</span>
+            </h5>
+            </div>
         </div>
         <div class="invoice-box padding-10">
             <div>
@@ -245,7 +251,7 @@
                             <tr >
                                 <th>快递公司：</th>
                                 <td>
-                                    <input type="text" data-ng-model="expressInfo.expressName">
+                                    <input type="text" data-ng-model="$parent.expressName">
                                 </td>
                             </tr>
                             <tr >
