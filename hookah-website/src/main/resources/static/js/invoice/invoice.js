@@ -63,10 +63,11 @@ function getInvoiceInfo() {
 				EditInvoice();
 				var invoicePriceAA = null;
 				if(window.location.pathname == '/order/directInfo'){
-					invoicePriceAA = $('.order-amount span').html();
+					invoicePriceAA = $('#pay-money').html();
 				}else if(window.location.pathname == '/usercenter/myInvoice'){
 					invoicePriceAA = invoicePriceAB;
 				}
+				console.log(invoicePriceAA)
 				$('.J_invoicePriceBox').html(invoicePriceAA);
 			} else {
 				$.alert(data.message)
@@ -131,6 +132,12 @@ function selectThisTitle(event) { //选择发票信息
 		event.stopPropagation()
 	})
 }
+$('.items-title-i').on('input onporpertychange', function () {
+	$(this).val($(this).val().toUpperCase());
+});
+$('input[name=Z_taxpayerIdentifyNo]').on('input onporpertychange', function () {
+	$(this).val($(this).val().toUpperCase());
+});
 function deleteInvoice() { //删除发票抬头
 	$('.delTitle').click(function (event) {
 		var num = $(this).attr('titleid');
@@ -623,20 +630,16 @@ $('.submit-add').click(function () {
 			if (regex.invoiceName.test(address)) {
 				$('.editAddress input[name=address]').siblings('.must-tip').hide();
 				if($('select[name="province"]').val() < 0){
-					console.log(11111111)
 					$('#province').siblings('.must-tip').show();
 				}else{
 					if($('select[name="province"]').val() >= 710000){
-						console.log(22222222)
 						$('#province').siblings('.must-tip').hide();
 						region =
 						setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)
 					}else{
 						if($('select[name="region"]').val() < 0){
-							console.log(333333333)
 							$('#province').siblings('.must-tip').show();
 						}else{
-							console.log(4444444)
 							region = $('select[name="region"]').val();
 							$('#province').siblings('.must-tip').hide();
 							setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)

@@ -53,6 +53,12 @@ function getInvoiceDetails(id){
 				html+='<li>发票抬头：'+invoiceData.userInvoiceTitle.titleName+'</li>';
 				html+='<li>发票内容：'+invoiceData.invoiceContent+'</li>';
 				html+='<li>发票税号：'+invoiceData.taxpayerIdentifyNo+'</li>';
+				if(invoiceData.invoiceType != 0){
+					html+='<li>注册地址：'+invoiceData.userInvoiceTitle.regAddress+'</li>';
+					html+='<li>注册电话：'+invoiceData.userInvoiceTitle.regTel+'</li>';
+					html+='<li>开户银行：'+invoiceData.userInvoiceTitle.openBank+'</li>';
+					html+='<li>银行账户：'+invoiceData.userInvoiceTitle.bankAccount+'</li>';
+				}
 				html+='<li>申请时间：'+invoiceData.addTime+'</li>';
 				html+='<li>收票人姓名：'+invoiceData.userInvoiceAddress.invoiceName+'</li>';
 				html+='<li>收票人手机号：'+invoiceData.userInvoiceAddress.mobile+'</li>';
