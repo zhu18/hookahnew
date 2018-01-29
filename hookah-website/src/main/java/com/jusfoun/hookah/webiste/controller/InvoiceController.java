@@ -64,10 +64,10 @@ public class InvoiceController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ReturnData findByPage(@RequestParam(defaultValue = "1") Integer pageNum,
+    public ReturnData findByPage(@RequestParam(defaultValue = "1") Integer pageNumber,
                              @RequestParam(defaultValue = "15") Integer pageSize, Byte invoiceStatus, Model model) {
         try {
-            Pagination<OrderInfoInvoiceVo> pOrders = invoiceService.getDetailListInPage(pageNum, pageSize, this.getCurrentUser().getUserId(), invoiceStatus);
+            Pagination<OrderInfoInvoiceVo> pOrders = invoiceService.getDetailListInPage(pageNumber, pageSize, this.getCurrentUser().getUserId(), invoiceStatus);
             model.addAttribute("orderInvoiceList", pOrders);
 //            return "/mybuyer/invoice";
             return ReturnData.success(pOrders);
