@@ -889,10 +889,102 @@ public class GoodsServiceImpl extends GenericServiceImpl<Goods, String> implemen
     }
 
     @Override
-    public List<Goods> getGoodsListByGoodsType(Byte goodsType){
+    public List<GoodsVo> getGoodsListByGoodsType(Byte goodsType) throws HookahException{
         List<Condition> filters = new ArrayList<>();
         filters.add(Condition.eq("goodsType", goodsType));
         filters.add(Condition.eq("isDelete", 1));
-        return this.selectList(filters);
+
+        List<Goods> goodsList = this.selectList(filters);
+        List<GoodsVo> goodsVos = new ArrayList<>();
+
+        if(Objects.nonNull(goodsList) && goodsList.size() > 0){
+            for (Goods goods : goodsList) {
+                goodsVos.add(getGoodsVoInfoByGoodsId(goods));
+            }
+        }
+        return goodsVos;
     }
+
+    private GoodsVo getGoodsVoInfoByGoodsId(Goods goods) throws HookahException{
+        if (goods == null || goods.getGoodsId() == null) {
+            throw new HookahException("未查询到商品信息！");
+        }
+        GoodsVo goodsVo = new GoodsVo();
+        BeanUtils.copyProperties(goods, goodsVo);
+        // 查询所有区域信息
+        EsGoods esGoods = goodsMapper.getNeedGoodsById(goods.getGoodsId());
+        if(esGoods != null) {
+            if(esGoods.getGoodsAreas() != null) {
+                String[] region = esGoods.getGoodsAreas().split(" ");
+                if(region.length >= 2)
+                    goodsVo.setAreaCountry(region[1]);
+                if(region.length >= 3)
+                    goodsVo.setAreaProvince(region[2]);
+                if(region.length == 4)
+                    goodsVo.setAreaCity(region[3]);
+            }
+            if(esGoods.getCatIds() != null) {
+                String[] catIds = esGoods.getCatIds().split(" ");
+                StringBuffer stringBuffer = new StringBuffer();
+                for(String item : catIds) {
+                    stringBuffer.append(DictionaryUtil.getCategoryById(item) == null
+                            ? "" : DictionaryUtil.getCategoryById(item).getCatName()).append("->");
+                }
+                goodsVo.setCatFullName(stringBuffer.substring(0, stringBuffer.length() - 2));
+            }
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        //商品标签赋值
+        if(StringUtils.isNotBlank(goodsVo.getKeywords())) {
+            for(String label : goodsVo.getKeywords().split(",")) {
+                stringBuilder.append(DictionaryUtil.getGoodsLabelById(label) == null
+                        ? "" : DictionaryUtil.getGoodsLabelById(label).getLabName()).append(",");
+            }
+            goodsVo.setKeywordsNames(stringBuilder.substring(0, stringBuilder.length() - 1));
+        }
+
+        MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());
+        if (mgGoods != null) {
+            goodsVo.setFormatList(mgGoods.getFormatList());
+            goodsVo.setImgList(mgGoods.getImgList());
+            goodsVo.setAttrTypeList(mgGoods.getAttrTypeList());
+            if(StringUtils.isNotBlank(goods.getApiUrl())){
+                try {
+                    goodsVo.setApiInfo(this.fetchGoodsApiInfo(goods.getApiUrl()).getApiInfo());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+
+                goodsVo.setApiInfo(mgGoods.getApiInfo());
+            }
+            goodsVo.setPackageApiInfo(mgGoods.getPackageApiInfo());
+            goodsVo.setAsAloneSoftware(mgGoods.getAsAloneSoftware());
+            goodsVo.setAsSaaS(mgGoods.getAsSaaS());
+            goodsVo.setAtAloneSoftware(mgGoods.getAtAloneSoftware());
+            goodsVo.setAtSaaS(mgGoods.getAtSaaS());
+            goodsVo.setDataModel(mgGoods.getDataModel());
+            goodsVo.setClickRate(mgGoods.getClickRate());
+            goodsVo.setOffLineData(mgGoods.getOffLineData());
+            goodsVo.setOffLineInfo(mgGoods.getOffLineInfo());
+            goodsVo.setSales(mgGoods.getSales());
+        }
+
+        if(goodsVo.getAreaProvince() == null) {
+            goodsVo.setGoodsAreaFullName("全部");
+        }
+        if (goodsVo.getAreaProvince() != null) {
+            if(goodsVo.getAreaCity() == null) {
+                goodsVo.setGoodsAreaFullName(DictionaryUtil.getRegionById(goodsVo.getAreaProvince()).getName());
+            }else {
+                goodsVo.setGoodsAreaFullName(DictionaryUtil.getRegionById(goodsVo.getAreaProvince()).getName()
+                        + "-" + DictionaryUtil.getRegionById(goodsVo.getAreaCity()).getName());
+            }
+        }
+
+        goodsVo.setCatName(DictionaryUtil.getCategoryById(goodsVo.getCatId()) == null
+                ? "" : DictionaryUtil.getCategoryById(goodsVo.getCatId()).getCatName());
+        return goodsVo;
+    }
+
 }
