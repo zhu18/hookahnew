@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.domain.vo.*;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
@@ -158,6 +159,8 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
         }else{
             invoice.setInvoiceAmount(orderInfoService.sumOrderAmountByOrderIds(new String[]{invoiceDTOVo.getOrderIds()}));
         }
+        // 开票时间
+        invoice.setAddTime(DateUtils.now());
         return invoice;
     }
 
