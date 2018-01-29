@@ -90,6 +90,10 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
             if(orderInvoiceService.exists(filters)){
                 orderInvoiceService.deleteByCondtion(filters);
             }
+            // 换开发票
+            if(HookahConstants.INVOICE_STATUS_4 == super.selectById(invoiceDTOVo.getInvoiceId()).getInvoiceStatus()){
+                invoice.setInvoiceChange(HookahConstants.INVOICE_CHANGE_1);
+            }
             // 修改时，更新状态为已申请(待审核)
             invoice.setInvoiceStatus(HookahConstants.INVOICE_STATUS_1);
             invoice.setInvoiceId(invoiceDTOVo.getInvoiceId());

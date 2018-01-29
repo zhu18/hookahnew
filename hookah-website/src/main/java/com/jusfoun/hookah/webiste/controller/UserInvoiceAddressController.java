@@ -43,6 +43,7 @@ public class UserInvoiceAddressController extends BaseController {
             String userId = this.getCurrentUser().getUserId();
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", userId));
+            filters.add(Condition.eq("deleteStatus", HookahConstants.DELETE_STATUS_1));
             List<UserInvoiceAddress> userInvoiceAddressList = new ArrayList<>();
             userInvoiceAddressList = userInvoiceAddressService.selectList(filters);
             userInvoiceAddressList.stream().forEach(userInvoiceAddress -> {
