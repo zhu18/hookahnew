@@ -64,6 +64,30 @@ function getInvoiceDetails(id){
 				html+='<li>收票人手机号：'+invoiceData.userInvoiceAddress.mobile+'</li>';
 				html+='<li>收票地址：'+invoiceData.userInvoiceAddress.receiveAddress+'</li>';
 				html+='</ul>';
+				var invoiceStatusC = null;
+				switch (invoiceData.invoiceStatus) {
+					case 0:
+						invoiceStatusC = '未开发票';
+						break;
+					case 1:
+						invoiceStatusC = '<span style="color:#eb9c03;">已申请</span>（待审核）';
+						break;
+					case 2:
+						invoiceStatusC = '<span style="color:#eb9c03;">待邮寄</span>（审核通过）';
+						break;
+					case 3:
+						invoiceStatusC = '<span style="color: #E34F4F;">未通过</span>';
+						break;
+					case 4:
+						invoiceStatusC = '<span style="color: #0eca33;">已开票</span>';
+						break;
+				}
+				html+='<dl>';
+				html+='<dt>审核结果：'+invoiceStatusC+'</dt>';
+				if(invoiceData.invoiceStatus == 3){
+					html+='<dd>：原因：'+invoiceData.auditOpinion+'</dd>';
+				}
+				html+='</dl>';
 				if(invoiceData.invoiceStatus == 4){
 					html+='<dl>';
 					html+='<dt>邮寄信息：</dt>';

@@ -12,6 +12,7 @@ var oInvoiceInfo = '';
 var oInfo = '';
 var isEditSpecial = 'add';
 var editSpecialTitleId = '';
+var invoiceValShow = null;
 
 
 $('.translate-close-btn').click(function () { //关闭浮层
@@ -67,8 +68,8 @@ function getInvoiceInfo() {
 				}else if(window.location.pathname == '/usercenter/myInvoice'){
 					invoicePriceAA = invoicePriceAB;
 				}
-				console.log(invoicePriceAA)
 				$('.J_invoicePriceBox').html(invoicePriceAA);
+				$('.J_nsrsbh').hide();
 			} else {
 				$.alert(data.message)
 			}
@@ -125,14 +126,18 @@ function selectThisTitle(event) { //选择发票信息
 	$('.input-invoice').click(function (event) {
 		$(this).addClass('hover').siblings().removeClass('hover');
 		var invoiceid = $(this).attr('invoiceid');
-
-		$('.invoceVal').html($(this).children('input').val());
-		// console.log($(this).children('input').val());
+		invoiceValShow = $(this).children('input').val();
+		// $('.invoceVal').html(invoiceValShow);
 		$('.p_input-exclusive').val(invoiceid);
+		if($(this).attr('invoiceid')){
+			$('.J_nsrsbh').show();
+		}else{
+			$('.J_nsrsbh').hide();
+		}
 		event.stopPropagation()
 	})
 }
-$('.items-title-i').on('input onporpertychange', function () {
+$('input[name=taxpayerIdentifyNo_1]').on('input onporpertychange', function () {
 	$(this).val($(this).val().toUpperCase());
 });
 $('input[name=Z_taxpayerIdentifyNo]').on('input onporpertychange', function () {
@@ -730,6 +735,7 @@ function endSetting(){
 					$('.translateInfo-g').html('<p>'+oInvoiceInfo+'</p><p>'+oInfo+'</p>');
 					$('#J-noTranslate').show();
 					$('.translate-bg').hide();
+					$('.invoceVal').html(invoiceValShow);
 				}else if(window.location.pathname == '/usercenter/myInvoice'){
 					if(orderIds){
 						var datas = null;
