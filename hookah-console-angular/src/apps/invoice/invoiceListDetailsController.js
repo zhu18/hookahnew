@@ -33,6 +33,7 @@ class invoiceListDetailsController {
                     var orderInfoInvoiceVoList=info.orderInfoInvoiceVoList;
                     $scope.mgOrderGoodsList=orderInfoInvoiceVoList.mgOrderGoodsList;//关联订单列表
                     var userInvoiceTitle=info.userInvoiceTitle;//增票资质
+                    $scope.titleId=info.titleId;
                     if(userInvoiceTitle){
                         $scope.titleName=userInvoiceTitle.titleName;
                         $scope.taxpayerIdentifyNo=userInvoiceTitle.taxpayerIdentifyNo;

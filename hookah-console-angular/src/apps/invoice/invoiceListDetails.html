@@ -128,7 +128,7 @@
                 <div class="col-sm-12">
                     <div><h5 class="font-weight-bold">增票资质：</h5></div>
                     <div class="border-bottom clearfix">
-                        <table class="info-tab">
+                        <table class="info-tab" data-ng-show="titleId != 0">
                             <tbody>
                             <tr >
                                 <th>发票抬头：</th>
@@ -162,6 +162,17 @@
                             </tr>
                             </tbody>
                         </table>
+                        <table class="info-tab" data-ng-show="titleId == 0">
+                            <tbody>
+                            <tr >
+                                <th>发票抬头：</th>
+                                <td>
+                                    <span data-ng-bind="titleName"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
                     </div>
 
                 </div>
@@ -251,7 +262,7 @@
                             <tr >
                                 <th>快递公司：</th>
                                 <td>
-                                    <input type="text" data-ng-model="$parent.expressName">
+                                    <input type="text" data-ng-model="expressInfo.expressName">
                                 </td>
                             </tr>
                             <tr >
