@@ -1,5 +1,6 @@
 package com.jusfoun.hookah.console.server.service.impl;
 
+import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.dao.UserInvoiceAddressMapper;
 import com.jusfoun.hookah.core.domain.UserInvoiceAddress;
 import com.jusfoun.hookah.core.domain.vo.UserInvoiceAddressVo;
@@ -41,5 +42,16 @@ public class UserInvoiceAddressServiceImpl extends GenericServiceImpl<UserInvoic
             }
         }
         return userInvoiceAddressVo;
+    }
+
+    @Override
+    public int updateDefaultAddress(String addressId, String userId){
+
+        userInvoiceAddressMapper.updateDefaultAddr(userId);
+
+        UserInvoiceAddress userInvoiceAddress = new UserInvoiceAddress();
+        userInvoiceAddress.setId(addressId);
+        userInvoiceAddress.setDefaultStatus(HookahConstants.USER_INVOICE_DEFAULT);
+        return super.updateByIdSelective(userInvoiceAddress);
     }
 }

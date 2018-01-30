@@ -11,4 +11,14 @@
 
         where id = #{id}
     </select>
+
+    <update id="updateDefaultAddr" >
+
+        UPDATE user_invoice_address
+        SET default_status = 0
+        WHERE
+        user_id = #{userId,jdbcType=VARCHAR}
+
+    </update>
+
 </mapper>

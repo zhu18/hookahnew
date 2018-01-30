@@ -153,10 +153,7 @@ public class UserInvoiceAddressController extends BaseController {
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
-            UserInvoiceAddress userInvoiceAddress = new UserInvoiceAddress();
-            userInvoiceAddress.setId(id);
-            userInvoiceAddress.setDefaultStatus(HookahConstants.USER_INVOICE_DEFAULT);
-            userInvoiceAddressService.updateByIdSelective(userInvoiceAddress);
+            userInvoiceAddressService.updateDefaultAddress(id, getCurrentUser().getUserId());
             returnData.setData(userInvoiceAddressService.selectById(id));
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
