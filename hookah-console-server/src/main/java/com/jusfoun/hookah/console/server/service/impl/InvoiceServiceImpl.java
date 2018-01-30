@@ -277,7 +277,7 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
 
         InvoiceDetailVo invoiceDetailVo = new InvoiceDetailVo();
         List<OrderInfoInvoiceVo> orderInfoInvoiceVoList = invoiceMapper.getOrderInvoiceDetailInfo(invoiceId);
-
+        List<OrderInfoInvoiceVo> list = new ArrayList<>();
         for(OrderInfo order:orderInfoInvoiceVoList){
             OrderInfoInvoiceVo orderInfoInvoiceVo = new OrderInfoInvoiceVo();
             this.copyProperties(order,orderInfoInvoiceVo,null);
@@ -300,9 +300,10 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
             }
 
             orderInfoInvoiceVo.setMgOrderGoodsList(goodsList);
+            list.add(orderInfoInvoiceVo);
         }
         BeanUtils.copyProperties(this.findInvoiceInfo(invoiceId), invoiceDetailVo);
-        invoiceDetailVo.setOrderInfoInvoiceVoList(orderInfoInvoiceVoList);
+        invoiceDetailVo.setOrderInfoInvoiceVoList(list);
         invoiceDetailVo.setUserInvoiceVo(invoiceMapper.getUserInvoiceInfoByInvoiceId(invoiceId));
         return invoiceDetailVo;
     }
