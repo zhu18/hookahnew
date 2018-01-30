@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.domain.vo.*;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
+import com.jusfoun.hookah.core.utils.DateUtils;
 import com.jusfoun.hookah.core.utils.JsonUtils;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.*;
@@ -158,6 +159,8 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
         }else{
             invoice.setInvoiceAmount(orderInfoService.sumOrderAmountByOrderIds(new String[]{invoiceDTOVo.getOrderIds()}));
         }
+        // 开票时间
+        invoice.setAddTime(DateUtils.now());
         return invoice;
     }
 
@@ -274,7 +277,7 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
 
         InvoiceDetailVo invoiceDetailVo = new InvoiceDetailVo();
         List<OrderInfoInvoiceVo> orderInfoInvoiceVoList = invoiceMapper.getOrderInvoiceDetailInfo(invoiceId);
-
+        List<OrderInfoInvoiceVo> list = new ArrayList<>();
         for(OrderInfo order:orderInfoInvoiceVoList){
             OrderInfoInvoiceVo orderInfoInvoiceVo = new OrderInfoInvoiceVo();
             this.copyProperties(order,orderInfoInvoiceVo,null);
@@ -297,9 +300,10 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
             }
 
             orderInfoInvoiceVo.setMgOrderGoodsList(goodsList);
+            list.add(orderInfoInvoiceVo);
         }
         BeanUtils.copyProperties(this.findInvoiceInfo(invoiceId), invoiceDetailVo);
-        invoiceDetailVo.setOrderInfoInvoiceVoList(orderInfoInvoiceVoList);
+        invoiceDetailVo.setOrderInfoInvoiceVoList(list);
         invoiceDetailVo.setUserInvoiceVo(invoiceMapper.getUserInvoiceInfoByInvoiceId(invoiceId));
         return invoiceDetailVo;
     }

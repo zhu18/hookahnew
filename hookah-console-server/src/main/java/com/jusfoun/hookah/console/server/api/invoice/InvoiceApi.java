@@ -152,7 +152,7 @@ public class InvoiceApi extends BaseController{
             InvoiceDetailVo invoiceDetailVo = invoiceService.findOrderInvoiceInfo(invoiceId);
             return ReturnData.success(invoiceDetailVo);
         } catch (Exception e) {
-            logger.error("修改错误", e);
+            logger.error("信息不存在", e);
             ReturnData.error("系统异常:" + e.getMessage());
         }
         return returnData;
