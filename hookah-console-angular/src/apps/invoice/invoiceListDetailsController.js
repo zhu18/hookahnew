@@ -40,6 +40,8 @@ class invoiceListDetailsController {
                         $scope.regTel=userInvoiceTitle.regTel;
                         $scope.regAddress=userInvoiceTitle.regAddress;
                         $scope.bankAccount=userInvoiceTitle.bankAccount;
+                    }else if($scope.titleId == 0){
+                        $scope.titleName="个人"
                     }
                     var userInvoiceAddress=info.userInvoiceAddress;//收票信息
                     if(userInvoiceAddress){
@@ -141,19 +143,14 @@ class invoiceListDetailsController {
             });
 
         }
-        $scope.expressInfo={ //获取不到前台的值
-            expressName:"",
-            expressNo:"",
-            addTime:""
-        }
         $scope.save=function () {//邮寄函数
             var modalInstance =$rootScope.openConfirmDialogModal("确认提交信息吗？");
             modalInstance.result.then(function () {
                 let data={
                     invoiceId:$stateParams.id,
-                    expressName:$scope.expressInfo.expressName,
-                    expressNo:$scope.expressInfo.expressNo,
-                    addTime:$scope.expressInfo.addTime
+                    expressName:$scope.expressName,
+                    expressNo:$scope.expressNo,
+                    addTime:$scope.addTime
                 };
                 let promise = $http({
                     method: 'post',

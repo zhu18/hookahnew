@@ -1,3 +1,9 @@
+<style>
+    #userForm p{
+        color: red;
+        padding: 0;
+    }
+</style>
 <div class="row">
     <div class="col-sm-12">
         <div class="console-title console-title-border clearfix">
@@ -224,6 +230,13 @@
                                     <textarea name="" id="" cols="30" rows="10" ng-disabled="invoiceStatu == 2" data-ng-model="auditOpinion"></textarea>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-primary"  data-ng-click="auditing()" style="margin: auto;display: block;">
+                                        提交
+                                    </button>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                         <table class="info-tab" data-ng-show="invoiceStatus == 2">
@@ -254,41 +267,61 @@
                         </table>
                     </div>
                 </div>
-                <div class="col-sm-12 "  data-ng-if="invoiceStatus == 2 || invoiceStatus == 4">
+                <div class="col-sm-12 "  data-ng-show="invoiceStatus == 2 || invoiceStatus == 4">
                     <div><h5 class="font-weight-bold background-color-gary">邮寄信息：</h5></div>
                     <div class="clearfix">
-                        <table class="info-tab" data-ng-if="invoiceStatus == 2">
-                            <tbody>
-                            <tr >
-                                <th>快递公司：</th>
-                                <td>
-                                    <input type="text" data-ng-model="expressInfo.expressName">
-                                </td>
-                            </tr>
-                            <tr >
-                                <th>快递单号：</th>
-                                <td>
-                                    <input type="text" data-ng-model="expressInfo.expressNo">
-                                </td>
-                            </tr>
-                            <tr >
-                                <th>寄出日期：</th>
-                                <td>
-                                    <p class="input-group">
-                                        <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
-                                               ng-paste="$event.preventDefault()" type="text" class="form-control"
-                                               uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="expressInfo.addTime"
-                                               is-open="popup1.opened" datepicker-options="inlineOptions" close-text="关闭" clear-text="清除"
-                                               current-text="今天" readonly="true"/>
-                                        <span class="input-group-btn">
+                        <form action="" id="userForm" name="userForm" data-ng-show="invoiceStatus == 2">
+                            <table class="info-tab" >
+                                <tbody>
+                                <tr >
+                                    <th>快递公司：</th>
+                                    <td>
+                                        <input type="text" data-ng-model="expressName" name="expressName" ng-maxlength="50"  placeholder="限50字符内。" required>
+
+                                    </td>
+                                    <td>
+                                        <div data-ng-show="userForm.expressName.$pristine || userForm.expressName.$invalid" style="text-align: left;">
+                                            <p data-ng-show="userForm.expressName.$error.required" >快递公司不能为空。</p>
+                                            <p data-ng-show="userForm.expressName.$error.maxlength">限50字符内。</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <th>快递单号：</th>
+                                    <td>
+                                        <input type="text" data-ng-model="expressNo" name="expressNo" data-ng-pattern="/^[0-9a-zA_Z]+$/" ng-maxlength="30" required>
+                                    </td>
+                                    <td>
+                                        <div data-ng-show="userForm.expressNo.$pristine || userForm.expressNo.$invalid" style="text-align: left;">
+                                            <p data-ng-show="userForm.expressNo.$error.required" >快递单号不能为空。</p>
+                                            <p data-ng-show="userForm.expressNo.$error.pattern">只能是数字、字母组合。</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <th>寄出日期：</th>
+                                    <td>
+                                        <p class="input-group">
+                                            <input style="background-color: transparent;" ng-keypress="$event.preventDefault()"
+                                                   ng-paste="$event.preventDefault()" type="text" class="form-control"
+                                                   uib-datepicker-popup="yyyy-MM-dd" type="datetime-local" ng-model="addTime"
+                                                   is-open="popup1.opened" datepicker-options="inlineOptions" close-text="关闭" clear-text="清除"
+                                                   current-text="今天" readonly="true"/>
+                                            <span class="input-group-btn">
                                       <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                                  </span>
-                                    </p>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table class="info-tab" data-ng-if="invoiceStatus == 4">
+                                        </p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <button class="btn btn-primary"  data-ng-click="save()" ng-disabled="userForm.$pristine || userForm.$invalid" style="margin: auto;display: block;">
+                                    提交
+                                </button>
+                            </div>
+                        </form>
+                        <table class="info-tab" data-ng-show="invoiceStatus == 4">
                             <tbody>
                             <tr >
                                 <th>快递公司：</th>
@@ -311,14 +344,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div>
-                    <button class="btn btn-primary" data-ng-if="invoiceStatus == 1" data-ng-click="auditing()" style="margin: auto;display: block;">
-                        提交
-                    </button>
-                    <button class="btn btn-primary" data-ng-if="invoiceStatus == 2" data-ng-click="save()" style="margin: auto;display: block;">
-                        提交
-                    </button>
                 </div>
             </div>
         </div>
