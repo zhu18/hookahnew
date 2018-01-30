@@ -11,4 +11,6 @@ public interface UserInvoiceTitleMapper extends GenericDao<UserInvoiceTitle> {
 
     List<UserInvoiceTitleVo> getIncreInvoiceList(@Param("userName") String userName, @Param("userType") Byte userType,
                                                  @Param("invoiceStatus") Byte invoiceStatus);
+
+    UserInvoiceTitleVo findUserInvoiceTitleInfo(String titleId);
 }

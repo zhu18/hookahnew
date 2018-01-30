@@ -53,4 +53,23 @@
             AND ut.invoice_status = #{invoiceStatus,jdbcType=TINYINT}
         </if>
     </select>
+
+    <select id="findUserInvoiceTitleInfo" resultMap="UserInvoiceTitleVoResultMap">
+
+        SELECT
+        ut.*,
+        u.user_name,
+        u.user_type,
+        ud.real_name
+        FROM
+        user_invoice_title ut,
+        user u,
+        user_detail ud
+        WHERE
+        ut.user_id = u.user_id
+        AND u.user_id = ud.user_id
+        AND ut.user_invoice_type = 1
+        AND ut.title_id = #{titleId,jdbcType=VARCHAR}
+
+    </select>
 </mapper>

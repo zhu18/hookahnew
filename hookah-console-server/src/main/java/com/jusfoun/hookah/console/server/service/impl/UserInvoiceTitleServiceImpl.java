@@ -27,6 +27,6 @@ public class UserInvoiceTitleServiceImpl extends GenericServiceImpl<UserInvoiceT
     }
 
     public UserInvoiceTitleVo findUserInvoiceTitleInfo(String titleId){
-     return null;
+     return userInvoiceTitleMapper.findUserInvoiceTitleInfo(titleId);
     }
 }
