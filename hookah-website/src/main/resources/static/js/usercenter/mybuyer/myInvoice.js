@@ -167,18 +167,13 @@ function loadPageData(data) {
 			getInvoiceInfo()
 		});
 		$("[name=selectInvoice]:checkbox").click(function () {
-			// var flag = true;
-			// $("[name=selectInvoice]:checkbox").each(function () {
-			// 	if(this.checked){
-			// 		selectNum +=1;
-			// 	}else{
-			// 		selectNum -=1;
-			// 	}
-			// });
+			if($(this).prop('checked')){
+				$(this).parent('td').siblings().children('.J_editInvoice').hide();
+			}else{
+				$(this).parent('td').siblings().children('.J_editInvoice').show();
+			}
 			totalAmountFn();
 		});
-
-
 	} else {
 		$('.order').html('<tr class="noData"><td colspan="5">暂时无订单！</td></tr>');
 	}
@@ -186,7 +181,6 @@ function loadPageData(data) {
 }
 
 function filterInvoice(that){
-	// console.log($(that).val());
 	dataParm.invoiceStatus = $(that).val();
 	goPage(1);
 }
@@ -195,7 +189,7 @@ function totalAmountFn() {
 	selectOrderId = [];
 	selectNum = 0;
 	$("[name=selectInvoice]:checkbox:checked").each(function () {
-		totalAmount += Number($(this).attr('price'))
+		totalAmount += Number($(this).attr('price'));
 		selectNum +=1;
 		selectOrderId.push($(this).val())
 	});
