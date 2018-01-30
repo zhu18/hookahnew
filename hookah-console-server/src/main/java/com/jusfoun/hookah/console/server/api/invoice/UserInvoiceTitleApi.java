@@ -31,7 +31,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = "/test/userInvoiceTitle/back")
+@RequestMapping(value = "/api/userInvoiceTitle/back")
 public class UserInvoiceTitleApi extends BaseController{
 
     @Resource
