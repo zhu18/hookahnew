@@ -63,7 +63,7 @@
                             <span>{{(invoiceAmount/100) | currency: '￥'}}</span>
                         </div>
                         <div class="col-sm-12">
-                            <table class="table" data-ng-repeat="item in mgOrderGoodsList">
+                            <table class="table" data-ng-repeat="item in orderInfoInvoiceVoList">
                                 <thead>
                                 <tr>
                                     <th>
@@ -84,9 +84,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="{{item.goodsImg}}" alt="">
+                                <tr data-ng-repeat="item in item.mgOrderGoodsList">
+                                    <td style="text-align: center;">
+                                        <img src="{{item.goodsImg}}" alt="" style="width: 100px;height: 100px;">
                                         <p>
                                             <span data-ng-bind="item.goodsName"></span>
                                         </p>
@@ -94,7 +94,7 @@
                                     <td>
                                           <p>
                                             <span>*</span>
-                                            <span data-ng-show="item.goodsNumber"></span>
+                                            <span data-ng-bind="item.goodsNumber"></span>
                                           </p>
                                           <p>
                                               <span>规格：</span>
