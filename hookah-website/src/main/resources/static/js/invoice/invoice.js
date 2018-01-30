@@ -35,7 +35,7 @@ var regex = {
 	regTel: /[0-9]{1,15}/,    //发票--注册电话
 	openBank: /[\u4e00-\u9fa5]{1,50}/,    //开户银行
 	bankAccount: /[0-9]{1,50}/,    //银行账号
-	invoiceName: /[\u4e00-\u9fa5a-zA-Z]{1,15}/,    //收票姓名
+	invoiceName: /^[a-zA-Z]{1,15}$|^[\u4e00-\u9fa5]{1,15}$/,    //收票姓名
 	mobile: /^0?(13[0-9]|14[5-9]|15[012356789]|66|17[0-9]|18[0-9]|19[8-9])[0-9]{8}$/,    //收票手机
 	address: /[\u4e00-\u9fa5a-zA-Z0-9]{1,150}/,    //收票地址
 	fixedLine1: /[0-9]{1,4}/,    //固话一
@@ -519,10 +519,16 @@ function getInvoiceAddress() {
 					isLoadAddress = true;
 					var html = '';
 					for (var i = 0; i < data.data.length; i++) {
-						html += '<div class="addressInfo-item" aid="' + data.data[i].id + '" ainfo="'+ data.data[i].receiveAddress + data.data[i].address + '，'+ data.data[i].invoiceName + '，'+ data.data[i].mobile +'">';
+						var isDefault = data.data[i].defaultStatus == 1 ? 'hover':'';
+						html += '<div class="addressInfo-item '+isDefault+'" aid="' + data.data[i].id + '" ainfo="'+ data.data[i].receiveAddress + data.data[i].address + '，'+ data.data[i].invoiceName + '，'+ data.data[i].mobile +'">';
 						html += '<div class="info-t">';
 						html += '<span>收票人：' + data.data[i].invoiceName + '</span>';
 						html += '<span>手机号：' + data.data[i].mobile + '</span>';
+						if(data.data[i].defaultStatus == 0){
+							html += '<span class="address-seting address-default" aid="' + data.data[i].id + '">设为默认</span>';
+						}else{
+							html += '<span class="address-seting" style="color:#666; display: block">默认地址</span>';
+						}
 						html += '<span class="address-seting address-editor" aid="' + data.data[i].id + '">修改</span>';
 						html += '<span class="address-seting address-del" aid="' + data.data[i].id + '">删除</span>';
 						html += '</div>';
@@ -532,6 +538,29 @@ function getInvoiceAddress() {
 					html += '<div style="text-align: center;" class="form-btn"><a style="display: inline-block;float: none;background: #237ee8;color:#fff;margin: 0 15px;" href="javascript:void(0)" class="ok-invoice">确定</a><a  style="display: inline-block;float: none;margin: 0 15px;" href="javascript:void(0)" class="no-invoice">取消</a></div>';
 					$('.addressInfo').html(html);
 					$('.addAddress').show();
+					$('.address-default').click(function (event) {//删除收票地址
+						var id = $(this).attr('aid');
+						$.confirm('确定要设为默认收票地址? ', null, function (type) {
+							if (type == 'yes') {
+								this.hide();
+								$.ajax({
+									type: "get",
+									url: host.website + '/api/userInvoiceAddress/updateDefalutAddr',
+									data:{id:id},
+									success: function (data) {
+										if (data.code == 1) {
+											getInvoiceAddress()
+										} else {
+											$.alert(data.message)
+										}
+									}
+								});
+							} else {
+								this.hide();
+							}
+						});
+						event.stopPropagation()
+					});
 					$('.addressInfo-item').click(function (event) { //选择收票地址
 						$(this).addClass('hover').siblings().removeClass('hover');
 						event.stopPropagation()
@@ -628,6 +657,8 @@ $('.submit-add').click(function () {
 		fixedLine1 = $('.editAddress input[name=fixedLine1]').val(),    //固话一
 		fixedLine2 = $('.editAddress input[name=fixedLine2]').val(),    //固话二
 		postCode = $('.editAddress input[name=postCode]').val();
+	console.log(invoiceName)
+
 	if (regex.invoiceName.test(invoiceName)) {
 		$('.editAddress input[name=invoiceName]').siblings('.must-tip').hide();
 		if (regex.mobile.test(mobile)) {
