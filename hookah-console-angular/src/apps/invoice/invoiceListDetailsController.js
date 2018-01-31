@@ -30,15 +30,18 @@ class invoiceListDetailsController {
                     }
                     $scope.addTime=info.addTime;
                     $scope.invoiceAmount=info.invoiceAmount;
-                    var orderInfoInvoiceVoList=info.orderInfoInvoiceVoList;
-                    $scope.mgOrderGoodsList=orderInfoInvoiceVoList.mgOrderGoodsList;//关联订单列表
+                    $scope.orderInfoInvoiceVoList=info.orderInfoInvoiceVoList; // 订单列表
+
                     var userInvoiceTitle=info.userInvoiceTitle;//增票资质
+                    $scope.titleId=info.titleId;
                     if(userInvoiceTitle){
                         $scope.titleName=userInvoiceTitle.titleName;
                         $scope.taxpayerIdentifyNo=userInvoiceTitle.taxpayerIdentifyNo;
                         $scope.regTel=userInvoiceTitle.regTel;
                         $scope.regAddress=userInvoiceTitle.regAddress;
                         $scope.bankAccount=userInvoiceTitle.bankAccount;
+                    }else if($scope.titleId == 0){
+                        $scope.titleName="个人"
                     }
                     var userInvoiceAddress=info.userInvoiceAddress;//收票信息
                     if(userInvoiceAddress){
@@ -140,19 +143,14 @@ class invoiceListDetailsController {
             });
 
         }
-        $scope.expressInfo={ //获取不到前台的值
-            expressName:"",
-            expressNo:"",
-            addTime:""
-        }
         $scope.save=function () {//邮寄函数
             var modalInstance =$rootScope.openConfirmDialogModal("确认提交信息吗？");
             modalInstance.result.then(function () {
                 let data={
                     invoiceId:$stateParams.id,
-                    expressName:$scope.expressInfo.expressName,
-                    expressNo:$scope.expressInfo.expressNo,
-                    addTime:$scope.expressInfo.addTime
+                    expressName:$scope.expressName,
+                    expressNo:$scope.expressNo,
+                    addTime:$scope.addTime
                 };
                 let promise = $http({
                     method: 'post',

@@ -73,5 +73,5 @@ public interface GoodsService extends GenericService<Goods,String> {
 
     int count(Byte goodsType);
 
-    List<Goods> getGoodsListByGoodsType(Byte goodsType);
+    List<GoodsVo> getGoodsListByGoodsType(Byte goodsType) throws HookahException;
 }

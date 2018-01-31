@@ -9,9 +9,37 @@ import java.io.Serializable;
  */
 public class UserInvoiceTitleVo extends UserInvoiceTitle implements Serializable {
 
-    private byte invoiceStatus;
+    private String userName;
+
+    private String realName;
+
+    private Byte userType;
 
     private String auditOpinion;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public Byte getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Byte userType) {
+        this.userType = userType;
+    }
 
     public String getAuditOpinion() {
         return auditOpinion;

@@ -11,4 +11,6 @@ import com.jusfoun.hookah.core.generic.GenericService;
 public interface UserInvoiceAddressService extends GenericService<UserInvoiceAddress,String> {
 
     UserInvoiceAddressVo findUserInvoiceAddressInfoById(String id) throws HookahException;
+
+    int updateDefaultAddress(String addressId, String userId);
 }

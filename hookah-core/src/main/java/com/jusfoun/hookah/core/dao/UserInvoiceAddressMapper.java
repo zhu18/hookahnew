@@ -7,4 +7,6 @@ import com.jusfoun.hookah.core.generic.GenericDao;
 public interface UserInvoiceAddressMapper extends GenericDao<UserInvoiceAddress> {
 
     UserInvoiceAddressVo getUserInvoiceAddressById(String id);
+
+    int updateDefaultAddr(String userId);
 }

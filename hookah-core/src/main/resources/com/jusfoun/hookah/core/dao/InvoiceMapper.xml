@@ -172,7 +172,7 @@
     ie.invoice_sn,
     ie.invoice_change
     FROM
-    (select * from order_info oio where oio.user_id = #{userId,jdbcType=VARCHAR}) as oi
+    (select * from order_info oio where oio.pay_status = 2 and oio.user_id = #{userId,jdbcType=VARCHAR}) as oi
     LEFT JOIN order_invoice oe ON oi.order_id = oe.order_id
     LEFT JOIN invoice ie ON oe.invoice_id = ie.invoice_id
 
@@ -253,11 +253,10 @@
 	u.user_type,
 	ud.real_name
   FROM
-	user u,
+	user u left join
 	user_detail ud
-  WHERE
-	u.user_id = ud.user_id
-  AND u.user_id = (
+	on u.user_id = ud.user_id
+  WHERE u.user_id = (
 	SELECT
 		ie.add_user
 	FROM

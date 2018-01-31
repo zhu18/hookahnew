@@ -43,6 +43,7 @@ public class UserInvoiceTitleController extends BaseController {
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("userInvoiceType", userInvoiceType));
+            filters.add(Condition.eq("deleteStatus", HookahConstants.DELETE_STATUS_1));
             if(HookahConstants.INVOICE_TYPE_1 == userInvoiceType){
                /* UserInvoiceTitle userInvoiceTitle = userInvoiceTitleService.selectOne(filters);
                 UserInvoiceTitleVo userInvoiceTitleVo = new UserInvoiceTitleVo();
