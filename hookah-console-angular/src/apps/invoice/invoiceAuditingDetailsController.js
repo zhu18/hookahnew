@@ -8,7 +8,7 @@ class invoiceAuditingDetailsController {
         $scope.reader=function () {//渲染页面
             let promise = $http({
                 method: 'GET',
-                url: $rootScope.site.apiServer + "/api/invoice/back/findById",
+                url: $rootScope.site.apiServer + "/api/userInvoiceTitle/back/findById",
                 params: {
                     invoiceId:$stateParams.id
                 }
@@ -18,44 +18,17 @@ class invoiceAuditingDetailsController {
                     console.log(res.data.data);
                     var info=res.data.data;
                     $scope.invoiceStatus=info.invoiceStatus;//发票状态
-                    $scope.invoiceSn=info.invoiceSn;
-                    $scope.invoiceType=info.invoiceType;
-                    $scope.auditOpinion=info.auditOpinion;
-                    $scope.invoiceChange=info.invoiceChange;
-                    var userInvoiceVo=info.userInvoiceVo;//增票资质
-                    if(userInvoiceVo){
-                        $scope.userName=userInvoiceVo.userName;
-                        $scope.realName=userInvoiceVo.realName;
-                        $scope.userType=userInvoiceVo.userType;
-                    }
-                    $scope.addTime=info.addTime;
-                    $scope.invoiceAmount=info.invoiceAmount;
-                    var orderInfoInvoiceVoList=info.orderInfoInvoiceVoList;
-                    $scope.mgOrderGoodsList=orderInfoInvoiceVoList.mgOrderGoodsList;//关联订单列表
-                    var userInvoiceTitle=info.userInvoiceTitle;//增票资质
-                    if(userInvoiceTitle){
-                        $scope.titleName=userInvoiceTitle.titleName;
-                        $scope.taxpayerIdentifyNo=userInvoiceTitle.taxpayerIdentifyNo;
-                        $scope.regTel=userInvoiceTitle.regTel;
-                        $scope.regAddress=userInvoiceTitle.regAddress;
-                        $scope.bankAccount=userInvoiceTitle.bankAccount;
-                    }
-                    var userInvoiceAddress=info.userInvoiceAddress;//收票信息
-                    if(userInvoiceAddress){
-                        $scope.invoiceName=userInvoiceAddress.invoiceName;
-                        $scope.mobile=userInvoiceAddress.mobile;
-                        $scope.receiveAddress=userInvoiceAddress.receiveAddress;
-                    }
-                    var expressInfo=info.expressInfo;//邮寄信息
-                    if(expressInfo){
-                        $scope.expressName=expressInfo.expressName;
-                        $scope.expressNo=expressInfo.expressNo;
-                        $scope.addTime=expressInfo.addTime;
-                    }else {
-                        $scope.expressName="";
-                        $scope.expressNo="";
-                        $scope.addTime="";
-                    }
+                    $scope.invoiceType=info.invoiceType;//审核状态
+                    $scope.auditOpinion=info.auditOpinion;//审核意见
+                    $scope.userName=info.userName;//买家账号
+                    $scope.realName=info.realName;//实名认证
+                    $scope.userType=info.userType;//账号类型
+                    $scope.addTime=info.addTime;//申请时间
+                    $scope.titleName=info.titleName;//发票抬头
+                    $scope.taxpayerIdentifyNo=info.taxpayerIdentifyNo;//纳税人识别号
+                    $scope.regTel=info.regTel;//注册电话
+                    $scope.regAddress=info.regAddress;//注册地址
+                    $scope.bankAccount=info.bankAccount;//银行账户
                 } else {
 
                 }
@@ -122,7 +95,7 @@ class invoiceAuditingDetailsController {
                 }
                 let promise = $http({
                     method: 'post',
-                    url: $rootScope.site.apiServer + "/api/invoice/back/check",
+                    url: $rootScope.site.apiServer + "/api/userInvoiceTitle/back/check",
                     params: {invoice:JSON.stringify(data)}
                 });
                 promise.then(function (res, status, config, headers) {
@@ -140,40 +113,7 @@ class invoiceAuditingDetailsController {
             });
 
         }
-        $scope.expressInfo={ //获取不到前台的值
-            expressName:"",
-            expressNo:"",
-            addTime:""
-        }
-        $scope.save=function () {//邮寄函数
-            var modalInstance =$rootScope.openConfirmDialogModal("确认提交信息吗？");
-            modalInstance.result.then(function () {
-                let data={
-                    invoiceId:$stateParams.id,
-                    expressName:$scope.expressInfo.expressName,
-                    expressNo:$scope.expressInfo.expressNo,
-                    addTime:$scope.expressInfo.addTime
-                };
-                let promise = $http({
-                    method: 'post',
-                    url: $rootScope.site.apiServer + "/api/invoice/back/send",
-                    params: {expressInfo:JSON.stringify(data)}
-                });
-                promise.then(function (res, status, config, headers) {
-                    if (res.data.code == '1') {
-                        console.log(res.data.data);
-                        $state.go('invoice.list');
-                    } else {
 
-                    }
-                    $rootScope.loadingState = false;
-                    growl.addSuccessMessage("订单数据加载完毕。。。");
-                });
-            }, function () {
-                $state.go('invoice.listDetails');
-            });
-
-        }
     }
 }
 
