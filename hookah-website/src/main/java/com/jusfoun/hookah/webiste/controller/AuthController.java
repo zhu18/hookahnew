@@ -380,10 +380,15 @@ public class AuthController extends BaseController {
             JsonNode data = JsonUtils.toObject(result.toString(), JsonNode.class);
             //判断企业认证信息是否正确
             String isCheck = "0";
+            Map<String, String> mapCheck = new HashMap<>(6);
             if(data.get("ReturnCode").toString().equals("1")){
-                String societyCode = data.get("Result").get("societyCode").textValue();
                 String name = data.get("Result").get("name").textValue();
-                if(!societyCode.equals(organization.getCreditCode()) ||
+                String societyCode = data.get("Result").get("societyCode").textValue();
+                if(societyCode == null){  // 判断信用编码为空需要审核
+                    mapCheck.put("isCheck", "1");
+                    orgAuthInfo(organization, userId, request, "1");
+                    return ReturnData.success(mapCheck);
+                } else if(!societyCode.equals(organization.getCreditCode()) ||
                         !name.equals(organization.getOrgName())){
                     return ReturnData.error("企业名称与社会信用代码不匹配，请重新录入!");
                 }else {
@@ -391,7 +396,6 @@ public class AuthController extends BaseController {
                     return ReturnData.success("恭喜您！验证成功！");
                 }
             }else {
-                Map<String, String> mapCheck = new HashMap<>(6);
                 mapCheck.put("isCheck", "1");
                 orgAuthInfo(organization, userId, request, "1");
                 return ReturnData.success(mapCheck);
