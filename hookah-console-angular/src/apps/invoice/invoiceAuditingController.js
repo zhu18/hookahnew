@@ -16,7 +16,6 @@ class invoiceAuditingController {
             {id:2, name:"审核通过"}
         ];
         $scope.invoiceStatus=-1;
-        $scope.invoiceType=1;
         $scope.controlScreen=function () { //控制搜索框展示函数
             $scope.controlScreenShow=true;
             $scope.screenTitle='收起筛选';
@@ -34,11 +33,10 @@ class invoiceAuditingController {
         $scope.search = function () { //Render page function
             var promise = $http({
                 method: 'GET',
-                url: $rootScope.site.apiServer + "/api/invoice/back/all",
+                url: $rootScope.site.apiServer + "/api/userInvoiceTitle/back/all",
                 params: {
                     userName: $scope.userName,//审核状态
                     userType: $scope.userType,
-                    invoiceStatus: $scope.invoiceStatus,
                     invoiceType: $scope.invoiceType,
                     currentPage: $rootScope.pagination.currentPage, //当前页码
                     pageSize: $rootScope.pagination.pageSize,
