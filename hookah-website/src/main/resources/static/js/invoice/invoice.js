@@ -34,7 +34,7 @@ var regex = {
 	regAddress: /[\u4e00-\u9fa50-9a-zA-Z]{1,50}/,    //发票--注册地址
 	regTel: /[0-9]{1,15}/,    //发票--注册电话
 	openBank: /[\u4e00-\u9fa5]{1,50}/,    //开户银行
-	bankAccount: /[0-9]{1,50}/,    //银行账号
+	bankAccount: /^[0-9]{1,50}$/,    //银行账号
 	invoiceName: /^[a-zA-Z]{1,15}$|^[\u4e00-\u9fa5]{1,15}$/,    //收票姓名
 	mobile: /^0?(13[0-9]|14[5-9]|15[012356789]|66|17[0-9]|18[0-9]|19[8-9])[0-9]{8}$/,    //收票手机
 	address: /[\u4e00-\u9fa5a-zA-Z0-9]{1,150}/,    //收票地址
@@ -309,6 +309,7 @@ function testInvoiceInfo(titleName, taxpayerIdentifyNo, regAddress, regTel, open
 					$('input[name=Z_regTel]').siblings('.must-tip').hide();
 					if (regex.openBank.test(openBank)) {
 						$('input[name=Z_openBank]').siblings('.must-tip').hide();
+
 						if (regex.bankAccount.test(bankAccount)) {
 							$('input[name=Z_bankAccount]').siblings('.must-tip').hide();
 							return true;
@@ -641,6 +642,7 @@ $('.addAddressBtn').click(function () {
 	$('.editAddress').show();
 	$('.addAddress').hide();
 	$('.addressInfo').hide();
+	$('.J_gotoInvoiceInfo').hide();
 	isAddAddress = 'add';
 	loadRegion('province', regionParam); //加载地区
 });
@@ -648,6 +650,7 @@ $('.cancel-add').click(function () {
 	$('.editAddress').hide();
 	$('.addAddress').show();
 	$('.addressInfo').show();
+	$('.J_gotoInvoiceInfo').show();
 	resetAddAddress();
 });
 $('.submit-add').click(function () {
@@ -724,6 +727,7 @@ function setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLin
 				getInvoiceAddress();
 				resetAddAddress();
 				$.alert('保存成功')
+				$('.J_gotoInvoiceInfo').show();
 			} else {
 				$.alert(data.message)
 			}

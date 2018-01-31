@@ -64,6 +64,7 @@ var htmlPart = {
 								<td>${(list.goodsPrice * list.goodsNumber) / 100}</td>
 							</tr>
 							<%}%>
+							<%if( orderAmount / 100  > 0){%>
 							<tr>
 								<td colspan="9">
 									<table class="coupon-list">
@@ -81,6 +82,7 @@ var htmlPart = {
 									</table>
 								</td>
 							</tr>
+							<%}%>
 							<%if(isNotEmpty(couponList)){%>
 							<tr>
 								<td colspan="9">
