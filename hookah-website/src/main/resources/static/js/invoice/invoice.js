@@ -29,15 +29,15 @@ $('.tab-btn a').click(function () {
 	$('.info-t div').eq(index).addClass('hover').siblings().removeClass('hover');
 });
 var regex = {
-	titleName: /[\u4e00-\u9fa5]{1,50}/,    //发票抬头
+	titleName: /[\u4e00-\u9fa5]{1,50}$/,    //发票抬头
 	taxpayerIdentifyNo: /^[0-9A-Z]{15,20}$/,     //纳税人识别号
-	regAddress: /[\u4e00-\u9fa50-9a-zA-Z]{1,50}/,    //发票--注册地址
-	regTel: /[0-9]{1,15}/,    //发票--注册电话
-	openBank: /[\u4e00-\u9fa5]{1,50}/,    //开户银行
+	regAddress: /[\u4e00-\u9fa50-9a-zA-Z]{1,50}$/,    //发票--注册地址
+	regTel: /[0-9]{1,15}$/,    //发票--注册电话
+	openBank: /[\u4e00-\u9fa5]{1,50}$/,    //开户银行
 	bankAccount: /^[0-9]{1,50}$/,    //银行账号
 	invoiceName: /^[a-zA-Z]{1,15}$|^[\u4e00-\u9fa5]{1,15}$/,    //收票姓名
 	mobile: /^0?(13[0-9]|14[5-9]|15[012356789]|66|17[0-9]|18[0-9]|19[8-9])[0-9]{8}$/,    //收票手机
-	address: /[\u4e00-\u9fa5a-zA-Z0-9]{1,150}/,    //收票地址
+	address: /[\u4e00-\u9fa5a-zA-Z0-9]{1,150}$/,    //收票地址
 	fixedLine1: /[0-9]{1,4}/,    //固话一
 	fixedLine2: /[0-9]{1,10}/,    //固话二
 	postCode: /[0-9]{1,6}/,    //邮编
@@ -63,7 +63,7 @@ function getInvoiceInfo() {
 				deleteInvoice();
 				EditInvoice();
 				var invoicePriceAA = null;
-				if(window.location.pathname == '/order/directInfo'){
+				if(window.location.pathname == '/order/directInfo' || window.location.pathname == '/order/orderInfo'){
 					invoicePriceAA = $('#pay-money').html();
 				}else if(window.location.pathname == '/usercenter/myInvoice'){
 					invoicePriceAA = invoicePriceAB;
@@ -568,6 +568,7 @@ function getInvoiceAddress() {
 					});
 					$('.address-editor').click(function (event) {//修改收票地址
 						isAddAddress = 'modify';
+						$('.J_gotoInvoiceInfo').hide();
 						var id = $(this).attr('aid');
 						eidtAId = id;
 						$.ajax({
@@ -751,19 +752,18 @@ function endSetting(){
 	$('.ok-invoice').click(function(){
 		if ($('.addressInfo').html()) {//判断是否有抬头信息 //true
 			var addressIds = null;
-			var nums = 0;
+			var numsD = 0;
 			$('.addressInfo .addressInfo-item').each(function () {
 				if ($(this).hasClass('hover')) {
-					nums += 1;
+					numsD += 1;
 					addressIds = $(this).attr('aid');
 					oInfo = $(this).attr('ainfo');
 				}
 			});
-			if (nums > 0) {//判断是否选择抬头  //true     --------------------------------------待做赋值处理
-				console.log(addressIds);
+			if (numsD > 0) {//判断是否选择抬头  //true     --------------------------------------待做赋值处理
 				oAddressId = addressIds;
 				oInvoiceInfo = $('.info-t div.hover').html();
-				if(window.location.pathname == '/order/directInfo'){
+				if(window.location.pathname == '/order/directInfo' || window.location.pathname == '/order/orderInfo' ){
 					$('.titleIdO').val(oTitleId);
 					$('.addressIdO').val(oAddressId);
 					$('.translateInfo span').html('开发票');
@@ -771,7 +771,9 @@ function endSetting(){
 					$('#J-noTranslate').show();
 					$('.translate-bg').hide();
 					$('.invoceVal').html(invoiceValShow);
+					console.log(13132123)
 				}else if(window.location.pathname == '/usercenter/myInvoice'){
+					console.log('qeqweqweqwe')
 					if(orderIds){
 						var datas = null;
 						if(editType == 'add'){
