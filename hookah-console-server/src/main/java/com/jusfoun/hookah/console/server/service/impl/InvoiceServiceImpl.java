@@ -140,6 +140,7 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
         }else{
             // 抬头为个人
             invoice.setTitleId("0");
+            invoice.setInvoiceType(HookahConstants.INVOICE_TYPE_2);
         }
         // 收票人ID
         invoice.setInvoiceAddrId(invoiceDTOVo.getAddressId());
