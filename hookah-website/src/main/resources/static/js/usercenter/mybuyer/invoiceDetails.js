@@ -45,15 +45,22 @@ function getInvoiceDetails(id){
 				var invoiceType = null;
 				if(invoiceData.invoiceType == 0){
 					invoiceType = '普通发票';
-				}else{
+				}else if(invoiceData.invoiceType == 1){
 					invoiceType = '专用发票';
+				}else if(invoiceData.invoiceType == 2){
+					invoiceType = '个人发票';
 				}
 				html+='<li>发票类型：'+invoiceType+'</li>';
 				html+='<li>发票介质：纸质</li>';
-				html+='<li>发票抬头：'+invoiceData.userInvoiceTitle.titleName+'</li>';
+				if(invoiceData.invoiceType == 2){
+					html+='<li>发票抬头：个人</li>';
+				}else{
+					html+='<li>发票抬头：'+invoiceData.userInvoiceTitle.titleName+'</li>';
+				}
+
 				html+='<li>发票内容：'+invoiceData.invoiceContent+'</li>';
 				html+='<li>发票税号：'+invoiceData.taxpayerIdentifyNo+'</li>';
-				if(invoiceData.invoiceType != 0){
+				if(invoiceData.invoiceType == 1){
 					html+='<li>注册地址：'+invoiceData.userInvoiceTitle.regAddress+'</li>';
 					html+='<li>注册电话：'+invoiceData.userInvoiceTitle.regTel+'</li>';
 					html+='<li>开户银行：'+invoiceData.userInvoiceTitle.openBank+'</li>';
@@ -85,7 +92,7 @@ function getInvoiceDetails(id){
 				html+='<dl>';
 				html+='<dt>审核结果：'+invoiceStatusC+'</dt>';
 				if(invoiceData.invoiceStatus == 3){
-					html+='<dd>：原因：'+invoiceData.auditOpinion+'</dd>';
+					html+='<dd>原因：'+invoiceData.auditOpinion+'</dd>';
 				}
 				html+='</dl>';
 				if(invoiceData.invoiceStatus == 4){

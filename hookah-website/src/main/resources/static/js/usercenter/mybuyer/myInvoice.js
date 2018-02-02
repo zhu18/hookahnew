@@ -119,6 +119,9 @@ function loadPageData(data) {
 					case 1:
 						invoiceType = '专用发票';
 						break;
+					case 2:
+						invoiceType = '个人发票';
+						break;
 					default:
 						invoiceType = '-';
 				}
