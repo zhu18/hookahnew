@@ -29,18 +29,18 @@ $('.tab-btn a').click(function () {
 	$('.info-t div').eq(index).addClass('hover').siblings().removeClass('hover');
 });
 var regex = {
-	titleName: /[\u4e00-\u9fa5]{1,50}$/,    //发票抬头
+	titleName: /^[\u4e00-\u9fa5]{1,50}$/,    //发票抬头
 	taxpayerIdentifyNo: /^[0-9A-Z]{15,20}$/,     //纳税人识别号
-	regAddress: /[\u4e00-\u9fa50-9a-zA-Z]{1,50}$/,    //发票--注册地址
+	regAddress: /[\u4e00-\u9fa50-9a-zA-Z]{1,50}/,    //发票--注册地址
 	regTel: /[0-9]{1,15}$/,    //发票--注册电话
 	openBank: /[\u4e00-\u9fa5]{1,50}$/,    //开户银行
 	bankAccount: /^[0-9]{1,50}$/,    //银行账号
 	invoiceName: /^[a-zA-Z]{1,15}$|^[\u4e00-\u9fa5]{1,15}$/,    //收票姓名
 	mobile: /^0?(13[0-9]|14[5-9]|15[012356789]|66|17[0-9]|18[0-9]|19[8-9])[0-9]{8}$/,    //收票手机
-	address: /[\u4e00-\u9fa5a-zA-Z0-9]{1,150}$/,    //收票地址
-	fixedLine1: /[0-9]{1,4}/,    //固话一
-	fixedLine2: /[0-9]{1,10}/,    //固话二
-	postCode: /[0-9]{1,6}/,    //邮编
+	address: /[\u4e00-\u9fa5a-zA-Z0-9]{1,150}/,    //收票地址
+	fixedLine1: /^[0-9]{3,4}$/,    //固话一
+	fixedLine2: /^[0-9]{1,10}$/,    //固话二
+	postCode: /^[0-9]{6,6}$/,    //邮编
 };
 function getInvoiceInfo() {
 	$.ajax({
@@ -511,10 +511,12 @@ function renderRegion(id, data, display) {
 	$('#' + id).html(html);
 }
 function getInvoiceAddress() {
+	Loading.start();
 	$.ajax({
 		type: "get",
 		url: host.website + '/api/userInvoiceAddress/findAll',
 		success: function (data) {
+			Loading.stop();
 			if (data.code == 1) {
 				if (data.data.length > 0) {
 					isLoadAddress = true;
@@ -661,35 +663,78 @@ $('.submit-add').click(function () {
 		fixedLine1 = $('.editAddress input[name=fixedLine1]').val(),    //固话一
 		fixedLine2 = $('.editAddress input[name=fixedLine2]').val(),    //固话二
 		postCode = $('.editAddress input[name=postCode]').val();
-	console.log(invoiceName)
-
 	if (regex.invoiceName.test(invoiceName)) {
 		$('.editAddress input[name=invoiceName]').siblings('.must-tip').hide();
 		if (regex.mobile.test(mobile)) {
 			$('.editAddress input[name=mobile]').siblings('.must-tip').hide();
-			if (regex.invoiceName.test(address)) {
+			if (address.length > 1 && address.length < 150) { //地址验证
 				$('.editAddress input[name=address]').siblings('.must-tip').hide();
-				if($('select[name="province"]').val() < 0){
-					$('#province').siblings('.must-tip').show();
-				}else{
-					if($('select[name="province"]').val() >= 710000){
-						$('#province').siblings('.must-tip').hide();
-						region =
-						setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)
+				if (is_forbid(address)) {
+					$('.editAddress input[name=address]').siblings('.must-tip').hide();
+					if($('select[name="province"]').val() < 0){
+						$('#province').siblings('.must-tip').show();
 					}else{
-						if($('select[name="region"]').val() < 0){
-							$('#province').siblings('.must-tip').show();
-						}else{
-							region = $('select[name="region"]').val();
+						if($('select[name="province"]').val() >= 710000){
 							$('#province').siblings('.must-tip').hide();
+							region = $('select[name="region"]').val();
 							setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)
+						}else{
+							if($('select[name="region"]').val() < 0){
+								$('#province').siblings('.must-tip').show();
+							}else{
+								region = $('select[name="region"]').val();
+								$('#province').siblings('.must-tip').hide();
+								$('.editAddress input[name=postCode]').siblings('.must-tip').hide();
+								if(fixedLine1){ //判断电话区号
+									if(testPhoneNum(fixedLine1,fixedLine2)){
+										if(postCode){
+											if(regex.postCode.test(postCode)){
+												setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)
+											}else{
+												$('.editAddress input[name=postCode]').siblings('.must-tip').show();
+											}
+										}else{
+											setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)
+										}
+									}
+								}else{
+									if(fixedLine2){//判断电话区号
+										if(testPhoneNum(fixedLine1,fixedLine2)){
+											if(postCode){
+												if(regex.postCode.test(postCode)){
+													setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)
+												}else{
+													$('.editAddress input[name=postCode]').siblings('.must-tip').show();
+												}
+											}else{
+												setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)
+											}
+										}
+									}else{
+										if(postCode){
+											if(regex.postCode.test(postCode)){
+												setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)
+											}else{
+												$('.editAddress input[name=postCode]').siblings('.must-tip').show();
+											}
+										}else{
+											setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode)
+										}
+									}
+								}
 
-							//_____________----------------------------****************
+
+								//_____________----------------------------****************
+							}
 						}
 					}
+				}else{
+					$('.editAddress input[name=address]').siblings('.must-tip2').show();
+					return false;
 				}
+
 			} else {
-				$('.editAddress input[name=address]').siblings('.must-tip').show();
+				$('.editAddress input[name=address]').siblings('.must-tip1').show();
 				return false;
 			}
 		} else {
@@ -701,6 +746,51 @@ $('.submit-add').click(function () {
 		return false;
 	}
 });
+function testPhoneNum(fixedLine1,fixedLine2){ //验证电话
+	$('.editAddress input[name=fixedLine1]').siblings('.must-tip').hide();
+	if(regex.fixedLine1.test(fixedLine1)){
+		if(regex.fixedLine2.test(fixedLine2)){
+			return true;
+		}else{
+			$('.editAddress input[name=fixedLine1]').siblings('.must-tip').show().html('电话为10位以内数字');
+			return false;
+		}
+	}else{
+		$('.editAddress input[name=fixedLine1]').siblings('.must-tip').show().html('区号最多4位数字');
+		return false;
+	}
+}
+/**
+ * 检查是否含有非法字符
+ * @param temp_str
+ * @returns {Boolean}
+ */
+function is_forbid(temp_str){
+	temp_str = temp_str.replace(/(^\s*)|(\s*$)/g, "");
+	temp_str = temp_str.replace('--',"@");
+	temp_str = temp_str.replace('/',"@");
+	temp_str = temp_str.replace('+',"@");
+	temp_str = temp_str.replace('\'',"@");
+	temp_str = temp_str.replace('\\',"@");
+	temp_str = temp_str.replace('$',"@");
+	temp_str = temp_str.replace('^',"@");
+	temp_str = temp_str.replace('.',"@");
+	temp_str = temp_str.replace(';',"@");
+	temp_str = temp_str.replace('<',"@");
+	temp_str = temp_str.replace('>',"@");
+	temp_str = temp_str.replace('"',"@");
+	temp_str = temp_str.replace('=',"@");
+	temp_str = temp_str.replace('{',"@");
+	temp_str = temp_str.replace('}',"@");
+	var forbid_str = new String('@,%,~,&');
+	var forbid_array = new Array();
+	forbid_array = forbid_str.split(',');
+	for(i=0;i<forbid_array.length;i++){
+		if(temp_str.search(new RegExp(forbid_array[i])) != -1)
+			return false;
+	}
+	return true;
+}
 function setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLine2,postCode) {
 	var data = {
 		invoiceName : invoiceName,    //收票姓名

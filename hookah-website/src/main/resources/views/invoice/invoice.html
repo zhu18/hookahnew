@@ -191,7 +191,7 @@
 					<td>
 						<div class="input-exclusive">
 							<input type="text" class="text-input" name="invoiceName">
-							<p class="must-tip">15个字以内，支持中文或英文</p>
+							<p class="must-tip">15个字以内，仅支持中文或英文</p>
 						</div>
 					</td>
 				</tr>
@@ -226,7 +226,8 @@
 					<td>
 						<div class="input-exclusive">
 							<input type="text" class="text-input" name="address">
-							<p class="must-tip">150字内字符，支持中文、数字、字母</p>
+							<p class="must-tip must-tip1">150字内字符，支持中文、数字、字母</p>
+							<p class="must-tip must-tip2">不能包含非法字符</p>
 						</div>
 					</td>
 				</tr>
@@ -234,8 +235,8 @@
 					<td>固话：</td>
 					<td>
 						<div class="input-exclusive">
-							<input type="text" class="text-input quhao" style="width: 50px;" name="fixedLine1">
-							<input type="text" class="text-input dianhua" style="width: 328px;" name="fixedLine2">
+							<input type="number" class="text-input quhao" style="width: 50px;" name="fixedLine1">
+							<input type="number" class="text-input dianhua" style="width: 328px;" name="fixedLine2">
 							<p class="must-tip">最多四位数字</p>
 						</div>
 					</td>
@@ -245,7 +246,7 @@
 					<td>
 						<div class="input-exclusive">
 							<input type="number" class="text-input" name="postCode">
-							<p class="must-tip">邮编填写不符合规则</p>
+							<p class="must-tip">邮编填写不符合规则(六位数字)</p>
 						</div>
 					</td>
 				</tr>
