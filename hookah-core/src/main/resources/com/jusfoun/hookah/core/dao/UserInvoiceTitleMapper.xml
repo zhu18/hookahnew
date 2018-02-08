@@ -31,18 +31,15 @@
     <select id="getIncreInvoiceList" resultMap="UserInvoiceTitleVoResultMap">
 
         SELECT
-        ut.*,
-        u.user_name,
+        ut.*, u.user_name,
         u.user_type,
         ud.real_name
         FROM
-        user_invoice_title ut,
-        user u,
-        user_detail ud
+        user_invoice_title ut
+        LEFT JOIN user u on ut.user_id = u.user_id
+        LEFT JOIN user_detail ud on u.user_id = ud.user_id
         WHERE
-        ut.user_id = u.user_id
-        AND u.user_id = ud.user_id
-        AND ut.user_invoice_type = 1
+        ut.user_invoice_type = 1
         <if test="userName != null ">
             AND u.user_name LIKE '%${userName}%'
         </if>
