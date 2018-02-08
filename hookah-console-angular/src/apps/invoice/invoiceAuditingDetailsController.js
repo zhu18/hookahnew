@@ -10,7 +10,7 @@ class invoiceAuditingDetailsController {
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/userInvoiceTitle/back/findById",
                 params: {
-                    invoiceId:$stateParams.id
+                    titleId:$stateParams.id
                 }
             });
             promise.then(function (res, status, config, headers) {
@@ -96,12 +96,12 @@ class invoiceAuditingDetailsController {
                 let promise = $http({
                     method: 'post',
                     url: $rootScope.site.apiServer + "/api/userInvoiceTitle/back/check",
-                    params: {invoice:JSON.stringify(data)}
+                    params: {userInvoiceTitle:JSON.stringify(data)}
                 });
                 promise.then(function (res, status, config, headers) {
                     if (res.data.code == '1') {
                         console.log(res.data.data);
-                        $state.go('invoice.list');
+                        $state.go('invoice.auditing');
                     } else {
 
                     }
@@ -109,7 +109,7 @@ class invoiceAuditingDetailsController {
                     growl.addSuccessMessage("订单数据加载完毕。。。");
                 });
             }, function () {
-                $state.go('invoice.listDetails');
+                $state.go('invoice.auditingDetails');
             });
 
         }
