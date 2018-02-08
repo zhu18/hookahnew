@@ -3,7 +3,7 @@
         <div class="console-title console-title-border clearfix">
             <div class="pull-left"><h5>发票查询</h5></div>
             <div class="pull-right">
-                <button class="btn btn-default" data-ng-click="search()"><span
+                <button class="btn btn-default" data-ng-click="refresh()"><span
                     class="glyphicon glyphicon-refresh"></span> 刷新
                 </button>
             </div>
@@ -80,6 +80,7 @@
                                 <td>
                                     <span data-ng-show="item.invoiceType==0" >普通发票</span>
                                     <span data-ng-show="item.invoiceType==1" >增值税专用发票</span>
+                                    <span data-ng-show="item.invoiceType==2" >个人</span>
                                 </td>
                                 <td data-ng-bind="item.addTime"></td>
                                 <td >

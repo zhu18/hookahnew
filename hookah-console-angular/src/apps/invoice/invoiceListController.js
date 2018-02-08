@@ -20,7 +20,8 @@ class invoiceListController {
         $scope.invoiceTypes=[
             {id:-1, name:"全部"},
             {id:0, name:"普通发票"},
-            {id:1, name:"增值税专用发票"}
+            {id:1, name:"增值税专用发票"},
+            {id:2, name:"个人"}
         ];
         $scope.invoiceType=-1;
         $scope.controlScreen=function () { //控制搜索框展示函数
@@ -80,6 +81,10 @@ class invoiceListController {
             $state.go('invoice.listDetails', {id: id});
         };
         $scope.refresh = function () {
+            $scope.userName="";
+            $scope.userType=-1;
+            $scope.invoiceStatus=-1;
+            $scope.invoiceType=-1;
             $scope.search();
         };
         $scope.pageChanged = function () {
