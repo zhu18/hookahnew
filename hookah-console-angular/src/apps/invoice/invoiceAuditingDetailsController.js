@@ -89,7 +89,7 @@ class invoiceAuditingDetailsController {
             var modalInstance =$rootScope.openConfirmDialogModal("确认审核通过？");
             modalInstance.result.then(function () {
                 let data={
-                    invoiceId:$stateParams.id,
+                    titleId:$stateParams.id,
                     invoiceStatus:$scope.invoiceStatu,
                     auditOpinion:$scope.auditOpinion
                 }
