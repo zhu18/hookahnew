@@ -37,7 +37,7 @@ class invoiceAuditingController {
                 params: {
                     userName: $scope.userName,//审核状态
                     userType: $scope.userType,
-                    invoiceType: $scope.invoiceType,
+                    invoiceStatus: $scope.invoiceStatus,
                     currentPage: $rootScope.pagination.currentPage, //当前页码
                     pageSize: $rootScope.pagination.pageSize,
                 }

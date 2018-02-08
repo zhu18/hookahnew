@@ -66,7 +66,10 @@ function loadPageData(data) {
 				html += '<tr class="content border-bottom"">';
 				if(ii == 0){
 					if (list[i].invoiceStatus == 0) {
-						html += '<td rowspan="' + goods.length + '" class="border-right" style="width: 50px;"><input type="checkbox" name="selectInvoice" value="' + list[i].orderId + '" price="'+list[i].orderAmount+'"></td>';
+						html += '<td rowspan="' + goods.length + '" class="border-right" style="width: 50px;">';
+						if((list[i].orderAmount / 100) > 0){
+							html+='<input type="checkbox" name="selectInvoice" value="' + list[i].orderId + '" price="'+list[i].orderAmount+'"></td>';
+						}
 					} else {
 						html += '<td rowspan="' + goods.length + '" class="border-right" style="width: 50px;"></td>';
 					}
@@ -116,6 +119,9 @@ function loadPageData(data) {
 					case 1:
 						invoiceType = '专用发票';
 						break;
+					case 2:
+						invoiceType = '个人发票';
+						break;
 					default:
 						invoiceType = '-';
 				}
@@ -127,7 +133,9 @@ function loadPageData(data) {
 					switch (list[i].invoiceStatus) {
 						case 0:
 							// invoiceStatus = '未开发票';
-							html += '<a href="javascript:void(0)" class="btn invoice-page-btn J_editInvoice" invoiceid="' + list[i].invoiceId + '" orderId="' + list[i].orderId + '" type="add" price="'+(list[i].orderAmount / 100).toFixed(2)+'">开发票</a>';
+							if((list[i].orderAmount / 100) > 0) {
+								html += '<a href="javascript:void(0)" class="btn invoice-page-btn J_editInvoice" invoiceid="' + list[i].invoiceId + '" orderId="' + list[i].orderId + '" type="add" price="' + (list[i].orderAmount / 100).toFixed(2) + '">开发票</a>';
+							}
 							break;
 						case 1:
 							// invoiceStatus = '已申请（待审核）';
