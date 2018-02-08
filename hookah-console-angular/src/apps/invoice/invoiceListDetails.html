@@ -31,6 +31,7 @@
                             <label for="">开票类型：</label>
                             <span data-ng-show="invoiceType==0" >普通发票</span>
                             <span data-ng-show="invoiceType==1" >增值税专用发票</span>
+                            <span data-ng-show="invoiceType==2" >个人</span>
                         </div>
                         <div class="col-sm-4">
                             <label for="">当前开票次数：</label>
@@ -80,11 +81,11 @@
                                         <span>{{(item.orderAmount/100) | currency: '￥'}}</span>
                                     </th>
                                     <th>
-                                        收起
+                                        <button class="btn" data-ng-click="controlBtn($index)">收起</button>
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody data-ng-show="{{$index}}">
                                 <tr data-ng-repeat="item in item.mgOrderGoodsList">
                                     <td style="text-align: center;">
                                         <img src="{{item.goodsImg}}" alt="" style="width: 100px;height: 100px;display: inline-block">
@@ -212,7 +213,8 @@
                 </div>
                 <div class="col-sm-12 " >
                     <div class="clearfix ">
-                        <table class="info-tab" data-ng-show="invoiceStatus == 1">
+                        <form  id="user" name="user" data-ng-show="invoiceStatus == 1">
+                        <table class="info-tab" >
                             <tbody>
                             <tr>
                                 <th>审核状态：</th>
@@ -228,18 +230,22 @@
                             <tr>
                                 <th>审核意见：</th>
                                 <td>
-                                    <textarea name="" id="" cols="30" rows="10" ng-disabled="invoiceStatu == 2" data-ng-model="auditOpinion"></textarea>
+                                    <textarea name="" id="" cols="30" rows="10"  name="auditOpinion" ng-maxlength="200"  placeholder="限200字符内。" ng-disabled="invoiceStatu == 2" data-ng-model="auditOpinion"></textarea>
+                                </td>
+                                <td>
+                                    <p data-ng-show="user.auditOpinion.$error.maxlength">限200字符内。</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <button class="btn btn-primary"  data-ng-click="auditing()" style="margin: auto;display: block;">
+                                    <button class="btn btn-primary"  data-ng-click="auditing()" ng-disabled="user.$invalid" style="margin: auto;display: block;">
                                         提交
                                     </button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+                        </form>
                         <table class="info-tab" data-ng-show="invoiceStatus == 2">
                             <tbody>
                             <tr >
@@ -271,7 +277,7 @@
                 <div class="col-sm-12 "  data-ng-show="invoiceStatus == 2 || invoiceStatus == 4">
                     <div><h5 class="font-weight-bold background-color-gary">邮寄信息：</h5></div>
                     <div class="clearfix">
-                        <form action="" id="userForm" name="userForm" data-ng-show="invoiceStatus == 2">
+                        <form id="userForm" name="userForm" data-ng-show="invoiceStatus == 2">
                             <table class="info-tab" >
                                 <tbody>
                                 <tr >
