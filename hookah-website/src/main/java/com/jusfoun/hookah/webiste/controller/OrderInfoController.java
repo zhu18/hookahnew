@@ -73,6 +73,8 @@ public class OrderInfoController extends BaseController {
     @Resource
     MqSenderService mqSenderService;
 
+    @Resource
+    InvoiceService invoiceService;
 
     /**
      * 购物车确定订单信息
@@ -526,7 +528,8 @@ public class OrderInfoController extends BaseController {
                 invoiceDTOVo.setAddressId(addressId);
                 invoiceDTOVo.setOrderIds(orderinfo.getOrderId());
                 invoiceDTOVo.setUserId(orderinfo.getUserId());
-                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE, invoiceDTOVo);
+//                mqSenderService.sendDirect(RabbitmqQueue.CONTRACT_INVOICE_MESSAGE, invoiceDTOVo);
+                invoiceService.addInvoice(invoiceDTOVo);
             }
 
             return "redirect:/pay/cash";

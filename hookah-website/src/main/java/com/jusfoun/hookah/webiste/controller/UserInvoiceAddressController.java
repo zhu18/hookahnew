@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.jusfoun.hookah.core.constants.HookahConstants;
 import com.jusfoun.hookah.core.domain.UserInvoiceAddress;
 import com.jusfoun.hookah.core.generic.Condition;
+import com.jusfoun.hookah.core.generic.OrderBy;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.core.utils.StringUtils;
@@ -44,8 +45,11 @@ public class UserInvoiceAddressController extends BaseController {
             List<Condition> filters = new ArrayList();
             filters.add(Condition.eq("userId", userId));
             filters.add(Condition.eq("deleteStatus", HookahConstants.DELETE_STATUS_1));
+
+            List<OrderBy> orderBys = new ArrayList();
+            orderBys.add(OrderBy.desc("defaultStatus"));
             List<UserInvoiceAddress> userInvoiceAddressList = new ArrayList<>();
-            userInvoiceAddressList = userInvoiceAddressService.selectList(filters);
+            userInvoiceAddressList = userInvoiceAddressService.selectList(filters, orderBys);
             userInvoiceAddressList.stream().forEach(userInvoiceAddress -> {
                 if(StringUtils.isNotBlank(userInvoiceAddress.getRegion())){
                     if(Objects.nonNull(regionService.selectById(userInvoiceAddress.getRegion()))){
