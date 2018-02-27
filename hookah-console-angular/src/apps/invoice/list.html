@@ -84,8 +84,9 @@
                                 </td>
                                 <td data-ng-bind="item.addTime"></td>
                                 <td >
-                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus!=4"  data-ng-click="getDetails(item.invoiceId)">处理</button>
-                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus==4" data-ng-click="getDetails(item.invoiceId)">查看</button>
+                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus==1"  data-ng-click="getDetails(item.invoiceId,item.titleId,item.invoiceType)">去审核</button>
+                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus==2"  data-ng-click="getDetails(item.invoiceId,item.titleId,item.invoiceType)">处理</button>
+                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus==4 || item.invoiceStatus==3" data-ng-click="getDetails(item.invoiceId)">查看</button>
                                 </td>
                             </tr>
 
