@@ -230,6 +230,7 @@ function getExpert() {//获取专用发票信息
 						$('.add-go-address-special').show();//跳转到地址管理页面
 						$('.Z_ssac .text-input').css({'border': 'none'}).attr('readonly', 'readonly');
 						$('.Z_set_btn.J_reset_invoice').hide();
+						$('.J_del_invoice').attr('tid',data.data.titleId);
 						break;
 					case 3:
 						invoiceStatus = '<span style="color:#f00">未通过</span>';
@@ -240,7 +241,7 @@ function getExpert() {//获取专用发票信息
 						$('.Z_set_btn.J_reset_invoice').show();
 						$('.Z_set_btn.J_edit_invoice').show();
 						$('.Z_invoice_item_bot').hide();  //增票资质确认书
-						$('.add-go-address-special').hide();//跳转到地址管理页面
+						$('.add-go-address-special').show();//跳转到地址管理页面
 						$('.submit-invoice').hide();
 						$('.cancel-edit').hide();
 						break;
@@ -272,6 +273,38 @@ $('.J_reset_invoice').click(function(){
 	editSpecialTitleId = $(this).attr('tid');
 	$('.Z_invoice_item_bot').show();  //增票资质确认书
 	$('.Z_ssac .text-input').css({'border': '1px solid #e5e5e5'}).removeAttr('readonly');
+});
+$('.J_del_invoice').click(function (event) {
+	var tid = $(this).attr('tid');
+	console.log(tid)
+	$.confirm('你确定要删除此条信息吗? ', null, function (type) {
+		if (type == 'yes') {
+			this.hide();
+			$.ajax({
+				url: host.website + '/api/userInvoiceTitle/del',
+				type: 'get',
+				data: {
+					titleId: tid
+				},
+				success: function (data) {
+					if (data.code == 1) {
+						$.alert('删除成功');
+						removeInvoiceVal();
+						$('.invoiceStatus').html('未添加')
+						$('.Z_ssac .text-input').css({'border': '1px solid #e5e5e5'}).removeAttr('readonly');
+						$('.submit-invoice').show();
+						$('.cancel-edit').show();
+						$('.Z_invoice_item_bot').show();
+						$('.add-go-address-special').hide();
+					} else {
+						$.alert(data.message)
+					}
+				}
+			})
+		} else {
+			this.hide();
+		}
+	});
 });
 $('.cancel-edit').click(function(){
 	setInvoiceVal(resetEditSpecialTitle);
@@ -379,6 +412,7 @@ $('.submit-invoice').click(function () {
 					success: function (data) {
 						if (data.code == 1) {
 							$.alert('提交成功，请选择售票地址');
+							console.log(123123);
 							getExpert()
 						} else {
 							$.alert(data.message);
@@ -522,7 +556,7 @@ function getInvoiceAddress() {
 					isLoadAddress = true;
 					var html = '';
 					for (var i = 0; i < data.data.length; i++) {
-						var isDefault = data.data[i].defaultStatus == 1 ? 'hover':'';
+						var isDefault = data.data[i].defaultStatus == 1 ? 'hover': i == 0 ? 'hover':'';
 						html += '<div class="addressInfo-item '+isDefault+'" aid="' + data.data[i].id + '" ainfo="'+ data.data[i].receiveAddress + data.data[i].address + '，'+ data.data[i].invoiceName + '，'+ data.data[i].mobile +'">';
 						html += '<div class="info-t">';
 						html += '<span>收票人：' + data.data[i].invoiceName + '</span>';
@@ -907,4 +941,6 @@ function endSetting(){
 		$('.translate-bg').hide();
 	})
 }
+
+
 

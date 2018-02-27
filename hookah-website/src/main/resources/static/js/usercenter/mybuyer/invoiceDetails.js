@@ -59,7 +59,9 @@ function getInvoiceDetails(id){
 				}
 
 				html+='<li>发票内容：'+invoiceData.invoiceContent+'</li>';
-				html+='<li>发票税号：'+invoiceData.taxpayerIdentifyNo+'</li>';
+				if(invoiceData.invoiceType != 2){
+					html+='<li>发票税号：'+invoiceData.taxpayerIdentifyNo+'</li>';
+				}
 				if(invoiceData.invoiceType == 1){
 					html+='<li>注册地址：'+invoiceData.userInvoiceTitle.regAddress+'</li>';
 					html+='<li>注册电话：'+invoiceData.userInvoiceTitle.regTel+'</li>';
