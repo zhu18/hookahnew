@@ -116,31 +116,36 @@ class invoiceListDetailsController {
         }
         $scope.readerData()
         $scope.auditing=function () {//审核函数
-            var modalInstance =$rootScope.openConfirmDialogModal("确认审核通过？");
-            modalInstance.result.then(function () {
-                let data={
-                    invoiceId:$stateParams.id,
-                    invoiceStatus:$scope.invoiceStatu,
-                    auditOpinion:$scope.auditOpinion
-                }
-                let promise = $http({
-                    method: 'post',
-                    url: $rootScope.site.apiServer + "/api/invoice/back/check",
-                    params: {invoice:JSON.stringify(data)}
-                });
-                promise.then(function (res, status, config, headers) {
-                    if (res.data.code == '1') {
-                        console.log(res.data.data);
-                        $state.go('invoice.list');
-                    } else {
-
+            if($scope.invoiceStatu=="3" && ($scope.auditOpinion==="" || !$scope.auditOpinion )){
+                $rootScope.openJustShowDialogModal('审核意见不能为空！')
+            }else {
+                var modalInstance =$rootScope.openConfirmDialogModal("确认审核通过？");
+                modalInstance.result.then(function () {
+                    let data={
+                        invoiceId:$stateParams.id,
+                        invoiceStatus:$scope.invoiceStatu,
+                        auditOpinion:$scope.auditOpinion
                     }
-                    $rootScope.loadingState = false;
-                    growl.addSuccessMessage("订单数据加载完毕。。。");
+                    let promise = $http({
+                        method: 'post',
+                        url: $rootScope.site.apiServer + "/api/invoice/back/check",
+                        params: {invoice:JSON.stringify(data)}
+                    });
+                    promise.then(function (res, status, config, headers) {
+                        if (res.data.code == '1') {
+                            console.log(res.data.data);
+                            $state.go('invoice.list');
+                        } else {
+
+                        }
+                        $rootScope.loadingState = false;
+                        growl.addSuccessMessage("订单数据加载完毕。。。");
+                    });
+                }, function () {
+                    $state.go('invoice.listDetails');
                 });
-            }, function () {
-                $state.go('invoice.listDetails');
-            });
+            }
+
 
         }
         $scope.save=function () {//邮寄函数

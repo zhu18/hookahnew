@@ -86,32 +86,35 @@ class invoiceAuditingDetailsController {
         }
         $scope.readerData()
         $scope.auditing=function () {//审核函数
-            var modalInstance =$rootScope.openConfirmDialogModal("确认审核通过？");
-            modalInstance.result.then(function () {
-                let data={
-                    titleId:$stateParams.id,
-                    invoiceStatus:$scope.invoiceStatu,
-                    auditOpinion:$scope.auditOpinion
-                }
-                let promise = $http({
-                    method: 'post',
-                    url: $rootScope.site.apiServer + "/api/userInvoiceTitle/back/check",
-                    params: {userInvoiceTitle:JSON.stringify(data)}
-                });
-                promise.then(function (res, status, config, headers) {
-                    if (res.data.code == '1') {
-                        console.log(res.data.data);
-                        $state.go('invoice.auditing');
-                    } else {
-
+            if($scope.invoiceStatu=="3" && ($scope.auditOpinion==="" || !$scope.auditOpinion )){
+                $rootScope.openJustShowDialogModal('审核意见不能为空！')
+            }else {
+                var modalInstance =$rootScope.openConfirmDialogModal("确认审核通过？");
+                modalInstance.result.then(function () {
+                    let data={
+                        titleId:$stateParams.id,
+                        invoiceStatus:$scope.invoiceStatu,
+                        auditOpinion:$scope.auditOpinion
                     }
-                    $rootScope.loadingState = false;
-                    growl.addSuccessMessage("订单数据加载完毕。。。");
-                });
-            }, function () {
-                $state.go('invoice.auditingDetails');
-            });
+                    let promise = $http({
+                        method: 'post',
+                        url: $rootScope.site.apiServer + "/api/userInvoiceTitle/back/check",
+                        params: {userInvoiceTitle:JSON.stringify(data)}
+                    });
+                    promise.then(function (res, status, config, headers) {
+                        if (res.data.code == '1') {
+                            console.log(res.data.data);
+                            $state.go('invoice.auditing');
+                        } else {
 
+                        }
+                        $rootScope.loadingState = false;
+                        growl.addSuccessMessage("订单数据加载完毕。。。");
+                    });
+                }, function () {
+                    $state.go('invoice.auditingDetails');
+                });
+            }
         }
 
     }
