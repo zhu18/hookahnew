@@ -31,7 +31,12 @@ class invoiceListDetailsController {
                     $scope.addTime=info.addTime;
                     $scope.invoiceAmount=info.invoiceAmount;
                     $scope.orderInfoInvoiceVoList=info.orderInfoInvoiceVoList; // 订单列表
-
+                    if($scope.orderInfoInvoiceVoList.length){
+                        for(var i=0;i<$scope.orderInfoInvoiceVoList.length;i++){
+                            var res='isShow_'+i;
+                            $scope[res]=true;
+                        }
+                    }
                     var userInvoiceTitle=info.userInvoiceTitle;//增票资质
                     $scope.titleId=info.titleId;
                     if(userInvoiceTitle){
@@ -177,6 +182,18 @@ class invoiceListDetailsController {
             });
 
         }
+
+
+        $scope.controlBtn=function (index) {
+            var res='isShow_'+index;
+            if ($scope[res]){
+                $scope[res]=false;
+            }else {
+                $scope[res]=true;
+            }
+        }
+
+
     }
 }
 

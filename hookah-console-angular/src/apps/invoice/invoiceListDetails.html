@@ -85,8 +85,8 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr data-ng-repeat="item in item.mgOrderGoodsList">
+                                <tbody data-ng-show="isShow_{{$index}}">
+                                 <tr data-ng-repeat="item in item.mgOrderGoodsList">
                                     <td style="text-align: center;">
                                         <img src="{{item.goodsImg}}" alt="" style="width: 100px;height: 100px;display: inline-block">
                                         <p>
@@ -126,7 +126,6 @@
                                     <td></td>
 
                                 </tr>
-
                                 </tbody>
                             </table>
                         </div>
