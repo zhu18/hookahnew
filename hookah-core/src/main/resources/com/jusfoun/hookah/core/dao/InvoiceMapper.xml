@@ -187,7 +187,7 @@
 
   </select>
 
-  <select id="getInvoiceInfo" parameterType="java.lang.String" resultMap="InvoiceVoResultMap">
+  <select id="getInvoiceInfo2" parameterType="java.lang.String" resultMap="InvoiceVoResultMap">
 
     SELECT
     ie.*, u.user_name,
@@ -196,10 +196,10 @@
     FROM
     (
     SELECT
-    *
+    iee.*
     FROM
-    invoice iee
-    WHERE 1=1
+    invoice iee,(select * from user usee where usee.user_type = 2) us
+    WHERE iee.add_user = us.user_id
     <if test="invoiceStatus != -1 ">
       and iee.invoice_status = #{invoiceStatus,jdbcType=TINYINT}
     </if>
@@ -224,8 +224,43 @@
       and u.user_name like '%${userName}%'
     </if>
 
-    <if test="userType != -1 ">
-      and u.user_type = #{userType,jdbcType=TINYINT}
+  </select>
+
+  <select id="getInvoiceInfo4" parameterType="java.lang.String" resultMap="InvoiceVoResultMap">
+
+    SELECT
+    ie.*, u.user_name,
+    u.user_type,
+    org.org_name as real_name
+    FROM
+    (
+    SELECT
+    iee.*
+    FROM
+    invoice iee,(select * from user usee where usee.user_type = 4) us
+    WHERE iee.add_user = us.user_id
+    <if test="invoiceStatus != -1 ">
+      and iee.invoice_status = #{invoiceStatus,jdbcType=TINYINT}
+    </if>
+
+    <if test="invoiceType != -1 ">
+      and iee.invoice_type = #{invoiceType,jdbcType=TINYINT}
+    </if>
+    ) ie
+    LEFT JOIN (
+    SELECT
+    *
+    FROM
+    order_invoice
+    GROUP BY
+    invoice_id
+    ) oi ON ie.invoice_id = oi.invoice_id
+    LEFT JOIN order_info oo ON oi.order_id = oo.order_id
+    LEFT JOIN user u ON ie.add_user = u.user_id
+    LEFT JOIN organization org ON u.org_id = org.org_id
+    WHERE 1=1
+    <if test="userName != '' and userName != null">
+      and u.user_name like '%${userName}%'
     </if>
 
   </select>
@@ -246,7 +281,7 @@
 
   </select>
 
-  <select id="getUserInvoiceInfoByInvoiceId" parameterType="java.lang.String" resultMap="UserInvoiceVoResultMap">
+  <select id="getUserInvoiceInfoByInvoiceId2" parameterType="java.lang.String" resultMap="UserInvoiceVoResultMap">
 
     SELECT
 	u.user_name,
@@ -264,6 +299,26 @@
 	WHERE
 		ie.invoice_id = #{invoiceId,jdbcType=VARCHAR}
   )
+
+  </select>
+  <select id="getUserInvoiceInfoByInvoiceId4" parameterType="java.lang.String" resultMap="UserInvoiceVoResultMap">
+
+    SELECT
+    u.user_name,
+    u.user_type,
+    org.org_name as real_name
+    FROM
+    user u left join
+    organization org
+    on u.org_id = org.org_id
+    WHERE u.user_id = (
+    SELECT
+    ie.add_user
+    FROM
+    invoice ie
+    WHERE
+    ie.invoice_id = #{invoiceId,jdbcType=VARCHAR}
+    )
 
   </select>
 </mapper>

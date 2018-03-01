@@ -190,6 +190,10 @@ public class HookahConstants {
     // 通用未删除状态
     public static final Byte DELETE_STATUS_1 = 1;
 
+    // 用户类型
+    public static final Byte USER_TYPE_2 = 2;
+    public static final Byte USER_TYPE_4 = 4;
+
     public static final Byte GOODS_ON_LINE = 0;//线上支付
     public static final Byte GOODS_OFF_LINE = 1;//线下支付
 

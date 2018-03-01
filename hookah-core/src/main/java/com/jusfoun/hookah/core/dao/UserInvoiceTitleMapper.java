@@ -9,8 +9,13 @@ import java.util.List;
 
 public interface UserInvoiceTitleMapper extends GenericDao<UserInvoiceTitle> {
 
-    List<UserInvoiceTitleVo> getIncreInvoiceList(@Param("userName") String userName, @Param("userType") Byte userType,
+    List<UserInvoiceTitleVo> getIncreInvoiceList2(@Param("userName") String userName, @Param("userType") Byte userType,
                                                  @Param("invoiceStatus") Byte invoiceStatus);
 
-    UserInvoiceTitleVo findUserInvoiceTitleInfo(String titleId);
+    List<UserInvoiceTitleVo> getIncreInvoiceList4(@Param("userName") String userName, @Param("userType") Byte userType,
+                                                 @Param("invoiceStatus") Byte invoiceStatus);
+
+    UserInvoiceTitleVo findUserInvoiceTitleInfo2(String titleId);
+
+    UserInvoiceTitleVo findUserInvoiceTitleInfo4(String titleId);
 }

@@ -113,10 +113,10 @@ public class UserInvoiceTitleApi extends BaseController{
      * @return
      */
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public ReturnData findInvoiceInfo(String titleId){
+    public ReturnData findInvoiceInfo(String titleId, Byte userType){
         ReturnData returnData = new ReturnData<>();
         try {
-            UserInvoiceTitleVo userInvoiceTitleVo= userInvoiceTitleService.findUserInvoiceTitleInfo(titleId);
+            UserInvoiceTitleVo userInvoiceTitleVo= userInvoiceTitleService.findUserInvoiceTitleInfo(titleId, userType);
             return ReturnData.success(userInvoiceTitleVo);
         } catch (Exception e) {
             logger.error("查看详情错误", e);
