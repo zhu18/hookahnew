@@ -31,7 +31,7 @@ export default function invoiceRouting($stateProvider, $urlRouterProvider) {
 
     })
     .state('invoice.auditingDetails', {  //增票资质审核详情页面
-      url: '/invoice/auditingDetails/:id',
+      url: '/invoice/auditingDetails/:id/:type',
       template: require('./invoiceAuditingDetails.html'),
       controller: invoiceAuditingDetailsController,
       permission: 'invoice_auditingDetails'
