@@ -4,13 +4,15 @@
 class invoiceListDetailsController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
+        console.log($stateParams.type);
         $scope.invoiceStatu="2";
         $scope.reader=function () {//渲染页面
             let promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/invoice/back/findById",
                 params: {
-                    invoiceId:$stateParams.id
+                    invoiceId:$stateParams.id,
+                    userType:$stateParams.type
                 }
             });
             promise.then(function (res, status, config, headers) {

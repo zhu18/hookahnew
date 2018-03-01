@@ -77,11 +77,12 @@ class invoiceListController {
 
         }; //列表搜索
         $scope.search();
-        $scope.getDetails=function (invoiceId,titleId,type) {
-            if(type==1){
-                $state.go('invoice.auditingDetails', {id: titleId});
+        $scope.getDetails=function (item) {
+            console.log(item);
+            if(item.invoiceType==1){
+                $state.go('invoice.auditingDetails', {id: item.titleId,type:item.userType});
             }else {
-                $state.go('invoice.listDetails', {id: invoiceId});
+                $state.go('invoice.listDetails', {id: item.invoiceId,type:item.userType});
             }
         };
 

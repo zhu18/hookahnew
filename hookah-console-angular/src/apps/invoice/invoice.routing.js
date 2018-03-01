@@ -18,7 +18,7 @@ export default function invoiceRouting($stateProvider, $urlRouterProvider) {
       permission: 'invoice_list'
     })
     .state('invoice.listDetails', {// 发票详情
-      url: '/invoice/listDetails/:id',
+      url: '/invoice/listDetails/:id/:type',
       template: require('./invoiceListDetails.html'),
       controller: invoiceListDetailsController,
       permission: 'invoiceList_listDetails'
