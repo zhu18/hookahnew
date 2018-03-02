@@ -9,6 +9,7 @@
     <id column="invoice_id" jdbcType="VARCHAR" property="invoiceId" />
     <result column="invoice_addr_id" jdbcType="VARCHAR" property="invoiceAddrId" />
     <result column="invoice_sn" jdbcType="VARCHAR" property="invoiceSn" />
+    <result column="qualification_status" jdbcType="TINYINT" property="qualificationStatus" />
     <result column="invoice_type" jdbcType="TINYINT" property="invoiceType" />
     <result column="invoice_medium" jdbcType="TINYINT" property="invoiceMedium" />
     <result column="invoice_content" jdbcType="VARCHAR" property="invoiceContent" />
@@ -121,6 +122,7 @@
     <!--<id column="invoice_id" jdbcType="VARCHAR" property="invoiceId" />-->
     <result column="invoice_id" jdbcType="VARCHAR" property="invoiceId" />
     <result column="invoice_sn" jdbcType="VARCHAR" property="invoiceSn" />
+    <result column="qualification_status" jdbcType="TINYINT" property="qualificationStatus" />
     <result column="invoice_type" jdbcType="TINYINT" property="invoiceType" />
     <result column="invoice_status" jdbcType="TINYINT" property="invoiceStatus" />
     <result column="invoice_change" jdbcType="TINYINT" property="invoiceChange" />
@@ -170,6 +172,7 @@
     ) invoiceStatus,
     ie.invoice_type,
     ie.invoice_sn,
+    ie.qualification_status,
     ie.invoice_change
     FROM
     (select * from order_info oio where oio.pay_status = 2 and oio.user_id = #{userId,jdbcType=VARCHAR}) as oi
