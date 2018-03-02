@@ -21,6 +21,8 @@ public class OrderInfoInvoiceVo extends OrderInfo {
 
 	private String invoiceSn;
 
+	private Byte qualificationStatus;
+
 	private Byte invoiceStatus;
 
 	private Byte invoiceType;
@@ -28,14 +30,14 @@ public class OrderInfoInvoiceVo extends OrderInfo {
 	private Byte invoiceChange;
 
 	@Transient
-	private List<MgOrderGoods> orderGoodsList;//订单里的商品列表
+	private List<MgOrderGoods> mgOrderGoodsList;//订单里的商品列表
 
 	public List<MgOrderGoods> getMgOrderGoodsList() {
-		return orderGoodsList;
+		return mgOrderGoodsList;
 	}
 
-	public void setMgOrderGoodsList(List<MgOrderGoods> orderGoodsList) {
-		this.orderGoodsList = orderGoodsList;
+	public void setMgOrderGoodsList(List<MgOrderGoods> mgOrderGoodsList) {
+		this.mgOrderGoodsList = mgOrderGoodsList;
 	}
 
 
@@ -53,6 +55,14 @@ public class OrderInfoInvoiceVo extends OrderInfo {
 
 	public void setInvoiceSn(String invoiceSn) {
 		this.invoiceSn = invoiceSn;
+	}
+
+	public Byte getQualificationStatus() {
+		return qualificationStatus;
+	}
+
+	public void setQualificationStatus(Byte qualificationStatus) {
+		this.qualificationStatus = qualificationStatus;
 	}
 
 	public Byte getInvoiceStatus() {
