@@ -13,6 +13,7 @@ import com.jusfoun.hookah.core.domain.vo.InvoiceDetailVo;
 import com.jusfoun.hookah.core.domain.vo.InvoiceVo;
 import com.jusfoun.hookah.core.domain.vo.UserInvoiceTitleVo;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.ExpressInfoService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +38,9 @@ public class UserInvoiceTitleApi extends BaseController{
 
     @Resource
     UserInvoiceTitleService userInvoiceTitleService;
+
+@Resource
+    InvoiceService invoiceService;
 
     @Resource
     UserService userService;
@@ -99,6 +104,12 @@ public class UserInvoiceTitleApi extends BaseController{
         returnData.setCode(ExceptionConst.Success);
         try {
             userInvoiceTitleService.updateByIdSelective(obj);
+            Invoice invoice = new Invoice();
+            invoice.setTitleId(obj.getTitleId());
+            invoice.setQualificationStatus(obj.getInvoiceStatus());
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("titleId", obj.getTitleId()));
+            invoiceService.updateByConditionSelective(invoice, filters);
         } catch (Exception e) {
             returnData.setCode(ExceptionConst.Failed);
             returnData.setMessage(e.toString());

@@ -137,6 +137,8 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
             BeanUtils.copyProperties(userInvoiceTitle, invoice);
             // 发票类型 0：普通发票 1：专用发票
             invoice.setInvoiceType(userInvoiceTitle.getUserInvoiceType());
+            if(HookahConstants.INVOICE_TYPE_1 == userInvoiceTitle.getUserInvoiceType())
+            invoice.setQualificationStatus(HookahConstants.QUALIFICATION_STATUS_1);
         }else{
             // 抬头为个人
             invoice.setTitleId("0");
