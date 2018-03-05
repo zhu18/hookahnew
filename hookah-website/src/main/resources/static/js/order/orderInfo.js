@@ -49,6 +49,8 @@ $(function () {
     $('#J-noTranslate').click(function(){
 		$('.editAddress input[name=titleId]').val('');
 		$('.editAddress input[name=addressId]').val('');
+		$('.titleIdO').val('');
+		$('.addressIdO').val('');
 		$('.translateInfo span').html('不开发票');
 		$('.translateInfo-g').html('');
 		$('#J-noTranslate').hide();

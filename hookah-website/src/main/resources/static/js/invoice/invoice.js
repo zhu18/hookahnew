@@ -232,6 +232,7 @@ function getExpert() {//获取专用发票信息
 						$('.J_edit_invoice').hide();
 						$('.submit-invoice').hide();
 						$('.Z_invoice_item_bot').hide();  //增票资质确认书
+						$('.add-go-address-special').attr('tid',data.data.titleId);//跳转到地址管理页面
 						$('.add-go-address-special').show();//跳转到地址管理页面
 						$('.Z_ssac .text-input').css({'border': 'none'}).attr('readonly', 'readonly');
 						$('.Z_set_btn.J_reset_invoice').hide();
@@ -286,7 +287,6 @@ $('.J_reset_invoice').click(function(){
 });
 $('.J_del_invoice').click(function (event) {
 	var tid = $(this).attr('tid');
-	console.log(tid)
 	$.confirm('你确定要删除此条信息吗? ', null, function (type) {
 		if (type == 'yes') {
 			this.hide();
@@ -421,7 +421,6 @@ $('.submit-invoice').click(function () {
 				}else if(isEditSpecial == 'modify'){
 					url = '/api/userInvoiceTitle/edit';
 					data.titleId = editSpecialTitleId;
-					console.log(editSpecialTitleId)
 				}
 				$.ajax({
 					url: host.website + url,
@@ -432,7 +431,6 @@ $('.submit-invoice').click(function () {
 					success: function (data) {
 						if (data.code == 1) {
 							$.alert('提交成功，请选择售票地址');
-							console.log(123123);
 							getExpert()
 						} else {
 							$.alert(data.message);
@@ -459,7 +457,6 @@ $('.add-go-address-common').click(function(){
 			}
 		});
 		if (nums > 0) {//判断是否选择抬头  //true     --------------------------------------待做赋值处理
-			console.log(titleIds);
 			oTitleId = titleIds;
 			$('.invoiceInfo').hide();
 			$('.invoiceAddress').show();
@@ -477,7 +474,6 @@ $('.add-go-address-common').click(function(){
 $('.add-go-address-special').click(function () {
 	$('.invoiceInfo').hide();
 	$('.invoiceAddress').show();
-	// console.log($(this).attr('tid'));
 	// oInvoiceInfo = '专用发票 办公用品 单位';
 	oTitleId = $(this).attr('tid');
 	if (!isLoadAddress) {
@@ -861,7 +857,6 @@ function setInvoiceAddress(invoiceName,mobile,region,address,fixedLine1,fixedLin
 	}else if(isAddAddress == 'modify'){
 		url='/api/userInvoiceAddress/edit'
 		data.id = eidtAId;
-		console.log(eidtAId);
 	}
 	$.ajax({
 		type: "post",
@@ -915,9 +910,7 @@ function endSetting(){
 					$('#J-noTranslate').show();
 					$('.translate-bg').hide();
 					$('.invoceVal').html(invoiceValShow);
-					console.log(13132123)
 				}else if(window.location.pathname == '/usercenter/myInvoice'){
-					console.log('qeqweqweqwe')
 					if(orderIds){
 						var datas = null;
 						if(editType == 'add'){
