@@ -137,6 +137,8 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
             BeanUtils.copyProperties(userInvoiceTitle, invoice);
             // 发票类型 0：普通发票 1：专用发票
             invoice.setInvoiceType(userInvoiceTitle.getUserInvoiceType());
+            if(HookahConstants.INVOICE_TYPE_1 == userInvoiceTitle.getUserInvoiceType())
+            invoice.setQualificationStatus(HookahConstants.QUALIFICATION_STATUS_1);
         }else{
             // 抬头为个人
             invoice.setTitleId("0");
@@ -271,10 +273,22 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
 
     public List<InvoiceVo> getInvoiceListInPage(String userName, Byte userType, Byte invoiceStatus, Byte invoiceType)throws HookahException{
 
-        return invoiceMapper.getInvoiceInfo(userName, userType, invoiceStatus, invoiceType);
+        List<InvoiceVo> invoiceVoList = new ArrayList<>();
+        if(-1 == userType || null == userType){
+
+            invoiceVoList.addAll(invoiceMapper.getInvoiceInfo2(userName, userType, invoiceStatus, invoiceType));
+            invoiceVoList.addAll(invoiceMapper.getInvoiceInfo4(userName, userType, invoiceStatus, invoiceType));
+        }else if(HookahConstants.USER_TYPE_2 == userType){
+
+            invoiceVoList.addAll(invoiceMapper.getInvoiceInfo2(userName, userType, invoiceStatus, invoiceType));
+        }else if(HookahConstants.USER_TYPE_4 == userType){
+
+            invoiceVoList.addAll(invoiceMapper.getInvoiceInfo4(userName, userType, invoiceStatus, invoiceType));
+        }
+        return invoiceVoList;
     }
 
-    public InvoiceDetailVo findOrderInvoiceInfo(String invoiceId) throws HookahException {
+    public InvoiceDetailVo findOrderInvoiceInfo(String invoiceId, Byte userType) throws HookahException {
 
         InvoiceDetailVo invoiceDetailVo = new InvoiceDetailVo();
         List<OrderInfoInvoiceVo> orderInfoInvoiceVoList = invoiceMapper.getOrderInvoiceDetailInfo(invoiceId);
@@ -305,7 +319,13 @@ public class InvoiceServiceImpl extends GenericServiceImpl<Invoice, String> impl
         }
         BeanUtils.copyProperties(this.findInvoiceInfo(invoiceId), invoiceDetailVo);
         invoiceDetailVo.setOrderInfoInvoiceVoList(list);
-        invoiceDetailVo.setUserInvoiceVo(invoiceMapper.getUserInvoiceInfoByInvoiceId(invoiceId));
+        if(HookahConstants.USER_TYPE_2 == userType){
+
+            invoiceDetailVo.setUserInvoiceVo(invoiceMapper.getUserInvoiceInfoByInvoiceId2(invoiceId));
+        }else{
+
+            invoiceDetailVo.setUserInvoiceVo(invoiceMapper.getUserInvoiceInfoByInvoiceId4(invoiceId));
+        }
         return invoiceDetailVo;
     }
 }

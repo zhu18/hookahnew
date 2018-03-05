@@ -26,5 +26,5 @@ public interface UserInvoiceTitleService extends GenericService<UserInvoiceTitle
      * @param titleId
      * @return
      */
-    UserInvoiceTitleVo findUserInvoiceTitleInfo(String titleId);
+    UserInvoiceTitleVo findUserInvoiceTitleInfo(String titleId, Byte userType);
 }

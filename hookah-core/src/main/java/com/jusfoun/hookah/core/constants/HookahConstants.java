@@ -177,6 +177,12 @@ public class HookahConstants {
     public static final Byte INVOICE_STATUS_3 = 3;
     public static final Byte INVOICE_STATUS_4 = 4;
 
+    // 资质状态 type为1时 0：未添加 1：已申请（审核中）2：已添加（审核通过） 3（未通过）
+    public static final Byte QUALIFICATION_STATUS_0 = 0;
+    public static final Byte QUALIFICATION_STATUS_1 = 1;
+    public static final Byte QUALIFICATION_STATUS_2 = 2;
+    public static final Byte QUALIFICATION_STATUS_3 = 3;
+
     //发票类型 用户发票类型 0：普通发票 1：专用发票 2：个人
     public static final Byte INVOICE_TYPE_1 = 1;
     public static final Byte INVOICE_TYPE_2 = 2;
@@ -189,6 +195,10 @@ public class HookahConstants {
 
     // 通用未删除状态
     public static final Byte DELETE_STATUS_1 = 1;
+
+    // 用户类型
+    public static final Byte USER_TYPE_2 = 2;
+    public static final Byte USER_TYPE_4 = 4;
 
     public static final Byte GOODS_ON_LINE = 0;//线上支付
     public static final Byte GOODS_OFF_LINE = 1;//线下支付

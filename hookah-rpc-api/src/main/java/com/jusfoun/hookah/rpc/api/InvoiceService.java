@@ -59,5 +59,5 @@ public interface InvoiceService extends GenericService<Invoice,String> {
      * @return
      * @throws HookahException
      */
-    public InvoiceDetailVo findOrderInvoiceInfo(String invoiceId) throws HookahException;
+    public InvoiceDetailVo findOrderInvoiceInfo(String invoiceId, Byte userType) throws HookahException;
 }

@@ -4,13 +4,15 @@
 class invoiceListDetailsController {
     constructor($scope, $rootScope, $http, $state, $stateParams, growl) {
         console.log($stateParams.id);
+        console.log($stateParams.type);
         $scope.invoiceStatu="2";
         $scope.reader=function () {//渲染页面
             let promise = $http({
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/invoice/back/findById",
                 params: {
-                    invoiceId:$stateParams.id
+                    invoiceId:$stateParams.id,
+                    userType:$stateParams.type
                 }
             });
             promise.then(function (res, status, config, headers) {
@@ -31,7 +33,12 @@ class invoiceListDetailsController {
                     $scope.addTime=info.addTime;
                     $scope.invoiceAmount=info.invoiceAmount;
                     $scope.orderInfoInvoiceVoList=info.orderInfoInvoiceVoList; // 订单列表
-
+                    if($scope.orderInfoInvoiceVoList.length){
+                        for(var i=0;i<$scope.orderInfoInvoiceVoList.length;i++){
+                            var res='isShow_'+i;
+                            $scope[res]=true;
+                        }
+                    }
                     var userInvoiceTitle=info.userInvoiceTitle;//增票资质
                     $scope.titleId=info.titleId;
                     if(userInvoiceTitle){
@@ -177,6 +184,18 @@ class invoiceListDetailsController {
             });
 
         }
+
+
+        $scope.controlBtn=function (index) {
+            var res='isShow_'+index;
+            if ($scope[res]){
+                $scope[res]=false;
+            }else {
+                $scope[res]=true;
+            }
+        }
+
+
     }
 }
 

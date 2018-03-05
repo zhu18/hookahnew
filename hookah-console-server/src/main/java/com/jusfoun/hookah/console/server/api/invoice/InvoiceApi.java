@@ -146,10 +146,10 @@ public class InvoiceApi extends BaseController{
      * @return
      */
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public ReturnData findInvoiceInfo(String invoiceId){
+    public ReturnData findInvoiceInfo(String invoiceId, Byte userType){
         ReturnData returnData = new ReturnData<>();
         try {
-            InvoiceDetailVo invoiceDetailVo = invoiceService.findOrderInvoiceInfo(invoiceId);
+            InvoiceDetailVo invoiceDetailVo = invoiceService.findOrderInvoiceInfo(invoiceId,userType);
             return ReturnData.success(invoiceDetailVo);
         } catch (Exception e) {
             logger.error("信息不存在", e);

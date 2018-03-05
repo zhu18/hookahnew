@@ -10,7 +10,8 @@ class invoiceAuditingDetailsController {
                 method: 'GET',
                 url: $rootScope.site.apiServer + "/api/userInvoiceTitle/back/findById",
                 params: {
-                    titleId:$stateParams.id
+                    titleId:$stateParams.id,
+                    userType:$stateParams.type
                 }
             });
             promise.then(function (res, status, config, headers) {

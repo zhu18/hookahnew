@@ -68,8 +68,8 @@ class invoiceAuditingController {
 
         }; //列表搜索
         $scope.search();
-        $scope.getDetails=function (id) {
-            $state.go('invoice.auditingDetails', {id: id});
+        $scope.getDetails=function (item) {
+            $state.go('invoice.auditingDetails', {id: item.titleId,type:item.userType});
         };
         $scope.refresh = function () {
             $scope.search();

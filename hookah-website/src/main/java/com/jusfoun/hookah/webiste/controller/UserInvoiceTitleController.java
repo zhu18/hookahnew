@@ -118,7 +118,8 @@ public class UserInvoiceTitleController extends BaseController {
     public ReturnData editUserInvoiceTitle(String userInvoiceTitle) {
 
         UserInvoiceTitle obj = JSON.parseObject(userInvoiceTitle, UserInvoiceTitle.class);
-
+        // 重新添加 修改状态改为 已申请(审核中)
+        obj.setInvoiceStatus(HookahConstants.INVOICE_STATUS_1);
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
