@@ -80,7 +80,11 @@ class invoiceListController {
         $scope.getDetails=function (item) {
             console.log(item);
             if(item.invoiceType==1){
-                $state.go('invoice.auditingDetails', {id: item.titleId,type:item.userType});
+                if(item.qualificationStatus == 2){
+                    $state.go('invoice.listDetails', {id: item.invoiceId,type:item.userType});
+                }else {
+                    $state.go('invoice.auditingDetails', {id: item.titleId,type:item.userType});
+                }
             }else {
                 $state.go('invoice.listDetails', {id: item.invoiceId,type:item.userType});
             }
