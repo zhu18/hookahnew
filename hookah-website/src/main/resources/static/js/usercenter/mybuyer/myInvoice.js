@@ -108,8 +108,25 @@ function loadPageData(data) {
 						invoiceStatusS = '<span style="color: #0eca33;">已开票</span>';
 						break;
 				}
+				var qualificationStatus = null;
+				switch (list[i].qualificationStatus) {
+					case 0:
+						qualificationStatus = '资质未添加';
+						break;
+					case 1:
+						qualificationStatus = '资质审核中';
+						break;
+					case 2:
+						qualificationStatus = '资质已添加';
+						break;
+					case 3:
+						qualificationStatus = '资质审核未通过';
+						break;
+					default:
+						qualificationStatus = '';
+				}
 				if(ii == 0){
-					html += '<td rowspan="' + goods.length + '" class="border-left" style="width:120px;">' + invoiceStatusS + '</td>';
+					html += '<td rowspan="' + goods.length + '" class="border-left" style="width:120px;">' + invoiceStatusS +'<br>'+qualificationStatus+'</td>';
 				}
 				var invoiceType = null;
 				switch (list[i].invoiceType) {
