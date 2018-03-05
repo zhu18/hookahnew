@@ -32,7 +32,7 @@ $('.tab-btn a').click(function () {
 var regex = {
 	titleName: /^[\u4e00-\u9fa5]{1,50}$/,    //发票抬头
 	taxpayerIdentifyNo: /^[0-9A-Z]{15,20}$/,     //纳税人识别号
-	regAddress: /[\u4e00-\u9fa50-9a-zA-Z]{1,50}/,    //发票--注册地址
+	regAddress: /[\u4e00-\u9fa50-9a-zA-Z]{1,50}$/,    //发票--注册地址
 	regTel: /[0-9]{1,15}$/,    //发票--注册电话
 	openBank: /[\u4e00-\u9fa5]{1,50}$/,    //开户银行
 	bankAccount: /^[0-9]{1,50}$/,    //银行账号
@@ -229,7 +229,7 @@ function getExpert() {//获取专用发票信息
 						invoiceStatus = '<span style="color:#0f0">已添加</span>';
 						invoiceStatus_num = 2;
 						setInvoiceVal(data);
-						$('.J_edit_invoice').attr('tid',data.data.titleId);
+						$('.J_edit_invoice').hide();
 						$('.submit-invoice').hide();
 						$('.Z_invoice_item_bot').hide();  //增票资质确认书
 						$('.add-go-address-special').show();//跳转到地址管理页面
@@ -243,6 +243,7 @@ function getExpert() {//获取专用发票信息
 						$('.Z_set_btn').hide();
 						setInvoiceVal(data);
 						$('.J_edit_invoice').attr('tid',data.data.titleId);
+						$('.J_reset_invoice').attr('tid',data.data.titleId);
 						$('.Z_ssac .text-input').css({'border': 'none'}).attr('readonly', 'readonly');
 						$('.Z_set_btn.J_reset_invoice').show();
 						$('.Z_set_btn.J_edit_invoice').show();
@@ -266,6 +267,7 @@ $('.J_edit_invoice').click(function(){
 	$('.add-go-address-special').hide();
 	$('.submit-invoice').show();
 	$('.cancel-edit').show();
+	$('.zizhi_tip').hide();//审核不通过提示
 	isEditSpecial = 'modify';
 	editSpecialTitleId = $(this).attr('tid');
 	$('.Z_invoice_item_bot').show();  //增票资质确认书
@@ -350,6 +352,10 @@ function testInvoiceInfo(titleName, taxpayerIdentifyNo, regAddress, regTel, open
 		$('input[name=Z_titleName]').siblings('.must-tip').hide();
 		if (regex.taxpayerIdentifyNo.test(taxpayerIdentifyNo)) {
 			$('input[name=Z_taxpayerIdentifyNo]').siblings('.must-tip').hide();
+			if(regAddress.length > 50){
+				$('input[name=Z_regAddress]').siblings('.must-tip').show();
+				return false;
+			}
 			if (regex.regAddress.test(regAddress)) {
 				$('input[name=Z_regAddress]').siblings('.must-tip').hide();
 				if (regex.regTel.test(regTel)) {
