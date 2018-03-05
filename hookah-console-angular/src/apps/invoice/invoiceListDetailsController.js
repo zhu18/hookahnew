@@ -30,7 +30,7 @@ class invoiceListDetailsController {
                         $scope.realName=userInvoiceVo.realName;
                         $scope.userType=userInvoiceVo.userType;
                     }
-                    $scope.addTime=info.addTime;
+                    $scope.addTim=info.addTime;
                     $scope.invoiceAmount=info.invoiceAmount;
                     $scope.orderInfoInvoiceVoList=info.orderInfoInvoiceVoList; // 订单列表
                     if($scope.orderInfoInvoiceVoList.length){
