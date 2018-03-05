@@ -13,6 +13,7 @@ var oInfo = '';
 var isEditSpecial = 'add';
 var editSpecialTitleId = '';
 var invoiceValShow = null;
+var invoiceStatus_num = null;
 
 
 $('.translate-close-btn').click(function () { //关闭浮层
@@ -204,14 +205,17 @@ function getExpert() {//获取专用发票信息
 				isLoadZ = true;
 				resetEditSpecialTitle = data;
 				$('.J_edit_invoice').attr('tid',data.data.tid);
+				// $('.invoiceStatus').html('<span style="color:#fff000">审核中</span>');
 				switch (data.data.invoiceStatus) {
 					case 0:
 						invoiceStatus = '未添加';
+						invoiceStatus_num = 0;
 						$('.Z_set_btn').hide();//设置按钮
 						$('.add-go-address-special').hide();//跳转到地址管理页面
 						break;
 					case 1:
 						invoiceStatus = '<span style="color:#fff000">审核中</span>';
+						invoiceStatus_num = 1;
 						$('.submit-invoice').hide();
 						$('.cancel-edit').hide();
 						setInvoiceVal(data);
@@ -223,6 +227,7 @@ function getExpert() {//获取专用发票信息
 						break;
 					case 2:
 						invoiceStatus = '<span style="color:#0f0">已添加</span>';
+						invoiceStatus_num = 2;
 						setInvoiceVal(data);
 						$('.J_edit_invoice').attr('tid',data.data.titleId);
 						$('.submit-invoice').hide();
@@ -234,6 +239,7 @@ function getExpert() {//获取专用发票信息
 						break;
 					case 3:
 						invoiceStatus = '<span style="color:#f00">未通过</span>';
+						invoiceStatus_num = 3;
 						$('.Z_set_btn').hide();
 						setInvoiceVal(data);
 						$('.J_edit_invoice').attr('tid',data.data.titleId);
@@ -241,7 +247,8 @@ function getExpert() {//获取专用发票信息
 						$('.Z_set_btn.J_reset_invoice').show();
 						$('.Z_set_btn.J_edit_invoice').show();
 						$('.Z_invoice_item_bot').hide();  //增票资质确认书
-						$('.add-go-address-special').show();//跳转到地址管理页面
+						// $('.add-go-address-special').show();//跳转到地址管理页面
+						$('.zizhi_tip').show();//跳转到地址管理页面
 						$('.submit-invoice').hide();
 						$('.cancel-edit').hide();
 						break;
@@ -267,6 +274,7 @@ $('.J_edit_invoice').click(function(){
 $('.J_reset_invoice').click(function(){
 	removeInvoiceVal();
 	$('.add-go-address-special').hide();
+	$('.zizhi_tip').hide();//审核不通过提示
 	$('.submit-invoice').show();
 	$('.cancel-edit').show();
 	isEditSpecial = 'modify';
@@ -308,11 +316,17 @@ $('.J_del_invoice').click(function (event) {
 });
 $('.cancel-edit').click(function(){
 	setInvoiceVal(resetEditSpecialTitle);
-	$('.add-go-address-special').show();
+
 	$('.submit-invoice').hide();
 	$('.cancel-edit').hide();
 	$('.Z_invoice_item_bot').hide();  //增票资质确认书
 	isEditSpecial = 'add';
+	if(invoiceStatus_num == 3){
+		$('.zizhi_tip').show();//跳转到地址管理页面
+	}else{
+		$('.add-go-address-special').show();
+	}
+
 	$('.Z_ssac .text-input').css({'border': 'none'}).attr('readonly', 'readonly');
 });
 function setInvoiceVal(data) {
