@@ -499,7 +499,7 @@ public class OrderInfoController extends BaseController {
             }
             init(orderinfo);
 
-            if (StringUtils.isNotBlank(titleId) && StringUtils.isNotBlank(addressId)){
+            if (StringUtils.isNotBlank(addressId)){
                 orderinfo.setInvoiceOrNot((byte)1);
             }
             if(cartIdArray[0].equals("-1")){

@@ -37,13 +37,13 @@
         FROM
         (
         select uti.* from user_invoice_title  uti,(select * from user usee where usee.user_type = 2) us
-        where uti.user_id = us.user_id and uti.user_invoice_type = 1) ut
+        where uti.user_id = us.user_id and uti.user_invoice_type = 1 ) ut
 
         LEFT JOIN user u on ut.user_id = u.user_id
 
         LEFT JOIN user_detail ud on u.user_id = ud.user_id
 
-        WHERE 1=1
+        WHERE ut.delete_status = 1
 
         <if test="userName != null ">
             AND u.user_name LIKE '%${userName}%'
@@ -62,14 +62,14 @@
         org.org_name as real_name
         FROM
         (
-        select uti.* from user_invoice_title  uti,(select * from user usee where usee.user_type = 4) us
-        where uti.user_id = us.user_id and uti.user_invoice_type = 1) ut
+        select uti.* from user_invoice_title  uti,(select * from user usee where usee.user_type = 4 ) us
+        where uti.user_id = us.user_id and uti.user_invoice_type = 1 ) ut
 
         LEFT JOIN user u on ut.user_id = u.user_id
 
         LEFT JOIN organization org on u.org_id = org.org_id
 
-        WHERE 1=1
+        WHERE ut.delete_status = 1
 
         <if test="userName != null ">
             AND u.user_name LIKE '%${userName}%'
