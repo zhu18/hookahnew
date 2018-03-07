@@ -59,8 +59,8 @@
                             <tr data-ng-repeat="item in invoiceList">
                                 <td data-ng-bind="$index+1"></td>
                                 <td >
-                                    <a data-ng-click="getDetails(item.invoiceId)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus==4"></a>
-                                    <a data-ng-click="getDetails(item.invoiceId)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus!=4"></a>
+                                    <a data-ng-click="getDetails(item)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus==4"></a>
+                                    <a data-ng-click="getDetails(item)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus!=4"></a>
                                 </td>
                                 <td data-ng-bind="item.userName"></td>
                                 <td data-ng-bind="item.realName"></td>
