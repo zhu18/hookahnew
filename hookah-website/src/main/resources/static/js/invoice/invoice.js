@@ -430,7 +430,7 @@ $('.submit-invoice').click(function () {
 					},
 					success: function (data) {
 						if (data.code == 1) {
-							$.alert('提交成功，请选择售票地址');
+							$.alert('提交成功，请选择收票地址');
 							getExpert()
 						} else {
 							$.alert(data.message);
