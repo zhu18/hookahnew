@@ -59,8 +59,8 @@
                             <tr data-ng-repeat="item in invoiceList">
                                 <td data-ng-bind="$index+1"></td>
                                 <td >
-                                    <a data-ng-click="getDetails(item.invoiceId)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus==4"></a>
-                                    <a data-ng-click="getDetails(item.invoiceId)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus!=4"></a>
+                                    <a data-ng-click="getDetails(item)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus==4"></a>
+                                    <a data-ng-click="getDetails(item)" data-ng-bind="item.invoiceSn" data-ng-show="item.invoiceStatus!=4"></a>
                                 </td>
                                 <td data-ng-bind="item.userName"></td>
                                 <td data-ng-bind="item.realName"></td>
@@ -86,7 +86,7 @@
                                 <td >
                                     <button class="btn btn-primary" data-ng-show="item.invoiceStatus==1"  data-ng-click="getDetails(item)">去审核</button>
                                     <button class="btn btn-primary" data-ng-show="item.invoiceStatus==2"  data-ng-click="getDetails(item)">处理</button>
-                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus==4 || item.invoiceStatus==3" data-ng-click="getDetails(item.invoiceId)">查看</button>
+                                    <button class="btn btn-primary" data-ng-show="item.invoiceStatus==4 || item.invoiceStatus==3" data-ng-click="getDetails(item)">查看</button>
                                 </td>
                             </tr>
 
