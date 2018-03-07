@@ -47,6 +47,7 @@ class invoiceListDetailsController {
                         $scope.regTel=userInvoiceTitle.regTel;
                         $scope.regAddress=userInvoiceTitle.regAddress;
                         $scope.bankAccount=userInvoiceTitle.bankAccount;
+                        $scope.openBank=userInvoiceTitle.openBank;//银行账户
                     }else if($scope.titleId == 0){
                         $scope.titleName="个人"
                     }

@@ -30,6 +30,7 @@ class invoiceAuditingDetailsController {
                     $scope.regTel=info.regTel;//注册电话
                     $scope.regAddress=info.regAddress;//注册地址
                     $scope.bankAccount=info.bankAccount;//银行账户
+                    $scope.openBank=info.openBank;//银行账户
                 } else {
 
                 }
