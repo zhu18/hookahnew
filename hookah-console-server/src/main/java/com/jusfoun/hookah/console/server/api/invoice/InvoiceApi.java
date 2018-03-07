@@ -11,6 +11,7 @@ import com.jusfoun.hookah.core.domain.Invoice;
 import com.jusfoun.hookah.core.domain.vo.InvoiceDetailVo;
 import com.jusfoun.hookah.core.domain.vo.InvoiceVo;
 import com.jusfoun.hookah.core.exception.HookahException;
+import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.ReturnData;
 import com.jusfoun.hookah.rpc.api.ExpressInfoService;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -126,6 +128,9 @@ public class InvoiceApi extends BaseController{
         ReturnData returnData = new ReturnData<>();
         returnData.setCode(ExceptionConst.Success);
         try {
+            List<Condition> filters = new ArrayList<>();
+            filters.add(Condition.eq("invoiceId", obj.getInvoiceId()));
+            expressInfoService.deleteByCondtion(filters);
             expressInfoService.insert(obj);
             // 提交邮寄同时更新已开发票
             Invoice invoice = new Invoice();
