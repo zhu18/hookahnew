@@ -3,16 +3,16 @@ var config = {
   permissionList: "",
   permissionArray:"",
   site: {
-    adminServer: "http://admin.wfbdex.com",
-    apiServer: "http://console.wfbdex.com",
-    websiteServer: "http://trade.wfbdex.com",
-    authServer: "http://auth.wfbdex.com",
-    staticServer: "http://static.wfbdex.com"
+    adminServer: "http://admin.cxy.aesdata.cn",
+    apiServer: "http://console.cxy.aesdata.cn",
+    websiteServer: "http://trade.cxy.aesdata.cn",
+    authServer: "http://auth.cxy.aesdata.cn",
+    staticServer: "http://static.cxy.aesdata.cn"
   },
   url: {
-    loginUrl: "http://auth.wfbdex.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.wfbdex.com/login&backurl=",
-    uploadUrl: "http://static.wfbdex.com/upload/fileUpload",
-    uploadEditor: "http://static.wfbdex.com/upload/wangeditor",
+    loginUrl: "http://auth.cxy.aesdata.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.cxy.aesdata.cn/login&backurl=",
+    uploadUrl: "http://static.cxy.aesdata.cn/upload/fileUpload",
+    uploadEditor: "http://static.cxy.aesdata.cn/upload/wangeditor",
   }
 };
 
@@ -87,7 +87,7 @@ export default angular.module('Common', [
   'angular-growl',
   'angularSpinner',
 ])
-  .constant('loginUrl', "http://auth.wfbdex.com/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
+  .constant('loginUrl', "http://auth.cxy.aesdata.cn/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
      * 配置消息提示
