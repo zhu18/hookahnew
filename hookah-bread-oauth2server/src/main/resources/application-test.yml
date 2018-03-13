@@ -4,11 +4,11 @@ server:
       protocal: http://
   session:
     cookie:
-      domain: wfbdex.com
+      domain: cxy.aesdata.cn
       name: hookah_sid
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://192.168.15.204:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    url: jdbc:log4jdbc:mysql://192.168.16.129:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
     #driverClassName: com.mysql.jdbc.Driver
     #url: jdbc:mysql://192.168.15.204:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
@@ -40,28 +40,25 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.204:27017/hookah
+      uri:  mongodb://192.168.16.129:27017/hookah
   rabbitmq:
-    addresses: 192.168.15.204:5672
+    addresses: 192.168.16.129:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
-    listener:
-      retry:
-        enabled: true
-        max-attempts: 2
   mail:
-    host: smtp.qiye.163.com
-    port: 25
-    username: gbd@jusfoun.com
-    password: 1QAZ2wsx
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+      host: smtp.cxy.aesdata.cn
+      username: service@cxy.aesdata.cn
+      password: Bigdata8661101
+      transport:
+        protocol: smtp
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
             socketFactory:
               fallback: false
 #  jpa:
@@ -74,17 +71,6 @@ spring:
 #        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
-redis:
-  ip: 192.168.15.204
-  port: 6379
-  password: Yqn2ht4DYkMHlDvTY7CV
-  pool:
-    #最大分配的对象数
-    maxTotal: 1024
-    #最大能够保持idel状态的对象数
-    maxIdle: 200
-    #当调用borrow Object方法时，是否进行有效性检查
-    testOnBorrow: false
 myconf:
   beetl:
     templatesPath: views/
@@ -93,16 +79,16 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: wfbdex.com
-    cms: ${server.http.protocal}www.wfbdex.com
-    website: ${server.http.protocal}trade.wfbdex.com
-    static: ${server.http.protocal}static.wfbdex.com
-    auth: ${server.http.protocal}auth.wfbdex.com
-    console: ${server.http.protocal}console.wfbdex.com
+    domain: cxy.aesdata.cn
+    cms: ${server.http.protocal}www.cxy.aesdata.cn
+    website: ${server.http.protocal}trade.cxy.aesdata.cn
+    static: ${server.http.protocal}static.cxy.aesdata.cn
+    auth: ${server.http.protocal}auth.cxy.aesdata.cn
+    console: ${server.http.protocal}console.cxy.aesdata.cn
   site:
-    user-default-img: /static/images/user-safe-head.png
+      user-default-img: /static/images/user-safe-head.png
   redis:
-    ipPort: 192.168.15.204:7000,192.168.15.204:7001,192.168.15.204:7002
+    ipPort: 192.168.16.129:7000,192.168.16.129:7001,192.168.16.129:7002
   consul:
-    ipPort: 192.168.15.204:8500
+    ipPort: 127.0.0.1:8500
 debug: true

@@ -4,12 +4,12 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: wfbdex.com
+      domain: cxy.aesdata.cn
       name: hookah_sid
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.15.204:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.16.129:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: password
     initialize: true
@@ -38,22 +38,19 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.204:27017/hookah
+      uri:  mongodb://192.168.16.129:27017/hookah
   rabbitmq:
-    addresses: 192.168.15.204:5672
+    addresses: 192.168.16.129:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
-    listener:
-      retry:
-        enabled: true
-        max-attempts: 2
   mail:
-      host: smtp.qiye.163.com
-      port: 25
-      username: gbd@jusfoun.com
-      password: 1QAZ2wsx
+      host: smtp.cxy.aesdata.cn
+      username: service@cxy.aesdata.cn
+      password: Bigdata8661101
+      transport:
+        protocol: smtp
       properties:
         mail:
           smtp:
@@ -72,17 +69,6 @@ spring:
 #        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
-redis:
-  ip: 192.168.15.204
-  port: 6379
-  password: Yqn2ht4DYkMHlDvTY7CV
-  pool:
-    #最大分配的对象数
-    maxTotal: 1024
-    #最大能够保持idel状态的对象数
-    maxIdle: 200
-    #当调用borrow Object方法时，是否进行有效性检查
-    testOnBorrow: false
 myconf:
   beetl:
     templatesPath: views/
@@ -91,28 +77,29 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: wfbdex.com
-    website: ${server.http.protocal}trade.wfbdex.com
-    static: ${server.http.protocal}static.wfbdex.com
-    auth: ${server.http.protocal}auth.wfbdex.com
-    console: ${server.http.protocal}console.wfbdex.com
+    domain: cxy.aesdata.cn
+    website: ${server.http.protocal}trade.cxy.aesdata.cn
+    static: ${server.http.protocal}static.cxy.aesdata.cn
+    auth: ${server.http.protocal}auth.cxy.aesdata.cn
+    console: ${server.http.protocal}console.cxy.aesdata.cn
   oauth2:
     clientId: admin
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.wfbdex.com/reg
-    loginUrl: http://auth.wfbdex.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.wfbdex.com/home
-    logoutUrl: http://auth.wfbdex.com/logout?redirect_uri=http://trade.wfbdex.com/login
-    accessTokenUrl: http://auth.wfbdex.com/oauth/accessToken
-    userInfoUrl: http://auth.wfbdex.com/userInfo
-    redirectUrl: http://auth.wfbdex.com/login
+    regUrl: http://auth.cxy.aesdata.cn/reg
+    loginUrl: http://auth.cxy.aesdata.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.cxy.aesdata.cn/home
+    logoutUrl: http://auth.cxy.aesdata.cn/logout?redirect_uri=http://trade.cxy.aesdata.cn/login
+    accessTokenUrl: http://auth.cxy.aesdata.cn/oauth/accessToken
+    userInfoUrl: http://auth.cxy.aesdata.cn/userInfo
+    redirectUrl: http://auth.cxy.aesdata.cn/login
   api:
     url: http://192.168.200.116:5555/gateway/insert
     tokenUrl: http://192.168.200.116:5555/gateway/getToken
     changeUrl: http://192.168.200.116:5555/gateway/changeToken
+    apiRestUrl: http://192.168.15.174:8070/apirest/findInvokeStatus
   redis:
-    ipPort: 192.168.15.204:7000,192.168.15.204:7001,192.168.15.204:7002
+    ipPort: 192.168.16.129:7000,192.168.16.129:7001,192.168.16.129:7002
   consul:
-    ipPort: 192.168.15.204:8500
+    ipPort: 127.0.0.1:8500
   es:
     ipPort: 192.168.200.116:9300
 debug: true
