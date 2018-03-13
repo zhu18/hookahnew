@@ -133,6 +133,7 @@ local.properties
 /hookah-console-angular/dist/
 /hookah-console-angular/node_modules/
 /hookah-console-other/src/main/resources/application-dev.yml
+/hookah-pay/src/main/resources/application-dev.yml
 /hookah-breed-website/src/main/resources/application-dev.yml
 /npm-debug.log
 /*.ipr
