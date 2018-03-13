@@ -669,7 +669,11 @@ header .header-container {
 header .header-container .logo {
     float: left;
     position: relative;
-    top: 30px;
+    top: 20px;
+}
+header .header-container .logo img{
+    width: 180px;
+    height: 65px;
 }
 
 header .header-container .nav {
