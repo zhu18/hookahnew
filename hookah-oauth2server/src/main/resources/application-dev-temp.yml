@@ -90,6 +90,7 @@ myconf:
       user-default-img: /static/images/user-safe-head.png
   redis:
     ipPort: 192.168.15.203:7000,192.168.15.203:7001,192.168.15.203:7002
+    password: bdgstore
   consul:
       ipPort: localhost:8500
 debug: true

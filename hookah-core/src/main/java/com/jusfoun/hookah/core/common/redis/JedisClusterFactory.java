@@ -28,6 +28,8 @@ public class JedisClusterFactory implements FactoryBean<JedisCluster>, Initializ
 
     @Value("${myconf.redis.ipPort}")
     private String jedisClusterNodes;
+    @Value("${myconf.redis.password}")
+    private String jedisClusterPassword;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -48,7 +50,8 @@ public class JedisClusterFactory implements FactoryBean<JedisCluster>, Initializ
             haps.add(new HostAndPort(arr[0], Integer.valueOf(arr[1])));
         }
 
-        jedisCluster = new JedisCluster(haps, connectionTimeout, soTimeout, maxRedirections, genericObjectPoolConfig);
+//        jedisCluster = new JedisCluster(haps, connectionTimeout, soTimeout, maxRedirections, genericObjectPoolConfig);
+        jedisCluster = new JedisCluster(haps, connectionTimeout, soTimeout, maxRedirections, jedisClusterPassword , genericObjectPoolConfig);
     }
 
     @Override

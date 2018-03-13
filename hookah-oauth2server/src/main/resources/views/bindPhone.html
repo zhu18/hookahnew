@@ -292,6 +292,7 @@ var htmlPart = {
 		$("#validCode").off("click");
 		obj.src = "${host.auth}/captcha?_"+new Date().getTime();
 	}
+
 	$("#validCode").on('click', function () {
 		changeImg(this);
 	}).on('load', function () {

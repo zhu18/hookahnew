@@ -87,6 +87,7 @@ myconf:
     redirectUrl: http://auth.bdgstore.cn/login
   redis:
     ipPort: 192.168.15.203:7000,192.168.15.203:7001,192.168.15.203:7002
+    password: bdgstore
   consul:
     ipPort: 127.0.0.1:8500
 debug: true

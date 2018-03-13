@@ -77,7 +77,7 @@ function loadPageData(data){ //渲染页面数据
 				shopPrice = Number(list[i].shopPrice) / 100
 			}
 			html += '<li>';
-			html += '<a target="_blank" class="item-top" href="/exchange/details?id='+list[i].goodsId+'">';
+			html += '<a target="_blank" class="item-top" href="'+list[i].goodsSn+'">';
 			html += '<p class="goods-img"><img src="'+list[i].goodsImg+'" alt=""/></p>';
 			html += '<p class="goods-name">'+list[i].goodsName+'</p>';
 			html += '<p class="goods-tag"><span class="item-tag"><span class="tag-in"><span class="in-nol">'+goodsTypeAllName+'</span></span>'+goodsTypeName+'</span><span class="item-tag"><span class="tag-in"><span class="in-nol">'+purchaseLimitAllName+'</span></span>'+purchaseLimitName+'</span></p>';
