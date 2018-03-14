@@ -2181,6 +2181,7 @@ dl {
 
 .goodsDetails .goods-right .recommend-one-n ul li{
   padding:6px 0;
+	overflow: hidden;
 }
 
 .down-btn-a {
