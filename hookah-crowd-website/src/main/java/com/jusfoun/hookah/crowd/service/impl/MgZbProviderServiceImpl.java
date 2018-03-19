@@ -266,9 +266,10 @@ public class MgZbProviderServiceImpl extends GenericMongoServiceImpl<MgZbProvide
                     Query query = new Query(Criteria.where("_id").is(vo.getUserId()));
                     Update update = new Update();
 
-                    if (StringUtils.isNotBlank(vo.getProviderDesc())) {
-                        update.set("providerDesc", vo.getProviderDesc());
-                    }
+//                    if (StringUtils.isNotBlank(vo.getProviderDesc())) {
+//                        update.set("providerDesc", vo.getProviderDesc());
+//                    }
+                    update.set("providerDesc", vo.getProviderDesc());
 
                     if (vo.getSpecialSkills() != null && vo.getSpecialSkills().size() > 0) {
                         update.set("specialSkills", vo.getSpecialSkills().toArray());
