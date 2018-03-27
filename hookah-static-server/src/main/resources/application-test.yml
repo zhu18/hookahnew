@@ -4,16 +4,16 @@ server:
     protocal: http://
 myconf:
   host:
-    domain: wfbdex.com
-    website: ${server.http.protocal}trade.wfbdex.com
-    static: ${server.http.protocal}static.wfbdex.com
-    auth: ${server.http.protocal}auth.wfbdex.com
-    console: ${server.http.protocal}console.wfbdex.com
+    domain: cxy.aesdata.cn
+    website: ${server.http.protocal}trade.cxy.aesdata.cn
+    static: ${server.http.protocal}static.cxy.aesdata.cn
+    auth: ${server.http.protocal}auth.cxy.aesdata.cn
+    console: ${server.http.protocal}console.cxy.aesdata.cn
 debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.15.204:27017/hookah
+      uri:  mongodb://192.168.16.129:27017/hookah
   mvc:
       static-path-pattern: /static/**
   http:

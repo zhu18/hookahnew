@@ -80,7 +80,7 @@ myconf:
     cache: false
   host:
     domain: cxy.aesdata.cn
-    cms: ${server.http.protocal}www.cxy.aesdata.cn
+    cms: ${server.http.protocal}cxy.aesdata.cn
     website: ${server.http.protocal}trade.cxy.aesdata.cn
     static: ${server.http.protocal}static.cxy.aesdata.cn
     auth: ${server.http.protocal}auth.cxy.aesdata.cn
