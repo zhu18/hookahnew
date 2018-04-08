@@ -4,7 +4,7 @@ server:
       protocal: http://
   session:
     cookie:
-      domain: wfbdex.com
+      domain: xzbdex.com
       name: hookah_sid
 spring:
   datasource:
@@ -48,8 +48,8 @@ spring:
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.wfbdex.com
-      username: service@wfbdex.com
+      host: smtp.xzbdex.com
+      username: service@xzbdex.com
       password: Bigdata8661101
       transport:
         protocol: smtp
@@ -79,12 +79,12 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: wfbdex.com
-    cms: ${server.http.protocal}www.wfbdex.com
-    website: ${server.http.protocal}trade.wfbdex.com
-    static: ${server.http.protocal}static.wfbdex.com
-    auth: ${server.http.protocal}auth.wfbdex.com
-    console: ${server.http.protocal}console.wfbdex.com
+    domain: xzbdex.com
+    cms: ${server.http.protocal}cms.xzbdex.com
+    website: ${server.http.protocal}www.xzbdex.com
+    static: ${server.http.protocal}static.xzbdex.com
+    auth: ${server.http.protocal}auth.xzbdex.com
+    console: ${server.http.protocal}console.xzbdex.com
   site:
     user-default-img: /static/images/user-safe-head.png
   redis:

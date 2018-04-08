@@ -4,14 +4,14 @@ server:
       protocal: http://
   session:
     cookie:
-      domain: wfbdex.com
+      domain: xzbdex.com
       name: hookah_sid
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://192.168.15.204:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    url: jdbc:log4jdbc:mysql://192.168.16.206:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
     #driverClassName: com.mysql.jdbc.Driver
-    #url: jdbc:mysql://192.168.15.204:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    #url: jdbc:mysql://192.168.16.206:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: password
     initialize: true
@@ -40,9 +40,9 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.204:27017/hookah
+      uri:  mongodb://192.168.16.206:27017/hookah
   rabbitmq:
-    addresses: 192.168.15.204:5672
+    addresses: 192.168.16.206:5672
     username: root
     password: password
     publisher-confirms: true
@@ -75,7 +75,7 @@ spring:
   mvc:
     static-path-pattern: /static/**
 redis:
-  ip: 192.168.15.204
+  ip: 192.168.16.206
   port: 6379
   password: Yqn2ht4DYkMHlDvTY7CV
   pool:
@@ -93,16 +93,16 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: wfbdex.com
-    cms: ${server.http.protocal}www.wfbdex.com
-    website: ${server.http.protocal}trade.wfbdex.com
-    static: ${server.http.protocal}static.wfbdex.com
-    auth: ${server.http.protocal}auth.wfbdex.com
-    console: ${server.http.protocal}console.wfbdex.com
+    domain: xzbdex.com
+    cms: ${server.http.protocal}cms.xzbdex.com
+    website: ${server.http.protocal}www.xzbdex.com
+    static: ${server.http.protocal}static.xzbdex.com
+    auth: ${server.http.protocal}auth.xzbdex.com
+    console: ${server.http.protocal}console.xzbdex.com
   site:
     user-default-img: /static/images/user-safe-head.png
   redis:
-    ipPort: 192.168.15.204:7000,192.168.15.204:7001,192.168.15.204:7002
+    ipPort: 192.168.16.206:7000,192.168.16.206:7001,192.168.16.206:7002
   consul:
-    ipPort: 192.168.15.204:8500
+    ipPort: 192.168.16.206:8500
 debug: true

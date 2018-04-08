@@ -117,7 +117,7 @@ public class HelpController extends BaseController{
                         returnData.setCode(ExceptionConst.Failed);
                         return returnData;
                     }
-                    returnData.setData("http://static.wfbdex.com/upload/download?filePath=" + goodsVo.getUploadUrl());
+                    returnData.setData("http://static.xzbdex.com/upload/download?filePath=" + goodsVo.getUploadUrl());
                     return returnData;
                 }else if(goodsVo.getGoodsType() == 1) { //api
 

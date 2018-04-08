@@ -4,11 +4,11 @@ server:
     protocal: http://
 myconf:
   host:
-    domain: wfbdex.com
-    website: ${server.http.protocal}trade.wfbdex.com
-    static: ${server.http.protocal}static.wfbdex.com
-    auth: ${server.http.protocal}auth.wfbdex.com
-    console: ${server.http.protocal}console.wfbdex.com
+    domain: xzbdex.com
+    website: ${server.http.protocal}www.xzbdex.com
+    static: ${server.http.protocal}static.xzbdex.com
+    auth: ${server.http.protocal}auth.xzbdex.com
+    console: ${server.http.protocal}console.xzbdex.com
 debug: true
 spring:
   data:

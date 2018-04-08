@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: wfbdex.com
+      domain: xzbdex.com
       name: hookah_sid
 myconf:
   beetl:
@@ -15,34 +15,34 @@ myconf:
     cache: false
 
   host:
-    domain: wfbdex.com
-    website: ${server.http.protocal}trade.wfbdex.com
-    static: ${server.http.protocal}static.wfbdex.com
-    auth: ${server.http.protocal}auth.wfbdex.com
-    console: ${server.http.protocal}console.wfbdex.com
-    admin: ${server.http.protocal}admin.wfbdex.com
+    domain: xzbdex.com
+    website: ${server.http.protocal}www.xzbdex.com
+    static: ${server.http.protocal}static.xzbdex.com
+    auth: ${server.http.protocal}auth.xzbdex.com
+    console: ${server.http.protocal}console.xzbdex.com
+    admin: ${server.http.protocal}admin.xzbdex.com
   oauth2:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.wfbdex.com/reg
-    loginUrl: http://auth.wfbdex.com/oauth/authorize?client_id=website&response_type=code&redirect_uri=
-    logoutUrl: http://auth.wfbdex.com/logout?redirect_uri=http://trade.wfbdex.com/login
-    accessTokenUrl: http://auth.wfbdex.com/oauth/accessToken
-    userInfoUrl: http://auth.wfbdex.com/userInfo
-    redirectUrl: http://auth.wfbdex.com/login
+    regUrl: http://auth.xzbdex.com/reg
+    loginUrl: http://auth.xzbdex.com/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    logoutUrl: http://auth.xzbdex.com/logout?redirect_uri=http://www.xzbdex.com/login
+    accessTokenUrl: http://auth.xzbdex.com/oauth/accessToken
+    userInfoUrl: http://auth.xzbdex.com/userInfo
+    redirectUrl: http://auth.xzbdex.com/login
   redis:
-    ipPort: 192.168.15.204:7000,192.168.15.204:7001,192.168.15.204:7002
+    ipPort: 192.168.16.206:7000,192.168.16.206:7001,192.168.16.206:7002
   consul:
-    ipPort: 192.168.15.204:8500
+    ipPort: 192.168.16.206:8500
 debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.15.204:27017/hookah
+      uri:  mongodb://192.168.16.206:27017/hookah
   mvc:
       static-path-pattern: /static/**
   rabbitmq:
-      addresses: 192.168.15.204:5672
+      addresses: 192.168.16.206:5672
       username: root
       password: password
       publisher-confirms: true
@@ -52,7 +52,7 @@ spring:
           enabled: true
           max-attempts: 2
 redis:
-  ip: 192.168.15.204
+  ip: 192.168.16.206
   port: 6379
   password: Yqn2ht4DYkMHlDvTY7CV
   pool:

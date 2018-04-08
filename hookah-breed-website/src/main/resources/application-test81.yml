@@ -17,7 +17,7 @@ myconf:
   host:
     domain: test.com.cn:81
     website: ${server.http.protocal}trade.test.com.cn:81
-    static: ${server.http.protocal}static.wfbdex.com
+    static: ${server.http.protocal}static.xzbdex.com
     auth: ${server.http.protocal}auth.test.com.cn:81
     console: ${server.http.protocal}console.test.com.cn:81
     admin: ${server.http.protocal}admin.test.com.cn:81
