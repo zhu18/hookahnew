@@ -669,13 +669,13 @@ header .header-container {
 header .header-container .logo {
     float: left;
     position: relative;
-    top: 30px;
+    top: 10px;
 }
 
 header .header-container .nav {
     list-style: none;
     margin: 0;
-    padding: 43px 0 0 120px;
+    padding: 43px 0 0 80px;
     text-align: center;
     float: left;
 }
