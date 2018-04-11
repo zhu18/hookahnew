@@ -3,16 +3,16 @@ var config = {
   permissionList: "",
   permissionArray:"",
   site: {
-    adminServer: "http://admin.cxy.aesdata.cn",
-    apiServer: "http://console.cxy.aesdata.cn",
-    websiteServer: "http://trade.cxy.aesdata.cn",
-    authServer: "http://auth.cxy.aesdata.cn",
-    staticServer: "http://static.cxy.aesdata.cn"
+    adminServer: "http://admin.lsdashuju.com",
+    apiServer: "http://console.lsdashuju.com",
+    websiteServer: "http://trade.lsdashuju.com",
+    authServer: "http://auth.lsdashuju.com",
+    staticServer: "http://static.lsdashuju.com"
   },
   url: {
-    loginUrl: "http://auth.cxy.aesdata.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.cxy.aesdata.cn/login&backurl=",
-    uploadUrl: "http://static.cxy.aesdata.cn/upload/fileUpload",
-    uploadEditor: "http://static.cxy.aesdata.cn/upload/wangeditor",
+    loginUrl: "http://auth.lsdashuju.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.lsdashuju.com/login&backurl=",
+    uploadUrl: "http://static.lsdashuju.com/upload/fileUpload",
+    uploadEditor: "http://static.lsdashuju.com/upload/wangeditor",
   }
 };
 
@@ -87,7 +87,7 @@ export default angular.module('Common', [
   'angular-growl',
   'angularSpinner',
 ])
-  .constant('loginUrl', "http://auth.cxy.aesdata.cn/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
+  .constant('loginUrl', "http://auth.lsdashuju.com/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
      * 配置消息提示

@@ -4,7 +4,7 @@ server:
       protocal: http://
   session:
     cookie:
-      domain: cxy.aesdata.cn
+      domain: lsdashuju.com
       name: hookah_sid
 spring:
   datasource:
@@ -48,8 +48,8 @@ spring:
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.cxy.aesdata.cn
-      username: service@cxy.aesdata.cn
+      host: smtp.lsdashuju.com
+      username: service@lsdashuju.com
       password: Bigdata8661101
       transport:
         protocol: smtp
@@ -79,12 +79,12 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: cxy.aesdata.cn
-    cms: ${server.http.protocal}cxy.aesdata.cn
-    website: ${server.http.protocal}trade.cxy.aesdata.cn
-    static: ${server.http.protocal}static.cxy.aesdata.cn
-    auth: ${server.http.protocal}auth.cxy.aesdata.cn
-    console: ${server.http.protocal}console.cxy.aesdata.cn
+    domain: lsdashuju.com
+    cms: ${server.http.protocal}lsdashuju.com
+    website: ${server.http.protocal}trade.lsdashuju.com
+    static: ${server.http.protocal}static.lsdashuju.com
+    auth: ${server.http.protocal}auth.lsdashuju.com
+    console: ${server.http.protocal}console.lsdashuju.com
   site:
       user-default-img: /static/images/user-safe-head.png
   redis:
