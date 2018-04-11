@@ -4,11 +4,11 @@ server:
     protocal: http://
 myconf:
   host:
-    domain: cxy.aesdata.cn
-    website: ${server.http.protocal}trade.cxy.aesdata.cn
-    static: ${server.http.protocal}static.cxy.aesdata.cn
-    auth: ${server.http.protocal}auth.cxy.aesdata.cn
-    console: ${server.http.protocal}console.cxy.aesdata.cn
+    domain: lsdashuju.com
+    website: ${server.http.protocal}trade.lsdashuju.com
+    static: ${server.http.protocal}static.lsdashuju.com
+    auth: ${server.http.protocal}auth.lsdashuju.com
+    console: ${server.http.protocal}console.lsdashuju.com
 debug: true
 spring:
   data:

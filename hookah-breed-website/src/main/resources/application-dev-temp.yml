@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: cxy.aesdata.cn
+      domain: lsdashuju.com
       name: hookah_sid
 myconf:
   beetl:
@@ -15,21 +15,21 @@ myconf:
     cache: false
 
   host:
-    domain: cxy.aesdata.cn
-    website: ${server.http.protocal}trade.cxy.aesdata.cn
-    static: ${server.http.protocal}static.cxy.aesdata.cn
-    auth: ${server.http.protocal}auth.cxy.aesdata.cn
-    console: ${server.http.protocal}console.cxy.aesdata.cn
-    admin: ${server.http.protocal}admin.cxy.aesdata.cn
+    domain: lsdashuju.com
+    website: ${server.http.protocal}trade.lsdashuju.com
+    static: ${server.http.protocal}static.lsdashuju.com
+    auth: ${server.http.protocal}auth.lsdashuju.com
+    console: ${server.http.protocal}console.lsdashuju.com
+    admin: ${server.http.protocal}admin.lsdashuju.com
   oauth2:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.cxy.aesdata.cn/reg
-    loginUrl: http://auth.cxy.aesdata.cn/oauth/authorize?client_id=website&response_type=code&redirect_uri=
-    logoutUrl: http://auth.cxy.aesdata.cn/logout?redirect_uri=http://trade.cxy.aesdata.cn/login
-    accessTokenUrl: http://auth.cxy.aesdata.cn/oauth/accessToken
-    userInfoUrl: http://auth.cxy.aesdata.cn/userInfo
-    redirectUrl: http://auth.cxy.aesdata.cn/login
+    regUrl: http://auth.lsdashuju.com/reg
+    loginUrl: http://auth.lsdashuju.com/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    logoutUrl: http://auth.lsdashuju.com/logout?redirect_uri=http://trade.lsdashuju.com/login
+    accessTokenUrl: http://auth.lsdashuju.com/oauth/accessToken
+    userInfoUrl: http://auth.lsdashuju.com/userInfo
+    redirectUrl: http://auth.lsdashuju.com/login
   redis:
     ipPort: 192.168.16.129:7000,192.168.16.129:7001,192.168.16.129:7002
   consul:
