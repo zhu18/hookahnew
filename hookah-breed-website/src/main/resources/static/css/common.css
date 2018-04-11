@@ -672,14 +672,15 @@ header .header-container .logo {
     top: 20px;
 }
 header .header-container .logo img{
-    width: 180px;
-    height: 65px;
+    width: 160px;
+    height: 73px;
+    margin-left: 97px;
 }
 
 header .header-container .nav {
     list-style: none;
     margin: 0;
-    padding: 43px 0 0 120px;
+    padding: 43px 0 0 50px;
     text-align: center;
     float: left;
 }

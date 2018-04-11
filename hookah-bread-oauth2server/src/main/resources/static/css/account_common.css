@@ -40,8 +40,9 @@ ul {
   /*text-indent: -999em*/
 }
 #header .header-layout .logo a img{
-  width: 180px;
-  height: 65px;
+  width: 160px;
+  height: 73px;
+  margin-left: 97px;
 }
 
 #header .header-layout .intl-logo {
