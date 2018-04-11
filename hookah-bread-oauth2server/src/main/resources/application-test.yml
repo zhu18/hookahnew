@@ -8,12 +8,12 @@ server:
       name: hookah_sid
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://192.168.16.129:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    url: jdbc:log4jdbc:mysql://192.168.1.201:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
     #driverClassName: com.mysql.jdbc.Driver
     #url: jdbc:mysql://192.168.15.204:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: password
+    password: Jusfoun@123
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -40,9 +40,9 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.16.129:27017/hookah
+      uri:  mongodb://192.168.1.201:27017/hookah
   rabbitmq:
-    addresses: 192.168.16.129:5672
+    addresses: 192.168.1.201:5672
     username: root
     password: password
     publisher-confirms: true
@@ -88,7 +88,7 @@ myconf:
   site:
       user-default-img: /static/images/user-safe-head.png
   redis:
-    ipPort: 192.168.16.129:7000,192.168.16.129:7001,192.168.16.129:7002
+    ipPort: 192.168.1.201:7000,192.168.1.201:7001,192.168.1.201:7002
   consul:
     ipPort: 127.0.0.1:8500
 debug: true

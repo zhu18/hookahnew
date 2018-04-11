@@ -31,18 +31,18 @@ myconf:
     userInfoUrl: http://auth.lsdashuju.com/userInfo
     redirectUrl: http://auth.lsdashuju.com/login
   redis:
-    ipPort: 192.168.16.129:7000,192.168.16.129:7001,192.168.16.129:7002
+    ipPort: 192.168.1.201:7000,192.168.1.201:7001,192.168.1.201:7002
   consul:
     ipPort: 127.0.0.1:8500
 debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.16.129:27017/hookah
+      uri:  mongodb://192.168.1.201:27017/hookah
   mvc:
       static-path-pattern: /static/**
   rabbitmq:
-      addresses: 192.168.16.129:5672
+      addresses: 192.168.1.201:5672
       username: root
       password: password
       publisher-confirms: true
