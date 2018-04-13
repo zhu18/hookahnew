@@ -117,9 +117,9 @@ public class UserCenterController {
     public String becomingSupplierStep1(Model model) throws UnsupportedEncodingException {
         String address = PropertiesManager.getInstance().getProperty("protocol.address");
         model.addAttribute("address", new String(address.getBytes("ISO-8859-1"),"UTF-8"));
-        model.addAttribute("email",PropertiesManager.getInstance().getProperty("protocol.email"));
-        String name = PropertiesManager.getInstance().getProperty("protocol.name");
-        model.addAttribute("name",new String(name.getBytes("ISO-8859-1"),"UTF-8"));
+//        model.addAttribute("email",PropertiesManager.getInstance().getProperty("protocol.email"));
+//        String name = PropertiesManager.getInstance().getProperty("protocol.name");
+//        model.addAttribute("name",new String(name.getBytes("ISO-8859-1"),"UTF-8"));
         model.addAttribute("phone",PropertiesManager.getInstance().getProperty("protocol.phone"));
         model.addAttribute("mobile",PropertiesManager.getInstance().getProperty("protocol.mobile"));
         return "usercenter/userInfo/becomingSupplierStep1";
