@@ -164,11 +164,11 @@ var htmlPart = {
 					</div>
 				</div>
 				<div class="pw-rule">
-					<div class="pw-rule-item pw-rule-length"><i class="iconfont"></i><span>6~20个字符</span></div>
+					<div class="pw-rule-item pw-rule-length"><i class="iconfont"></i><span>8~20个字符</span></div>
 					<div class="pw-rule-item pw-rule-legal"><i class="iconfont"></i><span class="tsl">只能包含字母、数字以及标点符号（除空格）</span>
 					</div>
 					<div class="pw-rule-item pw-rule-multi"><i class="iconfont"></i><span
-						class="tsl">字母、数字和标点符号至少包含2种</span>
+						class="tsl">同时包含字母、数字和标点符号</span>
 					</div>
 				</div>
 			</div>
@@ -196,10 +196,11 @@ var htmlPart = {
 			passwordIllegal: /[^-+=|,0-9a-zA-Z!@#$%^&*?_.~+\/\\(){}\[\]<>]/, //不合法的
             hasNum:/\D/g,
 			allNumber: /^\d+$/, //全部是数字
-			allLetter: /^[a-zA-Z]+$/, //全部是字母
+			allLetter: /^[a-zA-Z]+$/, //全部是字母/^[A-Za-z]+$/
 			allCharacter: /^[-+=|,!@#$%^&*?_.~+\/\\(){}\[\]<>]+$/,//全部是字符
 			allSame: /^([\s\S])\1*$/,//全部相同
-			upperLetter: /[A-Z]/,//匹配大写
+            letter: /[a-zA-Z]/, //匹配字母
+            upperLetter: /[A-Z]/,//匹配大写
 			lowerLetter: /[a-z]/,//匹配小写
 			number: /\d/g,//匹配数字
 			character: /[-+=|,!@#$%^&*?_.~+\/\\()|{}\[\]<>]/, //匹配字符
@@ -226,6 +227,9 @@ var htmlPart = {
 		},
 		allSame: function (val) {
 			return this.regex.allSame.test(val)
+		},
+		letter: function (val) {
+			return this.regex.letter.test(val)
 		},
 		upperLetter: function (val) {
 			return this.regex.upperLetter.test(val)
@@ -312,22 +316,27 @@ var htmlPart = {
 			$(this).val(val);
 		}
 		var a = val.replace(/\D/g, '').length>0?true:false,//是不是数字
-			b = testData.upperLetter(val),//是不是大写字母
-			c = testData.lowerLetter(val),//是不是小写字母
-			d = testData.character(val);//有没有字符
-        var num="";
+			b = testData.letter(val),//是不是字母
+//			b = testData.upperLetter(val),//是不是大写字母
+//			c = testData.lowerLetter(val),//是不是小写字母
+			c = testData.character(val);//有没有字符
 
-		if (strlen(val) <= 20 && strlen(val) >= 6) {//规定6-20范围之间
+		if (strlen(val) <= 20 && strlen(val) >= 8) {//规定8-20范围之间
+            console.log("规定8-20范围之间");
 //         显示字符是正确的
             passwordChange.iconOrColor(".pw-rule-length", testData.tipIcon.ok, 'pw-icon-error pw-icon-normal', 'pw-icon-ok');
-			if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
-				passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.ok, 'pw-icon-normal pw-icon-error', 'pw-icon-ok');
+            console.log(a);
+            console.log(b);
+            console.log(c);
+            if (a && b && c) {
+                console.log("进来了");
+                passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.ok, 'pw-icon-normal pw-icon-error', 'pw-icon-ok');
 			}
 //        判断强弱规则
-            if (a && b && c && d && (strlen(val) > 7)) {
+            if (a && b && c && (strlen(val) > 9)) {
                 $("input[name='safetyLandScore']").val("30");
                 passwordChange.strength('pw-strength-bar-1 pw-strength-bar-2', 'pw-strength-bar-3', TRLang.pwd_level_high)
-            }else if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
+            }else if ((a && b) || (a && c) || (b && c)) {
                 $("input[name='safetyLandScore']").val("20");
                 passwordChange.strength('pw-strength-bar-1 pw-strength-bar-3', 'pw-strength-bar-2', TRLang.pwd_level_medium);
             }else {
@@ -335,12 +344,15 @@ var htmlPart = {
                 passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
             }
 		} else if (strlen(val) == 0) {
+            console.log("长度为0");
 			passwordChange.iconOrColor(".pw-rule-length", testData.tipIcon.normal, 'pw-icon-ok pw-icon-error', 'pw-icon-normal');
 			passwordChange.iconOrColor(".pw-rule-legal", testData.tipIcon.normal, 'pw-icon-ok pw-icon-error', 'pw-icon-normal');
 			passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.normal, 'pw-icon-ok pw-icon-error', 'pw-icon-normal');
 			passwordChange.strength('pw-strength-bar-1 pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar', '');
 		} else{
-		    //长度为false
+            console.log("不在规定8-20范围之间");
+
+            //长度为false
             passwordChange.iconOrColor(".pw-rule-length", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
             //验证是不是合法
             if (testData.passwordIllegal(val)) {
@@ -348,14 +360,14 @@ var htmlPart = {
             } else {
                 passwordChange.iconOrColor(".pw-rule-legal", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
             }
-            if ((a && b) || (a && c) || (a && d) || (b && c) || (b && d) || (c && d)) {
+            if (a && b && c) {
                 passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.ok, 'pw-icon-normal pw-icon-error', 'pw-icon-ok');
             }else {
                 passwordChange.iconOrColor(".pw-rule-multi", testData.tipIcon.error, 'pw-icon-normal pw-icon-ok', 'pw-icon-error');
 
             }
             //两种情况处理
-		    if(strlen(val) <= 6 && strlen(val) > 0){
+		    if(strlen(val) <= 8 && strlen(val) > 0){
                 passwordChange.strength('pw-strength-bar-2 pw-strength-bar-3', 'pw-strength-bar-1', TRLang.pwd_level_low);
             }
 		}
@@ -365,7 +377,7 @@ var htmlPart = {
 	$('#J_Password').blur(function () {
 		var thisVal = $(this).val();
 		$('#J_PwdTip').hide();
-		if (strlen(thisVal) > 20 || strlen(thisVal) < 6) {
+		if (strlen(thisVal) > 20 || strlen(thisVal) < 8) {
             $('#J_MsgPassword').show().removeClass('msg-type-info').addClass('msg-type-error').children('.msg-cnt').html(TRLang.ERROR_MALFORM_PASSWORD).siblings('.iconfont').html('󰅕');
 		} else {
             $('#J_PwdTip .pw-rule .pw-rule-item').each(function () {
@@ -659,7 +671,7 @@ var htmlPart = {
 //				d = testData.character(nick);
 //			if (strlen(nick) <= 25 && strlen(nick) >= 5 && !testData.allNumber(nick)) {
 //				if (!testData.nickIllegal(nick)) {
-					if (strlen(password) <= 20 && strlen(password) >= 6 && $("input[name='safetyLandScore']").val() != "0") {
+					if (strlen(password) <= 20 && strlen(password) >= 8 && $("input[name='safetyLandScore']").val() != "0") {
 //						if (rePassword == password) {
 							if (testData.mobile(mobile)) {
 								if(validSms){
@@ -741,20 +753,16 @@ var htmlPart = {
 			}
 		});
 	}
-$('#J_Agreement').change(function(){
+    $('#J_Agreement').change(function(){
 	if($(this).is(':checked')){
 		$('#J_BtnInfoForm').removeAttr('disabled').css({'background':'#008fb2','cursor':'pointer'});
 	}else{
 		$('#J_BtnInfoForm').attr('disabled','disabled').css({'background':'#ccc','cursor':'no-drop'});
 	}
 })
-
 	$('.forPoints span').click(function(){//点击移出积分
 		$(this).parent().remove()
 	})
-
-
-
 </script>
 <%};
 include("layout/base.html",{headSection:head,htmlSection:htmlPart}){}
