@@ -40,7 +40,7 @@
                  interface="com.jusfoun.hookah.rpc.api.LoginLogService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 
-  <motan:referer id="permissionService"
+  <motan:referer id="permissionService" directUrl="192.168.1.201:5003"
                  interface="com.jusfoun.hookah.rpc.api.PermissionService"
                  connectTimeout="30000" requestTimeout="30000" basicReferer="HookahRPCClientBasicConfig"/>
 

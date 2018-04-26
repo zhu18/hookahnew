@@ -9,9 +9,9 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.16.129:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.1.201:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: password
+    password: Jusfoun@123
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -38,9 +38,9 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.16.129:27017/hookah_pay
+      uri:  mongodb://192.168.1.201:27017/hookah_pay
   rabbitmq:
-    addresses: 192.168.16.129:5672
+    addresses: 192.168.1.201:5672
     username: root
     password: password
     publisher-confirms: true
@@ -95,7 +95,8 @@ myconf:
     userInfoUrl: http://auth.lsdashuju.com/userInfo
     redirectUrl: http://auth.lsdashuju.com/login
   redis:
-    ipPort: 192.168.16.129:7000,192.168.16.129:7001,192.168.16.129:7002
+    ipPort: 192.168.1.201:7000,192.168.1.201:7001,192.168.1.201:7002
   consul:
-    ipPort: 127.0.0.1:8500
+    ipPort: 192.168.1.201:8500
+    ip: 192.168.1.201
 debug: true

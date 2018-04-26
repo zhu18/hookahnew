@@ -19,5 +19,5 @@
     <!-- 通用配置，多个rpc服务使用相同的基础配置. group和module定义具体的服务池。export格式为“protocol id:提供服务的端口”-->
     <motan:basicService export="hookah:5002"
                         group="hookah-rpc" accessLog="false" shareChannel="true" module="hookah-rpc"
-                        application="hookah" registry="registry" id="serviceBasicConfig"/>
+                        application="hookah" registry="registry" id="serviceBasicConfig" host="${myconf.consul.ip}"/>
 </beans>
