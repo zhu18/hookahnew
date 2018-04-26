@@ -6,13 +6,15 @@ public class AlipayConfig {
 	
 	/** 合作身份者ID，签约账号*/
 	public static final String partner = "2088721171740277";
-	
+	//public static final String partner = "2088821289807401";
+
 	/** 收款支付宝账号*/
 	public static final String seller_id = partner;
 	
 	/** MD5密钥，安全检验码*/
 	public static String key = "z7gd4j4u2b9h39p2wgewq9epku0m9nqp";
-	
+	//public static String key = "o6tn4lterk14v6g260rdr4qkos17ynmi";
+
 	/** 服务器异步通知页面路径*/
 //	public static String notify_url = "http://商户网址/create_direct_pay_by_user-JAVA-UTF-8/notify_url.jsp";
 //	public static String notify_url = PayConfiguration.ALIPAY_NOTIFY_URL;

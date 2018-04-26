@@ -94,8 +94,8 @@ myconf:
     cache: false
   host:
     domain: xzbdex.com
-    cms: ${server.http.protocal}cms.xzbdex.com
-    website: ${server.http.protocal}www.xzbdex.com
+    cms: ${server.http.protocal}www.xzbdex.com
+    website: ${server.http.protocal}trade.xzbdex.com
     static: ${server.http.protocal}static.xzbdex.com
     auth: ${server.http.protocal}auth.xzbdex.com
     console: ${server.http.protocal}console.xzbdex.com

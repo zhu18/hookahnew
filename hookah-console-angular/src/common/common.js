@@ -5,7 +5,7 @@ var config = {
   site: {
     adminServer: "http://admin.xzbdex.com",
     apiServer: "http://console.xzbdex.com",
-    websiteServer: "http://www.xzbdex.com",
+    websiteServer: "http://trade.xzbdex.com",
     authServer: "http://auth.xzbdex.com",
     staticServer: "http://static.xzbdex.com"
   },
