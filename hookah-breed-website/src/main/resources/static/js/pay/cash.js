@@ -14,26 +14,26 @@ $(".saved-card-list").on('click','li',function () {
         $("#J_authSubmit").removeAttr("disabled").css({'background':'#078cfc','cursor':'pointer'});
     }
 });
-// $('.manage-more').click(function () {
-// 	if($(this).hasClass('manage-colse')){
-// 		// $('.saved-card-list li').siblings().slideUp();
-// 		$('.saved-card-list li').each(function () {
-//             if($(this).find("input").is(':checked')){
-//                 $(this).siblings().slideUp()
-// 			}
-//         });
-// 		$(this).removeClass('manage-colse').html('显示其他支付方式');
-// 	}else{
-//         $('.saved-card-list li').each(function () {
-//             if($(this).find("input").is(':checked')){
-//                 $(this).siblings().slideDown()
-//             }
-//         });
-//         // $('.saved-card-list li').slideDown();
-// 		$(this).addClass('manage-colse').html('隐藏其他支付方式');
-// 	}
-//
-// });
+$('.manage-more').click(function () {
+	if($(this).hasClass('manage-colse')){
+		// $('.saved-card-list li').siblings().slideUp();
+		$('.saved-card-list li').each(function () {
+            if($(this).find("input").is(':checked')){
+                $(this).siblings().slideUp()
+			}
+        });
+		$(this).removeClass('manage-colse').html('显示其他支付方式');
+	}else{
+        $('.saved-card-list li').each(function () {
+            if($(this).find("input").is(':checked')){
+                $(this).siblings().slideDown()
+            }
+        });
+        // $('.saved-card-list li').slideDown();
+		$(this).addClass('manage-colse').html('隐藏其他支付方式');
+	}
+
+});
 $('.saved-card-list>.row-container').click(function () {
     var that = $(this);
     if (that.hasClass('row-container-disabled')) {
