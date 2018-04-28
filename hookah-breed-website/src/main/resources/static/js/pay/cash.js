@@ -112,11 +112,7 @@ $("[name=apiCode]:radio").click(function () {
             $('#J-security').show();
             $('#J-rcSubmit').show();
         }
-    } else if(this.value == 2) {
-        $('#J-security').hide();
-        $('#J-balanceNt').hide();
-        $('#J-rcSubmit').hide();
-    }else {
+    } else {
         $('#J-security').hide();
         $('#J-balanceNt').hide();
         $('#J-rcSubmit').hide();
