@@ -858,6 +858,7 @@ dl {
 }
 .search {
 	font-family: 'Microsoft YaHei';
+	overflow: hidden;
 }
 .search ul {
 	padding: 0;

@@ -15,16 +15,16 @@ html {
 .header-centerbar {
 	width: 100%;
 	min-width: 1200px;
-	height: 131px;
-	border-bottom: 1px solid #171717;
-	background: #000;
+	height: 60px;
+	border-bottom: 3px solid #de0010;
+	background: #eceaeb;
 }
 .header-tops {
-	height: 68px;
+	height: 60px;
 }
 .header-centerbar .logo {
-	width: 154px;
-	margin: 12px 0;
+	width: 155px;
+	margin: 5px 0;
 }
 .header-centerbar .logo a {
 	display: inline-block;
@@ -35,31 +35,30 @@ html {
 }
 .header-centerbar .search {
 	position: relative;
-	margin: 19px 0 0 210px;
+	margin: 18px 0 0 0px;
 }
 .header-centerbar .search .searchIconF {
 	position: absolute;
-	left: 0;
+	right: 3px;
 	top: 0;
-	width: 38px;
-	height: 38px;
-	line-height: 38px;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
 	font-size: 20px;
-	color: #fff;
+	color: #666161;
+	cursor: pointer;
 }
 .header-centerbar .search input {
-	width: 509px;
-	height: 36px;
-	padding-left: 32px;
+	width: 218px;
+	height: 24px;
+	padding-left: 10px;
 	font-size: 13px;
-	color: rgb(142, 164, 185);
-	line-height: 36px;
-
-	border-width: 1px;
-	border-style: solid;
-	border-color: rgb(134, 1, 11);
-	border-image: initial;
-	background: url("/static/images/hover-border5.png")
+	color: #d5d4d6;
+	line-height: 26px;
+	border:1px solid #bdb9bd;
+	border-radius:26px;
+	/*border-image: initial;*/
+	/*background: url("/static/images/hover-border5.png")*/
 }
 .header-centerbar .search input[placeholder] {
 	color: rgb(142, 164, 185);
@@ -82,7 +81,7 @@ html {
 .search-sug {
 	display: none;
 	position: absolute;
-	top: 38px;
+	top: 25px;
 	left: 0;
 	background: #fff;
 	border: 1px solid #ccc;
@@ -335,25 +334,42 @@ html {
 }
 .topbar-user li a {
 	font-size: 14px;
-	font-weight: bold;
-	padding: 7px 9px;
-	border: 1px solid #989898;
+	display: block;
+	height: 24px;
+	width: 82px;
+	border: 1px solid #b9b4b9;
 	border-radius: 50px;
-	color: #989898;
+	text-align: center;
+	line-height: 24px;
+	color: #666;
 }
-.topbar-user li a.reg {
-	background: #fff;
-	border: 1px solid #fff;
-	color: #d20003;
-}
+/*.topbar-user li a.reg {*/
+	/*background: #fff;*/
+	/*border: 1px solid #fff;*/
+	/*color: #d20003;*/
+/*}*/
 .topbar-user li a:hover {
 	background: #d20003;
 	border: 1px solid #d20003;
 	color: #fff;
 }
+.topbar-user li .login_btn_s,.topbar-user li .logout_btn_s{
+	background:#dddcdd; /* 一些不支持背景渐变的浏览器 */
+	background:-moz-linear-gradient(top, #fefefe, #dddcdd);
+	background:-webkit-gradient(linear, 0 0, 0 bottom, from(#fefefe), to(#dddcdd));
+	background:-o-linear-gradient(top, #fefefe, #dddcdd);
+}
+.topbar-user li .reg_btn_s{
+	color:#fff;
+	border:1px solid #bb0714;
+	background:#cf0e1c; /* 一些不支持背景渐变的浏览器 */
+	background:-moz-linear-gradient(top, #f15863, #cf0e1c);
+	background:-webkit-gradient(linear, 0 0, 0 bottom, from(#f15863), to(#cf0e1c));
+	background:-o-linear-gradient(top, #f15863, #cf0e1c);
+}
 .header-bottoms {
-	height: 40px;
-	margin-top: 23px;
+	/*height: 40px;*/
+	/*margin-top: 23px;*/
 }
 .userInfos .userInfos-box {
 	position: absolute;
@@ -496,32 +512,46 @@ input:focus, select:focus, textarea:focus {
 	border: 1px solid #69c5dd;
 }
 #navList {
-	height: 40px;
-	font-size: 16px;
+	font-size: 18px;
 	list-style: none;
 	padding: 0;
+	margin-left: 82px;
 }
 #navList li.active {
 
 }
 #navList li {
 	float: left;
-	width: 140px;
+	line-height: 60px;
 	text-align: center;
-	color: rgb(142, 164, 185);
+	color: #666;
 }
 #navList li a {
 	display: block;
 	text-decoration: none;
 }
 #navList li.active .text {
-	color: #fff;
+	color: #de0010;
+	font-weight:bold;
+	position: relative;
+}
+#navList li.active .text:before{
+	position: absolute;
+	bottom:0;
+	left:50%;
+	margin-left:-2px;
+	content: '';
+	width: 0;
+	height: 0;
+	border-left:4px solid transparent;
+	border-right:4px solid transparent;
+	border-bottom: 4px solid #de0010;
 }
 #navList li a .text, #exchange_menu a .text {
 	display: block;
-	line-height: 40px;
+	line-height: 60px;
 	text-align: center;
-	color: rgb(142, 164, 185);
+	color: #666;
 	white-space: nowrap;
 	overflow: hidden;
 }
@@ -543,13 +573,14 @@ input:focus, select:focus, textarea:focus {
 .pageTopBar {
 	background-color: #f2f2f2;
 	font-size: 14px;
-	line-height: 30px;
-	border-bottom: 1px solid #ffffff;
+	line-height: 26px;
+	height:26px;
+	border-bottom: 1px solid #dedede;
 	color: #949494;
 	overflow: hidden;
 }
 .pageTopBar a {
-	padding: 10px;
+	padding:0 10px;
 	color: #949494;
 }
 .pageTopBar a:hover {
