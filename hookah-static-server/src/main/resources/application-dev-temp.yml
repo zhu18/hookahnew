@@ -4,11 +4,11 @@ server:
     protocal: http://
 myconf:
   host:
-    domain: xzbdex.com
-    website: ${server.http.protocal}trade.xzbdex.com
-    static: ${server.http.protocal}static.xzbdex.com
-    auth: ${server.http.protocal}auth.xzbdex.com
-    console: ${server.http.protocal}console.xzbdex.com
+    domain: pybdex.com
+    website: ${server.http.protocal}trade.pybdex.com
+    static: ${server.http.protocal}static.pybdex.com
+    auth: ${server.http.protocal}auth.pybdex.com
+    console: ${server.http.protocal}console.pybdex.com
 debug: true
 spring:
   data:

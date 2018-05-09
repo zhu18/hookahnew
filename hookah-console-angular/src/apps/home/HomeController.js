@@ -16,7 +16,7 @@ class HomeController {
         // var currUrl = window.location;
         // console.log(currUrl);
         // if (401 === XMLHttpRequest.status) {
-        //   window.location.href = "http://auth.xzbdex.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
+        //   window.location.href = "http://auth.pybdex.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=" + currUrl;
         // }
       }
     });

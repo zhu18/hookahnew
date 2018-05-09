@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: xzbdex.com
+      domain: pybdex.com
       name: hookah_sid
 spring:
   datasource:
@@ -91,20 +91,20 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: xzbdex.com
-    website: ${server.http.protocal}trade.xzbdex.com
-    static: ${server.http.protocal}static.xzbdex.com
-    auth: ${server.http.protocal}auth.xzbdex.com
-    console: ${server.http.protocal}console.xzbdex.com
+    domain: pybdex.com
+    website: ${server.http.protocal}trade.pybdex.com
+    static: ${server.http.protocal}static.pybdex.com
+    auth: ${server.http.protocal}auth.pybdex.com
+    console: ${server.http.protocal}console.pybdex.com
   oauth2:
     clientId: admin
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.xzbdex.com/reg
-    loginUrl: http://auth.xzbdex.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.xzbdex.com/home
-    logoutUrl: http://auth.xzbdex.com/logout?redirect_uri=http://trade.xzbdex.com/login
-    accessTokenUrl: http://auth.xzbdex.com/oauth/accessToken
-    userInfoUrl: http://auth.xzbdex.com/userInfo
-    redirectUrl: http://auth.xzbdex.com/login
+    regUrl: http://auth.pybdex.com/reg
+    loginUrl: http://auth.pybdex.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.pybdex.com/home
+    logoutUrl: http://auth.pybdex.com/logout?redirect_uri=http://trade.pybdex.com/login
+    accessTokenUrl: http://auth.pybdex.com/oauth/accessToken
+    userInfoUrl: http://auth.pybdex.com/userInfo
+    redirectUrl: http://auth.pybdex.com/login
   api:
     url: http://192.168.200.116:5555/gateway/insert
     tokenUrl: http://192.168.200.116:5555/gateway/getToken
