@@ -9,7 +9,7 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.15.175:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.4.215:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: bdgStore3306
     initialize: true
@@ -38,9 +38,9 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.175:27017/hookah
+      uri:  mongodb://192.168.4.215:27017/hookah
   rabbitmq:
-    addresses: 192.168.15.174:5672
+    addresses: 192.168.4.215:5672
     username: root
     password: password
     publisher-confirms: true
@@ -86,8 +86,8 @@ myconf:
     userInfoUrl: http://auth.bdgstore.cn/userInfo
     redirectUrl: http://auth.bdgstore.cn/login
   redis:
-    ipPort: 192.168.15.174:7000,192.168.15.174:7001,192.168.15.174:7002
+    ipPort: 192.168.4.215:7000,192.168.4.215:7001,192.168.4.215:7002
     password: bdgstore
   consul:
-        ipPort: 192.168.15.174:8500
+        ipPort: localhost:8500
 debug: true

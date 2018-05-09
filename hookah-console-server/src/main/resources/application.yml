@@ -9,7 +9,7 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.15.203:3306/bdgStore?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.4.215:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
     password: password
     initialize: true
@@ -38,9 +38,9 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.15.203:27017/bdgStore
+      uri:  mongodb://192.168.4.215:27017/hookah
   rabbitmq:
-    addresses: 192.168.200.116:5672
+    addresses: 192.168.4.215:5672
     username: root
     password: password
     publisher-confirms: true
@@ -93,14 +93,14 @@ myconf:
     userInfoUrl: http://auth.bdgstore.cn/userInfo
     redirectUrl: http://auth.bdgstore.cn/login
   api:
-    url: http://192.168.15.206:5555/gateway/insert
-    tokenUrl: http://192.168.15.206:5555/gateway/getToken
-    changeUrl: http://192.168.15.206:5555/gateway/changeToken
-    apiRestUrl: http://192.168.15.206:8070/apirest/findInvokeStatus
+    url: http://202.106.10.250:5555/gateway/insert
+    tokenUrl: http://202.106.10.250:5555/gateway/getToken
+    changeUrl: http://202.106.10.250:5555/gateway/changeToken
+    apiRestUrl: http://192.168.15.176:8070/apirest/findInvokeStatus
     wrapperUrl: http:// 202.106.10.250:5555
-    apiDetailsUrl: http://192.168.15.206:8070/apirest/findByUrl?url=
+    apiDetailsUrl: http://192.168.15.176:8070/apirest/findByUrl?url=
   redis:
-    ipPort: 192.168.15.203:7000,192.168.15.203:7001,192.168.15.203:7002
+    ipPort: 192.168.4.215:7000,192.168.4.215:7001,192.168.4.215:7002
     password: bdgstore
   consul:
     ipPort: localhost:8500
@@ -114,14 +114,14 @@ myconf:
       ping_timeout: 5s
       nodes_sampler_interval: 5s
     goods:
-      index: bdg-goods-v1
+      index: sbh-goods-v1
       type: goods
       shards: 4
       replicas: 1
     category:
-      index: bdg-category-v1
+      index: sbh-category-v1
       type: category
       shards: 2
       replicas: 1
-  operateMobileNo: 13621268780,13810168006
+  operateMobileNo: 13290603059,13810168006
 debug: true
