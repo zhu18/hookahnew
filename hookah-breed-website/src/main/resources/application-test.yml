@@ -31,18 +31,18 @@ myconf:
     userInfoUrl: http://auth.pybdex.com/userInfo
     redirectUrl: http://auth.pybdex.com/login
   redis:
-    ipPort: 192.168.16.206:7000,192.168.16.206:7001,192.168.16.206:7002
+    ipPort: 192.168.15.116:7000,192.168.15.116:7001,192.168.15.116:7002
   consul:
-    ipPort: 192.168.16.206:8500
+    ipPort: 192.168.15.116:8500
 debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.16.206:27017/hookah
+      uri:  mongodb://192.168.15.116:27017/hookah
   mvc:
       static-path-pattern: /static/**
   rabbitmq:
-      addresses: 192.168.16.206:5672
+      addresses: 192.168.15.116:5672
       username: root
       password: password
       publisher-confirms: true
@@ -52,7 +52,7 @@ spring:
           enabled: true
           max-attempts: 2
 redis:
-  ip: 192.168.16.206
+  ip: 192.168.15.116
   port: 6379
   password: Yqn2ht4DYkMHlDvTY7CV
   pool:
