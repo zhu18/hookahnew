@@ -1,24 +1,50 @@
 <link rel="stylesheet" href="/static/css/font/exchange-menu/iconfont.css">
 <link rel="stylesheet" href="/static/css/exchange/exchange-menu.css">
 <div class="exchange-index-menu ">
-    <div class="station-box">
+    <!--<div class="station-box">-->
 
-    </div>
+    <!--</div>-->
     <ul class="menu-list">
-        <% for(var i=0;i<9;i++){%>
+        <% for(var i=0;i<8;i++){%>
         <li class="menu-item">
             <a class="oneA" href="/exchange/list?catId=${categoryInfo[i].catId}&prId=${categoryInfo[i].catId}&prNm=${categoryInfo[i].catName}">
-                <i class="qian"><img src="/static/images/exchange/category-six-0${i+1}.png" alt="" ></i>
+                <i class="qian qian_1"><img src="/static/images/exchange/category-six-0${i+1}.png" alt="" ></i>
+                <i class="qian qian_2"><img src="/static/images/exchange/category-hove-0${i+1}.png" alt="" ></i>
                 <span>${categoryInfo[i].catName}</span>
-                <i class="hou fa fa-angle-right"></i>
+                <!--<i class="hou fa fa-angle-right"></i>-->
             </a>
             <% if(categoryInfo[i].children.~size > 0){ %>
             <div class="menu-son-list">
-                <ul style="margin-top: 22px;">
-                    <% for(list in categoryInfo[i].children){%>
-                    <li><a href="/exchange/list?catId=${list.catId}&prId=${categoryInfo[i].catId}&prNm=${categoryInfo[i].catName}&msId=${list.catId}&msNm=${list.catName}">${list.catName} </a> </li>
-                    <% } %>
-                </ul>
+                <% if(categoryInfo[i].domainId == '1'){%>
+                    <ol class="threeOl">
+                        <% for(listTwo in categoryInfo[i].children){%>
+                        <li class="threeOli">
+                            <dl>
+                                <dt>
+                                    <a href="/exchange/list?catId=${listTwo.catId}&prId=${categoryInfo[i].catId}&prNm=${categoryInfo[i].catName}&msId=${listTwo.catId}&msNm=${listTwo.catName}">
+                                    ${listTwo.catName}
+                                    </a>
+                                </dt>
+                                <dd>
+                                    <ul>
+                                        <% for(listThree in listTwo.children){%>
+                                        <li><span> | </span><a href="/exchange/list?catId=${listThree.catId}&prId=${categoryInfo[i].catId}&prNm=${categoryInfo[i].catName}&msId=${listThree.catId}&msNm=${listThree.catName}">${listThree.catName} </a> </li>
+                                        <% } %>
+                                    </ul>
+                                </dd>
+                            </dl>
+
+                        </li>
+                        <% } %>
+                    </ol>
+                <% }else{ %>
+                    <ul class="twoUl">
+                        <% for(list in categoryInfo[i].children){%>
+                        <li class="twoLi"><a href="/exchange/list?catId=${list.catId}&prId=${categoryInfo[i].catId}&prNm=${categoryInfo[i].catName}&msId=${list.catId}&msNm=${list.catName}">${list.catName} </a><span>|</span></li>
+                        <% } %>
+                    </ul>
+                <% } %>
+
             </div>
             <% } %>
         </li>
@@ -27,12 +53,12 @@
 
 </div>
 <script>
-    $('.menu-item').hover(function(){
-        var len = $(this).children('.menu-son-list').children('ul').children('li').length;
-        if(len <= 9){
-			$('.exchange-index-menu ').css({'width':'180px'});
-			$(this).children('.menu-son-list').css({'width':'240px','overflow':'hidden'});
-			$(this).children('.menu-son-list').children('ul').children('li').css('width','240px');
-        }
-    })
+//    $('.menu-item').hover(function(){
+//        var len = $(this).children('.menu-son-list').children('ul').children('li').length;
+//        if(len <= 9){
+//			$('.exchange-index-menu ').css({'width':'144px'});
+//			$(this).children('.menu-son-list').css({'width':'240px','overflow':'hidden'});
+//			$(this).children('.menu-son-list').children('ul').children('li').css('width','240px');
+//        }
+//    })
 </script>

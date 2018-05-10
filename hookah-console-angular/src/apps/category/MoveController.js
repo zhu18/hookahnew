@@ -21,14 +21,16 @@ class MoveController {
 			}else{
 				$scope.dataEnd = null;
 			}
+
 			if($scope.goodsV && $scope.goodsV.length > 0){
 				$scope.goodsVd = true;
 			}else{
 				$scope.goodsVd = false;
 			}
-
+			// console.log('-------------------'+$scope.dataFrom+':-------'+$scope.dataEnd);
 		}
         $scope.getCategory = function(num,type){
+			// console.log('num:-------------------'+num);
 			$scope.goodsV = null;
 			var promise = $http({
 				method: 'get',
@@ -55,14 +57,14 @@ class MoveController {
 						$scope.dataTemp3 = null;
 						if(res.data.data.length > 0) {
 							$scope.dataTemp2 = res.data.data;
-							$scope.dataTemp2.unshift({catId: null, catName: "全部"})
+							$scope.dataTemp2.unshift({catId: null, catName: "全部"});
 							$scope.dataTemp2v = null;
 						}
 						$scope.getGoodsList(num)
 					}else if(type == 'dataTemp3'){
 						if(res.data.data.length > 0) {
 							$scope.dataTemp3 = res.data.data;
-							$scope.dataTemp3.unshift({catId: null, catName: "全部"})
+							$scope.dataTemp3.unshift({catId: null, catName: "全部"});
 							$scope.dataTemp3v = null;
 						}
 						$scope.getGoodsList(num)
@@ -74,20 +76,20 @@ class MoveController {
 						$scope.dataTempC = null;
 						if(res.data.data.length > 0){
 							$scope.dataTempA = res.data.data;
-							$scope.dataTempA.unshift({catId: null, catName: "全部"})
+							$scope.dataTempA.unshift({catId: null, catName: "全部"});
 							$scope.dataTempAv = null;
 						}
 					}else if(type == 'dataTempB'){
 						$scope.dataTempC = null;
 						if(res.data.data.length > 0) {
 							$scope.dataTempB = res.data.data;
-							$scope.dataTempB.unshift({catId: null, catName: "全部"})
+							$scope.dataTempB.unshift({catId: null, catName: "全部"});
 							$scope.dataTempBv = null;
 						}
 					}else if(type == 'dataTempC'){
 						if(res.data.data.length > 0) {
 							$scope.dataTempC = res.data.data;
-							$scope.dataTempC.unshift({catId: null, catName: "全部"})
+							$scope.dataTempC.unshift({catId: null, catName: "全部"});
 							$scope.dataTempCv = null;
 						}
 					}else if(type == 'dataTempD'){
@@ -120,6 +122,7 @@ class MoveController {
 
 		$scope.getCategory(0,'dataTemp1');
 		$scope.pushData = function(){
+			$scope.evaluate()
 			var promise = $http({
 				method: 'POST',
 				url: $rootScope.site.websiteServer + "/category/confirmTransfer",

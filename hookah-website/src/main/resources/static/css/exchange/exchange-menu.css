@@ -4,29 +4,36 @@
 
 
 .exchange-index-menu {
-    position: absolute;
-    top: -40px;
-    z-index: 10;
-    width: 180px;
+    width: 146px;
+    float: left;
+    position: relative;
+    z-index: 3;
+    background: #f5f5f5;
+    border: 1px solid #c6c6c6;
+    border-radius: 3px;
+    height: 958px;
 }
 .exchange-index-menu .station-box{
     height: 40px;
 }
 .exchange-index-menu .menu-list {
-    font-size:0;
+    font-size: 0;
     padding: 15px 0;
-    background: rgba(64,64,64,0.8);
+    width: 146px;
+    background: #fcfbfb;
+    border-bottom: 1px solid #c6c6c6;
 }
 .exchange-index-menu .menu-list>li {
     display: inline-block;
-    color: white;
-    line-height: 42px;
-    height: 42px;
-    width:180px;
+    color: #313131;
+    line-height: 48px;
+    height: 48px;
+    width:146px;
     font-size: 14px;
+    margin: 11.48px 0;
 }
 .exchange-index-menu .menu-list li .oneA{
-    color:#fff;
+    color:#313131;
     display: block;
     height:100%;
     width:100%;
@@ -36,7 +43,16 @@
     display: block;
     float: left;
     width: 16px;
-    margin: 13px 16px 0 22px;
+    margin: 15px 16px 0 22px;
+}
+.exchange-index-menu .menu-list li .oneA .qian_2{
+    display: none;
+}
+.exchange-index-menu .menu-list li:hover .oneA .qian.qian_2{
+    display: block;
+}
+.exchange-index-menu .menu-list li:hover  .oneA .qian.qian_1{
+    display: none;
 }
 .exchange-index-menu .menu-list li .oneA .hou{
     display: block;
@@ -50,13 +66,26 @@
     width:100%;
 }
 .exchange-index-menu .menu-list li:hover{
-    background: #fff;
+    color:#fff;
+    /*width:144px;*/
 }
 .exchange-index-menu .menu-list li:hover .oneA{
     color:#fff;
     font-weight: bold;
     text-decoration: none;
-    color:#000;
+    background: #e95d67;
+    line-height: 46px;
+    width:144px;
+    height:46px;
+    border:1px solid #de0010;
+}
+.exchange-index-menu .menu-list li .oneA:hover img{
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(1);
+    -ms-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    filter: grayscale(0%);
+    filter: gray;
 }
 
 .exchange-index-menu .menu-list li > a.Bh {
@@ -85,21 +114,67 @@
 }
 .exchange-index-menu .menu-son-list,.exchange-index-menu-item {
     display: none;
-    top: 40px;
-    left: 180px;
+    top: -1px;
+    left: 143px;
     position: absolute;
+    width: 1060px;
+}
+.exchange-index-menu .menu-son-list .twoUl,.exchange-index-menu .menu-son-list .threeOl{
     background-color: white;
-    height: 400px;
-    width: 800px;
+    height: 562px;
+    width: 1040px;
+    border:1px solid #c6c6c6;
+    border-left:1px solid #de0010;
+    border-radius:4px;
+    opacity: 0.97;
+    margin-left:14px;
+    padding-top: 20px;
 }
 
-.exchange-index-menu .menu-son-list ul li,.exchange-index-menu-item li {
+.exchange-index-menu .menu-son-list .twoUl .twoLi,.exchange-index-menu-item .twoLi ,.exchange-index-menu .menu-son-list .twoUl .threeOli{
     float: left;
     font-size: 14px;
-    padding: 5px 20px;
-    height:26px;
+    line-height: 44px;
 }
+.exchange-index-menu .menu-son-list:after{
+    position: absolute;
+    left: 10px;
+    top:50%;
+    margin-top:-4px;
+    content: '';
+    border-top:4px solid transparent;
+    border-bottom:4px solid transparent;
+    border-right:4px solid #de0010;
 
+}
+.exchange-index-menu .menu-son-list .threeOl dl{}
+.exchange-index-menu .menu-son-list .threeOl dt{
+    float: left;
+    width:87px;
+    text-align: center;
+    line-height: 44px;
+}
+.exchange-index-menu .menu-son-list .threeOl dt a{
+    color:#870a13;
+    font-weight:bold;
+}
+.exchange-index-menu .menu-son-list .threeOl dd{
+    float: left;
+    width:953px;
+}
+.exchange-index-menu .menu-son-list .threeOl dd li{
+    float: left;
+    font-size: 14px;
+    line-height: 44px;
+}
+.exchange-index-menu .menu-son-list ul li span{
+    color:#666;
+    float: left;
+}
+.exchange-index-menu .menu-son-list ul li a{
+    float: left;
+    margin:0 20px;
+}
 .exchange-index-menu-item{
     display: block;
     width: 100%;

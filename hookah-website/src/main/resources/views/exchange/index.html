@@ -5,11 +5,10 @@ var head = {
 <link rel="stylesheet" href="/static/css/font/exchange/iconfont.css">
 <style>
 	.cm-banner {
-		width: 100%;
-		height: 400px;
+		width: 1042px;
 		overflow: hidden;
-		cursor: pointer;
-		position: relative;
+		float: right;
+
 	}
 	.cm-banner-in {
 		width: 1260px;
@@ -20,15 +19,26 @@ var head = {
 	}
 	.cm-banner-in span {
 		position: absolute;
-		top:158px;
+		top: 158px;
 		width: 30px;
 		height: 84px;
-		background: rgba(255,255,255,0.4);
+		background: rgba(255, 255, 255, 0.4);
 		text-align: center;
 		line-height: 84px;
-		color:#dcdcdc;
+		color: #dcdcdc;
 		font-weight: bold;
 		font-size: 24px;
+	}
+	#cm_banner_list {
+		width: 1040px;
+		height: 298px;
+		cursor: pointer;
+		border-radius: 3px;
+		border: 1px solid #daa1a2;
+		overflow: hidden;
+	}
+	.cm-banner-list {
+		position: relative;
 	}
 	#cm_banner_list li {
 		display: none;
@@ -36,7 +46,8 @@ var head = {
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 400px;
+		height: 298px;
+		margin-top: 1px;
 	}
 	#cm_banner_list li a {
 		display: block;
@@ -44,27 +55,30 @@ var head = {
 		height: 100%;
 	}
 	.cm-banner-num {
-		width: 1200px;
+		width: 1040px;
 		position: absolute;
 		left: 50%;
 		bottom: 0;
-		text-align: right;
+		text-align: center;
 		z-index: 2;
-		margin-left: -600px;
+		margin-left: -520px;
 	}
 	.cm-banner-num li {
-		width: 16px;
+		width: 8px;
 		margin: 10px 6px;
-		height: 16px;
-		background-color: #fff;
+		height: 8px;
+		background-color: #000;
 		border-radius: 8px;
 		-webkit-border-radius: 8px;
 		display: inline-block;
-		opacity: 0.8;
+		opacity: 0.3;
+		cursor: pointer;
 	}
 	.cm-banner-num .active {
-		background-color: #cc3333;
-		width:30px;
+		background-color: #fff;
+		border: 1px solid #de0010;
+		margin: 9px 6px;
+		opacity: 1;
 	}
 	.cm-banner-arrow {
 		position: absolute;
@@ -81,6 +95,119 @@ var head = {
 		right: 0;
 
 	}
+	.menu-entrance {
+
+	}
+	.cm_banner_b {
+		margin-top: 20px;
+		border-bottom: 1px dashed #ccc;
+	}
+	.cm_banner_b h3 {
+		border-left: 3px solid #de0010;
+		font-size: 18px;
+		font-weight: bold;
+		height: 20px;
+		line-height: 20px;
+		padding-left: 8px;
+	}
+	.menu-entrance ul {
+		width: 850px;
+		margin-top: 15px;
+	}
+	.menu-entrance ul li {
+		float: left;
+		margin: 0 30.5px 30px 0;
+		width: 182px;
+		height: 92px;
+		box-shadow: 4px 4px 8px #fff5f6;
+	}
+	.cm_banner_b ul li a {
+		display: block;
+		width: 100%;
+	}
+	.cm_banner_b ul li img {
+		width: 100%
+	}
+	.more-platforms {
+		width: 162px;
+		padding-left: 29px;
+		border-left: 1px dashed #ccc;
+	}
+	.more-platforms ul {
+		width: 162px;
+		margin-top: 15px;
+	}
+	.more-platforms li {
+		margin: 0 0 30px 0;
+	}
+	.index-b-cont {
+		margin-top: 24px;
+	}
+	.index-b-cont .b-con-box {
+	}
+	.index-b-cont .b-con-box .b-box-item {
+		width: 236px;
+		height: 322px;
+		border: 1px solid #dedede;
+		border-radius: 4px;
+		float: left;
+		margin-right: 30px;
+	}
+	.index-b-cont .b-con-box .b-box-item:last-child {
+		margin-right: 0;
+	}
+	.index-b-cont .b-con-box .b-box-item dt {
+		height: 38px;
+		line-height: 38px;
+		font-size: 16px;
+		color: #666;
+		font-weight: bold;
+		text-align: center;
+		background: #f3f3f3;
+		border-bottom: 1px solid #dedede;
+	}
+	.index-b-cont .b-con-box .b-box-item dd {
+		width: 206px;
+		height: 60px;
+		margin: 0 15px;
+		padding: 16px 0;
+		border-bottom: 1px solid #dedede;
+	}
+	.index-b-cont .b-con-box .b-box-item dd a {
+		display: block;
+	}
+	.index-b-cont .b-con-box .b-box-item dd:last-child {
+		border-bottom: 0;
+	}
+	.index-b-cont .b-con-box .b-box-item dd img {
+		width: 60px;
+		height: 60px;
+		float: left;
+	}
+	.index-b-cont .b-con-box .b-box-item dd .index-b-goods {
+		width: 136px;
+		float: right;
+	}
+	.index-b-cont .b-con-box .b-box-item dd .index-b-goods h3 {
+		height: 26px;
+		font-size: 14px;
+		color: #303030;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.index-b-cont .b-con-box .b-box-item dd .index-b-goods p {
+		font-size: 12px;
+		color: #777;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		height: 32px;
+		-webkit-box-orient: vertical;
+		line-height: 16px;
+	}
 </style>
 <%};%>
 <%
@@ -89,203 +216,211 @@ var htmlPart = {
 <div class="grid-0 exchange-index">
 	<!--顶部轮播图-->
 	<div class="index-banner">
-		<div class="grid-row bdg-row" style="position: relative">
-			<!--菜单-->
+		<div class="exchange-index-banner grid-row clearfix">
 			<%include("/layout/menu.html"){} %>
-		</div>
-		<div class="exchange-index-banner">
 			<div class="cm-banner">
 				<div class="cm-banner-list">
 					<ul id="cm_banner_list">
 					</ul>
 					<ul class="cm-banner-num" id="cm_banner_num"></ul>
 				</div>
-				<div class="cm-banner-in w">
-					<span id="cm_prev" class="cm-banner-arrow"><</span>
-					<span id="cm_next" class="cm-banner-arrow">></span>
+				<!--<div class="cm-banner-in w">-->
+				<!--<span id="cm_prev" class="cm-banner-arrow"><</span>-->
+				<!--<span id="cm_next" class="cm-banner-arrow">></span>-->
+				<!--</div>-->
+				<div class="cm_banner_b clearfix">
+					<div class="menu-entrance grid-left">
+						<h3>导航入口</h3>
+						<ul>
+							<li>
+								<a href="/exchange/list?catId=101&prId=101&prNm=数据源">
+									<img src="/static/images/index/menu-bg-1.jpg" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="/exchange/list?catId=102&prId=102&prNm=模型算法">
+									<img src="/static/images/index/menu-bg-2.jpg" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="/exchange/list?catId=103&prId=103&prNm=可视化组件">
+									<img src="/static/images/index/menu-bg-3.jpg" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="/exchange/list?catId=104&prId=104&prNm=应用平台">
+									<img src="/static/images/index/menu-bg-4.jpg" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="/exchange/list?catId=114&prId=114&prNm=数据安全">
+									<img src="/static/images/index/menu-bg-5.jpg" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="/exchange/list?catId=115&prId=115&prNm=工具组件">
+									<img src="/static/images/index/menu-bg-6.jpg" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="/exchange/list?catId=116&prId=116&prNm=数据治理">
+									<img src="/static/images/index/menu-bg-7.jpg" alt="">
+								</a>
+							</li>
+							<li>
+								<a href="/exchange/list?catId=117&prId=117&prNm=云资源">
+									<img src="/static/images/index/menu-bg-8.jpg" alt="">
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="more-platforms grid-right">
+						<h3>更多平台</h3>
+						<ul>
+							<li><a href="http://crowd.bdgstore.cn/crowdsourcing"><img src="/static/images/index/menu-r-1.jpg" alt=""></a></li>
+							<li style="margin-bottom: 0;">
+								<a href="http://cms.bdgstore.cn/scfw/index.jhtml"><img src="/static/images/index/menu-r-2.jpg" alt=""></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="index-b-cont">
+					<ul class="b-con-box">
+						<li class="b-box-item">
+							<dl>
+								<dt><span><img src="/static/images/index/index-icon-01.png" alt=""></span>排行榜</dt>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="b-box-item">
+							<dl>
+								<dt><span><img src="/static/images/index/index-icon-02.png" alt=""></span>最新</dt>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="b-box-item">
+							<dl>
+								<dt><span><img src="/static/images/index/index-icon-03.png" alt=""></span>海外精选</dt>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="b-box-item">
+							<dl>
+								<dt><span><img src="/static/images/index/index-icon-04.png" alt=""></span>免费资源</dt>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+								<dd>
+									<a href="">
+										<img src="/static/images/timg.jpeg" alt="">
+										<div class="index-b-goods">
+											<h3>中国汽车经销商行业研究报告</h3>
+											<p>中国汽车经销商行业研究报告中国汽车经销商行业研究报告</p>
+										</div>
+									</a>
+								</dd>
+							</dl>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="grid-0">
-	<div class="grid-row">
-		<%for(item in goodsStorageInfo){%>
-		<div class="storageList">
-			<h2>${item.name}</h2>
-			<div class="storageBox">
-				<div class="storageImg storageImg_${itemLP.index} grid-left">
-					<img class="one_img" src="${item.img}" alt="">
-					<%if(itemLP.first){%>
-					<div class="box">
-						<img src="/static/images/exchange/y_1.png" alt="" class="y_1">
-						<img src="/static/images/exchange/y_2.png" alt="" class="y_2">
-						<img src="/static/images/exchange/y_3.png" alt="" class="y_3">
-					</div>
-					<%}else if(itemLP.index == 2){%>
-					<div class="box">
-						<img src="/static/images/exchange/y2_1.png" alt="" class="y2_1">
-						<img src="/static/images/exchange/y2_2.png" alt="" class="y2_2">
-						<img src="/static/images/exchange/y2_3.png" alt="" class="y2_3">
-					</div>
-					<%}else if(itemLP.index == 3){%>
-					<div class="box">
-						<img src="/static/images/exchange/y3_1.png" alt="" class="y3_1">
-						<img src="/static/images/exchange/y3_2.png" alt="" class="y3_2">
-					</div>
-					<%}%>
-					<p class="describle">${item.describle}</p>
-				</div>
-				<div class="storageInfo grid-left">
-					<div class="tagsList">
-						<div class="left grid-left">
-							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
-							<%if(typeListLP.first){%>
-							<div class="tagsItem">
-								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
-									<h5>${typeList.typeName}</h5>
-									<p>${typeList.describle}</p>
-									<img src="${typeList.img}" alt="">
-								</a>
-							</div>
-							<%}%>
-							<%}%>
-						</div>
-						<div class="right grid-left">
-							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
-							<%if(typeListLP.index == 2){%>
-							<div class="tagsItem">
-								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
-									<h5>${typeList.typeName}</h5>
-									<p>${typeList.describle}</p>
-									<img src="${typeList.img}" alt="">
-								</a>
-							</div>
-							<%}%>
-							<%}%>
-							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
-							<%if(typeListLP.index == 3){%>
-							<div class="tagsItem">
-								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
-									<h5>${typeList.typeName}</h5>
-									<p>${typeList.describle}</p>
-									<img src="${typeList.img}" alt="">
-								</a>
-							</div>
-							<%}%>
-							<%}%>
-						</div>
-						<div class="left grid-left">
-							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
-							<%if(typeListLP.index == 4){%>
-							<div class="tagsItem">
-								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
-									<h5>${typeList.typeName}</h5>
-									<p>${typeList.describle}</p>
-									<img src="${typeList.img}" alt="">
-								</a>
-							</div>
-							<%}%>
-							<%}%>
-						</div>
-						<div class="right grid-left">
-							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
-							<%if(typeListLP.index == 5){%>
-							<div class="tagsItem">
-								<a href="/exchange/label?storageId=${item.mgGoodsStorageVo.storageId}&typeId=${typeList.typeId}">
-									<h5>${typeList.typeName}</h5>
-									<p>${typeList.describle}</p>
-									<img src="${typeList.img}" alt="">
-								</a>
-							</div>
-							<%}%>
-							<%}%>
-							<%for(typeList in item.mgGoodsStorageVo.typeList){%>
-							<%if(typeListLP.index == 6){%>
-							<div class="tagsItem">
-								<a href="/exchange/label?storageId=${item.id}&typeId=${typeList.typeId}">
-									<h5>${typeList.typeName}</h5>
-									<p>${typeList.describle}</p>
-									<img src="${typeList.img}" alt="">
-								</a>
-							</div>
-							<%}%>
-							<%}%>
-						</div>
-					</div>
-					<div class="goodsList">
-						<%for(goodsItem in item.mgGoodsStorageVo.goodsList){%>
-						<div class="goodsItem grid-left">
-							<a href="/exchange/details?id=${goodsItem.goodsId}">
-								<h5>${goodsItem.goodsName}</h5>
-								<img src="${goodsItem.goodsImg}" alt="">
-								<%if(goodsItem.shopFormat == -1){%>
-								<p>${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套',-1,'面议')}</p>
-								<%}else{%>
-									<%if(goodsItem.shopPrice >= 1000000){%>
-									<p>￥<i>${trunc(goodsItem.shopPrice / 1000000,2)}</i>万/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套',-1,'面议')}</p>
-									<%}else{%>
-									<p>￥<i>${goodsItem.shopPrice /100}</i>/${goodsItem.shopNumber == 1 ?'' : goodsItem.shopNumber}${decode(goodsItem.shopFormat,0,'次',1,'月',2,'年',3,'套',-1,'面议')}</p>
-									<%}%>
-								<%}%>
-
-								<span>${goodsItem.catName}</span>
-							</a>
-						</div>
-						<%}%>
-					</div>
-				</div>
-			</div>
-		</div>
-		<%}%>
-		<div class="activity clearfix">
-			<div class="activity_item grid-left">
-				<div class="activityTop">
-					<div class="activity_img"><img src="/static/images/exchange/activity_1.png" alt=""></div>
-					<p>
-						API服务<br>
-						<span>开发者的丰富API服务库</span>
-					</p>
-					<a target="_blank" href="http://www.bdgstore.cn/activity/superCost">马上去抢购</a>
-				</div>
-				<div class="activityBottom">
-					<div class="botOld"></div>
-					<div class="botNew"></div>
-				</div>
-			</div>
-			<div class="activity_item grid-left">
-				<div class="activityTop">
-					<div class="activity_img"><img src="/static/images/exchange/activity_2.png" alt=""></div>
-					<p>
-						BDG Store数据星河<br>
-						<span>全球大数据产业生态圈</span>
-					</p>
-					<a target="_blank" href="http://cms.bdgstore.cn/gysjxh/index.jhtml">点击查看</a>
-				</div>
-				<div class="activityBottom">
-					<div class="botOld"></div>
-					<div class="botNew"></div>
-				</div>
-			</div>
-			<div class="activity_item grid-left">
-				<div class="activityTop">
-					<div class="activity_img"><img src="/static/images/exchange/activity_3.png" alt=""></div>
-					<p>
-						个人身份验证<br>
-						<span>授权通道，加密传输，安全可靠，快速响应</span>
-					</p>
-					<a target="_blank" href="http://www.bdgstore.cn/exchange/details?id=02b343c87e6011e79931fefcfe6cbde7 ">马上去体验</a>
-				</div>
-				<div class="activityBottom">
-					<div class="botOld"></div>
-					<div class="botNew"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<iframe frameborder=0 width=100% height=0 marginheight=0 marginwidth=0 id="jyxgzx" scrolling=no
-		src="http://cms.bdgstore.cn/jyzsnr/index.jhtml"></iframe>
+<!--<iframe frameborder=0 width=100% height=0 marginheight=0 marginwidth=0 id="jyxgzx" scrolling=no src="http://cms.bdgstore.cn/jyzsnr/index.jhtml"></iframe>-->
+<!--<%include("/layout/footer-new.html"){} %>-->
 <script src="/static/js/exchange/common.js"></script>
 <script src="/static/js/exchange/index.js"></script>
 <script>
@@ -298,9 +433,9 @@ var htmlPart = {
 					var html = '';
 					var html2 = '';
 					for (var j = 0; j < data.data.length; j++) {
-						if(data.data[j].isNewTab == 1){
+						if (data.data[j].isNewTab == 1) {
 							html += '<li><a href="' + data.data[j].imgLink + '" target="_blank" class="imgFloat_' + j + '" style="background:url(' + data.data[j].imgUrl + ') center center no-repeat"></a></li>';
-						}else{
+						} else {
 							html += '<li><a href="' + data.data[j].imgLink + '" class="imgFloat_' + j + '" style="background:url(' + data.data[j].imgUrl + ') center center no-repeat"></a></li>';
 						}
 
@@ -396,19 +531,18 @@ var htmlPart = {
 				}
 			}
 		});
-		$('.activity_item').hover(function(){
+		$('.activity_item').hover(function () {
 			var thisElm = $(this).children('.activityBottom').children('.botNew')
-			setTimeout(function(){
-				thisElm.animate({height:'317px',bottom:'0'},10);
-			},700)
-		},function(){
+			setTimeout(function () {
+				thisElm.animate({height: '317px', bottom: '0'}, 10);
+			}, 700)
+		}, function () {
 			var thisElm = $(this).children('.activityBottom').children('.botNew')
-			setTimeout(function(){
-				thisElm.css({height:'221px',bottom:'36px'},10);
-			},700)
+			setTimeout(function () {
+				thisElm.css({height: '221px', bottom: '36px'}, 10);
+			}, 700)
 		});
 	});
-
 </script>
 <%};
 include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
