@@ -13,7 +13,7 @@ debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.15.203:27017/bdgStore
+      uri:  mongodb://192.168.4.215:27017/bdgStore
   mvc:
       static-path-pattern: /static/**
   http:
