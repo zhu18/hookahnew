@@ -142,8 +142,8 @@ public class HelpController extends BaseController{
 //                    dataMap.put("respParamList", goodsVo.getApiInfo().getRespParamList());
 //                    dataMap.put("respSample", goodsVo.getApiInfo().getRespSample() == null ? goodsVo.getApiInfo().getRespSample() : goodsVo.getApiInfo().getRespSample().replace("&", "&amp;"));
 
-                    returnData.setData("http://open.bdgstore.cn/down/doc?apiId=" + sourceId + "&orderNo=" + orderNo);
-//                    returnData.setData("http://open.bdgstore.cn/down/doc?apiId=2&orderNo=1");
+                    returnData.setData("http://open.gbdex.bdgstore.cn/down/doc?apiId=" + sourceId + "&orderNo=" + orderNo);
+//                    returnData.setData("http://open.gbdex.bdgstore.cn/down/doc?apiId=2&orderNo=1");
                     return returnData;
                 }else if(goodsVo.getGoodsType() == 2){ // 数据模型
 

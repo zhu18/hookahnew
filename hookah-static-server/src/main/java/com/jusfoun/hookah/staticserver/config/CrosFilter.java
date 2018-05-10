@@ -2,7 +2,6 @@ package com.jusfoun.hookah.staticserver.config;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +9,6 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,13 +41,13 @@ public class CrosFilter implements Filter {
             Matcher matcher = pattern.matcher(origin);
             if (matcher.find()) {
                 String host = matcher.group(2);
-                if (host.endsWith(domain) && !host.equals(domain) && StringUtils.isNoneBlank(getDomain(host))) {
+//                if (host.endsWith(domain) && StringUtils.isNoneBlank(getDomain(host))) {
                     httpServletResponse.addHeader("Access-Control-Allow-Origin", httpServletRequest.getScheme() + "://" + getDomain(host) + "." + domain);
                     httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,HEAD,OPTIONS,PATCH,PUT");
                     httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
                     httpServletResponse.setHeader("Access-Control-Allow-Headers", "X-Requested-With,X-Auth-Token,content-type");
                     httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-                }
+//                }
             }
         }
 

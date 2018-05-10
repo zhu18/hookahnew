@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: bdgstore.cn
+      domain: gbdex.bdgstore.cn
       name: hookah_sid
 spring:
   datasource:
@@ -46,7 +46,7 @@ spring:
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.bdgstore.cn
+      host: smtp.gbdex.bdgstore.cn
       username: service@qddata.com.cn
       password: Bigdata8661101
       transport:
@@ -69,22 +69,22 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: bdgstore.cn
-    website: ${server.http.protocal}www.bdgstore.cn
-    static: ${server.http.protocal}static.bdgstore.cn
-    auth: ${server.http.protocal}auth.bdgstore.cn
-    console: ${server.http.protocal}console.bdgstore.cn
-    admin: ${server.http.protocal}admin.bdgstore.cn
-    crowd: ${server.http.protocal}crowd.bdgstore.cn
+    domain: gbdex.bdgstore.cn
+    website: ${server.http.protocal}gbdex.bdgstore.cn
+    static: ${server.http.protocal}static.gbdex.bdgstore.cn
+    auth: ${server.http.protocal}auth.gbdex.bdgstore.cn
+    console: ${server.http.protocal}console.gbdex.bdgstore.cn
+    admin: ${server.http.protocal}admin.gbdex.bdgstore.cn
+    crowd: ${server.http.protocal}crowd.gbdex.bdgstore.cn
   oauth2:
     clientId: crowd
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.bdgstore.cn/reg
-    loginUrl: http://auth.bdgstore.cn/oauth/authorize?client_id=crowd&response_type=code&redirect_uri=
-    logoutUrl: http://auth.bdgstore.cn/logout?redirect_uri=http://www.bdgstore.cn/login
-    accessTokenUrl: http://auth.bdgstore.cn/oauth/accessToken
-    userInfoUrl: http://auth.bdgstore.cn/userInfo
-    redirectUrl: http://auth.bdgstore.cn/login
+    regUrl: http://auth.gbdex.bdgstore.cn/reg
+    loginUrl: http://auth.gbdex.bdgstore.cn/oauth/authorize?client_id=crowd&response_type=code&redirect_uri=
+    logoutUrl: http://auth.gbdex.bdgstore.cn/logout?redirect_uri=http://gbdex.bdgstore.cn/login
+    accessTokenUrl: http://auth.gbdex.bdgstore.cn/oauth/accessToken
+    userInfoUrl: http://auth.gbdex.bdgstore.cn/userInfo
+    redirectUrl: http://auth.gbdex.bdgstore.cn/login
   redis:
     ipPort: 192.168.4.215:7000,192.168.4.215:7001,192.168.4.215:7002
     password: bdgstore

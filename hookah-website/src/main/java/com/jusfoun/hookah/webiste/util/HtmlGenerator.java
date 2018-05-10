@@ -104,7 +104,7 @@ public class HtmlGenerator {
         File cfgFile = ResourceUtils.getFile("classpath:");
         String absolutePath = cfgFile.getAbsolutePath();
         String htmlPath = absolutePath + File.separator + "views" + File.separator + "bdgstore.html" ;
-        h.createHtmlPage("http://www.bdgstore.cn", htmlPath);
+        h.createHtmlPage("http://gbdex.bdgstore.cn", htmlPath);
         logger.info("已生成首页静态页面到views");
 
     }
@@ -112,7 +112,7 @@ public class HtmlGenerator {
     //测试方法
     public static void main(String[] args) {
         HtmlGenerator h = new HtmlGenerator("webappname");
-        h.createHtmlPage("http://www.bdgstore.cn", "D:/bdgstore.html");
+        h.createHtmlPage("http://gbdex.bdgstore.cn", "D:/bdgstore.html");
         System.out.println("静态页面已经生成到c:/a.html");
 
     }
