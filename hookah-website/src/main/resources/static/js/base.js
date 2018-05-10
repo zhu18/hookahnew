@@ -1,6 +1,11 @@
 $(document).ready(function () {
 	var pathname = window.location.pathname;
 	var path = pathname.replace("/","");
+	if(pathname == "/"){
+		$('#navList .index').addClass('active');
+	}else{
+		$('#navList .index').removeClass('active');
+	}
     if (path==""){
         $('#exchange_menu').show();
         $(".exchange-index-menu").show();
