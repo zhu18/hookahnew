@@ -42,7 +42,7 @@ public class CrosFilter implements Filter {
             Matcher matcher = pattern.matcher(origin);
             if (matcher.find()) {
                 String host = matcher.group(2);
-                if (host.endsWith(domain) && !host.equals(domain) && StringUtils.isNoneBlank(getDomain(host))) {
+                if (host.endsWith(domain) && StringUtils.isNoneBlank(getDomain(host))) {
                     httpServletResponse.addHeader("Access-Control-Allow-Origin", httpServletRequest.getScheme() + "://" + getDomain(host) + "." + domain);
                     httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,HEAD,OPTIONS,PATCH,PUT");
                     httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
@@ -63,7 +63,10 @@ public class CrosFilter implements Filter {
 
     private String getDomain(String host) {
         if (host.endsWith(domain)) {
-            return host.substring(0, host.length() - (domain.length() + 1));
+            if(host.length() == domain.length())
+                return domain;
+            else
+                return host.substring(0, host.length() - (domain.length() + 1));
         } else return null;
     }
 }

@@ -1,39 +1,37 @@
 <div class="float-tool">
     <div class="tool-item">
         <a href="javascript:void(0)" class="no-cursor">
-            <span class="btn-content"><img src="/static/images/tool/tool_img_wx.jpg" alt=""></span>
-            <span class="btn-title"><img src="/static/images/tool/tool_img_1.png" alt=""></span>
+            <span class="btn-content">400-819-0919</span>
+            <span class="btn-title"><img src="/static/images/tool/tool_img_1.png" alt=""><p>服务热线</p></span>
         </a>
     </div>
     <div class="tool-item">
         <a href="javascript:doyoo.util.openChat(1)" id="looyu_dom_1">
             <span class="btn-content">在线咨询</span>
-            <span class="btn-title"><img src="/static/images/tool/tool_img_2.png" alt=""></span>
+            <span class="btn-title"><img src="/static/images/tool/tool_img_2.png" alt=""><p>在线咨询</p></span>
         </a>
     </div>
     <div class="tool-item">
         <a href="javascript:void(0)" class="no-cursor">
-            <span class="btn-content">400-819-0919</span>
-            <span class="btn-title"><img src="/static/images/tool/tool_img_3.png" alt=""></span>
+            <span class="btn-content"><img src="/static/images/tool/tool_img_wx.jpg" alt=""></span>
+            <span class="btn-title"><img src="/static/images/tool/tool_img_3.png" alt=""><p>官方微信</p></span>
         </a>
     </div>
     <div class="tool-item">
-        <a href="http://bdgstore.mikecrm.com/UzZw5NG" target="_blank">
+        <a href="http://looyuoms7714.looyu.com/chat/chat/p.do?command=leaveMessage&amp;t=0&amp;n=jcfadmin&amp;md=1&amp;c=20003161&amp;v=f8c2a32daf51657f6723e3372e1bb2db4c&amp;u=cf6e4389dee24c9088dfe16614a0501451&amp;f=10089519&amp;site=0&amp;p0=http%3A%2F%2Fgbdex.bdgstore.cn%2F&amp;ct=72&amp;lang=sc&amp;refer=&amp;loc=http%3A%2F%2Fgbdex.bdgstore.cn%2F&amp;_d=1512958381403" target="_blank">
             <span class="btn-content">用户反馈</span>
-            <span class="btn-title"><img src="/static/images/tool/tool_img_4.png" alt=""></span>
+            <span class="btn-title"><img src="/static/images/tool/tool_img_4.png" alt=""><p>用户反馈</p></span>
         </a>
     </div>
-    <div class="tool-item go_to_top">
+    <div class="tool-item go_to_top" style="display: none;">
         <a href="javascript:void(0)" class="goToTop">
             <span class="btn-content">顶部</span>
             <span class="btn-title"><img src="/static/images/tool/tool_img_5.png" alt=""></span>
         </a>
     </div>
-    <!--<div id="J_gotoTop" style="cursor: pointer;">-->
-    <!--<img style="width: 38px;" src="/static/images/toTop2.jpg">-->
-    <!--</div>-->
 </div>
 <script class="text/javascript">
+
 	$('.go_to_top').hide()
 	$(window).scroll(function () {
 		var windowHeight = parseFloat($(window).height())
@@ -46,8 +44,10 @@
 
 	});
 	$(document).ready(function(){
-//		$('#doyoo_panel').hide()
-
+//		$('#doyoo_panel').css({
+//		    "opacity":"0"
+//		});
+		$('.show-ad').addClass('show');
 	})
 	$('.float-tool .tool-item a').hover(function () {
 		$(this).children('.btn-content').addClass('hover');
@@ -57,4 +57,6 @@
 	$('.goToTop').click(function () {
 		$("html,body").animate({scrollTop: 0}, 600);
 	});
+
+
 </script>
