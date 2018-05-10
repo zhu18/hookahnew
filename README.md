@@ -92,7 +92,7 @@
      !!window下执行:```.\node_modules\.bin\webpack.cmd
   * 模块根目录下会生成dist目录及打包好的程序
 * hookah-oauth2server打包
-  * 修改pom.xml文件，把下面所示的resource注释掉
+  * 修改pom.xml文件，把下面所示的resource注释掉   
     ```
     <!-- 打包时注释下面的resource -->
         <resource>
