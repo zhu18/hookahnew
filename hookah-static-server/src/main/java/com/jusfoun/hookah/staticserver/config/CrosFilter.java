@@ -62,7 +62,9 @@ public class CrosFilter implements Filter {
 
     private String getDomain(String host) {
         if (host.endsWith(domain)) {
-            return host.substring(0, host.length() - (domain.length() + 1));
+            if (host.length() == domain.length())
+                return domain;
+            else return host.substring(0, host.length() - (domain.length() + 1));
         } else return null;
     }
 }
