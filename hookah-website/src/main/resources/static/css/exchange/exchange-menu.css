@@ -129,6 +129,8 @@
     opacity: 0.97;
     margin-left:14px;
     padding-top: 20px;
+    -webkit-transition: all .3s linear;
+    transition: all .3s linear;
 }
 
 .exchange-index-menu .menu-son-list .twoUl .twoLi,.exchange-index-menu-item .twoLi ,.exchange-index-menu .menu-son-list .twoUl .threeOli{

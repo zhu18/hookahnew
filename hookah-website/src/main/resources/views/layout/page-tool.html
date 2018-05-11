@@ -40,14 +40,18 @@
 <script class="text/javascript">
 	$('.go_to_top').hide()
 	$(window).scroll(function () {
-		var windowHeight = parseFloat($(window).height())
+		var windowHeight = parseFloat($(window).height());
 		var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
 		if (totalheight - windowHeight >= 500) {
 			$('.go_to_top').show();
 		} else {
 			$('.go_to_top').hide()
 		}
-
+		if(totalheight - windowHeight > 109){
+			$('.exchange-index-menu .menu-son-list .twoUl, .exchange-index-menu .menu-son-list .threeOl').css('margin-top',(totalheight - windowHeight - 109)+'px')
+		}else{
+			$('.exchange-index-menu .menu-son-list .twoUl, .exchange-index-menu .menu-son-list .threeOl').css('margin-top','0px')
+		}
 	});
 	$(document).ready(function(){
 //		$('#doyoo_panel').css({
