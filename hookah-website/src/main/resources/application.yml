@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: gbdex.bdgstore.cn
+      domain: bdgstore.cn
       name: hookah_sid
 myconf:
   beetl:
