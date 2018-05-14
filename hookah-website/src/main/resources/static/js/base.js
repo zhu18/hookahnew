@@ -1,11 +1,7 @@
 $(document).ready(function () {
 	var pathname = window.location.pathname;
 	var path = pathname.replace("/","");
-	if(pathname == "/"){
-		$('#navList .index').addClass('active');
-	}else{
-		$('#navList .index').removeClass('active');
-	}
+
     if (path==""){
         $('#exchange_menu').show();
         $(".exchange-index-menu").show();
@@ -73,28 +69,35 @@ $(document).ready(function () {
 		}
 
 	});
-	$('#navList li').each(function () {
-		if (pathname.indexOf('/exchange/index') >= 0) {
-			$('#navList li:nth-child(1)').addClass('active');
-		}
-		if (pathname.indexOf('/crowdsourcing') >= 0) {
-			$('#navList li:nth-child(3)').addClass('active');
-		}
-		if (pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0) {
-			$('#navList li:nth-child(1)').addClass('active');
-		}
-		if (pathname.indexOf('/scfw') >= 0) {
-			$('#navList li:nth-child(3)').addClass('active');
-		}
-		if (pathname.indexOf('/usercenter/buyer/allOrderList') >= 0 || pathname.indexOf('/usercenter/buyer/orderManagement') >= 0 || pathname.indexOf('/usercenter/buyer/orderStay') >= 0 || pathname.indexOf('/usercenter/buyer/cancelOrderList') >= 0) {
-			$('#navList li:nth-child(4)').addClass('active');
-		} else if (pathname.indexOf('/usercenter') >= 0) {
-			$('#navList li:nth-child(4)').addClass('active');
-		}
-		if (path==""){
-			$('#navList li:nth-child(1)').addClass('active');
-		}
-	});
+	if(pathname == "/"){
+		console.log('yes')
+		$('#navList .index').addClass('active');
+	}else{
+		console.log('none')
+		$('#navList .index').removeClass('active');
+	}
+	// $('#navList li').each(function () {
+	// 	if (pathname.indexOf('/exchange/index') >= 0) {
+	// 		$('#navList li:nth-child(1)').addClass('active');
+	// 	}
+	// 	if (pathname.indexOf('/crowdsourcing') >= 0) {
+	// 		$('#navList li:nth-child(3)').addClass('active');
+	// 	}
+	// 	if (pathname.indexOf('/exchange/list') >= 0 || pathname.indexOf('/exchange/details') >= 0) {
+	// 		$('#navList li:nth-child(1)').addClass('active');
+	// 	}
+	// 	if (pathname.indexOf('/scfw') >= 0) {
+	// 		$('#navList li:nth-child(3)').addClass('active');
+	// 	}
+	// 	if (pathname.indexOf('/usercenter/buyer/allOrderList') >= 0 || pathname.indexOf('/usercenter/buyer/orderManagement') >= 0 || pathname.indexOf('/usercenter/buyer/orderStay') >= 0 || pathname.indexOf('/usercenter/buyer/cancelOrderList') >= 0) {
+	// 		$('#navList li:nth-child(4)').addClass('active');
+	// 	} else if (pathname.indexOf('/usercenter') >= 0) {
+	// 		$('#navList li:nth-child(4)').addClass('active');
+	// 	}
+	// 	if (path==""){
+	// 		$('#navList li:nth-child(1)').addClass('active');
+	// 	}
+	// });
 
 	$("#J_searchInput").on("input propertychange", function () {
 		if ($(this).val() == "") {
