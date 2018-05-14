@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.core.domain.zb;
 
 import com.jusfoun.hookah.core.generic.GenericModel;
+import com.jusfoun.hookah.core.utils.SQLUtil;
 
 /**
  * Created by admin on 2017/9/19.
@@ -112,7 +113,7 @@ public class ZbRequirementPageHelper extends GenericModel {
     }
 
     public void setOrder(String order) {
-        this.order = order;
+        this.order = SQLUtil.sqlValidate(order);
     }
 
     public Integer getStartIndex() {
@@ -128,6 +129,6 @@ public class ZbRequirementPageHelper extends GenericModel {
     }
 
     public void setSort(String sort) {
-        this.sort = sort;
+        this.sort = SQLUtil.sqlValidate(sort);
     }
 }
