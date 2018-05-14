@@ -73,4 +73,11 @@
 ////			$(this).children('.menu-son-list .twoUl').css({'margin-top':'0px'});
 //        }
 //    })
+$('.menu-item').hover(function(){
+	var childH = $(this).children('.menu-son-list').height();
+	var setTop = (childH - 48) / 2;
+	$(this).children('.menu-son-list').css({'margin-top':-setTop+'px'});
+	console.log("HHHHHHHHHHH:------------"+setTop);
+
+})
 </script>

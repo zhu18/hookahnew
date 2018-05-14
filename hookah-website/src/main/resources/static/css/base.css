@@ -595,6 +595,7 @@ input:focus, select:focus, textarea:focus {
 	bottom: 50px;
 	left: 25px;
 	z-index: 1000;
+	display: none;
 }
 .ad-box .link-btn {
 	display: block;
