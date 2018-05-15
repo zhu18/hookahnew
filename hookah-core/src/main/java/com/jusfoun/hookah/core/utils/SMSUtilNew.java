@@ -22,8 +22,12 @@ import java.util.*;
 
 public class SMSUtilNew {
 
-	public static String smsUser="xzbdex";
-	public static String smsKey="HvHv9oZgnK5rLAdoNeNlrqJxqlbk6x3U";
+	//public static String smsUser="xzbdex";
+	//public static String smsKey="HvHv9oZgnK5rLAdoNeNlrqJxqlbk6x3U";
+    public static String smsUser="qddata";
+    public static String smsKey="KeKFp18MLR8HRQoqCTRSsw5i76IKMvig";
+
+
 
     private static Logger logger = LoggerFactory.getLogger(SMSUtilNew.class);
 	
