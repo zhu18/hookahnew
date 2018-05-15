@@ -63,12 +63,21 @@ public class HookahConstants {
     public static final Byte IS_LOCAL_NO = 1;
 
     public enum SmsTypeNew {
-        SMS_USER_REGISTER("101"),  //注册
-        SMS_FIND_USER_PWD("102"),   //找回登录密码
-        SMS_CHANGE_USER_PWD("104"),   //修改登录密码
-        SMS_CHANGE_MOBILE("103"),   //修改手机号
-        SMS_CHANGE_PAY_PWD("105"),   //修改交易密码
-        SMS_SET_PAY_PWD("106");   //设置交易密码
+        // 徐州
+//        SMS_USER_REGISTER("101"),  //注册
+//        SMS_FIND_USER_PWD("102"),   //找回登录密码
+//        SMS_CHANGE_USER_PWD("104"),   //修改登录密码
+//        SMS_CHANGE_MOBILE("103"),   //修改手机号
+//        SMS_CHANGE_PAY_PWD("105"),   //修改交易密码
+//        SMS_SET_PAY_PWD("106");   //设置交易密码
+        // 青岛
+        SMS_USER_REGISTER("6524"),  //注册
+        SMS_FIND_USER_PWD("6525"),   //找回登录密码
+        SMS_CHANGE_USER_PWD("6527"),   //修改登录密码
+        SMS_CHANGE_MOBILE("6526"),   //修改手机号
+        SMS_CHANGE_PAY_PWD("6528"),   //修改支付密码
+        SMS_SET_PAY_PWD("6587");   //设置支付密码
+
 
         public String code;
 
