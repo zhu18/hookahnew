@@ -176,10 +176,10 @@
 .exchange-index-menu .menu-son-list ul li span{
     color:#666;
     float: left;
+    margin: 0 20px;
 }
 .exchange-index-menu .menu-son-list ul li a{
     float: left;
-    margin:0 20px;
     font-size: 16px;
     color: #333;
 }

@@ -40,7 +40,7 @@
                 <% }else{ %>
                     <ul class="twoUl">
                         <% for(list in categoryInfo[i].children){%>
-                        <li class="twoLi"><a href="/exchange/list?catId=${list.catId}&prId=${categoryInfo[i].catId}&prNm=${categoryInfo[i].catName}&msId=${list.catId}&msNm=${list.catName}">${list.catName} </a><span>|</span></li>
+                        <li class="twoLi"><span>|</span><a href="/exchange/list?catId=${list.catId}&prId=${categoryInfo[i].catId}&prNm=${categoryInfo[i].catName}&msId=${list.catId}&msNm=${list.catName}">${list.catName} </a></li>
                         <% } %>
                     </ul>
                 <% } %>
