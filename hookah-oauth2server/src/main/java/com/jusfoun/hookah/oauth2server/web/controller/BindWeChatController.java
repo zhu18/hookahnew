@@ -152,7 +152,7 @@ public class BindWeChatController {
                 users.setUserSn(generateUserSn());
                 //默认用户名
                 users.setUserName(WXConfigUtils.generateUserName(user.getOpenid()));
-                users.setNickName("" + (StringUtils.isNotBlank(users.getUserSn()) ? users.getUserSn().substring(2) : System.currentTimeMillis()));
+                users.setNickName(HookahConstants.BDGStore + (StringUtils.isNotBlank(users.getUserSn()) ? users.getUserSn().substring(2) : System.currentTimeMillis()));
                 User regUser = userService.insert(users);
 
                 //发送默认密码到用户手机

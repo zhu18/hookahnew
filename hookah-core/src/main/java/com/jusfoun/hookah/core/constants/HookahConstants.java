@@ -12,7 +12,7 @@ public class HookahConstants {
     public static final String platformCode="JF";
 
     /*用户默认昵称前缀*/
-    public static final String BDGStore="BDGStore";
+    public static final String BDGStore="GBDEx";
 
     /*平台用户、产品编码前缀*/
     public static final String platformInvoiceCode="FP";

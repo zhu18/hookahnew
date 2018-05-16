@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: bdgstore.cn
+      domain: gbdex.bdgstore.cn
       name: hookah_sid
 spring:
   datasource:
