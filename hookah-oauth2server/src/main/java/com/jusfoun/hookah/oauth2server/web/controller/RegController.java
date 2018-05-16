@@ -189,7 +189,7 @@ public class RegController {
 //        String userSn = HookahConstants.platformCode + date + String.format("%06d",redisOperate.incr("userSn"));
 //        String userSn = HookahConstants.platformCode + date + String.format("%06d",count);
         user.setUserSn(generateUserSn());
-        user.setNickName(HookahConstants.BDGStore + (StringUtils.isBlank(user.getUserSn()) ? System.currentTimeMillis() : user.getUserSn().substring(2)));
+        user.setNickName("" + (StringUtils.isBlank(user.getUserSn()) ? System.currentTimeMillis() : user.getUserSn().substring(2)));
         user.setUserName(user.getUserName() == null ? user.getMobile() : user.getUserName());
         User regUser = userService.insert((User) user);
         //redirectAttributes.addAttribute(regUser);

@@ -1,7 +1,6 @@
 package com.jusfoun.hookah.oauth2server.web.controller;
 
 import com.google.code.kaptcha.Constants;
-import com.jusfoun.hookah.core.Md5Utils;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.config.WeChatConfig;
 import com.jusfoun.hookah.core.constants.HookahConstants;
@@ -19,15 +18,12 @@ import com.jusfoun.hookah.core.exception.UserRegInvalidCaptchaException;
 import com.jusfoun.hookah.core.exception.UserRegInvalidSmsException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.utils.*;
-import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
 import com.jusfoun.hookah.oauth2server.config.ReadCookieUtil;
 import com.jusfoun.hookah.oauth2server.config.WXConfigUtils;
 import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.rpc.api.*;
-import org.apache.commons.lang3.*;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,7 +152,7 @@ public class BindWeChatController {
                 users.setUserSn(generateUserSn());
                 //默认用户名
                 users.setUserName(WXConfigUtils.generateUserName(user.getOpenid()));
-                users.setNickName(HookahConstants.BDGStore + (StringUtils.isNotBlank(users.getUserSn()) ? users.getUserSn().substring(2) : System.currentTimeMillis()));
+                users.setNickName("" + (StringUtils.isNotBlank(users.getUserSn()) ? users.getUserSn().substring(2) : System.currentTimeMillis()));
                 User regUser = userService.insert(users);
 
                 //发送默认密码到用户手机
