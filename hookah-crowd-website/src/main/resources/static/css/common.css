@@ -111,6 +111,7 @@
 
 /* clear float
 =================================================================== */
+.clearfix{overflow: hidden}
 .clearfix:after {
     visibility: hidden;
     clear: both;
