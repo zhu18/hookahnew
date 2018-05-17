@@ -43,7 +43,7 @@
     position: relative;
     float: left;
     width: 33.33%;
-    line-height:60px;
+    line-height:70px;
     font-size:14px;
     color: #ccc;
     text-align: center;
@@ -52,7 +52,7 @@
     content: attr(data-tip);
     display: block;
     position: absolute;
-    top: -9px;
+    top: 0px;
     left: 46%;
     z-index: 10;
     width: 19px;
@@ -65,7 +65,7 @@
 }
 .steps .txt li:after{
     position: absolute;
-    top: 0;
+    top: 9px;
     right: 50%;
     content: "";
     display: block;

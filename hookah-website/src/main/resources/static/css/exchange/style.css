@@ -2458,7 +2458,7 @@ dl {
 }
 .qrcode-wraper .qrcode-title{
 	height:80px;
-	background: #000;
+	background: #eceaeb;
 	overflow: hidden;
 }
 .qrcode-wraper .qrcode-title span{
@@ -2470,7 +2470,7 @@ dl {
 	width: 12px;
 	height: 12px;
 	margin: 34px 20px 0 0;
-	color: #fff;
+	color: #7f7c7c;
 	line-height: 12px;
 }
 .qrcode-wraper .qrcode-content{

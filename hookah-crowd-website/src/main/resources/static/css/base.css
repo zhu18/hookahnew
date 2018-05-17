@@ -24,7 +24,7 @@ html {
 }
 .header-centerbar .logo {
 	width: 207px;
-	margin: 5px 0;
+	margin: 5px 0 0 ;
 }
 .header-centerbar .logo a {
 	display: inline-block;

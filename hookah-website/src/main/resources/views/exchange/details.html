@@ -695,7 +695,7 @@ var htmlPart = {
 <div class="qrcode-wraper">
 	<div class="qrcode-wraper-in">
 		<div class="qrcode-title">
-			<span class="grid-left"><img src="/static/images/wxshare/share_logo.png" alt=""></span>
+			<span class="grid-left"><img src="/static/images/logo-sbh.png" alt=""></span>
 			<a href="javascript:void(0)" class="fa fa-close close-share-btn grid-right"></a>
 		</div>
 		<div class="qrcode-content">
@@ -747,7 +747,7 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 		shareImg = '${goodsDetails.goodsImg}',
 		shareDesc = $('#J_goodsBrief').text(),
 		shareLink = location.href.split('#')[0];
-	    respSample = '${goodsDetails.apiInfo.respSample}';
+	    respSample = ${goodsDetails.apiInfo.respSample};
 	$(document).ready(function(){
         $("meta[property='og:url']").attr('content',shareLink);
         $("meta[property='og:title']").attr('content',shareTitle);

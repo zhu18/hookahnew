@@ -55,6 +55,7 @@ var htmlPart = {
 							<input type="hidden" name="orderSn" value="${orderInfo.orderSn}" id="J_orderSn">
 							<ul id="J_MarketinglList"></ul>
 							<ul class="saved-card-list">
+								<%if(moneyBalance >= 0){%>
 								<%for(item in payments){%>
 								<li class="${itemLP.index == 1 ? 'channel-balance' : 'channel-bank'} row-container fn-clear ${itemLP.index == 1 ? 'row-container-focus' : ''}">
 									<div class="row-basic fn-clear">
@@ -104,6 +105,31 @@ var htmlPart = {
 									</div>
 									<div class="row-extra fn-hide"></div>
 								</li>
+								<%}else{%>
+									<%for(var i=0;i<1;i++){%>
+									<li class="channel-balance row-container fn-clear row-container-focus}">
+										<div class="row-basic fn-clear">
+											<label class="channel-label">
+												<span class="channel-tit channel-icon icon banklogo-BALANCE_s"></span>
+												<span class="fn-mr-20">
+													<span class="channel-name">${payments[i].payName}</span>
+													<span class="money-balance">${moneyBalance / 100}</span>
+												</span>
+												<span class="pay-amount">
+													<span class="amount">
+														<span>支付</span>
+														<span class="amount-font-R16">${orderInfo.orderAmount / 100}</span>
+														<span> 元</span>
+													</span>
+													<span></span>
+												</span>
+												<input checked="checked" class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
+											</label>
+										</div>
+										<div class="row-extra fn-hide"></div>
+									</li>
+									<%}%>
+								<%}%>
 								<!--此处注释代码不要删除（含有备用状态）-->
 								<!--<li class="channel-bank row-container fn-clear">-->
 								<!--<div class="row-basic fn-clear">-->
