@@ -110,7 +110,8 @@
 .recommend-operate-content .recommendUrl {
     border: 1px solid #ccc;
     width: 500px;
-    line-height: 24px;
+    line-height: 30px;
+    height: 30px;
 }
 
 .recommend-operate-content .forCopy {

@@ -747,7 +747,7 @@ include("/layout/base.html",{headSection:head,htmlSection:htmlPart}){}
 		shareImg = '${goodsDetails.goodsImg}',
 		shareDesc = $('#J_goodsBrief').text(),
 		shareLink = location.href.split('#')[0];
-	    respSample = ${goodsDetails.apiInfo.respSample};
+	    respSample = '${goodsDetails.apiInfo.respSample}';
 	$(document).ready(function(){
         $("meta[property='og:url']").attr('content',shareLink);
         $("meta[property='og:title']").attr('content',shareTitle);
