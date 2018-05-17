@@ -1,6 +1,7 @@
 package com.jusfoun.hookah.crowd.config;
 
 import com.jusfoun.hookah.crowd.interceptor.CommonInterceptor;
+import com.jusfoun.hookah.crowd.interceptor.SecurityInterceptor;
 import com.jusfoun.hookah.crowd.interceptor.UserAuthInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -17,6 +18,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CommonInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(new UserAuthInterceptor()).addPathPatterns("/usercenter/authentication");
     }
 

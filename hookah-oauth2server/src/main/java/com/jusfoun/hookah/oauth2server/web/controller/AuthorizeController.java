@@ -8,6 +8,7 @@ import com.jusfoun.hookah.core.utils.ExceptionConst;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.NetUtils;
 import com.jusfoun.hookah.oauth2server.config.Constants;
+import com.jusfoun.hookah.oauth2server.config.RsaLoginUtils;
 import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.oauth2server.web.OAuthAuthxRequest;
 import com.jusfoun.hookah.rpc.api.LoginLogService;
@@ -87,8 +88,12 @@ public class AuthorizeController {
 
             Subject subject = SecurityUtils.getSubject();
             //如果用户没有登录，跳转到登陆页面 TODO...判断是否是POST
+
+
             if (!subject.isAuthenticated()) {
                 if (!isLogin(subject, request)) {//登录失败时跳转到登陆页面
+                    //获取公钥随模板返回
+                    model.addAttribute(RsaLoginUtils.LOGIN_PUBLIC_KEY, RsaLoginUtils.getLoginPublicKey());
                     model.addAttribute("client", clientService.selectById(oauthRequest.getClientId()));
                     model.addAttribute("error", request.getAttribute("error"));
                     return "login";
@@ -179,6 +184,9 @@ public class AuthorizeController {
         String password = request.getParameter("password");
         String picValid = request.getParameter("picValid");
 
+        //解密数据
+        username = RsaLoginUtils.decryptByRSALoginInfo(username);
+        password = RsaLoginUtils.decryptByRSALoginInfo(password);
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return false;

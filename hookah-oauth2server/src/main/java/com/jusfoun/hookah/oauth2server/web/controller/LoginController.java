@@ -5,7 +5,10 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.UserValidVo;
 import com.jusfoun.hookah.core.utils.FormatCheckUtil;
 import com.jusfoun.hookah.core.utils.NetUtils;
+import com.jusfoun.hookah.core.utils.RSAUtils;
+import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.oauth2server.config.MyProps;
+import com.jusfoun.hookah.oauth2server.config.RsaLoginUtils;
 import com.jusfoun.hookah.oauth2server.security.UsernameAndPasswordToken;
 import com.jusfoun.hookah.rpc.api.LoginLogService;
 import com.jusfoun.hookah.rpc.api.UserService;
@@ -46,14 +49,20 @@ public class LoginController {
     @Resource
     LoginLogService loginLogService;
 
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
+        //获取公钥随模板返回
+        model.addAttribute(RsaLoginUtils.LOGIN_PUBLIC_KEY, RsaLoginUtils.getLoginPublicKey());
         return "login";
     }
 
     @Log(platform = "front", logType = "f0002", optType = "insert")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String postLogin(UserValidVo user, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
+
+        //解密数据
+        RsaLoginUtils.decryptByRSALoginInfo(user);
 
         String username = user.getUserName();
         UsernameAndPasswordToken token = new UsernameAndPasswordToken();
@@ -106,5 +115,9 @@ public class LoginController {
             return "redirect:" + host.get("website") + "/login";
         }
     }
+
+
+
+
 
 }

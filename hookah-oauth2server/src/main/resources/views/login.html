@@ -3,6 +3,7 @@ var head = {
 %>
 <link type="text/css" rel="stylesheet" href="/static/css/loginform.css">
 <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="/static/vendor/rsa/jsencrypt.min.js"></script>
 <style>
 	#header.transparent {
 		position: relative;
@@ -255,6 +256,7 @@ var htmlPart = {
 				<input id="fm-modulus" name="modulus" value="" type="hidden">
 				<input id="fm-exponent" name="exponent" value="10001" type="hidden">
 				<input type="hidden" name="ua" id="UA_InputId" value=""></form>
+				<input type="hidden" name="loginPublicKey" id="login_public_key" value="${loginPublicKey}"></form>
 		</div>
 		<div class="agreement">
 		</div>
@@ -301,7 +303,7 @@ var htmlPart = {
 
 	function check(form) {
 
-		if (form.userName.value == '') {
+        if (form.userName.value == '') {
 			$('#login-error').show().children('.notice-descript').html('用户名不能为空');
 			form.userName.focus();
 			return false;
@@ -311,6 +313,17 @@ var htmlPart = {
 			form.password.focus();
 			return false;
 		}
+
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey($('#login_public_key').val());
+        var encrypteUsername = encrypt.encrypt(form.userName.value);
+        var encryptePassword = encrypt.encrypt(form.password.value);
+        $('#fm-login-id').val(encrypteUsername);
+        $('#fm-login-password').val(encryptePassword);
+
+        console.log("加密后的数据username:" + $('#fm-login-id').val());
+        console.log("加密后的数据password:" + $('#fm-login-password').val());
+
 		$('#login-loading').show();
 		return true;
 	}
