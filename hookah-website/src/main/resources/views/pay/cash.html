@@ -55,7 +55,7 @@ var htmlPart = {
 							<input type="hidden" name="orderSn" value="${orderInfo.orderSn}" id="J_orderSn">
 							<ul id="J_MarketinglList"></ul>
 							<ul class="saved-card-list">
-								<%if(moneyBalance >= 0){%>
+								<%if(moneyBalance > 0){%>
 								<%for(item in payments){%>
 								<li class="${itemLP.index == 1 ? 'channel-balance' : 'channel-bank'} row-container fn-clear ${itemLP.index == 1 ? 'row-container-focus' : ''}">
 									<div class="row-basic fn-clear">
