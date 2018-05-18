@@ -14,7 +14,7 @@
              }
        });
  });
-$("#J_rechargeBtn").attr("disabled",true).css({"pointer-events":"none"},{"background": "#ccc"});
+$("#J_rechargeBtn").attr("disabled",true).css({"background":"#ccc","pointer-events":"none"});
 $("#J_rechargeBtn").on("click", function () {
     var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
     var money=$('#recharge-money').val();

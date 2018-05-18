@@ -3,7 +3,6 @@
 ================================================================== */
 .grid-0{
     width:100%;
-    overflow: hidden;
 }
 .grid-row{
     width:1200px;
@@ -112,9 +111,6 @@
 
 /* clear float
 =================================================================== */
-.clearfix{
-    overflow: hidden;
-}
 .clearfix:after {
     visibility: hidden;
     clear: both;
