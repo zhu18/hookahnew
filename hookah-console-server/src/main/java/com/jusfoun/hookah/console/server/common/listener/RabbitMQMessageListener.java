@@ -9,7 +9,8 @@ import com.jusfoun.hookah.core.exception.EmailException;
 import com.jusfoun.hookah.core.exception.SmsException;
 import com.jusfoun.hookah.core.exception.StationException;
 import com.jusfoun.hookah.core.utils.DateUtils;
-import com.jusfoun.hookah.core.utils.SMSUtil;
+import com.jusfoun.hookah.core.utils.JsonUtils;
+import com.jusfoun.hookah.core.utils.SMSUtilNew;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.MailService;
 import org.slf4j.Logger;
@@ -146,14 +147,14 @@ public class RabbitMQMessageListener {
         //获取模板内容
         String content = template.getTemplateContent();
         content = this.getContent(content, map);
-//        String retVal = SMSUtilNew.send(mobileNo, JsonUtils.toJson(map), template.getSmsTypeCode());
+        String retVal = SMSUtilNew.send(mobileNo, JsonUtils.toJson(map), template.getSmsTypeCode());
 
-        SMSUtil.sendSMS(mobileNo, content);
-//        if (HookahConstants.SMS_SUCCESS.equals(retVal)) {
-//            sendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_SUCCESS);
-//        }else {
-//            sendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_FAIL);
-//        }
+//        SMSUtil.sendSMS(mobileNo, content);
+        if (HookahConstants.SMS_SUCCESS.equals(retVal)) {
+            sendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_SUCCESS);
+        }else {
+            sendInfo.setIsSuccess(HookahConstants.LOCAL_SMS_FAIL);
+        }
         sendInfo.setSendContent(content);
         sendInfo.setSendHeader(template.getTemplateHeader());
         sendInfo.setReceiveAddr(mobileNo);
