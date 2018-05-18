@@ -4,7 +4,6 @@ import com.jusfoun.hookah.core.annotation.Log;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.common.redis.RedisOperate;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.constants.TongJiEnum;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
@@ -25,7 +24,6 @@ import com.jusfoun.hookah.webiste.util.ReadCookieUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -627,17 +625,23 @@ public class OrderInfoController extends BaseController {
     private List<Map> initPaymentList(HttpSession session){
         Map userMap = (Map)session.getAttribute("user");
         User user = userService.selectById((String)userMap.get("userId"));
-        Object[][] payments = {{"账户余额",user.getMoneyBalance()},{"支付宝",user.getMobile()}};
-        List<Map> list = new ArrayList<>(2);
-        for(int i=0;i<2;i++){
-            Map pay = new HashMap();
-            pay.put("payCode",i+1);
-            pay.put("payName",payments[i][0]);
-            pay.put("payDetail",payments[i][1]);
-            list.add(pay);
-        }
-        return list;
+//        Object[][] payments = {{"账户余额",user.getMoneyBalance()},{"支付宝",user.getMobile()}};
+//        List<Map> list = new ArrayList<>(2);
+//        for(int i=0;i<2;i++){
+//            Map pay = new HashMap();
+//            pay.put("payCode",i+1);
+//            pay.put("payName",payments[i][0]);
+//            pay.put("payDetail",payments[i][1]);
+//            list.add(pay);
+//        }
 
+        List<Map> list = new ArrayList<>();
+        Map pay = new HashMap();
+        pay.put("payCode",1);
+        pay.put("payName","账户余额");
+        pay.put("payDetail",user.getMoneyBalance());
+        list.add(pay);
+        return list;
     }
 
     /**
