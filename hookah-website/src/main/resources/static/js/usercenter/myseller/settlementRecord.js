@@ -51,6 +51,21 @@ $(function () {
         var hour = date.getHours();
         var minute = date.getMinutes();
         var second = date.getSeconds();
+		if(month < 10){
+			month = '0'+ month;
+		}
+		if(day < 10){
+			day = '0'+ day;
+		}
+		if(hour < 10){
+			hour = '0'+ hour;
+		}
+		if(minute < 10){
+			minute = '0'+ minute;
+		}
+		if(second < 10){
+			second = '0'+ second;
+		}
         $("#endDate").val(year + '-' + month + '-' + day  + ' ' + hour + ':' + minute + ':' + second)
         if(html=="本月"){
             month = now.getMonth()+1;
@@ -61,7 +76,28 @@ $(function () {
             month = date.getMonth()-2 ;
         } else if(html=="半年"){
             month = date.getMonth()-5;
+
+            console.log(month)
         }
+		if(month < 1){
+			year -=1;
+			month+=13
+		}
+		if(month < 10){
+			month = '0'+ month;
+        }
+		if(day < 10){
+			day = '0'+ day;
+		}
+		if(hour < 10){
+			hour = '0'+ hour;
+		}
+		if(minute < 10){
+			minute = '0'+ minute;
+		}
+		if(second < 10){
+			second = '0'+ second;
+		}
         $("#startDate").val(year + '-' + month + '-' + day  + ' ' + hour + ':' + minute + ':' + second)
         dataParm.settleStatus=status || null;
         dataParm.startDate=$("#startDate").val() || null;

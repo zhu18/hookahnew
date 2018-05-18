@@ -55,7 +55,7 @@ var htmlPart = {
 							<input type="hidden" name="orderSn" value="${orderInfo.orderSn}" id="J_orderSn">
 							<ul id="J_MarketinglList"></ul>
 							<ul class="saved-card-list">
-								<%if(moneyBalance >= 0){%>
+								<%if(orderInfo.orderAmount / 100 > 0){%>
 								<%for(item in payments){%>
 								<li class="${itemLP.index == 1 ? 'channel-balance' : 'channel-bank'} row-container fn-clear ${itemLP.index == 1 ? 'row-container-focus' : ''}">
 									<div class="row-basic fn-clear">
@@ -95,11 +95,11 @@ var htmlPart = {
 											<input class="channel-input"  name="apiCode" type="radio">
 											<p class="offline-payInfo" style="display:none;color: #969696;clear: both;line-height: 25px;border: 1px solid #CCCCCC;margin: 0 15px 10px;padding: 5px 35px;font-weight: bold;">
 												汇款账户 <br>
-												开户银行：浦发银行 <br>
-												开户行：浦发银行知春路支行 <br>
-												户名：九次方大数据信息集团有限公司 <br>
-												收款账户：91170078801900000095 <br>
-												<span style="color:red;">*汇款成后请联系客服进行确认，客服电话：4008190919</span>
+												开户银行：贵阳银行 <br>
+												开户行：贵阳银行高新科技支行<br>
+												户名：贵阳大数据交易所有限责任公司 <br>
+												收款账户：1116 0120 0300 0392 3<br>
+												<span style="color:red;">*汇款成后请联系客服进行确认，客服电话：0851-88118959</span>
 											</p>
 										</label>
 									</div>
@@ -123,7 +123,7 @@ var htmlPart = {
 													</span>
 													<span></span>
 												</span>
-												<input checked="checked" class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
+												<input checked="checked" class="channel-input" value="${payments[i].payCode}" name="apiCode" type="radio">
 											</label>
 										</div>
 										<div class="row-extra fn-hide"></div>
