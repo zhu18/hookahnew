@@ -6,13 +6,15 @@ import com.jusfoun.hookah.console.server.config.MyProps;
 import com.jusfoun.hookah.console.server.util.PropertiesManager;
 import com.jusfoun.hookah.core.common.Pagination;
 import com.jusfoun.hookah.core.constants.HookahConstants;
-import com.jusfoun.hookah.core.constants.RabbitmqQueue;
 import com.jusfoun.hookah.core.dao.OrderInfoMapper;
 import com.jusfoun.hookah.core.domain.*;
 import com.jusfoun.hookah.core.domain.mongo.MgGoods;
 import com.jusfoun.hookah.core.domain.mongo.MgGoodsOrder;
 import com.jusfoun.hookah.core.domain.mongo.MgOrderGoods;
-import com.jusfoun.hookah.core.domain.vo.*;
+import com.jusfoun.hookah.core.domain.vo.CartVo;
+import com.jusfoun.hookah.core.domain.vo.GoodsVo;
+import com.jusfoun.hookah.core.domain.vo.OrderInfoVo;
+import com.jusfoun.hookah.core.domain.vo.PayVo;
 import com.jusfoun.hookah.core.exception.HookahException;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.core.generic.GenericServiceImpl;
@@ -27,7 +29,6 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -1437,18 +1438,18 @@ public class OrderInfoServiceImpl extends GenericServiceImpl<OrderInfo, String> 
         StringBuilder apiRestUri = new StringBuilder();
         apiRestUri.append(apiRestUrl).append("?pageNum=").append(pageNumber).append("&pageSize=").append(pageSize)
                 .append("&orderSn=").append(orderSn).append("&goodsSn=").append(goodsSn);
-        if (null != startDate) {
+        if (null != startDate &&  !"".equals(startDate)) {
             startDate = startDate.replace(" ","%20");
             apiRestUri.append("&startTime=").append(startDate);
         }
-        if (null != endDate) {
+        if (null != endDate &&  !"".equals(endDate)) {
             endDate = endDate.replace(" ","%20");
             apiRestUri.append("&endTime=").append(endDate);
         }
-        if (null != ip) {
+        if (null != ip &&  !"".equals(ip)) {
             apiRestUri.append("&ip=").append(ip);
         }
-        if (null != status) {
+        if (null != status &&  !"".equals(status)) {
             apiRestUri.append("&status=").append(status);
         }
         apiRestUrl = apiRestUri.toString();
