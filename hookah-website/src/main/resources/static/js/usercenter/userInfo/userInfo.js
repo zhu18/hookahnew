@@ -14,7 +14,7 @@ function loadPageData(data) {
                 html +='<div class="order-list-top-info grid-left">';
                 html +='<h4>'+list[i].goodsName+'</h4>';
                 if(list[i].isDiscussPrice==1){
-                    html +='<p>价格面议</span></p>';
+                    html +='<p>咨询服务价格</span></p>';
 
                 }else {
                     var d=Transformation(list[i].shopPrice,"10000")
@@ -35,7 +35,7 @@ function loadPageData(data) {
                 html +='<div class="order-list-top-info grid-left">';
                 html +='<h4>'+list[i].goodsName+'</h4>';
                 if(list[i].isDiscussPrice==1){
-                    html +='<p>价格面议</span></p>';
+                    html +='<p>咨询服务价格</span></p>';
                 }else {
                     var d=Transformation(list[i].goodsPrice,"10000");
                     html +='<p>价格：<span>￥'+d+'</span></p>';

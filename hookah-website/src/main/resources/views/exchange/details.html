@@ -120,7 +120,7 @@ var htmlPart = {
 						<%}else{%>
 						<div>
 							<span>价格</span>
-							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">面议
+							<span class="font-size-24 color-orange J_goodsPrice" formatid="<%for(item in goodsDetails.formatList){%><%if(itemLP.first){%>${item.formatId}<%}%><%}%>">服务咨询
 <span style="font-size:12px;">(详情请咨询客服)</span>
 </span>
 						</div>
@@ -162,10 +162,19 @@ var htmlPart = {
 							</div>
 							<input type="hidden" name="goodsId" id="J_goodsId" value="${goodsDetails.goodsId}">
 							<input type="hidden" name="formatId" id="J_formatId" value="${goodsDetails.formatList[0].formatId}">
+							<%if(goodsDetails.isDiscussPrice == 1){%>
+							<a class="vertical-align-middle btn btn-full-orange grid-left" href="javascript:check()" style="cursor: pointer; margin-left:10px; height:42px; line-height:42px; font-size:18px;width:138px;background-color: #ccc;pointer-events:none;">
+								立即购买
+							</a>
+
+							<a id="J_addCart" href="javascript:addCart('${goodsDetails.goodsId}','${goodsDetails.isDiscussPrice}');" style="height:40px; line-height:40px; font-size:18px;width:136px;background-color: #ccc;border:1px solid #ccc;color:#fff;pointer-events:none;" class="vertical-align-middle btn btn-full-blue margin-left-10  grid-left">加入购物车</a>
+							<%}else{%>
 							<a class="vertical-align-middle btn btn-full-orange grid-left" href="javascript:check()" style="cursor: pointer; margin-left:10px; height:42px; line-height:42px; font-size:18px;width:138px;background-color: #ffa800;">
 								立即购买
 							</a>
+
 							<a id="J_addCart" href="javascript:addCart('${goodsDetails.goodsId}','${goodsDetails.isDiscussPrice}');" style="height:40px; line-height:40px; font-size:18px;width:136px;background-color: #fff;border:1px solid #ffa800;color:#ffa800;" class="vertical-align-middle btn btn-full-blue margin-left-10  grid-left">加入购物车</a>
+							<%}%>
 							<!--<a id="J_test" href="javascript:addCart('${goodsDetails.goodsId}','${goodsDetails.isDiscussPrice}');" style="height:40px; line-height:40px; font-size:18px;width:136px;background-color: #faf8ca;border:1px solid #ffa800;color:#ffa800;" class="vertical-align-middle btn btn-full-blue margin-left-10  grid-left">申请试用</a>-->
 						</form>
 					</div>
@@ -661,7 +670,7 @@ var htmlPart = {
 							<div class="img-info">
 								<p class="title">${item.goodsName}</p>
 								<%if(item.isDiscussPrice == 1){%>
-								<p class="color-red-bdg">面议</p>
+								<p class="color-red-bdg">服务咨询</p>
 								<%}else{%>
 								<%if(item.shopPrice >= 1000000){%>
 								<p class="color-red-bdg">￥${trunc(item.shopPrice / 1000000,2)}万/${item.shopNumber == 1 ?

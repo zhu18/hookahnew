@@ -26,7 +26,7 @@ function loadPageData(data){
                  <img src="'+list[i].goodsImg+'" alt="">\
                 </div>';
             if(list[i].isDiscussPrice == 1){
-                html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price text-align-center color-red font-size-16">价格面议</div></div>';
+                html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price text-align-center color-red font-size-16">价格咨询服务</div></div>';
             }else {
                 var d=Transformation(list[i].shopPrice,"10000")
                 html += '<div class="goods-name">'+list[i].goodsName+'<div class="goods-price">价格：<span>￥'+d+'/'+mMat+'</span></div></div>';

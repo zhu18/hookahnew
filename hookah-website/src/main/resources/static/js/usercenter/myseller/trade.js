@@ -81,7 +81,7 @@ function loadPageData(data){
                 html += '</div>';
                 html += '</td>';
                 if(goods[ii].isDiscussPrice == 1){
-                    html += '<td class="text-align-left">x' + goods[ii].goodsNumber +'<br/>'+ '面议参考价:'+ (goods[ii].goodsPrice / 100).toFixed(2) +'元<br />'+ goodsTypeInfo+ '<br />'+ isOfflineInfo+'</td>';
+                    html += '<td class="text-align-left">x' + goods[ii].goodsNumber +'<br/>'+ '咨询服务参考价:'+ (goods[ii].goodsPrice / 100).toFixed(2) +'元<br />'+ goodsTypeInfo+ '<br />'+ isOfflineInfo+'</td>';
                 }else {
                     html += '<td class="text-align-left">x' + goods[ii].goodsNumber + '<br/>' + '规格:' + (goods[ii].goodsPrice / 100).toFixed(2) + '/' + mMat + '<br />'+ goodsTypeInfo+ '<br />'+ isOfflineInfo+'</td>';
                 }
