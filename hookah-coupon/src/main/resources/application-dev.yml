@@ -1,17 +1,17 @@
 server:
-  port: 9898
+  port: 9698
   http:
     protocal: http://
   session:
     cookie:
-      domain: gbdex.bdgstore.cn
+      domain: bdgstore.cn
       name: hookah_sid
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.22.200:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.4.215:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: password
+    password: bdgStore3306
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -38,22 +38,19 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.22.200:27017/hookah_pay
+      uri:  mongodb://192.168.4.215:27017/hookah
   rabbitmq:
-    addresses: 192.168.22.200:5672
+    addresses: 192.168.4.215:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
-    listener:
-      retry:
-        enabled: true
-        max-attempts: 2
   mail:
-      host: smtp.qiye.163.com
-      port: 25
-      username: gbd@jusfoun.com
-      password: 1QAZ2wsx
+      host: smtp.gbdex.bdgstore.cn
+      username: service@qddata.com.cn
+      password: Bigdata8661101
+      transport:
+        protocol: smtp
       properties:
         mail:
           smtp:
@@ -62,21 +59,13 @@ spring:
               enable: true
             socketFactory:
               fallback: false
-#  jpa:
-#    database: MYSQL
-#    show-sql: true
-##    hibernate:
-##      ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        dialect : org.hibernate.dialect.MySQL5Dialect
   mvc:
     static-path-pattern: /static/**
 myconf:
   beetl:
     templatesPath: views/
     contentType: text/html;charset:UTF-8
-    prefix:
+    prefix: /
     suffix: .html
     cache: false
   host:
@@ -85,18 +74,19 @@ myconf:
     static: ${server.http.protocal}static.gbdex.bdgstore.cn
     auth: ${server.http.protocal}auth.gbdex.bdgstore.cn
     console: ${server.http.protocal}console.gbdex.bdgstore.cn
+    admin: ${server.http.protocal}admin.gbdex.bdgstore.cn
     crowd: ${server.http.protocal}crowd.gbdex.bdgstore.cn
   oauth2:
-    clientId: admin
+    clientId: crowd
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
     regUrl: http://auth.gbdex.bdgstore.cn/reg
-    loginUrl: http://auth.gbdex.bdgstore.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://admin.gbdex.bdgstore.cn/home
+    loginUrl: http://auth.gbdex.bdgstore.cn/oauth/authorize?client_id=crowd&response_type=code&redirect_uri=
     logoutUrl: http://auth.gbdex.bdgstore.cn/logout?redirect_uri=http://gbdex.bdgstore.cn/login
     accessTokenUrl: http://auth.gbdex.bdgstore.cn/oauth/accessToken
     userInfoUrl: http://auth.gbdex.bdgstore.cn/userInfo
     redirectUrl: http://auth.gbdex.bdgstore.cn/login
   redis:
-    ipPort: 192.168.22.200:7000,192.168.22.200:7001,192.168.22.200:7002
+    ipPort: 192.168.4.215:7000,192.168.4.215:7001,192.168.4.215:7002
     password: bdgstore
   consul:
     ipPort: localhost:8500
