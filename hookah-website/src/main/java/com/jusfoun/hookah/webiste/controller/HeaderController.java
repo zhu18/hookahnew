@@ -4,13 +4,11 @@ import com.jusfoun.hookah.core.domain.User;
 import com.jusfoun.hookah.core.domain.vo.CartVo;
 import com.jusfoun.hookah.core.generic.Condition;
 import com.jusfoun.hookah.rpc.api.CartService;
-import com.jusfoun.hookah.rpc.api.UserService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,7 +45,7 @@ public class HeaderController extends BaseController {
                 html.append("var userInfo = '<input type=\"hidden\" id=\"J_userType\" value=\""+userMap.get("userType")+"\">';");
                 html.append("document.getElementById('userStatus').innerHTML = str + userInfo;");
             }else {
-                html.append("var str = '<li class=\"display-inline-block\"> <a href=\"http://auth.gbdex.bdgstore.cn/oauth/authorize?client_id=website&amp;response_type=code&amp;redirect_uri=\" style=\"padding:7px 14px;\">登录</a> </li> <li class=\"display-inline-block margin-left-10\"> <a class=\"reg\" href=\"http://auth.gbdex.bdgstore.cn/reg\">免费注册</a> </li> <p class=\"show-ad show\">注册送200元大礼 <i class=\"fa fa-close\"></i> </p>';");
+                html.append("var str = '<li class=\"display-inline-block\"> <a href=\"http://auth.gbdex.bdgstore.cn/oauth/authorize?client_id=website&amp;response_type=code&amp;redirect_uri=\" style=\"padding:7px 14px;\">登录</a> </li> <li class=\"display-inline-block margin-left-10\"> <a class=\"reg\" href=\"http://auth.gbdex.bdgstore.cn/reg\">注册</a> </li> <p class=\"show-ad show\">注册送200元大礼 <i class=\"fa fa-close\"></i> </p>';");
                 html.append("document.getElementById('userStatus').innerHTML = str;");
 
             }
