@@ -132,13 +132,6 @@ local.properties
 /hookah-console-angular/npm-debug.log
 /hookah-console-angular/dist/
 /hookah-console-angular/node_modules/
-/hookah-console-other/src/main/resources/application-dev.yml
-/hookah-website/src/main/resources/application-dev.yml
 /npm-debug.log
 /*.ipr
-/hookah-pay/src/main/resources/application-dev.yml
-/hookah-coupon/src/main/resources/application-dev.yml
-/hookah-console-server/src/main/resources/application-dev.yml
-/hookah-oauth2server/src/main/resources/application-dev.yml
-/hookah-crowd-website/src/main/resources/application-dev.yml
 /hookah-console-angular/package-lock.json

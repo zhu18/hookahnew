@@ -13,7 +13,7 @@ debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.4.215:27017/hookah
+      uri:  mongodb://192.168.22.200:27017/hookah
   mvc:
       static-path-pattern: /static/**
   http:
