@@ -32,7 +32,7 @@ myconf:
     userInfoUrl: http://auth.gbdex.bdgstore.cn/userInfo
     redirectUrl: http://auth.gbdex.bdgstore.cn/login
   redis:
-    ipPort: 192.168.4.215:7000,192.168.4.215:7001,192.168.4.215:7002
+    ipPort: 192.168.22.200:7000,192.168.22.200:7001,192.168.22.200:7002
     password: bdgstore
   consul:
     ipPort: localhost:8500
@@ -40,11 +40,11 @@ debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.4.215:27017/hookah
+      uri:  mongodb://192.168.22.200:27017/hookah
   mvc:
       static-path-pattern: /static/**
   rabbitmq:
-      addresses: 192.168.4.215:5672
+      addresses: 192.168.22.200:5672
       username: root
       password: password
       publisher-confirms: true
