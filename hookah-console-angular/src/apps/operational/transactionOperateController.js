@@ -1,6 +1,6 @@
 class OperateController {
   constructor($scope, $rootScope, $http, $stateParams, $uibModal, usSpinnerService, growl) {
-    $scope.title = "运营流量统计分析";
+    $scope.title = "交易运营统计分析";
     $scope.search = function () {
       if ($scope.startDate !== null && $scope.endDate !== null && ($scope.startDate > $scope.endDate)) {
         alert('开始时间必须大于结束时间！请重新选择日期。');
