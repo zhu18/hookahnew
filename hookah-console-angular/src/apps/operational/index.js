@@ -35,13 +35,14 @@ app.run(function ($rootScope, $state) {
   };
   $rootScope.config.title = '数据分析';
   $rootScope.config.mainNav =[
+    // {
+    //   "title":"交易数据统计分析",
+    //   "url":"operational.transaction"
+    // },{
+    //   "title":"网站流量统计分析",
+    //   "url":"operational.website"
+    // },
     {
-      "title":"交易数据统计分析",
-      "url":"operational.transaction"
-    },{
-      "title":"网站流量统计分析",
-      "url":"operational.website"
-    },{
       "title":"交易运营统计分析",
       "url":"operational.transactionOperate"
     },{
