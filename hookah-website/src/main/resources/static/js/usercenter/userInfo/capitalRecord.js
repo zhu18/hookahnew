@@ -110,8 +110,8 @@ $(function () {
     var start = {
         format: "YYYY-MM-DD hh:mm:ss",
         isTime: true,
-        maxDate: $.nowDate(0),
-        choosefun: function (elem, datas) { //日历选择完毕回调函数
+        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+        donefun: function (elem, datas) { //日历选择完毕回调函数
             end.minDate = datas; //开始日选好后，重置结束日的最小日期
             if($("#endDate").val() && $("#startDate").val()){
                 dataParm.startDate=$("#startDate").val() || null;
@@ -128,8 +128,8 @@ $(function () {
     var end = {
         format: "YYYY-MM-DD hh:mm:ss",
         isTime: true,
-        maxDate: $.nowDate(0),
-        choosefun: function (elem, datas) {
+        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+        donefun: function (elem, datas) {
             start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
             if($("#endDate").val() && $("#startDate").val()){
                 dataParm.startDate=$("#startDate").val() || null;
@@ -143,8 +143,8 @@ $(function () {
             goPage(1);
         }
     };
-    $.jeDate("#startDate", start);
-    $.jeDate("#endDate", end);
+    jeDate("#startDate", start);
+    jeDate("#endDate", end);
     // 日历插件结束
 
 })

@@ -129,13 +129,12 @@ $(document).on('blur', '#J_money', function () { //托管金额失去焦点去�
 var end = {
   format: "YYYY-MM-DD hh:mm:ss",
   isTime: true,
-  minDate: $.nowDate(),
-  maxDate: $.nowDate(90),
-  choosefun: function (elem, datas) {
-  }
+  minDate: "1990-12-31 23:59:59",
+  maxDate: "2099-12-31 23:59:59",
+  theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"}
 
 };
-$.jeDate("#J_date", end);
+jeDate("#J_date", end);
 $(document).on('mouseenter', '.load-file', function () { //鼠标滑过描述显示工具栏
   $(this).children().find('.crowdsourcing-table-edit').css({'display': 'block'}).stop().animate({
     'opacity': 1,

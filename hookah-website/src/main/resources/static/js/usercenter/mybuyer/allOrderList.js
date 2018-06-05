@@ -279,24 +279,17 @@ function loadPageData(data) {
   }
 }
 var start = {
-  format: "YYYY-MM-DD hh:mm:ss",
-  isTime: true,
-  maxDate: $.nowDate(0),
-  choosefun: function (elem, datas) {
-    end.minDate = datas; //开始日选好后，重置结束日的最小日期
-  }
+    format: "YYYY-MM-DD hh:mm:ss",
+    isTime: true,
+    theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"}
 };
 var end = {
-  format: "YYYY-MM-DD hh:mm:ss",
-  isTime: true,
-  maxDate: $.nowDate(0),
-  choosefun: function (elem, datas) {
-    start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
-  }
-
+    format: "YYYY-MM-DD hh:mm:ss",
+    isTime: true,
+    theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"}
 };
-$.jeDate("#startDate", start);
-$.jeDate("#endDate", end);
+jeDate("#startDate", start);
+jeDate("#endDate", end);
 //点击查询按钮
 $(".searchQuery .search").on("click", function () {
   //评论状态：0：未评论；1：已评论

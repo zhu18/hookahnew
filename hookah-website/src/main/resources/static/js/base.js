@@ -370,3 +370,41 @@ $('#doyoo_mon_refuse').click(function(){
 	},500)
 
 })
+
+if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {
+    var $placeholder = $("input[placeholder]");
+    for (var i = 0; i < $placeholder.length; i++) {
+        if ($placeholder.eq(i).attr("type") == "text") {
+            $placeholder.eq(i).siblings("label").text($placeholder.eq(i).attr("placeholder")).show()
+        } else {
+            $placeholder.eq(i).val($placeholder.eq(i).attr("placeholder")).css({"color": "#ccc"})
+        }
+    }
+    $placeholder.focus(function () {
+        if ($(this).attr("type") == "text") {
+            $(this).siblings("label").hide()
+        } else {
+            if ($(this).val() == $(this).attr("placeholder")) {
+                $(this).val("").css({"color": "#333"})
+            }
+        }
+    }).blur(function () {
+        if ($(this).attr("type") == "text") {
+            if ($(this).val() == "") {
+                $(this).siblings("label").text($(this).attr("placeholder")).show()
+            }
+        } else {
+            if ($(this).val() == "") {
+                $(this).val($(this).attr("placeholder")).css({"color": "#ccc"})
+            }
+        }
+    });
+
+    $placeholder.siblings("label").click(function () {
+        if ($(this).parent("div").siblings(".see_pwd_btn").attr("data-flag") == "1") {
+            $(this).hide().next("input").next("input").focus()
+        } else {
+            $(this).hide().next("input").focus()
+        }
+    })
+}
