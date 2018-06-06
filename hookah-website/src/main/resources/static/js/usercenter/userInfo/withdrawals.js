@@ -130,8 +130,7 @@ function getDetail(id) {
     var start = {
         format: "YYYY-MM-DD hh:mm:ss",
         isTime: true,
-        maxDate: $.nowDate(0),
-        choosefun: function (elem, datas) {
+        donefun: function (elem, datas) {
             end.minDate = datas; //开始日选好后，重置结束日的最小日期
             if($("#endDate").val() && $("#startDate").val()){
                   dataParm.startDate=$("#startDate").val() || null;
@@ -148,8 +147,7 @@ function getDetail(id) {
     var end = {
         format: "YYYY-MM-DD hh:mm:ss",
         isTime: true,
-        maxDate: $.nowDate(0),
-        choosefun: function (elem, datas) {
+        donefun: function (elem, datas) {
             start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
             if($("#endDate").val() && $("#startDate").val()){
                 dataParm.startDate=$("#startDate").val() || null;
@@ -163,6 +161,6 @@ function getDetail(id) {
             goPage(1);
         }
     };
-    $.jeDate("#startDate", start);
-    $.jeDate("#endDate", end);
+    jeDate("#startDate", start);
+    jeDate("#endDate", end);
     // 日历插件结束
