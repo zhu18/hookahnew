@@ -708,11 +708,10 @@ function isOnsaleFun(that) {
 		$('.isOnsale-box').hide();
 	}
 }
-$.jeDate("#indate", {
+jeDate("#indate", {
 	format: "YYYY-MM-DD hh:mm:ss",
 	isTime: true,
-	minDate: $.nowDate(0),
-	choosefun: function(val) {
+	donefun: function(val) {
 		$('#indate_s').val(val)
 	}
 });
