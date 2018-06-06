@@ -711,7 +711,8 @@ function isOnsaleFun(that) {
 jeDate("#indate", {
 	format: "YYYY-MM-DD hh:mm:ss",
 	isTime: true,
-	donefun: function(val) {
+    theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+    donefun: function(val) {
 		$('#indate_s').val(val)
 	}
 });

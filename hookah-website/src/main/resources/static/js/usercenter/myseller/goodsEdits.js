@@ -322,7 +322,8 @@ function rederDateDL() {
 	var start = {
 		format: "YYYY-MM-DD hh:mm:ss",
 		isTime: true,
-		choosefun: function (elem, val, datas) {
+        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+        donefun: function (elem, val, datas) {
 			end.minDate = datas; //开始日选好后，重置结束日的最小日期
 			$("#offLine_startDate_s").val(val);
 		},
@@ -337,7 +338,8 @@ function rederDateDL() {
 	var end = {
 		format: "YYYY-MM-DD hh:mm:ss",
 		isTime: true,
-		choosefun: function (elem, val, datas) {
+        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+        donefun: function (elem, val, datas) {
 			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
 			$("#offLine_endDate_s").val(val);
 		},
@@ -350,8 +352,8 @@ function rederDateDL() {
 		}
 	};
 
-	$.jeDate("#offLine_startDate", start);
-	$.jeDate("#offLine_endDate", end);
+	jeDate("#offLine_startDate", start);
+	jeDate("#offLine_endDate", end);
 }
 function childrenSelects(that) {
 	initializeGoodsType($('#parentSelect').val(), that);
@@ -1810,11 +1812,11 @@ function renderIsBook(isBook, onsaleStartDate) {
 		$('#indate_s').val(onsaleStartDate);
 	}
 }
-$.jeDate("#indate", {
+jeDate("#indate", {
 	format: "YYYY-MM-DD hh:mm:ss",
 	isTime: true,
-	minDate: $.nowDate(0),
-	choosefun: function (elem, val, date) {
+    theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+    choosefun: function (elem, val, date) {
 		$('#indate_s').val(val)
 	},
 	okfun: function (elem, val, date) {
