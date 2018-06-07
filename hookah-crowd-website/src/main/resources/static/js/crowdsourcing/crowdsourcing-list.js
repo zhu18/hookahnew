@@ -58,16 +58,16 @@ function loadPageData(data) { //渲染页面数据
 
 $(document).on('click', '.j_searchLi li',function () {
   $(this).addClass('active').siblings().removeClass('active').parent().attr('value', $(this).attr('value'));
-  searchFn();
+    searchFn($(this).html());
 });
 $('.searchBtn').on('click', function () {
   searchFn();
 });
-function searchFn() {
-  dataParm.status = $('#status').attr('value');
-  dataParm.type = $('#type').attr('value');
-  dataParm.timeType = $('#timeType').attr('value');
-  goPage("1");
+function searchFn(val) {
+  dataParm.status = val == "全部"?"":$('#status').attr('value');
+  dataParm.type = val == "全部" ?"":$('#type').attr('value');
+  dataParm.timeType = val == "全部"?"":$('#timeType').attr('value');
+    goPage("1");
 }
 
 $(document).on('click','.timeOver',function () {
