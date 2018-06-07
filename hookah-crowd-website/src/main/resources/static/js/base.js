@@ -212,9 +212,7 @@ function compatibilityPL() {
     if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {
         var $placeholder = $("input[placeholder]");
         for (var i = 0; i < $placeholder.length; i++) {
-
             $placeholder.eq(i).val($placeholder.eq(i).attr("placeholder")).css({"color": "#ccc"})
-
         }
         $placeholder.focus(function () {
             console.log($(this).val());

@@ -110,15 +110,14 @@ function renderPage(data) {
 }
 
 
-
-
 $(document).on('blur', '#J_money', function () { //托管金额失去焦点去掉小数点
-  var tempVal=parseInt($(this).val());
-  if(tempVal<1){
-    $(this).val(1);
-  }else{
-    $(this).val(tempVal);
-  }
+    var tempVal = parseInt($(this).val() || 0);
+    console.log(tempVal);
+    if (tempVal < 1) {
+        $(this).val(1);
+    } else {
+        $(this).val(tempVal);
+    }
 
 });
 
