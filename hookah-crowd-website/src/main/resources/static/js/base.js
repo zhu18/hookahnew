@@ -209,19 +209,26 @@ function shoppingCart() {
 	}
 }
 function compatibilityPL() {
-	if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {
-		var $placeholder = $("input[placeholder]");
-		$placeholder.val($placeholder.attr("placeholder")).css({"color": "#ccc"});
-		$placeholder.focus(function () {
-			if ($(this).val() == $(this).attr("placeholder")) {
-				$(this).val("").css({"color": "#333"})
-			}
-		}).blur(function () {
-			if ($(this).val() == "") {
-				$(this).val($(this).attr("placeholder")).css({"color": "#ccc"})
-			}
-		});
-	}
+    if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {
+        var $placeholder = $("input[placeholder]");
+        for (var i = 0; i < $placeholder.length; i++) {
+
+            $placeholder.eq(i).val($placeholder.eq(i).attr("placeholder")).css({"color": "#ccc"})
+
+        }
+        $placeholder.focus(function () {
+            console.log($(this).val());
+            if ($(this).val() == $(this).attr("placeholder")) {
+                $(this).val("").css({"color": "#333"})
+            }
+        }).blur(function () {
+            console.log($(this).val());
+
+            if ($(this).val() == "") {
+                $(this).val($(this).attr("placeholder")).css({"color": "#ccc"})
+            }
+        });
+    }
 }
 function getSearchSug(sugText) {
 	$.ajax({
