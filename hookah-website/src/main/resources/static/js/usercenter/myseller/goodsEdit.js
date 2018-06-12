@@ -310,11 +310,14 @@ $('#fileupload2').fileupload({ //文件上传
 
 	}
 });
+console.log(222);
 $('#fileupload11').fileupload({ //文件上传
 	url: host.static+'/upload/other',
 	dataType: 'json',
 	done: function (e, data) {
-		if(data.result.code == 1){
+        console.log(data);
+        console.log(1111);
+        if(data.result.code == 1){
 			var obj = data.result.data[0];
 			$("#dataSample").val(obj.filePath);
 			$('.fileUploads_j span').html(data.files[0].name);

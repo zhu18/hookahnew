@@ -544,11 +544,15 @@ function renderWangEdit() { // 渲染富文本
 	editorEs.create();
 }
 function uploadGoodsImg() { //上传商品图片
-	$('#fileupload').fileupload({   //图片上传
+    console.log(11);
+    $('#fileupload').fileupload({   //图片上传
 		url: host.static + '/upload/img',
 		dataType: 'json',
+        sequentialUploads: true,
+        autoUpload: true,
 		add: function (e, data) {
-			var filesize = data.files[0].size;
+            console.log(11);
+            var filesize = data.files[0].size;
 			if (Math.ceil(filesize / 1024) > 1024 * 5) {
 				$.alert('文件过大');
 				return;
@@ -556,7 +560,12 @@ function uploadGoodsImg() { //上传商品图片
 			data.submit();
 		},
 		done: function (e, data) {
-			if (data.result.code == 1) {
+            console.log(33);
+            console.log(data);
+            console.log($('pre', data.result).text());
+            console.log(data.result);
+            // var result = JSON.parse(data.result);
+            if (data.result.code == 1) {
 				var obj = data.result.data[0];
 				$("#preview-img").attr("src", obj.absPath);
 				$('input[name="goodsImges"]').val(obj.absPath);
