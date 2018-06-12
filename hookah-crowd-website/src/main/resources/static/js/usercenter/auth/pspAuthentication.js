@@ -98,7 +98,7 @@ $("#educationAdd").on('click',function () {
          });
          $("#educationAdd").hide();
          $('.content-education-noData').hide();
-         jeDate();
+         jeDateFn();
          fileUpload();
          validate();
 });
@@ -149,7 +149,7 @@ $("#workAdd").on('click',function () {
         })
     });
     $("#workAdd").hide();
-    jeDate();
+    jeDateFn();
     fileUpload();
     validate();
 });
@@ -192,7 +192,7 @@ $("#projectAdd").on('click',function () {
         })
     });
     $("#projectAdd").hide();
-    jeDate();
+    jeDateFn();
     fileUpload();
     validate();
 });
@@ -245,7 +245,7 @@ $("#appCaseAdd").on('click',function () {//应用案例
         })
     });
     $("#appCaseAdd").hide();
-    jeDate();
+    jeDateFn();
     fileUpload();
     validate();
 });
@@ -296,7 +296,7 @@ $("#swpAdd").on('click',function () {//软件著作权
         })
     });
     $("#swpCaseAdd").hide();
-    jeDate();
+    jeDateFn();
     fileUpload();
     validate();
 });
@@ -347,7 +347,7 @@ $("#inPatentsAdd").on('click',function () { //发明专利
         })
     });
     $("#inPatentsAdd").hide();
-    jeDate();
+    jeDateFn();
     fileUpload();
     validate();
 });
@@ -362,6 +362,7 @@ function itemDelete(r,optAuthType) {
                 type: 'post',
                 url: "/api/auth/optAuthInfo",
                 dataType: 'json',
+                cache:false,
                 contentType: 'application/json',
                 data:JSON.stringify({
                     optArrAySn:r.currentTarget.attributes[2].nodeValue,
@@ -371,7 +372,12 @@ function itemDelete(r,optAuthType) {
                 success: function (data) {
                     console.log(data);
                     if(data.code==1){
-                        r.target.parentNode.parentNode.parentNode.parentNode.remove();
+                        if(isIE10()){
+                            r.target.parentNode.parentNode.parentNode.parentNode.removeNode();
+
+                        }else {
+                            r.target.parentNode.parentNode.parentNode.parentNode.remove();
+                        }
                         reader();
                         $.alert("删除成功！")
                     }
@@ -383,6 +389,18 @@ function itemDelete(r,optAuthType) {
         }
     });
 }
+//判断是不是ie10以下的浏览器
+function isIE10() {
+    if ((navigator.appName == "Microsoft Internet Explorer") && (document.documentMode < 10 || document.documentMode == undefined)) {
+          return true;
+    }else {
+        return false;
+    }
+};
+
+
+
+
 //保存按钮
 function addSave(data) {
     // var sn=$(r)[0].target.attributes[2].nodeValue;
@@ -489,7 +507,7 @@ function educationEdit(r) {
                     });
                 });
                 $("#educationAdd").hide();
-                jeDate();
+                jeDateFn();
                 fileUpload();
                 validate();
             }
@@ -568,7 +586,7 @@ function workEdit(r) {
                     });
                 });
                 $("#workAdd").hide();
-                jeDate();
+                jeDateFn();
                 fileUpload();
                 validate();
             }
@@ -638,7 +656,7 @@ function projectEdit(r) {
                     })
                 });
                 $("#projectAdd").hide();
-                jeDate();
+                jeDateFn();
                 fileUpload();
                 validate();
             }
@@ -720,7 +738,7 @@ function appCaseEdit(r) {
                     })
                 });
                 $("#appCaseAdd").hide();
-                jeDate();
+                jeDateFn();
                 fileUpload();
                 validate();
             }
@@ -800,7 +818,7 @@ function swpEdit(r) {
                     })
                 });
                 $("#swpAdd").hide();
-                jeDate();
+                jeDateFn();
                 fileUpload();
                 validate();
             }
@@ -880,7 +898,7 @@ function inPatentsEdit(r) {
                     })
                 });
 
-                jeDate();
+                jeDateFn();
                 fileUpload();
                 validate();
             }
@@ -894,6 +912,7 @@ function reader() {
         type: 'get',
         url: "/api/auth/getAuthInfo",
         async: false,
+        cache:false,
         success: function (data) {
             console.log(data);
             if(data.code==1){
@@ -1024,10 +1043,12 @@ function reader() {
                 }
 
                 if(appCaseList && appCaseList.length>0){ //应用案例
+                    console.log(appCaseList);
                     $('.content-appCase-noData').hide();
                     var html=''
                     for (var i=0,len=appCaseList.length;i<len;i++){
                         var item=appCaseList[i];
+                        console.log(formatDate(item.startTime));
                         html +='<dl> '
                         html +='<dt class="clearfix"> '
                         html +='<div class="grid-left"> '
@@ -1145,39 +1166,51 @@ function time() {
 }
 
 function formatDate(d){
-    var   data=new Date(d);
-    var   now=new Date(data.getTime(d));
-    var   year=now.getFullYear();
-    var   month=now.getMonth()+1;
-    return year+"/"+month;
+    // var str = d.replace(/-/g,"/");
+    // var date = new Date(str );
+    // var   data=new Date(d);
+    // var   now=new Date(data.getTime(d));
+    // var   year=now.getFullYear();
+    // var   month=now.getMonth()+1;
+    // return year+"/"+month;
+
+    var newDate=/\d{4}-\d{1,2}-\d{1,2}/g.exec(d);//去掉时间
+    var str = newDate[0].replace(/-/g,"/");//“2018-5-3” ---》“2018/5/3”
+    var date = new Date(str );
+    return str ;//“2018/5/3”
 }
 
 // 日历插件
-function jeDate() {
+function jeDateFn() {
     var start = {
         format: "YYYY-MM-DD hh:mm:ss",
         isTime: true,
-        maxDate: $.nowDate(0),
-        choosefun: function (elem, datas) { //日历选择完毕回调函数
+        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+        donefun: function (elem, datas) { //日历选择完毕回调函数
             end.minDate = datas; //开始日选好后，重置结束日的最小日期
         }
     };
     var end = {
         format: "YYYY-MM-DD hh:mm:ss",
         isTime: true,
-        maxDate: $.nowDate(0),
-        choosefun: function (elem, datas) {
+        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+        donefun: function (elem, datas) {
             start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
         }
     };
     var single = {
         format: "YYYY-MM-DD hh:mm:ss",
-        isTime: true,
-        maxDate: $.nowDate(0),
+        isTime: true
     };
-    $.jeDate("#startDate", start);
-    $.jeDate("#endDate", end);
-    $.jeDate("#singleDate", single);
+    if(document.getElementById('startDate')){
+        jeDate("#startDate", start);
+    }
+    if(document.getElementById('endDate')){
+        jeDate("#endDate", end);
+    }
+    if(document.getElementById('singleDate')){
+        jeDate("#singleDate", single);
+    }
 }
 // 上传插件
 function fileUpload() {
