@@ -144,4 +144,20 @@ public class UploadfileController {
         }
         return returnData;
     }
+
+    @RequestMapping(value="image", method = RequestMethod.POST, consumes = MediaType.TEXT_PLAIN_VALUE)
+    @ResponseBody
+    public ReturnData fileUploadImage(HttpServletRequest request, String userId, @RequestParam("filename") MultipartFile[] myfiles) {
+        ReturnData returnData = new ReturnData();
+        returnData.setCode(ExceptionConst.Success);
+        try {
+            returnData.setData(UploadUtil.uploadFile(request, PRE_IMG, userId, myfiles));
+        } catch (Exception e) {
+            returnData.setCode(ExceptionConst.Failed);
+            returnData.setMessage(e.toString());
+            e.printStackTrace();
+        }
+        return returnData;
+    }
+
 }
