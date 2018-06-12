@@ -548,7 +548,6 @@ function uploadGoodsImg() { //上传商品图片
     $('#fileupload').fileupload({   //图片上传
 		url: host.static + '/upload/img',
 		dataType: 'json',
-        sequentialUploads: true,
         autoUpload: true,
 		add: function (e, data) {
             console.log(11);
@@ -559,12 +558,34 @@ function uploadGoodsImg() { //上传商品图片
 			}
 			data.submit();
 		},
+        // success:function(data){
+         //    var browser=navigator.appName
+         //    var b_version=navigator.appVersion
+         //    var version=b_version.split(";");
+         //    var trim_Version=version[1].replace(/[ ]/g,"");
+         //    if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE9.0")
+         //    {
+         //        console.log('ie9999999999999')
+         //        console.log(data);
+         //    }
+		// },
 		done: function (e, data) {
-            console.log(33);
-            console.log(data);
-            console.log($('pre', data.result).text());
-            console.log(data.result);
+            // console.log(3311111111111111111111);
+            // console.log(data);
+            // console.log($('pre', data.result).text());
+            // console.log(data.result);
             // var result = JSON.parse(data.result);
+            // var browser=navigator.appName
+            // var b_version=navigator.appVersion
+            // var version=b_version.split(";");
+            // var trim_Version=version[1].replace(/[ ]/g,"");
+            // if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE9.0")
+            // {
+            //     console.log('ie9999999999999')
+            //     console.log(e);
+            //     console.log('ie9999999999999')
+            //     console.log(data);
+            // }
             if (data.result.code == 1) {
 				var obj = data.result.data[0];
 				$("#preview-img").attr("src", obj.absPath);
