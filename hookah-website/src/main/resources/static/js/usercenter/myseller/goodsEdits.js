@@ -322,13 +322,15 @@ function rederDateDL() {
 	var start = {
 		format: "YYYY-MM-DD hh:mm:ss",
 		isTime: true,
-        donefun: function (elem, val, datas) {
-			end.minDate = datas; //开始日选好后，重置结束日的最小日期
-			$("#offLine_startDate_s").val(val);
+        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+		donefun: function (obj) {
+			end.minDate = obj.date; //开始日选好后，重置结束日的最小日期
+			$("#offLine_startDate_s").val(obj.val);
 		},
-		okfun: function (elem, val, datas) {
-			end.minDate = datas; //开始日选好后，重置结束日的最小日期
-			$("#offLine_startDate_s").val(val);
+		okfun: function (obj) {
+			end.minDate = obj.date; //开始日选好后，重置结束日的最小日期
+			$("#offLine_startDate_s").val(obj.val);
+
 		},
 		clearfun: function (elem, val) {
 			$("#offLine_startDate_s").val();
@@ -337,13 +339,14 @@ function rederDateDL() {
 	var end = {
 		format: "YYYY-MM-DD hh:mm:ss",
 		isTime: true,
-        donefun: function (elem, val, datas) {
-			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
-			$("#offLine_endDate_s").val(val);
+        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+        donefun: function (obj) {
+			start.maxDate = obj.date; //将结束日的初始值设定为开始日的最大日期
+			$("#offLine_endDate_s").val(obj.val);
 		},
-		okfun: function (elem, val, datas) {
-			start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
-			$("#offLine_endDate_s").val(val);
+		okfun: function (obj) {
+			start.maxDate = obj.date; //将结束日的初始值设定为开始日的最大日期
+			$("#offLine_endDate_s").val(obj.val);
 		},
 		clearfun: function (elem, val) {
 			$("#offLine_endDate_s").val();
@@ -1843,13 +1846,14 @@ function renderIsBook(isBook, onsaleStartDate) {
 jeDate("#indate", {
 	format: "YYYY-MM-DD hh:mm:ss",
 	isTime: true,
-    donefun: function (elem, val, date) {
-		$('#indate_s').val(val)
+    theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
+	donefun: function (obj) {
+		$('#indate_s').val(obj.val)
 	},
-	okfun: function (elem, val, date) {
-		$('#indate_s').val(val)
+	okfun: function (obj) {
+		$('#indate_s').val(obj.val)
 	},
-	clearfun: function (elem, val) {
+	clearfun: function (obj) {
 		$('#indate_s').val('');
 	}
 });
