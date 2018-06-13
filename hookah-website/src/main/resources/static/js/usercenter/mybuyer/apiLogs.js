@@ -24,21 +24,19 @@ function loadPageData(data) {
 var start = {
     format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
-    maxDate: $.nowDate(0),
-    choosefun: function (elem, datas) {
+    donefun: function (elem, datas) {
         end.minDate = datas; //开始日选好后，重置结束日的最小日期
     }
 };
 var end = {
     format: "YYYY-MM-DD hh:mm:ss",
     isTime: true,
-    maxDate: $.nowDate(0),
-    choosefun: function (elem, datas) {
+    donefun: function (elem, datas) {
         start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
     }
 };
-$.jeDate("#startDate", start);
-$.jeDate("#endDate", end);
+jeDate("#startDate", start);
+jeDate("#endDate", end);
 $("#ip").blur(function () {
     if(this.value){
         if(/^((25[0-5]|2[0-4]\d|[01]?\d\d?)($|(?!\.$)\.)){4}$/.test(this.value)){

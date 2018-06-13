@@ -108,7 +108,6 @@ $(function () {
     var start = {
         format: "YYYY-MM-DD hh:mm:ss", //设置日历显示格式
         isTime: true,//是不是要选择时分秒
-        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
         donefun: function (elem, datas) {
             end.minDate = datas; //开始日选好后，重置结束日的最小日期
             if($("#endDate").val() && $("#startDate").val()){
@@ -126,7 +125,6 @@ $(function () {
     var end = {
         format: "YYYY-MM-DD hh:mm:ss",
         isTime: true,
-        theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"},
         donefun: function (elem, datas) {
             start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
             if($("#endDate").val() && $("#startDate").val()){
