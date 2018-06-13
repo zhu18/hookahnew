@@ -3,17 +3,17 @@ var config = {
   permissionList: "",
   permissionArray:"",
   site: {
-    adminServer: "http://admin.gbdex.bdgstore.cn",
-    apiServer: "http://console.gbdex.bdgstore.cn",
-    websiteServer: "http://gbdex.bdgstore.cn",
-    authServer: "http://auth.gbdex.bdgstore.cn",
-    staticServer: "http://static.gbdex.bdgstore.cn",
-    crowdServer: "http://crowd.gbdex.bdgstore.cn"
+    adminServer: "http://admin.lsdashuju.net",
+    apiServer: "http://console.lsdashuju.net",
+    websiteServer: "http://www.lsdashuju.net",
+    authServer: "http://auth.lsdashuju.net",
+    staticServer: "http://static.lsdashuju.net",
+    crowdServer: "http://crowd.lsdashuju.net"
   },
   url: {
-    loginUrl: "http://auth.gbdex.bdgstore.cn/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.gbdex.bdgstore.cn/login&backurl=",
-    uploadUrl: "http://static.gbdex.bdgstore.cn/upload/fileUpload",
-    uploadEditor: "http://static.gbdex.bdgstore.cn/upload/wangeditor",
+    loginUrl: "http://auth.lsdashuju.net/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.lsdashuju.net/login&backurl=",
+    uploadUrl: "http://static.lsdashuju.net/upload/fileUpload",
+    uploadEditor: "http://static.lsdashuju.net/upload/wangeditor",
   }
 };
 
@@ -88,7 +88,7 @@ export default angular.module('Common', [
   'angular-growl',
   'angularSpinner',
 ])
-  .constant('loginUrl', "http://auth.gbdex.bdgstore.cn/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
+  .constant('loginUrl', "http://auth.lsdashuju.net/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
      * 配置消息提示
