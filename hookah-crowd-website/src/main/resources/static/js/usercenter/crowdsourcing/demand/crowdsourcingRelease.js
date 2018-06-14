@@ -131,7 +131,6 @@ var end = {
   isTime: true,
   minDate: "1990-12-31 23:59:59",
   maxDate: "2099-12-31 23:59:59",
-  theme:{bgcolor:"#D91600",color:"#ffffff",pnColor:"#FF6653"}
 
 };
 jeDate("#J_date", end);
