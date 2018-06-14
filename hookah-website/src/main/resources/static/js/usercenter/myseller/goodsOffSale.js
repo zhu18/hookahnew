@@ -100,6 +100,7 @@ function selectTimes(id) {
 	});
 	jeDate("#indate", {
 		format: "YYYY-MM-DD hh:mm:ss",
+		theme:{ bgcolor:"#ffa800",color:"#ffffff", pnColor:"#f9b32b"},
 		isTime: true,
 	});
 	$('#indate').click(function(){

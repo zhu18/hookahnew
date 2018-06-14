@@ -92,10 +92,12 @@ function loadPageData(data){
 }
 var start = {
     format: "YYYY-MM-DD hh:mm:ss",
+	theme:{ bgcolor:"#ffa800",color:"#ffffff", pnColor:"#f9b32b"},
     isTime: true
 };
 var end = {
     format: "YYYY-MM-DD hh:mm:ss",
+	theme:{ bgcolor:"#ffa800",color:"#ffffff", pnColor:"#f9b32b"},
     isTime: true
 };
 jeDate("#startDate", start);

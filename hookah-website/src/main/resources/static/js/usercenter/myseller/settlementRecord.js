@@ -107,6 +107,7 @@ $(function () {
     // 日历插件开始
     var start = {
         format: "YYYY-MM-DD hh:mm:ss", //设置日历显示格式
+		theme:{ bgcolor:"#ffa800",color:"#ffffff", pnColor:"#f9b32b"},
         isTime: true,//是不是要选择时分秒
         donefun: function (elem, datas) {
             end.minDate = datas; //开始日选好后，重置结束日的最小日期
@@ -124,6 +125,7 @@ $(function () {
     };
     var end = {
         format: "YYYY-MM-DD hh:mm:ss",
+		theme:{ bgcolor:"#ffa800",color:"#ffffff", pnColor:"#f9b32b"},
         isTime: true,
         donefun: function (elem, datas) {
             start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期

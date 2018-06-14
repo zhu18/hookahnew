@@ -23,6 +23,7 @@ function loadPageData(data) {
 
 var start = {
     format: "YYYY-MM-DD hh:mm:ss",
+	theme:{ bgcolor:"#ffa800",color:"#ffffff", pnColor:"#f9b32b"},
     isTime: true,
     donefun: function (elem, datas) {
         end.minDate = datas; //开始日选好后，重置结束日的最小日期
@@ -30,6 +31,7 @@ var start = {
 };
 var end = {
     format: "YYYY-MM-DD hh:mm:ss",
+	theme:{ bgcolor:"#ffa800",color:"#ffffff", pnColor:"#f9b32b"},
     isTime: true,
     donefun: function (elem, datas) {
         start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
