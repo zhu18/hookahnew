@@ -31,7 +31,7 @@ public class RabbitMQGenerateIndexListener {
             File cfgFile = ResourceUtils.getFile("classpath:");
             String absolutePath = cfgFile.getAbsolutePath();
             String htmlPath = absolutePath + File.separator + "views" + File.separator + "bdgstore.html" ;
-            h.createHtmlPage("http://gbdex.bdgstore.cn", htmlPath);
+            h.createHtmlPage("http://www.lsdashuju.net", htmlPath);
             logger.info("已生成首页静态页面到views---->>>>>>>>-----bdgstore.html");
 
         }catch (Exception e){

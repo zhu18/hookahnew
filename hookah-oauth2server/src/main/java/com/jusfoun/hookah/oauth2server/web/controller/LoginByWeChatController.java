@@ -47,7 +47,7 @@ public class LoginByWeChatController {
 //    public String getStartURLToGetCode() throws Exception{
 //        String takenUrl = WeChatConfig.getSnsApiUserInfoUrl;
 //        takenUrl= takenUrl.replace("APPID", WeChatConfig.appID);
-//        takenUrl= takenUrl.replace("REDIRECT_URI", URLEncoder.encode("http://gbdex.bdgstore.cn/exchange/index","UTF-8"));
+//        takenUrl= takenUrl.replace("REDIRECT_URI", URLEncoder.encode("http://www.lsdashuju.net/exchange/index","UTF-8"));
 //        //FIXME ： snsapi_userinfo
 //        takenUrl= takenUrl.replace("SCOPE", "snsapi_userinfo");
 //        return takenUrl;

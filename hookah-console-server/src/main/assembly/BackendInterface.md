@@ -1,5 +1,5 @@
 1、前台奖励邀请页面接口
-URL：http://gbdex.bdgstore.cn/userRecommend/recommendInfo
+URL：http://www.lsdashuju.net/userRecommend/recommendInfo
 请求方式：post/get
 返回页面：/usercenter/userInfo/rewardRecommend
 返回参数：
@@ -12,7 +12,7 @@ URL：http://gbdex.bdgstore.cn/userRecommend/recommendInfo
 }
 
 2、后台邀请好友查询接口
-URL：http://console.gbdex.bdgstore.cn/api/recommend/findRecommendList
+URL：http://console.lsdashuju.net/api/recommend/findRecommendList
 请求方式：post/get
 请求参数：
 {
@@ -46,7 +46,7 @@ URL：http://console.gbdex.bdgstore.cn/api/recommend/findRecommendList
 
 3、后台邀请好友列表查询接口
 （1）、推荐用户信息接口
-URL：http://console.gbdex.bdgstore.cn/api/recommend/findOneRecommend?recommenderId=1
+URL：http://console.lsdashuju.net/api/recommend/findOneRecommend?recommenderId=1
 请求方式：post/get
 请求参数：
 {
@@ -71,7 +71,7 @@ URL：http://console.gbdex.bdgstore.cn/api/recommend/findOneRecommend?recommende
     "message": "调用成功"
 }
 （2）邀请好友列表信息接口
-URL：http://console.gbdex.bdgstore.cn//api/recommend/findRecommendDetails?recommenderId=1&currentPage=2&pageSize=1
+URL：http://console.lsdashuju.net//api/recommend/findRecommendDetails?recommenderId=1&currentPage=2&pageSize=1
 请求方式：post/get
 请求参数：
 {

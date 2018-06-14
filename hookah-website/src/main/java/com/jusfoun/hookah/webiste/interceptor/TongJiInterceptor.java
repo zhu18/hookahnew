@@ -1,13 +1,7 @@
 package com.jusfoun.hookah.webiste.interceptor;
 
 
-import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.jusfoun.hookah.core.domain.User;
-import com.jusfoun.hookah.core.domain.mongo.MgTongJi;
 import com.jusfoun.hookah.core.utils.StringUtils;
 import com.jusfoun.hookah.rpc.api.MgTongJiService;
 import com.jusfoun.hookah.webiste.util.ReadCookieUtil;
@@ -21,6 +15,9 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,10 +100,10 @@ public class TongJiInterceptor implements HandlerInterceptor {
                     userId = userId == null ? "无" : userId;
                     String uuid = StringUtils.getUUID();
                     Cookie cookie = new Cookie("TongJi", uuid);
-                    cookie.setDomain("gbdex.bdgstore.cn");
+                    cookie.setDomain("lsdashuju.net");
                     cookie.setPath("/");
                     response.addCookie(cookie);
-                    mgTongJiService.setTongJiInfo("gbdex.bdgstore.cn" + uri, uuid,
+                    mgTongJiService.setTongJiInfo("www.lsdashuju.net" + uri, uuid,
                             utmSource1 == null ? "直接访问" : utmSource1, utmTerm1 == null ? "无" : utmTerm1, userId);
                 }
             }

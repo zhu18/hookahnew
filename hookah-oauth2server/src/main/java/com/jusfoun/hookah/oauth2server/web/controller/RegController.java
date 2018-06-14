@@ -93,7 +93,7 @@ public class RegController {
             String unSecret = URLDecoder.decode(recommendToken,"UTF-8");
             String recommendUserId = unSecret.split("&")[0].split(":")[1];
             Cookie cookie = new Cookie("recommendUser", recommendUserId);
-            cookie.setDomain("gbdex.bdgstore.cn");
+            cookie.setDomain("lsdashuju.net");
             response.addCookie(cookie);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

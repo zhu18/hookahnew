@@ -42,7 +42,7 @@ $('.order-ext-trigger').click(function () {
 // 		that.addClass('row-container-focus').siblings().removeClass('row-container-focus');
 // 	}
 // });
-getPayPwdStatus();
+// getPayPwdStatus(); //获取支付密码设置状态
 function getPayPwdStatus() {
 	$.ajax({
 		url: host.website + '/usercenter/payPassSta',
