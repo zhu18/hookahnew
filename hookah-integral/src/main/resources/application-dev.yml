@@ -4,14 +4,14 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: bdgstore.cn
+      domain: lsdashuju.net
       name: hookah_sid
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.4.215:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.1.201:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: password
+    password: Jusfoun@123
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -38,15 +38,15 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.4.215:27017/hookah
+      uri:  mongodb://192.168.1.201:27017/hookah
   rabbitmq:
-    addresses: 192.168.4.215:5672
+    addresses: 192.168.1.201:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.gbdex.bdgstore.cn
+      host: smtp.lsdashuju.net
       username: service@qddata.com.cn
       password: Bigdata8661101
       transport:
@@ -69,24 +69,24 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: gbdex.bdgstore.cn
-    website: ${server.http.protocal}gbdex.bdgstore.cn
-    static: ${server.http.protocal}static.gbdex.bdgstore.cn
-    auth: ${server.http.protocal}auth.gbdex.bdgstore.cn
-    console: ${server.http.protocal}console.gbdex.bdgstore.cn
-    admin: ${server.http.protocal}admin.gbdex.bdgstore.cn
-    crowd: ${server.http.protocal}crowd.gbdex.bdgstore.cn
+    domain: lsdashuju.net
+    website: ${server.http.protocal}www.lsdashuju.net
+    static: ${server.http.protocal}static.lsdashuju.net
+    auth: ${server.http.protocal}auth.lsdashuju.net
+    console: ${server.http.protocal}console.lsdashuju.net
+    admin: ${server.http.protocal}admin.lsdashuju.net
+    crowd: ${server.http.protocal}crowd.lsdashuju.net
   oauth2:
     clientId: crowd
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.gbdex.bdgstore.cn/reg
-    loginUrl: http://auth.gbdex.bdgstore.cn/oauth/authorize?client_id=crowd&response_type=code&redirect_uri=
-    logoutUrl: http://auth.gbdex.bdgstore.cn/logout?redirect_uri=http://gbdex.bdgstore.cn/login
-    accessTokenUrl: http://auth.gbdex.bdgstore.cn/oauth/accessToken
-    userInfoUrl: http://auth.gbdex.bdgstore.cn/userInfo
-    redirectUrl: http://auth.gbdex.bdgstore.cn/login
+    regUrl: http://auth.lsdashuju.net/reg
+    loginUrl: http://auth.lsdashuju.net/oauth/authorize?client_id=crowd&response_type=code&redirect_uri=
+    logoutUrl: http://auth.lsdashuju.net/logout?redirect_uri=http://www.lsdashuju.net/login
+    accessTokenUrl: http://auth.lsdashuju.net/oauth/accessToken
+    userInfoUrl: http://auth.lsdashuju.net/userInfo
+    redirectUrl: http://auth.lsdashuju.net/login
   redis:
-    ipPort: 192.168.4.215:7000,192.168.4.215:7001,192.168.4.215:7002
+    ipPort: 192.168.1.201:7000,192.168.1.201:7001,192.168.1.201:7002
     password: bdgstore
   consul:
         ipPort: localhost:8500

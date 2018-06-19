@@ -4,16 +4,16 @@ server:
       protocal: http://
   session:
     cookie:
-      domain: bdgstore.cn
+      domain: lsdashuju.net
       name: hookah_sid
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://192.168.4.215:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
+    url: jdbc:log4jdbc:mysql://192.168.1.201:3306/hookah?characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&autoReconnectForPools=true
     driverClassName: net.sf.log4jdbc.DriverSpy
     #driverClassName: com.mysql.jdbc.Driver
     #url: jdbc:mysql://192.168.15.90:3306/hookah?&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: root
-    password: password
+    password: Jusfoun@123
     initialize: true
     type: com.alibaba.druid.pool.DruidDataSource
     # 连接池配置
@@ -40,15 +40,15 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   data:
     mongodb:
-      uri:  mongodb://192.168.4.215:27017/hookah
+      uri:  mongodb://192.168.1.201:27017/hookah
   rabbitmq:
-    addresses: 192.168.4.215:5672
+    addresses: 192.168.1.201:5672
     username: root
     password: password
     publisher-confirms: true
     virtual-host: /
   mail:
-      host: smtp.gbdex.bdgstore.cn
+      host: smtp.lsdashuju.net
       username: service@qddata.com.cn
       password: Bigdata8661101
       transport:
@@ -79,17 +79,17 @@ myconf:
     suffix: .html
     cache: false
   host:
-    domain: gbdex.bdgstore.cn
-    cms: ${server.http.protocal}gbdex.bdgstore.cn
-    website: ${server.http.protocal}gbdex.bdgstore.cn
-    static: ${server.http.protocal}static.gbdex.bdgstore.cn
-    auth: ${server.http.protocal}auth.gbdex.bdgstore.cn
-    console: ${server.http.protocal}console.gbdex.bdgstore.cn
-    crowd: ${server.http.protocal}crowd.gbdex.bdgstore.cn
+    domain: lsdashuju.net
+    cms: ${server.http.protocal}www.lsdashuju.net
+    website: ${server.http.protocal}www.lsdashuju.net
+    static: ${server.http.protocal}static.lsdashuju.net
+    auth: ${server.http.protocal}auth.lsdashuju.net
+    console: ${server.http.protocal}console.lsdashuju.net
+    crowd: ${server.http.protocal}crowd.lsdashuju.net
   site:
       user-default-img: /static/images/user-safe-head.png
   redis:
-    ipPort: 192.168.4.215:7000,192.168.4.215:7001,192.168.4.215:7002
+    ipPort: 192.168.1.201:7000,192.168.1.201:7001,192.168.1.201:7002
     password: bdgstore
   consul:
     ipPort: localhost:8500
