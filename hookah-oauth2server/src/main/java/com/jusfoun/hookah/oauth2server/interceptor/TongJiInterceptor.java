@@ -100,10 +100,10 @@ public class TongJiInterceptor implements HandlerInterceptor {
                     userId = userId == null ? "无" : userId;
                     String uuid = StringUtils.getUUID();
                     Cookie cookie = new Cookie("TongJi", uuid);
-                    cookie.setDomain("lsdashuju.net");
+                    cookie.setDomain("pybdex.com");
                     cookie.setPath("/");
                     response.addCookie(cookie);
-                    mgTongJiService.setTongJiInfo("www.lsdashuju.net" + uri, uuid,
+                    mgTongJiService.setTongJiInfo("www.pybdex.com" + uri, uuid,
                             utmSource1 == null ? "直接访问" : utmSource1, utmTerm1 == null ? "无" : utmTerm1, userId);
                 }
             }

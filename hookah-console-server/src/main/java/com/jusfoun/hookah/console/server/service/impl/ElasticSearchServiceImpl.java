@@ -158,7 +158,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             goods.setOnsaleStartDate(DateUtils.toDateText(DateUtils.getDate(goods.getOnsaleStartDate(),
                     DateUtils.DEFAULT_DATE_TIME_FORMAT), DateUtils.DEFAULT_DATE_TIME_FORMAT));
         }
-        goods.setGoodsSn("http://cms.lsdashuju.net/jeecmsv9f/html/job/"+goods.getGoodsSn()+".html");
+        goods.setGoodsSn("http://cms.pybdex.com/jeecmsv9f/html/job/"+goods.getGoodsSn()+".html");
         //查询mongo中的数据
         try {
             MgGoods mgGoods = mgGoodsService.selectById(goods.getGoodsId());

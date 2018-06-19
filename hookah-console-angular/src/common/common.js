@@ -3,17 +3,17 @@ var config = {
   permissionList: "",
   permissionArray:"",
   site: {
-    adminServer: "http://admin.lsdashuju.net",
-    apiServer: "http://console.lsdashuju.net",
-    websiteServer: "http://www.lsdashuju.net",
-    authServer: "http://auth.lsdashuju.net",
-    staticServer: "http://static.lsdashuju.net",
-    crowdServer: "http://crowd.lsdashuju.net"
+    adminServer: "http://admin.pybdex.com",
+    apiServer: "http://console.pybdex.com",
+    websiteServer: "http://www.pybdex.com",
+    authServer: "http://auth.pybdex.com",
+    staticServer: "http://static.pybdex.com",
+    crowdServer: "http://crowd.pybdex.com"
   },
   url: {
-    loginUrl: "http://auth.lsdashuju.net/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.lsdashuju.net/login&backurl=",
-    uploadUrl: "http://static.lsdashuju.net/upload/fileUpload",
-    uploadEditor: "http://static.lsdashuju.net/upload/wangeditor",
+    loginUrl: "http://auth.pybdex.com/oauth/authorize?client_id=admin&response_type=code&redirect_uri=http://console.pybdex.com/login&backurl=",
+    uploadUrl: "http://static.pybdex.com/upload/fileUpload",
+    uploadEditor: "http://static.pybdex.com/upload/wangeditor",
   }
 };
 
@@ -88,7 +88,7 @@ export default angular.module('Common', [
   'angular-growl',
   'angularSpinner',
 ])
-  .constant('loginUrl', "http://auth.lsdashuju.net/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
+  .constant('loginUrl', "http://auth.pybdex.com/oauth/authorize?client_id=test&response_type=code&redirect_uri=")
   .config(['growlProvider', function (growlProvider) {
     /**
      * 配置消息提示

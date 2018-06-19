@@ -41,11 +41,11 @@ public class HeaderController extends BaseController {
                 //已登录
                 Map userMap = (HashMap) SecurityUtils.getSubject().getSession().getAttribute("user");
 
-                html.append("var str = '<li class=\"display-inline-block margin-left-10\"><a href=\"http://auth.lsdashuju.net/logout\">退出</a></li>';");
+                html.append("var str = '<li class=\"display-inline-block margin-left-10\"><a href=\"http://auth.pybdex.com/logout\">退出</a></li>';");
                 html.append("var userInfo = '<input type=\"hidden\" id=\"J_userType\" value=\""+userMap.get("userType")+"\">';");
                 html.append("document.getElementById('userStatus').innerHTML = str + userInfo;");
             }else {
-                html.append("var str = '<li class=\"display-inline-block\"> <a href=\"http://auth.lsdashuju.net/oauth/authorize?client_id=website&amp;response_type=code&amp;redirect_uri=\" style=\"padding:7px 14px;\">登录</a> </li> <li class=\"display-inline-block margin-left-10\"> <a class=\"reg\" href=\"http://auth.lsdashuju.net/reg\">注册</a> </li> <p class=\"show-ad show\">注册送200元大礼 <i class=\"fa fa-close\"></i> </p>';");
+                html.append("var str = '<li class=\"display-inline-block\"> <a href=\"http://auth.pybdex.com/oauth/authorize?client_id=website&amp;response_type=code&amp;redirect_uri=\" style=\"padding:7px 14px;\">登录</a> </li> <li class=\"display-inline-block margin-left-10\"> <a class=\"reg\" href=\"http://auth.pybdex.com/reg\">注册</a> </li> <p class=\"show-ad show\">注册送200元大礼 <i class=\"fa fa-close\"></i> </p>';");
                 html.append("document.getElementById('userStatus').innerHTML = str;");
 
             }

@@ -4,7 +4,7 @@ server:
     protocal: http://
   session:
     cookie:
-      domain: lsdashuju.net
+      domain: pybdex.com
       name: hookah_sid
 myconf:
   beetl:
@@ -15,24 +15,24 @@ myconf:
     cache: false
 
   host:
-    domain: lsdashuju.net
-    website: ${server.http.protocal}www.lsdashuju.net
-    static: ${server.http.protocal}static.lsdashuju.net
-    auth: ${server.http.protocal}auth.lsdashuju.net
-    console: ${server.http.protocal}console.lsdashuju.net
-    admin: ${server.http.protocal}admin.lsdashuju.net
-    crowd: ${server.http.protocal}crowd.lsdashuju.net
+    domain: pybdex.com
+    website: ${server.http.protocal}www.pybdex.com
+    static: ${server.http.protocal}static.pybdex.com
+    auth: ${server.http.protocal}auth.pybdex.com
+    console: ${server.http.protocal}console.pybdex.com
+    admin: ${server.http.protocal}admin.pybdex.com
+    crowd: ${server.http.protocal}crowd.pybdex.com
   oauth2:
     clientId: website
     clientSecret: Yqn2ht4DYkMHlDvTY7CV
-    regUrl: http://auth.lsdashuju.net/reg
-    loginUrl: http://auth.lsdashuju.net/oauth/authorize?client_id=website&response_type=code&redirect_uri=
-    logoutUrl: http://auth.lsdashuju.net/logout?redirect_uri=http://www.lsdashuju.net/login
-    accessTokenUrl: http://auth.lsdashuju.net/oauth/accessToken
-    userInfoUrl: http://auth.lsdashuju.net/userInfo
-    redirectUrl: http://auth.lsdashuju.net/login
+    regUrl: http://auth.pybdex.com/reg
+    loginUrl: http://auth.pybdex.com/oauth/authorize?client_id=website&response_type=code&redirect_uri=
+    logoutUrl: http://auth.pybdex.com/logout?redirect_uri=http://www.pybdex.com/login
+    accessTokenUrl: http://auth.pybdex.com/oauth/accessToken
+    userInfoUrl: http://auth.pybdex.com/userInfo
+    redirectUrl: http://auth.pybdex.com/login
   redis:
-    ipPort: 192.168.1.201:7000,192.168.1.201:7001,192.168.1.201:7002
+    ipPort: 192.168.15.116:7000,192.168.15.116:7001,192.168.15.116:7002
     password: bdgstore
   consul:
     ipPort: localhost:8500
@@ -40,11 +40,11 @@ debug: true
 spring:
   data:
     mongodb:
-      uri:  mongodb://192.168.1.201:27017/hookah
+      uri:  mongodb://192.168.15.116:27017/hookah
   mvc:
       static-path-pattern: /static/**
   rabbitmq:
-      addresses: 192.168.1.201:5672
+      addresses: 192.168.15.116:5672
       username: root
       password: password
       publisher-confirms: true
