@@ -50,8 +50,8 @@ public class JedisClusterFactory implements FactoryBean<JedisCluster>, Initializ
             haps.add(new HostAndPort(arr[0], Integer.valueOf(arr[1])));
         }
 
-//        jedisCluster = new JedisCluster(haps, connectionTimeout, soTimeout, maxRedirections, genericObjectPoolConfig);
-        jedisCluster = new JedisCluster(haps, connectionTimeout, soTimeout, maxRedirections, jedisClusterPassword , genericObjectPoolConfig);
+        jedisCluster = new JedisCluster(haps, connectionTimeout, soTimeout, maxRedirections, genericObjectPoolConfig);
+//        jedisCluster = new JedisCluster(haps, connectionTimeout, soTimeout, maxRedirections, jedisClusterPassword , genericObjectPoolConfig);
     }
 
     @Override
