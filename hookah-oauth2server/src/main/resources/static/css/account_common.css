@@ -27,20 +27,21 @@ ul {
   background-size: 100%;
   float: left;
   display: inline-block;
-  height: 50px;
+  height: 40px;
   margin-right: 20px
 }
 
 #header .header-layout .logo a {
   float: left;
   display: inline-block;
-  height: 50px;
+  height: 40px;
   width: 207px;
   overflow: hidden;
   /*text-indent: -999em*/
 }
 #header .header-layout .logo a img{
   width:100%;
+  height: 100%;
 }
 
 #header .header-layout .intl-logo {

@@ -24,14 +24,16 @@ html {
 }
 .header-centerbar .logo {
 	width: 207px;
-	margin: 5px 0 0 ;
+	margin: 11px 0 0 ;
 }
 .header-centerbar .logo a {
 	display: inline-block;
 	width: 207px;
+	height: 40px;
 }
 .header-centerbar .logo a img {
 	width: 100%;
+	height: 100%;
 }
 .header-centerbar .search {
 	position: relative;
