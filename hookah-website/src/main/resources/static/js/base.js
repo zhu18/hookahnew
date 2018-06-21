@@ -379,3 +379,18 @@ $('#doyoo_mon_refuse').click(function(){
 
 })
 
+function isAdmin(){
+    $.ajax({
+        type: "GET",
+        url: "http://console.pybdex.com/api/auth/isAdmin",
+        async: false,
+        success: function (data) {
+            if (data.code=="1"){
+                console.log(11);
+            }else {
+                console.log(22);
+            }
+        }
+    })
+}
+isAdmin();
