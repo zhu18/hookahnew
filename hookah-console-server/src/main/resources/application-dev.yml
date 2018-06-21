@@ -105,7 +105,7 @@ myconf:
   consul:
     ipPort: localhost:8500
   es:
-    ipPort: 192.168.15.116:9300
+    ipPort: 192.168.200.116:9200
     cluster:
       name: qingdao-es
     clientTransport:
@@ -114,12 +114,12 @@ myconf:
       ping_timeout: 5s
       nodes_sampler_interval: 5s
     goods:
-      index: sbh-goods-v1
+      index: py-goods-v1
       type: goods
       shards: 4
       replicas: 1
     category:
-      index: sbh-category-v1
+      index: py-category-v1
       type: category
       shards: 2
       replicas: 1
