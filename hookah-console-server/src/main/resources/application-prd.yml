@@ -105,7 +105,7 @@ myconf:
   consul:
     ipPort: localhost:8500
   es:
-    ipPort: 192.168.200.116:9200
+    ipPort: 192.168.200.116:9300
     cluster:
       name: qingdao-es
     clientTransport:
