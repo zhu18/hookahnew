@@ -26,7 +26,9 @@ function loadPageData(data) {
 			// }
 			html += '<td>';
 			html += '<a href="javascript:selectTimes(\'' + list[i].goodsId + '\');">上架</a>';
-			html += '<a href="'+host.website+'/usercenter/goodsModify?id='+list[i].goodsId+'">修改</a>';
+			if(userTypeNum != 0){
+				html += '<a href="'+host.website+'/usercenter/goodsModify?id='+list[i].goodsId+'">修改</a>';
+			}
 			html += '<a href="javascript:deleteGoods(\'' + list[i].goodsId + '\');">删除</a>';
 			html += '</td>';
 			html += '</tr>';
@@ -100,7 +102,7 @@ function selectTimes(id) {
 	});
 	jeDate("#indate", {
 		format: "YYYY-MM-DD hh:mm:ss",
-		theme:{ bgcolor:"#ffa800",color:"#ffffff", pnColor:"#f9b32b"},
+		theme:{ bgcolor:"#ffa800",color:"#ffffff", pnColor:"#f9b32b"},onClose:false,
 		isTime: true,
 	});
 	$('#indate').click(function(){

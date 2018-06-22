@@ -26,8 +26,10 @@ function loadPageData(data){
 			html += '<td class="text-right">'+list[i].lastUpdateTime+'</td>';
 			html += '<td>';
 			// html += '<a style="padding: 0;margin:5px 0;" href="javascript:offSale(\'' + list[i].goodsId + '\');">取消上架</a>';
-			html += '<a style="padding: 0;margin:5px 0;" href="'+host.website+'/usercenter/goodsModify?id=' + list[i].goodsId + '">修改</a>';
-            html += '</td>';
+			if(userTypeNum != 0) {
+				html += '<a style="padding: 0;margin:5px 0;" href="' + host.website + '/usercenter/goodsModify?id=' + list[i].goodsId + '">修改</a>';
+			}
+			html += '</td>';
             html += '</tr>';
         }
         $('.trade-box tbody').html(html);
