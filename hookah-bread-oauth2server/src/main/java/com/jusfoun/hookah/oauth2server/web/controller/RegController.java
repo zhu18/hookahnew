@@ -153,7 +153,7 @@ public class RegController {
         filter.clear();
         long count = userService.count(filter)+1;
         String number = "000000" + count;
-        String key = "QD" + date + number.substring(number.length()-6);
+        String key = "XZ" + date + number.substring(number.length()-6);
         user.setUserSn(key);
 
         User regUser = userService.insert((User) user);
