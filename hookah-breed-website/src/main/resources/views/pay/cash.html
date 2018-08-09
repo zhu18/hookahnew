@@ -54,38 +54,38 @@ var htmlPart = {
 							<input type="hidden" value="${moneyBalance}" id="moneyBalance">
 							<input type="hidden" name="orderSn" value="${orderInfo.orderSn}" id="J_orderSn">
 							<ul id="J_MarketinglList"></ul>
-							<!--<ul class="saved-card-list">-->
-								<!--<%for(item in payments){%>-->
-								<!--<li class="${itemLP.index == 1 ? 'channel-balance' : 'channel-bank'} row-container fn-clear ${itemLP.index == 1 ? 'row-container-focus' : ''}">-->
-									<!--<div class="row-basic fn-clear">-->
-										<!--<label class="channel-label">-->
-											<!--<span class="channel-tit channel-icon icon banklogo-BALANCE_s"></span>-->
-											<!--<span class="fn-mr-20">-->
-                                            	<!--<span class="channel-name">${item.payName}</span>-->
-												<!--<%if(itemLP.index == 1){%>-->
-												<!--<span class="money-balance">${moneyBalance / 100}</span>-->
-												<!--<%}else{%>-->
-                                            	<!--&lt;!&ndash;<span>${item.payDetail}</span>&ndash;&gt;-->
-												<!--<%}%>-->
-                                        	<!--</span>-->
-											<!--<span class="pay-amount">-->
-												<!--<span class="amount">-->
-													<!--<span>支付</span>-->
-													<!--<span class="amount-font-R16">${orderInfo.goodsAmount / 100}</span>-->
-													<!--<span> 元</span>-->
-												<!--</span>-->
-                                            	<!--<span></span>-->
-                                        	<!--</span>-->
-											<!--<%if(itemLP.index == 1){%>-->
-											<!--<input checked="checked" class="channel-input" value="${item.payCode}" name="apiCode" type="radio">-->
-											<!--<%}else{%>-->
-											<!--<input class="channel-input" value="${item.payCode}" name="apiCode" type="radio">-->
-											<!--<%}%>-->
-										<!--</label>-->
-									<!--</div>-->
-									<!--<div class="row-extra fn-hide"></div>-->
-								<!--</li>-->
-								<!--<%}%>-->
+							<ul class="saved-card-list">
+								<%for(item in payments){%>
+								<li class="${itemLP.index == 1 ? 'channel-balance' : 'channel-bank'} row-container fn-clear ${itemLP.index == 1 ? 'row-container-focus' : ''}">
+									<div class="row-basic fn-clear">
+										<label class="channel-label">
+											<span class="channel-tit channel-icon icon banklogo-BALANCE_s"></span>
+											<span class="fn-mr-20">
+                                            	<span class="channel-name">${item.payName}</span>
+												<%if(itemLP.index == 1){%>
+												<span class="money-balance">${moneyBalance / 100}</span>
+												<%}else{%>
+                                            	<!--<span>${item.payDetail}</span>-->
+												<%}%>
+                                        	</span>
+											<span class="pay-amount">
+												<span class="amount">
+													<span>支付</span>
+													<span class="amount-font-R16">${orderInfo.goodsAmount / 100}</span>
+													<span> 元</span>
+												</span>
+                                            	<span></span>
+                                        	</span>
+											<%if(itemLP.index == 1){%>
+											<input checked="checked" class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
+											<%}else{%>
+											<input class="channel-input" value="${item.payCode}" name="apiCode" type="radio">
+											<%}%>
+										</label>
+									</div>
+									<div class="row-extra fn-hide"></div>
+								</li>
+								<%}%>
 								<!--&lt;!&ndash;此处注释代码不要删除（含有备用状态）&ndash;&gt;-->
 								<!--&lt;!&ndash;<li class="channel-bank row-container fn-clear">&ndash;&gt;-->
 								<!--&lt;!&ndash;<div class="row-basic fn-clear">&ndash;&gt;-->
@@ -155,35 +155,35 @@ var htmlPart = {
 							<!--</div>-->
 						</div>
 					</div>
-					<!--<div id="J-balanceNt" class="color-red">-->
-						<!--您的余额不足以支付次订单，请<a href="javascript:void(0)" class="color-blue">充值</a>，或者选用<a href="javascript:void(0)" class="color-blue">其他方式</a>支付。-->
-					<!--</div>-->
-					<!--<div id="J-security" class="">-->
-						<!--<div id="payPassword_container" class="alieditContainer clearfix" data-busy="0">-->
-							<!--<label class="i-block">支付密码：</label>-->
-							<!--<div class="i-block" data-error="i_error">-->
-								<!--<div class="i-block six-password">-->
-									<!--<input class="i-text sixDigitPassword" id="paymentPassword" type="password" autocomplete="off" required="required" value="" name="paymentPassword" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6" aria-required="true">-->
-									<!--<input type="hidden" name="password">-->
-									<!--<div tabindex="0" class="sixDigitPassword-box" style="width: 182px;">-->
-										<!--<i style="width: 29px; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>-->
-										<!--<i style="width: 29px;"><b style="visibility: hidden;"></b></i>-->
-										<!--<i style="width: 29px;"><b style="visibility: hidden;"></b></i>-->
-										<!--<i style="width: 29px;"><b style="visibility: hidden;"></b></i>-->
-										<!--<i style="width: 29px;"><b style="visibility: hidden;"></b></i>-->
-										<!--<i style="width: 29px;"><b style="visibility: hidden;"></b></i>-->
-										<!--<span style="width: 29px; left: 0px; visibility: hidden;" id="cardwrap" data-role="cardwrap"></span>-->
-									<!--</div>-->
-								<!--</div>-->
-								<!--<span>请输入6位支付密码( 数字！)</span>-->
-							<!--</div>-->
-							<!--<div class="ui-form-explain ui-form-error" style="display:none">-->
-								<!--<p class="color-red">-->
-									<!--支付密码不符合要求-->
-								<!--</p>-->
-							<!--</div>-->
-						<!--</div>-->
-					<!--</div>-->
+					<div id="J-balanceNt" class="color-red">
+						您的余额不足以支付次订单，请<a href="javascript:void(0)" class="color-blue">充值</a>，或者选用<a href="javascript:void(0)" class="color-blue">其他方式</a>支付。
+					</div>
+					<div id="J-security" class="">
+						<div id="payPassword_container" class="alieditContainer clearfix" data-busy="0">
+							<label class="i-block">支付密码：</label>
+							<div class="i-block" data-error="i_error">
+								<div class="i-block six-password">
+									<input class="i-text sixDigitPassword" id="paymentPassword" type="password" autocomplete="off" required="required" value="" name="paymentPassword" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6" aria-required="true">
+									<input type="hidden" name="password">
+									<div tabindex="0" class="sixDigitPassword-box" style="width: 182px;">
+										<i style="width: 29px; border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<i style="width: 29px;"><b style="visibility: hidden;"></b></i>
+										<span style="width: 29px; left: 0px; visibility: hidden;" id="cardwrap" data-role="cardwrap"></span>
+									</div>
+								</div>
+								<span>请输入6位支付密码( 数字！)</span>
+							</div>
+							<div class="ui-form-explain ui-form-error" style="display:none">
+								<p class="color-red">
+									支付密码不符合要求
+								</p>
+							</div>
+						</div>
+					</div>
 					<div id="J-rcSubmit">
 						<div class="ui-fm-item ui-fm-action j-submit" data-reactid=".1">
 							<input class="pay-btn btn-full-blue ui-button-lblue" id="J_authSubmit" type="button" onclick="return check()" value="确认付款">
